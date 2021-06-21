@@ -1,0 +1,34 @@
+{
+    "global": {
+        "entities": {
+            "blur_elysium_slides": "Elysium Slides"
+        }
+    },
+    "sw-privileges": {
+        "permissions": {
+            "blur_elysium_slides": {
+                "label": "Elysium Slides"
+            }
+        }
+    },
+    "BlurElysiumSlides": {
+        "entityLabel": "Elysium Slides",
+        "description": "Here you can define Single Slides for the Elysium Slider",
+        "placeholderSearchBar": "Search for Slides",
+        "messages": {
+            "emptySlidesTitle": "No Slides yet",
+            "emptySlidesSubtitle": "No Slides yet"
+        },
+        "actions": {
+            "createSlide": "Create Slide",
+            "createSlideNoLanguageChange": "New Slide can only be created in our chosen system default language"
+        },
+        "baseForm": {
+            "cardTitle": "Content",
+            "labelInput": {
+                "title": "Slide Label",
+                "placeholder": "Enter a Name for your Slide"
+            }
+        }
+    }
+}

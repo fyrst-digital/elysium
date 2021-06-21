@@ -1,0 +1,71 @@
+{% block blur_elysium_slides_create %}
+    <sw-page class="blur-slysium-slides-create__page">
+
+        {% block blur_elysium_slides_create_header %}
+            <template #smart-bar-header>
+                <h2>
+                    {{ $tc( 'BlurElysiumSlides.actions.createSlide' ) }}
+                </h2>
+            </template>
+        {% endblock %}
+
+        {% block blur_elysium_slides_create_actions %}
+            <template slot="smart-bar-actions">
+
+                {% block blur_elysium_slides_create_actions_abort %}
+                    <sw-button
+                        @click="onCancel"
+                    >
+                        {{ $tc('sw-product.detail.buttonCancel') }}
+                    </sw-button>
+                {% endblock %}
+
+                {% block blur_elysium_slides_create_actions_save %}
+                    <sw-button-process
+                        class="sw-customer-create__save-action"
+                        :is-loading="isLoading"
+                        :disabled="isLoading"
+                        :process-success="isSaveSuccessful"
+                        variant="primary"
+                        @process-finish="saveFinish"
+                        @click.prevent="onSave"
+                    >
+
+                        {{ $tc('sw-customer.detail.buttonSave') }}
+                    </sw-button-process>                    
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block blur_elysium_slides_create_language_switch %}
+            <template slot="language-switch">
+                <sw-language-switch
+                    v-tooltip="{ message: $tc('BlurElysiumSlides.actions.createSlideNoLanguageChange') }"
+                    disabled
+                />
+            </template>
+        {% endblock %}
+
+        <template #content>
+            <div class="blur-slysium-slides-create__main-content">
+            
+                {% block blur_elysium_slides_create_basic_info_card %}
+                    <sw-card
+                        :title="$tc('BlurElysiumSlides.baseForm.cardTitle')"
+                        :is-loading="isLoading"
+                    >
+
+                        {% block blur_elysium_slides_create_base_basic_info_form %}
+                            <blur-elysium-slides-basic-form
+                                v-if="!isLoading"
+                                :blur-elysium-slides="blurElysiumSlides"
+                                :allow-edit="acl.can('blur_slides_elysium.editor')"
+                            />
+                        {% endblock %}
+
+                    </sw-card>
+                {% endblock %}        
+            </div>
+        </template>    
+    </sw-page>
+{% endblock %}

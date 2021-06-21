@@ -1,0 +1,89 @@
+{% block blur_elysium_slides %}
+    <sw-page class="blur-slysium-slides-list__page">
+
+        {% block blur_elysium_slides_search_bar %}
+            <template slot="search-bar">
+                <sw-search-bar
+                    initial-search-type="blur_elysium_slides"
+                    :initial-search="term"
+                    @search="onSearch"
+                />
+            </template>
+        {% endblock %}
+
+        {% block blur_elysium_slides_smart_bar_header %}
+            <template slot="smart-bar-header">
+                <div class="smart-bar-header__title-container">
+                    <sw-icon name="default-tools-ruler-pencil" color="#d35400"></sw-icon>
+                    <h2 class="smart-bar-header__title">
+                        {{ $tc('BlurElysiumSlides.entityLabel') }}
+
+                        {% block blur_elysium_slides_smart_bar_header_amount %}
+                            <span
+                                v-if="!isLoading"
+                                class="sw-page__smart-bar-amount"
+                            >
+                                ({{ total }})
+                            </span>
+                        {% endblock %}
+                    </h2>
+                </div>
+            </template>
+        {% endblock %}
+
+        {% block blur_elysium_slides_smart_bar_actions %}
+            <template #smart-bar-actions>
+                {% block blur_elysium_slides_smart_bar_actions_add %}
+                    <sw-button
+                        v-tooltip="{
+                            message: $tc('sw-privileges.tooltip.warning'),
+                            disabled: acl.can('blur_elysium_slides.creator'),
+                            showOnDisabledElements: true
+                        }"
+                        variant="primary"
+                        :disabled="!acl.can('blur_elysium_slides.creator')"
+                        :router-link="{ name: 'blur.elysium.slides.create' }"
+                    >
+                        {{ $tc('BlurElysiumSlides.actions.createSlide') }}
+                    </sw-button>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block sw_product_list_language_switch %}
+            <template #language-switch>
+                <sw-language-switch @on-change="onChangeLanguage" />
+            </template>
+        {% endblock %}
+
+        <template #content>
+            {% block blur_elysium_slides_list_content %}
+                <div class="sw-customer-list__content">
+
+                    {% block blur_elysium_slides_list_grid %}
+                    <template v-if="blur_elysium_slides !== null && blur_elysium_slides.length > 0">
+                        <h1 style="text-align: center;">
+                            Yay! There are {{ total }} slides :)
+                        </h1>
+                    </template>
+                    {% endblock %}
+
+                    {% block blur_elysium_slides_list_empty_state %}
+                        <template v-if="!isLoading && !total">
+                            <sw-empty-state
+                                v-if="filterCriteria.length"
+                                :title="$tc('sw-customer.filter.messageEmptyTitle')"
+                                :subline="$tc('sw-customer.filter.messageEmptySubline')"
+                            />
+                            <sw-empty-state
+                                v-else
+                                :title="$tc('BlurElysiumSlides.messages.emptySlidesTitle')"
+                            />
+                        </template>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </template>
+
+    </sw-page>
+{% endblock %}

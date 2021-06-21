@@ -1,0 +1,31 @@
+{
+    "name": "blur/elysium-blocks",
+    "description": "A CMS Block and Element Collection for Shopware 6",
+    "version": "0.0.1",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Robert Bisovski"
+        }
+    ],
+    "require": {
+        "shopware/core": "6.4.*"
+    },
+    "extra": {
+        "shopware-plugin-class": "Blur\\ElysiumBlocks\\BlurElysiumBlocks",
+        "label": {
+            "de-DE": "Elysium Blocks",
+            "en-GB": "Elysium Blocks"
+        },
+        "description": {
+            "de-DE": "Eine CMS Block und Element Sammlung für Shopware 6",
+            "en-GB": "A CMS Block and Element Collection for Shopware 6"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Blur\\ElysiumBlocks\\": "src/"
+        }
+    }
+}
