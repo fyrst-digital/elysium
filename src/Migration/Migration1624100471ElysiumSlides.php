@@ -25,10 +25,13 @@ class Migration1624100471ElysiumSlides extends MigrationStep
         $sql = <<<SQL
         CREATE TABLE IF NOT EXISTS `blur_elysium_slides` (
             `id` BINARY(16) NOT NULL,
+            `version_id` BINARY(16) NOT NULL,
             `translations` BINARY(16) NULL,
+            `blur_elysium_slides_media_id` BINARY(16) NULL,
+            `blur_elysium_slides_media_version_id` BINARY(16) NULL,
             `created_at` DATETIME(3) NOT NULL,
             `updated_at` DATETIME(3),
-            PRIMARY KEY (`id`)
+            PRIMARY KEY (`id`, `version_id`)
         )
             ENGINE = InnoDB
             DEFAULT CHARSET = utf8mb4
