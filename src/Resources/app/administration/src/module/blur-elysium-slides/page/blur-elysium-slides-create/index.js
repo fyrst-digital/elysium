@@ -3,6 +3,16 @@ import './blur-elysium-slides-create.scss';
 
 const { Component, Mixin } = Shopware;
 
+const { mapPageErrors } = Shopware.Component.getComponentHelper();
+
+const errorConfig = {
+    "blur.elysium.slides.create": {
+      "elysiumSlides": [
+        "label"
+      ]
+    }
+};
+
 Component.register( 'blur-elysium-slides-create', {
     template,
 
@@ -33,6 +43,8 @@ Component.register( 'blur-elysium-slides-create', {
         elysiumSlidesRepository() {
             return this.repositoryFactory.create( 'blur_elysium_slides' );
         },
+
+        // ...mapPageErrors(errorConfig),
     },
 
     created() {
@@ -56,12 +68,25 @@ Component.register( 'blur-elysium-slides-create', {
             this.isLoading = true;
             this.isSaveSuccessful = false;
 
-            console.dir( this.blurElysiumSlides );
+            /*
+            if ( !this.blurElysiumSlides.label ) {
+                this.createNotificationError({
+                    message: this.$tc('Slide label is required'),
+                });
+
+                this.isLoading = false;
+
+                return new Promise((res) => res());
+            }
+            */
+
+            console.log( 'fire');
 
             return this.elysiumSlidesRepository.save( this.blurElysiumSlides, Shopware.Context.api ).then(() => {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
-            }).catch(() => {
+                this.createdComponent();
+            }).catch(( exception ) => {
                 this.createNotificationError({
                     message: this.$tc('sw-customer.detail.messageSaveError'),
                 });

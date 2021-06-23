@@ -27,7 +27,28 @@
             "cardTitle": "Content",
             "labelInput": {
                 "title": "Slide Label",
-                "placeholder": "Enter a Name for your Slide"
+                "placeholder": "Enter a Name for your Slide",
+                "helpText": "Lege einen Namen für den Slide fest. Dieser Name wird nur zur Identifikation des Slides genutzt"
+            },
+            "titleInput": {
+                "title": "Headline",
+                "placeholder": "Enter a Headline for your Slide",
+                "helpText": "Lege eine Überschrift für diesen Slide fest."
+            },
+            "descriptionInput": {
+                "title": "Description",
+                "placeholder": "Enter a Description for your Slide",
+                "helpText": "Lege einen Beschreibungs-Text für diesen Slide fest."
+            },
+            "buttonLabelInput": {
+                "title": "Button Label",
+                "placeholder": "Enter a Button Label for your Slide",
+                "helpText": "Lege die Beschriftung des Buttons fest."
+            },
+            "urlInput": {
+                "title": "Slide URL",
+                "placeholder": "Enter a URL for your Slide",
+                "helpText": "Lege die Verlinkung des Slides fest."
             }
         }
     }

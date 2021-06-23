@@ -13,6 +13,12 @@ Component.register( 'blur-elysium-slides-list', {
         'filterFactory'
     ],
 
+    mixins: [
+        Mixin.getByName('notification'),
+        Mixin.getByName('salutation'),
+        Mixin.getByName('listing'),
+    ],
+
     data() {
         return {
             blur_elysium_slides: null,
@@ -20,6 +26,10 @@ Component.register( 'blur-elysium-slides-list', {
             blur_elysium_slide: null,
             isLoading: false,
             term: this.$route.query ? this.$route.query.term : '',
+            sortBy: 'label',
+            naturalSorting: true,
+            sortDirection: 'ASC',
+            showDeleteModal: false,
             filterCriteria: []
         };
     },
@@ -36,14 +46,31 @@ Component.register( 'blur-elysium-slides-list', {
             return this.repositoryFactory.create( 'blur_elysium_slides' );
         },
 
+        elysiumSlidesColumns() {
+            return this.getElysiumSlidesColumns();
+        },
+
         defaultCriteria() {
             const defaultCriteria = new Criteria( this.page, this.limit );
 
+            this.naturalSorting = this.sortBy === 'label';
+
             defaultCriteria.setTerm(this.term);
+
+            this.sortBy.split(',').forEach(sortBy => {
+
+                defaultCriteria.addSorting( Criteria.sort(
+                    sortBy, 
+                    this.sortDirection, 
+                    this.naturalSorting
+                ));
+            });
 
             this.filterCriteria.forEach(filter => {
                 defaultCriteria.addFilter(filter);
             });
+
+            console.dir( defaultCriteria );
 
             /*
             const defaultCriteria = new Criteria(this.page, this.limit);
@@ -87,7 +114,6 @@ Component.register( 'blur-elysium-slides-list', {
     methods: {
         createdComponent() {
             this.getList();
-            console.dir( this.blur_elysium_slides );
         },
 
         async getList() {
@@ -108,11 +134,25 @@ Component.register( 'blur-elysium-slides-list', {
                 this.blur_elysium_slides = items;
                 this.isLoading = false;
                 this.selection = {};
-
-                console.dir( this.blur_elysium_slides );
             } catch {
                 this.isLoading = false;
             }
+        },
+
+        onDelete( id ) {
+            this.showDeleteModal = id;
+        },
+
+        onCloseDeleteModal() {
+            this.showDeleteModal = false;
+        },
+
+        onConfirmDelete( id ) {
+            this.showDeleteModal = false;
+
+            return this.elysiumSlidesRepository.delete( id, Shopware.Context.api ).then(() => {
+                this.getList();
+            });
         },
 
         onSearch( searchTerm ) {
@@ -125,9 +165,39 @@ Component.register( 'blur-elysium-slides-list', {
             this.getList();
         },
 
+        onInlineEditSave(promise) {
+            promise.then(() => {
+                this.createNotificationSuccess({
+                    message: this.$tc('sw-customer.detail.messageSaveSuccess'),
+                });
+            }).catch(() => {
+                this.getList();
+                this.createNotificationError({
+                    message: this.$tc('sw-customer.detail.messageSaveError'),
+                });
+            });
+        },
+
         updateCriteria(criteria) {
             this.page = 1;
             this.filterCriteria = criteria;
         },
+
+        getElysiumSlidesColumns() {
+            const columns = [{
+                property: 'label',
+                dataIndex: 'label',
+                inlineEdit: 'string',
+                label: 'sw-customer.list.columnName',
+                routerLink: 'blur.elysium.slides.detail',
+                width: '250px',
+                allowResize: true,
+                primary: true,
+                useCustomSort: true,
+                naturalSorting: true,
+            }];
+
+            return columns;
+        }
     }
 });

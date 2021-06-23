@@ -1,17 +1,47 @@
-
-<sw-container columns="1fr 1fr">
+<sw-container columns="1fr" gap="0 32px">
 
     <sw-text-field
         v-model="blurElysiumSlides.label"
-        :label="$tc('BlurElysiumSlides.baseForm.labelInput.title')"
-        :placeholder="$tc('BlurElysiumSlides.baseForm.labelInput.placeholder')"
         required
+        :label="$tc('sw-customer.baseForm.labelLastName')"
+        :placeholder="$tc('BlurElysiumSlides.baseForm.labelInput.placeholder')"
+        :help-text="$tc('BlurElysiumSlides.baseForm.labelInput.helpText')"
+        :error="blurElysiumSlidesLabelError"
     />
 
-    <sw-text-field
+    <sw-field
         v-model="blurElysiumSlides.title"
-        :label="$tc('BlurElysiumSlides.baseForm.labelInput.title')"
-        :placeholder="$tc('BlurElysiumSlides.baseForm.labelInput.placeholder')"
-        required
+        type="text"
+        requi
+        :label="$tc('BlurElysiumSlides.baseForm.titleInput.title')"
+        :placeholder="$tc('BlurElysiumSlides.baseForm.titleInput.placeholder')"
+        :help-text="$tc('BlurElysiumSlides.baseForm.titleInput.helpText')"
     />
+
+    <sw-field
+        v-model="blurElysiumSlides.description"
+        type="textarea"
+        :label="$tc('BlurElysiumSlides.baseForm.descriptionInput.title')"
+        :placeholder="$tc('BlurElysiumSlides.baseForm.descriptionInput.placeholder')"
+        :help-text="$tc('BlurElysiumSlides.baseForm.descriptionInput.helpText')"
+    />
+
+    <sw-container columns="1fr 1fr" gap="0 32px">
+
+        <sw-field
+            v-model="blurElysiumSlides.button_label"
+            type="text"
+            :label="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.title')"
+            :placeholder="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.placeholder')"
+            :help-text="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.helpText')"
+            required
+        />
+
+        <sw-url-field
+            v-model="blurElysiumSlides.url"
+            :label="$tc('BlurElysiumSlides.baseForm.urlInput.title')"
+            :placeholder="$tc('BlurElysiumSlides.baseForm.urlInput.placeholder')"
+            :help-text="$tc('BlurElysiumSlides.baseForm.urlInput.helpText')"
+        />
+    </sw-container>
 </sw-container>

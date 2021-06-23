@@ -4,6 +4,10 @@ const { Criteria } = Shopware.Data;
 const { Component, Context, Mixin } = Shopware;
 const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
 
+const propErrors = [
+    'label'
+];
+
 Component.register( 'blur-elysium-slides-basic-form', {
     template,
 
@@ -14,7 +18,13 @@ Component.register( 'blur-elysium-slides-basic-form', {
         },
     },
 
+    computed: {
+    
+        ...mapPropertyErrors( 'blurElysiumSlides' , propErrors)
+    },
+
     created() {
+        console.dir( this );
     }
 
 });

@@ -45,7 +45,7 @@ class ElysiumSlidesDefinition extends EntityDefinition {
             (new TranslatedField('url'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslationsAssociationField( 
                 ElysiumSlidesTranslationDefinition::class, 
-                'product_id'
+                'blur_elysium_slides_id'
             ))->addFlags(new ApiAware(), new Inherited(), new Required())
         ]);
     }

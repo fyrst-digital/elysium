@@ -1,0 +1,78 @@
+<sw-page class="blur-slysium-slides-detail__page">
+
+    <template #smart-bar-header>
+        <h2 v-if="blurElysiumSlide && blurElysiumSlide.label">
+            {{ blurElysiumSlide.label }}
+        </h2>
+    </template>
+
+    <template #smart-bar-actions>
+
+        {#
+        <span v-if="!editMode">
+            <sw-button
+                v-tooltip="{
+                    message: $tc('sw-privileges.tooltip.warning'),
+                    disabled: acl.can('blur_elysium_slides.editor'),
+                    showOnDisabledElements: true
+                }"
+                class="sw-customer-detail__open-edit-mode-action"
+                variant="primary"
+                :disabled="isLoading || !acl.can('blur_elysium_slides.editor')"
+                @click.prevent="onActivateCustomerEditMode"
+            >
+                {{ $tc('sw-customer.detail.buttonEdit') }}
+            </sw-button>
+        </span>
+        #}
+
+        <sw-container class="blur-slysium-slides-detail__header-actions-container" columns="auto auto" gap="0 8px">
+
+            <sw-button
+                :disabled="isLoading"
+                @click="onAbortButtonClick"
+            >
+                {{ $tc('sw-customer.detail.buttonCancel') }}
+            </sw-button>
+
+            <sw-button-process
+                class="sw-customer-detail__save-action"
+                :is-loading="isLoading"
+                :process-success="isSaveSuccessful"
+                :disabled="isLoading"
+                variant="primary"
+                @process-finish="saveFinish"
+                @click.prevent="onSave"
+            >
+                {{ $tc('sw-customer.detail.buttonSave') }}
+            </sw-button-process>
+        </sw-container>
+    </template>
+
+    <template slot="language-switch">
+        <sw-language-switch
+            :save-changes-function="saveOnLanguageChange"
+            :abort-change-function="abortOnLanguageChange"
+            :disabled="!blurElysiumSlideId"
+            @on-change="onChangeLanguage"
+        />
+    </template>
+
+    <template #content>
+
+        <div class="blur-slysium-slides-create__main-content">
+
+            <sw-card
+                :title="$tc('BlurElysiumSlides.baseForm.cardTitle')"
+                :is-loading="isLoading"
+            >
+
+                <blur-elysium-slides-basic-form
+                    v-if="!isLoading"
+                    :blur-elysium-slides="blurElysiumSlide"
+                    :allow-edit="acl.can('blur_slides_elysium.editor')"
+                />
+            </sw-card>
+        </div>
+    </template>
+</sw-page>
