@@ -50,6 +50,14 @@
                 "placeholder": "Enter a URL for your Slide",
                 "helpText": "Lege die Verlinkung des Slides fest."
             }
+        },
+        "mediaForm": {
+            "cardTitle": "Media",
+            "uploadInput": {
+                "title": "Slide Cover",
+                "helpText": "Lege ein Bild für deinen Slide fest"
+            },
+            "useAsCover": "Use as Cover"
         }
     }
 }

@@ -73,6 +73,50 @@
                     :allow-edit="acl.can('blur_slides_elysium.editor')"
                 />
             </sw-card>
+            
+            <sw-card
+                :title="$tc('BlurElysiumSlides.mediaForm.cardTitle')"
+                :is-loading="isLoading"
+            >
+
+                {% block blur_elysium_slides_create_base_media_upload_form %}
+                    <sw-upload-listener
+                        :upload-tag="uploadTag"
+                        auto-upload
+                        @media-upload-finish="setMediaItem"
+                    />
+                    <sw-media-upload-v2
+                        :disabled="!acl.can('blur_slides_elysium.editor')"
+                        :upload-tag="uploadTag"
+                        :source="mediaItem"
+                        class="blur-elysium-slides__media-upload"
+                        :allow-multi-select="false"
+                        variant="regular"
+                        :label="$tc('BlurElysiumSlides.mediaForm.uploadInput.title')"
+                        :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
+                        {# :default-folder="blurElysiumSlide.getEntityName()" #}
+                        @media-drop="onDropMedia"
+                        @media-upload-sidebar-open="onOpenMedia"
+                        @media-upload-remove-image="onUnlinkMedia"
+                    />
+                {% endblock %}
+
+            </sw-card>
         </div>
     </template>
+
+    <template slot="sidebar">
+        <sw-sidebar :propagate-width="true">
+            <sw-sidebar-media-item ref="mediaSidebarItem">
+                <template
+                    slot="context-menu-items"
+                    slot-scope="media"
+                >
+                    <sw-context-menu-item @click="setMediaFromSidebar(media.mediaItem)">
+                        {{ $tc('BlurElysiumSlides.mediaForm.useAsCover') }}
+                    </sw-context-menu-item>
+                </template>
+            </sw-sidebar-media-item>
+        </sw-sidebar>
+    </template> 
 </sw-page>
