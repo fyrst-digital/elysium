@@ -44,7 +44,7 @@ class ElysiumSlidesDefinition extends EntityDefinition {
             (new FkField('media_id', 'mediaId', MediaDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('media', 'media_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
             // translation
-            (new TranslatedField('label'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('name'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('title'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('description'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('button_label'))->addFlags(new ApiAware(), new Inherited()),

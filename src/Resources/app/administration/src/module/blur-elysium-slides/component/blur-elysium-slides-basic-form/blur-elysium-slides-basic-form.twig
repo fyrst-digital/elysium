@@ -1,12 +1,12 @@
 <sw-container columns="1fr" gap="0 32px">
 
     <sw-text-field
-        v-model="blurElysiumSlides.label"
+        v-model="blurElysiumSlides.name"
         required
         :label="$tc('sw-customer.baseForm.labelLastName')"
         :placeholder="$tc('BlurElysiumSlides.baseForm.labelInput.placeholder')"
         :help-text="$tc('BlurElysiumSlides.baseForm.labelInput.helpText')"
-        :error="blurElysiumSlidesLabelError"
+        :error="blurElysiumSlidesNameError"
     />
 
     <sw-field

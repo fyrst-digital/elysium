@@ -21,7 +21,7 @@ class ElysiumSlidesTranslationEntity extends TranslationEntity
     /**
      * @var string|null
      */
-    protected $label;
+    protected $name;
 
     /**
      * @var string|null
@@ -64,14 +64,14 @@ class ElysiumSlidesTranslationEntity extends TranslationEntity
         $this->elysiumSlidesId = $elysiumSlidesId;
     }
 
-    public function getLabel(): string
+    public function getName(): string
     {
-        return $this->label;
+        return $this->name;
     }
 
-    public function setLabel(string $label): void
+    public function setName(string $name): void
     {
-        $this->label = $label;
+        $this->name = $name;
     }
 
     public function getTitle(): string

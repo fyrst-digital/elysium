@@ -27,7 +27,7 @@ class ElysiumSlidesTranslationDefinition extends EntityTranslationDefinition
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
-            ( new StringField( 'label', 'label' ) )->addFlags( new Required() ),
+            ( new StringField( 'name', 'name' ) )->addFlags( new Required() ),
             ( new StringField( 'title', 'title' ) )->addFlags( new ApiAware() ),
             ( new LongTextField( 'description', 'description' ) )->addFlags( new ApiAware() ),
             ( new StringField( 'button_label', 'button_label' ) )->addFlags( new ApiAware() ),

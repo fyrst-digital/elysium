@@ -1,0 +1,45 @@
+{% block cms_element_blur_elysium_slide %}
+    {% set slideHorizonalAlignment = 'slide-horizontal-alignment__center' %}
+    {% set slideHorizonalAlignment = 'slide-horizontal-alignment__right' %}
+    {% set slideHorizonalAlignment = 'slide-horizontal-alignment__left' %}
+
+    {% if slide.media.url %}
+        {% apply spaceless %}
+            <style>
+                [data-elysium-slide-id="{{ slide.id }}"] {
+                    background-image: url( {{ slide.media.url }} );
+                }
+            </style>
+        {% endapply %}
+    {% endif %}
+
+    <div data-elysium-slide-id="{{ slide.id }}" 
+         class="cms-element-elysium-slide {{ slideHorizonalAlignment }}">
+        
+        <div class="cms-element-elysium-slide__container">
+
+            {% if slide.translated.title %}
+                <div class="cms-element-elysium-slide__title text-size-medium">
+                    {{ slide.translated.title }}
+                </div>                
+            {% endif %}
+
+            {% if slide.translated.title %}
+                <div class="cms-element-elysium-slide__description text-size-medium">
+                    {{ slide.translated.description }}
+                </div>                
+            {% endif %}
+
+            {% if slide.translated.button_label %}
+                <div class="cms-element-elysium-slide__actions">
+                    
+                    <a href="{{ slide.translated.url }}" 
+                       title="{{ slide.translated.button_label }}" 
+                       class="btn btn-light cms-element-elysium-slide__cta-button">
+                        {{ slide.translated.button_label }}
+                    </a>
+                </div>                
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

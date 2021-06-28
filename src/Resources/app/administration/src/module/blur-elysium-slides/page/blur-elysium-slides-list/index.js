@@ -26,7 +26,7 @@ Component.register( 'blur-elysium-slides-list', {
             blur_elysium_slide: null,
             isLoading: false,
             term: this.$route.query ? this.$route.query.term : '',
-            sortBy: 'label',
+            sortBy: 'name',
             naturalSorting: true,
             sortDirection: 'ASC',
             showDeleteModal: false,
@@ -53,7 +53,7 @@ Component.register( 'blur-elysium-slides-list', {
         defaultCriteria() {
             const defaultCriteria = new Criteria( this.page, this.limit );
 
-            this.naturalSorting = this.sortBy === 'label';
+            this.naturalSorting = this.sortBy === 'name';
 
             defaultCriteria.setTerm(this.term);
 
@@ -185,8 +185,8 @@ Component.register( 'blur-elysium-slides-list', {
 
         getElysiumSlidesColumns() {
             const columns = [{
-                property: 'label',
-                dataIndex: 'label',
+                property: 'name',
+                dataIndex: 'name',
                 inlineEdit: 'string',
                 label: 'sw-customer.list.columnName',
                 routerLink: 'blur.elysium.slides.detail',

@@ -8,7 +8,7 @@ const { mapPageErrors } = Shopware.Component.getComponentHelper();
 const errorConfig = {
     "blur.elysium.slides.create": {
       "elysiumSlides": [
-        "label"
+        "name"
       ]
     }
 };

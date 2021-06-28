@@ -1,0 +1,13 @@
+{
+    "blurElysiumSlider": {
+        "cmsElement": {
+            "label": "Elysium Slider",
+            "config": {
+                "slidesSelect": {
+                    "label": "Elysium Slides",
+                    "placeholder": "Wähle deine Slides"
+                }
+            }
+        }
+    }
+}

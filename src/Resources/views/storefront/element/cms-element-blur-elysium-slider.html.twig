@@ -1,0 +1,78 @@
+{% block cms_element_blur_elysium_slider %}
+
+    {% set sliderOverlay = true %}
+
+    {% set sliderSettingsNav = true %}
+
+    {% set sliderSettings = {
+        nav: sliderSettingsNav,
+        navContainer: '[data-base-slider-nav=true]',
+        controls: true,
+        loop: false,
+        rewind: true
+    } %}
+
+    <div id="elysiumSlider-{{ element.id }}" 
+        data-slider-settings='{{ sliderSettings|json_encode }}'
+        class="cms-element-elysium-slider{% if sliderSettingsNav %} has-navigation{% endif %}{% if sliderOverlay %} has-overlay{% endif %}">
+
+        {% if element.data.slideCollection is empty %}
+            {% block cms_element_blur_elysium_slider_empty_state %}
+                Here is no slide :(
+            {% endblock %}
+        {% else %}
+            {% block cms_element_blur_elysium_slider_container %}
+                <div class="cms-element-elysium-slider__slide-container">
+                    {% for slide in element.data.slideCollection %}
+                        <div class="cms-element-elysium-slide__wrapper">
+
+                            {% block cms_element_blur_elysium_slide_include %}
+                                {% sw_include '@Storefront/storefront/element/blur-elysium-slide.html.twig' with {
+                                    slide: slide
+                                } only %}
+                            {% endblock %}        
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endblock %}
+        
+            {% block cms_element_blur_elysium_slider_controls %}
+                <div class="cms-element-elysium-slider__controls" 
+                     data-base-slider-controls="true">
+                    
+                    {% block cms_element_blur_elysium_slider_controls_prev %}
+                        <button type="button" class="cms-element-elysium-slider__control-button control-prev">
+                            {% block cms_element_blur_elysium_slider_controls_prev_icon %}
+                                {% sw_icon 'arrow-head-left' %}
+                            {% endblock %}
+                        </button>
+                    {% endblock %}
+                    
+                    {% block cms_element_blur_elysium_slider_controls_next %}
+                        <button type="button" class="cms-element-elysium-slider__control-button control-next">
+                            {% block cms_element_blur_elysium_slider_controls_next_icon %}
+                                {% sw_icon 'arrow-head-right' %}
+                            {% endblock %}
+                        </button>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+            {% block cms_element_blur_elysium_slider_navigation %}
+            
+                {% if sliderSettingsNav %}
+                    <div class="cms-element-elysium-slider__navigation" 
+                        data-base-slider-nav="true">
+                        
+                        {% for slide in element.data.slideCollection %}
+                            <div class="cms-element-elysium-slider__navigation-bullet"></div>
+                        {% endfor %}
+                    </div>                    
+                {% endif %}
+            {% endblock %}
+        {% endif %}
+
+    </div>    
+{% endblock %}
+
+

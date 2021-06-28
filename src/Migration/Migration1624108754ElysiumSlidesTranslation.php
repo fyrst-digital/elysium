@@ -19,7 +19,7 @@ class Migration1624108754ElysiumSlidesTranslation extends MigrationStep
         CREATE TABLE IF NOT EXISTS `blur_elysium_slides_translation` (
             `blur_elysium_slides_id` BINARY(16) NOT NULL,
             `language_id` BINARY(16) NOT NULL,
-            `label` VARCHAR(255),
+            `name` VARCHAR(255),
             `title` VARCHAR(255),
             `description` LONGTEXT,
             `button_label` VARCHAR(255),

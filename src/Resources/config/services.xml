@@ -5,14 +5,23 @@
 
     <services>
 
+        <!-- Elysium Slider Data Resolver -->
+        <service id="Blur\ElysiumBlocks\DataResolver\ElysiumSliderCmsElementResolver">
+            <argument type="service" id="blur_elysium_slides.repository"/>
+            <tag name="shopware.cms.data_resolver" />
+        </service>
+
+        <!-- Elysium Slides Entity Extension -->
         <service id="Blur\ElysiumBlocks\Extension\Content\Media\MediaDefinitionExtension">
             <tag name="shopware.entity.extension"/>
         </service>
-    
+
+        <!-- Elysium Slides Entity Definition -->
         <service id="Blur\ElysiumBlocks\Core\Content\ElysiumSlides\ElysiumSlidesDefinition">
             <tag name="shopware.entity.definition" entity="blur_elysium_slides" />
         </service>
 
+        <!-- Elysium Slides Entity Translation Definition -->
         <service id="Blur\ElysiumBlocks\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition">
             <tag name="shopware.entity.definition" entity="blur_elysium_slides_translation" />
         </service>

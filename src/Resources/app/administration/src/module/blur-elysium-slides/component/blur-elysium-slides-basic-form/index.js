@@ -5,7 +5,7 @@ const { Component, Context, Mixin } = Shopware;
 const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
 
 const propErrors = [
-    'label'
+    'name'
 ];
 
 Component.register( 'blur-elysium-slides-basic-form', {
@@ -24,7 +24,6 @@ Component.register( 'blur-elysium-slides-basic-form', {
     },
 
     created() {
-        console.dir( this );
     }
 
 });

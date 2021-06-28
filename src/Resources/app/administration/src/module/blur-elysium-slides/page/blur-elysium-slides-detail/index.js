@@ -54,7 +54,7 @@ Component.register( 'blur-elysium-slides-detail', {
             }
 
             // return name
-            return this.placeholder(this.blurElysiumSlide, 'label', this.$tc('sw-product.detail.textHeadline'));
+            return this.placeholder(this.blurElysiumSlide, 'name', this.$tc('sw-product.detail.textHeadline'));
         },
 
         elysiumSlidesRepository() {
