@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Blur\ElysiumBlocks\DataResolver;
+namespace Blur\BlurElysiumSlider\DataResolver;
 
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
@@ -11,7 +11,7 @@ use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 
-use Blur\ElysiumBlocks\Struct\ElysiumSliderStruct;
+use Blur\BlurElysiumSlider\Struct\ElysiumSliderStruct;
 
 class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
 {

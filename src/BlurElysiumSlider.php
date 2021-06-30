@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Blur\ElysiumBlocks;
+namespace Blur\BlurElysiumSlider;
 
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 
-class BlurElysiumBlocks extends Plugin
+class BlurElysiumSlider extends Plugin
 {
     
     public function uninstall( UninstallContext $uninstallContext ): void

@@ -1,6 +1,6 @@
 <?php
 
-namespace Blur\ElysiumBlocks\Struct;
+namespace Blur\BlurElysiumSlider\Struct;
 
 use Shopware\Core\Framework\Struct\Struct;
 

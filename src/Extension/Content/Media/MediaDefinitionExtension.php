@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Blur\ElysiumBlocks\Extension\Content\Media;
+namespace Blur\BlurElysiumSlider\Extension\Content\Media;
 
 use Shopware\Core\Content\Media\MediaDefinition;
-use Blur\ElysiumBlocks\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityExtension;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;

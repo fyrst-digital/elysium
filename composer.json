@@ -1,5 +1,5 @@
 {
-    "name": "blur/elysium-blocks",
+    "name": "blur/elysium-slider",
     "description": "A CMS Block and Element Collection for Shopware 6",
     "version": "0.0.1",
     "type": "shopware-platform-plugin",
@@ -13,19 +13,19 @@
         "shopware/core": "6.4.*"
     },
     "extra": {
-        "shopware-plugin-class": "Blur\\ElysiumBlocks\\BlurElysiumBlocks",
+        "shopware-plugin-class": "Blur\\BlurElysiumSlider\\BlurElysiumSlider",
         "label": {
-            "de-DE": "Elysium Blocks",
-            "en-GB": "Elysium Blocks"
+            "de-DE": "Elysium Slider",
+            "en-GB": "Elysium Slider"
         },
         "description": {
-            "de-DE": "Eine CMS Block und Element Sammlung für Shopware 6",
-            "en-GB": "A CMS Block and Element Collection for Shopware 6"
+            "de-DE": "Ein flexibler Slider für die Shopware 6 Erlebniswelten",
+            "en-GB": "A flexible Slider for Shopware 6"
         }
     },
     "autoload": {
         "psr-4": {
-            "Blur\\ElysiumBlocks\\": "src/"
+            "Blur\\BlurElysiumSlider\\": "src/"
         }
     }
 }

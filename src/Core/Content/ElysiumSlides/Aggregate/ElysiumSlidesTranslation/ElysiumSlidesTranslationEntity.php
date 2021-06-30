@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Blur\ElysiumBlocks\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation;
+namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation;
 
 use Shopware\Core\Framework\DataAbstractionLayer\TranslationEntity;
-use Blur\ElysiumBlocks\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 
 class ElysiumSlidesTranslationEntity extends TranslationEntity
 {
