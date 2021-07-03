@@ -34,7 +34,8 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
 
     created() {
         this.createdComponent();
-        console.dir( this );
+        this.updatePreviewData();
+
     },
 
     methods: {
@@ -43,10 +44,16 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         },
 
         updatePreviewData() {
+            let slideCollectionIds = this.element.config.elysiumSlideCollection.value;
 
-            if ( this.element.config.elysiumSlideCollection.value.length > 0  ) {
-                console.log( 'yay, the slideCollection has data');
+            if ( slideCollectionIds.length > 0  ) {
+                console.dir( slideCollectionIds );
             }
+
+            /**
+             * @TODO
+             * search in blur_elysium_slides repository for all slide collection IDs
+             */
         }
     }
 });
