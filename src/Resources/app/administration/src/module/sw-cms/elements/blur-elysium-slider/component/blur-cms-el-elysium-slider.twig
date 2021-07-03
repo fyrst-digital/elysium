@@ -1,5 +1,42 @@
 {% block blur_cms_element_elysium_slider %}
     <div class="blur-cms-el-elysium-slider">
-        Here comes the rendered component in admin view
+
+        {% block blur_cms_element_elysium_slider_empty_data %}
+            {# template loaded if there are no slides in config #}
+            <template v-if="previewData === null">
+                
+                <div class="blur-cms-el-elysium-slider__slider-preview">
+                    <div class="blur-cms-el-elysium-slider__slider-preview__container">
+                        
+                        <div class="blur-cms-el-elysium-slider__slider-preview__title">
+                            Elysium Slider
+                        </div>
+                        
+                        <div class="blur-cms-el-elysium-slider__slider-preview__description">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacinia, erat ut tempus vehicula, nisi leo aliquam orci, non varius erat urna at diam. Sed hendrerit tincidunt nisl non convallis. Suspendisse congue sed neque id viverra.
+                        </div>
+
+                        <div class="blur-cms-el-elysium-slider__slider-preview__actions">
+                            
+                            <span class="sw-button blur-cms-el-elysium-slider__slider-preview__button-element">
+                                Mehr Erfahren
+                            </span>
+                        </div>
+                    </div>
+
+                    <sw-icon class="blur-cms-el-elysium-slider__slider-preview__navigation-button navigation-prev"
+                            name="default-arrow-head-left"
+                            size="24">
+                    </sw-icon>
+                    <sw-icon class="blur-cms-el-elysium-slider__slider-preview__navigation-button navigation-next"
+                            name="default-arrow-head-right"
+                            size="24">
+                    </sw-icon>
+
+                </div>
+                    
+            </template>            
+        {% endblock %}
+
     </div>
 {% endblock %}
