@@ -1,7 +1,7 @@
 {
     "name": "blur/elysium-slider",
-    "description": "A CMS Block and Element Collection for Shopware 6",
-    "version": "0.0.1",
+    "description": "A flexible Slider for Shopware 6",
+    "version": "0.1.1",
     "type": "shopware-platform-plugin",
     "license": "MIT",
     "authors": [
