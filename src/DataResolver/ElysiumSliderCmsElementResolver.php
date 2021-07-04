@@ -47,16 +47,18 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
     {
         $elysiumSliderStruct = new ElysiumSliderStruct();
 
-        $criteria = new Criteria( $slot->getFieldConfig()->get( 'elysiumSlideCollection' )->getValue() );
-        $criteria->addAssociation( 'media' );
-
-        $slideCollection = $this->blurElysiumSlides->search(
-            $criteria,
-            $resolverContext->getSalesChannelContext()->getContext()
-        );
-
-        $elysiumSliderStruct->setSlideCollection( $slideCollection->getElements() );
-
-        $slot->setData( $elysiumSliderStruct );
+        if ( !empty( $slot->getFieldConfig()->get( 'elysiumSlideCollection' )->getValue() ) ) {
+            $criteria = new Criteria( $slot->getFieldConfig()->get( 'elysiumSlideCollection' )->getValue() );
+            $criteria->addAssociation( 'media' );
+    
+            $slideCollection = $this->blurElysiumSlides->search(
+                $criteria,
+                $resolverContext->getSalesChannelContext()->getContext()
+            );
+    
+            $elysiumSliderStruct->setSlideCollection( $slideCollection->getElements() );
+    
+            $slot->setData( $elysiumSliderStruct );
+        }
     }
 }
