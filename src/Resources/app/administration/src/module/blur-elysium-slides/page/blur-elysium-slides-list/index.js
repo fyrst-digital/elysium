@@ -70,8 +70,6 @@ Component.register( 'blur-elysium-slides-list', {
                 defaultCriteria.addFilter(filter);
             });
 
-            console.dir( defaultCriteria );
-
             /*
             const defaultCriteria = new Criteria(this.page, this.limit);
             // eslint-disable-next-line vue/no-side-effects-in-computed-properties
