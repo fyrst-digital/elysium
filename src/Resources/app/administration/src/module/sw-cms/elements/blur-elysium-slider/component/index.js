@@ -2,9 +2,15 @@ import template from './blur-cms-el-elysium-slider.twig';
 import './blur-cms-el-elysium-slider.scss';
 
 const { Component, Mixin } = Shopware;
+const { Criteria } = Shopware.Data;
 
 Shopware.Component.register( 'blur-cms-el-elysium-slider', {
     template,
+
+    inject: [
+        'repositoryFactory',
+        'acl',
+    ],
 
     mixins: [
         Mixin.getByName('cms-element')
@@ -13,21 +19,74 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
     data() {
         return {
             editable: true,
-            previewData: null
+            isLoading: true,
+            slideCollectionIds: null,
+            slidesData: null,
+            inlineBgImage: null,
+            inlineColor: '#ffffff',
+            test: 'www.google.de',
+            slideIndex: parseInt( 0 )
         };
+    },
+
+    computed: {
+        elysiumSlidesRepository() {
+            return this.repositoryFactory.create('blur_elysium_slides');
+        },
+
+        slidesCollectionCriteria() {
+            const criteria = new Criteria();
+
+            criteria.setIds( this.slideCollectionIds );
+
+            return criteria;
+        },
+
+        previewData: {
+
+            get: function() {
+                return this.slidesData;
+            },
+
+            set: function( value ) {
+                this.slidesData = value;
+            }
+        },
+
+        mediaUrl() {
+            if ( this.previewData[this.slideIndex].media === undefined ) {
+                return null;
+            }
+
+            return this.previewData[this.slideIndex].media.url;
+        },
+
+        previewStyles: {
+
+            get: function() {
+                return {
+                    color: this.inlineColor,
+                    backgroundImage: 'url(' + this.inlineBgImage + ')'
+                };
+            },
+
+            set: function( value ) {
+                this.inlineBgImage = value;
+            }
+        }
     },
 
     watch: {
         cmsPageState: {
             deep: true,
             handler() {
-                // this.updateValue();
+                this.updatePreviewData();
             }
         },
 
         'element.config.headline.source': {
             handler() {
-                // this.updateValue();
+                this.updatePreviewData();
             }
         }
     },
@@ -35,7 +94,6 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
     created() {
         this.createdComponent();
         this.updatePreviewData();
-
     },
 
     methods: {
@@ -44,16 +102,30 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         },
 
         updatePreviewData() {
-            let slideCollectionIds = this.element.config.elysiumSlideCollection.value;
+            this.slideCollectionIds = this.element.config.elysiumSlideCollection.value;
 
-            if ( slideCollectionIds.length > 0  ) {
-                console.dir( slideCollectionIds );
+            if ( this.slideCollectionIds.length > 0  ) {
+
+                this.elysiumSlidesRepository.search(
+                    this.slidesCollectionCriteria,
+                    Shopware.Context.api
+                ).then(( blurElysiumSlidesCollection ) => {
+                    this.previewStyles = blurElysiumSlidesCollection[0].media.url
+                    this.previewData = blurElysiumSlidesCollection;
+                });    
+            } else {
+                this.previewData = null;
             }
+        },
 
-            /**
-             * @TODO
-             * search in blur_elysium_slides repository for all slide collection IDs
-             */
+        slideArrowClick( iterator ) {
+            let previewDataLength = parseInt( this.previewData.length ) - 1;
+
+            if ( parseInt( iterator ) === 1 && this.slideIndex < previewDataLength ) {
+                this.slideIndex += parseInt( iterator );
+            } else if ( parseInt( iterator ) === -1 && this.slideIndex > 0 ) {
+                this.slideIndex += parseInt( iterator );
+            }
         }
     }
 });

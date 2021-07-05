@@ -1,42 +1,83 @@
 {% block blur_cms_element_elysium_slider %}
     <div class="blur-cms-el-elysium-slider">
 
-        {% block blur_cms_element_elysium_slider_empty_data %}
             {# template loaded if there are no slides in config #}
-            <template v-if="previewData === null">
+            <template v-if="previewData !== null && previewData.length > 0">
                 
-                <div class="blur-cms-el-elysium-slider__slider-preview">
-                    <div class="blur-cms-el-elysium-slider__slider-preview__container">
-                        
-                        <div class="blur-cms-el-elysium-slider__slider-preview__title">
-                            {{ $tc( 'blurElysiumSlider.cmsElement.component.preview.defaultTitleValue' ) }}
-                        </div>
-                        
-                        <div class="blur-cms-el-elysium-slider__slider-preview__description">
-                            {{ $tc( 'blurElysiumSlider.cmsElement.component.preview.defaultDescriptionValue' ) }}
-                        </div>
+                {% block blur_cms_element_elysium_slider_preview %}
+                    <div class="blur-cms-el-elysium-slider__slider-preview" 
+                        v-bind:style="{ color: inlineColor, backgroundImage: 'url(' + mediaUrl + ')' }">
 
-                        <div class="blur-cms-el-elysium-slider__slider-preview__actions">
+                        <div class="blur-cms-el-elysium-slider__slider-preview__container">
                             
-                            <span class="sw-button blur-cms-el-elysium-slider__slider-preview__button-element">
-                                {{ $tc( 'blurElysiumSlider.cmsElement.component.preview.defaultButtonLabelValue' ) }}
-                            </span>
+                            <div v-if="previewData[slideIndex].title" class="blur-cms-el-elysium-slider__slider-preview__title">
+                                {{ previewData[slideIndex].title }}
+                            </div>
+                            
+                            <div v-if="previewData[slideIndex].description" class="blur-cms-el-elysium-slider__slider-preview__description">
+                                {{ previewData[slideIndex].description }}
+                            </div>
+
+                            <div v-if="previewData[slideIndex].button_label" class="blur-cms-el-elysium-slider__slider-preview__actions">
+                                
+                                <span class="sw-button blur-cms-el-elysium-slider__slider-preview__button-element">
+                                    {{ previewData[slideIndex].button_label }}
+                                </span>
+                            </div>
                         </div>
+
+                        <sw-icon class="blur-cms-el-elysium-slider__slider-preview__navigation-button navigation-prev"
+                                name="default-arrow-head-left"
+                                size="24"
+                                @click="slideArrowClick( -1 )">
+                        </sw-icon>
+                        <sw-icon class="blur-cms-el-elysium-slider__slider-preview__navigation-button navigation-next"
+                                name="default-arrow-head-right"
+                                size="24"
+                                @click="slideArrowClick( 1 )">
+                        </sw-icon>
+
                     </div>
-
-                    <sw-icon class="blur-cms-el-elysium-slider__slider-preview__navigation-button navigation-prev"
-                            name="default-arrow-head-left"
-                            size="24">
-                    </sw-icon>
-                    <sw-icon class="blur-cms-el-elysium-slider__slider-preview__navigation-button navigation-next"
-                            name="default-arrow-head-right"
-                            size="24">
-                    </sw-icon>
-
-                </div>
+                {% endblock %}
                     
             </template>            
-        {% endblock %}
+
+            <template v-else>
+
+                {% block blur_cms_element_elysium_slider_empty_data %}
+                    <div class="blur-cms-el-elysium-slider__slider-preview">
+                        <div class="blur-cms-el-elysium-slider__slider-preview__container">
+                            
+                            <div class="blur-cms-el-elysium-slider__slider-preview__title">
+                                {{ $tc( 'blurElysiumSlider.cmsElement.component.preview.defaultTitleValue' ) }}
+                            </div>
+                            
+                            <div class="blur-cms-el-elysium-slider__slider-preview__description">
+                                {{ $tc( 'blurElysiumSlider.cmsElement.component.preview.defaultDescriptionValue' ) }}
+                            </div>
+
+                            <div class="blur-cms-el-elysium-slider__slider-preview__actions">
+                                
+                                <span class="sw-button blur-cms-el-elysium-slider__slider-preview__button-element">
+                                    {{ $tc( 'blurElysiumSlider.cmsElement.component.preview.defaultButtonLabelValue' ) }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <sw-icon class="blur-cms-el-elysium-slider__slider-preview__navigation-button navigation-prev"
+                                name="default-arrow-head-left"
+                                size="24">
+                        </sw-icon>
+                        <sw-icon class="blur-cms-el-elysium-slider__slider-preview__navigation-button navigation-next"
+                                name="default-arrow-head-right"
+                                size="24">
+                        </sw-icon>
+
+                    </div>
+                {% endblock %}
+                    
+            </template>       
+
 
     </div>
 {% endblock %}
