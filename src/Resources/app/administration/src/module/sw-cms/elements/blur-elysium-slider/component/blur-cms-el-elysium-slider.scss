@@ -16,11 +16,31 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
-    padding-left: 6rem;
-    padding-right: 6rem;
+    padding: 3rem 6rem;
     text-align: center;
     line-height: 1.5;
     position: relative;
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.1);
+    }
+}
+
+.blur-cms-el-elysium-slider__slider-preview__container {
+    width: 100%;
+    position: relative;
+    z-index: 5;
 }
 
 .blur-cms-el-elysium-slider__slider-preview__title {
@@ -31,10 +51,12 @@
 
 .blur-cms-el-elysium-slider__slider-preview__description {
     margin-bottom: 1.5rem;
+    font-size: 1.25rem;
 }
 
 .blur-cms-el-elysium-slider__slider-preview__navigation-button {
     position: absolute;
+    z-index: 5;
     top: 50%;
     margin-top: -12px;
     cursor: pointer;
