@@ -23,6 +23,6 @@ const uspSliderOptions = {
 
 // register plugins
 // 
-PluginManager.register('BlurElysiumSlider', BlurElysiumSlider, '.cms-element-elysium-slider', {
+PluginManager.register('BlurElysiumSliderPlugin', BlurElysiumSlider, '.cms-element-elysium-slider', {
     containerSelector: '.cms-element-elysium-slider__slide-container'
 });
