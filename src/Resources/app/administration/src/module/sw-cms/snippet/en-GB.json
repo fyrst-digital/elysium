@@ -6,6 +6,20 @@
                 "slidesSelect": {
                     "label": "Elysium Slides",
                     "placeholder": "Wähle deine Slides"
+                },
+                "sliderNavigation": {
+                    "label": "Slider Navigation"
+                },
+                "tabs": {
+                    "content": "Content",
+                    "settings": "Settings"
+                }
+            },
+            "component": {
+                "preview": {
+                    "defaultTitleValue": "Elysium Slider",
+                    "defaultDescriptionValue": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacinia, erat ut tempus vehicula, nisi leo aliquam orci, non varius erat urna at diam. Sed hendrerit tincidunt nisl non convallis. Suspendisse congue sed neque id viverra.",
+                    "defaultButtonLabelValue": "Mehr erfahren"
                 }
             }
         }

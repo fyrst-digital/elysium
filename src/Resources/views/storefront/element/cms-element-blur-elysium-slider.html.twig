@@ -1,8 +1,8 @@
 {% block cms_element_blur_elysium_slider %}
 
-    {% set sliderOverlay = true %}
+    {% set sliderOverlay = element.translated.config.sliderOverlay.value %}
 
-    {% set sliderSettingsNav = true %}
+    {% set sliderSettingsNav = element.translated.config.sliderNavigation.value %}
 
     {% set sliderSettings = {
         nav: sliderSettingsNav,

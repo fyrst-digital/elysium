@@ -6,6 +6,16 @@
                 "slidesSelect": {
                     "label": "Elysium Slides",
                     "placeholder": "Wähle deine Slides"
+                },
+                "sliderNavigation": {
+                    "label": "Slider Navigation"
+                },
+                "sliderOverlay": {
+                    "label": "Slider Overlay"
+                },
+                "tabs": {
+                    "content": "Inhalt",
+                    "settings": "Einstellungen"
                 }
             },
             "component": {

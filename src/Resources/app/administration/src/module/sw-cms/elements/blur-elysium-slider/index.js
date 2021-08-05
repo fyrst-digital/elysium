@@ -12,6 +12,14 @@ Shopware.Service('cmsService').registerCmsElement({
         elysiumSlideCollection: {
             source: 'static',
             value: []
+        },
+        sliderNavigation: {
+            source: 'static',
+            value: true
+        },
+        sliderOverlay: {
+            source: 'static',
+            value: true
         }
     }
 });

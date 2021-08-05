@@ -1,11 +1,56 @@
-<sw-container>
+<div class="sw-cms-el-config-blur-elysium-slider">
 
-    <sw-entity-multi-id-select
-        v-model="elysiumSlideCollection"
-        :repository="elysiumSlidesRepository"
-        {# :help-text="$tc('sw-settings-document.detail.helpTextDisplayDeliveryCountries')" #}
-        :label="$tc('blurElysiumSlider.cmsElement.config.slidesSelect.label')"
-        :placeholder="$tc('blurElysiumSlider.cmsElement.config.slidesSelect.placeholder')"
-        @change="onChange"
-    />
-</sw-container>
+    <sw-tabs default-item="content">
+
+        <template slot-scope="{ active }">
+            <sw-tabs-item
+                name="content"
+                :active-tab="active"
+            >
+                {{ $tc('blurElysiumSlider.cmsElement.config.tabs.content') }}
+            </sw-tabs-item>
+
+            <sw-tabs-item
+                name="setting"
+                :active-tab="active"
+            >
+                {{ $tc('blurElysiumSlider.cmsElement.config.tabs.settings') }}
+            </sw-tabs-item>
+        </template>
+
+
+        <template
+            slot="content"
+            slot-scope="{ active }">
+
+            <template v-if="active === 'content'">
+
+                <sw-entity-multi-id-select
+                    v-model="elysiumSlideCollection"
+                    :repository="elysiumSlidesRepository"
+                    :label="$tc('blurElysiumSlider.cmsElement.config.slidesSelect.label')"
+                    :placeholder="$tc('blurElysiumSlider.cmsElement.config.slidesSelect.placeholder')"
+                    @change="onChange"
+                />
+            </template>
+
+            <template v-if="active === 'setting'">
+
+                <sw-container columns="1fr 1fr" gap="0 2rem">
+
+                    <sw-switch-field 
+                        :label="$tc('blurElysiumSlider.cmsElement.config.sliderNavigation.label')" 
+                        v-model="element.config.sliderNavigation.value"
+                        noMarginTop="true">
+                    </sw-switch-field>
+
+                    <sw-switch-field 
+                        :label="$tc('blurElysiumSlider.cmsElement.config.sliderOverlay.label')"
+                        v-model="element.config.sliderOverlay.value"
+                        noMarginTop="true">
+                    </sw-switch-field>
+                </sw-container>
+            </template>
+        </template>
+    </sw-tabs>
+</div>
