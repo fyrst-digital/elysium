@@ -1,7 +1,7 @@
 {
     "name": "blur/elysium-slider",
     "description": "A flexible Slider for Shopware 6",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "type": "shopware-platform-plugin",
     "license": "MIT",
     "authors": [
