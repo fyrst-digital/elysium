@@ -20,6 +20,18 @@ Shopware.Service('cmsService').registerCmsElement({
         sliderOverlay: {
             source: 'static',
             value: true
+        },
+        slideSpeed: {
+            source: 'static',
+            value: 300
+        },
+        sliderAutoplay: {
+            source: 'static',
+            value: true
+        },
+        sliderAutoplayTimeout: {
+            source: 'static',
+            value: 5000
         }
     }
 });

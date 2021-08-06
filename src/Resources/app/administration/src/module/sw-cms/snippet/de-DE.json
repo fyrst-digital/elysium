@@ -13,10 +13,26 @@
                 "sliderOverlay": {
                     "label": "Slider Overlay"
                 },
+                "slideSpeed": {
+                    "label": "Slide-Geschwindigkeit",
+                    "placeholder": "Zeit in Millisekunden"
+                },
+                "sliderAutoplay": {
+                    "label": "Auto-Widergabe"
+                },
+                "sliderAutoplayTimeout": {
+                    "label": "Auto-Wiedergabe Intervall",
+                    "placeholder": "Zeit in Millisekunden"
+                },
                 "tabs": {
                     "content": "Inhalt",
                     "settings": "Einstellungen"
                 }
+            },
+            "settings": {
+                "slideCollectionTitle": "Slide-Auswahl",
+                "generalTitle": "Allgemein",
+                "autoplayTitle": "Auto-Wiedergabe"
             },
             "component": {
                 "preview": {

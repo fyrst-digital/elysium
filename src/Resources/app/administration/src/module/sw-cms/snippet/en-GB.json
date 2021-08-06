@@ -10,6 +10,15 @@
                 "sliderNavigation": {
                     "label": "Slider Navigation"
                 },
+                "sliderOverlay": {
+                    "label": "Slider Overlay"
+                },
+                "sliderAutoplay": {
+                    "label": "Auto-Widergabe"
+                },
+                "sliderAutoplayTimeout": {
+                    "label": "Intervall"
+                },
                 "tabs": {
                     "content": "Content",
                     "settings": "Settings"
