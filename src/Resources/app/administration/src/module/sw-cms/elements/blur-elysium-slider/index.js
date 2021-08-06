@@ -12,6 +12,26 @@ Shopware.Service('cmsService').registerCmsElement({
         elysiumSlideCollection: {
             source: 'static',
             value: []
+        },
+        sliderNavigation: {
+            source: 'static',
+            value: true
+        },
+        sliderOverlay: {
+            source: 'static',
+            value: true
+        },
+        slideSpeed: {
+            source: 'static',
+            value: 300
+        },
+        sliderAutoplay: {
+            source: 'static',
+            value: true
+        },
+        sliderAutoplayTimeout: {
+            source: 'static',
+            value: 5000
         }
     }
 });

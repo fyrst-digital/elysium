@@ -1,15 +1,22 @@
 {% block cms_element_blur_elysium_slider %}
 
-    {% set sliderOverlay = true %}
-
-    {% set sliderSettingsNav = true %}
+    {% set sliderOverlay = element.translated.config.sliderOverlay.value %}
+    {% set sliderSettingsNav = element.translated.config.sliderNavigation.value %}
+    {% set slideSpeed = element.translated.config.slideSpeed.value %}
+    {% set sliderAutoplay = element.translated.config.sliderAutoplay.value %}
+    {% set sliderAutoplayTimeout = element.translated.config.sliderAutoplayTimeout.value %}
 
     {% set sliderSettings = {
         nav: sliderSettingsNav,
         navContainer: '[data-base-slider-nav=true]',
         controls: true,
         loop: false,
-        rewind: true
+        rewind: true,
+        speed: slideSpeed,
+        autoplay: sliderAutoplay,
+        autoplayTimeout: sliderAutoplayTimeout,
+        autoplayHoverPause: true,
+        autoplayButtonOutput: false
     } %}
 
     <div id="elysiumSlider-{{ element.id }}" 

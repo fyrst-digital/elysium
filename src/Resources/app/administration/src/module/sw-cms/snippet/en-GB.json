@@ -5,7 +5,40 @@
             "config": {
                 "slidesSelect": {
                     "label": "Elysium Slides",
-                    "placeholder": "Wähle deine Slides"
+                    "placeholder": "Choose your Slides"
+                },
+                "sliderNavigation": {
+                    "label": "Slider Navigation"
+                },
+                "sliderOverlay": {
+                    "label": "Slider Overlay"
+                },
+                "slideSpeed": {
+                    "label": "Slide Speed",
+                    "placeholder": "Time in Millisecond"
+                },
+                "sliderAutoplay": {
+                    "label": "Autoplay"
+                },
+                "sliderAutoplayTimeout": {
+                    "label": "Interval",
+                    "placeholder": "Time in Millisecond"
+                },
+                "tabs": {
+                    "content": "Content",
+                    "settings": "Settings"
+                }
+            },
+            "settings": {
+                "slideCollectionTitle": "Slide Collection",
+                "generalTitle": "General",
+                "autoplayTitle": "Autopay"
+            },
+            "component": {
+                "preview": {
+                    "defaultTitleValue": "Elysium Slider",
+                    "defaultDescriptionValue": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacinia, erat ut tempus vehicula, nisi leo aliquam orci, non varius erat urna at diam. Sed hendrerit tincidunt nisl non convallis. Suspendisse congue sed neque id viverra.",
+                    "defaultButtonLabelValue": "See more"
                 }
             }
         }
