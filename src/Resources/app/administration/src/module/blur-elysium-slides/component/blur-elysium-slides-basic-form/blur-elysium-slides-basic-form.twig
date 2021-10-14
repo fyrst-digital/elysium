@@ -37,11 +37,14 @@
             required
         />
 
-        <sw-url-field
+        <sw-field
             v-model="blurElysiumSlides.url"
+            type="text"
             :label="$tc('BlurElysiumSlides.baseForm.urlInput.title')"
             :placeholder="$tc('BlurElysiumSlides.baseForm.urlInput.placeholder')"
             :help-text="$tc('BlurElysiumSlides.baseForm.urlInput.helpText')"
+            required
         />
+        
     </sw-container>
 </sw-container>
