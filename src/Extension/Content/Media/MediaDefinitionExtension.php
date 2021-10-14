@@ -16,7 +16,7 @@ class MediaDefinitionExtension extends EntityExtension
     public function extendFields(FieldCollection $collection): void
     {
         $collection->add(
-            (new OneToManyAssociationField('blurElysiumSlidess', ElysiumSlidesDefinition::class, 'media_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
+            (new OneToManyAssociationField('blurElysiumSlides', ElysiumSlidesDefinition::class, 'media_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
             // new OneToOneAssociationField('exampleExtension', 'id', 'product_id', ExampleExtensionDefinition::class, true)
         );
     }
