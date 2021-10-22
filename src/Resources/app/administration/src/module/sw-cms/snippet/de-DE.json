@@ -24,15 +24,20 @@
                     "label": "Auto-Wiedergabe Intervall",
                     "placeholder": "Zeit in Millisekunden"
                 },
+                "sliderArrowColor": {
+                    "label": "Farbe"
+                },
                 "tabs": {
                     "content": "Inhalt",
-                    "settings": "Einstellungen"
+                    "settings": "Einstellungen",
+                    "styling": "Styling"
                 }
             },
             "settings": {
                 "slideCollectionTitle": "Slide-Auswahl",
                 "generalTitle": "Allgemein",
-                "autoplayTitle": "Auto-Wiedergabe"
+                "autoplayTitle": "Auto-Wiedergabe",
+                "arrowStylingTitle": "Slider-Pfeile"
             },
             "component": {
                 "preview": {

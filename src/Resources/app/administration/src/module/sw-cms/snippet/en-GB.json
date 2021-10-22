@@ -24,15 +24,20 @@
                     "label": "Interval",
                     "placeholder": "Time in Millisecond"
                 },
+                "sliderArrowColor": {
+                    "label": "Color"
+                },
                 "tabs": {
                     "content": "Content",
-                    "settings": "Settings"
+                    "settings": "Settings",
+                    "styling": "Styling"
                 }
             },
             "settings": {
                 "slideCollectionTitle": "Slide Collection",
                 "generalTitle": "General",
-                "autoplayTitle": "Autopay"
+                "autoplayTitle": "Autopay",
+                "arrowStylingTitle": "Slider Arrows"
             },
             "component": {
                 "preview": {

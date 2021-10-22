@@ -32,6 +32,10 @@ Shopware.Service('cmsService').registerCmsElement({
         sliderAutoplayTimeout: {
             source: 'static',
             value: 5000
+        },
+        sliderArrowColor: {
+            source: 'static',
+            value: null
         }
     }
 });

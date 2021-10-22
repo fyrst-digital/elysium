@@ -5,6 +5,7 @@
     {% set slideSpeed = element.translated.config.slideSpeed.value %}
     {% set sliderAutoplay = element.translated.config.sliderAutoplay.value %}
     {% set sliderAutoplayTimeout = element.translated.config.sliderAutoplayTimeout.value %}
+    {% set sliderArrowColors = element.translated.config.sliderArrowColor.value %}
 
     {% set sliderSettings = {
         nav: sliderSettingsNav,
@@ -18,6 +19,16 @@
         autoplayHoverPause: true,
         autoplayButtonOutput: false
     } %}
+
+    {% if sliderArrowColors %}
+        {% apply spaceless %}
+            <style>
+                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__control-button {
+                    color: {{ sliderArrowColors }};
+                }
+            </style>
+        {% endapply %}
+    {% endif %}
 
     <div id="elysiumSlider-{{ element.id }}" 
         data-slider-settings='{{ sliderSettings|json_encode }}'

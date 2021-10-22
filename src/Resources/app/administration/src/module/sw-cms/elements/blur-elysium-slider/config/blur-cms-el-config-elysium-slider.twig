@@ -14,6 +14,12 @@
                 :active-tab="active">
                 {{ $tc('blurElysiumSlider.cmsElement.config.tabs.settings') }}
             </sw-tabs-item>
+
+            <sw-tabs-item
+                name="styling"
+                :active-tab="active">
+                {{ $tc('blurElysiumSlider.cmsElement.config.tabs.styling') }}
+            </sw-tabs-item>
         </template>
 
 
@@ -104,6 +110,31 @@
                     </sw-container>
                 </sw-card>
             </template>
+
+            <template v-if="active === 'styling'">
+
+                <sw-card 
+                    :title="$tc('blurElysiumSlider.cmsElement.settings.arrowStylingTitle')" 
+                    class="bc-card bc-card__static-title">
+
+                    <sw-container columns="1fr 1fr" gap="0 2rem">
+
+                        <sw-colorpicker 
+                            v-model="element.config.sliderArrowColor.value"
+                            colorOutput="auto"
+                            :label="$tc('blurElysiumSlider.cmsElement.config.sliderArrowColor.label')"
+                            :alpha="true"
+                            :disabled="false"
+                            :colorLabels="true"
+                            zIndex="1010">
+                        </sw-colorpicker>
+
+                    </sw-container>
+
+                </sw-card>
+
+            </template>
+
         </template>
     </sw-tabs>
 </div>
