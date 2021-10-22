@@ -27,6 +27,12 @@
                 "sliderArrowColor": {
                     "label": "Farbe"
                 },
+                "sliderDotColor": {
+                    "label": "Farbe"
+                },
+                "sliderDotActiveColor": {
+                    "label": "Farbe (Aktiv)"
+                },
                 "tabs": {
                     "content": "Inhalt",
                     "settings": "Einstellungen",
@@ -37,7 +43,8 @@
                 "slideCollectionTitle": "Slide-Auswahl",
                 "generalTitle": "Allgemein",
                 "autoplayTitle": "Auto-Wiedergabe",
-                "arrowStylingTitle": "Slider-Pfeile"
+                "arrowStylingTitle": "Slider-Pfeile",
+                "navigationStylingTitle": "Slider-Navigation"
             },
             "component": {
                 "preview": {

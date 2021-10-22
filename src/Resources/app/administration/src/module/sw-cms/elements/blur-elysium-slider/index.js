@@ -36,6 +36,14 @@ Shopware.Service('cmsService').registerCmsElement({
         sliderArrowColor: {
             source: 'static',
             value: null
+        },
+        sliderDotColor: {
+            source: 'static',
+            value: null
+        },
+        sliderDotActiveColor: {
+            source: 'static',
+            value: null
         }
     }
 });
