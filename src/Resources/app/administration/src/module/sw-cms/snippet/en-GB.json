@@ -24,15 +24,27 @@
                     "label": "Interval",
                     "placeholder": "Time in Millisecond"
                 },
+                "sliderArrowColor": {
+                    "label": "Color"
+                },
+                "sliderDotColor": {
+                    "label": "Color"
+                },
+                "sliderDotActiveColor": {
+                    "label": "Color (Active)"
+                },
                 "tabs": {
                     "content": "Content",
-                    "settings": "Settings"
+                    "settings": "Settings",
+                    "styling": "Styling"
                 }
             },
             "settings": {
                 "slideCollectionTitle": "Slide Collection",
                 "generalTitle": "General",
-                "autoplayTitle": "Autopay"
+                "autoplayTitle": "Autopay",
+                "arrowStylingTitle": "Slider Arrows",
+                "navigationStylingTitle": "Slider Navigation",
             },
             "component": {
                 "preview": {

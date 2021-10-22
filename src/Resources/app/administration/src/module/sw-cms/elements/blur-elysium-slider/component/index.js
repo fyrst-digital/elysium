@@ -25,7 +25,10 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
             inlineBgImage: null,
             inlineColor: '#ffffff',
             test: 'www.google.de',
-            slideIndex: parseInt( 0 )
+            slideIndex: parseInt( 0 ),
+            sliderArrowColor: null,
+            sliderDotColor: null,
+            sliderDotActiveColor: null
         };
     },
 
@@ -94,6 +97,7 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
     created() {
         this.createdComponent();
         this.updatePreviewData();
+        this.setConfigProperties();
     },
 
     methods: {
@@ -115,6 +119,18 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
                 });    
             } else {
                 this.previewData = null;
+            }
+        },
+
+        setConfigProperties() {
+            if ( this.element.config.sliderArrowColor.value ) {
+                this.sliderArrowColor = this.element.config.sliderArrowColor.value;
+            }
+            if ( this.element.config.sliderDotColor.value ) {
+                this.sliderDotColor = this.element.config.sliderDotColor.value;
+            }
+            if ( this.element.config.sliderDotActiveColor.value ) {
+                this.sliderDotActiveColor = this.element.config.sliderDotActiveColor.value;
             }
         },
 

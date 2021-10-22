@@ -5,6 +5,9 @@
     {% set slideSpeed = element.translated.config.slideSpeed.value %}
     {% set sliderAutoplay = element.translated.config.sliderAutoplay.value %}
     {% set sliderAutoplayTimeout = element.translated.config.sliderAutoplayTimeout.value %}
+    {% set sliderArrowColors = element.translated.config.sliderArrowColor.value %}
+    {% set sliderDotColors = element.translated.config.sliderDotColor.value %}
+    {% set sliderDotActiveColors = element.translated.config.sliderDotActiveColor.value %}
 
     {% set sliderSettings = {
         nav: sliderSettingsNav,
@@ -18,6 +21,23 @@
         autoplayHoverPause: true,
         autoplayButtonOutput: false
     } %}
+
+    {% if sliderArrowColors or sliderDotColors or sliderDotActiveColors %}
+        {% apply spaceless %}
+            <style>
+                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__control-button {
+                    color: {{ sliderArrowColors }};
+                }
+                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet {
+                    background-color: {{ sliderDotColors }};
+                }
+                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet:hover,
+                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet.tns-nav-active {
+                    background-color: {{ sliderDotActiveColors }};
+                }
+            </style>
+        {% endapply %}
+    {% endif %}
 
     <div id="elysiumSlider-{{ element.id }}" 
         data-slider-settings='{{ sliderSettings|json_encode }}'
