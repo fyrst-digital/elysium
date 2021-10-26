@@ -1,7 +1,7 @@
-{% block blur_elysium_slides %}
+{% block blur_elysium_slides_list_view %}
     <sw-page class="blur-slysium-slides-list__page">
 
-        {% block blur_elysium_slides_search_bar %}
+        {% block blur_elysium_slides_list_view_search_bar %}
             <template slot="search-bar">
                 <sw-search-bar
                     initial-search-type="blur_elysium_slides"
@@ -11,29 +11,36 @@
             </template>
         {% endblock %}
 
-        {% block blur_elysium_slides_smart_bar_header %}
+        {% block blur_elysium_slides_list_view_smart_bar_header %}
             <template slot="smart-bar-header">
                 <div class="smart-bar-header__title-container">
-                    <sw-icon name="default-tools-ruler-pencil" color="#d35400"></sw-icon>
-                    <h2 class="smart-bar-header__title">
-                        {{ $tc('BlurElysiumSlides.entityLabel') }}
 
-                        {% block blur_elysium_slides_smart_bar_header_amount %}
-                            <span
-                                v-if="!isLoading"
-                                class="sw-page__smart-bar-amount"
-                            >
-                                ({{ total }})
-                            </span>
-                        {% endblock %}
-                    </h2>
+                    {% block blur_elysium_slides_list_view_smart_bar_header_icon %}
+                        <sw-icon name="default-tools-ruler-pencil" color="#d35400"></sw-icon>
+                    {% endblock %}
+
+                    {% block blur_elysium_slides_list_view_smart_bar_header_title %}
+                        <h2 class="smart-bar-header__title">
+                            {{ $tc('BlurElysiumSlides.entityLabel') }}
+
+                            {% block blur_elysium_slides_list_view_smart_bar_header_amount %}
+                                <span
+                                    v-if="!isLoading"
+                                    class="sw-page__smart-bar-amount"
+                                >
+                                    ({{ total }})
+                                </span>
+                            {% endblock %}
+                        </h2>
+                    {% endblock %}
                 </div>
             </template>
         {% endblock %}
 
-        {% block blur_elysium_slides_smart_bar_actions %}
+        {% block blur_elysium_slides_list_view_smart_bar_actions %}
             <template #smart-bar-actions>
-                {% block blur_elysium_slides_smart_bar_actions_add %}
+
+                {% block blur_elysium_slides_list_view_smart_bar_action_add %}
                     <sw-button
                         v-tooltip="{
                             message: $tc('sw-privileges.tooltip.warning'),
@@ -50,17 +57,18 @@
             </template>
         {% endblock %}
 
-        {% block sw_product_list_language_switch %}
+        {% block blur_elysium_slides_list_view_language_switch %}
             <template #language-switch>
                 <sw-language-switch @on-change="onChangeLanguage" />
             </template>
         {% endblock %}
 
         <template #content>
-            {% block blur_elysium_slides_list_content %}
+
+            {% block blur_elysium_slides_list_view_content %}
                 <div class="sw-customer-list__content">
 
-                    {% block blur_elysium_slides_list_grid %}
+                    {% block blur_elysium_slides_list_view_grid %}
                         <template v-if="blur_elysium_slides !== null && blur_elysium_slides.length > 0">
 
                             <sw-entity-listing
@@ -85,71 +93,87 @@
 
                                 <template #actions="{ item }">
 
-                                    <sw-context-menu-item
-                                        class="sw-customer-list__edit-action"
-                                        :disabled="!acl.can('blur_elysium_slides.editor')"
-                                        :router-link="{ name: 'blur.elysium.slides.detail', params: { id: item.id }, query: { edit: true } }"
-                                    >
-                                        {{ $tc('sw-customer.list.contextMenuEdit') }}
-                                    </sw-context-menu-item>
+                                    {% block blur_elysium_slides_list_view_grid_action_edit %}
+                                        <sw-context-menu-item
+                                            class="sw-customer-list__edit-action"
+                                            :disabled="!acl.can('blur_elysium_slides.editor')"
+                                            :router-link="{ name: 'blur.elysium.slides.detail', params: { id: item.id }, query: { edit: true } }"
+                                        >
+                                            {{ $tc('sw-customer.list.contextMenuEdit') }}
+                                        </sw-context-menu-item>
+                                    {% endblock %}
 
-                                    <sw-context-menu-item
-                                        class="sw-customer-list__delete-action"
-                                        variant="danger"
-                                        :disabled="!acl.can('blur_elysium_slides.deleter')"
-                                        @click="onDelete(item.id)"
-                                    >
-                                        {{ $tc('sw-customer.list.contextMenuDelete') }}
-                                    </sw-context-menu-item>
+                                    {% block blur_elysium_slides_list_view_grid_action_delete %}
+                                        <sw-context-menu-item
+                                            class="sw-customer-list__delete-action"
+                                            variant="danger"
+                                            :disabled="!acl.can('blur_elysium_slides.deleter')"
+                                            @click="onDelete(item.id)"
+                                        >
+                                            {{ $tc('sw-customer.list.contextMenuDelete') }}
+                                        </sw-context-menu-item>
+                                    {% endblock %}
                                 </template>
 
                                 <template #action-modals="{ item }">
 
-                                    <sw-modal
-                                        v-if="showDeleteModal === item.id"
-                                        :title="$tc('global.default.warning')"
-                                        variant="small"
-                                        @modal-close="onCloseDeleteModal"
-                                    >
+                                    {% block blur_elysium_slides_list_view_modal_delete %}
+                                        <sw-modal
+                                            v-if="showDeleteModal === item.id"
+                                            :title="$tc('global.default.warning')"
+                                            variant="small"
+                                            @modal-close="onCloseDeleteModal"
+                                        >
 
-                                        <p class="sw-customer-list__confirm-delete-text">
-                                            {{ $tc('sw-customer.list.textDeleteConfirm', 0, { name: `${item.firstName} ${item.lastName}` }) }}
-                                        </p>
+                                            {% block blur_elysium_slides_list_view_modal_delete_text %}
+                                                <p class="sw-customer-list__confirm-delete-text">
+                                                    {{ $tc('sw-customer.list.textDeleteConfirm', 0, { name: `${item.firstName} ${item.lastName}` }) }}
+                                                </p>
+                                            {% endblock %}
 
-                                        <template #modal-footer>
+                                            {% block blur_elysium_slides_list_view_modal_delete_footer %}
+                                                <template #modal-footer>
 
-                                            <sw-button
-                                                size="small"
-                                                @click="onCloseDeleteModal"
-                                            >
-                                                {{ $tc('sw-customer.list.buttonCancel') }}
-                                            </sw-button>
+                                                    {% block blur_elysium_slides_list_view_modal_delete_action_cancel %}
+                                                        <sw-button
+                                                            size="small"
+                                                            @click="onCloseDeleteModal"
+                                                        >
+                                                            {{ $tc('sw-customer.list.buttonCancel') }}
+                                                        </sw-button>
+                                                    {% endblock %}
 
-                                            <sw-button
-                                                variant="danger"
-                                                size="small"
-                                                @click="onConfirmDelete(item.id)"
-                                            >
-                                                {{ $tc('sw-customer.list.buttonDelete') }}
-                                            </sw-button>
-                                        </template>
-                                    </sw-modal>
+                                                    {% block blur_elysium_slides_list_view_modal_delete_action_delete %}
+                                                        <sw-button
+                                                            variant="danger"
+                                                            size="small"
+                                                            @click="onConfirmDelete(item.id)"
+                                                        >
+                                                            {{ $tc('sw-customer.list.buttonDelete') }}
+                                                        </sw-button>
+                                                    {% endblock %}
+                                                </template>
+                                            {% endblock %}
+                                        </sw-modal>
+                                    {% endblock %}
                                 </template>
 
-                                <template #pagination>
-                                    <sw-pagination
-                                        :page="page"
-                                        :limit="limit"
-                                        :total="total"
-                                        :total-visible="7"
-                                        @page-change="onPageChange"
-                                    />
-                                </template>
+                                {% block blur_elysium_slides_list_view_pagination %}
+                                    <template #pagination>
+                                        <sw-pagination
+                                            :page="page"
+                                            :limit="limit"
+                                            :total="total"
+                                            :total-visible="7"
+                                            @page-change="onPageChange"
+                                        />
+                                    </template>
+                                {% endblock %}
                             </sw-entity-listing>
                         </template>
                     {% endblock %}
 
-                    {% block blur_elysium_slides_list_empty_state %}
+                    {% block blur_elysium_slides_list_view_empty_state %}
                         <template v-if="!isLoading && !total">
                             <sw-empty-state
                                 v-if="filterCriteria.length"
