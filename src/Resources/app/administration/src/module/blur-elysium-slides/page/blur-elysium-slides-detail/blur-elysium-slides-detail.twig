@@ -1,122 +1,129 @@
-<sw-page class="blur-slysium-slides-detail__page">
+{% block blur_elysium_slides_detail_page %}
+    <sw-page class="blur-slysium-slides-detail__page">
 
-    <template #smart-bar-header>
-        <h2 v-if="blurElysiumSlide && blurElysiumSlide.name">
-            {{ blurElysiumSlide.name }}
-        </h2>
-    </template>
+        {% block blur_elysium_slides_detail_page_smart_bar_header %}
+            <template #smart-bar-header>
 
-    <template #smart-bar-actions>
-
-        {#
-        <span v-if="!editMode">
-            <sw-button
-                v-tooltip="{
-                    message: $tc('sw-privileges.tooltip.warning'),
-                    disabled: acl.can('blur_elysium_slides.editor'),
-                    showOnDisabledElements: true
-                }"
-                class="sw-customer-detail__open-edit-mode-action"
-                variant="primary"
-                :disabled="isLoading || !acl.can('blur_elysium_slides.editor')"
-                @click.prevent="onActivateCustomerEditMode"
-            >
-                {{ $tc('sw-customer.detail.buttonEdit') }}
-            </sw-button>
-        </span>
-        #}
-
-        <sw-container class="blur-slysium-slides-detail__header-actions-container" columns="auto auto" gap="0 8px">
-
-            <sw-button
-                :disabled="isLoading"
-                @click="onAbortButtonClick"
-            >
-                {{ $tc('sw-customer.detail.buttonCancel') }}
-            </sw-button>
-
-            <sw-button-process
-                class="sw-customer-detail__save-action"
-                :is-loading="isLoading"
-                :process-success="isSaveSuccessful"
-                :disabled="isLoading"
-                variant="primary"
-                @process-finish="saveFinish"
-                @click.prevent="onSave"
-            >
-                {{ $tc('sw-customer.detail.buttonSave') }}
-            </sw-button-process>
-        </sw-container>
-    </template>
-
-    <template slot="language-switch">
-        <sw-language-switch
-            :save-changes-function="saveOnLanguageChange"
-            :abort-change-function="abortOnLanguageChange"
-            :disabled="!blurElysiumSlideId"
-            @on-change="onChangeLanguage"
-        />
-    </template>
-
-    <template #content>
-
-        <div class="blur-slysium-slides-create__main-content">
-
-            <sw-card
-                :title="$tc('BlurElysiumSlides.baseForm.cardTitle')"
-                :is-loading="isLoading"
-            >
-
-                <blur-elysium-slides-basic-form
-                    v-if="!isLoading"
-                    :blur-elysium-slides="blurElysiumSlide"
-                    :allow-edit="acl.can('blur_slides_elysium.editor')"
-                />
-            </sw-card>
-            
-            <sw-card
-                :title="$tc('BlurElysiumSlides.mediaForm.cardTitle')"
-                :is-loading="isLoading"
-            >
-
-                {% block blur_elysium_slides_create_base_media_upload_form %}
-                    <sw-upload-listener
-                        :upload-tag="uploadTag"
-                        auto-upload
-                        @media-upload-finish="setMediaItem"
-                    />
-                    <sw-media-upload-v2
-                        :disabled="!acl.can('blur_slides_elysium.editor')"
-                        :upload-tag="uploadTag"
-                        :source="mediaItem"
-                        class="blur-elysium-slides__media-upload"
-                        :allow-multi-select="false"
-                        variant="regular"
-                        :label="$tc('BlurElysiumSlides.mediaForm.uploadInput.title')"
-                        :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
-                        {# :default-folder="blurElysiumSlide.getEntityName()" #}
-                        @media-drop="onDropMedia"
-                        @media-upload-sidebar-open="onOpenMedia"
-                        @media-upload-remove-image="onUnlinkMedia"
-                    />
+                {% block blur_elysium_slides_detail_page_smart_bar_header_title %}
+                    <h2 v-if="blurElysiumSlide && blurElysiumSlide.name">
+                        {{ blurElysiumSlide.name }}
+                    </h2>
                 {% endblock %}
+            </template>
+        {% endblock %}
 
-            </sw-card>
-        </div>
-    </template>
+        {% block blur_elysium_slides_detail_page_smart_bar_actions %}
+            <template #smart-bar-actions>
 
-    <template slot="sidebar">
-        <sw-sidebar :propagate-width="true">
-            <sw-sidebar-media-item ref="mediaSidebarItem">
-                <template
-                    slot="context-menu-items"
-                    slot-scope="media"
-                >
-                    <sw-context-menu-item @click="setMediaFromSidebar(media.mediaItem)">
-                        {{ $tc('BlurElysiumSlides.mediaForm.useAsCover') }}
-                    </sw-context-menu-item>
-                </template>
-            </sw-sidebar-media-item>
-        </sw-sidebar>
-    </template> 
-</sw-page>
+                <sw-container class="blur-slysium-slides-detail__header-actions-container" columns="auto auto" gap="0 8px">
+
+                    {% block blur_elysium_slides_detail_page_smart_bar_action_cancel %}
+                        <sw-button
+                            :disabled="isLoading"
+                            @click="onAbortButtonClick"
+                        >
+                            {{ $tc('sw-customer.detail.buttonCancel') }}
+                        </sw-button>
+                    {% endblock %}
+
+                    {% block blur_elysium_slides_detail_page_smart_bar_action_save %}
+                        <sw-button-process
+                            class="sw-customer-detail__save-action"
+                            :is-loading="isLoading"
+                            :process-success="isSaveSuccessful"
+                            :disabled="isLoading"
+                            variant="primary"
+                            @process-finish="saveFinish"
+                            @click.prevent="onSave"
+                        >
+                            {{ $tc('sw-customer.detail.buttonSave') }}
+                        </sw-button-process>
+                    {% endblock %}
+                </sw-container>
+            </template>
+        {% endblock %}
+
+        {% block blur_elysium_slides_detail_page_language_switch %}
+            <template slot="language-switch">
+                <sw-language-switch
+                    :save-changes-function="saveOnLanguageChange"
+                    :abort-change-function="abortOnLanguageChange"
+                    :disabled="!blurElysiumSlideId"
+                    @on-change="onChangeLanguage"
+                />
+            </template>
+        {% endblock %}
+
+        <template #content>
+
+            <div class="blur-slysium-slides-create__main-content">
+
+                {% block blur_elysium_slides_detail_page_card_basic_form %}
+                    <sw-card
+                        :title="$tc('BlurElysiumSlides.baseForm.cardTitle')"
+                        :is-loading="isLoading"
+                    >
+
+                        {% block blur_elysium_slides_detail_page_basic_form %}
+                            <blur-elysium-slides-basic-form
+                                v-if="!isLoading"
+                                :blur-elysium-slides="blurElysiumSlide"
+                                :allow-edit="acl.can('blur_slides_elysium.editor')"
+                            />
+                        {% endblock %}
+                    </sw-card>
+                {% endblock %}
+                
+                {% block blur_elysium_slides_detail_page_card_media_form %}
+                    <sw-card
+                        :title="$tc('BlurElysiumSlides.mediaForm.cardTitle')"
+                        :is-loading="isLoading"
+                    >
+
+                        {% block blur_elysium_slides_detail_page_input_media_upload %}
+                            <sw-upload-listener
+                                :upload-tag="uploadTag"
+                                auto-upload
+                                @media-upload-finish="setMediaItem"
+                            />
+                            <sw-media-upload-v2
+                                :disabled="!acl.can('blur_slides_elysium.editor')"
+                                :upload-tag="uploadTag"
+                                :source="mediaItem"
+                                class="blur-elysium-slides__media-upload"
+                                :allow-multi-select="false"
+                                variant="regular"
+                                :label="$tc('BlurElysiumSlides.mediaForm.uploadInput.title')"
+                                :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
+                                @media-drop="onDropMedia"
+                                @media-upload-sidebar-open="onOpenMedia"
+                                @media-upload-remove-image="onUnlinkMedia"
+                            />
+                        {% endblock %}
+
+                    </sw-card>
+                {% endblock %}
+            </div>
+        </template>
+
+        {% block blur_elysium_slides_detail_page_sidebar %}
+            <template slot="sidebar">
+                <sw-sidebar :propagate-width="true">
+
+                    {% block blur_elysium_slides_detail_page_sidebar_media_selection %}
+                        <sw-sidebar-media-item ref="mediaSidebarItem">
+                            <template
+                                slot="context-menu-items"
+                                slot-scope="media"
+                            >
+                                <sw-context-menu-item @click="setMediaFromSidebar(media.mediaItem)">
+                                    {{ $tc('BlurElysiumSlides.mediaForm.useAsCover') }}
+                                </sw-context-menu-item>
+                            </template>
+                        </sw-sidebar-media-item>
+                    {% endblock %}
+                </sw-sidebar>
+            </template>
+        {% endblock %}
+    </sw-page>
+{% endblock %}
