@@ -1,10 +1,10 @@
-{% block blur_elysium_slides_detail_page %}
+{% block blur_elysium_slides_detail_view %}
     <sw-page class="blur-slysium-slides-detail__page">
 
-        {% block blur_elysium_slides_detail_page_smart_bar_header %}
+        {% block blur_elysium_slides_detail_view_smart_bar_header %}
             <template #smart-bar-header>
 
-                {% block blur_elysium_slides_detail_page_smart_bar_header_title %}
+                {% block blur_elysium_slides_detail_view_smart_bar_header_title %}
                     <h2 v-if="blurElysiumSlide && blurElysiumSlide.name">
                         {{ blurElysiumSlide.name }}
                     </h2>
@@ -12,12 +12,12 @@
             </template>
         {% endblock %}
 
-        {% block blur_elysium_slides_detail_page_smart_bar_actions %}
+        {% block blur_elysium_slides_detail_view_smart_bar_actions %}
             <template #smart-bar-actions>
 
                 <sw-container class="blur-slysium-slides-detail__header-actions-container" columns="auto auto" gap="0 8px">
 
-                    {% block blur_elysium_slides_detail_page_smart_bar_action_cancel %}
+                    {% block blur_elysium_slides_detail_view_smart_bar_action_cancel %}
                         <sw-button
                             :disabled="isLoading"
                             @click="onAbortButtonClick"
@@ -26,7 +26,7 @@
                         </sw-button>
                     {% endblock %}
 
-                    {% block blur_elysium_slides_detail_page_smart_bar_action_save %}
+                    {% block blur_elysium_slides_detail_view_smart_bar_action_save %}
                         <sw-button-process
                             class="sw-customer-detail__save-action"
                             :is-loading="isLoading"
@@ -43,7 +43,7 @@
             </template>
         {% endblock %}
 
-        {% block blur_elysium_slides_detail_page_language_switch %}
+        {% block blur_elysium_slides_detail_view_language_switch %}
             <template slot="language-switch">
                 <sw-language-switch
                     :save-changes-function="saveOnLanguageChange"
@@ -58,13 +58,13 @@
 
             <div class="blur-slysium-slides-create__main-content">
 
-                {% block blur_elysium_slides_detail_page_card_basic_form %}
+                {% block blur_elysium_slides_detail_view_card_basic_form %}
                     <sw-card
                         :title="$tc('BlurElysiumSlides.baseForm.cardTitle')"
                         :is-loading="isLoading"
                     >
 
-                        {% block blur_elysium_slides_detail_page_basic_form %}
+                        {% block blur_elysium_slides_detail_view_basic_form %}
                             <blur-elysium-slides-basic-form
                                 v-if="!isLoading"
                                 :blur-elysium-slides="blurElysiumSlide"
@@ -74,13 +74,13 @@
                     </sw-card>
                 {% endblock %}
                 
-                {% block blur_elysium_slides_detail_page_card_media_form %}
+                {% block blur_elysium_slides_detail_view_card_media_form %}
                     <sw-card
                         :title="$tc('BlurElysiumSlides.mediaForm.cardTitle')"
                         :is-loading="isLoading"
                     >
 
-                        {% block blur_elysium_slides_detail_page_input_media_upload %}
+                        {% block blur_elysium_slides_detail_view_input_media_upload %}
                             <sw-upload-listener
                                 :upload-tag="uploadTag"
                                 auto-upload
@@ -106,11 +106,11 @@
             </div>
         </template>
 
-        {% block blur_elysium_slides_detail_page_sidebar %}
+        {% block blur_elysium_slides_detail_view_sidebar %}
             <template slot="sidebar">
                 <sw-sidebar :propagate-width="true">
 
-                    {% block blur_elysium_slides_detail_page_sidebar_media_selection %}
+                    {% block blur_elysium_slides_detail_view_sidebar_media_selection %}
                         <sw-sidebar-media-item ref="mediaSidebarItem">
                             <template
                                 slot="context-menu-items"
