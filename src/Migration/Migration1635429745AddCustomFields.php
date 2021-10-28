@@ -16,7 +16,7 @@ class Migration1635429745AddCustomFields extends MigrationStep
     {
         $sql = <<<SQL
             ALTER TABLE `blur_elysium_slides`
-            ADD COLUMN `custom_fields` json DEFAULT NULL,
+            ADD COLUMN `custom_fields` json DEFAULT NULL
         SQL;
 
         // add custom field column
