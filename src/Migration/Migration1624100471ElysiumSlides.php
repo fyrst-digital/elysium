@@ -51,3 +51,4 @@ class Migration1624100471ElysiumSlides extends MigrationStep
         $connection->executeStatement( $sql );
     }
 }
+?>

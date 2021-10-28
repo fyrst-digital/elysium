@@ -45,3 +45,4 @@ class Migration1624108754ElysiumSlidesTranslation extends MigrationStep
         // implement update destructive
     }
 }
+?>
