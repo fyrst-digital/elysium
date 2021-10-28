@@ -14,14 +14,6 @@ class Migration1624100471ElysiumSlides extends MigrationStep
 
     public function update( Connection $connection ): void
     {
-        // implement update
-        /**
-         * First step, create translation
-         * 
-         * For further steps:
-         * `translations` BINARY(16),
-         * `customFieldSets` BINARY(16) NULL,
-         */
         $sql = <<<SQL
         CREATE TABLE IF NOT EXISTS `blur_elysium_slides` (
             `id` BINARY(16) NOT NULL,

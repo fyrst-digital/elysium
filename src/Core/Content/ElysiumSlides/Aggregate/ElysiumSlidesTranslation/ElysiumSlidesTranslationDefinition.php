@@ -7,6 +7,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\CustomFields;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 
@@ -31,7 +32,8 @@ class ElysiumSlidesTranslationDefinition extends EntityTranslationDefinition
             ( new StringField( 'title', 'title' ) )->addFlags( new ApiAware() ),
             ( new LongTextField( 'description', 'description' ) )->addFlags( new ApiAware() ),
             ( new StringField( 'button_label', 'button_label' ) )->addFlags( new ApiAware() ),
-            ( new LongTextField( 'url', 'url' ) )->addFlags( new ApiAware() )
+            ( new LongTextField( 'url', 'url' ) )->addFlags( new ApiAware() ),
+            ( new CustomFields())->addFlags(new ApiAware() )
         ]);
     }
 }
