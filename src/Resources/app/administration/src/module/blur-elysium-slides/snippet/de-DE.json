@@ -17,7 +17,10 @@
         "placeholderSearchBar": "Slides Suchen",
         "messages": {
             "emptySlidesTitle": "Keine Slides gefunden",
-            "emptySlidesSubtitle": "Es wurden noch keine Slides erstellt"
+            "emptySlidesSubtitle": "Es wurden noch keine Slides erstellt",
+            "createSlideError": "Der Slide konnte nicht gespeichert werden.",
+            "createSlideSuccess": "Der Slide wurde erstellt.",
+            "missingSlideNameError": "Bitte gib einen Slide Namen an."
         },
         "actions": {
             "createSlide": "Slide erstellen",

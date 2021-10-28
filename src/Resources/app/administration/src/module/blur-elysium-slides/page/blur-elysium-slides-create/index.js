@@ -61,8 +61,6 @@ Component.register( 'blur-elysium-slides-create', {
             Shopware.State.commit('context/resetLanguageToDefault');
 
             this.blurElysiumSlides = this.elysiumSlidesRepository.create( Shopware.Context.api );
-            
-            //this.mediaItem = this.mediaRepository.create( Shopware.Context.api );
         },
 
         saveFinish() {
@@ -74,27 +72,22 @@ Component.register( 'blur-elysium-slides-create', {
             this.isLoading = true;
             this.isSaveSuccessful = false;
 
-            /*
-            if ( !this.blurElysiumSlides.label ) {
+            if ( this.blurElysiumSlides.name === undefined ) {
                 this.createNotificationError({
-                    message: this.$tc('Slide label is required'),
+                    message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError'),
                 });
-
-                this.isLoading = false;
-
-                return new Promise((res) => res());
             }
-            */
-
-            
 
             return this.elysiumSlidesRepository.save( this.blurElysiumSlides, Shopware.Context.api ).then(() => {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
+                this.createNotificationSuccess({
+                    message: this.$tc('BlurElysiumSlides.messages.createSlideSuccess')
+                });
                 this.createdComponent();
             }).catch(( exception ) => {
                 this.createNotificationError({
-                    message: this.$tc('sw-customer.detail.messageSaveError'),
+                    message: this.$tc('BlurElysiumSlides.messages.createSlideError')
                 });
                 this.isLoading = false;
             });
@@ -103,16 +96,6 @@ Component.register( 'blur-elysium-slides-create', {
         onCancel() {
             this.$router.push({ name: 'blur.elysium.slides.index' });
         },
-
-        /*
-        setMediaItem({ targetId }) {
-            this.mediaRepository.get(targetId)
-            .then((updatedMedia) => {
-                this.mediaItem = updatedMedia;
-                this.blurElysiumSlides.mediaId = targetId;
-            });
-        },
-        */
 
         setMediaItem( media ) {
             let mediaId = media.targetId ? media.targetId : media.id;
