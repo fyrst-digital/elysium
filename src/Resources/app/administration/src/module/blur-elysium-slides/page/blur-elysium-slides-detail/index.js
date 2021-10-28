@@ -28,10 +28,12 @@ Component.register( 'blur-elysium-slides-detail', {
 
     data() {
         return {
+            entityName: 'blur_elysium_slides',
             isLoading: false,
             isSaveSuccessful: false,
             blurElysiumSlide: null,
             mediaItem: null,
+            customFieldSets: [],
             uploadTag: 'blur-elysium-slide-upload-tag'
         };
     },
@@ -71,6 +73,24 @@ Component.register( 'blur-elysium-slides-detail', {
             return criteria;
         },
 
+        customFieldSetRepository() {
+            return this.repositoryFactory.create( 'custom_field_set' );
+        },
+    
+        customFieldSetCriteria() {
+            const criteria = new Criteria();
+    
+            criteria.addFilter(
+                Criteria.equals( 'relations.entityName', this.entityName )
+            );
+    
+            criteria.getAssociation( 'customFields' )
+                    .addSorting(Criteria.sort('config.customFieldPosition'));
+
+    
+            return criteria;
+        },
+
         editMode: {
             get() {
                 if (typeof this.$route.query.edit === 'boolean') {
@@ -93,6 +113,7 @@ Component.register( 'blur-elysium-slides-detail', {
 
     created() {
         this.createdComponent();
+        this.loadCustomFieldSets();
     },
 
     methods: {
@@ -144,6 +165,19 @@ Component.register( 'blur-elysium-slides-detail', {
                     this.productNumberPreview = response.number;
                     this.product.productNumber = response.number;
                 });
+            });
+        },
+
+
+        loadCustomFieldSets() {
+
+            this.customFieldSetRepository.search( this.customFieldSetCriteria, Shopware.Context.api )
+            .then( ( result ) => {
+                this.customFieldSets = result.filter((set) => set.customFields.length > 0);
+                // this.customFieldSets = result;
+                this.isLoading = false;
+            }, reason => {
+                this.customFieldSets = [];
             });
         },
 

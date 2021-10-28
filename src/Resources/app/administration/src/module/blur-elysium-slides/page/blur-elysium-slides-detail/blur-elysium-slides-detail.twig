@@ -103,6 +103,19 @@
 
                     </sw-card>
                 {% endblock %}
+
+                {% block blur_elysium_slides_detail_view_card_custom_fields %}
+                    <sw-card :title="$tc('swModules.customFields.cardLabel')"
+                            v-if="customFieldSets !== undefined"
+                            :isLoading="isLoading">
+                        <sw-custom-field-set-renderer
+                            v-if="blurElysiumSlide"
+                            :entity="blurElysiumSlide"
+                            :sets="customFieldSets">
+                        </sw-custom-field-set-renderer>
+                    </sw-card>
+                {% endblock %}
+
             </div>
         </template>
 
