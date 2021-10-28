@@ -16,6 +16,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\CustomFields;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 
 class ElysiumSlidesDefinition extends EntityDefinition {
@@ -52,7 +53,10 @@ class ElysiumSlidesDefinition extends EntityDefinition {
             (new TranslationsAssociationField( 
                 ElysiumSlidesTranslationDefinition::class, 
                 'blur_elysium_slides_id'
-            ))->addFlags(new ApiAware(), new Inherited(), new Required())
+            ))->addFlags(new ApiAware(), new Inherited(), new Required()),
+            // custom fields
+            (new CustomFields())->addFlags(new ApiAware())
         ]);
     }
 }
+?>
