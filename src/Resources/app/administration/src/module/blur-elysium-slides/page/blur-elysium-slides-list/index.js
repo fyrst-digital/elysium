@@ -70,28 +70,6 @@ Component.register( 'blur-elysium-slides-list', {
                 defaultCriteria.addFilter(filter);
             });
 
-            /*
-            const defaultCriteria = new Criteria(this.page, this.limit);
-            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-            this.naturalSorting = this.sortBy === 'customerNumber';
-
-            defaultCriteria.setTerm(this.term);
-
-            this.sortBy.split(',').forEach(sortBy => {
-                defaultCriteria.addSorting(Criteria.sort(sortBy, this.sortDirection, this.naturalSorting));
-            });
-
-            defaultCriteria
-                .addAssociation('defaultBillingAddress')
-                .addAssociation('group')
-                .addAssociation('requestedGroup')
-                .addAssociation('salesChannel');
-
-            this.filterCriteria.forEach(filter => {
-                defaultCriteria.addFilter(filter);
-            });
-            */
-
             return defaultCriteria;
         },
     },
@@ -116,14 +94,6 @@ Component.register( 'blur-elysium-slides-list', {
 
         async getList() {
             this.isLoading = true;
-
-            /**
-                const criteria = await Shopware.Service('filterService')
-                    .mergeWithStoredFilters(this.storeKey, this.defaultCriteria);
-
-                this.activeFilterNumber = criteria.filters.length;
-             */
-
 
             try {
                 const items = await this.elysiumSlidesRepository.search( this.defaultCriteria, Shopware.Context.api );
@@ -181,18 +151,34 @@ Component.register( 'blur-elysium-slides-list', {
             this.filterCriteria = criteria;
         },
 
+        onDeleteItems() {
+            this.getList();
+        },
+
         getElysiumSlidesColumns() {
             const columns = [{
                 property: 'name',
                 dataIndex: 'name',
                 inlineEdit: 'string',
-                label: 'sw-customer.list.columnName',
+                label: 'BlurElysiumSlides.list.columns.name',
                 routerLink: 'blur.elysium.slides.detail',
                 width: '250px',
                 allowResize: true,
                 primary: true,
                 useCustomSort: true,
                 naturalSorting: true,
+            }, {
+                property: 'title',
+                dataIndex: 'title',
+                inlineEdit: 'string',
+                label: 'BlurElysiumSlides.list.columns.title',
+                routerLink: 'blur.elysium.slides.detail',
+                width: '1fr',
+                allowResize: true,
+                sortable: false,
+                primary: false,
+                useCustomSort: false,
+                naturalSorting: false,
             }];
 
             return columns;

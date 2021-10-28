@@ -1,0 +1,72 @@
+{
+    "global": {
+        "entities": {
+            "blur_elysium_slides": "Elysium Slides"
+        }
+    },
+    "sw-privileges": {
+        "permissions": {
+            "blur_elysium_slides": {
+                "label": "Elysium Slides"
+            }
+        }
+    },
+    "BlurElysiumSlides": {
+        "entityLabel": "Elysium Slides",
+        "description": "Hier kannst du einzelne Slides für den Elysium Slider erstellen.",
+        "placeholderSearchBar": "Slides Suchen",
+        "messages": {
+            "emptySlidesTitle": "Keine Slides gefunden",
+            "emptySlidesSubtitle": "Es wurden noch keine Slides erstellt"
+        },
+        "actions": {
+            "createSlide": "Slide erstellen",
+            "createSlideNoLanguageChange": "Neue Slides können nur in der System Standardsprache angelegt werden"
+        },
+        "list": {
+            "columns": {
+                "name": "Name",
+                "title": "Überschrift"
+            }
+        },
+        "baseForm": {
+            "cardTitle": "Inhalt",
+            "labelInput": {
+                "title": "Slide Name",
+                "placeholder": "Slide Name eingeben",
+                "helpText": "Lege einen Namen für den Slide fest. Dieser Name wird nur zur Identifikation des Slides genutzt"
+            },
+            "titleInput": {
+                "title": "Überschrift",
+                "placeholder": "Überschrift eingeben",
+                "helpText": "Lege eine Überschrift für den Slide fest."
+            },
+            "descriptionInput": {
+                "title": "Kurzbeschreibung",
+                "placeholder": "Kurzbeschreibung eingeben",
+                "helpText": "Lege einen Kurzbeschreibungs-Text für den Slide fest. Dieser wird unter der Überschrift angezeigt."
+            },
+            "buttonLabelInput": {
+                "title": "Button Label",
+                "placeholder": "Button Label eingeben",
+                "helpText": "Lege die Beschriftung des Buttons fest."
+            },
+            "urlInput": {
+                "title": "Slide URL",
+                "placeholder": "Slide URL eingeben",
+                "helpText": "Lege die Verlinkung des Slides fest. Dies kann sowohl eine absolute als auch eine relative URL sein."
+            }
+        },
+        "mediaForm": {
+            "cardTitle": "Medien",
+            "uploadInput": {
+                "title": "Slide Cover",
+                "helpText": "Lege ein Cover-Bild für deinen Slide fest"
+            },
+            "useAsCover": "Als Cover nutzen"
+        },
+        "customFields": {
+            "cardTitle": "Zusatzfelder"
+        }
+    }
+}
