@@ -211,10 +211,9 @@ Component.register( 'blur-elysium-slides-detail', {
 
         async onSave() {
             this.isLoading = true;
-
             this.isSaveSuccessful = false;
 
-            if ( this.blurElysiumSlides.name === undefined ) {
+            if ( ( this.blurElysiumSlide !== null || this.blurElysiumSlide !== undefined ) && ( this.blurElysiumSlide.name === undefined || this.blurElysiumSlide.name === "" ) ) {
                 this.createNotificationError({
                     message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError'),
                 });

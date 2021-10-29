@@ -25,7 +25,7 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
             inlineBgImage: null,
             inlineColor: '#ffffff',
             test: 'www.google.de',
-            slideIndex: parseInt( 0 ),
+            slideIndex: parseInt( 0, 10 ),
             sliderArrowColor: null,
             sliderDotColor: null,
             sliderDotActiveColor: null
@@ -135,12 +135,12 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         },
 
         slideArrowClick( iterator ) {
-            let previewDataLength = parseInt( this.previewData.length ) - 1;
+            let previewDataLength = parseInt( this.previewData.length, 10 ) - 1;
 
-            if ( parseInt( iterator ) === 1 && this.slideIndex < previewDataLength ) {
-                this.slideIndex += parseInt( iterator );
-            } else if ( parseInt( iterator ) === -1 && this.slideIndex > 0 ) {
-                this.slideIndex += parseInt( iterator );
+            if ( parseInt( iterator, 10 ) === 1 && this.slideIndex < previewDataLength ) {
+                this.slideIndex += parseInt( iterator, 10 );
+            } else if ( parseInt( iterator, 10 ) === -1 && this.slideIndex > 0 ) {
+                this.slideIndex += parseInt( iterator, 10 );
             }
         }
     }
