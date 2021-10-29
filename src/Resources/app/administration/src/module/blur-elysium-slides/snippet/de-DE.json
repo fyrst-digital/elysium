@@ -64,7 +64,7 @@
             "cardTitle": "Medien",
             "uploadInput": {
                 "title": "Slide Cover",
-                "helpText": "Lege ein Cover-Bild für deinen Slide fest"
+                "helpText": "Dieses Bild wird als Hintergrund des Slides verwendet"
             },
             "useAsCover": "Als Cover nutzen"
         },
