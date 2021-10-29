@@ -34,8 +34,8 @@ class Migration1624108754ElysiumSlidesTranslation extends MigrationStep
         )
             ENGINE = InnoDB
             DEFAULT CHARSET = utf8mb4
-            COLLATE = utf8mb4_unicode_ci;
-        SQL;
+            COLLATE = utf8mb4_unicode_ci
+SQL;
         
         $connection->executeStatement($sql);
     }
