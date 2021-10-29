@@ -49,6 +49,7 @@ class ElysiumSlidesDefinition extends EntityDefinition {
             (new TranslatedField('description'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('button_label'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('url'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField( 'customFields' ))->addFlags(new ApiAware()),
             (new TranslationsAssociationField( 
                 ElysiumSlidesTranslationDefinition::class, 
                 'blur_elysium_slides_id'
@@ -56,3 +57,4 @@ class ElysiumSlidesDefinition extends EntityDefinition {
         ]);
     }
 }
+?>

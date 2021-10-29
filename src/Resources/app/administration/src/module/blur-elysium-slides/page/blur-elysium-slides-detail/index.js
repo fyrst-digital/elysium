@@ -28,10 +28,12 @@ Component.register( 'blur-elysium-slides-detail', {
 
     data() {
         return {
+            entityName: 'blur_elysium_slides',
             isLoading: false,
             isSaveSuccessful: false,
             blurElysiumSlide: null,
             mediaItem: null,
+            customFieldSets: [],
             uploadTag: 'blur-elysium-slide-upload-tag'
         };
     },
@@ -71,6 +73,24 @@ Component.register( 'blur-elysium-slides-detail', {
             return criteria;
         },
 
+        customFieldSetRepository() {
+            return this.repositoryFactory.create( 'custom_field_set' );
+        },
+    
+        customFieldSetCriteria() {
+            const criteria = new Criteria();
+    
+            criteria.addFilter(
+                Criteria.equals( 'relations.entityName', this.entityName )
+            );
+    
+            criteria.getAssociation( 'customFields' )
+                    .addSorting(Criteria.sort('config.customFieldPosition'));
+
+    
+            return criteria;
+        },
+
         editMode: {
             get() {
                 if (typeof this.$route.query.edit === 'boolean') {
@@ -93,6 +113,7 @@ Component.register( 'blur-elysium-slides-detail', {
 
     created() {
         this.createdComponent();
+        this.loadCustomFieldSets();
     },
 
     methods: {
@@ -130,8 +151,6 @@ Component.register( 'blur-elysium-slides-detail', {
         initState() {
             Shopware.State.commit('blurElysiumSlidesDetail/setApiContext', Shopware.Context.api);
 
-
-
             // when product exists
             if ( this.blurElysiumSlideId ) {
                 return this.loadState();
@@ -144,6 +163,17 @@ Component.register( 'blur-elysium-slides-detail', {
                     this.productNumberPreview = response.number;
                     this.product.productNumber = response.number;
                 });
+            });
+        },
+
+        loadCustomFieldSets() {
+
+            this.customFieldSetRepository.search( this.customFieldSetCriteria, Shopware.Context.api )
+            .then( ( result ) => {
+                this.customFieldSets = result.filter((set) => set.customFields.length > 0);
+                this.isLoading = false;
+            }, reason => {
+                this.customFieldSets = [];
             });
         },
 
@@ -182,33 +212,24 @@ Component.register( 'blur-elysium-slides-detail', {
         async onSave() {
             this.isLoading = true;
 
-            /*
-            if (!this.editMode) {
-                return false;
-            }
-            */
-
             this.isSaveSuccessful = false;
 
-            /*
-            if ( !this.blurElysiumSlides.label ) {
+            if ( this.blurElysiumSlides.name === undefined ) {
                 this.createNotificationError({
-                    message: this.$tc('Slide label is required'),
+                    message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError'),
                 });
-
-                this.isLoading = false;
-
-                return new Promise((res) => res());
             }
-            */
 
             return this.elysiumSlidesRepository.save( this.blurElysiumSlide, Shopware.Context.api ).then(() => {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
+                this.createNotificationSuccess({
+                    message: this.$tc('BlurElysiumSlides.messages.createSlideSuccess')
+                });
                 this.createdComponent();
             }).catch(( exception ) => {
                 this.createNotificationError({
-                    message: this.$tc('sw-customer.detail.messageSaveError'),
+                    message: this.$tc('BlurElysiumSlides.messages.createSlideError'),
                 });
                 this.isLoading = false;
             });
