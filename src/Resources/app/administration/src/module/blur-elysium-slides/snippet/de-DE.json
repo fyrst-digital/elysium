@@ -69,7 +69,8 @@
             "useAsCover": "Als Cover nutzen"
         },
         "customFields": {
-            "cardTitle": "Zusatzfelder"
+            "cardTitle": "Zusatzfelder",
+            "onCreateMessage": "Bitte speichere zuerst den Slide. Danach kannst du die Zusatzfelder pflegen."
         }
     }
 }

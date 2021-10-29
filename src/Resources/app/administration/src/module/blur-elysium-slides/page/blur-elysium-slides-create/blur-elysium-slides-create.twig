@@ -96,6 +96,15 @@
 
                     </sw-card>
                 {% endblock %}
+
+                {% block blur_elysium_slides_create_card_custom_fields %}
+                    <sw-card :title="$tc('BlurElysiumSlides.customFields.cardTitle')"
+                            :isLoading="isLoading">
+                        <sw-alert variant="info" appearance="default" :showIcon="true" :closable="false">
+                            {{ $tc('BlurElysiumSlides.customFields.onCreateMessage') }}
+                        </sw-alert>
+                    </sw-card>
+                {% endblock %}
             </div>
         </template>
 
