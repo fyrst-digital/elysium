@@ -1,7 +1,7 @@
 ## Install
 
 ### Manual 
-Go to [Release Page](https://gitlab.com/BlurCreative/Shopware/Plugins/BlurElysiumSlider/-/releases) and place the folder inside the `.zip` archive in your `custom/plugins/` folder.  
+Go to [Release Page](https://gitlab.com/BlurCreative/Shopware/Plugins/BlurElysiumSlider/-/releases) download the source code and place the folder inside the `.zip` archive in your `custom/plugins/` folder.  
 Be sure the folder has the name `BlurElysiumSlider` so the full path would be `custom/plugins/BlurElysiumSlider`
 
 ### Git
