@@ -17,47 +17,60 @@
         "placeholderSearchBar": "Search for Slides",
         "messages": {
             "emptySlidesTitle": "No Slides yet",
-            "emptySlidesSubtitle": "No Slides yet"
+            "emptySlidesSubtitle": "No Slides yet",
+            "createSlideError": "The slide could not be saved.",
+            "createSlideSuccess": "The slide was created.",
+            "missingSlideNameError": "Please enter a slide name."
         },
         "actions": {
             "createSlide": "Create Slide",
             "createSlideNoLanguageChange": "New Slide can only be created in our chosen system default language"
+        },
+        "list": {
+            "columns": {
+                "name": "Name",
+                "title": "Headline"
+            }
         },
         "baseForm": {
             "cardTitle": "Content",
             "labelInput": {
                 "title": "Slide Label",
                 "placeholder": "Enter a Name for your Slide",
-                "helpText": "Lege einen Namen für den Slide fest. Dieser Name wird nur zur Identifikation des Slides genutzt"
+                "helpText": "Set a name for the slide. This name will only be used to identify the slide"
             },
             "titleInput": {
                 "title": "Headline",
                 "placeholder": "Enter a Headline for your Slide",
-                "helpText": "Lege eine Überschrift für diesen Slide fest."
+                "helpText": "Set a heading for the slide."
             },
             "descriptionInput": {
                 "title": "Description",
                 "placeholder": "Enter a Description for your Slide",
-                "helpText": "Lege einen Beschreibungs-Text für diesen Slide fest."
+                "helpText": "Set a short description text for the slide. This will be displayed under the headline."
             },
             "buttonLabelInput": {
                 "title": "Button Label",
                 "placeholder": "Enter a Button Label for your Slide",
-                "helpText": "Lege die Beschriftung des Buttons fest."
+                "helpText": "Set the label of the button."
             },
             "urlInput": {
                 "title": "Slide URL",
                 "placeholder": "Enter a URL for your Slide",
-                "helpText": "Lege die Verlinkung des Slides fest."
+                "helpText": "Set the linking of the slide. This can be both an absolute and a relative URL."
             }
         },
         "mediaForm": {
             "cardTitle": "Media",
             "uploadInput": {
                 "title": "Slide Cover",
-                "helpText": "Lege ein Bild für deinen Slide fest"
+                "helpText": "This image is used as background of the slide"
             },
             "useAsCover": "Use as Cover"
+        },
+        "customFields": {
+            "cardTitle": "Custom Fields",
+            "onCreateMessage": "Please save the slide first. After that you can maintain the custom fields."
         }
     }
 }
