@@ -72,7 +72,7 @@ Component.register( 'blur-elysium-slides-create', {
             this.isLoading = true;
             this.isSaveSuccessful = false;
 
-            if ( this.blurElysiumSlides.name === undefined ) {
+            if ( this.blurElysiumSlides.name === undefined || this.blurElysiumSlides.name === "" ) {
                 this.createNotificationError({
                     message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError'),
                 });

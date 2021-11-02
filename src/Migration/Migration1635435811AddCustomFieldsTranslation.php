@@ -17,7 +17,7 @@ class Migration1635435811AddCustomFieldsTranslation extends MigrationStep
         $sql = <<<SQL
             ALTER TABLE `blur_elysium_slides_translation`
             ADD COLUMN `custom_fields` json DEFAULT NULL
-        SQL;
+SQL;
 
         // add custom field column
         $connection->executeStatement( $sql );
@@ -28,3 +28,4 @@ class Migration1635435811AddCustomFieldsTranslation extends MigrationStep
         // implement update destructive
     }
 }
+?>
