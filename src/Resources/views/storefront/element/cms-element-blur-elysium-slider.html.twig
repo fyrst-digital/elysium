@@ -1,4 +1,4 @@
-{% block cms_element_blur_elysium_slider %}
+{% block cms_element_blur_elysium_slider_root %}
 
     {% set sliderOverlay = element.translated.config.sliderOverlay.value %}
     {% set sliderSettingsNav = element.translated.config.sliderNavigation.value %}
@@ -22,84 +22,99 @@
         autoplayButtonOutput: false
     } %}
 
-    {% if sliderArrowColors or sliderDotColors or sliderDotActiveColors %}
+    {% block cms_element_blur_elysium_slider_css_styles %}
+
         {% apply spaceless %}
             <style>
-                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__control-button {
-                    color: {{ sliderArrowColors }};
-                }
-                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet {
-                    background-color: {{ sliderDotColors }};
-                }
-                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet:hover,
-                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet.tns-nav-active {
-                    background-color: {{ sliderDotActiveColors }};
-                }
+                {% if sliderArrowColors %}
+                    #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__control-button {
+                        color: {{ sliderArrowColors }};
+                    }                
+                {% endif %}
+                {% if sliderDotColors %}
+                    #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet {
+                        background-color: {{ sliderDotColors }};
+                    }                
+                {% endif %}
+                {% if sliderDotActiveColors %}
+                    #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet:hover,
+                    #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet.tns-nav-active {
+                        background-color: {{ sliderDotActiveColors }};
+                    }                
+                {% endif %}
+                {% block cms_element_blur_elysium_slider_css_styles_extend %}{% endblock %}
             </style>
         {% endapply %}
-    {% endif %}
+    {% endblock %}
 
-    <div id="elysiumSlider-{{ element.id }}" 
-        data-slider-settings='{{ sliderSettings|json_encode }}'
-        class="cms-element-elysium-slider{% if sliderSettingsNav %} has-navigation{% endif %}{% if sliderOverlay %} has-overlay{% endif %}">
+    {% block cms_element_blur_elysium_slider %}
+        {# your could override sliderSettings variables on this block #}
 
-        {% if element.data.slideCollection is empty %}
-            {% block cms_element_blur_elysium_slider_empty_state %}
-                <!-- no slide collection here -->
-            {% endblock %}
-        {% else %}
-            {% block cms_element_blur_elysium_slider_container %}
-                <div class="cms-element-elysium-slider__slide-container">
-                    {% for slide in element.data.slideCollection %}
-                        <div class="cms-element-elysium-slide__wrapper">
+        <div id="elysiumSlider-{{ element.id }}" 
+            data-slider-settings='{{ sliderSettings|json_encode }}'
+            class="cms-element-elysium-slider{% if sliderSettingsNav %} has-navigation{% endif %}{% if sliderOverlay %} has-overlay{% endif %}">
 
-                            {% block cms_element_blur_elysium_slide_include %}
-                                {% sw_include '@Storefront/storefront/element/blur-elysium-slide.html.twig' with {
-                                    slide: slide
-                                } only %}
-                            {% endblock %}        
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endblock %}
-        
-            {% block cms_element_blur_elysium_slider_controls %}
-                <div class="cms-element-elysium-slider__controls" 
-                     data-base-slider-controls="true">
-                    
-                    {% block cms_element_blur_elysium_slider_controls_prev %}
-                        <button type="button" class="cms-element-elysium-slider__control-button control-prev">
-                            {% block cms_element_blur_elysium_slider_controls_prev_icon %}
-                                {% sw_icon 'arrow-head-left' %}
-                            {% endblock %}
-                        </button>
-                    {% endblock %}
-                    
-                    {% block cms_element_blur_elysium_slider_controls_next %}
-                        <button type="button" class="cms-element-elysium-slider__control-button control-next">
-                            {% block cms_element_blur_elysium_slider_controls_next_icon %}
-                                {% sw_icon 'arrow-head-right' %}
-                            {% endblock %}
-                        </button>
-                    {% endblock %}
-                </div>
-            {% endblock %}
+            {% if element.data.slideCollection is empty %}
 
-            {% block cms_element_blur_elysium_slider_navigation %}
-            
-                {% if sliderSettingsNav %}
-                    <div class="cms-element-elysium-slider__navigation" 
-                        data-base-slider-nav="true">
-                        
+                {% block cms_element_blur_elysium_slider_empty_state %}
+                    <!-- no slide collection here -->
+                {% endblock %}
+            {% else %}
+
+                {% block cms_element_blur_elysium_slider_container %}
+                    <div class="cms-element-elysium-slider__slide-container">
+
                         {% for slide in element.data.slideCollection %}
-                            <div class="cms-element-elysium-slider__navigation-bullet"></div>
-                        {% endfor %}
-                    </div>                    
-                {% endif %}
-            {% endblock %}
-        {% endif %}
+                            <div class="cms-element-elysium-slide__wrapper">
 
-    </div>    
+                                {% block cms_element_blur_elysium_slide_include %}
+                                    {% sw_include '@Storefront/storefront/element/blur-elysium-slide.html.twig' with {
+                                        slide: slide
+                                    } only %}
+                                {% endblock %}        
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endblock %}
+            
+                {% block cms_element_blur_elysium_slider_controls %}
+                    <div class="cms-element-elysium-slider__controls" 
+                        data-base-slider-controls="true">
+                        
+                        {% block cms_element_blur_elysium_slider_controls_prev %}
+                            <button type="button" class="cms-element-elysium-slider__control-button control-prev">
+                                {% block cms_element_blur_elysium_slider_controls_prev_icon %}
+                                    {% sw_icon 'arrow-head-left' %}
+                                {% endblock %}
+                            </button>
+                        {% endblock %}
+                        
+                        {% block cms_element_blur_elysium_slider_controls_next %}
+                            <button type="button" class="cms-element-elysium-slider__control-button control-next">
+                                {% block cms_element_blur_elysium_slider_controls_next_icon %}
+                                    {% sw_icon 'arrow-head-right' %}
+                                {% endblock %}
+                            </button>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
+                {% block cms_element_blur_elysium_slider_navigation %}
+                
+                    {% if sliderSettingsNav %}
+                        <div class="cms-element-elysium-slider__navigation" 
+                            data-base-slider-nav="true">
+                            
+                            {% for slide in element.data.slideCollection %}
+                                <div class="cms-element-elysium-slider__navigation-bullet"></div>
+                            {% endfor %}
+                        </div>                    
+                    {% endif %}
+                {% endblock %}
+            {% endif %}
+
+        </div>  
+    {% endblock %}  
 {% endblock %}
 
 

@@ -20,6 +20,7 @@
             "emptySlidesSubtitle": "No Slides yet",
             "createSlideError": "The slide could not be saved.",
             "createSlideSuccess": "The slide was created.",
+            "saveSlideSuccess": "The slide was saved.",
             "missingSlideNameError": "Please enter a slide name."
         },
         "actions": {

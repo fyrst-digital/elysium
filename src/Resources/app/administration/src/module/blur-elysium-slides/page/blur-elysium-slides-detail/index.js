@@ -223,7 +223,7 @@ Component.register( 'blur-elysium-slides-detail', {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
                 this.createNotificationSuccess({
-                    message: this.$tc('BlurElysiumSlides.messages.createSlideSuccess')
+                    message: this.$tc('BlurElysiumSlides.messages.saveSlideSuccess')
                 });
                 this.createdComponent();
             }).catch(( exception ) => {
