@@ -1,45 +1,66 @@
-{% block cms_element_blur_elysium_slide %}
+{% block cms_element_blur_elysium_slide_root %}
+
+    {# @TODO slide setting for horizontal aligment #}
     {% set slideHorizonalAlignment = 'slide-horizontal-alignment__center' %}
     {% set slideHorizonalAlignment = 'slide-horizontal-alignment__right' %}
     {% set slideHorizonalAlignment = 'slide-horizontal-alignment__left' %}
 
-    {% if slide.media.url %}
+    {% block cms_element_blur_elysium_slide_css_styles %}
+
         {% apply spaceless %}
             <style>
-                [data-elysium-slide-id="{{ slide.id }}"] {
-                    background-image: url( {{ slide.media.url }} );
-                }
+                {% if slide.media.url %}
+                    [data-elysium-slide-id="{{ slide.id }}"] {
+                        background-image: url( {{ slide.media.url }} );
+                    }
+                {% endif %}
+                {% block cms_element_blur_elysium_slide_css_styles_extend %}{% endblock %}
             </style>
         {% endapply %}
-    {% endif %}
+    {% endblock %}
 
-    <div data-elysium-slide-id="{{ slide.id }}" 
-         class="cms-element-elysium-slide">
-        
-        <div class="cms-element-elysium-slide__container">
+    {% block cms_element_blur_elysium_slide %}
+        <div data-elysium-slide-id="{{ slide.id }}" 
+            class="cms-element-elysium-slide">
+            
+            {% block cms_element_blur_elysium_slide_container %}
+                <div class="cms-element-elysium-slide__container">
 
-            {% if slide.translated.title %}
-                <div class="cms-element-elysium-slide__title text-size-medium">
-                    {{ slide.translated.title }}
-                </div>                
-            {% endif %}
+                    {% block cms_element_blur_elysium_slide_title %}
+                        {% if slide.translated.title %}
+                            <div class="cms-element-elysium-slide__title text-size-medium">
+                                {{ slide.translated.title }}
+                            </div>                
+                        {% endif %}
+                    {% endblock %}
 
-            {% if slide.translated.title %}
-                <div class="cms-element-elysium-slide__description text-size-medium">
-                    {{ slide.translated.description }}
-                </div>                
-            {% endif %}
+                    {% block cms_element_blur_elysium_slide_description %}
+                        {% if slide.translated.description %}
+                            <div class="cms-element-elysium-slide__description text-size-medium">
+                                {{ slide.translated.description }}
+                            </div>                
+                        {% endif %}
+                    {% endblock %}
 
-            {% if slide.translated.button_label %}
-                <div class="cms-element-elysium-slide__actions">
-                    
-                    <a href="{{ slide.translated.url }}" 
-                       title="{{ slide.translated.button_label }}" 
-                       class="btn btn-light cms-element-elysium-slide__cta-button">
-                        {{ slide.translated.button_label }}
-                    </a>
-                </div>                
-            {% endif %}
+                    {% block cms_element_blur_elysium_slide_actions %}
+                        <div class="cms-element-elysium-slide__actions">
+                            
+                            {% block cms_element_blur_elysium_slide_action_cta_button %}
+                                {# @TODO add button icon? #}
+
+                                {% if slide.translated.button_label %}
+                                    <a href="{{ slide.translated.url }}" 
+                                    title="{{ slide.translated.button_label }}" 
+                                    class="btn btn-light cms-element-elysium-slide__cta-button">
+                                        {{ slide.translated.button_label }}
+                                    </a>
+                                {% endif %}
+                            {% endblock %}
+                        </div>                
+                    {% endblock %}
+
+                </div>
+            {% endblock %}
         </div>
-    </div>
+    {% endblock %}
 {% endblock %}

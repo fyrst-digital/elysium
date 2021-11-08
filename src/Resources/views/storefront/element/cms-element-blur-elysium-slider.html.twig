@@ -1,4 +1,4 @@
-{% block cms_element_blur_elysium_slider %}
+{% block cms_element_blur_elysium_slider_root %}
 
     {% set sliderOverlay = element.translated.config.sliderOverlay.value %}
     {% set sliderSettingsNav = element.translated.config.sliderNavigation.value %}
@@ -63,7 +63,7 @@
 
                 {% block cms_element_blur_elysium_slider_container %}
                     <div class="cms-element-elysium-slider__slide-container">
-                    
+
                         {% for slide in element.data.slideCollection %}
                             <div class="cms-element-elysium-slide__wrapper">
 
