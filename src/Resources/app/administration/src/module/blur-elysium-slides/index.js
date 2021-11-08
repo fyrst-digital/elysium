@@ -1,4 +1,3 @@
-import enGB from './snippet/en-GB.json';
 import './component/blur-elysium-slides-basic-form'; // Elysium Slide Basic Form
 import './page/blur-elysium-slides-list'; // List page component
 import './page/blur-elysium-slides-create'; // Create page component
@@ -63,31 +62,8 @@ Shopware.Module.register( 'blur-elysium-slides', {
                     };
                 },
             }
-        },
-            /**
-     * Importaant for further use
-        list: {
-            component: 'blur-elysium-slides-list',
-            path: 'list'
-        },
-
-        detail: {
-            component: 'swag-example-detail',
-            path: 'detail/:id',
-            meta: {
-                parentPath: 'swag.example.list'
-            }
-        },
-        create: {
-            component: 'swag-example-create',
-            path: 'create',
-            meta: {
-                parentPath: 'swag.example.list'
-            }
         }
-            */
     },
-
 
     navigation: [{
         id: 'blur-elysium-slides',
