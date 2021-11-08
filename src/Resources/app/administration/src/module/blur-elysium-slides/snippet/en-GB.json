@@ -71,7 +71,8 @@
         },
         "customFields": {
             "cardTitle": "Custom Fields",
-            "onCreateMessage": "Please save the slide first. After that you can maintain the custom fields."
+            "onCreateMessage": "Please save the slide first. After that you can maintain the custom fields.",
+            "emptyFieldSet": "You have not yet created any custom fields for the Elysium Slides. Go to the custom fields settings and create a set for the Elysium Slides."
         }
     }
 }

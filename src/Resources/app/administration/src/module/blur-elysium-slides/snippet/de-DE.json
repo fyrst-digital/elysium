@@ -71,7 +71,8 @@
         },
         "customFields": {
             "cardTitle": "Zusatzfelder",
-            "onCreateMessage": "Bitte speichere zuerst den Slide. Danach kannst du die Zusatzfelder pflegen."
+            "onCreateMessage": "Bitte speichere zuerst den Slide. Danach kannst du die Zusatzfelder pflegen.",
+            "emptyFieldSet": "Du hast für die Elysium Slides noch keine Zusatzfelder angelegt. Gehe in die Zusatzfelder Einstellungen und lege ein Set für die Elysium Slides an."
         }
     }
 }
