@@ -73,5 +73,5 @@ Shopware.Module.register( 'blur-elysium-slides', {
         icon: 'default-shopping-paper-bag-product',
         parent: 'sw-content',
         position: 100
-    }]
+    }],
 });

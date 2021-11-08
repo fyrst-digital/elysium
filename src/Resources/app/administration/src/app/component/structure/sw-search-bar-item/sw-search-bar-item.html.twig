@@ -1,8 +1,8 @@
-{% block sw_search_bar_item_cms_page %}
+{% block sw_search_bar_item_order %}
     {% parent %}
 
     <router-link v-else-if="type === 'blur_elysium_slides'"
-                 v-bind:to="{ name: 'blur.elysium.slides.index', params: { id: item.id } }"
+                 v-bind:to="{ name: 'blur.elysium.slides.detail', params: { id: item.id } }"
                  ref="routerLink"
                  class="sw-search-bar-item__link">
 

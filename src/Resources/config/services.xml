@@ -19,6 +19,7 @@
         <!-- Elysium Slides Entity Definition -->
         <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition">
             <tag name="shopware.entity.definition" entity="blur_elysium_slides" />
+            <tag name="shopware.composite_search.definition" priority="200"/>
         </service>
 
         <!-- Elysium Slides Entity Translation Definition -->
