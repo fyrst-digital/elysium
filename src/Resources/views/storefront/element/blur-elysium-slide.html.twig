@@ -6,10 +6,17 @@
     {% set slideHorizonalAlignment = 'slide-horizontal-alignment__left' %}
 
     {% block cms_element_blur_elysium_slide_css_styles %}
+    
+        {% set bgImageExtensionWhitelist = [
+            'jpg',
+            'jpeg',
+            'png',
+            'svg'
+        ] %}
 
         {% apply spaceless %}
             <style>
-                {% if slide.media.url %}
+                {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) %}
                     [data-elysium-slide-id="{{ slide.id }}"] {
                         background-image: url( {{ slide.media.url }} );
                     }
@@ -17,6 +24,10 @@
                 {% block cms_element_blur_elysium_slide_css_styles_extend %}{% endblock %}
             </style>
         {% endapply %}
+
+        <pre>
+            {{ dump( bgImageExtensionWhitelist ) }}
+        </pre>
     {% endblock %}
 
     {% block cms_element_blur_elysium_slide %}
