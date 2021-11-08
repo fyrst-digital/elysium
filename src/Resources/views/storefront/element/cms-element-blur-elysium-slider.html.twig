@@ -22,22 +22,30 @@
         autoplayButtonOutput: false
     } %}
 
-    {% if sliderArrowColors or sliderDotColors or sliderDotActiveColors %}
+    {% block cms_element_blur_elysium_slider_css_styles %}
+
         {% apply spaceless %}
             <style>
-                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__control-button {
-                    color: {{ sliderArrowColors }};
-                }
-                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet {
-                    background-color: {{ sliderDotColors }};
-                }
-                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet:hover,
-                #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet.tns-nav-active {
-                    background-color: {{ sliderDotActiveColors }};
-                }
+                {% if sliderArrowColors %}
+                    #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__control-button {
+                        color: {{ sliderArrowColors }};
+                    }                
+                {% endif %}
+                {% if sliderDotColors %}
+                    #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet {
+                        background-color: {{ sliderDotColors }};
+                    }                
+                {% endif %}
+                {% if sliderDotActiveColors %}
+                    #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet:hover,
+                    #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet.tns-nav-active {
+                        background-color: {{ sliderDotActiveColors }};
+                    }                
+                {% endif %}
+                {% block cms_element_blur_elysium_slider_css_styles_extend %}{% endblock %}
             </style>
         {% endapply %}
-    {% endif %}
+    {% endblock %}
 
     <div id="elysiumSlider-{{ element.id }}" 
         data-slider-settings='{{ sliderSettings|json_encode }}'
