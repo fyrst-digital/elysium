@@ -48,7 +48,7 @@
                 <sw-language-switch
                     :save-changes-function="saveOnLanguageChange"
                     :abort-change-function="abortOnLanguageChange"
-                    :disabled="!blurElysiumSlideId"
+                    :disabled="blurElysiumSlideId === null"
                     @on-change="onChangeLanguage"
                 />
             </template>
@@ -66,10 +66,17 @@
 
                         {% block blur_elysium_slides_detail_view_basic_form %}
                             <blur-elysium-slides-basic-form
-                                v-if="!isLoading"
+                                v-if="!isLoading && currentRoute == detailRoute"
                                 :blur-elysium-slides="blurElysiumSlide"
                                 :allow-edit="acl.can('blur_slides_elysium.editor')"
                             />
+                            <template v-else>
+                                <blur-elysium-slides-basic-form
+                                    v-if="!isLoading &&  elysiumSlideCreate !== undefined"
+                                    :blur-elysium-slides="elysiumSlideCreate"
+                                    :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                />
+                            </template>
                         {% endblock %}
                     </sw-card>
                 {% endblock %}
@@ -81,24 +88,26 @@
                     >
 
                         {% block blur_elysium_slides_detail_view_input_media_upload %}
-                            <sw-upload-listener
-                                :upload-tag="uploadTag"
-                                auto-upload
-                                @media-upload-finish="setMediaItem"
-                            />
-                            <sw-media-upload-v2
-                                :disabled="!acl.can('blur_slides_elysium.editor')"
-                                :upload-tag="uploadTag"
-                                :source="mediaItem"
-                                class="blur-elysium-slides__media-upload"
-                                :allow-multi-select="false"
-                                variant="regular"
-                                :label="$tc('BlurElysiumSlides.mediaForm.uploadInput.title')"
-                                :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
-                                @media-drop="onDropMedia"
-                                @media-upload-sidebar-open="onOpenMedia"
-                                @media-upload-remove-image="onUnlinkMedia"
-                            />
+
+                                
+                                <sw-upload-listener
+                                    :upload-tag="uploadTag"
+                                    auto-upload
+                                    @media-upload-finish="setMediaItem"
+                                />
+                                <sw-media-upload-v2
+                                    :disabled="!acl.can('blur_slides_elysium.editor')"
+                                    :upload-tag="uploadTag"
+                                    :source="mediaItem"
+                                    class="blur-elysium-slides__media-upload"
+                                    :allow-multi-select="false"
+                                    variant="regular"
+                                    :label="$tc('BlurElysiumSlides.mediaForm.uploadInput.title')"
+                                    :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
+                                    @media-drop="onDropMedia"
+                                    @media-upload-sidebar-open="onOpenMedia"
+                                    @media-upload-remove-image="onUnlinkMedia"
+                                />
                         {% endblock %}
 
                     </sw-card>
@@ -109,15 +118,24 @@
                             v-if="customFieldSets !== undefined"
                             :isLoading="isLoading">
 
-                        <sw-custom-field-set-renderer
-                            v-if="customFieldSets.length > 0"
-                            :entity="blurElysiumSlide"
-                            :sets="customFieldSets">
-                        </sw-custom-field-set-renderer>
+                        <template v-if="currentRoute == detailRoute">
 
-                        <sw-alert v-else variant="warning" appearance="default" :showIcon="true" :closable="false">
-                            {{ $tc('BlurElysiumSlides.customFields.emptyFieldSet') }}
-                        </sw-alert>
+                            <sw-custom-field-set-renderer
+                                v-if="customFieldSets.length > 0"
+                                :entity="blurElysiumSlide"
+                                :sets="customFieldSets">
+                            </sw-custom-field-set-renderer>
+
+                            <sw-alert v-else variant="warning" appearance="default" :showIcon="true" :closable="false">
+                                {{ $tc('BlurElysiumSlides.customFields.emptyFieldSet') }}
+                            </sw-alert>
+                        </template>
+                        <template v-else>
+
+                            <sw-alert variant="info" appearance="default" :showIcon="true" :closable="false">
+                                {{ $tc('BlurElysiumSlides.customFields.onCreateMessage') }}
+                            </sw-alert>
+                        </template>
                     </sw-card>
                 {% endblock %}
 

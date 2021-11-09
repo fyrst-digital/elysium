@@ -15,7 +15,7 @@ Component.register( 'blur-elysium-slides-basic-form', {
         blurElysiumSlides: {
             type: Object,
             required: true,
-        },
+        }
     },
 
     computed: {
@@ -25,5 +25,4 @@ Component.register( 'blur-elysium-slides-basic-form', {
 
     created() {
     }
-
 });
