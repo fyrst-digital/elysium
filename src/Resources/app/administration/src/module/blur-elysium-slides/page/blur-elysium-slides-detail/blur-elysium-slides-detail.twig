@@ -97,11 +97,13 @@
                                         >
 
                                             {% block blur_elysium_slides_detail_view_basic_form %}
-                                                <blur-elysium-slides-basic-form
-                                                    v-if="!isLoading && currentRoute == detailRoute"
-                                                    :blur-elysium-slides="blurElysiumSlide"
-                                                    :allow-edit="acl.can('blur_slides_elysium.editor')"
-                                                />
+                                                <template v-if="currentRoute == detailRoute">
+                                                    <blur-elysium-slides-basic-form
+                                                        v-if="!isLoading"
+                                                        :blur-elysium-slides="blurElysiumSlide"
+                                                        :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                                    />
+                                                </template>
                                                 <template v-else>
                                                     <blur-elysium-slides-basic-form v-else
                                                         v-if="!isLoading && elysiumSlideCreate !== undefined"
