@@ -167,8 +167,6 @@ Component.register( 'blur-elysium-slides-detail', {
                 } else {
                     this.elysiumSlideCreate.mediaId = mediaId;
                 }
-                
-                console.dir( this.elysiumSlideCreate.mediaId );
             }).catch(( exception ) => {
                 console.warn( exception );
             });
@@ -268,9 +266,6 @@ Component.register( 'blur-elysium-slides-detail', {
                         message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError'),
                     });
                 }
-
-                console.dir( this.elysiumSlideCreate );
-                console.dir( this.elysiumSlideCreate.mediaId );
 
                 // create new slide
                 return this.elysiumSlidesRepository.save( this.elysiumSlideCreate, Shopware.Context.api ).then(() => {
