@@ -135,6 +135,15 @@ Component.register( 'blur-elysium-slides-detail', {
                 Shopware.State.commit('context/resetLanguageToDefault');
             }
 
+            console.dir( this.currentTab );
+
+            /*
+            if ( this.currentTab === null ) {
+                // set the first item of tab collection as default
+                this.currentTab = this.tabItems[0].component;
+            }
+            */
+
             this.isLoading = true;
 
             if ( this.blurElysiumSlideId !== null ) {

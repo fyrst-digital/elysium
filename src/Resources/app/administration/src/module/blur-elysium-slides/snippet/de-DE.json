@@ -33,6 +33,9 @@
                 "title": "Überschrift"
             }
         },
+        "tabs": {
+            "generalLabel": "Allgemein"
+        },
         "baseForm": {
             "cardTitle": "Inhalt",
             "labelInput": {

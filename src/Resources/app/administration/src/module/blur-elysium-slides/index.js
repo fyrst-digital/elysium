@@ -61,6 +61,15 @@ Shopware.Module.register( 'blur-elysium-slides', {
                         blurElysiumSlideId: route.params.id,
                     };
                 },
+            },
+            children: {
+                base: {
+                    component: 'blur-elysium-slides-base',
+                    path: 'base',
+                    meta: {
+                        parentPath: 'blur.elysium.slides.index'
+                    },
+                }
             }
         }
     },
