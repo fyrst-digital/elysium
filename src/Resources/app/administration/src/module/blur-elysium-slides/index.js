@@ -1,6 +1,6 @@
 import './component/blur-elysium-slides-basic-form'; // Elysium Slide Basic Form
 import './page/blur-elysium-slides-list'; // List page component
-import './page/blur-elysium-slides-create'; // Create page component
+// import './page/blur-elysium-slides-create'; // Create page component
 import './page/blur-elysium-slides-detail'; // Detail page component
 import './acl'; // ACL Privilages
 
@@ -42,7 +42,7 @@ Shopware.Module.register( 'blur-elysium-slides', {
         },
 
         create: {
-            component: 'blur-elysium-slides-create',
+            component: 'blur-elysium-slides-detail',
             path: 'create',
             meta: {
                 parentPath: 'blur.elysium.slides.index'
@@ -61,6 +61,15 @@ Shopware.Module.register( 'blur-elysium-slides', {
                         blurElysiumSlideId: route.params.id,
                     };
                 },
+            },
+            children: {
+                base: {
+                    component: 'blur-elysium-slides-base',
+                    path: 'base',
+                    meta: {
+                        parentPath: 'blur.elysium.slides.index'
+                    },
+                }
             }
         }
     },

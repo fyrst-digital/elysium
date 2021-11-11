@@ -22,7 +22,8 @@ Component.register( 'blur-elysium-slides-detail', {
     props: {
         blurElysiumSlideId: {
             type: String,
-            required: true,
+            required: false,
+            default: null
         },
     },
 
@@ -34,6 +35,8 @@ Component.register( 'blur-elysium-slides-detail', {
             blurElysiumSlide: null,
             mediaItem: null,
             customFieldSets: [],
+            detailRoute: 'blur.elysium.slides.detail',
+            createRoute: 'blur.elysium.slides.create',
             uploadTag: 'blur-elysium-slide-upload-tag'
         };
     },
@@ -49,6 +52,10 @@ Component.register( 'blur-elysium-slides-detail', {
             return this.slideLabel;
         },
 
+        currentRoute() {
+            return this.$route.name;
+        },
+
         slideLabel() {
 
             if (!this.$i18n) {
@@ -61,6 +68,10 @@ Component.register( 'blur-elysium-slides-detail', {
 
         elysiumSlidesRepository() {
             return this.repositoryFactory.create('blur_elysium_slides');
+        },
+
+        elysiumSlideCreate() {
+            return this.elysiumSlidesRepository.create( Shopware.Context.api );
         },
 
         mediaRepository() {
@@ -120,29 +131,42 @@ Component.register( 'blur-elysium-slides-detail', {
 
         createdComponent() {
             
+            if ( this.currentRoute === this.createRoute ) {
+                Shopware.State.commit('context/resetLanguageToDefault');
+            }
+
             this.isLoading = true;
 
-            this.elysiumSlidesRepository.get(
-                this.blurElysiumSlideId,
-                Shopware.Context.api,
-                this.defaultCriteria,
-            ).then((blurElysiumSlide) => {
-                this.blurElysiumSlide = blurElysiumSlide;
+            if ( this.blurElysiumSlideId !== null ) {
 
-                if ( blurElysiumSlide.mediaId ) {
-                    this.setMediaItem( blurElysiumSlide.mediaId );
-                }
-                
-                this.isLoading = false;
-            });
+                this.elysiumSlidesRepository.get(
+                    this.blurElysiumSlideId,
+                    Shopware.Context.api,
+                    this.defaultCriteria,
+                ).then((blurElysiumSlide) => {
+                    this.blurElysiumSlide = blurElysiumSlide;
+       
+                    if ( blurElysiumSlide.mediaId ) {
+                        this.setMediaItem( blurElysiumSlide.mediaId );
+                    }
+                    
+                    this.isLoading = false;
+                });                
+            }
         },
 
         setMediaItem( mediaId ) {
 
             this.mediaRepository.get( mediaId, Shopware.Context.api )
             .then( ( updatedMedia ) => {
+
                 this.mediaItem = updatedMedia;
-                this.blurElysiumSlide.mediaId = mediaId;
+
+                if ( this.blurElysiumSlide !== null ) {
+                    this.blurElysiumSlide.mediaId = mediaId;
+                } else {
+                    this.elysiumSlideCreate.mediaId = mediaId;
+                }
             }).catch(( exception ) => {
                 console.warn( exception );
             });
@@ -213,25 +237,53 @@ Component.register( 'blur-elysium-slides-detail', {
             this.isLoading = true;
             this.isSaveSuccessful = false;
 
-            if ( ( this.blurElysiumSlide !== null || this.blurElysiumSlide !== undefined ) && ( this.blurElysiumSlide.name === undefined || this.blurElysiumSlide.name === "" ) ) {
-                this.createNotificationError({
-                    message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError'),
+            if ( !( this.blurElysiumSlide === null || this.blurElysiumSlide === undefined ) ) {
+
+                // save existend slide
+                if ( this.blurElysiumSlide.name === undefined || this.blurElysiumSlide.name === "" ) {
+                    this.createNotificationError({
+                        message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError')
+                    });                    
+                }
+
+                return this.elysiumSlidesRepository.save( this.blurElysiumSlide, Shopware.Context.api ).then(() => {
+                    this.isSaveSuccessful = true;
+                    this.createNotificationSuccess({
+                        message: this.$tc('BlurElysiumSlides.messages.saveSlideSuccess')
+                    });
+                    this.createdComponent();
+                    this.isLoading = false;
+                }).catch(( exception ) => {
+                    this.createNotificationError({
+                        message: this.$tc('BlurElysiumSlides.messages.createSlideError'),
+                    });
+                    this.isLoading = false;
+                });
+            } else {
+
+                if ( this.elysiumSlideCreate.name === undefined || this.elysiumSlideCreate.name === "" ) {
+                    this.createNotificationError({
+                        message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError'),
+                    });
+                }
+
+                // create new slide
+                return this.elysiumSlidesRepository.save( this.elysiumSlideCreate, Shopware.Context.api ).then(() => {
+                    
+                    this.isSaveSuccessful = true;
+                    this.createNotificationSuccess({
+                        message: this.$tc('BlurElysiumSlides.messages.createSlideSuccess')
+                    });
+                    this.createdComponent();
+                    this.isLoading = false;
+                    this.$router.push({ name: 'blur.elysium.slides.index' });
+                }).catch(( exception ) => {
+                    this.createNotificationError({
+                        message: this.$tc('BlurElysiumSlides.messages.createSlideError')
+                    });
+                    this.isLoading = false;
                 });
             }
-
-            return this.elysiumSlidesRepository.save( this.blurElysiumSlide, Shopware.Context.api ).then(() => {
-                this.isLoading = false;
-                this.isSaveSuccessful = true;
-                this.createNotificationSuccess({
-                    message: this.$tc('BlurElysiumSlides.messages.saveSlideSuccess')
-                });
-                this.createdComponent();
-            }).catch(( exception ) => {
-                this.createNotificationError({
-                    message: this.$tc('BlurElysiumSlides.messages.createSlideError'),
-                });
-                this.isLoading = false;
-            });
         },
 
         saveOnLanguageChange() {
@@ -256,7 +308,7 @@ Component.register( 'blur-elysium-slides-detail', {
             this.editMode = false;
         },
 
-        onDropMedia(mediaItem) {
+        onDropMedia( mediaItem ) {
             this.setMediaItem( mediaItem.id );
         },
 

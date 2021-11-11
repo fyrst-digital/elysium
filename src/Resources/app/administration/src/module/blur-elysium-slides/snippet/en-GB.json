@@ -33,6 +33,9 @@
                 "title": "Headline"
             }
         },
+        "tabs": {
+            "generalLabel": "General"
+        },
         "baseForm": {
             "cardTitle": "Content",
             "labelInput": {
