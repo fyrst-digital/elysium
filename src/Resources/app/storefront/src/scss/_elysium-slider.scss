@@ -2,10 +2,18 @@
     position: relative;
 }
 
+.cms-element-elysium-slider__slide-container {
+    @extend .d-flex,
+    .flex-nowrap,
+    .align-items-stretch,
+    .justify-content-start;
+}
+
 .cms-element-elysium-slide {
     @extend .d-flex,
     .flex-wrap;
     position: relative;
+    height: 100%;
     background: {
         position: center center;
         size: cover;
