@@ -13,6 +13,9 @@
                 "sliderOverlay": {
                     "label": "Slider Overlay"
                 },
+                "imageFlowMode": {
+                    "label": "Image-Flow Modus"
+                },
                 "slideSpeed": {
                     "label": "Slide-Geschwindigkeit",
                     "placeholder": "Zeit in Millisekunden"

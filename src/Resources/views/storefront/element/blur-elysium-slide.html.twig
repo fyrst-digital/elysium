@@ -5,18 +5,18 @@
     {% set slideHorizonalAlignment = 'slide-horizontal-alignment__right' %}
     {% set slideHorizonalAlignment = 'slide-horizontal-alignment__left' %}
 
+    {% set bgImageExtensionWhitelist = [
+        'jpg',
+        'jpeg',
+        'png',
+        'svg'
+    ] %}
+
     {% block cms_element_blur_elysium_slide_css_styles %}
     
-        {% set bgImageExtensionWhitelist = [
-            'jpg',
-            'jpeg',
-            'png',
-            'svg'
-        ] %}
-
         {% apply spaceless %}
             <style>
-                {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) %}
+                {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode is same as( false ) %}
                     [data-elysium-slide-id="{{ slide.id }}"] {
                         background-image: url( {{ slide.media.url }} );
                     }
@@ -28,8 +28,16 @@
 
     {% block cms_element_blur_elysium_slide %}
         <div data-elysium-slide-id="{{ slide.id }}" 
-            class="cms-element-elysium-slide">
-            
+            class="cms-element-elysium-slide{% if imageFlowMode %} image-flow-mode{% endif %}">
+
+            {% block cms_element_blur_elysium_slide_cover_image_element %}
+                {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode %}
+                    <img src="{{ slide.media.url }}" 
+                        alt="{{ slide.translated.title }}" 
+                        class="cms-element-elysium-slide__cover-image-element">
+                {% endif %}
+            {% endblock %}
+
             {% block cms_element_blur_elysium_slide_container %}
                 <div class="cms-element-elysium-slide__container">
 

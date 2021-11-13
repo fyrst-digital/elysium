@@ -44,6 +44,10 @@ Shopware.Service('cmsService').registerCmsElement({
         sliderDotActiveColor: {
             source: 'static',
             value: null
+        },
+        imageFlowMode: {
+            source: 'static',
+            value: false
         }
     }
 });
