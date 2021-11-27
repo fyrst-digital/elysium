@@ -20,6 +20,17 @@
     margin: 0;
 }
 
+.bc-field__inline-helptext {
+
+    .sw-field__label {
+        
+        label {
+            margin-right: 0;
+            padding-right: 1rem;
+        }
+    }
+}
+
 .bc-field__px-1 {
     padding-top: 1rem;
     padding-bottom: 1rem;

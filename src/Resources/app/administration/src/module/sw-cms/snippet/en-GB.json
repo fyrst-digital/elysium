@@ -14,7 +14,8 @@
                     "label": "Slider Overlay"
                 },
                 "imageFlowMode": {
-                    "label": "Image-Flow Mode"
+                    "label": "Image-Flow Mode",
+                    "helpText": "In image flow mode, the slider is scaled based on the slide covers. The height of the slider is variable, depending on the image height of the slide covers."
                 },
                 "slideSpeed": {
                     "label": "Slide Speed",
@@ -28,13 +29,13 @@
                     "placeholder": "Time in Millisecond"
                 },
                 "sliderArrowColor": {
-                    "label": "Color"
+                    "label": "Arrow Color"
                 },
                 "sliderDotColor": {
-                    "label": "Color"
+                    "label": "Dot Color"
                 },
                 "sliderDotActiveColor": {
-                    "label": "Color (Active)"
+                    "label": "Dot Color (Active)"
                 },
                 "tabs": {
                     "content": "Content",
