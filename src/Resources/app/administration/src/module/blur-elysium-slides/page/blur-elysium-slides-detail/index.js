@@ -157,6 +157,8 @@ Component.register( 'blur-elysium-slides-detail', {
 
         setMediaItem( mediaId ) {
 
+            console.dir( mediaId );
+
             this.mediaRepository.get( mediaId, Shopware.Context.api )
             .then( ( updatedMedia ) => {
 
@@ -310,6 +312,10 @@ Component.register( 'blur-elysium-slides-detail', {
 
         onDropMedia( mediaItem ) {
             this.setMediaItem( mediaItem.id );
+        },
+
+        onUploadMedia( mediaItem ) {
+            this.setMediaItem( mediaItem.targetId );
         },
 
         onOpenMedia() {

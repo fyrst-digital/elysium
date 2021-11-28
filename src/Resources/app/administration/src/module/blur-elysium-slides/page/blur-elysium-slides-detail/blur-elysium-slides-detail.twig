@@ -126,7 +126,7 @@
                                                 <sw-upload-listener
                                                     :upload-tag="uploadTag"
                                                     auto-upload
-                                                    @media-upload-finish="setMediaItem"
+                                                    @media-upload-finish="onUploadMedia"
                                                 />
                                                 <sw-media-upload-v2
                                                     :disabled="!acl.can('blur_slides_elysium.editor')"

@@ -89,6 +89,15 @@
                                                         class="bc-field__no-margin">
                                                     </sw-switch-field>
                                                 {% endblock %}
+
+                                                {% block blur_cms_config_elysium_slider_image_flow_mode %}
+                                                    <sw-switch-field 
+                                                        :help-text="$tc('blurElysiumSlider.cmsElement.config.imageFlowMode.helpText')"
+                                                        :label="$tc('blurElysiumSlider.cmsElement.config.imageFlowMode.label')"
+                                                        v-model="element.config.imageFlowMode.value"
+                                                        class="bc-field__no-margin bc-field__inline-helptext bc-helptext__color-light">
+                                                    </sw-switch-field>
+                                                {% endblock %}
                                             </div>
 
                                             <div>
