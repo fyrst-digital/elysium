@@ -5,8 +5,8 @@
             <template #smart-bar-header>
 
                 {% block blur_elysium_slides_detail_view_smart_bar_header_title %}
-                    <h2 v-if="blurElysiumSlide && blurElysiumSlide.name">
-                        {{ blurElysiumSlide.name }}
+                    <h2>
+                        {{ slideLabel }}
                     </h2>
                 {% endblock %}
             </template>
@@ -105,7 +105,7 @@
                                                     />
                                                 </template>
                                                 <template v-else>
-                                                    <blur-elysium-slides-basic-form v-else
+                                                    <blur-elysium-slides-basic-form
                                                         v-if="!isLoading && elysiumSlideCreate !== undefined"
                                                         :blur-elysium-slides="elysiumSlideCreate"
                                                         :allow-edit="acl.can('blur_slides_elysium.editor')"

@@ -2,115 +2,57 @@
     <sw-container columns="1fr" gap="0 32px">
 
         {% block blur_elysium_slides_input_name %}
-            <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
-                <div class="sw-field__label">
-                    <label>{{ $tc('BlurElysiumSlides.baseForm.labelInput.title') }}</label>
-                    <sw-help-text 
-                        :text="$tc('BlurElysiumSlides.baseForm.labelInput.helpText')" 
-                        :width="200" 
-                        tooltipPosition="top" 
-                        :showDelay="100" 
-                        :hideDelay="100">
-                    </sw-help-text>
-                </div>
-                <div class="sw-block-field__block">
-                    <input 
-                        type="text" 
-                        required
-                        :placeholder="$tc('BlurElysiumSlides.baseForm.labelInput.placeholder')"
-                        name="blurElysiumSlides.name" 
-                        v-model="blurElysiumSlides.name" />
-                </div>
-            </div>
+            <sw-field
+                type="text"
+                v-model="slide.name" 
+                :error="blurElysiumSlidesNameError"
+                :label="$tc('BlurElysiumSlides.baseForm.labelInput.title')"
+                :placeholder="placeholder(slide, 'name', this.$tc('BlurElysiumSlides.baseForm.labelInput.placeholder') )"
+                :helpText="$tc('BlurElysiumSlides.baseForm.labelInput.helpText')"
+                required
+            />
         {% endblock %}
 
         {% block blur_elysium_slides_input_title %}
-            <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
-                <div class="sw-field__label">
-                    <label>{{ $tc('BlurElysiumSlides.baseForm.titleInput.title') }}</label>
-                    <sw-help-text 
-                        :text="$tc('BlurElysiumSlides.baseForm.titleInput.helpText')" 
-                        :width="200" 
-                        tooltipPosition="top" 
-                        :showDelay="100" 
-                        :hideDelay="100">
-                    </sw-help-text>
-                </div>
-                <div class="sw-block-field__block">
-                    <input 
-                        type="text" 
-                        :placeholder="$tc('BlurElysiumSlides.baseForm.titleInput.placeholder')"
-                        name="blurElysiumSlides.title" 
-                        v-model="blurElysiumSlides.title" />
-                </div>
-            </div>
+            <sw-field
+                type="text"
+                v-model="slide.title" 
+                :label="$tc('BlurElysiumSlides.baseForm.titleInput.title')"
+                :placeholder="placeholder(slide, 'title', this.$tc('BlurElysiumSlides.baseForm.titleInput.placeholder') )"
+                :helpText="$tc('BlurElysiumSlides.baseForm.titleInput.helpText')"
+            />
         {% endblock %}
 
         {% block blur_elysium_slides_input_description %}
-            <div class="sw-field sw-block-field sw-field--textarea sw-field--default">
-                <div class="sw-field__label">
-                    <label>{{ $tc('BlurElysiumSlides.baseForm.descriptionInput.title') }}</label>
-                    <sw-help-text 
-                        :text="$tc('BlurElysiumSlides.baseForm.descriptionInput.helpText')" 
-                        :width="200" 
-                        tooltipPosition="top" 
-                        :showDelay="100" 
-                        :hideDelay="100">
-                    </sw-help-text>
-                </div>
-                <div class="sw-block-field__block">
-                    <textarea
-                        :placeholder="$tc('BlurElysiumSlides.baseForm.descriptionInput.placeholder')"
-                        name="blurElysiumSlides.description" 
-                        v-model="blurElysiumSlides.description"></textarea>
-                </div>
-            </div>
+            <sw-field
+                type="textarea"
+                v-model="slide.description" 
+                :label="$tc('BlurElysiumSlides.baseForm.descriptionInput.title')"
+                :placeholder="placeholder(slide, 'description', this.$tc('BlurElysiumSlides.baseForm.descriptionInput.placeholder') )"
+                :helpText="$tc('BlurElysiumSlides.baseForm.descriptionInput.helpText')"
+            />
         {% endblock %}
 
         <sw-container columns="1fr 1fr" gap="0 32px">
 
             {% block blur_elysium_slides_input_button_label %}
-                <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
-                    <div class="sw-field__label">
-                        <label>{{ $tc('BlurElysiumSlides.baseForm.buttonLabelInput.title') }}</label>
-                        <sw-help-text 
-                            :text="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.helpText')" 
-                            :width="200" 
-                            tooltipPosition="top" 
-                            :showDelay="100" 
-                            :hideDelay="100">
-                        </sw-help-text>
-                    </div>
-                    <div class="sw-block-field__block">
-                        <input 
-                            type="text" 
-                            :placeholder="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.placeholder')"
-                            name="blurElysiumSlides.button_label" 
-                            v-model="blurElysiumSlides.button_label" />
-                    </div>
-                </div>
+                <sw-field
+                    type="text"
+                    v-model="slide.button_label" 
+                    :label="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.title')"
+                    :placeholder="placeholder(slide, 'button_label', this.$tc('BlurElysiumSlides.baseForm.buttonLabelInput.placeholder') )"
+                    :helpText="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.helpText')"
+                />
             {% endblock %}
             
             {% block blur_elysium_slides_input_url %}
-                <div class="sw-field sw-block-field sw-contextual-field sw-field--text sw-field--default">
-                    <div class="sw-field__label">
-                        <label>{{ $tc('BlurElysiumSlides.baseForm.urlInput.title') }}</label>
-                        <sw-help-text 
-                            :text="$tc('BlurElysiumSlides.baseForm.urlInput.helpText')" 
-                            :width="200" 
-                            tooltipPosition="top" 
-                            :showDelay="100" 
-                            :hideDelay="100">
-                        </sw-help-text>
-                    </div>
-                    <div class="sw-block-field__block">
-                        <input 
-                            type="text" 
-                            :placeholder="$tc('BlurElysiumSlides.baseForm.urlInput.placeholder')"
-                            name="blurElysiumSlides.url" 
-                            v-model="blurElysiumSlides.url" />
-                    </div>
-                </div>
+                <sw-field
+                    type="text"
+                    v-model="slide.url" 
+                    :label="$tc('BlurElysiumSlides.baseForm.urlInput.title')"
+                    :placeholder="placeholder(slide, 'url', this.$tc('BlurElysiumSlides.baseForm.urlInput.placeholder') )"
+                    :helpText="$tc('BlurElysiumSlides.baseForm.urlInput.helpText')"
+                />
             {% endblock %}
             
         </sw-container>

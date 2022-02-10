@@ -24,6 +24,7 @@
             "missingSlideNameError": "Bitte gib einen Slide Namen an."
         },
         "actions": {
+            "newSlide": "Neuer Slide",
             "createSlide": "Slide erstellen",
             "createSlideNoLanguageChange": "Neue Slides können nur in der System Standardsprache angelegt werden"
         },

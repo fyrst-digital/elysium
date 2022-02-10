@@ -11,6 +11,10 @@ const propErrors = [
 Component.register( 'blur-elysium-slides-basic-form', {
     template,
 
+    mixins: [
+        Mixin.getByName('placeholder'),
+    ],
+
     props: {
         blurElysiumSlides: {
             type: Object,
@@ -19,10 +23,15 @@ Component.register( 'blur-elysium-slides-basic-form', {
     },
 
     computed: {
-    
+        
+        ...mapState('blurElysiumSlidesDetail', [
+            'slide'
+        ]),
+        
         ...mapPropertyErrors( 'blurElysiumSlides' , propErrors)
     },
 
     created() {
+        console.dir( this );
     }
 });

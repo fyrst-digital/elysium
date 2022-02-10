@@ -24,6 +24,7 @@
             "missingSlideNameError": "Please enter a slide name."
         },
         "actions": {
+            "newSlide": "New Slide",
             "createSlide": "Create Slide",
             "createSlideNoLanguageChange": "New Slide can only be created in our chosen system default language"
         },
