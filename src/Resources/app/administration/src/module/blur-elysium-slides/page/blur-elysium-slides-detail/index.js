@@ -370,6 +370,10 @@ Component.register( 'blur-elysium-slides-detail', {
         },
 
         onAbortButtonClick() {
+            /**
+             * @TODO nothin happens here. discardChanges() eeven doesn't exist
+             * make it work please
+             */
             this.discardChanges();
             this.editMode = false;
         },
