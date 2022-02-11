@@ -33,6 +33,5 @@ Component.register( 'blur-elysium-slides-basic-form', {
     },
 
     created() {
-        console.dir( this );
     }
 });
