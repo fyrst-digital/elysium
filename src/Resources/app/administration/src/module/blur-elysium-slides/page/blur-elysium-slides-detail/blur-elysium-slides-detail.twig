@@ -97,20 +97,10 @@
                                         >
 
                                             {% block blur_elysium_slides_detail_view_basic_form %}
-                                                <template v-if="currentRoute == detailRoute">
-                                                    <blur-elysium-slides-basic-form
-                                                        v-if="!isLoading"
-                                                        :blur-elysium-slides="blurElysiumSlide"
-                                                        :allow-edit="acl.can('blur_slides_elysium.editor')"
-                                                    />
-                                                </template>
-                                                <template v-else>
-                                                    <blur-elysium-slides-basic-form
-                                                        v-if="!isLoading && elysiumSlideCreate !== undefined"
-                                                        :blur-elysium-slides="elysiumSlideCreate"
-                                                        :allow-edit="acl.can('blur_slides_elysium.editor')"
-                                                    />
-                                                </template>
+                                                <blur-elysium-slides-basic-form
+                                                    v-if="!isLoading"
+                                                    :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                                />
                                             {% endblock %}
                                         </sw-card>
                                     {% endblock %}
@@ -155,7 +145,7 @@
 
                                                 <sw-custom-field-set-renderer
                                                     v-if="customFieldSets.length > 0"
-                                                    :entity="blurElysiumSlide"
+                                                    :entity="slide"
                                                     :sets="customFieldSets">
                                                 </sw-custom-field-set-renderer>
 

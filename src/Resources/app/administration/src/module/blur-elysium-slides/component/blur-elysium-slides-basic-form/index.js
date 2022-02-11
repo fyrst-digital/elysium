@@ -16,9 +16,10 @@ Component.register( 'blur-elysium-slides-basic-form', {
     ],
 
     props: {
-        blurElysiumSlides: {
-            type: Object,
-            required: true,
+        allowEdit: {
+            type: Boolean,
+            required: false,
+            default: true,
         }
     },
 

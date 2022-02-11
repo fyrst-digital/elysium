@@ -200,12 +200,13 @@ Component.register( 'blur-elysium-slides-detail', {
                     Shopware.Context.api,
                     this.defaultCriteria,
                 ).then((blurElysiumSlide) => {
-                    this.blurElysiumSlide = blurElysiumSlide;
-                    Shopware.State.commit('blurElysiumSlidesDetail/setSlide', blurElysiumSlide);
                     
                     if ( blurElysiumSlide.mediaId ) {
                         this.setMediaItem( blurElysiumSlide.mediaId );
                     }
+                    
+                    this.blurElysiumSlide = blurElysiumSlide;
+                    Shopware.State.commit('blurElysiumSlidesDetail/setSlide', blurElysiumSlide);
 
                     this.isLoading = false;
                 });                
