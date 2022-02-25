@@ -2,6 +2,7 @@
     <sw-card
         :title="$tc('BlurElysiumSlides.settingsForm.cardTitle')"
         :is-loading="isLoading"
+        v-if="!isLoading && slide.slideSettings"
     >
 
         {% block blur_elysium_slides_input_container_settings %}

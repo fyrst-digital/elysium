@@ -46,6 +46,7 @@
             {% endblock %}
 
                 <sw-select-field 
+                    v-if="slide.slideSettings"
                     v-model="slide.slideSettings.urlTarget"
                     class="bc__my-0"
                     :label="$tc('BlurElysiumSlides.settingsForm.urlSettings.target.label')"
@@ -67,6 +68,7 @@
 
                     <sw-switch-field 
                         :label="$tc('BlurElysiumSlides.settingsForm.urlSettings.overlay.inputLabel')" 
+                        v-if="slide.slideSettings"
                         v-model="slide.slideSettings.urlOverlay"
                         class="bc__my-0">
                     </sw-switch-field>
