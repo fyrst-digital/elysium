@@ -1,18 +1,37 @@
 {% block cms_element_blur_elysium_slide_root %}
 
-    {# @TODO slide setting for horizontal aligment #}
-    {% set slideHorizonalAlignment = 'slide-horizontal-alignment__center' %}
-    {% set slideHorizonalAlignment = 'slide-horizontal-alignment__right' %}
-    {% set slideHorizonalAlignment = 'slide-horizontal-alignment__left' %}
+    {% if slide.slideSettings.containerHorizontalAlign %}
+        {% set containerHorizonalAlignment = ' content-container__px-' ~ slide.slideSettings.containerHorizontalAlign %}
+    {% endif %}
+    {% if slide.slideSettings.containerBoxMode %}
+        {% set containerBoxMode = ' content-container__box-mode' %}
+    {% endif %}
+
+    {# @TODO add video support #}
+    {% set bgImageExtensionWhitelist = [
+        'jpg',
+        'jpeg',
+        'png',
+        'svg'
+    ] %}
 
     {% block cms_element_blur_elysium_slide_css_styles %}
-
+    
         {% apply spaceless %}
             <style>
-                {% if slide.media.url %}
+                {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode is same as( false ) %}
                     [data-elysium-slide-id="{{ slide.id }}"] {
                         background-image: url( {{ slide.media.url }} );
                     }
+                {% endif %}
+
+                {% if slide.slideSettings.containerMaxWidth and slide.slideSettings.containerBoxMode %}
+                    @media screen and ( min-width: {{ theme_config('breakpoint.md') ~ 'px' }} ) {
+                        [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__container {
+                            flex-basis: {{ slide.slideSettings.containerMaxWidth }} !important;
+                            max-width: {{ slide.slideSettings.containerMaxWidth }} !important;
+                        }
+                    }                    
                 {% endif %}
                 {% block cms_element_blur_elysium_slide_css_styles_extend %}{% endblock %}
             </style>
@@ -21,9 +40,32 @@
 
     {% block cms_element_blur_elysium_slide %}
         <div data-elysium-slide-id="{{ slide.id }}" 
-            class="cms-element-elysium-slide">
-            
+            class="cms-element-elysium-slide{% if imageFlowMode %} image-flow-mode{% endif %}{{ containerBoxMode }}{{ containerHorizonalAlignment }}">
+
+            {% if slide.slideSettings.urlOverlay is same as( true ) and slide.translated.url %}
+                <a href="{{ slide.translated.url }}" 
+                    class="cms-element-elysium-slide__url-overlay"
+                    title="{{ slide.translated.title }}}" 
+                    class="btn btn-light cms-element-elysium-slide__cta-button"
+                    {% if slide.slideSettings.urlTarget == "external" %}
+                        target="_blank"
+                    {% endif %}>{{ slide.translated.title }}</a>
+            {% endif %}
+
+            {% block cms_element_blur_elysium_slide_cover_image_element %}
+                {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode %}
+                    <img src="{{ slide.media.url }}" 
+                        alt="{{ slide.translated.title }}" 
+                        class="cms-element-elysium-slide__cover-image-element">
+                {% endif %}
+            {% endblock %}
+
             {% block cms_element_blur_elysium_slide_container %}
+
+                {% if imageFlowMode %}
+                    <div class="cms-element-elysium-slide__image-flow-wrapper">
+                {% endif %}
+
                 <div class="cms-element-elysium-slide__container">
 
                     {% block cms_element_blur_elysium_slide_title %}
@@ -48,10 +90,14 @@
                             {% block cms_element_blur_elysium_slide_action_cta_button %}
                                 {# @TODO add button icon? #}
 
-                                {% if slide.translated.button_label %}
+                                {% if slide.translated.button_label and slide.translated.url %}
                                     <a href="{{ slide.translated.url }}" 
                                         title="{{ slide.translated.button_label }}" 
-                                        class="btn btn-light cms-element-elysium-slide__cta-button">
+                                        class="btn btn-light cms-element-elysium-slide__cta-button"
+                                        {% if slide.slideSettings.urlTarget == "external" %}
+                                            target="_blank"
+                                        {% endif %}
+                                        >
                                         
                                         {{ slide.translated.button_label }}
                                     </a>
@@ -61,6 +107,10 @@
                     {% endblock %}
 
                 </div>
+
+                {% if imageFlowMode %}
+                    </div>
+                {% endif %}
             {% endblock %}
         </div>
     {% endblock %}

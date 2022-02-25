@@ -24,6 +24,7 @@
             "missingSlideNameError": "Bitte gib einen Slide Namen an."
         },
         "actions": {
+            "newSlide": "Neuer Slide",
             "createSlide": "Slide erstellen",
             "createSlideNoLanguageChange": "Neue Slides können nur in der System Standardsprache angelegt werden"
         },
@@ -32,6 +33,9 @@
                 "name": "Name",
                 "title": "Überschrift"
             }
+        },
+        "tabs": {
+            "generalLabel": "Allgemein"
         },
         "baseForm": {
             "cardTitle": "Inhalt",
@@ -53,12 +57,36 @@
             "buttonLabelInput": {
                 "title": "Button Label",
                 "placeholder": "Button Label eingeben",
-                "helpText": "Lege die Beschriftung des Buttons fest."
+                "helpText": "Lege die Beschriftung des Buttons fest. Ist keine Beschriftung hinterlegt, wird der Button nicht angezeigt."
             },
             "urlInput": {
                 "title": "Slide URL",
                 "placeholder": "Slide URL eingeben",
                 "helpText": "Lege die Verlinkung des Slides fest. Dies kann sowohl eine absolute als auch eine relative URL sein."
+            }
+        },
+        "settingsForm": {
+            "cardTitle": "Einstellungen",
+            "containerSettings": {
+                "title": "Inhalts-Container",
+                "description": "Hier kannst du das Verhalten des Inhalts-Container beeinflussen. Für nähere Informationen sieh dir unsere Dokumentation an.",
+                "helpText": "Wenn du den <b>Box Modus</b> aktivierst, wird der Inhalts-Container automatisch auf eine maximale Breite von 50% beschränkt. Die maximale Breite kannst du in den Einstellungen weiter spezifizieren. <b>Mit aktiviertem Box Modus</b> kannst du den Inhats-Container auch horizontal Ausrichten. Da <b>bei inaktivem Box Modus</b> der Inhalts-Container auf voller Breite dargestellt wird, hat die horizontale Ausrichtung dann keine Auswirkungen.",
+                "boxMode": {
+                    "inputLabel": "Box Modus"
+                },
+                "maxWidth": {
+                    "placeholder": "Max Breite (Prozent, px oder rem)"
+                },
+                "horizontalAlign": {
+                    "title": "Horizontale Ausrichtung",
+                    "placeholder": "Horizontale Ausrichtung",
+                    "helpText": "Set the Horizontal Alignment of the Container Element. This Option just applies on Boxed Mode",
+                    "options": {
+                        "left": "Links",
+                        "center": "Zentriert",
+                        "right": "Rechts"
+                    }
+                }
             }
         },
         "mediaForm": {
@@ -71,7 +99,8 @@
         },
         "customFields": {
             "cardTitle": "Zusatzfelder",
-            "onCreateMessage": "Bitte speichere zuerst den Slide. Danach kannst du die Zusatzfelder pflegen."
+            "onCreateMessage": "Bitte speichere zuerst den Slide. Danach kannst du die Zusatzfelder pflegen.",
+            "emptyFieldSet": "Du hast für die Elysium Slides noch keine Zusatzfelder angelegt. Gehe in die Zusatzfelder Einstellungen und lege ein Set für die Elysium Slides an."
         }
     }
 }

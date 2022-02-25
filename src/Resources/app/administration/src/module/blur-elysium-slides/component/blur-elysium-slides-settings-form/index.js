@@ -1,14 +1,10 @@
-import template from './blur-elysium-slides-basic-form.twig';
+import template from './blur-elysium-slides-settings-form.twig';
 
 const { Criteria } = Shopware.Data;
 const { Component, Context, Mixin } = Shopware;
 const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
 
-const propErrors = [
-    'name'
-];
-
-Component.register( 'blur-elysium-slides-basic-form', {
+Component.register( 'blur-elysium-slides-settings-form', {
     template,
 
     mixins: [
@@ -16,6 +12,11 @@ Component.register( 'blur-elysium-slides-basic-form', {
     ],
 
     props: {
+        isLoading: {
+            type: Boolean,
+            required: false,
+            default: true,
+        },
         allowEdit: {
             type: Boolean,
             required: false,
@@ -28,10 +29,9 @@ Component.register( 'blur-elysium-slides-basic-form', {
         ...mapState('blurElysiumSlidesDetail', [
             'slide'
         ]),
-        
-        ...mapPropertyErrors( 'blurElysiumSlides' , propErrors)
     },
 
     created() {
+        console.dir( this );
     }
 });
