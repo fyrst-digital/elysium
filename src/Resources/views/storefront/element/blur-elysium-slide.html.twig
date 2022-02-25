@@ -1,10 +1,13 @@
 {% block cms_element_blur_elysium_slide_root %}
 
-    {# @TODO slide setting for horizontal aligment #}
-    {% set slideHorizonalAlignment = 'slide-horizontal-alignment__center' %}
-    {% set slideHorizonalAlignment = 'slide-horizontal-alignment__right' %}
-    {% set slideHorizonalAlignment = 'slide-horizontal-alignment__left' %}
+    {% if slide.slideSettings.containerHorizontalAlign %}
+        {% set containerHorizonalAlignment = ' content-container__px-' ~ slide.slideSettings.containerHorizontalAlign %}
+    {% endif %}
+    {% if slide.slideSettings.containerBoxMode %}
+        {% set containerBoxMode = ' content-container__box-mode' %}
+    {% endif %}
 
+    {# @TODO add video support #}
     {% set bgImageExtensionWhitelist = [
         'jpg',
         'jpeg',
@@ -21,6 +24,15 @@
                         background-image: url( {{ slide.media.url }} );
                     }
                 {% endif %}
+
+                {% if slide.slideSettings.containerMaxWidth and slide.slideSettings.containerBoxMode %}
+                    @media screen and ( min-width: {{ theme_config('breakpoint.md') ~ 'px' }} ) {
+                        [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__container {
+                            flex-basis: {{ slide.slideSettings.containerMaxWidth }} !important;
+                            max-width: {{ slide.slideSettings.containerMaxWidth }} !important;
+                        }
+                    }                    
+                {% endif %}
                 {% block cms_element_blur_elysium_slide_css_styles_extend %}{% endblock %}
             </style>
         {% endapply %}
@@ -28,7 +40,7 @@
 
     {% block cms_element_blur_elysium_slide %}
         <div data-elysium-slide-id="{{ slide.id }}" 
-            class="cms-element-elysium-slide{% if imageFlowMode %} image-flow-mode{% endif %}">
+            class="cms-element-elysium-slide{% if imageFlowMode %} image-flow-mode{% endif %}{{ containerBoxMode }}{{ containerHorizonalAlignment }}">
 
             {% block cms_element_blur_elysium_slide_cover_image_element %}
                 {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode %}
@@ -39,6 +51,11 @@
             {% endblock %}
 
             {% block cms_element_blur_elysium_slide_container %}
+
+                {% if imageFlowMode %}
+                    <div class="cms-element-elysium-slide__image-flow-wrapper">
+                {% endif %}
+
                 <div class="cms-element-elysium-slide__container">
 
                     {% block cms_element_blur_elysium_slide_title %}
@@ -76,6 +93,10 @@
                     {% endblock %}
 
                 </div>
+
+                {% if imageFlowMode %}
+                    </div>
+                {% endif %}
             {% endblock %}
         </div>
     {% endblock %}
