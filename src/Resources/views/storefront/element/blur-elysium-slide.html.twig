@@ -42,6 +42,16 @@
         <div data-elysium-slide-id="{{ slide.id }}" 
             class="cms-element-elysium-slide{% if imageFlowMode %} image-flow-mode{% endif %}{{ containerBoxMode }}{{ containerHorizonalAlignment }}">
 
+            {% if slide.slideSettings.urlOverlay is same as( true ) and slide.translated.url %}
+                <a href="{{ slide.translated.url }}" 
+                    class="cms-element-elysium-slide__url-overlay"
+                    title="{{ slide.translated.title }}}" 
+                    class="btn btn-light cms-element-elysium-slide__cta-button"
+                    {% if slide.slideSettings.urlTarget == "external" %}
+                        target="_blank"
+                    {% endif %}>{{ slide.translated.title }}</a>
+            {% endif %}
+
             {% block cms_element_blur_elysium_slide_cover_image_element %}
                 {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode %}
                     <img src="{{ slide.media.url }}" 
@@ -80,10 +90,14 @@
                             {% block cms_element_blur_elysium_slide_action_cta_button %}
                                 {# @TODO add button icon? #}
 
-                                {% if slide.translated.button_label %}
+                                {% if slide.translated.button_label and slide.translated.url %}
                                     <a href="{{ slide.translated.url }}" 
                                         title="{{ slide.translated.button_label }}" 
-                                        class="btn btn-light cms-element-elysium-slide__cta-button">
+                                        class="btn btn-light cms-element-elysium-slide__cta-button"
+                                        {% if slide.slideSettings.urlTarget == "external" %}
+                                            target="_blank"
+                                        {% endif %}
+                                        >
                                         
                                         {{ slide.translated.button_label }}
                                     </a>

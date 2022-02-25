@@ -57,7 +57,7 @@
             "buttonLabelInput": {
                 "title": "Button Label",
                 "placeholder": "Button Label eingeben",
-                "helpText": "Lege die Beschriftung des Buttons fest."
+                "helpText": "Lege die Beschriftung des Buttons fest. Ist keine Beschriftung hinterlegt, wird der Button nicht angezeigt."
             },
             "urlInput": {
                 "title": "Slide URL",

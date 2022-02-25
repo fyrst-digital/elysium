@@ -34,16 +34,6 @@
         {% endblock %}
 
         <sw-container columns="1fr 1fr" gap="0 32px">
-
-            {% block blur_elysium_slides_input_button_label %}
-                <sw-field
-                    type="text"
-                    v-model="slide.button_label" 
-                    :label="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.title')"
-                    :placeholder="placeholder(slide, 'button_label', this.$tc('BlurElysiumSlides.baseForm.buttonLabelInput.placeholder') )"
-                    :helpText="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.helpText')"
-                />
-            {% endblock %}
             
             {% block blur_elysium_slides_input_url %}
                 <sw-field
@@ -54,6 +44,32 @@
                     :helpText="$tc('BlurElysiumSlides.baseForm.urlInput.helpText')"
                 />
             {% endblock %}
+
+                <sw-select-field 
+                    v-model="slide.slideSettings.urlTarget"
+                    class="bc__my-0"
+                    :label="$tc('BlurElysiumSlides.settingsForm.urlSettings.target.label')"
+                    :placeholder="placeholder(slide, 'slideSettings.urlTarget', this.$tc('BlurElysiumSlides.settingsForm.urlSettings.target.placeholder') )"
+                    :value="slide.slideSettings.urlTarget">
+                    <option value="internal">{{ $tc('BlurElysiumSlides.settingsForm.urlSettings.target.options.internal') }}</option>
+                    <option value="external">{{ $tc('BlurElysiumSlides.settingsForm.urlSettings.target.options.external') }}</option>
+                </sw-select-field>
+
+            {% block blur_elysium_slides_input_button_label %}
+                <sw-field
+                    type="text"
+                    v-model="slide.button_label" 
+                    :label="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.title')"
+                    :placeholder="placeholder(slide, 'button_label', this.$tc('BlurElysiumSlides.baseForm.buttonLabelInput.placeholder') )"
+                    :helpText="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.helpText')"
+                />
+            {% endblock %}
+
+                    <sw-switch-field 
+                        :label="$tc('BlurElysiumSlides.settingsForm.urlSettings.overlay.inputLabel')" 
+                        v-model="slide.slideSettings.urlOverlay"
+                        class="bc__my-0">
+                    </sw-switch-field>
             
         </sw-container>
     </sw-container> 

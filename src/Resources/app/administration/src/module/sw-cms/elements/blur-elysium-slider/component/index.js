@@ -114,7 +114,12 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
                     this.slidesCollectionCriteria,
                     Shopware.Context.api
                 ).then(( blurElysiumSlidesCollection ) => {
-                    this.previewStyles = blurElysiumSlidesCollection[0].media.url
+                    if ( blurElysiumSlidesCollection[0].media ) {
+                        this.previewStyles = blurElysiumSlidesCollection[0].media.url;
+                    } else {
+                        this.previewStyles = null;
+                    }
+                    
                     this.previewData = blurElysiumSlidesCollection;
                 });    
             } else {

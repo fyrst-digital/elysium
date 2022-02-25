@@ -36,6 +36,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.2);
+            z-index: $blur-elysium-slide-zindex-overlay;
         }
     }
 
@@ -75,7 +76,7 @@
     height: 100%;
     max-width: 1000px;
     position: relative;
-    z-index: 5;
+    z-index: $blur-elysium-slide-zindex-container;
 }
 
 .cms-element-elysium-slide__title {
@@ -181,6 +182,17 @@
     top: 0;
     bottom: 0;
     padding: $blur-elysium-slide-py $blur-elysium-slide-px;
+}
+
+.cms-element-elysium-slide__url-overlay {
+	display: block;
+	position: absolute;
+	top: 0;
+	z-index: $blur-elysium-slide-zindex-url-overlay;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	text-indent: -100%;
 }
 
 /**
