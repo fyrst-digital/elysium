@@ -57,7 +57,7 @@
             "buttonLabelInput": {
                 "title": "Button Label",
                 "placeholder": "Enter a Button Label for your Slide",
-                "helpText": "Set the label of the button."
+                "helpText": "Set the label of the button. If no label is provided no button will be display."
             },
             "urlInput": {
                 "title": "Slide URL",
@@ -67,6 +67,19 @@
         },
         "settingsForm": {
             "cardTitle": "Settings",
+            "urlSettings": {
+                "target": {
+                    "label": "Slide URL Target",
+                    "placeholder": "Choose Target",
+                    "options": {
+                        "internal": "Internal",
+                        "external": "External"
+                    }
+                },
+                "overlay": {
+                    "inputLabel": "URL Overlay"
+                }
+            },
             "containerSettings": {
                 "title": "Content Container",
                 "description": "Here you can influence the behavior of the content container. For more information, see our documentation.",
