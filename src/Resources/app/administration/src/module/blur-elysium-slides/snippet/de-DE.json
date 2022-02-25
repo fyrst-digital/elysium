@@ -65,6 +65,30 @@
                 "helpText": "Lege die Verlinkung des Slides fest. Dies kann sowohl eine absolute als auch eine relative URL sein."
             }
         },
+        "settingsForm": {
+            "cardTitle": "Einstellungen",
+            "containerSettings": {
+                "title": "Inhalts-Container",
+                "description": "Hier kannst du das Verhalten des Inhalts-Container beeinflussen. Für nähere Informationen sieh dir unsere Dokumentation an.",
+                "helpText": "Wenn du den <b>Box Modus</b> aktivierst, wird der Inhalts-Container automatisch auf eine maximale Breite von 50% beschränkt. Die maximale Breite kannst du in den Einstellungen weiter spezifizieren. <b>Mit aktiviertem Box Modus</b> kannst du den Inhats-Container auch horizontal Ausrichten. Da <b>bei inaktivem Box Modus</b> der Inhalts-Container auf voller Breite dargestellt wird, hat die horizontale Ausrichtung dann keine Auswirkungen.",
+                "boxMode": {
+                    "inputLabel": "Box Modus"
+                },
+                "maxWidth": {
+                    "placeholder": "Max Breite (Prozent, px oder rem)"
+                },
+                "horizontalAlign": {
+                    "title": "Horizontale Ausrichtung",
+                    "placeholder": "Horizontale Ausrichtung",
+                    "helpText": "Set the Horizontal Alignment of the Container Element. This Option just applies on Boxed Mode",
+                    "options": {
+                        "left": "Links",
+                        "center": "Zentriert",
+                        "right": "Rechts"
+                    }
+                }
+            }
+        },
         "mediaForm": {
             "cardTitle": "Medien",
             "uploadInput": {

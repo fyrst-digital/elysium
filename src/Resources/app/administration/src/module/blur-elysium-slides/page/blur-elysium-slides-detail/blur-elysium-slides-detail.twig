@@ -136,6 +136,14 @@
                                         </sw-card>
                                     {% endblock %}
 
+                                    {% block blur_elysium_slides_detail_view_settings_form %}
+                                        <blur-elysium-slides-settings-form
+                                            v-if="!isLoading"
+                                            :isLoading="isLoading"
+                                            :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                        />
+                                    {% endblock %}
+
                                     {% block blur_elysium_slides_detail_view_card_custom_fields %}
                                         <sw-card :title="$tc('BlurElysiumSlides.customFields.cardTitle')"
                                                 v-if="customFieldSets !== undefined"

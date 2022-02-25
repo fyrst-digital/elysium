@@ -212,11 +212,11 @@ Component.register( 'blur-elysium-slides-detail', {
                 });                
             } else {
                 /**
-                 * if slide id is not provided go here
+                 * if slide id is not provided create new slide
                 **/
+                this.elysiumSlideCreate.slideSettings = {};
                 Shopware.State.commit('blurElysiumSlidesDetail/setSlide', this.elysiumSlideCreate);
             }
-
         },
 
         setMediaItem( mediaId ) {

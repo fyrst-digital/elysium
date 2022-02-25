@@ -65,6 +65,30 @@
                 "helpText": "Set the linking of the slide. This can be both an absolute and a relative URL."
             }
         },
+        "settingsForm": {
+            "cardTitle": "Settings",
+            "containerSettings": {
+                "title": "Content Container",
+                "description": "Here you can influence the behavior of the content container. For more information, see our documentation.",
+                "helpText": "If you <b>activate the box mode</b>, the content container is automatically limited to a maximum width of 50%. You can further specify the maximum width in the settings. With <b>box mode enabled</b>, you can also align the content container horizontally. Since the content container is displayed on full width when the <b>box mode is inactive</b>, the horizontal alignment has no effect.",
+                "boxMode": {
+                    "inputLabel": "Box Mode"
+                },
+                "maxWidth": {
+                    "placeholder": "Max Width (percent, px oder rem)"
+                },
+                "horizontalAlign": {
+                    "title": "Horizontal Alignment",
+                    "placeholder": "Horizontal Alignment",
+                    "helpText": "Set the Horizontal Alignment of the Container Element. This Option just applies on Boxed Mode",
+                    "options": {
+                        "left": "Left",
+                        "center": "Center",
+                        "right": "Right"
+                    }
+                }
+            }
+        },
         "mediaForm": {
             "cardTitle": "Media",
             "uploadInput": {
