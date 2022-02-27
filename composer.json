@@ -6,7 +6,7 @@
         "CMS",
         "Slider"
     ],
-    "version": "0.2.0",
+    "version": "0.3.0",
     "type": "shopware-platform-plugin",
     "minimum-stability": "stable",
     "license": "MIT",
@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "shopware/core": "^6.3.0"
+        "shopware/core": "6.4.*"
     },
     "extra": {
         "shopware-plugin-class": "Blur\\BlurElysiumSlider\\BlurElysiumSlider",
