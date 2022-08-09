@@ -12,6 +12,7 @@
         'jpg',
         'jpeg',
         'png',
+        'webp',
         'svg'
     ] %}
 
@@ -19,9 +20,20 @@
     
         {% apply spaceless %}
             <style>
+
+                {# default background-image #}
                 {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode is same as( false ) %}
                     [data-elysium-slide-id="{{ slide.id }}"] {
                         background-image: url( {{ slide.media.url }} );
+                    }
+                {% endif %}
+
+                {# portrait mode background-image #}
+                {% if slide.mediaPortrait.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode is same as( false ) %}
+                    @media only screen and (orientation: portrait) {
+                        [data-elysium-slide-id="{{ slide.id }}"] {
+                            background-image: url( {{ slide.mediaPortrait.url }} );
+                        }
                     }
                 {% endif %}
 
@@ -52,11 +64,21 @@
                     {% endif %}>{{ slide.translated.title }}</a>
             {% endif %}
 
+            {# image element for image flow mode #}
             {% block cms_element_blur_elysium_slide_cover_image_element %}
-                {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode %}
-                    <img src="{{ slide.media.url }}" 
-                        alt="{{ slide.translated.title }}" 
-                        class="cms-element-elysium-slide__cover-image-element">
+                {% if ( slide.media.url or slide.mediaPortrait.url ) and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode %}
+                    <picture class="cms-element-elysium-slide__cover-picture">
+
+                        {% if slide.mediaPortrait %}
+                            <source 
+                                media="(orientation: portrait)" 
+                                srcset="{{ slide.mediaPortrait.url }}">                            
+                        {% endif %}
+
+                        <img src="{{ slide.media.url }}" 
+                            alt="{{ slide.translated.title }}" 
+                            class="cms-element-elysium-slide__cover-image-element">                    
+                    </picture>
                 {% endif %}
             {% endblock %}
 
