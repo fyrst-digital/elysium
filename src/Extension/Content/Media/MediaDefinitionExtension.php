@@ -17,7 +17,9 @@ class MediaDefinitionExtension extends EntityExtension
     {
         $collection->add(
             (new OneToManyAssociationField('blurElysiumSlides', ElysiumSlidesDefinition::class, 'media_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
-            // new OneToOneAssociationField('exampleExtension', 'id', 'product_id', ExampleExtensionDefinition::class, true)
+        );
+        $collection->add(
+            (new OneToManyAssociationField('blurElysiumSlides', ElysiumSlidesDefinition::class, 'media_portrait_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
         );
     }
 

@@ -33,11 +33,19 @@ Component.register( 'blur-elysium-slides-detail', {
             isLoading: false,
             isSaveSuccessful: false,
             blurElysiumSlide: null,
-            mediaItem: null,
+            media: {
+                slideCover: {
+                    data: null,
+                    slideMediaId: 'mediaId'
+                },
+                slideCoverPortrait: {
+                    data: null,
+                    slideMediaId: 'mediaPortraitId'
+                }
+            },
             customFieldSets: [],
             detailRoute: 'blur.elysium.slides.detail',
-            createRoute: 'blur.elysium.slides.create',
-            uploadTag: 'blur-elysium-slide-upload-tag'
+            createRoute: 'blur.elysium.slides.create'
         };
     },
 
@@ -75,8 +83,8 @@ Component.register( 'blur-elysium-slides-detail', {
             return this.repositoryFactory.create('blur_elysium_slides');
         },
 
-        elysiumSlideCreate() {
-            return this.elysiumSlidesRepository.create( Shopware.Context.api );
+        customFieldSetRepository() {
+            return this.repositoryFactory.create( 'custom_field_set' );
         },
 
         mediaRepository() {
@@ -87,10 +95,6 @@ Component.register( 'blur-elysium-slides-detail', {
             const criteria = new Criteria();
 
             return criteria;
-        },
-
-        customFieldSetRepository() {
-            return this.repositoryFactory.create( 'custom_field_set' );
         },
     
         customFieldSetCriteria() {
@@ -124,7 +128,7 @@ Component.register( 'blur-elysium-slides-detail', {
     watch: {
         blurElysiumSlideId() {
             this.createdComponent();
-        },
+        }
     },
 
     beforeCreate() {
@@ -172,8 +176,8 @@ Component.register( 'blur-elysium-slides-detail', {
     },
 
     created() {
-        this.createdComponent();
-        this.loadCustomFieldSets();
+        this.createdComponent()
+        this.loadCustomFieldSets()
     },
 
     methods: {
@@ -195,45 +199,37 @@ Component.register( 'blur-elysium-slides-detail', {
                 /**
                  * if slide id is provided load the according slide
                 **/
-                this.elysiumSlidesRepository.get(
-                    this.blurElysiumSlideId,
-                    Shopware.Context.api,
-                    this.defaultCriteria,
-                ).then((blurElysiumSlide) => {
-                    
-                    if ( blurElysiumSlide.mediaId ) {
-                        this.setMediaItem( blurElysiumSlide.mediaId );
-                    }
-                    
-                    this.blurElysiumSlide = blurElysiumSlide;
-                    Shopware.State.commit('blurElysiumSlidesDetail/setSlide', blurElysiumSlide);
-
-                    this.isLoading = false;
-                });                
+                this.loadSlide()           
             } else {
                 /**
                  * if slide id is not provided create new slide
                 **/
-                this.elysiumSlideCreate.slideSettings = {};
-                Shopware.State.commit('blurElysiumSlidesDetail/setSlide', this.elysiumSlideCreate);
+                this.createSlide()
             }
         },
 
-        setMediaItem( mediaId ) {
+        createSlide() {
+            let newSlide = this.elysiumSlidesRepository.create( Shopware.Context.api )
+            newSlide.slideSettings = {}
+            
+            this.setSlide( newSlide )
+        },
 
-            this.mediaRepository.get( mediaId, Shopware.Context.api )
-            .then( ( updatedMedia ) => {
+        setSlide( slide ) {
+            this.blurElysiumSlide = slide
+            Shopware.State.commit('blurElysiumSlidesDetail/setSlide', slide);
+        },
 
-                this.mediaItem = updatedMedia;
+        getSlide() {
+            return this.blurElysiumSlide
+        },
 
-                if ( this.blurElysiumSlide !== null ) {
-                    this.blurElysiumSlide.mediaId = mediaId;
-                } else {
-                    this.elysiumSlideCreate.mediaId = mediaId;
-                }
-            }).catch(( exception ) => {
-                console.warn( exception );
-            });
+        setSlideProp( key, value ) {
+            this.blurElysiumSlide[key] = value
+        },
+
+        getSlideProp( key ) {
+            return this.blurElysiumSlide[key]
         },
 
         initState() {
@@ -243,19 +239,6 @@ Component.register( 'blur-elysium-slides-detail', {
             if ( this.blurElysiumSlideId ) {
                 return this.loadState();
             }
-
-            // When no product id exists init state and new product with the repositoryFactory
-            return this.createState().then(() => {
-                // create new product number
-                // this.numberRangeService.reserve('product', '', true).then((response) => {
-                //    this.productNumberPreview = response.number;
-                //    this.product.productNumber = response.number;
-                // });
-            });
-        },
-
-        createState() {
-            Shopware.State.commit('blurElysiumSlidesDetail/setSlide', this.elysiumSlideCreate);
         },
 
         loadCustomFieldSets() {
@@ -288,16 +271,19 @@ Component.register( 'blur-elysium-slides-detail', {
                 this.blurElysiumSlideId,
                 Shopware.Context.api,
                 this.defaultCriteria,
-            ).then((res) => {
-                this.blurElysiumSlide = res;
-                Shopware.State.commit('blurElysiumSlidesDetail/setSlide', res);
+            ).then(( blurElysiumSlide ) => {
+                
+                this.blurElysiumSlide = blurElysiumSlide;
+                this.isLoading = false;
+
+                Shopware.State.commit('blurElysiumSlidesDetail/setSlide', blurElysiumSlide);
                 Shopware.State.commit('blurElysiumSlidesDetail/setLoading', ['slide', false]);
             });
         },
 
         saveFinish() {
             this.isSaveSuccessful = false;
-            this.editMode = false;
+            // this.editMode = true;
         },
 
         async onSave() {
@@ -306,19 +292,31 @@ Component.register( 'blur-elysium-slides-detail', {
 
             if ( !( this.blurElysiumSlide === null || this.blurElysiumSlide === undefined ) ) {
 
-                // save existend slide
+                // throw error notification if slide name is missing or empty
                 if ( this.blurElysiumSlide.name === undefined || this.blurElysiumSlide.name === "" ) {
                     this.createNotificationError({
                         message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError')
                     });                    
                 }
 
-                return this.elysiumSlidesRepository.save( this.blurElysiumSlide, Shopware.Context.api ).then(() => {
+                // save slide
+                return this.elysiumSlidesRepository.save( this.blurElysiumSlide, Shopware.Context.api ).then((result) => {
                     this.isSaveSuccessful = true;
                     this.createNotificationSuccess({
                         message: this.$tc('BlurElysiumSlides.messages.saveSlideSuccess')
                     });
-                    this.createdComponent();
+
+                    if ( this.blurElysiumSlide._isNew === true ) {
+                        // push route to detail with new id as param
+                        let newSlideId = JSON.parse( result.config.data ).id
+                        this.$router.push({ 
+                            name: 'blur.elysium.slides.detail',
+                            params: {
+                                id: newSlideId
+                            } 
+                        })
+                    }
+
                     this.isLoading = false;
                 }).catch(( exception ) => {
                     this.createNotificationError({
@@ -328,27 +326,11 @@ Component.register( 'blur-elysium-slides-detail', {
                 });
             } else {
 
-                if ( this.elysiumSlideCreate.name === undefined || this.elysiumSlideCreate.name === "" ) {
-                    this.createNotificationError({
-                        message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError'),
-                    });
-                }
+                console.error('Slide Entity is missing')
 
-                // create new slide
-                return this.elysiumSlidesRepository.save( this.elysiumSlideCreate, Shopware.Context.api ).then(() => {
-                    
-                    this.isSaveSuccessful = true;
-                    this.createNotificationSuccess({
-                        message: this.$tc('BlurElysiumSlides.messages.createSlideSuccess')
-                    });
-                    this.createdComponent();
-                    this.isLoading = false;
-                    this.$router.push({ name: 'blur.elysium.slides.index' });
-                }).catch(( exception ) => {
-                    this.createNotificationError({
-                        message: this.$tc('BlurElysiumSlides.messages.createSlideError')
-                    });
-                    this.isLoading = false;
+                // throw error notification if slide name is missing or empty
+                this.createNotificationError({
+                    message: this.$tc('BlurElysiumSlides.messages.missingSlideEntity'),
                 });
             }
         },
@@ -379,26 +361,9 @@ Component.register( 'blur-elysium-slides-detail', {
             this.editMode = false;
         },
 
-        onDropMedia( mediaItem ) {
-            this.setMediaItem( mediaItem.id );
-        },
-
-        onUploadMedia( mediaItem ) {
-            this.setMediaItem( mediaItem.targetId );
-        },
-
-        onOpenMedia() {
-            this.$refs.mediaSidebarItem.openContent();
-        },
-
-        onUnlinkMedia() {
-            this.mediaItem = null;
-            this.blurElysiumSlide.mediaId = null;
-        },
-
         setMediaFromSidebar(mediaEntity) {
-            this.mediaItem = mediaEntity;
-            this.blurElysiumSlide.mediaId = mediaEntity.id;
+            // @todo
+            console.log('dead function. todo')
         },
     }
 });
