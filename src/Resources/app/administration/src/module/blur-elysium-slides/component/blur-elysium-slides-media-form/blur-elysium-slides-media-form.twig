@@ -1,0 +1,53 @@
+{% block blur_elysium_slides_basic_form %}
+    <sw-card
+        :title="$tc('BlurElysiumSlides.mediaForm.cardTitle')"
+        :is-loading="isLoading"
+    >
+        <sw-container columns="1fr" gap="32px">
+
+            {% block blur_elysium_slides_media_form_cover_upload %}
+                    
+                <sw-upload-listener
+                    :upload-tag="coverTag"
+                    auto-upload
+                    @media-upload-finish="payload => setMedia( payload.targetId, 'slideCover' )"
+                />
+                <sw-media-upload-v2
+                    :disabled="!acl.can('blur_slides_elysium.editor')"
+                    :upload-tag="coverTag"
+                    :source="media.slideCover.data"
+                    class="blur-elysium-slides__media-upload"
+                    :allow-multi-select="false"
+                    variant="regular"
+                    :label="$tc('BlurElysiumSlides.mediaForm.uploadInput.title')"
+                    :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
+                    @media-drop="payload => setMedia( payload.id, 'slideCover' )"
+                    @media-upload-remove-image="payload => resetMedia( 'slideCover' )"
+                    @media-upload-sidebar-open="mediaSidebar.openContent()"
+                />
+            {% endblock %}
+
+            {% block blur_elysium_slides_media_form_cover_portrait_upload %}
+                    
+                <sw-upload-listener
+                    :upload-tag="coverPortraitTag"
+                    auto-upload
+                    @media-upload-finish="payload => setMedia( payload.targetId, 'slideCoverPortrait' )"
+                />
+                <sw-media-upload-v2
+                    :disabled="!acl.can('blur_slides_elysium.editor')"
+                    :upload-tag="coverPortraitTag"
+                    :source="media.slideCoverPortrait.data"
+                    class="blur-elysium-slides__media-upload"
+                    :allow-multi-select="false"
+                    variant="regular"
+                    :label="$tc('BlurElysiumSlides.mediaForm.coverPortrait.title')"
+                    :help-text="$tc('BlurElysiumSlides.mediaForm.coverPortrait.helpText')"
+                    @media-drop="payload => setMedia( payload.id, 'slideCoverPortrait' )"
+                    @media-upload-remove-image="payload => resetMedia( 'slideCoverPortrait' )"
+                    @media-upload-sidebar-open="mediaSidebar.openContent()"
+                />
+            {% endblock %}
+        </sw-container>
+    </sw-card>
+{% endblock %}

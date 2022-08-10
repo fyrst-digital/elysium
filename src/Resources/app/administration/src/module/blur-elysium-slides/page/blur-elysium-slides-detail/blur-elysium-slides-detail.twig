@@ -104,36 +104,15 @@
                                             {% endblock %}
                                         </sw-card>
                                     {% endblock %}
-                                    
-                                    {% block blur_elysium_slides_detail_view_card_media_form %}
-                                        <sw-card
-                                            :title="$tc('BlurElysiumSlides.mediaForm.cardTitle')"
-                                            :is-loading="isLoading"
-                                        >
 
-                                            {% block blur_elysium_slides_detail_view_input_media_upload %}
-                                                    
-                                                <sw-upload-listener
-                                                    :upload-tag="uploadTag"
-                                                    auto-upload
-                                                    @media-upload-finish="onUploadMedia"
-                                                />
-                                                <sw-media-upload-v2
-                                                    :disabled="!acl.can('blur_slides_elysium.editor')"
-                                                    :upload-tag="uploadTag"
-                                                    :source="mediaItem"
-                                                    class="blur-elysium-slides__media-upload"
-                                                    :allow-multi-select="false"
-                                                    variant="regular"
-                                                    :label="$tc('BlurElysiumSlides.mediaForm.uploadInput.title')"
-                                                    :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
-                                                    @media-drop="onDropMedia"
-                                                    @media-upload-sidebar-open="onOpenMedia"
-                                                    @media-upload-remove-image="onUnlinkMedia"
-                                                />
-                                            {% endblock %}
-
-                                        </sw-card>
+                                    {% block blur_elysium_slides_detail_view_media_form %}
+                                        <blur-elysium-slides-media-form
+                                            v-if="!isLoading && blurElysiumSlide"
+                                            :media="media"
+                                            :mediaSidebar="$refs.mediaSidebarItem"
+                                            :isLoading="isLoading"
+                                            :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                        />
                                     {% endblock %}
 
                                     {% block blur_elysium_slides_detail_view_settings_form %}
