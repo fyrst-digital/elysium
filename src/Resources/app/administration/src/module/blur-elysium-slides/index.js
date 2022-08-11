@@ -30,8 +30,8 @@ Shopware.Module.register( 'blur-elysium-slides', {
     name: 'blur_elysium_slides',
     title: 'BlurElysiumSlides.entityLabel',
     description: 'BlurElysiumSlides.description',
-    color: '#ff3d58',
-    icon: 'default-tools-ruler-pencil',
+    color: '#e868a1',
+    icon: 'default-action-quickjump',
     favicon: 'icon-module-content.png',
     entity: 'blur_elysium_slides',
 
