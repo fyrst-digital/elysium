@@ -47,6 +47,7 @@ class BlurElysiumSlider extends Plugin
         $this->createMediaDefaultFolder( $mediaDefaultFolderId, $context);
 
         // create media folder entry 
+        $this->createMediaFolder( $mediaFolderId, $mediaDefaultFolderId, $context );
     }
     
     public function uninstall( UninstallContext $uninstallContext ): void
@@ -59,20 +60,49 @@ class BlurElysiumSlider extends Plugin
         } 
     }
 
-    public function createMediaDefaultFolder( $defaultFolderId, Context $context )
+    public function createMediaDefaultFolder( 
+        $defaultFolderId, 
+        Context $context 
+    ): void
     {
-        $this->getMediaDefaultFolderRepository()->create( [
-            'id' => $defaultFolderId,
-            'associationFields' => ["media", "mediaPortrait"],
-            'entity' => 'blur_elysium_slides'
-        ], $context);
-
+        
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));
         $criteria->addAssociation('folder');
         $criteria->setLimit(1);
 
-        dd( $this->getMediaDefaultFolderRepository()->search($criteria, $context) );
+        if ( $this->getMediaDefaultFolderRepository()->search($criteria, $context)->getTotal() <= 0 ) {
+            $this->getMediaDefaultFolderRepository()->create( [
+                [
+                    'id' => $defaultFolderId,
+                    'associationFields' => ["media", "mediaPortrait"],
+                    'entity' => 'blur_elysium_slides'
+                ]
+            ], $context);
+        } 
+    }
+
+    public function createMediaFolder( 
+        $mediaFolderId, 
+        $defaultFolderId, 
+        Context $context 
+    ): void
+    {
+        
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));
+        $criteria->addAssociation('folder');
+        $criteria->setLimit(1);
+
+        $this->getMediaFolderRepository()->create( [
+            [
+                'id' => $mediaFolderId,
+                'name' => self::MEDIA_FOLDER_NAME,
+                'useParentConfiguration' => false,
+                'configuration' => [], // @TODO set proper folder configuration. i.e. thumbnail sizes
+                'defaultFolderId' => $defaultFolderId
+            ]
+        ], $context);
     }
 
     /**
