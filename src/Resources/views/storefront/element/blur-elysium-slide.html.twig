@@ -67,7 +67,7 @@
             {# image element for image flow mode #}
             {% block cms_element_blur_elysium_slide_cover_image_element %}
                 {% if ( slide.media.url or slide.mediaPortrait.url ) and ( slide.media.fileExtension in bgImageExtensionWhitelist ) and imageFlowMode %}
-                    <picture class="cms-element-elysium-slide__cover-picture">
+                    <picture class="{% block blur_elysium_slide_cover_picture_class %}cms-element-elysium-slide__cover-picture{% endblock %}">
 
                         {% if slide.mediaPortrait %}
                             <source 
@@ -77,7 +77,7 @@
 
                         <img src="{{ slide.media.url }}" 
                             alt="{{ slide.translated.title }}" 
-                            class="cms-element-elysium-slide__cover-image-element">                    
+                            class="{% block blur_elysium_slide_cover_picture_img_class %}cms-element-elysium-slide__cover-image-element{% endblock %}">                    
                     </picture>
                 {% endif %}
             {% endblock %}
@@ -92,7 +92,7 @@
 
                     {% block cms_element_blur_elysium_slide_title %}
                         {% if slide.translated.title %}
-                            <div class="cms-element-elysium-slide__title text-size-medium">
+                            <div class="{% block blur_elysium_slide_title_class %}cms-element-elysium-slide__title font-weight-bold fluid-text-title{% endblock %}">
                                 {{ slide.translated.title }}
                             </div>                
                         {% endif %}
@@ -100,7 +100,7 @@
 
                     {% block cms_element_blur_elysium_slide_description %}
                         {% if slide.translated.description %}
-                            <div class="cms-element-elysium-slide__description text-size-medium">
+                            <div class="{% block blur_elysium_slide_description_class %}cms-element-elysium-slide__description fluid-text-description{% endblock %}">
                                 {{ slide.translated.description }}
                             </div>                
                         {% endif %}

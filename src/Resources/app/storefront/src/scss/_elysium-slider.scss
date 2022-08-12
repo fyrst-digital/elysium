@@ -11,7 +11,8 @@
 
 .cms-element-elysium-slide {
     @extend .d-flex,
-    .flex-wrap;
+    .flex-wrap,
+    %bes_slide-padding;
     position: relative;
     height: 100%;
     background: {
@@ -19,7 +20,6 @@
         size: cover;
         repeat: no-repeat;
     }
-    padding: $blur-elysium-slide-py $blur-elysium-slide-px;
     color: $blur-elysium-slide-text-color;
 
     @include media-breakpoint-up( xl ) {
@@ -83,16 +83,17 @@
     margin-bottom: $blur-elysium-slide-title-mb;
     font-size: $blur-elysium-slide-title-font-size;
 
-    &.text-size-medium {
-        font-size: 3rem;
+    &.fluid-text-title {
+        //font-size: max(1rem, 3vw);
+        font-size: min(max(1.5rem, 4vw), 3rem);
     }
 }
 
 .cms-element-elysium-slide__description {
     margin-bottom: $blur-elysium-slide-description-mb;
 
-    &.text-size-medium {
-        font-size: 1.25rem;
+    .fluid-text-description {
+        font-size: min(max(1rem, 4vw), 1.75rem);
     }
 }
 
@@ -175,13 +176,13 @@
     @extend .d-flex,
     .flex-wrap,
     .align-items-stretch,
-    .justify-content-start;
+    .justify-content-start,
+    %bes_slide-padding;
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    padding: $blur-elysium-slide-py $blur-elysium-slide-px;
 }
 
 .cms-element-elysium-slide__url-overlay {
@@ -203,4 +204,16 @@
 	width: 100%;
 	max-width: 100%;
 	height: auto;
+
+    .cms-element-elysium-slide.image-flow-mode & {
+        // use as fallback if no portrait image is set in image flow mode
+        /**
+         * @TODO check if portrait image is uploaded
+         * if not set this as seperate fallback class (only on imageflow mode)
+         */
+        @media (orientation: portrait) {
+            min-height: 50vh;
+            object-fit: cover;            
+        }
+    }
 }
