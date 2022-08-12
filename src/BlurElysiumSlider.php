@@ -118,7 +118,7 @@ class BlurElysiumSlider extends Plugin
         $mediaDefaultFolderId = null;
         $mediaFolderId = null;
         $mediaConfigurationId = null;
-        $mediaThumbnailSizes = null;
+        $mediaThumbnailSizeIds = null;
 
         $this->setMediaDefaultFolderRepository( $this->container->get('media_default_folder.repository') );
         $this->setMediaFolderRepository( $this->container->get('media_folder.repository') );
@@ -151,10 +151,18 @@ class BlurElysiumSlider extends Plugin
         $criteriaConfiguration->addAssociation('media_folder_configuration_media_thumbnail_size');
         $criteriaConfiguration->setLimit(1);
 
-        #dd($this->container->get('media_folder_configuration.repository')->search($criteriaConfiguration, $context)->first()->mediaThumbnailSizes);
+        if ( $this->container->get('media_folder_configuration.repository')->search($criteriaConfiguration, $context)->getTotal() > 0 ) {
+            $mediaThumbnailSizeIds = array_map( function($item) {
+                return [ 'id' => $item->getId()];
+            }, array_keys($this->container->get('media_folder_configuration.repository')->search($criteriaConfiguration, $context)->first()->mediaThumbnailSizes->getElements()) );
+        }
 
-        if ( $mediaThumbnailSizes !== null ) {
+        #dd(array_values($mediaThumbnailSizeIds));
+
+        if ( $mediaThumbnailSizeIds !== null ) {
             // delete thumbnail sizes related to media config
+            $this->container->get('media_folder_configuration.repository')->delete($mediaThumbnailSizeIds, $context);
+            $this->container->get('media_thumbnail_size.repository')->delete($mediaThumbnailSizeIds, $context);
         }
 
         #dd($mediaFolderId, $mediaDefaultFolderId);
