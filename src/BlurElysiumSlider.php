@@ -106,8 +106,13 @@ class BlurElysiumSlider extends Plugin
                 'name' => self::MEDIA_FOLDER_NAME,
                 'useParentConfiguration' => false,
                 'configuration' => [
-                    'mediaThumbnailSizes' => self::MEDIA_THUMBNAIL_SIZES
-                ], // @TODO set proper folder configuration. i.e. thumbnail sizes
+                    /**
+                     * @TODO
+                     * discard the idea of setting custom thumbnails because of buggy behavior of shopware
+                     * review the possibility of custom thumbnails later on
+                     */
+                    //'mediaThumbnailSizes' => self::MEDIA_THUMBNAIL_SIZES
+                ],
                 'defaultFolderId' => $defaultFolderId
             ]
         ], $context);
