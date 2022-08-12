@@ -54,6 +54,13 @@ Component.register( 'blur-elysium-slides-media-form', {
         mediaRepository() {
             return this.repositoryFactory.create('media');
         },
+
+        entityName() {
+            /**
+             * @TODO existence check on entity
+            */
+            return 'blur_elysium_slides'
+        }
     },
 
     created() {

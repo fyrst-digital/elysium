@@ -1,0 +1,19 @@
+{% block sw_media_folder_default_icon%}
+<span
+    v-else-if="!!item.defaultFolderId"
+    key="sw-media-folder-preview"
+>
+    <sw-icon
+        :name="iconName"
+        size="90%"
+        :class="['sw-media-folder-item__folder-thumbnails', associatedEntity]"
+        v-bind="iconConfig"
+        multicolor
+    />
+    <sw-icon
+        v-if="iconConfig.name"
+        class="sw-media-folder-item__folder-thumbnails is--inner"
+        v-bind="iconConfig"
+    />
+</span>
+{% endblock %}
