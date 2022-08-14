@@ -45,10 +45,6 @@ Shopware.Service('cmsService').registerCmsElement({
             source: 'static',
             value: null
         },
-        imageFlowMode: {
-            source: 'static',
-            value: false
-        },
         aspectRatio: {
             source: 'static',
             value: {
