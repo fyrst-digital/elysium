@@ -48,6 +48,19 @@ Shopware.Service('cmsService').registerCmsElement({
         imageFlowMode: {
             source: 'static',
             value: false
+        },
+        aspectRatio: {
+            source: 'static',
+            value: {
+                landscape: {
+                    width: 16,
+                    height: 6
+                },
+                portrait: {
+                    width: 4,
+                    height: 3
+                }
+            }
         }
     }
 });

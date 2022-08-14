@@ -17,31 +17,37 @@
     ] %}
 
     {% block cms_element_blur_elysium_slide_css_styles %}
-    
+
         {% apply spaceless %}
             <style>
-
-                {# default background-image #}
-                {% if slide.media.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) %}
-                    [data-elysium-slide-id="{{ slide.id }}"] {
-                        background-image: url( {{ slide.media.url }} );
-                    }
-                {% endif %}
+                {% sw_include '@Storefront/storefront/element/blur-elysium-slide-media.html.twig' with {
+                    media: slide.media,
+                    slideId: slide.id,
+                    extenstionWhitelist: bgImageExtensionWhitelist
+                } only %}
 
                 {# portrait mode background-image #}
                 {% if slide.mediaPortrait.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) %}
-                    @media only screen and (orientation: portrait) {
-                        [data-elysium-slide-id="{{ slide.id }}"] {
-                            background-image: url( {{ slide.mediaPortrait.url }} );
-                        }
+                    @media screen and (orientation: portrait) {
+                        {% sw_include '@Storefront/storefront/element/blur-elysium-slide-media.html.twig' with {
+                            media: slide.mediaPortrait,
+                            slideId: slide.id,
+                            extenstionWhitelist: bgImageExtensionWhitelist
+                        } only %}
                     }
                 {% endif %}
 
-                {% if slide.slideSettings.containerMaxWidth and slide.slideSettings.containerBoxMode %}
-                    @media screen and ( min-width: {{ theme_config('breakpoint.md') ~ 'px' }} ) {
+                {% if slide.slideSettings.containerBoxMode %}
+                    {# @TODO make the min-width breakpoint configurable #}
+                    @media screen and ( min-width: {{ theme_config('breakpoint.sm') ~ 'px' }} ) {
                         [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__container {
-                            flex-basis: {{ slide.slideSettings.containerMaxWidth }} !important;
-                            max-width: {{ slide.slideSettings.containerMaxWidth }} !important;
+                            {% if slide.slideSettings.containerMaxWidth %}
+                                flex-basis: {{ slide.slideSettings.containerMaxWidth }} !important;
+                                max-width: {{ slide.slideSettings.containerMaxWidth }} !important;                                
+                            {% else %}
+                                flex: 0 1 50%;
+                                max-width: 50%;
+                            {% endif %}
                         }
                     }                    
                 {% endif %}
@@ -93,7 +99,7 @@
                                 {% if slide.translated.button_label and slide.translated.url %}
                                     <a href="{{ slide.translated.url }}" 
                                         title="{{ slide.translated.button_label }}" 
-                                        class="btn btn-light cms-element-elysium-slide__cta-button"
+                                        class="{% block blur_elysium_slide_button_class %}btn btn-light cms-element-elysium-slide__cta-button fluid-text-button{% endblock %}"
                                         {% if slide.slideSettings.urlTarget == "external" %}
                                             target="_blank"
                                         {% endif %}
@@ -103,7 +109,7 @@
                                     </a>
                                 {% endif %}
                             {% endblock %}
-                        </div>                
+                        </div>
                     {% endblock %}
 
                 </div>

@@ -8,6 +8,7 @@
     {% set sliderArrowColors = element.translated.config.sliderArrowColor.value %}
     {% set sliderDotColors = element.translated.config.sliderDotColor.value %}
     {% set sliderDotActiveColors = element.translated.config.sliderDotActiveColor.value %}
+    {% set sliderAspectRatio = element.translated.config.aspectRatio.value %}
 
     {% set sliderSettings = {
         nav: sliderSettingsNav,
@@ -26,6 +27,11 @@
 
         {% apply spaceless %}
             <style>
+                #elysiumSlider-{{ element.id }} .cms-element-elysium-slide {
+                    {% if sliderAspectRatio.landscape %}
+                        aspect-ratio: auto {{ sliderAspectRatio.landscape.width }} / {{ sliderAspectRatio.landscape.height }};
+                    {% endif %}
+                }
                 {% if sliderArrowColors %}
                     #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__control-button {
                         color: {{ sliderArrowColors }};
@@ -41,6 +47,13 @@
                     #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet.tns-nav-active {
                         background-color: {{ sliderDotActiveColors }};
                     }                
+                {% endif %}
+                {% if sliderAspectRatio.portrait %}
+                    @media screen and (orientation: portrait) {
+                        #elysiumSlider-{{ element.id }} .cms-element-elysium-slide {
+                            aspect-ratio: auto {{ sliderAspectRatio.portrait.width }} / {{ sliderAspectRatio.portrait.height }};
+                        }                        
+                    }
                 {% endif %}
                 {% block cms_element_blur_elysium_slider_css_styles_extend %}{% endblock %}
             </style>

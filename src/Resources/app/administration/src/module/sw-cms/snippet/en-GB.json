@@ -37,6 +37,20 @@
                 "sliderDotActiveColor": {
                     "label": "Dot Color (Active)"
                 },
+                "aspectRatio": {
+                    "landscape": {
+                        "label": "Landscape (Default)"
+                    },
+                    "portrait": {
+                        "label": "Portrait"
+                    },
+                    "width": {
+                        "placeholder": "Width"
+                    },
+                    "height": {
+                        "placeholder": "Height"
+                    }
+                },
                 "tabs": {
                     "content": "Content",
                     "settings": "Settings",
@@ -46,6 +60,7 @@
             "settings": {
                 "slideCollectionTitle": "Slide Collection",
                 "generalTitle": "General",
+                "aspectRatioTitle": "Aspect Ratio",
                 "autoplayTitle": "Autopay",
                 "arrowStylingTitle": "Slider Arrows",
                 "navigationStylingTitle": "Slider Navigation"

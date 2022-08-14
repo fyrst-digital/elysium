@@ -22,9 +22,20 @@
         repeat: no-repeat;
     }
     color: $blur-elysium-slide-text-color;
-
-    aspect-ratio: 1 / 1;
 	max-width: 100%;
+
+    /*
+
+    @media (orientation: portrait) {
+        // outsoure to twig file if configuration exists
+        aspect-ratio: auto 4 / 3;
+    }
+
+    @media (orientation: landscape) {
+        // outsoure to twig file if configuration exists
+        aspect-ratio: auto 16 / 6;
+    }
+    */
 
     @include media-breakpoint-up( xl ) {
         padding: 6rem;
@@ -49,8 +60,7 @@
         .cms-element-elysium-slide__container {
 
             @include media-breakpoint-up( md ) {
-                flex: 0 1 50%;
-                max-width: 50%;
+
             }
         }
     }
@@ -75,6 +85,7 @@
     flex: 1 1 100%;
     height: auto;
     max-width: 1000px;
+    padding: 2rem 0;
     z-index: $blur-elysium-slide-zindex-container;
 }
 
@@ -83,17 +94,32 @@
     font-size: $blur-elysium-slide-title-font-size;
 
     &.fluid-text-title {
-        //font-size: max(1rem, 3vw);
-        font-size: min(max(1.5rem, 4vw), 3rem);
+        font-size: #{"min(max( #{$blur-es-title-size-min}, #{$blur-es-title-size-scaling}), #{$blur-es-title-size-max})"};
     }
 }
 
 .cms-element-elysium-slide__description {
     margin-bottom: $blur-elysium-slide-description-mb;
 
-    .fluid-text-description {
-        font-size: min(max(1rem, 4vw), 1.75rem);
+    &.fluid-text-description {
+        font-size: #{"min(max( #{$blur-es-description-size-min}, #{$blur-es-description-size-scaling}), #{$blur-es-description-size-max})"};
     }
+}
+
+.cms-element-elysium-slide__cta-button {
+    
+    &.fluid-text-button {
+        line-height: 1.5;
+        padding-left: min(max(1.5rem, 3vw), 3rem);
+        padding-right: min(max(1.5rem, 3vw), 3rem);
+        padding-top: min(max(.5rem, 2vw), 1rem);
+        padding-bottom: min(max(.5rem, 2vw), 1rem);
+        font-size: #{"min(max( #{$blur-es-button-size-min}, #{$blur-es-button-size-scaling}), #{$blur-es-button-size-max})"};
+    }    
+}
+
+.cms-element-elysium-slide__actions {
+    margin-top: 1.5rem;
 }
 
 .cms-element-elysium-slider__control-button {
