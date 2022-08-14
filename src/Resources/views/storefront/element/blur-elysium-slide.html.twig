@@ -67,6 +67,7 @@
                     class="btn btn-light cms-element-elysium-slide__cta-button"
                     {% if slide.slideSettings.urlTarget == "external" %}
                         target="_blank"
+                        rel="noopener"
                     {% endif %}>{{ slide.translated.title }}</a>
             {% endif %}
 
@@ -102,6 +103,7 @@
                                         class="{% block blur_elysium_slide_button_class %}btn btn-light cms-element-elysium-slide__cta-button fluid-text-button{% endblock %}"
                                         {% if slide.slideSettings.urlTarget == "external" %}
                                             target="_blank"
+                                            rel="noopener"
                                         {% endif %}
                                         >
                                         
