@@ -122,6 +122,77 @@
                                     </sw-card>
                                 {% endblock %}
 
+                                {% block blur_cms_config_elysium_slider_card_aspect_ratio %}
+                                    <sw-card 
+                                        :title="$tc('blurElysiumSlider.cmsElement.settings.aspectRatioTitle')" 
+                                        class="bc-card bc-card__static-title">
+
+                                        <sw-container columns="1fr 1fr" gap="0 2rem">
+
+                                            <div>
+                                                <label>
+                                                    {{ $tc('blurElysiumSlider.cmsElement.config.aspectRatio.landscape.label') }}
+                                                </label>
+                                                <sw-container 
+                                                    columns="1fr auto 1fr" 
+                                                    gap="0.5rem"
+                                                    align="center">
+                                                    {% block blur_cms_config_elysium_slider_aspect_ratio_landscape %}
+                                                        <sw-number-field 
+                                                            numberType="int" 
+                                                            v-model="element.config.aspectRatio.value.landscape.width"
+                                                            class="bc-field__no-margin bc-field__px-1"
+                                                            :placeholder="$tc('blurElysiumSlider.cmsElement.config.aspectRatio.width.placeholder')"
+                                                            :allowEmpty="false">
+                                                        </sw-number-field>
+                                                        <div>
+                                                            {{'/'}}
+                                                        </div>
+                                                        <sw-number-field 
+                                                            numberType="int" 
+                                                            v-model="element.config.aspectRatio.value.landscape.height"
+                                                            class="bc-field__no-margin bc-field__px-1"
+                                                            :placeholder="$tc('blurElysiumSlider.cmsElement.config.aspectRatio.height.placeholder')"
+                                                            :allowEmpty="false">
+                                                        </sw-number-field>
+                                                    {% endblock %}
+                                                </sw-container>                                            
+                                            </div>
+
+                                            <div>
+                                                <label>
+                                                    {{ $tc('blurElysiumSlider.cmsElement.config.aspectRatio.portrait.label') }}
+                                                </label>
+                                                <sw-container 
+                                                    columns="1fr auto 1fr" 
+                                                    gap="0.5rem"
+                                                    align="center">
+                                                    {% block blur_cms_config_elysium_slider_aspect_ratio_portrait %}
+                                                        <sw-number-field 
+                                                            numberType="int" 
+                                                            v-model="element.config.aspectRatio.value.portrait.width"
+                                                            class="bc-field__no-margin bc-field__px-1"
+                                                            :placeholder="$tc('blurElysiumSlider.cmsElement.config.aspectRatio.width.placeholder')"
+                                                            :allowEmpty="false">
+                                                        </sw-number-field>
+                                                        <div>
+                                                            {{'/'}}
+                                                        </div>
+                                                        <sw-number-field 
+                                                            numberType="int" 
+                                                            v-model="element.config.aspectRatio.value.portrait.height"
+                                                            class="bc-field__no-margin bc-field__px-1"
+                                                            :placeholder="$tc('blurElysiumSlider.cmsElement.config.aspectRatio.height.placeholder')"
+                                                            :allowEmpty="false">
+                                                        </sw-number-field>
+                                                    {% endblock %}
+                                                </sw-container>                                            
+                                            </div>
+                                        </sw-container>
+
+                                    </sw-card>
+                                {% endblock %}
+
                                 {% block blur_cms_config_elysium_slider_card_autoplay %}
                                     <sw-card 
                                         :title="$tc('blurElysiumSlider.cmsElement.settings.autoplayTitle')" 

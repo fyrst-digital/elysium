@@ -1,9 +1,18 @@
-$blur-elysium-slide-py:             3rem !default;
-$blur-elysium-slide-px:             3rem !default;
-$blur-elysium-slide-mb:             2rem !default;
-$blur-elysium-slide-text-color:     #ffffff !default;
+:root {
+    --blur-es-description-size-min:         1rem;
+}
 
-$blur-elysium-slide-horizontal-algnment-breakpoint:             'lg' !default;
+$blur-elysium-slide-py:                     2rem !default;
+$blur-elysium-slide-px:                     2rem !default;
+
+$blur-elysium-slide-py-md:                  2rem !default;
+$blur-elysium-slide-px-md:                  2rem !default;
+
+$blur-elysium-slide-py-lg:                  3rem !default;
+$blur-elysium-slide-px-lg:                  3rem !default;
+
+$blur-elysium-slide-mb:                     1rem !default;
+$blur-elysium-slide-text-color:             #ffffff !default;
 
 $blur-elysium-slide-title-mb:               $blur-elysium-slide-mb;
 $blur-elysium-slide-title-font-size:        2rem !default;
@@ -19,3 +28,15 @@ $blur-elysium-slide-nav-color:              rgba(0,0,0,0.25) !default;
 $blur-elysium-slide-zindex-overlay:         5;
 $blur-elysium-slide-zindex-url-overlay:     15;
 $blur-elysium-slide-zindex-container:       10;
+
+$blur-es-title-size-min:                    1.5rem !default;
+$blur-es-title-size-max:                    3rem !default;
+$blur-es-title-size-scaling:                4vw !default;
+
+$blur-es-description-size-min:              1rem !default;
+$blur-es-description-size-max:              1.5rem !default;
+$blur-es-description-size-scaling:          2vw !default;
+
+$blur-es-button-size-min:              1rem !default;
+$blur-es-button-size-max:              1.25rem !default;
+$blur-es-button-size-scaling:          2vw !default;

@@ -37,6 +37,20 @@
                 "sliderDotActiveColor": {
                     "label": "Farbe (Aktiv)"
                 },
+                "aspectRatio": {
+                    "landscape": {
+                        "label": "Landscape (Standard)"
+                    },
+                    "portrait": {
+                        "label": "Portrait"
+                    },
+                    "width": {
+                        "placeholder": "Breite"
+                    },
+                    "height": {
+                        "placeholder": "Höhe"
+                    }
+                },
                 "tabs": {
                     "content": "Inhalt",
                     "settings": "Einstellungen",
@@ -46,6 +60,7 @@
             "settings": {
                 "slideCollectionTitle": "Slide-Auswahl",
                 "generalTitle": "Allgemein",
+                "aspectRatioTitle": "Seitenverhältnis",
                 "autoplayTitle": "Auto-Wiedergabe",
                 "arrowStylingTitle": "Slider-Pfeile",
                 "navigationStylingTitle": "Slider-Navigation"
