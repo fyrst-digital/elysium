@@ -24,19 +24,6 @@
     color: $blur-elysium-slide-text-color;
 	max-width: 100%;
 
-    /*
-
-    @media (orientation: portrait) {
-        // outsoure to twig file if configuration exists
-        aspect-ratio: auto 4 / 3;
-    }
-
-    @media (orientation: landscape) {
-        // outsoure to twig file if configuration exists
-        aspect-ratio: auto 16 / 6;
-    }
-    */
-
     @include media-breakpoint-up( xl ) {
         padding: 6rem;
     }
@@ -54,16 +41,6 @@
             z-index: $blur-elysium-slide-zindex-overlay;
         }
     }  
-
-    &.content-container__box-mode {
-
-        .cms-element-elysium-slide__container {
-
-            @include media-breakpoint-up( md ) {
-
-            }
-        }
-    }
 
     &.content-container__px-center,
     &.content-container__px-center .cms-element-elysium-slide__image-flow-wrapper {
