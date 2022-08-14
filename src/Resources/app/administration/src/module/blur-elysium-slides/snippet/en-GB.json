@@ -108,6 +108,10 @@
                 "title": "Slide Cover",
                 "helpText": "This image is used as background of the slide"
             },
+            "coverPortrait": {
+                "title": "Slide Cover (Portrait-Mode)",
+                "helpText": "This image is used as background of the slide when the device (e.g. smartphone or tablet) is in portrait mode."
+            },
             "useAsCover": "Use as Cover"
         },
         "customFields": {
