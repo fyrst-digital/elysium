@@ -95,7 +95,9 @@
                         data-base-slider-controls="true">
                         
                         {% block cms_element_blur_elysium_slider_controls_prev %}
-                            <button type="button" class="cms-element-elysium-slider__control-button control-prev">
+                            <button type="button" 
+                                class="cms-element-elysium-slider__control-button control-prev"
+                                aria-label="{{ 'blurElysiumSlides.sliderControls.prev' | trans }}">
                                 {% block cms_element_blur_elysium_slider_controls_prev_icon %}
                                     {% sw_icon 'arrow-head-left' %}
                                 {% endblock %}
@@ -103,7 +105,9 @@
                         {% endblock %}
                         
                         {% block cms_element_blur_elysium_slider_controls_next %}
-                            <button type="button" class="cms-element-elysium-slider__control-button control-next">
+                            <button type="button" 
+                                class="cms-element-elysium-slider__control-button control-next"
+                                aria-label="{{ 'blurElysiumSlides.sliderControls.next' | trans }}">
                                 {% block cms_element_blur_elysium_slider_controls_next_icon %}
                                     {% sw_icon 'arrow-head-right' %}
                                 {% endblock %}
