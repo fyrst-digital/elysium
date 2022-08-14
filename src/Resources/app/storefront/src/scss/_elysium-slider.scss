@@ -15,12 +15,27 @@
     %bes_slide-padding;
     position: relative;
     height: 100%;
+    width: 100%;
     background: {
         position: center center;
         size: cover;
         repeat: no-repeat;
     }
     color: $blur-elysium-slide-text-color;
+	max-width: 100%;
+
+    /*
+
+    @media (orientation: portrait) {
+        // outsoure to twig file if configuration exists
+        aspect-ratio: auto 4 / 3;
+    }
+
+    @media (orientation: landscape) {
+        // outsoure to twig file if configuration exists
+        aspect-ratio: auto 16 / 6;
+    }
+    */
 
     @include media-breakpoint-up( xl ) {
         padding: 6rem;
@@ -38,19 +53,14 @@
             background-color: rgba(0,0,0,0.2);
             z-index: $blur-elysium-slide-zindex-overlay;
         }
-    }
-
-    &.image-flow-mode {
-        padding: 0;
-    }    
+    }  
 
     &.content-container__box-mode {
 
         .cms-element-elysium-slide__container {
 
             @include media-breakpoint-up( md ) {
-                flex: 0 1 50%;
-                max-width: 50%;
+
             }
         }
     }
@@ -73,9 +83,9 @@
     .align-items-start,
     .justify-content-center;
     flex: 1 1 100%;
-    height: 100%;
+    height: auto;
     max-width: 1000px;
-    position: relative;
+    padding: 2rem 0;
     z-index: $blur-elysium-slide-zindex-container;
 }
 
@@ -84,17 +94,32 @@
     font-size: $blur-elysium-slide-title-font-size;
 
     &.fluid-text-title {
-        //font-size: max(1rem, 3vw);
-        font-size: min(max(1.5rem, 4vw), 3rem);
+        font-size: #{"min(max( #{$blur-es-title-size-min}, #{$blur-es-title-size-scaling}), #{$blur-es-title-size-max})"};
     }
 }
 
 .cms-element-elysium-slide__description {
     margin-bottom: $blur-elysium-slide-description-mb;
 
-    .fluid-text-description {
-        font-size: min(max(1rem, 4vw), 1.75rem);
+    &.fluid-text-description {
+        font-size: #{"min(max( #{$blur-es-description-size-min}, #{$blur-es-description-size-scaling}), #{$blur-es-description-size-max})"};
     }
+}
+
+.cms-element-elysium-slide__cta-button {
+    
+    &.fluid-text-button {
+        line-height: 1.5;
+        padding-left: min(max(1.5rem, 3vw), 3rem);
+        padding-right: min(max(1.5rem, 3vw), 3rem);
+        padding-top: min(max(.5rem, 2vw), 1rem);
+        padding-bottom: min(max(.5rem, 2vw), 1rem);
+        font-size: #{"min(max( #{$blur-es-button-size-min}, #{$blur-es-button-size-scaling}), #{$blur-es-button-size-max})"};
+    }    
+}
+
+.cms-element-elysium-slide__actions {
+    margin-top: 1.5rem;
 }
 
 .cms-element-elysium-slider__control-button {
@@ -148,8 +173,8 @@
 }
 
 .cms-element-elysium-slider__navigation-bullet {
-    width: 1rem;
-    height: 1rem;
+    width: .75rem;
+    height: .75rem;
     margin: .25rem;
     border-radius: 10rem;
     background-color: $blur-elysium-slide-nav-color;
@@ -167,22 +192,9 @@
     .justify-content-center;
     position: absolute;
     z-index: 5;
-    bottom: 2rem;
+    bottom: 1rem;
     left: 0;
     width: 100%;
-}
-
-.cms-element-elysium-slide__image-flow-wrapper {
-    @extend .d-flex,
-    .flex-wrap,
-    .align-items-stretch,
-    .justify-content-start,
-    %bes_slide-padding;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
 }
 
 .cms-element-elysium-slide__url-overlay {
@@ -194,26 +206,4 @@
 	bottom: 0;
 	right: 0;
 	text-indent: -100%;
-}
-
-/**
- * Cover Image Styling
-**/
-.cms-element-elysium-slide__cover-image-element {
-	display: block;
-	width: 100%;
-	max-width: 100%;
-	height: auto;
-
-    .cms-element-elysium-slide.image-flow-mode & {
-        // use as fallback if no portrait image is set in image flow mode
-        /**
-         * @TODO check if portrait image is uploaded
-         * if not set this as seperate fallback class (only on imageflow mode)
-         */
-        @media (orientation: portrait) {
-            min-height: 50vh;
-            object-fit: cover;            
-        }
-    }
 }

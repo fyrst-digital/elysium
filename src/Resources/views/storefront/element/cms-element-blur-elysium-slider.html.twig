@@ -8,6 +8,7 @@
     {% set sliderArrowColors = element.translated.config.sliderArrowColor.value %}
     {% set sliderDotColors = element.translated.config.sliderDotColor.value %}
     {% set sliderDotActiveColors = element.translated.config.sliderDotActiveColor.value %}
+    {% set sliderAspectRatio = element.translated.config.aspectRatio.value %}
 
     {% set sliderSettings = {
         nav: sliderSettingsNav,
@@ -26,6 +27,11 @@
 
         {% apply spaceless %}
             <style>
+                #elysiumSlider-{{ element.id }} .cms-element-elysium-slide {
+                    {% if sliderAspectRatio.landscape %}
+                        aspect-ratio: auto {{ sliderAspectRatio.landscape.width }} / {{ sliderAspectRatio.landscape.height }};
+                    {% endif %}
+                }
                 {% if sliderArrowColors %}
                     #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__control-button {
                         color: {{ sliderArrowColors }};
@@ -41,6 +47,13 @@
                     #elysiumSlider-{{ element.id }} .cms-element-elysium-slider__navigation-bullet.tns-nav-active {
                         background-color: {{ sliderDotActiveColors }};
                     }                
+                {% endif %}
+                {% if sliderAspectRatio.portrait %}
+                    @media screen and (orientation: portrait) {
+                        #elysiumSlider-{{ element.id }} .cms-element-elysium-slide {
+                            aspect-ratio: auto {{ sliderAspectRatio.portrait.width }} / {{ sliderAspectRatio.portrait.height }};
+                        }                        
+                    }
                 {% endif %}
                 {% block cms_element_blur_elysium_slider_css_styles_extend %}{% endblock %}
             </style>
@@ -69,8 +82,7 @@
 
                                 {% block cms_element_blur_elysium_slide_include %}
                                     {% sw_include '@Storefront/storefront/element/blur-elysium-slide.html.twig' with {
-                                        slide: slide,
-                                        imageFlowMode: element.translated.config.imageFlowMode.value
+                                        slide: slide
                                     } only %}
                                 {% endblock %}        
                             </div>
@@ -83,7 +95,9 @@
                         data-base-slider-controls="true">
                         
                         {% block cms_element_blur_elysium_slider_controls_prev %}
-                            <button type="button" class="cms-element-elysium-slider__control-button control-prev">
+                            <button type="button" 
+                                class="cms-element-elysium-slider__control-button control-prev"
+                                aria-label="{{ 'blurElysiumSlides.sliderControls.prev' | trans }}">
                                 {% block cms_element_blur_elysium_slider_controls_prev_icon %}
                                     {% sw_icon 'arrow-head-left' %}
                                 {% endblock %}
@@ -91,7 +105,9 @@
                         {% endblock %}
                         
                         {% block cms_element_blur_elysium_slider_controls_next %}
-                            <button type="button" class="cms-element-elysium-slider__control-button control-next">
+                            <button type="button" 
+                                class="cms-element-elysium-slider__control-button control-next"
+                                aria-label="{{ 'blurElysiumSlides.sliderControls.next' | trans }}">
                                 {% block cms_element_blur_elysium_slider_controls_next_icon %}
                                     {% sw_icon 'arrow-head-right' %}
                                 {% endblock %}
