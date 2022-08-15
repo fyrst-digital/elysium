@@ -20,7 +20,7 @@
                     {% block blur_elysium_slides_detail_view_smart_bar_action_cancel %}
                         <sw-button
                             :disabled="isLoading"
-                            @click="onAbortButtonClick"
+                            @click="cancel"
                         >
                             {{ $tc('sw-customer.detail.buttonCancel') }}
                         </sw-button>
@@ -71,14 +71,6 @@
                                     {{ $tc('BlurElysiumSlides.tabs.generalLabel') }}
                                 </sw-tabs-item>
                             {% endblock %}
-
-                            <!--
-                            <sw-tabs-item
-                                name="advanced"
-                                :active-tab="active">
-                                {{ $tc('blurElysiumSlider.cmsElement.config.tabs.content') }}
-                            </sw-tabs-item> 
-                            -->
                         </template>
                     {% endblock %}
 

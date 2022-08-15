@@ -352,17 +352,12 @@ Component.register( 'blur-elysium-slides-detail', {
             this.editMode = true;
         },
 
-        onAbortButtonClick() {
-            /**
-             * @TODO nothin happens here. discardChanges() eeven doesn't exist
-             * make it work please
-             */
-            this.discardChanges();
-            this.editMode = false;
+        cancel() {
+            this.$router.push({ name: 'blur.elysium.slides.index' });
         },
 
         setMediaFromSidebar(mediaEntity) {
-            // @todo
+            // @TODO
             console.log('dead function. todo')
         },
     }
