@@ -56,7 +56,7 @@ class Lifecycle
         # create media folder entry 
         $this->createMediaFolder( $context );
     }
-    
+
     public function uninstall( Context $context ): void
     {
         $criteria = new Criteria();
@@ -109,6 +109,7 @@ class Lifecycle
         $criteria->setLimit(1);
 
         if ( $this->mediaDefaultFolderRepositroy->search($criteria, $context)->getTotal() <= 0 ) {
+            # create new media default for blur_elysium_slides
             $this->mediaDefaultFolderRepositroy->create( [
                 [
                     'id' => $this->getMediaDefaultFolderId(),
@@ -116,29 +117,41 @@ class Lifecycle
                     'entity' => 'blur_elysium_slides'
                 ]
             ], $context);
-        } 
+        } else {
+            # if there is already a default folder for blur_elysium_slides
+            # check possible associations to an existing media folder linked to it
+            # if there is an existing media folder association set this as mediaFolderId for security check purpose
+            $elysiumMediaFolder = $this->mediaDefaultFolderRepositroy->search($criteria, $context)->first()->getFolder();
+            $this->setMediaFolderId( $elysiumMediaFolder->getId() );
+        }
     }
 
     private function createMediaFolder( 
         Context $context 
     ): void
     {
-        $this->mediaFolderRepositroy->create( [
-            [
-                'id' => $this->getMediaFolderId(),
-                'name' => self::MEDIA_FOLDER_NAME,
-                'useParentConfiguration' => false,
-                'configuration' => [
-                    /**
-                     * @TODO
-                     * discard the idea of setting custom thumbnails because of buggy behavior of shopware
-                     * review the possibility of custom thumbnails later on
-                     */
-                    //'mediaThumbnailSizes' => self::MEDIA_THUMBNAIL_SIZES
-                ],
-                'defaultFolderId' => $this->getMediaDefaultFolderId()
-            ]
-        ], $context);
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter( 'id', $this->getMediaFolderId() ));
+
+        if ( $this->mediaFolderRepositroy->search($criteria, $context)->getTotal() <= 0 ) {
+            # create media folder
+            $this->mediaFolderRepositroy->create( [
+                [
+                    'id' => $this->getMediaFolderId(),
+                    'name' => self::MEDIA_FOLDER_NAME,
+                    'useParentConfiguration' => false,
+                    'configuration' => [
+                        /**
+                         * @TODO
+                         * discard the idea of setting custom thumbnails because of buggy behavior of shopware
+                         * review the possibility of custom thumbnails later on
+                         */
+                        //'mediaThumbnailSizes' => self::MEDIA_THUMBNAIL_SIZES
+                    ],
+                    'defaultFolderId' => $this->getMediaDefaultFolderId()
+                ]
+            ], $context);
+        }
     }
 
     /**
