@@ -25,11 +25,14 @@ class Lifecycle
 
     private const MEDIA_FOLDER_NAME = 'Elysium Slides';
 
-    /** @var String */
+    /** @var string */
     private $mediaFolderId;
 
     /** @var string */
     private $mediaDefaultFolderId;
+
+    /** @var string */
+    private $mediaFolderConfigurationId;
 
     public function __construct(
         ContainerInterface $container
@@ -52,6 +55,47 @@ class Lifecycle
 
         # create media folder entry 
         $this->createMediaFolder( $context );
+    }
+    
+    public function uninstall( Context $context ): void
+    {
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));
+        $criteria->addAssociation('media_folder');
+        $criteria->setLimit(1);
+
+        # get associated mediaDefaultFolderId, mediaFolderId, mediaConfigurationId
+        $mediaFolderElysiumSlides = $this->mediaDefaultFolderRepositroy->search($criteria, $context)->first();
+
+        if ($mediaFolderElysiumSlides === null) {
+            return;
+        }
+
+        # existence check
+        if ( $mediaFolderElysiumSlides->getId() ) {
+            $this->setMediaDefaultFolderId( $mediaFolderElysiumSlides->getId() );
+        }
+
+        # existence check
+        if ( $mediaFolderElysiumSlides->getFolder() !== null ) {
+            $this->setMediaFolderId( $mediaFolderElysiumSlides->getFolder()->getId() );
+            $this->setMediaFolderConfigurationId( $mediaFolderElysiumSlides->getFolder()->getConfigurationId() );
+        }
+
+        if ( !empty( $this->getMediaFolderId() )) {
+            # delete media folder entry
+            $this->mediaFolderRepositroy->delete( [ [ 'id' => $this->getMediaFolderId() ] ], $context );
+        }
+
+        if ( !empty( $this->getMediaDefaultFolderId() )) {
+            # delete media folder entry
+            $this->mediaDefaultFolderRepositroy->delete( [ [ 'id' => $this->getMediaDefaultFolderId() ] ], $context );
+        }
+
+        if ( !empty( $this->getMediaFolderConfigurationId() )) {
+            # delete media folder configuration entry
+            $this->mediaFolderConfigurationRepositroy->delete( [ [ 'id' => $this->getMediaFolderConfigurationId() ] ], $context );
+        }
     }
 
     private function createMediaDefaultFolder( 
@@ -131,5 +175,23 @@ class Lifecycle
     private function setMediaDefaultFolderId(string $mediaDefaultFolderId): void
     {
         $this->mediaDefaultFolderId = $mediaDefaultFolderId;
+    }
+
+    /**
+     * Get the value of mediaFolderConfigurationId
+     */ 
+    private function getMediaFolderConfigurationId(): string
+    {
+        return $this->mediaFolderConfigurationId;
+    }
+
+    /**
+     * Set the value of mediaFolderConfigurationId
+     *
+     * @return  self
+     */ 
+    private function setMediaFolderConfigurationId(string $mediaFolderConfigurationId): void
+    {
+        $this->mediaFolderConfigurationId = $mediaFolderConfigurationId;
     }
 }
