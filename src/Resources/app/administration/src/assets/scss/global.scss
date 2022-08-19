@@ -1,0 +1,16 @@
+.bc-base__description-text {
+    font-size: 14px;
+}
+.bc__mt-1 {
+    margin-bottom: 0.5rem;
+}
+.bc__mb-1 {
+    margin-bottom: 0.5rem;
+}
+.bc__my-0 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.bc__my-1 {
+    @extend .bc__mt-1, .bc__mb-1;
+}

@@ -59,16 +59,24 @@
         <template #content>
 
             {% block blur_elysium_slides_detail_view_tabs %}
-                <sw-tabs :small="false" default-item="general" class="blur-elysium-slider__detail-tabs">
+                <sw-tabs :small="false" default-item="content" class="blur-elysium-slider__detail-tabs">
 
                     {% block blur_elysium_slides_detail_view_tab_navigation %}
                         <template slot-scope="{ active }">
 
-                            {% block blur_elysium_slides_detail_view_tab_navigation_general %}
+                            {% block blur_elysium_slides_detail_view_tab_navigation_content %}
                                 <sw-tabs-item
-                                    name="general"
+                                    name="content"
                                     :active-tab="active">
-                                    {{ $tc('BlurElysiumSlides.tabs.generalLabel') }}
+                                    {{ $tc('BlurElysiumSlides.tabs.contentLabel') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+
+                            {% block blur_elysium_slides_detail_view_tab_navigation_display %}
+                                <sw-tabs-item
+                                    name="display"
+                                    :active-tab="active">
+                                    {{ $tc('BlurElysiumSlides.tabs.displayLabel') }}
                                 </sw-tabs-item>
                             {% endblock %}
                         </template>
@@ -80,22 +88,16 @@
                             slot-scope="{ active }">
 
                             {% block blur_elysium_slides_detail_view_tab_content_general %}
-                                <template v-if="active === 'general'">
+                                <template v-if="active === 'content'">
 
-                                    {% block blur_elysium_slides_detail_view_card_basic_form %}
-                                        <sw-card
-                                            :title="$tc('BlurElysiumSlides.baseForm.cardTitle')"
+                                    {% block blur_elysium_slides_detail_view_basic_form %}
+                                        <blur-elysium-slides-basic-form
+                                            v-if="!isLoading"
                                             :is-loading="isLoading"
-                                        >
-
-                                            {% block blur_elysium_slides_detail_view_basic_form %}
-                                                <blur-elysium-slides-basic-form
-                                                    v-if="!isLoading"
-                                                    :allow-edit="acl.can('blur_slides_elysium.editor')"
-                                                />
-                                            {% endblock %}
-                                        </sw-card>
+                                            :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                        />
                                     {% endblock %}
+
 
                                     {% block blur_elysium_slides_detail_view_media_form %}
                                         <blur-elysium-slides-media-form
@@ -107,13 +109,6 @@
                                         />
                                     {% endblock %}
 
-                                    {% block blur_elysium_slides_detail_view_settings_form %}
-                                        <blur-elysium-slides-settings-form
-                                            v-if="!isLoading"
-                                            :isLoading="isLoading"
-                                            :allow-edit="acl.can('blur_slides_elysium.editor')"
-                                        />
-                                    {% endblock %}
 
                                     {% block blur_elysium_slides_detail_view_card_custom_fields %}
                                         <sw-card :title="$tc('BlurElysiumSlides.customFields.cardTitle')"
@@ -143,11 +138,17 @@
                                 </template>
                             {% endblock %}
 
-                            <!--
-                            <template v-if="active === 'advanced'">
-                                <component :is="componentTabSwitch" class="blur-tabs__container"></component>
+
+                            <template v-if="active === 'display'">
+                                {% block blur_elysium_slides_detail_view_settings_form %}
+                                    <blur-elysium-slides-settings-form
+                                        v-if="!isLoading"
+                                        :isLoading="isLoading"
+                                        :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                    />
+                                {% endblock %}
                             </template>
-                            -->
+
                         </template>
                     {% endblock %}
 

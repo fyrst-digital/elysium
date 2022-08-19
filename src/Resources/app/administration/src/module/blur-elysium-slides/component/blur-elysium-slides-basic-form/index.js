@@ -16,6 +16,9 @@ Component.register( 'blur-elysium-slides-basic-form', {
     ],
 
     props: {
+        isLoading: {
+            type: Boolean
+        },
         allowEdit: {
             type: Boolean,
             required: false,

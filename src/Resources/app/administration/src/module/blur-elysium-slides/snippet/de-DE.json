@@ -35,10 +35,12 @@
             }
         },
         "tabs": {
-            "generalLabel": "Allgemein"
+            "contentLabel": "Inhalt",
+            "displayLabel": "Anzeige"
         },
         "baseForm": {
-            "cardTitle": "Inhalt",
+            "generalCardTitle": "Allgemein",
+            "linkingCardTitle": "Verlinkung",
             "labelInput": {
                 "title": "Slide Name",
                 "placeholder": "Slide Name eingeben",
@@ -67,6 +69,20 @@
         },
         "settingsForm": {
             "cardTitle": "Einstellungen",
+            "urlSettings": {
+                "target": {
+                    "label": "URL Ziel",
+                    "placeholder": "Ziel wählen",
+                    "options": {
+                        "internal": "Intern",
+                        "external": "Extern"
+                    }
+                },
+                "overlay": {
+                    "description": "@TODO Beschreibung ergänzen",
+                    "inputLabel": "URL Overlay"
+                }
+            },
             "containerSettings": {
                 "title": "Inhalts-Container",
                 "description": "Hier kannst du das Verhalten des Inhalts-Container beeinflussen. Für nähere Informationen sieh dir unsere Dokumentation an.",

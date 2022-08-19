@@ -35,10 +35,12 @@
             }
         },
         "tabs": {
-            "generalLabel": "General"
+            "contentLabel": "Content",
+            "displayLabel": "Display"
         },
         "baseForm": {
-            "cardTitle": "Content",
+            "generalCardTitle": "General",
+            "linkingCardTitle": "Linking",
             "labelInput": {
                 "title": "Slide Label",
                 "placeholder": "Enter a Name for your Slide",
@@ -77,6 +79,7 @@
                     }
                 },
                 "overlay": {
+                    "description": "@TODO Beschreibung ergänzen",
                     "inputLabel": "URL Overlay"
                 }
             },
