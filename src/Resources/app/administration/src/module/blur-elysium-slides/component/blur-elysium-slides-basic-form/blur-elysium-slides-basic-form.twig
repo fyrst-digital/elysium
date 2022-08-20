@@ -77,38 +77,8 @@
                     </sw-select-field>
                 {% endblock %}
 
-                {% block blur_elysium_slides_input_button_label %}
-                    <sw-field
-                        type="text"
-                        v-model="slide.button_label" 
-                        :label="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.title')"
-                        :placeholder="placeholder(slide, 'button_label', this.$tc('BlurElysiumSlides.baseForm.buttonLabelInput.placeholder') )"
-                        :helpText="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.helpText')"
-                        class="bc__my-0"
-                    />
-                {% endblock %}
-
-                {% block blur_elysium_slides_input_button_appearance %}
-                    <sw-select-field 
-                        v-if="slide.slideSettings"
-                        v-model="slide.slideSettings.buttonAppearance"
-                        class="bc__my-0"
-                        :label="$tc('BlurElysiumSlides.settings.buttonAppearance.label')"
-                        :placeholder="placeholder(slide, 'settings.buttonAppearance', this.$tc('BlurElysiumSlides.settings.buttonAppearance.placeholder') )"
-                        :helpText="$tc('BlurElysiumSlides.settings.buttonAppearance.helpText')">
-                        <option value="primary">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.primary') }}</option>
-                        <option value="secondary">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.secondary') }}</option>
-                        <option value="success">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.success') }}</option>
-                        <option value="danger">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.danger') }}</option>
-                        <option value="warning">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.warning') }}</option>
-                        <option value="info">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.info') }}</option>
-                        <option value="light">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.light') }}</option>
-                        <option value="dark">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.dark') }}</option>
-                    </sw-select-field>
-                {% endblock %}
-
                 {% block blur_elysium_slides_input_url_overlay %}
-                    <div>
+                    <div style="grid-column-start:1;grid-column-end:3;">
                         <div class="bc-base__description-text bc__mb-1">
                             {{ $tc('BlurElysiumSlides.settingsForm.urlSettings.overlay.description') }}
                         </div>
@@ -119,6 +89,38 @@
                             class="bc__my-0">
                         </sw-switch-field>                
                     </div>
+                {% endblock %}
+
+                {% block blur_elysium_slides_input_button_label %}
+                    <sw-field
+                        type="text"
+                        v-model="slide.button_label" 
+                        :label="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.title')"
+                        :placeholder="placeholder(slide, 'button_label', this.$tc('BlurElysiumSlides.baseForm.buttonLabelInput.placeholder') )"
+                        :helpText="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.helpText')"
+                        :disabled="urlOverlayActive ? true : null"
+                        :class="'bc__my-0'"
+                    />
+                {% endblock %}
+
+                {% block blur_elysium_slides_input_button_appearance %}
+                    <sw-select-field 
+                        v-if="slide.slideSettings"
+                        v-model="slide.slideSettings.buttonAppearance"
+                        class="bc__my-0"
+                        :label="$tc('BlurElysiumSlides.settings.buttonAppearance.label')"
+                        :placeholder="placeholder(slide, 'settings.buttonAppearance', this.$tc('BlurElysiumSlides.settings.buttonAppearance.placeholder') )"
+                        :helpText="$tc('BlurElysiumSlides.settings.buttonAppearance.helpText')"
+                        :disabled="urlOverlayActive ? true : null">
+                        <option value="primary">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.primary') }}</option>
+                        <option value="secondary">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.secondary') }}</option>
+                        <option value="success">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.success') }}</option>
+                        <option value="danger">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.danger') }}</option>
+                        <option value="warning">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.warning') }}</option>
+                        <option value="info">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.info') }}</option>
+                        <option value="light">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.light') }}</option>
+                        <option value="dark">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.dark') }}</option>
+                    </sw-select-field>
                 {% endblock %}
                 
             </sw-container>

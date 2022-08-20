@@ -32,9 +32,14 @@ Component.register( 'blur-elysium-slides-basic-form', {
             'slide'
         ]),
         
-        ...mapPropertyErrors( 'blurElysiumSlides' , propErrors)
+        ...mapPropertyErrors( 'blurElysiumSlides' , propErrors),
+
+        urlOverlayActive() {
+            return this.slide.slideSettings.urlOverlay
+        }
     },
 
     created() {
+        console.dir(this.urlOverlayActive)
     }
 });

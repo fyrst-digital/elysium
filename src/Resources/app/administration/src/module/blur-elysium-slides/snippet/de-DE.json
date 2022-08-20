@@ -96,7 +96,7 @@
                     }
                 },
                 "overlay": {
-                    "description": "@TODO Beschreibung ergänzen",
+                    "description": "Bei aktivierten URL Overlay wird der Button ausgeblenden und der gesamte Slide als Verlinkungs-Fläche genutzt",
                     "inputLabel": "URL Overlay"
                 }
             },
