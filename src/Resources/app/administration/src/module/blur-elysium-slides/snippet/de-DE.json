@@ -67,6 +67,23 @@
                 "helpText": "Lege die Verlinkung des Slides fest. Dies kann sowohl eine absolute als auch eine relative URL sein."
             }
         },
+        "settings": {
+            "buttonAppearance": {
+                "label": "Button Farbgebung",
+                "placeholder": "Wähle eine Button-Farbe",
+                "helpText": "Legt die Farbgebung des Buttons fest. Die Farben orientieren sich an den Einstellungen des Themes.",
+                "options": {
+                    "primary": "Primärfarbe",
+                    "secondary": "Sekundärfarbe",
+                    "success": "Erfolg",
+                    "danger": "Fehler",
+                    "warning": "Hinweis",
+                    "info": "Information",
+                    "light": "Hell",
+                    "dark": "Dunkel"
+                }
+            }
+        },
         "settingsForm": {
             "cardTitle": "Einstellungen",
             "urlSettings": {

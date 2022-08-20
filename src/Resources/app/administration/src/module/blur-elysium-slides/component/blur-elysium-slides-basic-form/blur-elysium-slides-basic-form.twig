@@ -88,9 +88,24 @@
                     />
                 {% endblock %}
 
-                <div>
-                    <!-- @TODO Placeholder for Button Appearance Setting -->
-                </div>
+                {% block blur_elysium_slides_input_button_appearance %}
+                    <sw-select-field 
+                        v-if="slide.slideSettings"
+                        v-model="slide.slideSettings.buttonAppearance"
+                        class="bc__my-0"
+                        :label="$tc('BlurElysiumSlides.settings.buttonAppearance.label')"
+                        :placeholder="placeholder(slide, 'settings.buttonAppearance', this.$tc('BlurElysiumSlides.settings.buttonAppearance.placeholder') )"
+                        :helpText="$tc('BlurElysiumSlides.settings.buttonAppearance.helpText')">
+                        <option value="primary">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.primary') }}</option>
+                        <option value="secondary">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.secondary') }}</option>
+                        <option value="success">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.success') }}</option>
+                        <option value="danger">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.danger') }}</option>
+                        <option value="warning">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.warning') }}</option>
+                        <option value="info">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.info') }}</option>
+                        <option value="light">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.light') }}</option>
+                        <option value="dark">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.dark') }}</option>
+                    </sw-select-field>
+                {% endblock %}
 
                 {% block blur_elysium_slides_input_url_overlay %}
                     <div>

@@ -67,6 +67,23 @@
                 "helpText": "Set the linking of the slide. This can be both an absolute and a relative URL."
             }
         },
+        "settings": {
+            "buttonAppearance": {
+                "label": "Button Appearance",
+                "placeholder": "Choose a Color",
+                "helpText": "Sets the appearance of the button. The colors are based on the theme settings.",
+                "options": {
+                    "primary": "Primary",
+                    "secondary": "Secondary",
+                    "success": "Success",
+                    "danger": "Danger",
+                    "warning": "Warning",
+                    "info": "Information",
+                    "light": "Light",
+                    "dark": "Dark"
+                }
+            }
+        },
         "settingsForm": {
             "cardTitle": "Settings",
             "urlSettings": {
