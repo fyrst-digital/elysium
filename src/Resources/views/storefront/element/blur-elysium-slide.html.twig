@@ -37,6 +37,12 @@
                     }
                 {% endif %}
 
+                {% if slide.slideSettings.headline.textcolor %}
+                    [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__title {
+                        color: {{slide.slideSettings.headline.textcolor}};
+                    }
+                {% endif %}
+
                 {% if slide.slideSettings.containerBoxMode %}
                     {# @TODO make the min-width breakpoint configurable #}
                     @media screen and ( min-width: {{ theme_config('breakpoint.sm') ~ 'px' }} ) {
@@ -72,14 +78,18 @@
             {% endif %}
 
             {% block cms_element_blur_elysium_slide_container %}
-
                 <div class="cms-element-elysium-slide__container">
+                    {% set headlineElement = 'div' %}
+
+                    {% if slide.slideSettings.headline.element %}
+                        {% set headlineElement = slide.slideSettings.headline.element %}
+                    {% endif %}
 
                     {% block cms_element_blur_elysium_slide_title %}
                         {% if slide.translated.title %}
-                            <div class="{% block blur_elysium_slide_title_class %}cms-element-elysium-slide__title font-weight-bold fluid-text-title{% endblock %}">
+                            <{{headlineElement|raw}} class="{% block blur_elysium_slide_title_class %}cms-element-elysium-slide__title font-weight-bold fluid-text-title{% endblock %}">
                                 {{ slide.translated.title }}
-                            </div>                
+                            </{{headlineElement|raw}}>                
                         {% endif %}
                     {% endblock %}
 

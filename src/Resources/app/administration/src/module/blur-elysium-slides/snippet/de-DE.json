@@ -68,6 +68,16 @@
             }
         },
         "settings": {
+            "headline": {
+                "element": {
+                    "label": "HTML Element",
+                    "placeholder": "H1, H2, H3, ...",
+                    "helpText": "Lege ein HTML Element für deine Überschrift fest. Ist kein Element ausgewählt wird ein <b>div</b> Element verwendet"
+                },
+                "textcolor": {
+                    "label": "Textfarbe"
+                }
+            },
             "buttonAppearance": {
                 "label": "Button Farbgebung",
                 "placeholder": "Wähle eine Button-Farbe",

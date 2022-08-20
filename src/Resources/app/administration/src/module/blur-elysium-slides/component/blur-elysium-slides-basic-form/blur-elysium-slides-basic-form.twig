@@ -21,13 +21,42 @@
                 {% endblock %}
 
                 {% block blur_elysium_slides_input_title %}
-                    <sw-field
-                        type="text"
-                        v-model="slide.title" 
-                        :label="$tc('BlurElysiumSlides.baseForm.titleInput.title')"
-                        :placeholder="placeholder(slide, 'title', this.$tc('BlurElysiumSlides.baseForm.titleInput.placeholder') )"
-                        :helpText="$tc('BlurElysiumSlides.baseForm.titleInput.helpText')"
-                    />
+                    <sw-container columns="3fr 1fr 1fr" gap="0 16px">
+                        <sw-field
+                            type="text"
+                            v-model="slide.title" 
+                            :label="$tc('BlurElysiumSlides.baseForm.titleInput.title')"
+                            :placeholder="placeholder(slide, 'title', this.$tc('BlurElysiumSlides.baseForm.titleInput.placeholder') )"
+                            :helpText="$tc('BlurElysiumSlides.baseForm.titleInput.helpText')"
+                        />
+
+                        {% block blur_elysium_slides_input_title_element %}
+                            <sw-select-field 
+                                v-if="slide.slideSettings.headline"
+                                v-model="slide.slideSettings.headline.element"
+                                class="bc__my-0"
+                                :label="$tc('BlurElysiumSlides.settings.headline.element.label')"
+                                :placeholder="placeholder(slide, 'settings.headline.element', this.$tc('BlurElysiumSlides.settings.headline.element.placeholder') )"
+                                :helpText="$tc('BlurElysiumSlides.settings.headline.element.helpText')">
+                                <option value="h1">{{ 'H1' }}</option>
+                                <option value="h2">{{ 'H2' }}</option>
+                                <option value="h3">{{ 'H3' }}</option>
+                                <option value="h4">{{ 'H4' }}</option>
+                                <option value="h5">{{ 'H5' }}</option>
+                                <option value="h6">{{ 'H6' }}</option>
+                            </sw-select-field>
+                        {% endblock %}
+
+                        <sw-colorpicker
+                            v-if="slide.slideSettings.headline"
+                            v-model="slide.slideSettings.headline.textcolor"
+                            :label="$tc('BlurElysiumSlides.settings.headline.textcolor.label')"
+                            colorOutput="auto"
+                            :alpha="true"
+                            :colorLabels="true"
+                            :zIndex="100">
+                        </sw-colorpicker>
+                    </sw-container>
                 {% endblock %}
 
                 {% block blur_elysium_slides_input_description %}

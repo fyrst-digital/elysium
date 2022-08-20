@@ -69,6 +69,8 @@
 .cms-element-elysium-slide__title {
     margin-bottom: $blur-elysium-slide-title-mb;
     font-size: $blur-elysium-slide-title-font-size;
+    line-height: 1.5;
+    color: #ffffff;
 
     &.fluid-text-title {
         font-size: #{"min(max( #{$blur-es-title-size-min}, #{$blur-es-title-size-scaling}), #{$blur-es-title-size-max})"};
