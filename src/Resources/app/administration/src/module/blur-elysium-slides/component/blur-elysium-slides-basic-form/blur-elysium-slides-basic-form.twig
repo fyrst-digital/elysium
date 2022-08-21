@@ -69,6 +69,14 @@
                 {% endblock %}
             </sw-container> 
         {% endblock %}
+            <sw-field
+                type="text"
+                v-model="slide.slideSettings.slideCssClass" 
+                :error="blurElysiumSlidesNameError"
+                :label="$tc('BlurElysiumSlides.settings.sllideCssClass.title')"
+                :placeholder="$tc('BlurElysiumSlides.settings.sllideCssClass.placeholder')"
+                :helpText="$tc('BlurElysiumSlides.settings.sllideCssClass.helpText')"
+            />
         </sw-card>
     {% endblock %}
 

@@ -78,6 +78,11 @@
                     "label": "Textfarbe"
                 }
             },
+            "sllideCssClass": {
+                "title": "CSS Klasse",
+                "placeholder": "Lege eine oder mehrere CSS Klassen fest",
+                "helpText": "Lege eine oder mehrere CSS Klassen, getrennt durch ein Leerzeichen, für den Slide fest."
+            },
             "buttonAppearance": {
                 "label": "Button Farbgebung",
                 "placeholder": "Wähle eine Button-Farbe",

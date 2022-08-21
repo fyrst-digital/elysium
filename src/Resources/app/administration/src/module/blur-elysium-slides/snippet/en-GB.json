@@ -78,6 +78,12 @@
                     "label": "Textcolor"
                 }
             },
+            "sllideCssClass": {
+                "title": "CSS Class",
+                "placeholder": "my-slide-styling",
+                "helpText": "Set one or more CSS classes, separated by a space, for the slide."
+
+            },
             "buttonAppearance": {
                 "label": "Button Appearance",
                 "placeholder": "Choose a Color",

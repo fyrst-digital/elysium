@@ -64,7 +64,7 @@
 
     {% block cms_element_blur_elysium_slide %}
         <div data-elysium-slide-id="{{ slide.id }}" 
-            class="cms-element-elysium-slide{{ containerBoxMode }}{{ containerHorizonalAlignment }}">
+            class="cms-element-elysium-slide{{ containerBoxMode }}{{ containerHorizonalAlignment }}{% if slide.slideSettings.slideCssClass %} {{ slide.slideSettings.slideCssClass }}{% endif %}">
 
             {% if slide.slideSettings.urlOverlay is same as( true ) and slide.translated.url %}
                 <a href="{{ slide.translated.url }}" 
