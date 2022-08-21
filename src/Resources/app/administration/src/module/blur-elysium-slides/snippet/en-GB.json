@@ -92,30 +92,13 @@
                     "light": "Light",
                     "dark": "Dark"
                 }
-            }
-        },
-        "settingsForm": {
-            "cardTitle": "Settings",
-            "urlSettings": {
-                "target": {
-                    "label": "Slide URL Target",
-                    "placeholder": "Choose Target",
-                    "options": {
-                        "internal": "Internal",
-                        "external": "External"
-                    }
-                },
-                "overlay": {
-                    "description": "When the URL overlay is activated, the button is hidden and the entire slide is used as a linking area.",
-                    "inputLabel": "URL Overlay"
-                }
             },
-            "containerSettings": {
+            "container": {
                 "title": "Content Container",
                 "description": "Here you can influence the behavior of the content container. For more information, see our documentation.",
                 "helpText": "If you <b>activate the box mode</b>, the content container is automatically limited to a maximum width of 50%. You can further specify the maximum width in the settings. With <b>box mode enabled</b>, you can also align the content container horizontally. Since the content container is displayed on full width when the <b>box mode is inactive</b>, the horizontal alignment has no effect.",
                 "boxMode": {
-                    "inputLabel": "Box Mode"
+                    "inputLabel": "Limit Container Width"
                 },
                 "maxWidth": {
                     "placeholder": "Max Width (percent, px oder rem)"
@@ -129,6 +112,22 @@
                         "center": "Center",
                         "right": "Right"
                     }
+                }
+            }
+        },
+        "settingsForm": {
+            "urlSettings": {
+                "target": {
+                    "label": "Slide URL Target",
+                    "placeholder": "Choose Target",
+                    "options": {
+                        "internal": "Internal",
+                        "external": "External"
+                    }
+                },
+                "overlay": {
+                    "description": "When the URL overlay is activated, the button is hidden and the entire slide is used as a linking area.",
+                    "inputLabel": "URL Overlay"
                 }
             }
         },

@@ -92,30 +92,13 @@
                     "light": "Hell",
                     "dark": "Dunkel"
                 }
-            }
-        },
-        "settingsForm": {
-            "cardTitle": "Einstellungen",
-            "urlSettings": {
-                "target": {
-                    "label": "URL Ziel",
-                    "placeholder": "Ziel wählen",
-                    "options": {
-                        "internal": "Intern",
-                        "external": "Extern"
-                    }
-                },
-                "overlay": {
-                    "description": "Bei aktivierten URL Overlay wird der Button ausgeblenden und der gesamte Slide als Verlinkungs-Fläche genutzt",
-                    "inputLabel": "URL Overlay"
-                }
             },
-            "containerSettings": {
+            "container": {
                 "title": "Inhalts-Container",
                 "description": "Hier kannst du das Verhalten des Inhalts-Container beeinflussen. Für nähere Informationen sieh dir unsere Dokumentation an.",
                 "helpText": "Wenn du den <b>Box Modus</b> aktivierst, wird der Inhalts-Container automatisch auf eine maximale Breite von 50% beschränkt. Die maximale Breite kannst du in den Einstellungen weiter spezifizieren. <b>Mit aktiviertem Box Modus</b> kannst du den Inhats-Container auch horizontal Ausrichten. Da <b>bei inaktivem Box Modus</b> der Inhalts-Container auf voller Breite dargestellt wird, hat die horizontale Ausrichtung dann keine Auswirkungen.",
                 "boxMode": {
-                    "inputLabel": "Box Modus"
+                    "inputLabel": "Container-Breite begrenzen"
                 },
                 "maxWidth": {
                     "placeholder": "Max Breite (Prozent, px oder rem)"
@@ -129,6 +112,22 @@
                         "center": "Zentriert",
                         "right": "Rechts"
                     }
+                }
+            }
+        },
+        "settingsForm": {
+            "urlSettings": {
+                "target": {
+                    "label": "URL Ziel",
+                    "placeholder": "Ziel wählen",
+                    "options": {
+                        "internal": "Intern",
+                        "external": "Extern"
+                    }
+                },
+                "overlay": {
+                    "description": "Bei aktivierten URL Overlay wird der Button ausgeblenden und der gesamte Slide als Verlinkungs-Fläche genutzt",
+                    "inputLabel": "URL Overlay"
                 }
             }
         },
