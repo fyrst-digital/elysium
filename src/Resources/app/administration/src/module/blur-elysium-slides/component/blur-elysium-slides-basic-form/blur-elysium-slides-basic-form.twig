@@ -20,7 +20,7 @@
                     />
                 {% endblock %}
 
-                {% block blur_elysium_slides_input_title %}
+                {% block blur_elysium_slides_input_headline %}
                     <sw-container columns="3fr 1fr 1fr" gap="0 16px">
                         <sw-field
                             type="text"
@@ -30,7 +30,7 @@
                             :helpText="$tc('BlurElysiumSlides.baseForm.titleInput.helpText')"
                         />
 
-                        {% block blur_elysium_slides_input_title_element %}
+                        {% block blur_elysium_slides_input_headline_element %}
                             <sw-select-field 
                                 v-if="slide.slideSettings.headline"
                                 v-model="slide.slideSettings.headline.element"
@@ -47,25 +47,24 @@
                             </sw-select-field>
                         {% endblock %}
 
-                        <sw-colorpicker
-                            v-if="slide.slideSettings.headline"
-                            v-model="slide.slideSettings.headline.textcolor"
-                            :label="$tc('BlurElysiumSlides.settings.headline.textcolor.label')"
-                            colorOutput="auto"
-                            :alpha="true"
-                            :colorLabels="true"
-                            :zIndex="100">
-                        </sw-colorpicker>
+                        {% block blur_elysium_slides_input_headline_textcolor %}
+                            <sw-colorpicker
+                                v-if="slide.slideSettings.headline"
+                                v-model="slide.slideSettings.headline.textcolor"
+                                :label="$tc('BlurElysiumSlides.settings.headline.textcolor.label')"
+                                colorOutput="auto"
+                                :alpha="true"
+                                :colorLabels="true"
+                                :zIndex="100">
+                            </sw-colorpicker>
+                        {% endblock %}
                     </sw-container>
                 {% endblock %}
 
                 {% block blur_elysium_slides_input_description %}
-                    <sw-field
-                        type="textarea"
-                        v-model="slide.description" 
+                    <sw-text-editor
+                        v-model="slide.description"
                         :label="$tc('BlurElysiumSlides.baseForm.descriptionInput.title')"
-                        :placeholder="placeholder(slide, 'description', this.$tc('BlurElysiumSlides.baseForm.descriptionInput.placeholder') )"
-                        :helpText="$tc('BlurElysiumSlides.baseForm.descriptionInput.helpText')"
                     />
                 {% endblock %}
             </sw-container> 

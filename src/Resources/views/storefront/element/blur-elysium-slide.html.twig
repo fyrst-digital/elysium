@@ -96,7 +96,7 @@
                     {% block cms_element_blur_elysium_slide_description %}
                         {% if slide.translated.description %}
                             <div class="{% block blur_elysium_slide_description_class %}cms-element-elysium-slide__description fluid-text-description{% endblock %}">
-                                {{ slide.translated.description }}
+                                {{ slide.translated.description|raw }}
                             </div>                
                         {% endif %}
                     {% endblock %}
