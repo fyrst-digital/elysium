@@ -1,6 +1,7 @@
-import './component/blur-elysium-slides-basic-form'; // Elysium Slide Basic Form
-import './component/blur-elysium-slides-media-form'; // Elysium Slide Basic Form
-import './component/blur-elysium-slides-content-container-settings'; // Elysium Slide content container settings
+import './component/blur-elysium-slides-basic-form'; 
+import './component/blur-elysium-slides-media-form'; 
+import './component/blur-elysium-slides-content-general-appearance';
+import './component/blur-elysium-slides-content-container-settings'; 
 import './page/blur-elysium-slides-list'; // List page component
 // import './page/blur-elysium-slides-create'; // Create page component
 import './page/blur-elysium-slides-detail'; // Detail page component

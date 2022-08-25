@@ -1,7 +1,14 @@
 {% block cms_element_blur_elysium_slide_root %}
 
+    {% set contentVerticalAlign = ' content__x-left' %}
+    {% if slide.slideSettings.contentVerticalAlign %}
+        {% set contentVerticalAlign = ' content__x-' ~ slide.slideSettings.contentVerticalAlign %}
+    {% endif %}
+    {% if slide.slideSettings.containerVerticalAlign %}
+        {% set containerVerticalAlignment = ' content-container__y-' ~ slide.slideSettings.containerVerticalAlign %}
+    {% endif %}
     {% if slide.slideSettings.containerHorizontalAlign %}
-        {% set containerHorizonalAlignment = ' content-container__px-' ~ slide.slideSettings.containerHorizontalAlign %}
+        {% set containerHorizonalAlignment = ' content-container__x-' ~ slide.slideSettings.containerHorizontalAlign %}
     {% endif %}
     {% if slide.slideSettings.containerBoxMode %}
         {% set containerBoxMode = ' content-container__box-mode' %}
@@ -42,7 +49,16 @@
                         color: {{slide.slideSettings.headline.textcolor}};
                     }
                 {% endif %}
-
+                
+                [data-elysium-slide-id="{{ slide.id }}"] {
+                    {% if slide.slideSettings.slideBgColor %}background-color: {{slide.slideSettings.slideBgColor}};{% endif %}
+                }
+                
+                [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__container {
+                    {% if slide.slideSettings.containerBgColor %}background-color: {{slide.slideSettings.containerBgColor}};{% endif %}
+                    {% if slide.slideSettings.containerPadding %}padding: {{slide.slideSettings.containerPadding}};{% endif %}
+                }
+                
                 {% if slide.slideSettings.containerBoxMode %}
                     {# @TODO make the min-width breakpoint configurable #}
                     @media screen and ( min-width: {{ theme_config('breakpoint.sm') ~ 'px' }} ) {
@@ -64,7 +80,7 @@
 
     {% block cms_element_blur_elysium_slide %}
         <div data-elysium-slide-id="{{ slide.id }}" 
-            class="cms-element-elysium-slide{{ containerBoxMode }}{{ containerHorizonalAlignment }}{% if slide.slideSettings.slideCssClass %} {{ slide.slideSettings.slideCssClass }}{% endif %}">
+            class="cms-element-elysium-slide{{ containerVerticalAlignment }}{{ containerBoxMode }}{{ containerHorizonalAlignment }}{% if slide.slideSettings.slideCssClass %} {{ slide.slideSettings.slideCssClass }}{% endif %}">
 
             {% if slide.slideSettings.urlOverlay is same as( true ) and slide.translated.url %}
                 <a href="{{ slide.translated.url }}" 
@@ -78,7 +94,7 @@
             {% endif %}
 
             {% block cms_element_blur_elysium_slide_container %}
-                <div class="cms-element-elysium-slide__container">
+                <div class="cms-element-elysium-slide__container{{contentVerticalAlign}}">
                     {% set headlineElement = 'div' %}
 
                     {% if slide.slideSettings.headline.element %}

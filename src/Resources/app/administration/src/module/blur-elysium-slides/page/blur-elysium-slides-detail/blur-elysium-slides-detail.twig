@@ -140,6 +140,13 @@
 
 
                             <template v-if="active === 'display'">
+                                {% block blur_elysium_slides_detail_view_content_general_appearance %}
+                                    <blur-elysium-slides-content-general-appearance
+                                        v-if="!isLoading"
+                                        :isLoading="isLoading"
+                                        :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                    />
+                                {% endblock %}
                                 {% block blur_elysium_slides_detail_view_content_container_form %}
                                     <blur-elysium-slides-content-container-settings
                                         v-if="!isLoading"

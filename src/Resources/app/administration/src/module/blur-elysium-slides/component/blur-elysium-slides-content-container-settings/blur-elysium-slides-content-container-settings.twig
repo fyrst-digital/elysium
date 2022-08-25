@@ -5,36 +5,88 @@
         v-if="!isLoading && slide.slideSettings"
     >
 
-        {% block blur_elysium_slides_input_container_settings %}
-            <div class="bc-base__description-text bc__mb-2" v-html="$tc('BlurElysiumSlides.settings.container.helpText')" />
+        {% block blur_elysium_slides_content_container_settings %}
+            <sw-container columns="1fr" gap="2rem">
 
-            <sw-container columns="auto 1fr 1fr" gap="0 1rem">
-                {% block blur_elysium_slides_input_container_box_mode %}
-                    <sw-switch-field 
-                        :label="$tc('BlurElysiumSlides.settings.container.boxMode.inputLabel')" 
-                        v-model="slide.slideSettings.containerBoxMode"
-                        class="bc__my-0">
-                    </sw-switch-field>
-                {% endblock %}
+                <sw-container columns="1fr 1fr 1fr" gap="0 1rem">
 
-                {% block blur_elysium_slides_input_container_horizontal_align %}
-                    <sw-select-field 
-                        v-model="slide.slideSettings.containerHorizontalAlign"
-                        class="bc__my-0"
-                        :placeholder="placeholder(slide, 'slideSettings.containerHorizontalAlign', this.$tc('BlurElysiumSlides.settings.container.horizontalAlign.placeholder') )"
-                        :value="slide.slideSettings.containerHorizontalAlign">
-                        <option value="left">{{ $tc('BlurElysiumSlides.settings.container.horizontalAlign.options.left') }}</option>
-                        <option value="center">{{ $tc('BlurElysiumSlides.settings.container.horizontalAlign.options.center') }}</option>
-                        <option value="right">{{ $tc('BlurElysiumSlides.settings.container.horizontalAlign.options.right') }}</option>
-                    </sw-select-field>
-                {% endblock %}
+                    {% block blur_elysium_slides_setting_container_vertical_align %}
+                        <sw-select-field 
+                            v-if="slide.slideSettings"
+                            v-model="slide.slideSettings.containerVerticalAlign"
+                            class="bc__my-0"
+                            :label="$tc('BlurElysiumSlides.settings.container.verticalAlign.label')">
+                            <option value="top">{{ $tc('BlurElysiumSlides.settings.container.verticalAlign.options.top') }}</option>
+                            <option value="center">{{ $tc('BlurElysiumSlides.settings.container.verticalAlign.options.center') }}</option>
+                            <option value="bottom">{{ $tc('BlurElysiumSlides.settings.container.verticalAlign.options.bottom') }}</option>
+                        </sw-select-field>
+                    {% endblock %}
 
-                <sw-field
-                    type="text"
-                    class="bc__my-0"
-                    v-model="slide.slideSettings.containerMaxWidth" 
-                    :placeholder="placeholder(slide, 'slideSettings.containerMaxWidth', this.$tc('BlurElysiumSlides.settings.container.maxWidth.placeholder') )"
-                />
+                    {% block blur_elysium_slides_setting_container_bg_color %}
+                        <sw-colorpicker
+                            v-if="slide.slideSettings"
+                            v-model="slide.slideSettings.containerBgColor"
+                            class="bc-colorpicker bc__my-0"
+                            :label="$tc('BlurElysiumSlides.settings.container.bgColor.label')"
+                            colorOutput="auto"
+                            :alpha="true"
+                            :colorLabels="true"
+                            :zIndex="100">
+                        </sw-colorpicker>
+                    {% endblock %}
+
+                    {% block blur_elysium_slides_setting_container_padding %}
+                        <sw-field
+                            type="text"
+                            class="bc__my-0"
+                            v-model="slide.slideSettings.containerPadding" 
+                            :label="$tc('BlurElysiumSlides.settings.container.padding.label')"
+                            :placeholder="placeholder(slide, 'slideSettings.containerPadding', this.$tc('BlurElysiumSlides.settings.container.padding.placeholder') )"
+                            />
+                    {% endblock %}
+                </sw-container>
+
+                <div>
+                    {% block blur_elysium_slides_container_box_mode_headline %}
+                        <h4 class="bc-base__card-headline">
+                            {{ $tc('BlurElysiumSlides.settings.container.boxMode.title') }}
+                            <sw-help-text 
+                                :text="$tc('BlurElysiumSlides.settings.container.boxMode.helpText')"
+                                :width="400"
+                            />
+                            </sw-help-text>
+                        </h4>
+                    {% endblock %}
+
+                    <sw-container columns="auto 1fr 1fr" gap="0 1rem">
+                        {% block blur_elysium_slides_setting_container_box_mode %}
+                            <sw-switch-field 
+                                :label="$tc('BlurElysiumSlides.settings.container.boxMode.inputLabel')" 
+                                v-model="slide.slideSettings.containerBoxMode"
+                                class="bc__my-0">
+                            </sw-switch-field>
+                        {% endblock %}
+
+                        {% block blur_elysium_slides_setting_content_container_horizontal_align %}
+                            <sw-select-field 
+                                v-model="slide.slideSettings.containerHorizontalAlign"
+                                class="bc__my-0"
+                                :placeholder="placeholder(slide, 'slideSettings.containerHorizontalAlign', this.$tc('BlurElysiumSlides.settings.container.horizontalAlign.placeholder') )"
+                                :value="slide.slideSettings.containerHorizontalAlign">
+                                <option value="left">{{ $tc('BlurElysiumSlides.settings.container.horizontalAlign.options.left') }}</option>
+                                <option value="center">{{ $tc('BlurElysiumSlides.settings.container.horizontalAlign.options.center') }}</option>
+                                <option value="right">{{ $tc('BlurElysiumSlides.settings.container.horizontalAlign.options.right') }}</option>
+                            </sw-select-field>
+                        {% endblock %}
+
+                        <sw-field
+                            type="text"
+                            class="bc__my-0"
+                            v-model="slide.slideSettings.containerMaxWidth" 
+                            :placeholder="placeholder(slide, 'slideSettings.containerMaxWidth', this.$tc('BlurElysiumSlides.settings.container.maxWidth.placeholder') )"
+                        />
+                    </sw-container>            
+                </div>
             </sw-container>
         {% endblock %}
     </sw-card>

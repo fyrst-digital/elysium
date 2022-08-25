@@ -69,14 +69,28 @@
                 {% endblock %}
             </sw-container> 
         {% endblock %}
+
+        {% block blur_elysium_slides_setting_slide_bg_color %}
+            <sw-colorpicker
+                v-if="slide.slideSettings"
+                v-model="slide.slideSettings.slideBgColor" 
+                :label="$tc('BlurElysiumSlides.settings.slideBgColor.title')"
+                colorOutput="auto"
+                :alpha="true"
+                :colorLabels="true"
+                :zIndex="100">
+            </sw-colorpicker>
+        {% endblock %}
+
+        {% block blur_elysium_slides_setting_slide_css_class %}
             <sw-field
                 type="text"
                 v-model="slide.slideSettings.slideCssClass" 
-                :error="blurElysiumSlidesNameError"
                 :label="$tc('BlurElysiumSlides.settings.sllideCssClass.title')"
                 :placeholder="$tc('BlurElysiumSlides.settings.sllideCssClass.placeholder')"
                 :helpText="$tc('BlurElysiumSlides.settings.sllideCssClass.helpText')"
             />
+        {% endblock %}
         </sw-card>
     {% endblock %}
 

@@ -78,6 +78,9 @@
                     "label": "Textcolor"
                 }
             },
+            "slideBgColor": {
+                "title": "Slide Background color"
+            },
             "sllideCssClass": {
                 "title": "CSS Class",
                 "placeholder": "my-slide-styling",
@@ -102,17 +105,46 @@
             "container": {
                 "title": "Content Container",
                 "description": "Here you can influence the behavior of the content container. For more information, see our documentation.",
-                "helpText": "If you <b>activate the box mode</b>, the content container is automatically limited to a maximum width of 50%. You can further specify the maximum width in the settings. With <b>box mode enabled</b>, you can also align the content container horizontally. Since the content container is displayed on full width when the <b>box mode is inactive</b>, the horizontal alignment has no effect.",
                 "boxMode": {
-                    "inputLabel": "Limit Container Width"
+                    "title": "Container Width Limit",
+                    "inputLabel": "Enable Limit",
+                    "helpText": "If you <b>enable width limit</b>, the content container is automatically limited to a maximum width of 50%. You can further specify the maximum width in the settings. With <b>width limit enabled</b>, you can also align the content container horizontally. Since the content container is displayed on full width when the <b>with limit is disabled</b>, the horizontal alignment has no effect."
                 },
                 "maxWidth": {
                     "placeholder": "Max Width (percent, px oder rem)"
+                },
+                "verticalAlign": {
+                    "label": "Vertical Alignment",
+                    "options": {
+                        "top": "Top",
+                        "center": "Center",
+                        "bottom": "Bottom"
+                    }
+                },
+                "bgColor": {
+                    "label": "Hintergrundfarbe"
+                },
+                "padding": {
+                    "label": "Innenabstand",
+                    "placeholder": "20px"
                 },
                 "horizontalAlign": {
                     "title": "Horizontal Alignment",
                     "placeholder": "Horizontal Alignment",
                     "helpText": "Set the Horizontal Alignment of the Container Element. This Option just applies on Boxed Mode",
+                    "options": {
+                        "left": "Left",
+                        "center": "Center",
+                        "right": "Right"
+                    }
+                }
+            }
+        },
+        "appearance": {
+            "contentGeneral": {
+                "title": "General",
+                "contentVerticalAlign": {
+                    "label": "Content Alignment",
                     "options": {
                         "left": "Left",
                         "center": "Center",
