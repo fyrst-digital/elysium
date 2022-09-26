@@ -67,22 +67,22 @@
 .cms-element-elysium-slide__container {
     @extend .d-flex,
     .flex-wrap,
-    .flex-row,
+    .flex-column,
     .align-items-start;
     flex: 0 1 auto;
     height: auto;
     z-index: $blur-elysium-slide-zindex-container;
 
     &.content__x-left {
-        @extend .justify-content-start;
+        @extend .align-items-start;
         text-align: left;
     }
     &.content__x-center {
-        @extend .justify-content-center;
+        @extend .align-items-center;
         text-align: center;
     }
     &.content__x-right {
-        @extend .justify-content-end;
+        @extend .align-items-end;
         text-align: right;
     }
 }
