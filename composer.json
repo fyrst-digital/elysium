@@ -1,6 +1,11 @@
 {
     "name": "blurcreative/elysium-slider",
     "description": "A flexible, reusable and feature rich Slider for Shopware 6",
+    "keywords": [
+        "Shopware",
+        "CMS",
+        "Slider"
+    ],
     "version": "1.2.0",
     "type": "shopware-platform-plugin",
     "minimum-stability": "stable",
