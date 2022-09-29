@@ -35,10 +35,12 @@
             }
         },
         "tabs": {
-            "generalLabel": "Allgemein"
+            "contentLabel": "Inhalt",
+            "displayLabel": "Anzeige"
         },
         "baseForm": {
-            "cardTitle": "Inhalt",
+            "generalCardTitle": "Allgemein",
+            "linkingCardTitle": "Verlinkung",
             "labelInput": {
                 "title": "Slide Name",
                 "placeholder": "Slide Name eingeben",
@@ -55,8 +57,8 @@
                 "helpText": "Lege einen Kurzbeschreibungs-Text für den Slide fest. Dieser wird unter der Überschrift angezeigt."
             },
             "buttonLabelInput": {
-                "title": "Button Label",
-                "placeholder": "Button Label eingeben",
+                "title": "Button Beschriftung",
+                "placeholder": "Mehr Erfahren",
                 "helpText": "Lege die Beschriftung des Buttons fest. Ist keine Beschriftung hinterlegt, wird der Button nicht angezeigt."
             },
             "urlInput": {
@@ -65,17 +67,65 @@
                 "helpText": "Lege die Verlinkung des Slides fest. Dies kann sowohl eine absolute als auch eine relative URL sein."
             }
         },
-        "settingsForm": {
-            "cardTitle": "Einstellungen",
-            "containerSettings": {
+        "settings": {
+            "headline": {
+                "element": {
+                    "label": "HTML Element",
+                    "placeholder": "H1, H2, H3, ...",
+                    "helpText": "Lege ein HTML Element für deine Überschrift fest. Ist kein Element ausgewählt wird ein <b>div</b> Element verwendet"
+                },
+                "textcolor": {
+                    "label": "Textfarbe"
+                }
+            },
+            "slideBgColor": {
+                "title": "Slide Hintergrundfarbe"
+            },
+            "sllideCssClass": {
+                "title": "CSS Klasse",
+                "placeholder": "Lege eine oder mehrere CSS Klassen fest",
+                "helpText": "Lege eine oder mehrere CSS Klassen, getrennt durch ein Leerzeichen, für den Slide fest."
+            },
+            "buttonAppearance": {
+                "label": "Button Farbgebung",
+                "placeholder": "Wähle eine Button-Farbe",
+                "helpText": "Legt die Farbgebung des Buttons fest. Die Farben orientieren sich an den Einstellungen des Themes.",
+                "options": {
+                    "primary": "Primärfarbe",
+                    "secondary": "Sekundärfarbe",
+                    "success": "Erfolg",
+                    "danger": "Fehler",
+                    "warning": "Hinweis",
+                    "info": "Information",
+                    "light": "Hell",
+                    "dark": "Dunkel"
+                }
+            },
+            "container": {
                 "title": "Inhalts-Container",
                 "description": "Hier kannst du das Verhalten des Inhalts-Container beeinflussen. Für nähere Informationen sieh dir unsere Dokumentation an.",
-                "helpText": "Wenn du den <b>Box Modus</b> aktivierst, wird der Inhalts-Container automatisch auf eine maximale Breite von 50% beschränkt. Die maximale Breite kannst du in den Einstellungen weiter spezifizieren. <b>Mit aktiviertem Box Modus</b> kannst du den Inhats-Container auch horizontal Ausrichten. Da <b>bei inaktivem Box Modus</b> der Inhalts-Container auf voller Breite dargestellt wird, hat die horizontale Ausrichtung dann keine Auswirkungen.",
                 "boxMode": {
-                    "inputLabel": "Box Modus"
+                    "title": "Container-Breite begrenzen",
+                    "inputLabel": "Begrenzung aktivieren",
+                    "helpText": "Wenn du den <b>Box Modus</b> aktivierst, wird der Inhalts-Container automatisch auf eine maximale Breite von 50% beschränkt. Die maximale Breite kannst du in den Einstellungen weiter spezifizieren. <b>Mit aktiviertem Box Modus</b> kannst du den Inhats-Container auch horizontal Ausrichten. Da <b>bei inaktivem Box Modus</b> der Inhalts-Container auf voller Breite dargestellt wird, hat die horizontale Ausrichtung dann keine Auswirkungen."
                 },
                 "maxWidth": {
                     "placeholder": "Max Breite (Prozent, px oder rem)"
+                },
+                "bgColor": {
+                    "label": "Background color"
+                },
+                "padding": {
+                    "label": "Padding",
+                    "placeholder": "20px"
+                },
+                "verticalAlign": {
+                    "label": "Vertikale Ausrichtung",
+                    "options": {
+                        "top": "Oben",
+                        "center": "Zentriert",
+                        "bottom": "Unten"
+                    }
                 },
                 "horizontalAlign": {
                     "title": "Horizontale Ausrichtung",
@@ -86,6 +136,35 @@
                         "center": "Zentriert",
                         "right": "Rechts"
                     }
+                }
+            }
+        },
+        "appearance": {
+            "contentGeneral": {
+                "title": "Allgemein",
+                "contentVerticalAlign": {
+                    "label": "Ausrichtung Inhalt",
+                    "options": {
+                        "left": "Links",
+                        "center": "Zentriert",
+                        "right": "Rechts"
+                    }
+                }
+            }
+        },
+        "settingsForm": {
+            "urlSettings": {
+                "target": {
+                    "label": "URL Ziel",
+                    "placeholder": "Ziel wählen",
+                    "options": {
+                        "internal": "Intern",
+                        "external": "Extern"
+                    }
+                },
+                "overlay": {
+                    "description": "Bei aktivierten URL Overlay wird der Button ausgeblenden und der gesamte Slide als Verlinkungs-Fläche genutzt",
+                    "inputLabel": "URL Overlay"
                 }
             }
         },

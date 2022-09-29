@@ -1,5 +1,6 @@
 import template from './blur-elysium-slides-detail.twig';
 import './blur-elysium-slides-detail.scss';
+import slideStates from './state';
 
 const { Component, Mixin } = Shopware;
 const { Criteria } = Shopware.Data;
@@ -83,6 +84,10 @@ Component.register( 'blur-elysium-slides-detail', {
             return this.repositoryFactory.create('blur_elysium_slides');
         },
 
+        elysiumSlidesSyncRepository() {
+            return this.repositoryFactory.create('blur_elysium_slides', null, { useSync: true });
+        },
+
         customFieldSetRepository() {
             return this.repositoryFactory.create( 'custom_field_set' );
         },
@@ -132,47 +137,7 @@ Component.register( 'blur-elysium-slides-detail', {
     },
 
     beforeCreate() {
-        /** 
-         * @TODO outsource config object
-        **/
-        Shopware.State.registerModule( 'blurElysiumSlidesDetail', {
-            namespaced: true,
-            state() {
-                return {
-                    apiContext: {},
-                    slide: {},
-                    localMode: false,
-                    loading: {
-                        slide: false
-                    }
-                }
-            },
-            mutations: {
-                setApiContext(state, apiContext) {
-                    state.apiContext = apiContext;
-                },
-                setSlide(state, newSlide) {
-                    state.slide = newSlide;
-                },
-                setLocalMode(state, value) {
-                    state.localMode = value;
-                },
-                setLoading(state, value) {
-                    const name = value[0];
-                    const data = value[1];
-        
-                    if (typeof data !== 'boolean') {
-                        return false;
-                    }
-        
-                    if (state.loading[name] !== undefined) {
-                        state.loading[name] = data;
-                        return true;
-                    }
-                    return false;
-                },
-            }
-        });
+        Shopware.State.registerModule( 'blurElysiumSlidesDetail', slideStates);
     },
 
     created() {
@@ -300,22 +265,19 @@ Component.register( 'blur-elysium-slides-detail', {
                 }
 
                 // save slide
-                return this.elysiumSlidesRepository.save( this.blurElysiumSlide, Shopware.Context.api ).then((result) => {
+                return this.elysiumSlidesRepository.save( this.blurElysiumSlide ).then((result) => {
                     this.isSaveSuccessful = true;
                     this.createNotificationSuccess({
                         message: this.$tc('BlurElysiumSlides.messages.saveSlideSuccess')
                     });
 
-                    if ( this.blurElysiumSlide._isNew === true ) {
-                        // push route to detail with new id as param
-                        let newSlideId = JSON.parse( result.config.data ).id
-                        this.$router.push({ 
-                            name: 'blur.elysium.slides.detail',
-                            params: {
-                                id: newSlideId
-                            } 
-                        })
-                    }
+                    // push route to detail with new id as param
+                    this.$router.push({ 
+                        name: 'blur.elysium.slides.detail',
+                        params: {
+                            id: JSON.parse( result.config.data ).id
+                        } 
+                    })
 
                     this.isLoading = false;
                 }).catch(( exception ) => {
