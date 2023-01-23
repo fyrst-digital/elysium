@@ -47,6 +47,10 @@
                                         :title="$tc('blurElysiumSlider.cmsElement.settings.slideCollectionTitle')" 
                                         class="bc-card bc-card__static-title">
 
+                                        {% block blur_cms_config_elysium_slide_selection_component %}
+                                            <blur-elysium-slide-selection />
+                                        {% endblock %}
+
                                         {% block blur_cms_config_elysium_slider_collection %}
                                             <sw-entity-multi-id-select
                                                 v-model="elysiumSlideCollection"
