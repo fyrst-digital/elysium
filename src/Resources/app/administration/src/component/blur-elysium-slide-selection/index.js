@@ -25,13 +25,15 @@ Component.register( 'blur-elysium-slide-selection', {
         return {
             searchTerm: '',
             searchFocus: false,
-            elysiumSlides: []
+            elysiumSlides: [],
+            selectedSlidesList: []
         };
     },
 
     watch: {
         selectedSlides( slides, oldSlides ) {
-            //this.$emit('updateSelectedSlides', this.slides)
+            // if selected slides changes fetch the new selected-slides id collection from elysium slides repository
+            this.getElysiumSlidesById()
         },
         searchTerm( currentTerm, originTerm ) {
             this.inputSearch()
@@ -54,9 +56,7 @@ Component.register( 'blur-elysium-slide-selection', {
 
     created() {
         this.getElysiumSlides()
-    },
-
-    mounted() {
+        this.getElysiumSlidesById()
     },
 
     methods: {
@@ -71,7 +71,7 @@ Component.register( 'blur-elysium-slide-selection', {
         },
 
         blurSearch( event ) {
-            // call if search is focused
+            // call if search is blured
             if ( event.relatedTarget !== null ) {
                 this.searchFocus = false
             }
@@ -81,6 +81,22 @@ Component.register( 'blur-elysium-slide-selection', {
             this.elysiumSlidesRepository.search( this.elysiumSlidesCriteria, Shopware.Context.api ).then((result) => {
                 this.elysiumSlides = result
             })
+        },
+
+        getElysiumSlidesById() {
+            const criteria = new Criteria
+
+            criteria.setIds(this.selectedSlides)
+
+            console.dir(this.selectedSlides)
+
+            if ( this.selectedSlides.length > 0) {                
+                this.elysiumSlidesRepository.search( criteria, Shopware.Context.api ).then((result) => {
+                    this.selectedSlidesList = result
+                })
+            } else {
+                this.selectedSlidesList = []
+            }
         },
 
         selectSlide( value ) {

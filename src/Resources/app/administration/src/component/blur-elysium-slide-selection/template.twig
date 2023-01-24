@@ -14,7 +14,6 @@
 
         <template v-if="searchFocus === true">
 
-            <template v-if="elysiumSlides.length > 0">
                 <sw-select-result-list 
                     ref="resultList"
                     :options="elysiumSlides"
@@ -41,8 +40,16 @@
                     </template>
                 </sw-select-result-list>
 
-            </template>
         </template>        
+    </div>
+
+    <div v-if="selectedSlidesList.length > 0"
+        style="padding:1rem 0;">
+        <div v-for="slide in selectedSlidesList" 
+            :key="slide.id"
+            style="background-color:#f3f3f3;padding:.5rem 1rem;margin:.5rem 0;border-radius:5px;">
+            {{slide.name}}
+        </div>
     </div>
 
 </div>
