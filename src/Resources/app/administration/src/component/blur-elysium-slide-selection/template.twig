@@ -30,8 +30,9 @@
                         >
                             <li
                                 is="sw-select-result"
+                                :selected="slideIsSelected( item )"
                                 v-bind="{ item, index }"
-                                @item-select="selectSlide">
+                                @item-select.prevent="selectSlide">
                                 <div>{{ item.name }}</div>
                                 <div style="font-weight:600;">{{ item.title }}</div>
                             </li>

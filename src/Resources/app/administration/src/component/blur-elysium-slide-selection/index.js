@@ -44,7 +44,11 @@ Component.register( 'blur-elysium-slide-selection', {
         },
 
         elysiumSlidesCriteria() {
-            return new Criteria();
+            const criteria = new Criteria()
+
+            criteria.setTerm(this.searchTerm)
+
+            return criteria
         }
     },
 
@@ -58,6 +62,7 @@ Component.register( 'blur-elysium-slide-selection', {
     methods: {
         inputSearch() {
             // execute if user types a search term
+            this.getElysiumSlides()
         },
 
         focusSearch() {
@@ -80,12 +85,31 @@ Component.register( 'blur-elysium-slide-selection', {
 
         selectSlide( value ) {
             // call if slide is selected
-            // add slide to this.selectedSlides
-            if ( this.selectedSlides.includes(value.id) === false ) {
-                this.selectedSlides.push( value.id )
+            // add slide to this.selectedSlides if is not in collection
+            // remove slide from this.selectedSlides if is in collection
+            let index = this.selectedSlides.indexOf(value.id)
+            
+            switch (this.selectedSlides.includes(value.id)) {
+                case false:
+                    this.selectedSlides.push( value.id )
+                    break;
+                case true:
+                    this.selectedSlides.splice( index, 1 )
+                    break;
+                default:
+                    this.selectedSlides.push( value.id )
+                    break;
             }
+
             // loose search focus
             this.searchFocus = false
+        },
+
+        slideIsSelected( slide ) {
+            if (this.selectedSlides.includes(slide.id)) {
+                return true
+            }
+            return false
         }
     }
 });
