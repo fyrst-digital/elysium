@@ -1,0 +1,71 @@
+{% block blur_elysium_slide_select_item %} 
+    <div class="blur-es-list-item">
+
+        <template v-if="slideData && isLoading === false">
+
+            {% block blur_elysium_slide_select_item_silde_container %}
+                <div class="blur-es-list-item__slide-container">
+
+                    {% block blur_elysium_slide_select_item_silde_image %}
+                        <div v-if="slideImage !== null" 
+                            class="blur-es-list-item__slide-image">
+
+                            <img 
+                                :src="slideImage" 
+                                :alt="slideData.title"
+                                class="blur-es-list-item__slide-image-element">
+                        </div>
+                    {% endblock %}
+
+                    {% block blur_elysium_slide_select_item_silde_content %} 
+                        <div class="blur-es-list-item__slide-content">
+                            <div>
+                                {{slideData.name}}
+                            </div>
+                            <div>
+                                {{slideData.title}}
+                            </div>
+                        </div>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+            
+            {% block blur_elysium_slide_select_item_silde_actions %}
+                <div class="blur-es-list-item__slide-actions">
+                    {% block blur_elysium_slide_select_item_silde_action_position_up %}
+                        <sw-button 
+                            class="blur-es-list-item__icon-button"
+                            variant="context"
+                            :disabled="false" 
+                            :isLoading="isLoading"
+                            @click="positionUp">
+                            <sw-icon name="regular-chevron-up" size="18" color="#5a5a5a"></sw-icon>
+                        </sw-button>
+                    {% endblock %}
+
+                    {% block blur_elysium_slide_select_item_silde_action_position_down %}
+                        <sw-button 
+                            class="blur-es-list-item__icon-button" 
+                            variant="context"
+                            :disabled="false" 
+                            :isLoading="isLoading"
+                            @click="positionDown">
+                            <sw-icon name="regular-chevron-down" size="18" color="#5a5a5a"></sw-icon>
+                        </sw-button>
+                    {% endblock %}
+
+                    {% block blur_elysium_slide_select_item_silde_action_remove %}
+                        <sw-button 
+                            class="blur-es-list-item__icon-button"
+                            variant="context"
+                            :disabled="false" 
+                            :isLoading="isLoading"
+                            @click="removeSlide">
+                            <sw-icon name="regular-trash" size="16" color="#eb657d"></sw-icon>
+                        </sw-button>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </template>
+    </div>
+{% endblock %}

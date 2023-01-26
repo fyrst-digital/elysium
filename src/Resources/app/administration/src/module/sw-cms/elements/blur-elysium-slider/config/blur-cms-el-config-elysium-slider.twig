@@ -47,14 +47,9 @@
                                         :title="$tc('blurElysiumSlider.cmsElement.settings.slideCollectionTitle')" 
                                         class="bc-card bc-card__static-title">
 
-                                        {% block blur_cms_config_elysium_slider_collection %}
-                                            <sw-entity-multi-id-select
-                                                v-model="elysiumSlideCollection"
-                                                class="bc-field__no-margin bc-field__px-1"
-                                                :repository="elysiumSlidesRepository"
-                                                :label="$tc('blurElysiumSlider.cmsElement.config.slidesSelect.label')"
-                                                :placeholder="$tc('blurElysiumSlider.cmsElement.config.slidesSelect.placeholder')"
-                                                @change="onChange" />
+                                        {% block blur_cms_config_elysium_slide_selection_component %}
+                                            <blur-elysium-slide-selection 
+                                                :selected-slides="elysiumSlideCollection" />
                                         {% endblock %}
                                     </sw-card>
                                 {% endblock %}

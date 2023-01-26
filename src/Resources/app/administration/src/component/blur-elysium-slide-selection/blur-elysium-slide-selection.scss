@@ -1,0 +1,27 @@
+.blur-es-selection-label {
+    margin-bottom:.5rem;
+}
+
+.blur-es-selection__search {
+    position: relative;
+}
+
+.blur-es-selection__list-helptext {
+    padding:1rem 0;
+    line-height:1.5;
+    font-size:14px;
+}
+
+.blur-es-selection__list-container {
+    padding:1rem 0;
+}
+
+.blur-es-selection__list-label {
+    margin-bottom:1rem;
+}
+
+.blur-es-selection__list {
+    display:grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-gap:1rem;
+}

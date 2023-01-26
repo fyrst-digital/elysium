@@ -1,0 +1,14 @@
+{
+    "blurElysiumSlides": {
+        "slideSearch": {
+            "noResult": "Keine Slides gefunden"
+        },
+        "slideSelection": {
+            "label": "Wähle deine Slides",
+            "list": {
+                "label": "Slide-Auswahl",
+                "helptext": "Klicke in das Suchfeld und wähle aus deiner Slide Sammlung aus. Du kannst nach dem Slide-Namen und -Titel suchen. Deine Slides findest du unter <b>Inhalte &rsaquo; Elysium Slides</b>, dort kannst du auch neue Slides erstellen."
+            }
+        }
+    }
+}

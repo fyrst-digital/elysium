@@ -23,6 +23,9 @@
             "saveSlideSuccess": "The slide was saved.",
             "missingSlideNameError": "Please enter a slide name."
         },
+        "slideSelection": {
+            "label": "Wähle deine Slides"
+        },
         "actions": {
             "newSlide": "New Slide",
             "createSlide": "Create Slide",
