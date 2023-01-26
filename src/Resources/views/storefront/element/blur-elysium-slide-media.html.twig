@@ -3,7 +3,7 @@
     {# default background-image used as fallback #}
     {% if media.url and ( media.fileExtension in extenstionWhitelist ) %}
         [data-elysium-slide-id="{{ slideId }}"] {
-            background-image: url( {{ media.url }} );
+            background-image: url( "{{ media.url }}" );
         }
     {% endif %}
 
@@ -12,7 +12,7 @@
         {% for thumbnail in media.thumbnails %}
             @media screen and (max-width: {{ thumbnail.width ~ 'px' }}) {
                 [data-elysium-slide-id="{{ slideId }}"] {
-                    background-image: url( {{ thumbnail.url }} );
+                    background-image: url( "{{ thumbnail.url }}" );
                 }
             }
         {% endfor %}
