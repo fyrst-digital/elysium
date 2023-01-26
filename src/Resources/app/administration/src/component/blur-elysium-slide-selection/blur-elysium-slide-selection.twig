@@ -43,13 +43,27 @@
         </template>        
     </div>
 
-    <div v-if="selectedSlidesList.length > 0"
+    <div v-if="selectedSlides.length > 0"
         style="padding:1rem 0;">
-        <div v-for="slide in selectedSlidesList" 
-            :key="slide.id"
-            style="background-color:#f3f3f3;padding:.5rem 1rem;margin:.5rem 0;border-radius:5px;">
-            {{slide.name}}
+
+        <div style="margin-bottom:1rem;">
+            {{ $tc('ElysiumSlidesSelection') }}
+        </div>
+
+        <div style="display:grid;grid-template-columns:minmax(0, 1fr);grid-gap:1rem;">
+            <blur-elysium-slide-select-item 
+                v-for="slide in selectedSlides" 
+                :key="slide"
+                :selected-slide="slide" 
+                @position-up="slidePositionUp"
+                @position-down="slidePositionDown"
+                @remove-slide="onRemoveSlide" />
         </div>
     </div>
+    <p v-else style="padding:1rem 0;">
+        {{ $tc('ElysiumSlidesHepltext') }}
+        Klicke in das Suchfeld und wähle aus deinen Slide Sammlung aus<br/>
+        Deine Slides findest du unter <b>Inhalte &rsaquo; Elysium Slides</b>, dort kannst du auch neue Slides erstellen.
+    </p>
 
 </div>

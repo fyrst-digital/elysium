@@ -1,4 +1,4 @@
-import template from './template.twig';
+import template from './blur-elysium-slide-selection.twig';
 
 const { Criteria } = Shopware.Data;
 const { Component, Context, Mixin } = Shopware;
@@ -26,21 +26,22 @@ Component.register( 'blur-elysium-slide-selection', {
             searchTerm: '',
             searchFocus: false,
             elysiumSlides: [],
+            // may be @depracted
             selectedSlidesList: []
         };
     },
 
     watch: {
         selectedSlides( slides, oldSlides ) {
-            // if selected slides changes fetch the new selected-slides id collection from elysium slides repository
-            this.getElysiumSlidesById()
         },
+
         searchTerm( currentTerm, originTerm ) {
             this.inputSearch()
         }
     },
 
     computed: {
+
         elysiumSlidesRepository() {
             return this.repositoryFactory.create('blur_elysium_slides');
         },
@@ -56,7 +57,6 @@ Component.register( 'blur-elysium-slide-selection', {
 
     created() {
         this.getElysiumSlides()
-        this.getElysiumSlidesById()
     },
 
     methods: {
@@ -81,22 +81,6 @@ Component.register( 'blur-elysium-slide-selection', {
             this.elysiumSlidesRepository.search( this.elysiumSlidesCriteria, Shopware.Context.api ).then((result) => {
                 this.elysiumSlides = result
             })
-        },
-
-        getElysiumSlidesById() {
-            const criteria = new Criteria
-
-            criteria.setIds(this.selectedSlides)
-
-            console.dir(this.selectedSlides)
-
-            if ( this.selectedSlides.length > 0) {                
-                this.elysiumSlidesRepository.search( criteria, Shopware.Context.api ).then((result) => {
-                    this.selectedSlidesList = result
-                })
-            } else {
-                this.selectedSlidesList = []
-            }
         },
 
         selectSlide( value ) {
@@ -126,6 +110,35 @@ Component.register( 'blur-elysium-slide-selection', {
                 return true
             }
             return false
+        },
+
+        slidePositionUp ( slide ) {
+            let currentIndexPos = this.selectedSlides.indexOf(slide)
+            let upIndexPos = currentIndexPos - 1
+
+            if (upIndexPos >= 0) {
+                // remove slide from current position
+                this.selectedSlides.splice( currentIndexPos, 1 )
+                // add slide on up position
+                this.selectedSlides.splice( upIndexPos, 0, slide )
+            }
+        },
+
+        slidePositionDown ( slide ) {
+            let currentIndexPos = this.selectedSlides.indexOf(slide)
+            let downIndexPos = currentIndexPos + 1
+            let maxIndex = this.selectedSlides.length - 1
+
+            if (currentIndexPos < maxIndex) {
+                // remove slide from current position
+                this.selectedSlides.splice( currentIndexPos, 1 )
+                // add slide on down position
+                this.selectedSlides.splice( downIndexPos, 0, slide )
+            }
+        },
+
+        onRemoveSlide (slide) {
+            this.selectedSlides.splice( this.selectedSlides.indexOf(slide), 1 )
         }
     }
 });

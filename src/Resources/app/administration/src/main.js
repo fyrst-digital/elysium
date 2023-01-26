@@ -1,5 +1,6 @@
 import './assets/scss/global.scss'; // import global bc stylings
 import './component/blur-elysium-slide-selection';
+import './component/blur-elysium-slide-select-item';
 import './module/blur-elysium-slides'; // import main module
 import './app/component/structure/sw-search-bar-item'; // import search bar result override
 import './module/sw-cms/elements/blur-elysium-slider'; // import CMS Element
