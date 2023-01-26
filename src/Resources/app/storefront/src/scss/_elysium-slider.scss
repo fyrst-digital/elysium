@@ -110,10 +110,10 @@
     
     &.fluid-text-button {
         line-height: 1.5;
-        padding-left: min(max(1.5rem, 3vw), 3rem);
-        padding-right: min(max(1.5rem, 3vw), 3rem);
-        padding-top: min(max(.5rem, 2vw), 1rem);
-        padding-bottom: min(max(.5rem, 2vw), 1rem);
+        padding-left: #{"min(max(1.5rem, 3vw), 3rem)"};
+        padding-right: #{"min(max(1.5rem, 3vw), 3rem)"};
+        padding-top: #{"min(max(.5rem, 2vw), 1rem)"};
+        padding-bottom: #{"min(max(.5rem, 2vw), 1rem)"};
         font-size: #{"min(max( #{$blur-es-button-size-min}, #{$blur-es-button-size-scaling}), #{$blur-es-button-size-max})"};
     }    
 }
