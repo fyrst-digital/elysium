@@ -1,3 +1,4 @@
+import './blur-elysium-slide-selection.scss'
 import template from './blur-elysium-slide-selection.twig';
 
 const { Criteria } = Shopware.Data;

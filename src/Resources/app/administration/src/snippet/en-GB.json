@@ -1,0 +1,14 @@
+{
+    "blurElysiumSlides": {
+        "slideSearch": {
+            "noResult": "No Slides found"
+        },
+        "slideSelection": {
+            "label": "Choose your Slides",
+            "list": {
+                "label": "Slide selection",
+                "helptext": "Click in the search field and select your slide collection. You will find your slides under <b>Contents &rsaquo; Elysium Slides</b>, where you can also create new slides."
+            }
+        }
+    }
+}
