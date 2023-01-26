@@ -1,7 +1,9 @@
 {
     "blurElysiumSlides": {
         "slideSearch": {
-            "noResult": "No Slides found"
+            "noResult": "No Slides found",
+            "addItem": "Add",
+            "removeItem": "Remove"
         },
         "slideSelection": {
             "label": "Choose your Slides",

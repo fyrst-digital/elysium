@@ -42,9 +42,17 @@
                                             is="sw-select-result"
                                             :selected="slideIsSelected( item )"
                                             v-bind="{ item, index }"
+                                            class="blur-es-selection__search-result-list-item"
                                             @item-select.prevent="selectSlide">
-                                            <div>{{ item.name }}</div>
-                                            <div style="font-weight:600;">{{ item.title }}</div>
+                                            <div class="blur-es-selection__search-result-item">
+                                                <div>
+                                                    <div>{{ item.name }}</div>
+                                                    <div style="font-weight:600;">{{ item.title }}</div>
+                                                </div>
+                                                <div>
+                                                    {{ selectedSlides.includes(item.id) ? $tc('blurElysiumSlides.slideSearch.removeItem') : $tc('blurElysiumSlides.slideSearch.addItem') }}
+                                                </div>
+                                            </div>
                                         </li>
                                     {% endblock %}
                                 </slot>
