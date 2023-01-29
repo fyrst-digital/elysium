@@ -22,6 +22,7 @@
                         :label="$tc('BlurElysiumSlides.mediaForm.uploadInput.title')"
                         :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
                         :default-folder="entityName"
+                        file-accept="*/*"
                         @media-drop="payload => setMedia( payload.id, 'slideCover' )"
                         @media-upload-remove-image="payload => resetMedia( 'slideCover' )"
                         @media-upload-sidebar-open="mediaSidebar.openContent()"
