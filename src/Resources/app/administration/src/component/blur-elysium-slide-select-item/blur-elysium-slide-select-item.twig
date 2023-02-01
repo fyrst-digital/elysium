@@ -61,6 +61,17 @@
                         </sw-button>
                     {% endblock %}
 
+                    {% block blur_elysium_slide_select_item_silde_edit %}
+                        <sw-button 
+                            class="blur-es-list-item__icon-button"
+                            variant="context"
+                            :disabled="false" 
+                            :isLoading="isLoading"
+                            @click="editSlide">
+                            <sw-icon name="regular-file-edit" size="16" color="#189eff"></sw-icon>
+                        </sw-button>
+                    {% endblock %}
+
                     {% block blur_elysium_slide_select_item_silde_action_remove %}
                         <sw-button 
                             class="blur-es-list-item__icon-button"

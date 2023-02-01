@@ -58,6 +58,7 @@ Component.register( 'blur-elysium-slide-select-item', {
 
     created() {
         this.getElysiumSlide()
+        console.dir(this)
     },
 
     methods: {
@@ -74,6 +75,10 @@ Component.register( 'blur-elysium-slide-select-item', {
 
         positionDown() {
             this.$emit('position-down', this.selectedSlide)
+        },
+
+        editSlide() {
+            this.$emit('edit-slide', this.selectedSlide)
         },
 
         removeSlide() {

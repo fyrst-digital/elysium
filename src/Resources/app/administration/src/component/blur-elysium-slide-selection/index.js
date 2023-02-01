@@ -141,6 +141,11 @@ Component.register( 'blur-elysium-slide-selection', {
             this.selectedSlides.splice( this.selectedSlides.indexOf(slide), 1 )
         },
 
+        onEditSlide (slide) {
+            let route = this.$router.resolve({name: 'blur.elysium.slides.detail', params: {id: slide}})
+            window.open(route.href, '_blank');
+        },
+
         startDrag( slideId, event ) {
             event.dataTransfer.setData( 'startSlideId', slideId )
             event.dataTransfer.setData( 'startSlideIndex', this.selectedSlides.indexOf( slideId ) )
