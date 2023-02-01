@@ -2,15 +2,17 @@
 
     {# default background-image used as fallback #}
     {% if media.url and ( media.fileExtension in extenstionWhitelist ) %}
-        [data-elysium-slide-id="{{ slideId }}"] {
-            background-image: url( "{{ media.url }}" );
+        @media screen and (orientation: portrait) {
+            [data-elysium-slide-id="{{ slideId }}"] {
+                background-image: url( "{{ media.url }}" );
+            }
         }
     {% endif %}
 
     {% if media.thumbnails %}
         
         {% for thumbnail in media.thumbnails %}
-            @media screen and (max-width: {{ thumbnail.width ~ 'px' }}) {
+            @media screen and (max-width: {{ thumbnail.width ~ 'px' }}) and (orientation: portrait) {
                 [data-elysium-slide-id="{{ slideId }}"] {
                     background-image: url( "{{ thumbnail.url }}" );
                 }

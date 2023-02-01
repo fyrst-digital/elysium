@@ -27,6 +27,10 @@
 
 .blur-es-list-item__slide-image {
     flex: 0 1 auto;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .blur-es-list-item__slide-image-element {

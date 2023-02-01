@@ -21,6 +21,12 @@ Component.register( 'blur-elysium-slide-select-item', {
     data() {
         return {
             isLoading: true,
+            allowedImageExtension: [
+                'jpg','png','webp','avif','svg'
+            ],
+            allowedVideoExtension: [
+                'mp4','webm'
+            ],
             slideData: {}
         };
     },
@@ -29,11 +35,11 @@ Component.register( 'blur-elysium-slide-select-item', {
     },
 
     computed: {
-        slideImage() {
+        slideMedia() {
             if ( this.slideData && this.slideData.media ) {
-                return this.slideData.media.url
+                return this.slideData.media
             } else if ( this.slideData && this.slideData.mediaPortrait ) {
-                return this.slideData.mediaPortrait.url
+                return this.slideData.mediaPortrait
             }
 
             return null
@@ -52,7 +58,6 @@ Component.register( 'blur-elysium-slide-select-item', {
 
     created() {
         this.getElysiumSlide()
-        console.log(this)
     },
 
     methods: {
@@ -60,6 +65,7 @@ Component.register( 'blur-elysium-slide-select-item', {
             this.elysiumSlidesRepository.get( this.selectedSlide, Shopware.Context.api, this.elysiumSlideCriteria ).then((result) => {
                 this.slideData = result
                 this.isLoading = false
+                console.log(this.slideData)
             })
         },
 
