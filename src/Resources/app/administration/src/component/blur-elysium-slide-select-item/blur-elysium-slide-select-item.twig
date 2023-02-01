@@ -7,13 +7,16 @@
                 <div class="blur-es-list-item__slide-container">
 
                     {% block blur_elysium_slide_select_item_silde_image %}
-                        <div v-if="slideImage !== null" 
+                        <div v-if="slideMedia !== null" 
                             class="blur-es-list-item__slide-image">
 
-                            <img 
-                                :src="slideImage" 
+                            <img v-if="allowedImageExtension.includes(slideMedia.fileExtension)"
+                                :src="slideMedia.url" 
                                 :alt="slideData.title"
                                 class="blur-es-list-item__slide-image-element">
+                            <div v-else-if="allowedVideoExtension.includes(slideMedia.fileExtension)" >
+                                <sw-icon name="regular-play" color="#aaaaaa"></sw-icon>
+                            </div>
                         </div>
                     {% endblock %}
 

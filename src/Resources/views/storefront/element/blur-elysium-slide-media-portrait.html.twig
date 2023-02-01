@@ -1,0 +1,22 @@
+{% block cms_element_blur_elysium_slide_css_styles_media %}
+
+    {# default background-image used as fallback #}
+    {% if media.url and ( media.fileExtension in extenstionWhitelist ) %}
+        @media screen and (orientation: portrait) {
+            [data-elysium-slide-id="{{ slideId }}"] {
+                background-image: url( "{{ media.url }}" );
+            }
+        }
+    {% endif %}
+
+    {% if media.thumbnails %}
+        
+        {% for thumbnail in media.thumbnails %}
+            @media screen and (max-width: {{ thumbnail.width ~ 'px' }}) and (orientation: portrait) {
+                [data-elysium-slide-id="{{ slideId }}"] {
+                    background-image: url( "{{ thumbnail.url }}" );
+                }
+            }
+        {% endfor %}
+    {% endif %}
+{% endblock %}

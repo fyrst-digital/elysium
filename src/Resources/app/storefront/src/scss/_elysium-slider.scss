@@ -207,3 +207,14 @@
 	right: 0;
 	text-indent: -100%;
 }
+
+.cms-element-elysium-slide__video-element {
+    position: absolute;
+    inset: 0;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
