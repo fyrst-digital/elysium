@@ -27,8 +27,7 @@ Component.register( 'blur-elysium-slide-selection', {
             searchTerm: '',
             searchFocus: false,
             elysiumSlides: [],
-            // may be @depracted
-            selectedSlidesList: []
+            currentDragIndex: null
         };
     },
 
@@ -140,6 +139,20 @@ Component.register( 'blur-elysium-slide-selection', {
 
         onRemoveSlide (slide) {
             this.selectedSlides.splice( this.selectedSlides.indexOf(slide), 1 )
+        },
+
+        startDrag( slideId, event ) {
+            event.dataTransfer.setData( 'startSlideId', slideId )
+            event.dataTransfer.setData( 'startSlideIndex', this.selectedSlides.indexOf( slideId ) )
+        },
+
+        onDrag( slideId, event ) {
+            this.currentDragIndex = this.selectedSlides.indexOf( slideId )
+        },
+
+        onDrop( event ) {
+            this.selectedSlides.splice(event.dataTransfer.getData('startSlideIndex'), 1)
+            this.selectedSlides.splice(this.currentDragIndex, 0, event.dataTransfer.getData('startSlideId'))
         }
     }
 });

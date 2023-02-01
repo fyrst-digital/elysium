@@ -65,7 +65,6 @@ Component.register( 'blur-elysium-slide-select-item', {
             this.elysiumSlidesRepository.get( this.selectedSlide, Shopware.Context.api, this.elysiumSlideCriteria ).then((result) => {
                 this.slideData = result
                 this.isLoading = false
-                console.log(this.slideData)
             })
         },
 
@@ -80,5 +79,13 @@ Component.register( 'blur-elysium-slide-select-item', {
         removeSlide() {
             this.$emit('remove-slide', this.selectedSlide)
         },
+
+        startDrag( event ) {
+            this.$emit('start-drag', this.selectedSlide, event, this.$refs.selectItem)
+        },
+
+        overDrag( event ) {
+            this.$emit('over-drag', this.selectedSlide, event, this.$refs.selectItem)
+        }
     }
 });

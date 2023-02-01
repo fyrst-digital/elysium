@@ -1,5 +1,9 @@
 {% block blur_elysium_slide_select_item %} 
-    <div class="blur-es-list-item">
+    <div class="blur-es-list-item"
+        ref="selectItem"
+        draggable
+        @dragstart="startDrag($event)"
+        @dragenter="overDrag($event)">
 
         <template v-if="slideData && isLoading === false">
 

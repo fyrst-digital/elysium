@@ -76,12 +76,18 @@
                 {% endblock %}
 
                 {% block blur_elysium_slide_selection_list %}
-                    <div class="blur-es-selection__list">
+                    <div class="blur-es-selection__list"
+                        @drop="onDrop($event)"
+                        @dragover.prevent
+                        @dragenter.prevent>
                         {% block blur_elysium_slide_selection_list_item %}
                             <blur-elysium-slide-select-item 
                                 v-for="slide in selectedSlides" 
                                 :key="slide"
                                 :selected-slide="slide" 
+                                draggable
+                                @start-drag="startDrag"
+                                @over-drag="onDrag"
                                 @position-up="slidePositionUp"
                                 @position-down="slidePositionDown"
                                 @remove-slide="onRemoveSlide" />
