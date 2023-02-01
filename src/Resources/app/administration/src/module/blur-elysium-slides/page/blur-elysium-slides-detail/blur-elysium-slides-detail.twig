@@ -173,8 +173,11 @@
                                 slot="context-menu-items"
                                 slot-scope="media"
                             >
-                                <sw-context-menu-item @click="setMediaFromSidebar(media.mediaItem)">
+                                <sw-context-menu-item @click="setMedia(media.mediaItem.id, 'slideCover')">
                                     {{ $tc('BlurElysiumSlides.mediaForm.useAsCover') }}
+                                </sw-context-menu-item>
+                                <sw-context-menu-item @click="setMedia(media.mediaItem.id, 'slideCoverPortrait')">
+                                    {{ $tc('BlurElysiumSlides.mediaForm.useAsCoverPortrait') }}
                                 </sw-context-menu-item>
                             </template>
                         </sw-sidebar-media-item>
