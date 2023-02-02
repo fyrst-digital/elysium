@@ -11,21 +11,6 @@ Shopware.Component.override( 'sw-media-folder-item', {
         return { associatedEntity: null }
     },
 
-    created() {
-        /*
-        console.log(this.mediaFolder.name)
-        console.log(this.mediaFolder.defaultFolderId)
-        console.log(this.mediaFolder.id)
-
-        console.dir(this)
-        console.dir(await this.getEntityName().entity)
-        */
-        // this.mediaFolderRepository
-
-        const test = this.getEntityName()
-        console.dir(this)
-    }, 
-
     methods: {
         async getEntityName() {
             this.mediaDefaultFolderRepository.get( this.mediaFolder.defaultFolderId, Context.api).then((result) => {

@@ -22,7 +22,7 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
     },
 
     computed: {
-        elysiumSlideCollection: {
+        selectedSlides: {
             get() {
                 return this.element.config.elysiumSlideCollection.value
             },
@@ -56,8 +56,8 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
     },
 
     created() {
-        this.getSlides();
         this.createdComponent();
+        this.getSlides();
     },
 
     methods: {
@@ -69,10 +69,7 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
         getSlides() {
             this.elysiumSlidesRepository.search( this.defaultCriteria, Shopware.Context.api ).then(( res ) => {
                 this.blurElysiumSlides = res;
-
-                /**
-                 * @todo clear slide id in collection if the elysium slide id doen't exist anymore
-                 */
+                this.selectedSlides = this.filterOrphans(res)
                     
             }).catch( ( e ) => {
                 console.warn( e );
@@ -99,6 +96,15 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
         onSlideOverview() {
             let route = this.$router.resolve({name: 'blur.elysium.slides.index'})
             window.open(route.href, '_blank')
+        },
+
+        filterOrphans( slides ) {
+
+            return this.selectedSlides.filter( (selectedSlide, index) => {
+                return slides.find((slide) => {
+                    return slide.id === selectedSlide
+                })
+            })
         }
     }
 });

@@ -20,11 +20,9 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         return {
             editable: true,
             isLoading: true,
-            slideCollectionIds: null,
             slidesData: null,
             inlineBgImage: null,
             inlineColor: '#ffffff',
-            test: 'www.google.de',
             slideIndex: parseInt( 0, 10 ),
             sliderArrowColor: null,
             sliderDotColor: null,
@@ -33,6 +31,20 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
     },
 
     computed: {
+        selectedSlidesIds: {
+            
+            // getter
+            get() {
+                return this.element.config.elysiumSlideCollection.value
+            },
+            // setter
+            set(newValue) {
+                // Note: we are using destructuring assignment syntax here.
+                this.element.config.elysiumSlideCollection.value = newValue
+            }
+            
+        },
+
         elysiumSlidesRepository() {
             return this.repositoryFactory.create('blur_elysium_slides');
         },
@@ -40,7 +52,7 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         slidesCollectionCriteria() {
             const criteria = new Criteria();
 
-            criteria.setIds( this.slideCollectionIds );
+            criteria.setIds( this.selectedSlidesIds );
 
             return criteria;
         },
@@ -80,23 +92,26 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
     },
 
     watch: {
+        /** 
         cmsPageState: {
             deep: true,
             handler() {
                 this.updatePreviewData();
             }
         },
-
+        */
+        /** 
         'element.config.headline.source': {
             handler() {
                 this.updatePreviewData();
             }
         }
+        */
     },
 
     created() {
         this.createdComponent();
-        this.updatePreviewData();
+        //this.updatePreviewData();
         this.setConfigProperties();
     },
 
@@ -106,21 +121,35 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         },
 
         updatePreviewData() {
-            this.slideCollectionIds = this.element.config.elysiumSlideCollection.value;
 
-            if ( this.slideCollectionIds.length > 0  ) {
+            if ( this.selectedSlidesIds.length > 0  ) {
 
                 this.elysiumSlidesRepository.search(
                     this.slidesCollectionCriteria,
                     Shopware.Context.api
                 ).then(( blurElysiumSlidesCollection ) => {
-                    if ( blurElysiumSlidesCollection[0].media ) {
-                        this.previewStyles = blurElysiumSlidesCollection[0].media.url;
-                    } else {
-                        this.previewStyles = null;
-                    }
+
+                    let filtered = this.filterOrphans( blurElysiumSlidesCollection )
+                    this.selectedSlidesIds = filtered
+
+                    console.dir(this.selectedSlidesIds)
+                    console.dir(filtered)
                     
-                    this.previewData = blurElysiumSlidesCollection;
+
+                    if (blurElysiumSlidesCollection.length === 0) {
+                        // if there are no elysium-slides the slide selection will be cleared
+                        this.selectedSlidesIds = []
+
+                    } else {
+
+                        if ( blurElysiumSlidesCollection[0].media ) {
+                            this.previewStyles = blurElysiumSlidesCollection[0].media.url;
+                        } else {
+                            this.previewStyles = null;
+                        }
+                        
+                        this.previewData = blurElysiumSlidesCollection;
+                    }
                 });    
             } else {
                 this.previewData = null;
@@ -147,6 +176,15 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
             } else if ( parseInt( iterator, 10 ) === -1 && this.slideIndex > 0 ) {
                 this.slideIndex += parseInt( iterator, 10 );
             }
+        },
+
+        filterOrphans( slides ) {
+
+            return this.selectedSlidesIds.filter( (selectedSlide, index) => {
+                return slides.find((slide) => {
+                    return slide.id === selectedSlide
+                })
+            })
         }
     }
 });

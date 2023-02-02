@@ -58,7 +58,6 @@ Component.register( 'blur-elysium-slide-select-item', {
 
     created() {
         this.getElysiumSlide()
-        console.dir(this)
     },
 
     methods: {
