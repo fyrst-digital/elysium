@@ -58,7 +58,6 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
                 } else {
                     this.getSlides()
                 }
-                console.dir(this.selectedSlidesCollection)
             }
         }
     },
