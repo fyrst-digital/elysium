@@ -1,11 +1,18 @@
 {
     "blurElysiumSlides": {
+        "actions": {
+            "createSlide": "Create Slide",
+            "toOverview": "To Overview"
+        },
         "slideSearch": {
             "noResult": "No Slides found",
             "addItem": "Add",
             "removeItem": "Remove"
         },
         "slideSelection": {
+            "message": {
+                "noSlides": "Seems you haven't any Slides yet. Head over to the Elysium Slides Module and create some."
+            },
             "label": "Choose your Slides",
             "list": {
                 "label": "Slide selection",

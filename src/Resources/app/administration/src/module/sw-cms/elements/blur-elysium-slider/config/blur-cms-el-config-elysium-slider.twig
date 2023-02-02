@@ -50,17 +50,17 @@
                                         <template v-if="blurElysiumSlides.length === 0">
                                             <div class="blur-elysium-slider-config__no-slides">
                                                 <p style="margin-bottom:1rem;line-height:1.5;">
-                                                    Seems you haven't any Slides yet. Head over to the Elysium Slides Module and create some.
+                                                    {{ $tc( 'blurElysiumSlides.slideSelection.message.noSlides' ) }}
                                                 </p>
                                                 <div class="blur-elysium-slider-config__no-slides-actions">
                                                     <sw-button
                                                         variant="primary"
                                                         @click="onCreateSlide">
-                                                        Create Slide
+                                                        {{ $tc( 'blurElysiumSlides.actions.createSlide' ) }}
                                                     </sw-button>
                                                     <sw-button
                                                         @click="onSlideOverview">
-                                                        To Overview
+                                                        {{ $tc( 'blurElysiumSlides.actions.toOverview' ) }}
                                                     </sw-button>
                                                 </div>
                                             </div>
