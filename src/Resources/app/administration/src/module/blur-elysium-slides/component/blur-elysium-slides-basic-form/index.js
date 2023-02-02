@@ -39,10 +39,12 @@ Component.register( 'blur-elysium-slides-basic-form', {
         }
     },
 
-    created() {
-        if (!this.slide.slideSettings.headline) {
-            this.slide.slideSettings.headline = {}
-           
+    watch: {
+        slide() {
+            console.log('meddl')
         }
+    },
+
+    created() {
     }
 });

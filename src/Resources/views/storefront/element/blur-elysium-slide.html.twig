@@ -50,9 +50,9 @@
                     } only %}
                 {% endif %}
 
-                {% if slide.slideSettings.headline.textcolor %}
+                {% if slide.slideSettings.headlineTextcolor %}
                     [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__title {
-                        color: {{slide.slideSettings.headline.textcolor}};
+                        color: {{slide.slideSettings.headlineTextcolor}};
                     }
                 {% endif %}
                 
@@ -111,8 +111,8 @@
                 <div class="cms-element-elysium-slide__container{{contentVerticalAlign}}">
                     {% set headlineElement = 'div' %}
 
-                    {% if slide.slideSettings.headline.element %}
-                        {% set headlineElement = slide.slideSettings.headline.element %}
+                    {% if slide.slideSettings.headlineElement %}
+                        {% set headlineElement = slide.slideSettings.headlineElement %}
                     {% endif %}
 
                     {% block cms_element_blur_elysium_slide_title %}
