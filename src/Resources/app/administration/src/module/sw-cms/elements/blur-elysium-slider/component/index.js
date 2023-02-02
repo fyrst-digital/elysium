@@ -23,10 +23,11 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
             slidesData: null,
             inlineBgImage: null,
             inlineColor: '#ffffff',
-            slideIndex: parseInt( 0, 10 ),
+            slideIndex: 0,
             sliderArrowColor: null,
             sliderDotColor: null,
-            sliderDotActiveColor: null
+            sliderDotActiveColor: null,
+            selectedSlidesCollection: null
         };
     },
 
@@ -39,7 +40,6 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
             },
             // setter
             set(newValue) {
-                // Note: we are using destructuring assignment syntax here.
                 this.element.config.elysiumSlideCollection.value = newValue
             }
             
@@ -47,129 +47,57 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
 
         elysiumSlidesRepository() {
             return this.repositoryFactory.create('blur_elysium_slides');
-        },
-
-        slidesCollectionCriteria() {
-            const criteria = new Criteria();
-
-            criteria.setIds( this.selectedSlidesIds );
-
-            return criteria;
-        },
-
-        previewData: {
-
-            get: function() {
-                return this.slidesData;
-            },
-
-            set: function( value ) {
-                this.slidesData = value;
-            }
-        },
-
-        mediaUrl() {
-            if ( this.previewData[this.slideIndex].media === undefined ) {
-                return null;
-            }
-
-            return this.previewData[this.slideIndex].media.url;
-        },
-
-        previewStyles: {
-
-            get: function() {
-                return {
-                    color: this.inlineColor,
-                    backgroundImage: 'url(' + this.inlineBgImage + ')'
-                };
-            },
-
-            set: function( value ) {
-                this.inlineBgImage = value;
-            }
         }
     },
 
     watch: {
-        /** 
-        cmsPageState: {
-            deep: true,
+        'element.config.elysiumSlideCollection.value': {
             handler() {
-                this.updatePreviewData();
-            }
-        },
-        */
-        /** 
-        'element.config.headline.source': {
-            handler() {
-                this.updatePreviewData();
+                if (this.selectedSlidesIds.length === 0) {
+                    this.selectedSlidesCollection = null
+                } else {
+                    this.getSlides()
+                }
+                console.dir(this.selectedSlidesCollection)
             }
         }
-        */
     },
 
     created() {
-        this.createdComponent();
-        //this.updatePreviewData();
-        this.setConfigProperties();
+        this.createdComponent()
     },
 
     methods: {
         createdComponent() {
-            this.initElementConfig( 'blur-elysium-slider' );
+            this.initElementConfig( 'blur-elysium-slider' )
         },
 
-        updatePreviewData() {
+        getSlides() {
+            const criteria = new Criteria()
+            criteria.setIds( this.selectedSlidesIds )
 
-            if ( this.selectedSlidesIds.length > 0  ) {
-
-                this.elysiumSlidesRepository.search(
-                    this.slidesCollectionCriteria,
-                    Shopware.Context.api
-                ).then(( blurElysiumSlidesCollection ) => {
-
-                    let filtered = this.filterOrphans( blurElysiumSlidesCollection )
-                    this.selectedSlidesIds = filtered
-
-                    console.dir(this.selectedSlidesIds)
-                    console.dir(filtered)
-                    
-
-                    if (blurElysiumSlidesCollection.length === 0) {
-                        // if there are no elysium-slides the slide selection will be cleared
-                        this.selectedSlidesIds = []
-
-                    } else {
-
-                        if ( blurElysiumSlidesCollection[0].media ) {
-                            this.previewStyles = blurElysiumSlidesCollection[0].media.url;
-                        } else {
-                            this.previewStyles = null;
-                        }
-                        
-                        this.previewData = blurElysiumSlidesCollection;
-                    }
-                });    
-            } else {
-                this.previewData = null;
-            }
+            this.elysiumSlidesRepository.search( criteria, Shopware.Context.api ).then(( res ) => {
+                this.selectedSlidesCollection = res
+                this.isLoading = false
+            }).catch( ( e ) => {
+                console.warn( e );
+            });
         },
 
-        setConfigProperties() {
-            if ( this.element.config.sliderArrowColor.value ) {
-                this.sliderArrowColor = this.element.config.sliderArrowColor.value;
-            }
-            if ( this.element.config.sliderDotColor.value ) {
-                this.sliderDotColor = this.element.config.sliderDotColor.value;
-            }
-            if ( this.element.config.sliderDotActiveColor.value ) {
-                this.sliderDotActiveColor = this.element.config.sliderDotActiveColor.value;
-            }
+        getPreview( property, defaultSnippet ) {
+            return !( this.selectedSlidesCollection === null || this.selectedSlidesCollection === undefined ) && this.selectedSlidesCollection.length > 0 ? this.selectedSlidesCollection[this.slideIndex][property] : this.$tc( defaultSnippet )
+        },
+
+        getSlideSetting( property ) {
+            return !( this.selectedSlidesCollection === null || this.selectedSlidesCollection === undefined ) ? this.selectedSlidesCollection[this.slideIndex].slideSettings[property] : null
+        },
+
+        getSlideMedia( property ) {
+            return !( this.selectedSlidesCollection === null || this.selectedSlidesCollection === undefined ) && this.selectedSlidesCollection[this.slideIndex].media ? this.selectedSlidesCollection[this.slideIndex].media[property] : null
         },
 
         slideArrowClick( iterator ) {
-            let previewDataLength = parseInt( this.previewData.length, 10 ) - 1;
+            let previewDataLength = parseInt( this.selectedSlidesCollection.length, 10 ) - 1;
 
             if ( parseInt( iterator, 10 ) === 1 && this.slideIndex < previewDataLength ) {
                 this.slideIndex += parseInt( iterator, 10 );
@@ -177,14 +105,5 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
                 this.slideIndex += parseInt( iterator, 10 );
             }
         },
-
-        filterOrphans( slides ) {
-
-            return this.selectedSlidesIds.filter( (selectedSlide, index) => {
-                return slides.find((slide) => {
-                    return slide.id === selectedSlide
-                })
-            })
-        }
     }
 });

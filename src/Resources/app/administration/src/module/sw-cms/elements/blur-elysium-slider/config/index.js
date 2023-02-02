@@ -56,20 +56,25 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
     },
 
     created() {
-        this.createdComponent();
-        this.getSlides();
+        if ( this.selectedSlides.length > 0) {
+            this.getSlides();
+        }
+    },
+
+    watch: {
     },
 
     methods: {
 
-        createdComponent() {
-            this.initElementConfig( 'blur-elysium-slider' );
-        },
-
         getSlides() {
             this.elysiumSlidesRepository.search( this.defaultCriteria, Shopware.Context.api ).then(( res ) => {
                 this.blurElysiumSlides = res;
-                this.selectedSlides = this.filterOrphans(res)
+
+                if (res.length === 0) {
+                    this.selectedSlides = []
+                } else {
+                    this.selectedSlides = this.filterOrphans(res)
+                }
                     
             }).catch( ( e ) => {
                 console.warn( e );

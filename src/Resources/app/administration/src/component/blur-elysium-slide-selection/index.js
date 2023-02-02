@@ -32,10 +32,6 @@ Component.register( 'blur-elysium-slide-selection', {
     },
 
     watch: {
-        selectedSlides( slides, oldSlides ) {
-            console.dir(slides)
-            console.dir(oldSlides)
-        },
 
         searchTerm( currentTerm, originTerm ) {
             this.inputSearch()
