@@ -47,7 +47,7 @@
                                         :title="$tc('blurElysiumSlider.cmsElement.settings.slideCollectionTitle')" 
                                         class="bc-card bc-card__static-title">
 
-                                        <template v-if="blurElysiumSlides.length === 0">
+                                        <template v-if="blurElysiumSlides && blurElysiumSlides.length === 0">
                                             <div class="blur-elysium-slider-config__no-slides">
                                                 <p style="margin-bottom:1rem;line-height:1.5;">
                                                     {{ $tc( 'blurElysiumSlides.slideSelection.message.noSlides' ) }}
