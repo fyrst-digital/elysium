@@ -32,6 +32,7 @@
 
                         {% block blur_elysium_slides_input_headline_element %}
                             <sw-select-field 
+                                v-if="slide.slideSettings"
                                 v-model="slide.slideSettings.headlineElement"
                                 class="bc__my-0"
                                 :label="$tc('BlurElysiumSlides.settings.headline.element.label')"
@@ -48,6 +49,7 @@
 
                         {% block blur_elysium_slides_input_headline_textcolor %}
                             <sw-colorpicker
+                                v-if="slide.slideSettings"
                                 v-model="slide.slideSettings.headlineTextcolor"
                                 :label="$tc('BlurElysiumSlides.settings.headline.textcolor.label')"
                                 colorOutput="auto"

@@ -84,15 +84,27 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         },
 
         getPreview( property, defaultSnippet ) {
-            return !( this.selectedSlidesCollection === null || this.selectedSlidesCollection === undefined ) && this.selectedSlidesCollection.length > 0 ? this.selectedSlidesCollection[this.slideIndex][property] : this.$tc( defaultSnippet )
+            if ( this.selectedSlidesCollection && this.selectedSlidesCollection.length > 0 && this.selectedSlidesCollection[this.slideIndex][property] ) {
+                return this.selectedSlidesCollection[this.slideIndex][property]
+            }
+
+            return this.$tc( defaultSnippet )
         },
 
         getSlideSetting( property ) {
-            return !( this.selectedSlidesCollection === null || this.selectedSlidesCollection === undefined ) ? this.selectedSlidesCollection[this.slideIndex].slideSettings[property] : null
+            if ( this.selectedSlidesCollection && this.selectedSlidesCollection.length > 0 && this.selectedSlidesCollection[this.slideIndex].slideSettings && this.selectedSlidesCollection[this.slideIndex].slideSettings[property] ) {
+                return this.selectedSlidesCollection[this.slideIndex].slideSettings[property]
+            }
+
+            return null
         },
 
         getSlideMedia( property ) {
-            return !( this.selectedSlidesCollection === null || this.selectedSlidesCollection === undefined ) && this.selectedSlidesCollection[this.slideIndex].media ? this.selectedSlidesCollection[this.slideIndex].media[property] : null
+            if ( this.selectedSlidesCollection && this.selectedSlidesCollection.length > 0 && this.selectedSlidesCollection[this.slideIndex].media && this.selectedSlidesCollection[this.slideIndex].media[property] ) {
+                return this.selectedSlidesCollection[this.slideIndex].media[property]
+            }
+
+            return null
         },
 
         slideArrowClick( iterator ) {
