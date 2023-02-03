@@ -1,0 +1,63 @@
+.blur-es-list-item {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    border: 1px solid #f9fafb;
+    background: #f9fafb;
+    line-height: 1.5;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: .875rem;
+    transition: border-color .3s, box-shadow .3s;
+
+    &:hover {
+        border-color: #189eff;
+        box-shadow: 0 0 4px #b1deff;
+    }
+}
+
+.blur-es-list-item__slide-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.blur-es-list-item__slide-image {
+    flex: 0 1 auto;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blur-es-list-item__slide-image-element {
+    width: 50px;
+    height: 50px;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+
+.blur-es-list-item__slide-content {
+    flex: 1 1 0%;
+    min-width: 80px;
+}
+
+.blur-es-list-item__slide-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+
+    @media screen and (min-width:769px) {
+        flex-direction: row;
+    }
+}
+
+.blur-es-list-item__icon-button {
+    padding: 6px 8px;
+}

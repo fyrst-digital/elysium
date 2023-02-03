@@ -20,33 +20,39 @@
         'jpeg',
         'png',
         'webp',
+        'avif',
         'svg'
+    ] %}
+    
+    {% set videoExtensionWhitelist = [
+        'mp4',
+        'webm'
     ] %}
 
     {% block cms_element_blur_elysium_slide_css_styles %}
 
         {% apply spaceless %}
             <style>
-                {% sw_include '@Storefront/storefront/element/blur-elysium-slide-media.html.twig' with {
-                    media: slide.media,
-                    slideId: slide.id,
-                    extenstionWhitelist: bgImageExtensionWhitelist
-                } only %}
-
-                {# portrait mode background-image #}
-                {% if slide.mediaPortrait.url and ( slide.media.fileExtension in bgImageExtensionWhitelist ) %}
-                    @media screen and (orientation: portrait) {
-                        {% sw_include '@Storefront/storefront/element/blur-elysium-slide-media.html.twig' with {
-                            media: slide.mediaPortrait,
-                            slideId: slide.id,
-                            extenstionWhitelist: bgImageExtensionWhitelist
-                        } only %}
-                    }
+                {% if slide.media %}
+                    {% sw_include '@Storefront/storefront/element/blur-elysium-slide-media.html.twig' with {
+                        media: slide.media,
+                        slideId: slide.id,
+                        extenstionWhitelist: bgImageExtensionWhitelist
+                    } only %}
                 {% endif %}
 
-                {% if slide.slideSettings.headline.textcolor %}
+                {# portrait mode background-image #}
+                {% if slide.mediaPortrait %}
+                    {% sw_include '@Storefront/storefront/element/blur-elysium-slide-media-portrait.html.twig' with {
+                        media: slide.mediaPortrait,
+                        slideId: slide.id,
+                        extenstionWhitelist: bgImageExtensionWhitelist
+                    } only %}
+                {% endif %}
+
+                {% if slide.slideSettings.headlineTextcolor %}
                     [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__title {
-                        color: {{slide.slideSettings.headline.textcolor}};
+                        color: {{slide.slideSettings.headlineTextcolor}};
                     }
                 {% endif %}
                 
@@ -82,6 +88,14 @@
         <div data-elysium-slide-id="{{ slide.id }}" 
             class="cms-element-elysium-slide{{ containerVerticalAlignment }}{{ containerBoxMode }}{{ containerHorizonalAlignment }}{% if slide.slideSettings.slideCssClass %} {{ slide.slideSettings.slideCssClass }}{% endif %}">
 
+            {# video element #}
+            {% if ( slide.media and ( slide.media.fileExtension in videoExtensionWhitelist ) ) or ( slide.mediaPortrait and ( slide.mediaPortrait.fileExtension in videoExtensionWhitelist ) ) %}
+                {% sw_include '@Storefront/storefront/element/blur-elysium-slide-video.html.twig' with {
+                    media: slide.media,
+                    mediaPortrait: slide.mediaPortrait
+                } %}                
+            {% endif %}
+
             {% if slide.slideSettings.urlOverlay is same as( true ) and slide.translated.url %}
                 <a href="{{ slide.translated.url }}" 
                     class="cms-element-elysium-slide__url-overlay"
@@ -97,8 +111,8 @@
                 <div class="cms-element-elysium-slide__container{{contentVerticalAlign}}">
                     {% set headlineElement = 'div' %}
 
-                    {% if slide.slideSettings.headline.element %}
-                        {% set headlineElement = slide.slideSettings.headline.element %}
+                    {% if slide.slideSettings.headlineElement %}
+                        {% set headlineElement = slide.slideSettings.headlineElement %}
                     {% endif %}
 
                     {% block cms_element_blur_elysium_slide_title %}

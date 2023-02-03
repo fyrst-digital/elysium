@@ -1,0 +1,23 @@
+{
+    "blurElysiumSlides": {
+        "actions": {
+            "createSlide": "Slide erstellen",
+            "toOverview": "Zur Übersicht"
+        },
+        "slideSearch": {
+            "noResult": "Keine Slides gefunden",
+            "addItem": "Hinzufügen",
+            "removeItem": "Entfernen"
+        },
+        "slideSelection": {
+            "message": {
+                "noSlides": "Anscheinend hast du noch keine Slides angelegt. Geh zum Elysium Slides Modul und erstelle deine Slides."
+            },
+            "label": "Wähle deine Slides",
+            "list": {
+                "label": "Slide-Auswahl",
+                "helptext": "Klicke in das Suchfeld und wähle aus deiner Slide Sammlung aus. Du kannst nach dem Slide-Namen und -Titel suchen. Deine Slides findest du unter <b>Inhalte &rsaquo; Elysium Slides</b>, dort kannst du auch neue Slides erstellen."
+            }
+        }
+    }
+}

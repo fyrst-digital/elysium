@@ -35,14 +35,7 @@ Component.register( 'blur-elysium-slides-basic-form', {
         ...mapPropertyErrors( 'blurElysiumSlides' , propErrors),
 
         urlOverlayActive() {
-            return this.slide.slideSettings.urlOverlay
-        }
-    },
-
-    created() {
-        if (!this.slide.slideSettings.headline) {
-            this.slide.slideSettings.headline = {}
-           
+            return this.slide.slideSettings && this.slide.slideSettings.urlOverlay ? true : false
         }
     }
 });

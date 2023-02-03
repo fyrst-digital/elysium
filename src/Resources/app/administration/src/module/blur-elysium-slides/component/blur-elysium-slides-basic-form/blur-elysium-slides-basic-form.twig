@@ -32,8 +32,8 @@
 
                         {% block blur_elysium_slides_input_headline_element %}
                             <sw-select-field 
-                                v-if="slide.slideSettings.headline"
-                                v-model="slide.slideSettings.headline.element"
+                                v-if="slide.slideSettings"
+                                v-model="slide.slideSettings.headlineElement"
                                 class="bc__my-0"
                                 :label="$tc('BlurElysiumSlides.settings.headline.element.label')"
                                 :placeholder="placeholder(slide, 'settings.headline.element', this.$tc('BlurElysiumSlides.settings.headline.element.placeholder') )"
@@ -49,8 +49,8 @@
 
                         {% block blur_elysium_slides_input_headline_textcolor %}
                             <sw-colorpicker
-                                v-if="slide.slideSettings.headline"
-                                v-model="slide.slideSettings.headline.textcolor"
+                                v-if="slide.slideSettings"
+                                v-model="slide.slideSettings.headlineTextcolor"
                                 :label="$tc('BlurElysiumSlides.settings.headline.textcolor.label')"
                                 colorOutput="auto"
                                 :alpha="true"
@@ -85,6 +85,7 @@
         {% block blur_elysium_slides_setting_slide_css_class %}
             <sw-field
                 type="text"
+                v-if="slide.slideSettings"
                 v-model="slide.slideSettings.slideCssClass" 
                 :label="$tc('BlurElysiumSlides.settings.sllideCssClass.title')"
                 :placeholder="$tc('BlurElysiumSlides.settings.sllideCssClass.placeholder')"
@@ -148,7 +149,7 @@
                         :label="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.title')"
                         :placeholder="placeholder(slide, 'button_label', this.$tc('BlurElysiumSlides.baseForm.buttonLabelInput.placeholder') )"
                         :helpText="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.helpText')"
-                        :disabled="urlOverlayActive ? true : null"
+                        :disabled="urlOverlayActive"
                         :class="'bc__my-0'"
                     />
                 {% endblock %}
@@ -161,7 +162,7 @@
                         :label="$tc('BlurElysiumSlides.settings.buttonAppearance.label')"
                         :placeholder="placeholder(slide, 'settings.buttonAppearance', this.$tc('BlurElysiumSlides.settings.buttonAppearance.placeholder') )"
                         :helpText="$tc('BlurElysiumSlides.settings.buttonAppearance.helpText')"
-                        :disabled="urlOverlayActive ? true : null">
+                        :disabled="urlOverlayActive">
                         <option value="primary">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.primary') }}</option>
                         <option value="secondary">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.secondary') }}</option>
                         <option value="success">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.success') }}</option>

@@ -214,6 +214,8 @@ Component.register( 'blur-elysium-slides-detail', {
                 this.isLoading = false;
             }, reason => {
                 this.customFieldSets = [];
+            }).catch(( exception ) => {
+                console.warn( exception )
             });
         },
 
@@ -243,7 +245,9 @@ Component.register( 'blur-elysium-slides-detail', {
 
                 Shopware.State.commit('blurElysiumSlidesDetail/setSlide', blurElysiumSlide);
                 Shopware.State.commit('blurElysiumSlidesDetail/setLoading', ['slide', false]);
-            });
+            }).catch(( exception ) => {
+                console.warn( exception )
+            })
         },
 
         saveFinish() {
@@ -318,9 +322,16 @@ Component.register( 'blur-elysium-slides-detail', {
             this.$router.push({ name: 'blur.elysium.slides.index' });
         },
 
-        setMediaFromSidebar(mediaEntity) {
-            // @TODO
-            console.log('dead function. todo')
+        setMedia( id, key ) {
+
+            this.mediaRepository.get( id, Shopware.Context.api )
+            .then( ( media ) => {
+                this.blurElysiumSlide[ this.media[key].slideMediaId ] = id
+                this.media[key].data = media
+                
+            }).catch(( exception ) => {
+                console.warn( exception );
+            });
         },
     }
 });

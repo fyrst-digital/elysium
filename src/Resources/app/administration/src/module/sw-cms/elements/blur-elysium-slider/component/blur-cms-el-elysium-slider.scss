@@ -2,7 +2,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
     width: 100%;
     flex: 1 1 100%;
     position: relative;
@@ -13,7 +12,7 @@
     flex: 1 1 100%;
     min-height: 20rem;
     background-color: #f6f6f6;
-    border-radius: 10px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     padding: 3rem 6rem;
@@ -25,6 +24,7 @@
     background-size: cover;
     background-repeat: no-repeat;
 
+    /*
     &:after {
         content: '';
         display: block;
@@ -35,6 +35,7 @@
         height: 100%;
         background-color: rgba(0,0,0,0.1);
     }
+    */
 }
 
 .blur-cms-el-elysium-slider__slider-preview__container {

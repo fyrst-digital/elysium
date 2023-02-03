@@ -23,6 +23,9 @@
             "saveSlideSuccess": "The slide was saved.",
             "missingSlideNameError": "Please enter a slide name."
         },
+        "slideSelection": {
+            "label": "Wähle deine Slides"
+        },
         "actions": {
             "newSlide": "New Slide",
             "createSlide": "Create Slide",
@@ -173,13 +176,14 @@
             "cardTitle": "Media",
             "uploadInput": {
                 "title": "Slide Cover",
-                "helpText": "This image is used as background of the slide"
+                "helpText": "This media is used as the background cover of the slide. You can use images (jpg, png, webp, svg, avif) or videos (mp4, webm)"
             },
             "coverPortrait": {
                 "title": "Slide Cover (Portrait-Mode)",
-                "helpText": "This image is used as background of the slide when the device (e.g. smartphone or tablet) is in portrait mode."
+                "helpText": "This image is used as background of the slide when the device (e.g. smartphone or tablet) is in portrait mode. You can only use images (jpg, png, webp, svg, avif) here"
             },
-            "useAsCover": "Use as Cover"
+            "useAsCover": "Use as Cover",
+            "useAsCoverPortrait": "Use as Portrait-Cover"
         },
         "customFields": {
             "cardTitle": "Custom Fields",

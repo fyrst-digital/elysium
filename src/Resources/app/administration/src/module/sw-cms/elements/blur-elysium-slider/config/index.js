@@ -1,4 +1,5 @@
 import template from './blur-cms-el-config-elysium-slider.twig';
+import './blur-cms-el-config-elysium-slider.scss';
 
 const { Component, Mixin } = Shopware;
 const { Criteria, EntityCollection } = Shopware.Data;
@@ -21,8 +22,15 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
     },
 
     computed: {
-        elysiumSlideCollection() {
-            return this.element.config.elysiumSlideCollection.value;
+        selectedSlides: {
+            get() {
+                return this.element.config.elysiumSlideCollection.value
+            },
+
+            set(newValue) {
+                // Note: we are using destructuring assignment syntax here.
+                this.element.config.elysiumSlideCollection.value = newValue
+            }
         },
 
         elysiumSlidesRepository() {
@@ -48,19 +56,26 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
     },
 
     created() {
-        this.getSlides();
-        this.createdComponent();
+        if ( this.selectedSlides.length > 0) {
+            this.getSlides();
+        }
+    },
+
+    watch: {
     },
 
     methods: {
 
-        createdComponent() {
-            this.initElementConfig( 'blur-elysium-slider' );
-        },
-
         getSlides() {
             this.elysiumSlidesRepository.search( this.defaultCriteria, Shopware.Context.api ).then(( res ) => {
                 this.blurElysiumSlides = res;
+
+                if (res.length === 0) {
+                    this.selectedSlides = []
+                } else {
+                    this.selectedSlides = this.filterOrphans(res)
+                }
+                    
             }).catch( ( e ) => {
                 console.warn( e );
             });
@@ -78,10 +93,23 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
             }
         },
 
+        onCreateSlide() {
+            let route = this.$router.resolve({name: 'blur.elysium.slides.create'})
+            window.open(route.href, '_blank')
+        },
 
-        onElementUpdate(element) {
-            // this.element.config.elysiumSlideCollection = element;
+        onSlideOverview() {
+            let route = this.$router.resolve({name: 'blur.elysium.slides.index'})
+            window.open(route.href, '_blank')
+        },
+
+        filterOrphans( slides ) {
+
+            return this.selectedSlides.filter( (selectedSlide, index) => {
+                return slides.find((slide) => {
+                    return slide.id === selectedSlide
+                })
+            })
         }
-
     }
 });
