@@ -5,7 +5,7 @@
                 <div class="blur-cms-el-elysium-slider__slider-preview"
                     :style="{
                         backgroundColor: getSlideSetting( 'slideBgColor' ),
-                        backgroundImage: 'url(' + getSlideMedia( 'url' ) + ')'
+                        backgroundImage: getSlideMedia( 'url' ) ? 'url(' + getSlideMedia( 'url' ) + ')' : null
                     }">
 
                     {% block blur_cms_element_elysium_slider_preview_empty_container %}

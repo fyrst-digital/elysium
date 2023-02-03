@@ -56,16 +56,17 @@ Component.register( 'blur-elysium-slides-media-form', {
         },
 
         entityName() {
-            /**
-             * @TODO existence check on entity
-            */
             return 'blur_elysium_slides'
         }
     },
 
     created() {
-        this.getMedia( 'slideCover' )
-        this.getMedia( 'slideCoverPortrait' )
+        if ( this.slide.mediaId ) {
+            this.getMedia( 'slideCover' )
+        }
+        if ( this.slide.mediaPortraitId ) {
+            this.getMedia( 'slideCoverPortrait' )
+        }
     },
 
     methods: {
@@ -78,8 +79,9 @@ Component.register( 'blur-elysium-slides-media-form', {
             ).then( ( media ) => {
                 this.media[key].data = media
             }).catch(( exception ) => {
-                console.warn( exception );
-            });
+                console.error( exception )
+                return
+            })
         },
 
         setMedia( id, key ) {
@@ -90,12 +92,12 @@ Component.register( 'blur-elysium-slides-media-form', {
                 this.media[key].data = media
                 
             }).catch(( exception ) => {
-                console.warn( exception );
-            });
+                console.error( exception )
+                return
+            })
         },
 
         resetMedia( key ) {
-
             this.slide[ this.media[key].slideMediaId ] = null
             this.media[key].data = null
         }

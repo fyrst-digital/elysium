@@ -29,8 +29,5 @@ Component.register( 'blur-elysium-slides-content-container-settings', {
         ...mapState('blurElysiumSlidesDetail', [
             'slide'
         ]),
-    },
-
-    created() {
     }
 });

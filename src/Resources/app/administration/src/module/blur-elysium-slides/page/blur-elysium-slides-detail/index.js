@@ -214,6 +214,8 @@ Component.register( 'blur-elysium-slides-detail', {
                 this.isLoading = false;
             }, reason => {
                 this.customFieldSets = [];
+            }).catch(( exception ) => {
+                console.warn( exception )
             });
         },
 
@@ -243,7 +245,9 @@ Component.register( 'blur-elysium-slides-detail', {
 
                 Shopware.State.commit('blurElysiumSlidesDetail/setSlide', blurElysiumSlide);
                 Shopware.State.commit('blurElysiumSlidesDetail/setLoading', ['slide', false]);
-            });
+            }).catch(( exception ) => {
+                console.warn( exception )
+            })
         },
 
         saveFinish() {
