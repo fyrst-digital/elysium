@@ -30,7 +30,7 @@ class ElysiumSlidesTranslationDefinition extends EntityTranslationDefinition
     {
         return new FieldCollection([
             ( new StringField( 'name', 'name' ) )->addFlags( new Required() ),
-            ( new StringField( 'title', 'title' ) )->addFlags( new ApiAware() ),
+            ( new StringField( 'title', 'title' ) )->addFlags( new ApiAware(), new AllowHtml() ),
             ( new LongTextField( 'description', 'description' ) )->addFlags( new ApiAware(), new AllowHtml() ),
             ( new StringField( 'button_label', 'button_label' ) )->addFlags( new ApiAware() ),
             ( new LongTextField( 'url', 'url' ) )->addFlags( new ApiAware() ),
