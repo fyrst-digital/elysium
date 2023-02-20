@@ -120,9 +120,19 @@
                     {% endif %}
 
                     {% block cms_element_blur_elysium_slide_title %}
+                    
+                        {% set headlineTagsWhitelist = [
+                            '<br>',
+                            '<i>',
+                            '<b>',
+                            '<u>',
+                            '<strong>',
+                            '<span>'
+                        ] %}
+
                         {% if slide.translated.title %}
                             <{{headlineElement|raw}} class="{% block blur_elysium_slide_title_class %}cms-element-elysium-slide__title font-weight-bold fluid-text-title{% endblock %}">
-                                {{ slide.translated.title|raw }}
+                                {{ slide.translated.title|striptags( headlineTagsWhitelist|join )|raw }}
                             </{{headlineElement|raw}}>                
                         {% endif %}
                     {% endblock %}
