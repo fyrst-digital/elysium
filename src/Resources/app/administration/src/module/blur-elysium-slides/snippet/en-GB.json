@@ -49,11 +49,6 @@
                 "placeholder": "Enter a Name for your Slide",
                 "helpText": "Set a name for the slide. This name will only be used to identify the slide"
             },
-            "titleInput": {
-                "title": "Headline",
-                "placeholder": "Enter a Headline for your Slide",
-                "helpText": "Set a heading for the slide."
-            },
             "descriptionInput": {
                 "title": "Description",
                 "placeholder": "Enter a Description for your Slide",

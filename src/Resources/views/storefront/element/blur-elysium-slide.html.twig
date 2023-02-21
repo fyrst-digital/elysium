@@ -89,23 +89,27 @@
             class="cms-element-elysium-slide{{ containerVerticalAlignment }}{{ containerBoxMode }}{{ containerHorizonalAlignment }}{% if slide.slideSettings.slideCssClass %} {{ slide.slideSettings.slideCssClass }}{% endif %}">
 
             {# video element #}
-            {% if ( slide.media and ( slide.media.fileExtension in videoExtensionWhitelist ) ) or ( slide.mediaPortrait and ( slide.mediaPortrait.fileExtension in videoExtensionWhitelist ) ) %}
-                {% sw_include '@Storefront/storefront/element/blur-elysium-slide-video.html.twig' with {
-                    media: slide.media,
-                    mediaPortrait: slide.mediaPortrait
-                } %}                
-            {% endif %}
+            {% block cms_element_blur_elysium_slide_video %}
+                {% if ( slide.media and ( slide.media.fileExtension in videoExtensionWhitelist ) ) or ( slide.mediaPortrait and ( slide.mediaPortrait.fileExtension in videoExtensionWhitelist ) ) %}
+                    {% sw_include '@Storefront/storefront/element/blur-elysium-slide-video.html.twig' with {
+                        media: slide.media,
+                        mediaPortrait: slide.mediaPortrait
+                    } %}                
+                {% endif %}
+            {% endblock %}
 
-            {% if slide.slideSettings.urlOverlay is same as( true ) and slide.translated.url %}
-                <a href="{{ slide.translated.url }}" 
-                    class="cms-element-elysium-slide__url-overlay"
-                    title="{{ slide.translated.title }}" 
-                    class="btn btn-light cms-element-elysium-slide__cta-button"
-                    {% if slide.slideSettings.urlTarget == "external" %}
-                        target="_blank"
-                        rel="noopener"
-                    {% endif %}>{{ slide.translated.title }}</a>
-            {% endif %}
+            {% block cms_element_blur_elysium_slide_url_overlay %}
+                {% if slide.slideSettings.urlOverlay is same as( true ) and slide.translated.url %}
+                    <a href="{{ slide.translated.url }}" 
+                        class="cms-element-elysium-slide__url-overlay"
+                        title="{{ slide.translated.title|striptags }}" 
+                        class="btn btn-light cms-element-elysium-slide__cta-button"
+                        {% if slide.slideSettings.urlTarget == "external" %}
+                            target="_blank"
+                            rel="noopener"
+                        {% endif %}>{{ slide.translated.title|striptags }}</a>
+                {% endif %}
+            {% endblock %}
 
             {% block cms_element_blur_elysium_slide_container %}
                 <div class="cms-element-elysium-slide__container{{contentVerticalAlign}}">
@@ -116,9 +120,19 @@
                     {% endif %}
 
                     {% block cms_element_blur_elysium_slide_title %}
+                    
+                        {% set headlineTagsWhitelist = [
+                            '<br>',
+                            '<i>',
+                            '<b>',
+                            '<u>',
+                            '<strong>',
+                            '<span>'
+                        ] %}
+
                         {% if slide.translated.title %}
                             <{{headlineElement|raw}} class="{% block blur_elysium_slide_title_class %}cms-element-elysium-slide__title font-weight-bold fluid-text-title{% endblock %}">
-                                {{ slide.translated.title }}
+                                {{ slide.translated.title|striptags( headlineTagsWhitelist|join )|raw }}
                             </{{headlineElement|raw}}>                
                         {% endif %}
                     {% endblock %}
