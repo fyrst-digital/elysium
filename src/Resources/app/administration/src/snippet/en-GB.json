@@ -18,6 +18,13 @@
                 "label": "Slide selection",
                 "helptext": "Click in the search field and select your slide collection. You will find your slides under <b>Contents &rsaquo; Elysium Slides</b>, where you can also create new slides."
             }
+        },
+        "slideSettings": {
+            "headline": {
+                "label": "Headline",
+                "placeholder": "My awesome Slide!",
+                "helpText": "Set a heading for the slide. You can use the HTML tags br, i, u, b, strong and span."
+            }
         }
     }
 }

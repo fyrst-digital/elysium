@@ -46,11 +46,6 @@
                 "placeholder": "Slide Name eingeben",
                 "helpText": "Lege einen Namen für den Slide fest. Dieser Name wird nur zur Identifikation des Slides genutzt"
             },
-            "titleInput": {
-                "title": "Überschrift",
-                "placeholder": "Überschrift eingeben",
-                "helpText": "Lege eine Überschrift für den Slide fest."
-            },
             "descriptionInput": {
                 "title": "Kurzbeschreibung",
                 "placeholder": "Kurzbeschreibung eingeben",
