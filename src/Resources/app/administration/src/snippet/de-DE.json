@@ -1,5 +1,8 @@
 {
     "blurElysiumSlides": {
+        "messages": {
+            "noChanges": "Keine Änderungen"
+        },
         "actions": {
             "createSlide": "Slide erstellen",
             "toOverview": "Zur Übersicht"
@@ -24,7 +27,18 @@
                 "label": "Überschrift",
                 "placeholder": "Mein großartiger Slide!",
                 "helpText": "Lege eine Überschrift für den Slide fest. Du kannst folgende HTML Tags nutzen: br, i, u, b, strong und span."
+            },
+            "customTemplate": {
+                "cardTitle": "Eigenes Template",
+                "cardDescription": "Hier kannst du eine eigene Twig-Template Datei für diesen Slide festlegen. Wenn du in diesem Feld eine Twig-Template Datei eingnetragen hast, musst du diese manuell in deinem Theme hinterlegen.",
+                "customTemplatePath": "Der Pfad zu dieser Datei lautet:<br/><span class='bc-code-inline'>/storefront/component/blur-elysium-slide/custom/<b>{file}.html.twig</b></span>",
+                "hasCustomNotice": "<b>Hinweis:</b> Dieser Slide hat eine eigene Twig-Template Datei hinterlegt. Bitte beachte dies beim verwalten des Slides."
             }
+        },
+        "slideSettingTabs": {
+            "contentLabel": "Inhalt",
+            "displayLabel": "Anzeige",
+            "advancedLabel": "Erweitert"
         }
     }
 }

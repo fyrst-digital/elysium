@@ -12,8 +12,7 @@ Component.register( 'blur-elysium-slides-media-form', {
     template,
 
     inject: [
-        'repositoryFactory',
-        'acl',
+        'repositoryFactory'
     ],
 
     mixins: [
@@ -57,6 +56,10 @@ Component.register( 'blur-elysium-slides-media-form', {
 
         entityName() {
             return 'blur_elysium_slides'
+        },
+
+        coverType() {
+            return this.getMedia( 'slideCover' )
         }
     },
 
@@ -100,6 +103,11 @@ Component.register( 'blur-elysium-slides-media-form', {
         resetMedia( key ) {
             this.slide[ this.media[key].slideMediaId ] = null
             this.media[key].data = null
+        },
+
+        changeCoverType( value ) {
+            console.log(value)
+            this.coverType = value
         }
     }
 });

@@ -41,7 +41,10 @@ Shopware.Module.register( 'blur-elysium-slides', {
             components: {
                 default: 'blur-elysium-slides-list'
             },
-            path: 'index'
+            path: 'index',
+            meta: {
+                privilege: 'blur_elysium_slides.viewer'
+            }
         },
 
         create: {
@@ -84,6 +87,7 @@ Shopware.Module.register( 'blur-elysium-slides', {
         path: 'blur.elysium.slides.index',
         icon: 'default-shopping-paper-bag-product',
         parent: 'sw-content',
-        position: 100
+        position: 100,
+        privilege: 'blur_elysium_slides.viewer'
     }],
 });

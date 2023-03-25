@@ -27,7 +27,11 @@ Component.register( 'blur-elysium-slide-select-item', {
             allowedVideoExtension: [
                 'mp4','webm'
             ],
-            slideData: {}
+            slideData: {},
+            itemStyles: {
+                backgroundColor: null,
+                backgroundImage: null
+            }
         };
     },
 
@@ -53,6 +57,24 @@ Component.register( 'blur-elysium-slide-select-item', {
             const criteria = new Criteria()
 
             return criteria
+        },
+
+        itemStyle() {
+
+            if ( this.slideData?.slideSettings?.slideBgColor ) {
+                this.itemStyles.backgroundColor = this.slideData.slideSettings.slideBgColor
+            }
+
+            if ( this.slideMedia && this.allowedImageExtension.includes( this.slideMedia.fileExtension ) ) {
+
+                if ( this.slideMedia.thumbnails?.length > 0 ) {
+                    this.itemStyles.backgroundImage = `url( ${this.slideMedia.thumbnails.last().url} )`
+                } else {
+                    this.itemStyles.backgroundImage = `url( ${this.slideMedia.url} )`
+                }
+            }
+
+            return this.itemStyles
         }
     },
 

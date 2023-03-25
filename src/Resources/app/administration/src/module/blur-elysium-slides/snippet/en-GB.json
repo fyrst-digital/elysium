@@ -37,10 +37,6 @@
                 "title": "Headline"
             }
         },
-        "tabs": {
-            "contentLabel": "Content",
-            "displayLabel": "Display"
-        },
         "baseForm": {
             "generalCardTitle": "General",
             "linkingCardTitle": "Linking",

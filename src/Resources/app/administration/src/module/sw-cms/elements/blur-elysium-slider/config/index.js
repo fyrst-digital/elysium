@@ -56,9 +56,9 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
     },
 
     created() {
-        if ( this.selectedSlides.length > 0) {
-            this.getSlides();
-        }
+        this.getSlides();
+
+        console.dir( this.selectedSlides )
     },
 
     watch: {

@@ -1,0 +1,23 @@
+{% block cms_element_blur_elysium_slide_css_media_query %}
+
+    {% if media.thumbnails %}
+        
+        {# sort array by thumbnail width so that the media query order is correct #}
+        {% for thumbnail in media.thumbnails|sort((a, b) => a.width <=> b.width ) %}
+            @media screen{% if orientation is defined %} and (orientation: {{ orientation }} ){% endif %} {% if loop.first is same as(false) %} and (min-width: {{ thumbnail.width ~ 'px' }}){% endif %} {
+                [data-elysium-slide-id="{{ slideId }}"] {
+                    background-image: url( "{{ thumbnail.url }}" );
+                }
+            }
+        {% endfor %}
+
+    {% else %}
+
+        {# fallback if no thumbnails are available #}
+        @media screen{% if orientation is defined %} and (orientation: {{ orientation }} ){% endif %} {
+            [data-elysium-slide-id="{{ slideId }}"] {
+                background-image: url( "{{ media.url }}" );
+            }
+        }
+    {% endif %}
+{% endblock %}

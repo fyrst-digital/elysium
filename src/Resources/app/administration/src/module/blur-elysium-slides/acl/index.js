@@ -4,7 +4,7 @@ Shopware.Service('privileges').addPrivilegeMappingEntry({
     key: 'blur_elysium_slides',
     roles: {
         viewer: {
-            privileges: [],
+            privileges: ['blur_elysium_slides:read'],
             dependencies: []
         },
         editor: {
@@ -12,8 +12,8 @@ Shopware.Service('privileges').addPrivilegeMappingEntry({
             dependencies: []
         },
         creator: {
-            privileges: [],
-            dependencies: []
+            privileges: ['blur_elysium_slides:create','blur_elysium_slides:update'],
+            dependencies: ['blur_elysium_slides:create']
         },
         deleter: {
             privileges: [],

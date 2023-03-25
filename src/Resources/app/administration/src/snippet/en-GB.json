@@ -1,5 +1,8 @@
 {
     "blurElysiumSlides": {
+        "messages": {
+            "noChanges": "No changes"
+        },
         "actions": {
             "createSlide": "Create Slide",
             "toOverview": "To Overview"
@@ -24,7 +27,18 @@
                 "label": "Headline",
                 "placeholder": "My awesome Slide!",
                 "helpText": "Set a heading for the slide. You can use the HTML tags br, i, u, b, strong and span."
+            },
+            "customTemplate": {
+                "cardTitle": "Custom Template",
+                "cardDescription": "Here you can define your own Twig template file for this slide. If you have entered a Twig template file in this field, you must store it manually in your theme.",
+                "customTemplatePath": "The path to this file is:<br/><span class='bc-code-inline'>/storefront/component/blur-elysium-slide/custom/<b>{file}.html.twig</b></span>",
+                "hasCustomNotice": "<b>Notice:</b> This slide has its own Twig template file defined. Please note this when managing the slide."
             }
+        },
+        "slideSettingTabs": {
+            "contentLabel": "Content",
+            "displayLabel": "Display",
+            "advancedLabel": "Advanced"
         }
     }
 }
