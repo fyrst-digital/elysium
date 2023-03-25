@@ -2,11 +2,14 @@
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: minmax(0, 1fr) auto;
-    border: 1px solid #f9fafb;
-    background: #f9fafb;
+    border: 1px solid transparent;
+    background-color: #b59baf;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     line-height: 1.5;
     align-items: center;
-    padding: 1rem 1.5rem;
+    padding: 10px;
     border-radius: 12px;
     font-size: .875rem;
     transition: border-color .3s, box-shadow .3s;
@@ -17,12 +20,26 @@
     }
 }
 
+.blur-es-list-item__name-tag {
+    display: inline-flex;
+    background-color: #ffff;
+    border-radius: 10rem;
+    border: 1px solid rgba(0,0,0,.1);
+    padding: 2px 10px;
+}
+
+.blur-es-list-item__slide-headline {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
 .blur-es-list-item__slide-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
     justify-content: flex-start;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .blur-es-list-item__slide-image {
@@ -43,15 +60,16 @@
 }
 
 .blur-es-list-item__slide-content {
-    flex: 1 1 0%;
-    min-width: 80px;
+    flex: 1 1 100%;
+    width: 100%;
+    padding: 1rem;
 }
 
 .blur-es-list-item__slide-actions {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
+    gap: 10px;
 
     @media screen and (min-width:769px) {
         flex-direction: row;
@@ -59,5 +77,7 @@
 }
 
 .blur-es-list-item__icon-button {
-    padding: 6px 8px;
+    padding: 8px 10px;
+    background-color: #ffffff;
+    border-color: #dddddd;
 }

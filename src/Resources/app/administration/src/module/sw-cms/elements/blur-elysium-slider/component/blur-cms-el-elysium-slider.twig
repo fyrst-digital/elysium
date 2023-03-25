@@ -24,7 +24,7 @@
                             {% endblock %}
 
                             {% block blur_cms_element_elysium_slider_preview_empty_actions %}
-                                <div v-if="getPreview( 'button_label', 'blurElysiumSlider.cmsElement.component.preview.defaultButtonLabelValue' )"
+                                <div v-if="selectedSlidesCollection && selectedSlidesCollection[slideIndex].button_label !== null"
                                     class="blur-cms-el-elysium-slider__slider-preview__actions">
                                     
                                     {% block blur_cms_element_elysium_slider_preview_empty_button_element %}

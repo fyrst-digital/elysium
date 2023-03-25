@@ -11,7 +11,8 @@
     width: 100%;
     flex: 1 1 100%;
     min-height: 20rem;
-    background-color: #f6f6f6;
+    background-color: #b59baf;
+    color: #ffffff;
     border-radius: 0;
     display: flex;
     align-items: center;
@@ -61,11 +62,7 @@
     top: 50%;
     margin-top: -12px;
     cursor: pointer;
-    color: #aaa;
-
-    &:hover {
-        color: #555;
-    }
+    color: #ffffff;
 
     &.navigation-prev {
         left: 2rem;

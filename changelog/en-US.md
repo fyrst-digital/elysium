@@ -1,3 +1,21 @@
+# `1.4.0`
+
+## Update Notes
+
+**Note for developers**  
+The slide template has been refractored. Templates for individual slide components are now located under `storefront/component/blur-elysium-slide/`.  
+The template for the main CMS element is still located under `storefront/element/cms-element-blur-elysium-slider.html.twig`.
+
+## Changelog
+- Feature: In the slide settings there is now the "Advanced" tab, this will contain advanced settings of a slide
+- Feature: An individual Twig template file can be defined per slide. This is located in the "Advanced" tab of the slide settings (#44)
+- Improvement: Optimisation of the slide selection view in the Elysium Slider CMS element (#55)
+- Improvement: Optimization of ACL roles for admin users (#69)
+- Chore: The slide template has been refractored
+- Bugfix: The 'no slides available' dialogue in the Elysium Slider CMS element now appears as expected (#53)
+- Bugfix: Fix wrong thumbnail order in frontend (#57)
+- Bugfix: The slide button is now hidden when the URL overlay option is active (#63)
+
 # `1.3.1` 2023-02-21
 
 ## Changelog

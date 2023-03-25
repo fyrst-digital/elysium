@@ -1,0 +1,132 @@
+{% block cms_element_blur_elysium_slide_root %}
+    {% set slideContainerClasses = ['cms-element-elysium-slide'] %}
+
+    {% set contentVerticalAlign = ' content__x-left' %}
+    {% if slide.slideSettings.contentVerticalAlign %}
+        {% set contentVerticalAlign = ' content__x-' ~ slide.slideSettings.contentVerticalAlign %}
+    {% endif %}
+    {% if slide.slideSettings.containerVerticalAlign %}
+        {% set slideContainerClasses = slideContainerClasses|merge([
+            'content-container__y-' ~ slide.slideSettings.containerVerticalAlign
+        ]) %}
+    {% endif %}
+    {% if slide.slideSettings.containerHorizontalAlign %}
+        {% set slideContainerClasses = slideContainerClasses|merge([
+            'content-container__x-' ~ slide.slideSettings.containerHorizontalAlign
+        ]) %}
+    {% endif %}
+    {% if slide.slideSettings.containerBoxMode %}
+        {% set slideContainerClasses = slideContainerClasses|merge([
+            'content-container__box-mode'
+        ]) %}
+    {% endif %}
+
+    {# @TODO add video support #}
+    {% set bgImageExtensionWhitelist = [
+        'jpg',
+        'jpeg',
+        'png',
+        'webp',
+        'avif',
+        'svg'
+    ] %}
+    
+    {% set videoExtensionWhitelist = [
+        'mp4',
+        'webm'
+    ] %}
+
+    {% block cms_element_blur_elysium_slide_css_styles %}
+
+        {% block cms_element_blur_elysium_slide_css_styles_media %}
+            {% if slide.media or slide.mediaPortrait %}
+                {% apply spaceless %}
+                    <style>
+                        {% block cms_element_blur_elysium_slide_css_styles_media_include %}
+                            {% if slide.media and slide.media.fileExtension in bgImageExtensionWhitelist %}
+                                {% sw_include '@Storefront/storefront/component/blur-elysium-slide/media.html.twig' with {
+                                    media: slide.media,
+                                    slideId: slide.id
+                                } only %}
+                            {% endif %}
+                        {% endblock %}
+
+                        {% block cms_element_blur_elysium_slide_css_styles_media_portrait_include %}
+                            {% if slide.mediaPortrait and slide.mediaPortrait.fileExtension in bgImageExtensionWhitelist %}
+                                {% sw_include '@Storefront/storefront/component/blur-elysium-slide/media.html.twig' with {
+                                    media: slide.mediaPortrait,
+                                    slideId: slide.id,
+                                    orientation: 'portrait'
+                                } only %}
+                            {% endif %}
+                        {% endblock %}
+                    </style>
+                {% endapply %}
+            {% endif %}
+        {% endblock %}
+
+        {% apply spaceless %}
+            <style>
+
+                {% if slide.slideSettings.headlineTextcolor %}
+                    [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__title {
+                        color: {{slide.slideSettings.headlineTextcolor}};
+                    }
+                {% endif %}
+                
+                {% if slide.slideSettings.slideBgColor %}
+                    [data-elysium-slide-id="{{ slide.id }}"] {
+                        background-color: {{slide.slideSettings.slideBgColor}};
+                    }
+                {% endif %}
+                
+                [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__container {
+                    {% if slide.slideSettings.containerBgColor %}background-color: {{slide.slideSettings.containerBgColor}};{% endif %}
+                    {% if slide.slideSettings.containerPadding %}padding: {{slide.slideSettings.containerPadding}};{% endif %}
+                }
+                
+                {% if slide.slideSettings.containerBoxMode %}
+                    {# @TODO make the min-width breakpoint configurable #}
+                    @media screen and ( min-width: {{ theme_config('breakpoint.sm') ~ 'px' }} ) {
+                        [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__container {
+                            {% if slide.slideSettings.containerMaxWidth %}
+                                flex-basis: {{ slide.slideSettings.containerMaxWidth }} !important;
+                                max-width: {{ slide.slideSettings.containerMaxWidth }} !important;                                
+                            {% else %}
+                                flex: 0 1 50%;
+                                max-width: 50%;
+                            {% endif %}
+                        }
+                    }                    
+                {% endif %}
+                {% block cms_element_blur_elysium_slide_css_styles_extend %}{% endblock %}
+            </style>
+        {% endapply %}
+    {% endblock %}
+
+    {% block cms_element_blur_elysium_slide %}
+        <div data-elysium-slide-id="{{ slide.id }}" 
+            class="{% block cms_element_blur_elysium_slide_base_classes %}{{ slideContainerClasses|join(' ') }}{% endblock %}{% if slide.slideSettings.slideCssClass %} {{ slide.slideSettings.slideCssClass }}{% endif %}">
+
+            {# video element #}
+            {% block cms_element_blur_elysium_slide_video %}
+                {% if ( slide.media and ( slide.media.fileExtension in videoExtensionWhitelist ) ) or ( slide.mediaPortrait and ( slide.mediaPortrait.fileExtension in videoExtensionWhitelist ) ) %}
+                    {% sw_include '@Storefront/storefront/component/blur-elysium-slide/video.html.twig' with {
+                        media: slide.media,
+                        mediaPortrait: slide.mediaPortrait
+                    } %}                
+                {% endif %}
+            {% endblock %}
+
+            {% block cms_element_blur_elysium_slide_url_overlay_include %}
+                {% if slide.slideSettings.urlOverlay is same as( true ) and slide.translated.url %}
+                    {% sw_include '@Storefront/storefront/component/blur-elysium-slide/url-overlay.html.twig' %}
+                {% endif %}
+            {% endblock %}
+
+            {% block cms_element_blur_elysium_slide_container_include %}
+                {% sw_include '@Storefront/storefront/component/blur-elysium-slide/container.html.twig' %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

@@ -84,7 +84,7 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         },
 
         getPreview( property, defaultSnippet ) {
-            if ( this.selectedSlidesCollection && this.selectedSlidesCollection.length > 0 && this.selectedSlidesCollection[this.slideIndex][property] ) {
+            if ( this.selectedSlidesCollection?.length > 0 && this.selectedSlidesCollection[this.slideIndex]?.[property] ) {
                 return this.selectedSlidesCollection[this.slideIndex][property]
             }
 
@@ -92,7 +92,7 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         },
 
         getSlideSetting( property ) {
-            if ( this.selectedSlidesCollection && this.selectedSlidesCollection.length > 0 && this.selectedSlidesCollection[this.slideIndex].slideSettings && this.selectedSlidesCollection[this.slideIndex].slideSettings[property] ) {
+            if ( this.selectedSlidesCollection?.length > 0 && this.selectedSlidesCollection[this.slideIndex]?.slideSettings?.[property] ) {
                 return this.selectedSlidesCollection[this.slideIndex].slideSettings[property]
             }
 
@@ -100,8 +100,13 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         },
 
         getSlideMedia( property ) {
-            if ( this.selectedSlidesCollection && this.selectedSlidesCollection.length > 0 && this.selectedSlidesCollection[this.slideIndex].media && this.selectedSlidesCollection[this.slideIndex].media[property] ) {
-                return this.selectedSlidesCollection[this.slideIndex].media[property]
+            if ( this.selectedSlidesCollection?.length > 0 && this.selectedSlidesCollection[this.slideIndex]?.media?.[property] ) {
+                
+                if (this.selectedSlidesCollection[this.slideIndex].media.thumbnails?.length > 0 ) {
+                    return this.selectedSlidesCollection[this.slideIndex].media.thumbnails.last()[property]
+                } else {
+                    return this.selectedSlidesCollection[this.slideIndex].media[property]
+                }
             }
 
             return null

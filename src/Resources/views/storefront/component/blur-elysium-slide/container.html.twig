@@ -1,0 +1,58 @@
+{% block cms_element_blur_elysium_slide_container %}
+    <div class="cms-element-elysium-slide__container{{contentVerticalAlign}}">
+        {% set headlineElement = 'div' %}
+
+        {% if slide.slideSettings.headlineElement %}
+            {% set headlineElement = slide.slideSettings.headlineElement %}
+        {% endif %}
+
+        {% block cms_element_blur_elysium_slide_title %}
+        
+            {% set headlineTagsWhitelist = [
+                '<br>',
+                '<i>',
+                '<b>',
+                '<u>',
+                '<strong>',
+                '<span>'
+            ] %}
+
+            {% if slide.translated.title %}
+                <{{headlineElement|raw}} class="{% block blur_elysium_slide_title_class %}cms-element-elysium-slide__title font-weight-bold fluid-text-title{% endblock %}">
+                    {{ slide.translated.title|striptags( headlineTagsWhitelist|join )|raw }}
+                </{{headlineElement|raw}}>                
+            {% endif %}
+        {% endblock %}
+
+        {% block cms_element_blur_elysium_slide_description %}
+            {% if slide.translated.description %}
+                <div class="{% block blur_elysium_slide_description_class %}cms-element-elysium-slide__description fluid-text-description{% endblock %}">
+                    {{ slide.translated.description|raw }}
+                </div>                
+            {% endif %}
+        {% endblock %}
+
+        {% block cms_element_blur_elysium_slide_actions %}
+            {% if slide.translated.button_label and slide.translated.url and slide.slideSettings.urlOverlay is same as( false ) %}
+                <div class="cms-element-elysium-slide__actions">
+                    
+                    {% block cms_element_blur_elysium_slide_action_cta_button %}
+
+                        <a href="{{ slide.translated.url }}" 
+                            title="{{ slide.translated.button_label }}" 
+                            class="{% block blur_elysium_slide_button_class %}btn{% if slide.slideSettings.buttonAppearance %} btn-{{slide.slideSettings.buttonAppearance}}{% endif %} cms-element-elysium-slide__cta-button fluid-text-button{% endblock %}"
+                            {% if slide.slideSettings.urlTarget == "external" %}
+                                target="_blank"
+                                rel="noopener"
+                            {% endif %}
+                            >
+                            
+                            {{ slide.translated.button_label }}
+                        </a>        
+                    {% endblock %}
+                </div>
+            {% endif %}
+        {% endblock %}
+
+    </div>
+{% endblock %}

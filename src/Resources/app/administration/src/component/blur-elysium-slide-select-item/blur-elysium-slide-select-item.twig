@@ -1,5 +1,6 @@
 {% block blur_elysium_slide_select_item %} 
     <div class="blur-es-list-item"
+        :style="itemStyle"
         ref="selectItem"
         draggable
         @dragstart="startDrag($event)"
@@ -10,27 +11,16 @@
             {% block blur_elysium_slide_select_item_silde_container %}
                 <div class="blur-es-list-item__slide-container">
 
-                    {% block blur_elysium_slide_select_item_silde_image %}
-                        <div v-if="slideMedia !== null" 
-                            class="blur-es-list-item__slide-image">
-
-                            <img v-if="allowedImageExtension.includes(slideMedia.fileExtension)"
-                                :src="slideMedia.url" 
-                                :alt="slideData.title"
-                                class="blur-es-list-item__slide-image-element">
-                            <div v-else-if="allowedVideoExtension.includes(slideMedia.fileExtension)" >
-                                <sw-icon name="regular-play" color="#aaaaaa"></sw-icon>
-                            </div>
-                        </div>
-                    {% endblock %}
+                    <div class="blur-es-list-item__name-tag">
+                        {{slideData.name}}
+                    </div>
 
                     {% block blur_elysium_slide_select_item_silde_content %} 
                         <div class="blur-es-list-item__slide-content">
                             <div>
-                                {{slideData.name}}
-                            </div>
-                            <div style="font-size: 1rem;">
-                                {{slideData.title}}
+                                <div class="blur-es-list-item__slide-headline">
+                                    {{slideData.title}}
+                                </div>
                             </div>
                         </div>
                     {% endblock %}
@@ -42,29 +32,26 @@
                     {% block blur_elysium_slide_select_item_silde_action_position_up %}
                         <sw-button 
                             class="blur-es-list-item__icon-button"
-                            variant="context"
                             :disabled="false" 
                             :isLoading="isLoading"
                             @click="positionUp">
-                            <sw-icon name="regular-chevron-up" size="18" color="#5a5a5a"></sw-icon>
+                            <sw-icon name="regular-chevron-up" size="16" color="#5a5a5a"></sw-icon>
                         </sw-button>
                     {% endblock %}
 
                     {% block blur_elysium_slide_select_item_silde_action_position_down %}
                         <sw-button 
                             class="blur-es-list-item__icon-button" 
-                            variant="context"
                             :disabled="false" 
                             :isLoading="isLoading"
                             @click="positionDown">
-                            <sw-icon name="regular-chevron-down" size="18" color="#5a5a5a"></sw-icon>
+                            <sw-icon name="regular-chevron-down" size="16" color="#5a5a5a"></sw-icon>
                         </sw-button>
                     {% endblock %}
 
                     {% block blur_elysium_slide_select_item_silde_edit %}
                         <sw-button 
                             class="blur-es-list-item__icon-button"
-                            variant="context"
                             :disabled="false" 
                             :isLoading="isLoading"
                             @click="editSlide">
@@ -75,7 +62,6 @@
                     {% block blur_elysium_slide_select_item_silde_action_remove %}
                         <sw-button 
                             class="blur-es-list-item__icon-button"
-                            variant="context"
                             :disabled="false" 
                             :isLoading="isLoading"
                             @click="removeSlide">

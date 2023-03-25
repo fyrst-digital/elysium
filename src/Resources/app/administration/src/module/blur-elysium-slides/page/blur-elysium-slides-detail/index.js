@@ -33,6 +33,7 @@ Component.register( 'blur-elysium-slides-detail', {
             entityName: 'blur_elysium_slides',
             isLoading: false,
             isSaveSuccessful: false,
+            isNewSlide: null,
             blurElysiumSlide: null,
             media: {
                 slideCover: {
@@ -143,6 +144,10 @@ Component.register( 'blur-elysium-slides-detail', {
     created() {
         this.createdComponent()
         this.loadCustomFieldSets()
+        console.log('ACL Viewer: ' + this.acl.can('blur_elysium_slides.viewer'))
+        console.log('ACL Editor: ' + this.acl.can('blur_elysium_slides.editor'))
+        console.log('ACL Creator: ' + this.acl.can('blur_elysium_slides.creator'))
+        console.log('ACL Deletor: ' + this.acl.can('blur_elysium_slides.deleter'))
     },
 
     methods: {
@@ -182,7 +187,8 @@ Component.register( 'blur-elysium-slides-detail', {
 
         setSlide( slide ) {
             this.blurElysiumSlide = slide
-            Shopware.State.commit('blurElysiumSlidesDetail/setSlide', slide);
+            this.isNewSlide = this.blurElysiumSlide._isNew
+            Shopware.State.commit('blurElysiumSlidesDetail/setSlide', slide)
         },
 
         getSlide() {
@@ -256,6 +262,7 @@ Component.register( 'blur-elysium-slides-detail', {
         },
 
         async onSave() {
+            
             this.isLoading = true;
             this.isSaveSuccessful = false;
 
@@ -268,28 +275,41 @@ Component.register( 'blur-elysium-slides-detail', {
                     });                    
                 }
 
-                // save slide
-                return this.elysiumSlidesRepository.save( this.blurElysiumSlide ).then((result) => {
-                    this.isSaveSuccessful = true;
-                    this.createNotificationSuccess({
-                        message: this.$tc('BlurElysiumSlides.messages.saveSlideSuccess')
-                    });
+                // check if there are changes
+                if (this.elysiumSlidesRepository.hasChanges( this.blurElysiumSlide )) {
 
-                    // push route to detail with new id as param
-                    this.$router.push({ 
-                        name: 'blur.elysium.slides.detail',
-                        params: {
-                            id: JSON.parse( result.config.data ).id
-                        } 
-                    })
+                    // save slide
+                    return this.elysiumSlidesRepository.save( this.blurElysiumSlide ).then((result) => {
+                        this.isSaveSuccessful = true;
+                        this.createNotificationSuccess({
+                            message: this.$tc('BlurElysiumSlides.messages.saveSlideSuccess')
+                        });
 
-                    this.isLoading = false;
-                }).catch(( exception ) => {
-                    this.createNotificationError({
-                        message: this.$tc('BlurElysiumSlides.messages.createSlideError'),
+                        // push route to detail with new id as param
+                        this.$router.push({ 
+                            name: 'blur.elysium.slides.detail',
+                            params: {
+                                id: JSON.parse( result.config.data ).id
+                            } 
+                        })
+
+                        this.isLoading = false;
+                    }).catch(( exception ) => {
+                        this.createNotificationError({
+                            message: this.$tc('BlurElysiumSlides.messages.createSlideError'),
+                        });
+                        console.warn( exception )
+                        this.isLoading = false;
+                    });
+                
+                } else {
+                    // throw notification if there are no changes
+                    this.createNotification({
+                        message: this.$tc('blurElysiumSlides.messages.noChanges')
                     });
                     this.isLoading = false;
-                });
+                    this.isSaveSuccessful = false;
+                }
             } else {
 
                 console.error('Slide Entity is missing')

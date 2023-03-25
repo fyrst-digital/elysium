@@ -81,10 +81,16 @@
                             <div class="cms-element-elysium-slide__wrapper">
 
                                 {% block cms_element_blur_elysium_slide_include %}
-                                    {% sw_include '@Storefront/storefront/element/blur-elysium-slide.html.twig' with {
+                                    {% set slideTemplate = 'slide' %}
+
+                                    {% if slide.slideSettings.customTemplateFile %}
+                                        {% set slideTemplate = 'custom/' ~ slide.slideSettings.customTemplateFile %}
+                                    {% endif %}
+
+                                    {% sw_include '@Storefront/storefront/component/blur-elysium-slide/' ~ slideTemplate ~'.html.twig' ignore missing with {
                                         slide: slide
                                     } only %}
-                                {% endblock %}        
+                                {% endblock %}
                             </div>
                         {% endfor %}
                     </div>

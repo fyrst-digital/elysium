@@ -27,11 +27,17 @@
                     {% endblock %}
 
                     {% block blur_elysium_slides_detail_view_smart_bar_action_save %}
+
                         <sw-button-process
+                            v-tooltip="{
+                                message: $tc('sw-privileges.tooltip.warning'),
+                                disabled: acl.can('blur_elysium_slides.editor'),
+                                showOnDisabledElements: true
+                            }"
                             class="sw-customer-detail__save-action"
                             :is-loading="isLoading"
                             :process-success="isSaveSuccessful"
-                            :disabled="isLoading"
+                            :disabled="isLoading || !( acl.can('blur_elysium_slides.editor') || ( acl.can('blur_elysium_slides.creator') && isNewSlide ) )"
                             variant="primary"
                             @process-finish="saveFinish"
                             @click.prevent="onSave"
@@ -58,6 +64,19 @@
 
         <template #content>
 
+            {% block blur_elysium_slides_detail_view_custom_template_alert %}
+                <sw-alert 
+                    v-if="slide.slideSettings?.customTemplateFile" 
+                    variant="info" 
+                    appearance="default" 
+                    :showIcon="true" 
+                    :closable="false"
+                    style="margin:0;border-radius: 0;border-width: 0 0 1px 0;"
+                    >
+                    <span v-html="$tc('blurElysiumSlides.slideSettings.customTemplate.hasCustomNotice')" />
+                </sw-alert>
+            {% endblock %}
+
             {% block blur_elysium_slides_detail_view_tabs %}
                 <sw-tabs :small="false" default-item="content" class="blur-elysium-slider__detail-tabs">
 
@@ -68,7 +87,7 @@
                                 <sw-tabs-item
                                     name="content"
                                     :active-tab="active">
-                                    {{ $tc('BlurElysiumSlides.tabs.contentLabel') }}
+                                    {{ $tc('blurElysiumSlides.slideSettingTabs.contentLabel') }}
                                 </sw-tabs-item>
                             {% endblock %}
 
@@ -76,7 +95,15 @@
                                 <sw-tabs-item
                                     name="display"
                                     :active-tab="active">
-                                    {{ $tc('BlurElysiumSlides.tabs.displayLabel') }}
+                                    {{ $tc('blurElysiumSlides.slideSettingTabs.displayLabel') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+
+                            {% block blur_elysium_slides_detail_view_tab_navigation_advanced %}
+                                <sw-tabs-item
+                                    name="advanced"
+                                    :active-tab="active">
+                                    {{ $tc('blurElysiumSlides.slideSettingTabs.advancedLabel') }}
                                 </sw-tabs-item>
                             {% endblock %}
                         </template>
@@ -94,7 +121,7 @@
                                         <blur-elysium-slides-basic-form
                                             v-if="!isLoading"
                                             :is-loading="isLoading"
-                                            :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                            :allow-edit="acl.can('blur_elysium_slides.editor')"
                                         />
                                     {% endblock %}
 
@@ -105,7 +132,7 @@
                                             :media="media"
                                             :mediaSidebar="$refs.mediaSidebarItem"
                                             :isLoading="isLoading"
-                                            :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                            :allow-edit="acl.can('blur_elysium_slides.editor')"
                                         />
                                     {% endblock %}
 
@@ -138,23 +165,45 @@
                                 </template>
                             {% endblock %}
 
+                            {% block blur_elysium_slides_detail_view_tab_content_display %}
+                                <template v-if="active === 'display'">
+                                    {% block blur_elysium_slides_detail_view_content_general_appearance %}
+                                        <blur-elysium-slides-content-general-appearance
+                                            v-if="!isLoading"
+                                            :isLoading="isLoading"
+                                            :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                        />
+                                    {% endblock %}
+                                    {% block blur_elysium_slides_detail_view_content_container_form %}
+                                        <blur-elysium-slides-content-container-settings
+                                            v-if="!isLoading"
+                                            :isLoading="isLoading"
+                                            :allow-edit="acl.can('blur_slides_elysium.editor')"
+                                        />
+                                    {% endblock %}
+                                </template>
+                            {% endblock %}
 
-                            <template v-if="active === 'display'">
-                                {% block blur_elysium_slides_detail_view_content_general_appearance %}
-                                    <blur-elysium-slides-content-general-appearance
-                                        v-if="!isLoading"
-                                        :isLoading="isLoading"
-                                        :allow-edit="acl.can('blur_slides_elysium.editor')"
-                                    />
-                                {% endblock %}
-                                {% block blur_elysium_slides_detail_view_content_container_form %}
-                                    <blur-elysium-slides-content-container-settings
-                                        v-if="!isLoading"
-                                        :isLoading="isLoading"
-                                        :allow-edit="acl.can('blur_slides_elysium.editor')"
-                                    />
-                                {% endblock %}
-                            </template>
+                            {% block blur_elysium_slides_detail_view_tab_content_advanced %}
+                                <template v-if="active === 'advanced'">
+
+                                    <sw-card 
+                                        :title="$tc('blurElysiumSlides.slideSettings.customTemplate.cardTitle')"
+                                        v-if="!isLoading && slide.slideSettings"
+                                        :isLoading="isLoading">
+                                        <p 
+                                            v-html="$tc('blurElysiumSlides.slideSettings.customTemplate.cardDescription')" 
+                                            style="margin-bottom:1rem;" />
+                                        <sw-text-field 
+                                            v-model="slide.slideSettings.customTemplateFile"
+                                            :placeholder="'my-own-slide'" 
+                                            style="margin-bottom:1rem;" />
+                                        <div 
+                                            v-if="slide.slideSettings.customTemplateFile"
+                                            v-html="$t('blurElysiumSlides.slideSettings.customTemplate.customTemplatePath', { file: slide.slideSettings.customTemplateFile } )" />
+                                    </sw-card>
+                                </template>
+                            {% endblock %}
 
                         </template>
                     {% endblock %}
