@@ -1,4 +1,10 @@
-# `1.4.0`
+# `1.4.1` 2023-03-26
+
+## Changelog
+- Chore: Version compatibility to Shopware 6.5.0
+- Chore: The slider-overlay option is now inactive by default
+
+# `1.4.0` 2023-03-25
 
 ## Update Notes
 

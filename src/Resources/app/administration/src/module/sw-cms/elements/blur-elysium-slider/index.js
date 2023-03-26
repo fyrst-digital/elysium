@@ -19,7 +19,7 @@ Shopware.Service('cmsService').registerCmsElement({
         },
         sliderOverlay: {
             source: 'static',
-            value: true
+            value: false
         },
         slideSpeed: {
             source: 'static',
