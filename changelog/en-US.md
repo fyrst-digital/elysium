@@ -1,3 +1,8 @@
+# `1.4.2` 2023-04-19
+
+## Changelog
+- Bugfix: The display of the slide cover background images now works again as expected
+
 # `1.4.1` 2023-03-26
 
 ## Changelog
