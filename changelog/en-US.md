@@ -1,3 +1,8 @@
+# `1.4.4` 2023-05-19
+
+## Changelog
+- fix: ignore case sensitive on file extension of slide-cover media
+
 # `1.4.3` 2023-05-19
 
 ## Changelog
