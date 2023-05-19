@@ -1,3 +1,8 @@
+# `1.4.4` 2023-05-19
+
+## Changelog
+- Änderung: Die Groß- und Kleinschreibung der Slide-Cover Medien Dateiendungen wird nun ignoriert
+
 # `1.4.3` 2023-05-19
 
 ## Changelog
