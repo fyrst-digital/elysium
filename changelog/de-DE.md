@@ -1,3 +1,8 @@
+# `1.4.5` 2023-05-21
+
+## Changelog
+- Änderung: Eine Code-Ausgabe im Template wurde entfernt
+
 # `1.4.4` 2023-05-19
 
 ## Changelog

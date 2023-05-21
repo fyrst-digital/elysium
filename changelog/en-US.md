@@ -1,7 +1,12 @@
+# `1.4.5` 2023-05-21
+
+## Changelog
+- Bugfix: A code dump in the template was removed
+
 # `1.4.4` 2023-05-19
 
 ## Changelog
-- fix: ignore case sensitive on file extension of slide-cover media
+- Bugfix: ignore case sensitive on file extension of slide-cover media
 
 # `1.4.3` 2023-05-19
 
