@@ -1,5 +1,6 @@
 import template from './blur-cms-el-config-elysium-slider.twig';
 import './blur-cms-el-config-elysium-slider.scss';
+import { config } from "@elysiumSlider/utilities/identifiers";
 
 const { Component, Mixin } = Shopware;
 const { Criteria, EntityCollection } = Shopware.Data;
@@ -22,6 +23,9 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
     },
 
     computed: {
+        positionIdentifiers() {
+            return config
+        },
         selectedSlides: {
             get() {
                 return this.element.config.elysiumSlideCollection.value
@@ -57,8 +61,6 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
 
     created() {
         this.getSlides();
-
-        console.dir( this.selectedSlides )
     },
 
     watch: {

@@ -1,4 +1,140 @@
 {
+    "blurElysiumSlider": {
+        "general": {
+            "active": "Active",
+            "appearance": "Appearance",
+            "small": "Small",
+            "medium": "Medium",
+            "large": "Large",
+            "color": "Color",
+            "colorActive": "Color (Active)",
+            "iconColor": "Icon Color",
+            "iconColorActive": "Icon Color (Active)",
+            "bgColor": "Background Color",
+            "bgColorActive": "Background Color (Active)"
+        },
+        "config": {
+            "content": "Content",
+            "settings": "Settings",
+            "styling": "Styling",
+            "sliderTitle": {
+                "label": "Slider Title (optional)"
+            },
+            "rewind": "Rewind Slides",
+            "overlay": "Show Overlay",
+            "speed": {
+                "label": "Slide Speed",
+                "placeholder": "Time in Millisecond"
+            },
+            "autoplay": {
+                "label": "Autoplay",
+                "active": "Activate Autoplay",
+                "interval":{ 
+                    "label": "Interval",
+                    "placeholder": "Time in Millisecond"
+                },
+                "pauseOnHover": "Pause Autoplay on Mouseover"
+            },
+            "sizing":  {
+                "label": "Sizing",
+                "selectViewport": {
+                    "label": "Viewport Size",
+                    "placeholder": "Select viewport"
+                },
+                "width": "Breite",
+                "height": "Höhe",
+                "maxHeight": {
+                    "label": "Maximale Höhe",
+                    "placeholder": "px oder rem Werte"
+                },
+                "emptyViewport": {
+                    "title": "Select viewport",
+                    "description": "Please choose a viewport size first"
+                }
+            },
+            "navigation": {
+                "label": "Navigation",
+                "active": "Show Slider Navigation",
+                "position": {
+                    "label": "Position",
+                    "belowSlider": "Below the slider",
+                    "inSlider": "Inside the slider"
+                },
+                "align": {
+                    "label": "Alignment",
+                    "left": "Left",
+                    "center": "Center",
+                    "right": "Right"
+                },
+                "size": {
+                    "label": "Size"
+                },
+                "shape": {
+                    "label": "Shape",
+                    "circle": "Dot",
+                    "bar": "Bar"
+                },
+                "navPadding": {
+                    "label": "Padding"
+                }
+            },
+            "arrows": {
+                "label": "Arrows",
+                "active": "Show Slider Arrows",
+                "icons": {
+                    "label": "Icon",
+                    "arrow": "Arrow",
+                    "chevron": "Chevron"
+                },
+                "size": {
+                    "label": "Icon Size"
+                }
+            }
+        },
+        "cmsElement": {
+            "label": "Elysium Slider",
+            "config": {
+                "slidesSelect": {
+                    "label": "Elysium Slides",
+                    "placeholder": "Choose your Slides"
+                },
+                "sliderNavigation": {
+                    "label": "Slider Navigation"
+                },
+                "sliderArrowColor": {
+                    "label": "Arrow Color"
+                },
+                "aspectRatio": {
+                    "landscape": {
+                        "label": "Landscape (Default)"
+                    },
+                    "portrait": {
+                        "label": "Portrait"
+                    },
+                    "width": {
+                        "placeholder": "Width"
+                    },
+                    "height": {
+                        "placeholder": "Height"
+                    }
+                }
+            },
+            "settings": {
+                "slideCollectionTitle": "Slide Collection",
+                "aspectRatioTitle": "Aspect Ratio",
+                "autoplayTitle": "Autoplay",
+                "arrowStylingTitle": "Slider Arrows",
+                "navigationStylingTitle": "Slider Navigation"
+            },
+            "component": {
+                "preview": {
+                    "defaultTitleValue": "Elysium Slider",
+                    "defaultDescriptionValue": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacinia, erat ut tempus vehicula, nisi leo aliquam orci, non varius erat urna at diam. Sed hendrerit tincidunt nisl non convallis. Suspendisse congue sed neque id viverra.",
+                    "defaultButtonLabelValue": "See more"
+                }
+            }
+        }
+    },
     "blurElysiumSlides": {
         "messages": {
             "noChanges": "No changes"

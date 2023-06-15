@@ -2,27 +2,17 @@
 //
 import PluginManager from 'src/plugin-system/plugin.manager';
 
-// init plugins
+// import elysium slider plugin
 //
 import BlurElysiumSlider from './js/blur-elysium-slider.js';
 
-const uspSliderOptions = {
-    enabled: true,
-    autoplay: false,
-    loop: false,
-    rewind: true,
-    nav: true,
-    autoplayButtonOutput: false,
-    controls: true,
-    responsive: {
-        xs: {
-            items: 1
-        }
-    }
-}
+/**
+ * @todo find a way to include the styles in css build file
+ */
+import "@splide/dist/css/splide-core.min.css";
 
-// register plugins
+// register plugin
 // 
-PluginManager.register('BlurElysiumSliderPlugin', BlurElysiumSlider, '.cms-element-elysium-slider', {
-    containerSelector: '.cms-element-elysium-slider__slide-container'
+PluginManager.register('BlurElysiumSliderPlugin', BlurElysiumSlider, '[data-blur-elysium-slider]', {
+    "splideSelector": "[data-blur-elysium-slider-container]"
 });

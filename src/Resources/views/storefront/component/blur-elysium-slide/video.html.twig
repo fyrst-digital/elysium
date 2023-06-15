@@ -1,6 +1,12 @@
 {% block cms_element_blur_elysium_slide_video_element %}
-    <video class="cms-element-elysium-slide__video-element" autoplay loop muted
+    <video 
+        class="cms-element-elysium-slide__video-element" 
+        autoplay 
+        loop 
+        muted
         {% if mediaPortrait %} data-video-portrait="{{mediaPortrait.url}}"{% endif %}>
-        <source src="{{media.url}}" type="video/{{media.fileExtension}}">
+        <source 
+            src="{{media.url}}" 
+            type="video/{{media.fileExtension}}">
     </video>
 {% endblock %}

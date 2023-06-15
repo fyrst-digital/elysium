@@ -1,0 +1,81 @@
+{% block blur_elysium_slider_config_settings %}
+    <div>
+
+        {% block blur_cms_config_elysium_slider_settings_general %}
+            <sw-card 
+                :position-identifier="positionIdentifiers.autoplayGeneral">
+
+                <sw-container columns="1fr 1fr" gap="0 2rem">
+
+                        {% block blur_cms_config_elysium_slider_rewind %}
+                            <sw-switch-field 
+                                :label="$tc('blurElysiumSlider.config.rewind')"
+                                v-model="config.rewind">
+                            </sw-switch-field>
+                        {% endblock %}
+
+                        {% block blur_cms_config_elysium_slider_overlay %}
+                            <sw-switch-field 
+                                :label="$tc('blurElysiumSlider.config.overlay')"
+                                v-model="config.overlay">
+                            </sw-switch-field>
+                        {% endblock %}
+
+                        {% block blur_cms_config_elysium_slider_speed %}
+                            <sw-number-field 
+                                numberType="int" 
+                                v-model="config.speed"
+                                :label="$tc('blurElysiumSlider.config.speed.label')"
+                                :placeholder="$tc('blurElysiumSlider.config.speed.placeholder')"
+                                :step="null" 
+                                :min="null" 
+                                :max="null" 
+                                :digits="null"
+                                :allowEmpty="false">
+                            </sw-number-field>                                        
+                        {% endblock %}
+
+
+                </sw-container>
+            </sw-card>
+        {% endblock %}
+
+        {% block blur_cms_config_elysium_slider_settings_autoplay %}
+            <sw-card 
+                :title="$tc('blurElysiumSlider.config.autoplay.label')" 
+                :position-identifier="positionIdentifiers.autoplayGeneral">
+
+                <sw-container columns="1fr 1fr" gap="0 2rem">
+
+                    {% block blur_cms_config_elysium_slider_autoplay_active %}
+                        <sw-switch-field 
+                            :label="$tc('blurElysiumSlider.config.autoplay.active')" 
+                            v-model="config.autoplay.active">
+                        </sw-switch-field>
+                    {% endblock %}
+
+                    {% block blur_cms_config_elysium_slider_autoplay_pause_on_hover %}
+                        <sw-switch-field 
+                            :label="$tc('blurElysiumSlider.config.autoplay.pauseOnHover')" 
+                            v-model="config.autoplay.pauseOnHover">
+                        </sw-switch-field>
+                    {% endblock %}
+
+                    {% block blur_cms_config_elysium_slider_autoplay_timeout %}
+                        <sw-number-field 
+                            numberType="int" 
+                            v-model="config.autoplay.interval"
+                            :label="$tc('blurElysiumSlider.config.autoplay.interval.label')"
+                            :placeholder="$tc('blurElysiumSlider.config.autoplay.interval.placeholder')"
+                            :step="null" 
+                            :min="3000" 
+                            :max="null" 
+                            :digits="null"
+                            :allowEmpty="false">
+                        </sw-number-field>
+                    {% endblock %}
+                </sw-container>
+            </sw-card>
+        {% endblock %}
+    </div>
+{% endblock %}

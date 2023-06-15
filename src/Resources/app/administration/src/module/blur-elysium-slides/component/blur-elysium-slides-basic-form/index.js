@@ -1,4 +1,5 @@
 import template from './blur-elysium-slides-basic-form.twig';
+import { slides } from "@elysiumSlider/utilities/identifiers";
 
 const { Criteria } = Shopware.Data;
 const { Component, Context, Mixin } = Shopware;
@@ -8,7 +9,7 @@ const propErrors = [
     'name'
 ];
 
-Component.register( 'blur-elysium-slides-basic-form', {
+export default {
     template,
 
     mixins: [
@@ -34,8 +35,12 @@ Component.register( 'blur-elysium-slides-basic-form', {
         
         ...mapPropertyErrors( 'blurElysiumSlides' , propErrors),
 
+        positionIdentifiers() {
+            return slides
+        },
+
         urlOverlayActive() {
             return this.slide.slideSettings && this.slide.slideSettings.urlOverlay ? true : false
         }
     }
-});
+}

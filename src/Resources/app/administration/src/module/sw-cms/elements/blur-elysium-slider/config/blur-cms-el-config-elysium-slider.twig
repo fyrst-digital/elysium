@@ -2,7 +2,9 @@
     <div class="sw-cms-el-config-blur-elysium-slider">
 
         {% block blur_cms_config_elysium_slider_tabs %}
-            <sw-tabs default-item="content">
+            <sw-tabs 
+                :position-identifier="positionIdentifiers.tabs"
+                default-item="content">
 
                 {% block blur_cms_config_elysium_slider_tabs_navigation %}
                     <template slot-scope="{ active }">
@@ -11,23 +13,39 @@
                             <sw-tabs-item
                                 name="content"
                                 :active-tab="active">
-                                {{ $tc('blurElysiumSlider.cmsElement.config.tabs.content') }}
+                                {{ $tc('blurElysiumSlider.config.content') }}
                             </sw-tabs-item>                            
                         {% endblock %}
 
-                        {% block blur_cms_config_elysium_slider_tabs_navigation_item_setting %}
+                        {% block blur_cms_config_elysium_slider_tabs_navigation_item_settings %}
                             <sw-tabs-item
-                                name="setting"
+                                name="settings"
                                 :active-tab="active">
-                                {{ $tc('blurElysiumSlider.cmsElement.config.tabs.settings') }}
+                                {{ $tc('blurElysiumSlider.config.settings') }}
                             </sw-tabs-item>                            
                         {% endblock %}
 
-                        {% block blur_cms_config_elysium_slider_tabs_navigation_item_styling %}
+                        {% block blur_cms_config_elysium_slider_tabs_navigation_item_sizing %}
                             <sw-tabs-item
-                                name="styling"
+                                name="sizing"
                                 :active-tab="active">
-                                {{ $tc('blurElysiumSlider.cmsElement.config.tabs.styling') }}
+                                {{ $tc('blurElysiumSlider.config.sizing.label') }}
+                            </sw-tabs-item>                            
+                        {% endblock %}
+
+                        {% block blur_cms_config_elysium_slider_tabs_navigation_item_navigation %}
+                            <sw-tabs-item
+                                name="navigation"
+                                :active-tab="active">
+                                {{ $tc('blurElysiumSlider.config.navigation.label') }}
+                            </sw-tabs-item>                            
+                        {% endblock %}
+
+                        {% block blur_cms_config_elysium_slider_tabs_navigation_item_arrows %}
+                            <sw-tabs-item
+                                name="arrows"
+                                :active-tab="active">
+                                {{ $tc('blurElysiumSlider.config.arrows.label') }}
                             </sw-tabs-item>                            
                         {% endblock %}
 
@@ -42,29 +60,45 @@
                         {% block blur_cms_config_elysium_slider_content %}
                             <template v-if="active === 'content'">
 
+                                {% block blur_cms_config_elysium_slider_content_general %}
+                                    <sw-card 
+                                        :position-identifier="positionIdentifiers.contentGeneral">
+
+                                        {% block blur_cms_config_elysium_slider_title %}
+                                            <sw-text-field 
+                                                v-model="element.config.content.value.title" 
+                                                :label="$tc('blurElysiumSlider.config.sliderTitle.label')" />
+                                        {% endblock %}
+
+                                    </sw-card>
+                                {% endblock %}
+
                                 {% block blur_cms_config_elysium_slider_card_slide_collection %}
                                     <sw-card 
-                                        :title="$tc('blurElysiumSlider.cmsElement.settings.slideCollectionTitle')" 
-                                        class="bc-card bc-card__static-title">
+                                        :position-identifier="positionIdentifiers.slideCollection"
+                                        :title="$tc('blurElysiumSlider.cmsElement.settings.slideCollectionTitle')">
 
-                                        <template v-if="blurElysiumSlides && blurElysiumSlides.length === 0">
-                                            <div class="blur-elysium-slider-config__no-slides">
-                                                <p style="margin-bottom:1rem;line-height:1.5;">
-                                                    {{ $tc( 'blurElysiumSlides.slideSelection.message.noSlides' ) }}
-                                                </p>
-                                                <div class="blur-elysium-slider-config__no-slides-actions">
-                                                    <sw-button
-                                                        variant="primary"
-                                                        @click="onCreateSlide">
-                                                        {{ $tc( 'blurElysiumSlides.actions.createSlide' ) }}
-                                                    </sw-button>
-                                                    <sw-button
-                                                        @click="onSlideOverview">
-                                                        {{ $tc( 'blurElysiumSlides.actions.toOverview' ) }}
-                                                    </sw-button>
+                                        {% block blur_cms_config_elysium_slider_no_slides_dialogue %}
+                                            <template v-if="blurElysiumSlides && blurElysiumSlides.length === 0">
+                                                <div class="blur-elysium-slider-config__no-slides">
+                                                    <p style="margin-bottom:1rem;line-height:1.5;">
+                                                        {{ $tc( 'blurElysiumSlides.slideSelection.message.noSlides' ) }}
+                                                    </p>
+                                                    <div class="blur-elysium-slider-config__no-slides-actions">
+                                                        <sw-button
+                                                            variant="primary"
+                                                            @click="onCreateSlide">
+                                                            {{ $tc( 'blurElysiumSlides.actions.createSlide' ) }}
+                                                        </sw-button>
+                                                        <sw-button
+                                                            @click="onSlideOverview">
+                                                            {{ $tc( 'blurElysiumSlides.actions.toOverview' ) }}
+                                                        </sw-button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </template>
+                                            </template>
+                                        {% endblock %}
+
                                         {% block blur_cms_config_elysium_slide_selection_component %}
                                             <blur-elysium-slide-selection 
                                                 :selected-slides="selectedSlides" />
@@ -75,226 +109,31 @@
                             </template>
                         {% endblock %}
 
-                        {% block blur_cms_config_elysium_slider_setting %}
-                            <template v-if="active === 'setting'">
-
-                                {% block blur_cms_config_elysium_slider_card_general %}
-                                    <sw-card 
-                                        :title="$tc('blurElysiumSlider.cmsElement.settings.generalTitle')" 
-                                        class="bc-card bc-card__static-title">
-
-                                        <sw-container columns="1fr 1fr" gap="0 2rem">
-
-                                            <div>
-
-                                                {% block blur_cms_config_elysium_slider_navigation %}
-                                                    <sw-switch-field 
-                                                        :label="$tc('blurElysiumSlider.cmsElement.config.sliderNavigation.label')" 
-                                                        v-model="element.config.sliderNavigation.value"
-                                                        class="bc-field__no-margin">
-                                                    </sw-switch-field>                                                
-                                                {% endblock %}
-
-                                                {% block blur_cms_config_elysium_slider_overlay %}
-                                                    <sw-switch-field 
-                                                        :label="$tc('blurElysiumSlider.cmsElement.config.sliderOverlay.label')"
-                                                        v-model="element.config.sliderOverlay.value"
-                                                        class="bc-field__no-margin">
-                                                    </sw-switch-field>
-                                                {% endblock %}
-                                            </div>
-
-                                            <div>
-                                                {% block blur_cms_config_elysium_slider_speed %}
-                                                    <sw-number-field 
-                                                        numberType="int" 
-                                                        v-model="element.config.slideSpeed.value"
-                                                        class="bc-field__no-margin bc-field__px-1"
-                                                        :label="$tc('blurElysiumSlider.cmsElement.config.slideSpeed.label')"
-                                                        :placeholder="$tc('blurElysiumSlider.cmsElement.config.slideSpeed.placeholder')"
-                                                        :step="null" 
-                                                        :min="null" 
-                                                        :max="null" 
-                                                        :digits="null"
-                                                        :allowEmpty="false">
-                                                    </sw-number-field>                                        
-                                                {% endblock %}
-                                            </div>
-
-                                        </sw-container>
-                                    </sw-card>
-                                {% endblock %}
-
-                                {% block blur_cms_config_elysium_slider_card_aspect_ratio %}
-                                    <sw-card 
-                                        :title="$tc('blurElysiumSlider.cmsElement.settings.aspectRatioTitle')" 
-                                        class="bc-card bc-card__static-title">
-
-                                        <sw-container columns="1fr 1fr" gap="0 2rem">
-
-                                            <div>
-                                                <label>
-                                                    {{ $tc('blurElysiumSlider.cmsElement.config.aspectRatio.landscape.label') }}
-                                                </label>
-                                                <sw-container 
-                                                    columns="1fr auto 1fr" 
-                                                    gap="0.5rem"
-                                                    align="center">
-                                                    {% block blur_cms_config_elysium_slider_aspect_ratio_landscape %}
-                                                        <sw-number-field 
-                                                            numberType="int" 
-                                                            v-model="element.config.aspectRatio.value.landscape.width"
-                                                            class="bc-field__no-margin bc-field__px-1"
-                                                            :placeholder="$tc('blurElysiumSlider.cmsElement.config.aspectRatio.width.placeholder')"
-                                                            :allowEmpty="false">
-                                                        </sw-number-field>
-                                                        <div>
-                                                            {{'/'}}
-                                                        </div>
-                                                        <sw-number-field 
-                                                            numberType="int" 
-                                                            v-model="element.config.aspectRatio.value.landscape.height"
-                                                            class="bc-field__no-margin bc-field__px-1"
-                                                            :placeholder="$tc('blurElysiumSlider.cmsElement.config.aspectRatio.height.placeholder')"
-                                                            :allowEmpty="false">
-                                                        </sw-number-field>
-                                                    {% endblock %}
-                                                </sw-container>                                            
-                                            </div>
-
-                                            <div>
-                                                <label>
-                                                    {{ $tc('blurElysiumSlider.cmsElement.config.aspectRatio.portrait.label') }}
-                                                </label>
-                                                <sw-container 
-                                                    columns="1fr auto 1fr" 
-                                                    gap="0.5rem"
-                                                    align="center">
-                                                    {% block blur_cms_config_elysium_slider_aspect_ratio_portrait %}
-                                                        <sw-number-field 
-                                                            numberType="int" 
-                                                            v-model="element.config.aspectRatio.value.portrait.width"
-                                                            class="bc-field__no-margin bc-field__px-1"
-                                                            :placeholder="$tc('blurElysiumSlider.cmsElement.config.aspectRatio.width.placeholder')"
-                                                            :allowEmpty="false">
-                                                        </sw-number-field>
-                                                        <div>
-                                                            {{'/'}}
-                                                        </div>
-                                                        <sw-number-field 
-                                                            numberType="int" 
-                                                            v-model="element.config.aspectRatio.value.portrait.height"
-                                                            class="bc-field__no-margin bc-field__px-1"
-                                                            :placeholder="$tc('blurElysiumSlider.cmsElement.config.aspectRatio.height.placeholder')"
-                                                            :allowEmpty="false">
-                                                        </sw-number-field>
-                                                    {% endblock %}
-                                                </sw-container>                                            
-                                            </div>
-                                        </sw-container>
-
-                                    </sw-card>
-                                {% endblock %}
-
-                                {% block blur_cms_config_elysium_slider_card_autoplay %}
-                                    <sw-card 
-                                        :title="$tc('blurElysiumSlider.cmsElement.settings.autoplayTitle')" 
-                                        class="bc-card bc-card__static-title">
-
-                                        <sw-container columns="1fr 1fr" gap="0 2rem">
-
-                                            {% block blur_cms_config_elysium_slider_autoplay %}
-                                                <sw-switch-field 
-                                                    :label="$tc('blurElysiumSlider.cmsElement.config.sliderAutoplay.label')" 
-                                                    v-model="element.config.sliderAutoplay.value"
-                                                    class="bc-field__no-margin">
-                                                </sw-switch-field>
-                                            {% endblock %}
-
-                                            {% block blur_cms_config_elysium_slider_autoplay_timeout %}
-                                                <sw-number-field 
-                                                    numberType="int" 
-                                                    v-model="element.config.sliderAutoplayTimeout.value"
-                                                    class="bc-field__no-margin bc-field__px-1"
-                                                    :label="$tc('blurElysiumSlider.cmsElement.config.sliderAutoplayTimeout.label')"
-                                                    :placeholder="$tc('blurElysiumSlider.cmsElement.config.sliderAutoplayTimeout.placeholder')"
-                                                    :step="null" 
-                                                    :min="3000" 
-                                                    :max="null" 
-                                                    :digits="null"
-                                                    :allowEmpty="false">
-                                                </sw-number-field>
-                                            {% endblock %}
-                                        </sw-container>
-                                    </sw-card>
-                                {% endblock %}
-
+                        {% block blur_cms_config_elysium_slider_settings %}
+                            <template v-if="active === 'settings'">
+                                <blur-elysium-slider-config-settings 
+                                    :config="element.config.settings.value" />
                             </template>
                         {% endblock %}
 
-                        {% block blur_cms_config_elysium_slider_styling %}
-                            <template v-if="active === 'styling'">
+                        {% block blur_cms_config_elysium_slider_sizing %}
+                            <template v-if="active === 'sizing'">
+                                <blur-elysium-slider-config-sizing 
+                                    :sizing="element.config.sizing.value" />
+                            </template>
+                        {% endblock %}
 
-                                {% block blur_cms_config_elysium_slider_card_arrow_styling %}
-                                    <sw-card 
-                                        :title="$tc('blurElysiumSlider.cmsElement.settings.arrowStylingTitle')" 
-                                        class="bc-card bc-card__static-title">
+                        {% block blur_cms_config_elysium_slider_navigation %}
+                            <template v-if="active === 'navigation'">
+                                <blur-elysium-slider-config-navigation
+                                    :config="element.config.navigation.value" />
+                            </template>
+                        {% endblock %}
 
-                                        <sw-container columns="1fr 1fr" gap="0 2rem">
-
-                                            {% block blur_cms_config_elysium_slider_arrow_color %}
-                                                <sw-colorpicker 
-                                                    v-model="element.config.sliderArrowColor.value"
-                                                    colorOutput="auto"
-                                                    :label="$tc('blurElysiumSlider.cmsElement.config.sliderArrowColor.label')"
-                                                    :alpha="true"
-                                                    :disabled="false"
-                                                    :colorLabels="true"
-                                                    zIndex="1010">
-                                                </sw-colorpicker>
-                                            {% endblock %}
-
-                                        </sw-container>
-
-                                    </sw-card>
-                                {% endblock %}
-
-                                {% block blur_cms_config_elysium_slider_card_navigation_styling %}
-                                    <sw-card 
-                                        :title="$tc('blurElysiumSlider.cmsElement.settings.navigationStylingTitle')" 
-                                        class="bc-card bc-card__static-title">
-
-                                        <sw-container columns="1fr 1fr" gap="0 2rem">
-
-                                            {% block blur_cms_config_elysium_slider_dot_color %}
-                                                <sw-colorpicker 
-                                                    v-model="element.config.sliderDotColor.value"
-                                                    colorOutput="auto"
-                                                    :label="$tc('blurElysiumSlider.cmsElement.config.sliderDotColor.label')"
-                                                    :alpha="true"
-                                                    :disabled="false"
-                                                    :colorLabels="true"
-                                                    zIndex="1010">
-                                                </sw-colorpicker>
-                                            {% endblock %}
-
-                                            {% block blur_cms_config_elysium_slider_dot_active_color %}
-                                                <sw-colorpicker 
-                                                    v-model="element.config.sliderDotActiveColor.value"
-                                                    colorOutput="auto"
-                                                    :label="$tc('blurElysiumSlider.cmsElement.config.sliderDotActiveColor.label')"
-                                                    :alpha="true"
-                                                    :disabled="false"
-                                                    :colorLabels="true"
-                                                    zIndex="1010">
-                                                </sw-colorpicker>
-                                            {% endblock %}
-
-                                        </sw-container>
-
-                                    </sw-card>
-                                {% endblock %}
-
+                        {% block blur_cms_config_elysium_slider_arrows %}
+                            <template v-if="active === 'arrows'">
+                                <blur-elysium-slider-config-arrows
+                                    :config="element.config.arrows.value" />
                             </template>
                         {% endblock %}
 

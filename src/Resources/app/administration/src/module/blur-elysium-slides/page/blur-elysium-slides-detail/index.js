@@ -1,6 +1,7 @@
 import template from './blur-elysium-slides-detail.twig';
 import './blur-elysium-slides-detail.scss';
 import slideStates from './state';
+import { slides } from "@elysiumSlider/utilities/identifiers";
 
 const { Component, Mixin } = Shopware;
 const { Criteria } = Shopware.Data;
@@ -65,6 +66,10 @@ Component.register( 'blur-elysium-slides-detail', {
 
         identifier() {
             return this.slideLabel;
+        },
+
+        positionIdentifiers() {
+            return slides
         },
 
         currentRoute() {

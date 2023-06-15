@@ -1,3 +1,18 @@
+# `1.5.0` 2023-06-15
+
+## Update Notes
+
+**Changes and extension of the shopping worlds slider element settings**  
+Besides bug fixes, this update relates to the settings of the shopping worlds slider element.  We have made an adjustment to the admin interface and added options.
+
+**Important note**
+These adjustments also result in changes to the data structure of the shopping worlds slider element. **[Please read our update notes](https://elysium-slider.blurcreative.de/documentation/update-notes#version-1-5-0)** for version 1.5.0 before updating the extension.
+
+## Changelog
+- Feature: It is now possible to assign a slider heading
+- Feature: New settings have been added for the shopping worlds slider element
+- Change: The interface of the configurationn of the shopping worlds slider element has been adjusted
+
 # `1.4.5` 2023-05-21
 
 ## Changelog

@@ -4,7 +4,7 @@ namespace Blur\BlurElysiumSlider\Bootstrap;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Uuid\Uuid;
@@ -14,13 +14,13 @@ class Lifecycle
     /** @var ContainerInterface */
     private $container;
 
-    /** @var EntityRepositoryInterface */
+    /** @var EntityRepository */
     private $mediaFolderRepositroy;
 
-    /** @var EntityRepositoryInterface */
+    /** @var EntityRepository */
     private $mediaDefaultFolderRepositroy;
 
-    /** @var EntityRepositoryInterface */
+    /** @var EntityRepository */
     private $mediaFolderConfigurationRepositroy;
 
     private const MEDIA_FOLDER_NAME = 'Elysium Slides';

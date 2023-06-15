@@ -1,5 +1,6 @@
 {% block blur_elysium_slides_content_container_card %}
     <sw-card
+        :position-identifier="positionIdentifiers.detail.display.content"
         :title="$tc('BlurElysiumSlides.appearance.contentGeneral.title')"
         :is-loading="isLoading"
         v-if="!isLoading && slide.slideSettings"

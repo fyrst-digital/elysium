@@ -1,10 +1,11 @@
 import template from './blur-elysium-slides-content-container-settings.twig';
+import { slides } from "@elysiumSlider/utilities/identifiers";
 
 const { Criteria } = Shopware.Data;
 const { Component, Context, Mixin } = Shopware;
 const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
 
-Component.register( 'blur-elysium-slides-content-container-settings', {
+export default {
     template,
 
     mixins: [
@@ -26,8 +27,12 @@ Component.register( 'blur-elysium-slides-content-container-settings', {
 
     computed: {
         
+        positionIdentifiers() {
+            return slides
+        },
+        
         ...mapState('blurElysiumSlidesDetail', [
             'slide'
         ]),
     }
-});
+}

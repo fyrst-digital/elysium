@@ -9,7 +9,7 @@ const propErrors = [
     'name'
 ];
 
-Component.register( 'blur-elysium-slide-selection', {
+export default {
     template,
 
     inject: [
@@ -158,4 +158,4 @@ Component.register( 'blur-elysium-slide-selection', {
             this.selectedSlides.splice(this.currentDragIndex, 0, event.dataTransfer.getData('startSlideId'))
         }
     }
-});
+};

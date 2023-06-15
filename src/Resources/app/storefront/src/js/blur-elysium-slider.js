@@ -1,42 +1,54 @@
-import BaseSliderPlugin from 'src/plugin/slider/base-slider.plugin';
-import { tns } from 'tiny-slider/src/tiny-slider.module';
+import deepmerge from 'deepmerge';
+import Plugin from 'src/plugin-system/plugin.class';
 import PluginManager from 'src/plugin-system/plugin.manager';
+import Splide from '@splide';
 
-export default class BlurElysiumSlider extends BaseSliderPlugin {
+export default class BlurElysiumSlider extends Plugin {
+
+    slider;
 
     /**
-     * initialize the slider
+     * default slider options
      *
-     * @private
+     * @type {*}
      */
-    _initSlider() {
-        this.el.classList.add(this.options.initializedCls);
+    static options = {
+        splideSelector: null,
+        splideOptions: {
+            classes: {
+                page: "splide__pagination__page blur-esldr__nav-bullet",
+            },
+            pagination: true,
+            omitEnd: true
+        }
+    };
 
-        let sliderInlineSettings = JSON.parse( this.el.dataset.sliderSettings );
-
-        const container = this.el.querySelector(this.options.containerSelector);
-        const controlsContainer = this.el.querySelector(this.options.controlsSelector);
-        const onInit = () => {
-            PluginManager.initializePlugins();
-
-            this.$emitter.publish('initSlider');
-        };
-
-        if (container) {
-            if (this._sliderSettings.enabled) {
-                container.style.display = '';
-                this._slider = tns({
-                    container,
-                    controlsContainer,
-                    onInit,
-                    ...this._sliderSettings,
-                    ...sliderInlineSettings
-                });
-            } else {
-                container.style.display = 'none';
-            }
+    init() {
+        let splideSelector = this.el
+        let inlineOptions = null
+    
+        if ( this.options.splideSelector !== null ) {
+            splideSelector = this.el.querySelector(this.options.splideSelector)
         }
 
-        this.$emitter.publish('afterInitSlider');
+        if (typeof this.el.dataset.blurElysiumSlider === "string" ) {
+            inlineOptions = JSON.parse( this.el.dataset.blurElysiumSlider )
+            this.options = deepmerge(this.options, inlineOptions)
+            console.dir(this.options)
+        }
+
+
+        // init slider with class property without mounting it
+        this.setSlider(new Splide( splideSelector, this.options.splideOptions))
+        // mount the slider
+        this.getSlider().mount()
+    }
+
+    setSlider(slider) {
+        this.slider = slider;
+    }
+
+    getSlider() {
+        return this.slider;
     }
 }
