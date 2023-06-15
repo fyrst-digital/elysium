@@ -5,7 +5,7 @@ const { Criteria } = Shopware.Data;
 const { Component, Context, Mixin } = Shopware;
 const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
 
-Component.register( 'blur-elysium-slide-select-item', {
+export default {
     template,
 
     inject: [
@@ -114,4 +114,4 @@ Component.register( 'blur-elysium-slide-select-item', {
             this.$emit('over-drag', this.selectedSlide, event, this.$refs.selectItem)
         }
     }
-});
+};

@@ -1,0 +1,75 @@
+{% block blur_elysium_slider_config_sizing %}
+    <div>
+
+        {% block blur_elysium_slider_config_sizing_viewport_selection %}
+            <sw-card 
+                :position-identifier="positionIdentifiers.viewportSelection"
+                :title="$tc('blurElysiumSlider.config.sizing.selectViewport.label')"
+                :hero="false" 
+                :large="false">
+
+                <sw-container 
+                    columns="1fr"
+                    gap="2rem"
+                    :style="{
+                        alignItems: 'flex-end'
+                    }">
+
+                    <sw-select-field 
+                        :placeholder="$tc('blurElysiumSlider.config.sizing.selectViewport.placeholder')"
+                        @change="selectViewport">
+                        <option 
+                            v-for="size in sizing"
+                            :key="size.position"
+                            :value="size.viewport">{{size.viewport}}</option>
+                    </sw-select-field>
+                </sw-container>
+            </sw-card>
+        {% endblock %}
+
+        {% block blur_elysium_slider_config_sizing_aspect_ratio %}
+            <sw-card 
+                :position-identifier="positionIdentifiers.aspectRatio"
+                :title="$tc('blurElysiumSlider.config.sizing.aspectRatio.label')"
+                :hero="false" 
+                :large="false">
+
+                    <sw-container v-if="selectedSize !== null"
+                        columns="2fr 1fr"
+                        gap="0 2rem">
+
+                        <sw-container 
+                            columns="1fr 1fr"
+                            gap="0"
+                            class="input-group">
+
+                            <sw-number-field 
+                                numberType="int"
+                                v-model="selectedSize.aspectRatio.width"
+                                :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')" />
+
+                            <sw-number-field 
+                                numberType="int"
+                                v-model="selectedSize.aspectRatio.height"
+                                :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')" />
+
+                        </sw-container>
+
+                        <sw-text-field 
+                            :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
+                            :placeholder="$tc('blurElysiumSlider.config.sizing.maxHeight.placeholder')"
+                            v-model="selectedSize.maxHeight"
+                            :copyable="false" 
+                            :copyableTooltip="false" />
+
+                    </sw-container>
+
+                    <div v-else
+                        :style="emptyViewportContainerStyle">
+                        <h4 style="margin-bottom:10px;font-weight:500;">{{ $tc('blurElysiumSlider.config.sizing.emptyViewport.title') }}</h4>
+                        {{ $tc('blurElysiumSlider.config.sizing.emptyViewport.description') }}
+                    </div>
+            </sw-card>
+        {% endblock %}
+    </div>
+{% endblock %}

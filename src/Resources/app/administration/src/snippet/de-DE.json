@@ -1,4 +1,129 @@
 {
+    "blurElysiumSlider": {
+        "general": {
+            "active": "Aktiv",
+            "appearance": "Erscheinungbild",
+            "small": "Klein",
+            "medium": "Medium",
+            "large": "Groß",
+            "color": "Farbe",
+            "colorActive": "Farbe (Aktiv)",
+            "iconColor": "Icon-Farbe",
+            "iconColorActive": "Icon-Farbe (Aktiv)",
+            "bgColor": "Hintergrund-Farbe",
+            "bgColorActive": "Hintergrund-Farbe (Aktiv)"
+        },
+        "config": {
+            "content": "Inhalt",
+            "settings": "Einstellungen",
+            "styling": "Styling",
+            "rewind": "Slides zurückspulen",
+            "overlay": "Zeige Overlay",
+            "speed": {
+                "label": "Slide-Geschwindigkeit",
+                "placeholder": "Zeit in Millisekunden"
+            },
+            "autoplay": {
+                "label": "Auto-Wiedergabe",
+                "active": "Auto-Wiedergabe aktivieren",
+                "interval":{ 
+                    "label": "Auto-Wiedergabe Intervall",
+                    "placeholder": "Zeit in Millisekunden"
+                },
+                "pauseOnHover": "Pausiere Auto-Wiedergabe bei Hover"
+            },
+            "sizing":  {
+                "label": "Größen",
+                "selectViewport": {
+                    "label": "Bildschirm-Größe",
+                    "placeholder": "Größe auswählen"
+                },
+                "aspectRatio": {
+                    "label": "Seitenverhältnis",
+                    "width": "Breite",
+                    "height": "Höhe"
+                },
+                "maxHeight": {
+                    "label": "Maximale Höhe",
+                    "placeholder": "px oder rem Wert"
+                },
+                "emptyViewport": {
+                    "title": "Bildschirm-Größe wählen",
+                    "description": "Bitte wähle zuerst eine Bildschirm-Größe aus"
+                }
+            },
+            "navigation": {
+                "label": "Navigation",
+                "active": "Zeige Slider Navigation",
+                "position": {
+                    "label": "Position",
+                    "belowSlider": "Unterhalb des Slider",
+                    "inSlider": "Innerhalb des Slider"
+                },
+                "align": {
+                    "label": "Ausrichtung",
+                    "left": "Links",
+                    "center": "Zentriert",
+                    "right": "Rechts"
+                },
+                "size": {
+                    "label": "Größe"
+                },
+                "shape": {
+                    "label": "Form",
+                    "circle": "Punkt",
+                    "bar": "Balken"
+                },
+                "navPadding": {
+                    "label": "Abstand"
+                }
+            },
+            "arrows": {
+                "label": "Pfeile",
+                "active": "Zeige Slider Pfeile",
+                "size": {
+                    "label": "Icon Größe"
+                }
+            }
+        },
+        "cmsElement": {
+            "label": "Elysium Slider",
+            "config": {
+                "slidesSelect": {
+                    "label": "Elysium Slides",
+                    "placeholder": "Wähle deine Slides"
+                },
+                "aspectRatio": {
+                    "landscape": {
+                        "label": "Landscape (Standard)"
+                    },
+                    "portrait": {
+                        "label": "Portrait"
+                    },
+                    "width": {
+                        "placeholder": "Breite"
+                    },
+                    "height": {
+                        "placeholder": "Höhe"
+                    }
+                }
+            },
+            "settings": {
+                "slideCollectionTitle": "Slide-Auswahl",
+                "aspectRatioTitle": "Seitenverhältnis",
+                "autoplayTitle": "Auto-Wiedergabe",
+                "arrowStylingTitle": "Slider-Pfeile",
+                "navigationStylingTitle": "Slider-Navigation"
+            },
+            "component": {
+                "preview": {
+                    "defaultTitleValue": "Elysium Slider",
+                    "defaultDescriptionValue": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacinia, erat ut tempus vehicula, nisi leo aliquam orci, non varius erat urna at diam. Sed hendrerit tincidunt nisl non convallis. Suspendisse congue sed neque id viverra.",
+                    "defaultButtonLabelValue": "Mehr erfahren"
+                }
+            }
+        }
+    },
     "blurElysiumSlides": {
         "messages": {
             "noChanges": "Keine Änderungen"

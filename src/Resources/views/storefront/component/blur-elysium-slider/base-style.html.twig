@@ -1,0 +1,15 @@
+{% apply spaceless %}
+    <style>
+        {% for aspectRatio in aspectRatios %}
+            @media screen and (min-width: {{ theme_config('breakpoint.' ~ aspectRatio.viewport) ~ 'px'}}) {
+                #elysiumSlider-{{ elementId }} .cms-element-elysium-slide {
+                    aspect-ratio: {{aspectRatio.aspectRatio.width}} / {{aspectRatio.aspectRatio.height}};
+                    {% if aspectRatio.maxHeight is not empty %}
+                        max-height: {{ aspectRatio.maxHeight }};
+                    {% endif %}
+                }                        
+            }
+        {% endfor %}      
+        {% block cms_element_blur_elysium_slider_css_styles_extend %}{% endblock %}
+    </style>
+{% endapply %}

@@ -78,7 +78,11 @@
             {% endblock %}
 
             {% block blur_elysium_slides_detail_view_tabs %}
-                <sw-tabs :small="false" default-item="content" class="blur-elysium-slider__detail-tabs">
+                <sw-tabs 
+                    :position-identifier="positionIdentifiers.detail.tabs"
+                    :small="false" 
+                    default-item="content" 
+                    class="blur-elysium-slider__detail-tabs">
 
                     {% block blur_elysium_slides_detail_view_tab_navigation %}
                         <template slot-scope="{ active }">
@@ -138,9 +142,11 @@
 
 
                                     {% block blur_elysium_slides_detail_view_card_custom_fields %}
-                                        <sw-card :title="$tc('BlurElysiumSlides.customFields.cardTitle')"
-                                                v-if="customFieldSets !== undefined"
-                                                :isLoading="isLoading">
+                                        <sw-card 
+                                            :position-identifier="positionIdentifiers.detail.customFields"
+                                            :title="$tc('BlurElysiumSlides.customFields.cardTitle')"
+                                            v-if="customFieldSets !== undefined"
+                                            :isLoading="isLoading">
 
                                             <template v-if="currentRoute == detailRoute">
 
@@ -188,6 +194,7 @@
                                 <template v-if="active === 'advanced'">
 
                                     <sw-card 
+                                        :position-identifier="positionIdentifiers.detail.customTemplate"
                                         :title="$tc('blurElysiumSlides.slideSettings.customTemplate.cardTitle')"
                                         v-if="!isLoading && slide.slideSettings"
                                         :isLoading="isLoading">

@@ -1,0 +1,63 @@
+{% block component_blur_elysium_slider_arrows %}
+
+    {% set arrowClasses = [
+        'btn',
+        'position-absolute',
+        'z-3',
+        'translate-middle-y',
+        'top-50',
+        'border-0',
+        'blur-esldr__arrow-btn',
+        'arrow-size__' ~ config.size
+    ] %}
+
+    {% set iconPrev = config.icon.default ~ '-left' %}
+    {% set iconNext = config.icon.default ~ '-right' %}
+
+    {% if (config.colors.default or config.colors.active) or (config.bgColors.default or config.bgColors.active) is not empty %}
+        <style>
+            #elysiumSlider-{{ elementId }} .blur-esldr__arrow-btn {
+                {% if config.colors.default %}--blur-esldr-arrows-color: {{config.colors.default}};{% endif %}
+                {% if config.bgColors.default %}--blur-esldr-arrows-bg-color: {{config.bgColors.default}};{% endif %}
+                {% if config.colors.active %}--blur-esldr-arrows-color-active: {{config.colors.active}};{% endif %}
+                {% if config.bgColors.active %}--blur-esldr-arrows-bg-color-active: {{config.bgColors.active}};{% endif %}
+            }
+        </style>
+    {% endif %}
+
+    {% if config.active %}
+        <div class="blur-elysium-slider__controls splide__arrows"
+            data-blur-elysium-slider-controls>
+
+            {% block cms_element_blur_elysium_slider_controls_prev %}
+                <button 
+                    type="button"
+                    aria-label="{{ 'blurElysiumSlides.sliderControls.prev' | trans }}"
+                    class="{% block component_blur_elysium_slider_arrow_button_classes %}{{ arrowClasses|join(' ') }}{% endblock %} splide__arrow splide__arrow--prev">
+                    
+                    {% block cms_element_blur_elysium_slider_controls_prev_icon %}
+                        {% sw_include '@Storefront/storefront/utilities/icon.html.twig' with {
+                            name: iconPrev
+                        } %}
+                    {% endblock %}
+                </button>
+            {% endblock %}
+
+            {% block cms_element_blur_elysium_slider_controls_next %}
+                <button 
+                    type="button"
+                    aria-label="{{ 'blurElysiumSlides.sliderControls.next' | trans }}"
+                    class="{{ block('component_blur_elysium_slider_arrow_button_classes') }} splide__arrow splide__arrow--next">
+
+                    {% block cms_element_blur_elysium_slider_controls_next_icon %}
+                        {% sw_include '@Storefront/storefront/utilities/icon.html.twig' with {
+                            name: iconNext
+                        } %}
+                    {% endblock %}
+                </button>
+            {% endblock %}
+
+        </div>
+    {% endif %}
+
+{% endblock %}

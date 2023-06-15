@@ -1,5 +1,6 @@
 {% block blur_elysium_slides_content_container_card %}
     <sw-card
+        :position-identifier="positionIdentifiers.detail.display.container"
         :title="$tc('BlurElysiumSlides.settings.container.title')"
         :is-loading="isLoading"
         v-if="!isLoading && slide.slideSettings"
@@ -62,15 +63,16 @@
                         {% block blur_elysium_slides_setting_container_box_mode %}
                             <sw-switch-field 
                                 :label="$tc('BlurElysiumSlides.settings.container.boxMode.inputLabel')" 
-                                v-model="slide.slideSettings.containerBoxMode"
-                                class="bc__my-0">
+                                :style="{
+                                    margin: 0
+                                }"
+                                v-model="slide.slideSettings.containerBoxMode">
                             </sw-switch-field>
                         {% endblock %}
 
                         {% block blur_elysium_slides_setting_content_container_horizontal_align %}
                             <sw-select-field 
                                 v-model="slide.slideSettings.containerHorizontalAlign"
-                                class="bc__my-0"
                                 :placeholder="placeholder(slide, 'slideSettings.containerHorizontalAlign', this.$tc('BlurElysiumSlides.settings.container.horizontalAlign.placeholder') )"
                                 :value="slide.slideSettings.containerHorizontalAlign">
                                 <option value="left">{{ $tc('BlurElysiumSlides.settings.container.horizontalAlign.options.left') }}</option>

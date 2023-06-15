@@ -1,3 +1,18 @@
+# `1.5.0` 2023-06-15
+
+## Update Notes
+
+**Änderung und Erweiterung der Erlebniswelten Slider Einstellungen**  
+Neben Fehlerbehebungen bezieht sich dieses Update auf die Einstellungen des Erlebniswelten Elements. Wir haben eine Anpassung der Admin-Oberfläche vorgenommen und Optionen hinzugefügt. 
+
+**Wichtiger Hinweis**
+Durch diese Anpassungen ergeben sich auch Änderungen an der Datenstruktur des Erlebniswelten Elements. **[Bitte lies unsere Update-Hinweise](https://elysium-slider.blurcreative.de/de/documentation/update-notes#version-1-5-0)** zur Version 1.5.0, bevor du die Erweiterung aktualisierst.
+
+## Changelog
+- Feature: Es ist nun möglich eine Slider Überschrift zu vergeben
+- Feature: Für das Erlebniswelt Slider-Element wurden neue Einstellungen hinzugefügt
+- Änderung: Die Oberfläche der Konfigurationn des Erlebniswelt Slider-Elements wurde angepasst
+
 # `1.4.5` 2023-05-21
 
 ## Changelog

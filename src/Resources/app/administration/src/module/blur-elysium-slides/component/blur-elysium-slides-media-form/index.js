@@ -1,4 +1,5 @@
 import template from './blur-elysium-slides-media-form.twig';
+import { slides } from "@elysiumSlider/utilities/identifiers";
 
 const { Criteria } = Shopware.Data;
 const { Component, Context, Mixin } = Shopware;
@@ -8,7 +9,7 @@ const propErrors = [
     'name'
 ];
 
-Component.register( 'blur-elysium-slides-media-form', {
+export default {
     template,
 
     inject: [
@@ -49,6 +50,9 @@ Component.register( 'blur-elysium-slides-media-form', {
         
         ...mapPropertyErrors( 'blurElysiumSlides' , propErrors),
 
+        positionIdentifiers() {
+            return slides
+        },
 
         mediaRepository() {
             return this.repositoryFactory.create('media');
@@ -110,4 +114,4 @@ Component.register( 'blur-elysium-slides-media-form', {
             this.coverType = value
         }
     }
-});
+}

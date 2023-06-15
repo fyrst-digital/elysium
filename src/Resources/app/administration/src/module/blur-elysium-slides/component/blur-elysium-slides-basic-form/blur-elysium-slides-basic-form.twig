@@ -1,6 +1,7 @@
 <div>
     {% block blur_elysium_slides_detail_view_card_content_form %}
         <sw-card
+            :position-identifier="positionIdentifiers.detail.base.general"
             :title="$tc('BlurElysiumSlides.baseForm.generalCardTitle')"
             :is-loading="isLoading"
         >
@@ -97,6 +98,7 @@
 
     {% block blur_elysium_slides_detail_view_card_linking_form %}
         <sw-card
+            :position-identifier="positionIdentifiers.detail.base.linking"
             :title="$tc('BlurElysiumSlides.baseForm.linkingCardTitle')"
             :is-loading="isLoading"
         >

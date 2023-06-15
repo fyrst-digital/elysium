@@ -1,0 +1,131 @@
+{% block blur_elysium_slider_config_navigation %}
+    <div>
+
+        {% block blur_elysium_slider_config_navigation_general %}
+            <sw-card 
+                :position-identifier="positionIdentifiers.navigationGeneral"
+                :hero="false" 
+                :large="false">
+
+                <sw-container 
+                    columns="1fr"
+                    gap="2rem">
+
+                    {% block blur_elysium_slider_config_navigation_active %}
+                        <sw-switch-field 
+                            style="margin: 0;"
+                            v-model="config.active" 
+                            :label="$tc('blurElysiumSlider.config.navigation.active')" />
+                    {% endblock %}
+                
+                    <sw-container 
+                        columns="1fr 1fr 1fr"
+                        gap="0 2rem"
+                        :breakpoints="containerBreakpoints['3col']">
+
+                        {% block blur_elysium_slider_config_navigation_position %}
+                            <sw-select-field 
+                                :label="$tc('blurElysiumSlider.config.navigation.position.label')"
+                                v-model="config.position">
+                                <option 
+                                    v-for="position in positions" 
+                                    :key="position.value" 
+                                    :value="position.value">{{position.label}}</option>
+                            </sw-select-field>
+                        {% endblock %}
+
+                        {% block blur_elysium_slider_config_navigation_align %}
+                            <sw-select-field 
+                                :label="$tc('blurElysiumSlider.config.navigation.align.label')"
+                                v-model="config.align">
+                                <option 
+                                    v-for="align in aligns" 
+                                    :key="align.value" 
+                                    :value="align.value">{{align.label}}</option>
+                            </sw-select-field>
+                        {% endblock %}
+                    </sw-container>
+
+                </sw-container>
+            </sw-card>
+        {% endblock %}
+
+        {% block blur_elysium_slider_config_navigation_appearance %}
+            <sw-card 
+                :position-identifier="positionIdentifiers.navigationAppearance"
+                :title="$tc('blurElysiumSlider.general.appearance')"
+                :hero="false" 
+                :large="false">
+
+                <sw-container 
+                    columns="1fr 1fr 1fr"
+                    gap="0 2rem"
+                    :breakpoints="containerBreakpoints['3col']">
+
+                    {% block blur_elysium_slider_config_navigation_shape %}
+                        <sw-select-field 
+                            :label="$tc('blurElysiumSlider.config.navigation.shape.label')"
+                            v-model="config.shape">
+                            <option 
+                                v-for="shape in shapes" 
+                                :key="shape.value" 
+                                :value="shape.value">{{shape.label}}</option>
+                        </sw-select-field>
+                    {% endblock %}
+
+                    {% block blur_elysium_slider_config_navigation_sizes %}
+                        <sw-select-field 
+                            :label="$tc('blurElysiumSlider.config.navigation.size.label')"
+                            v-model="config.size">
+                            <option 
+                                v-for="size in sizes" 
+                                :key="size.value" 
+                                :value="size.value">{{size.label}}</option>
+                        </sw-select-field>
+                    {% endblock %}
+
+                    {% block blur_elysium_slider_config_navigation_navpadding %}
+                        <sw-select-field 
+                            :label="$tc('blurElysiumSlider.config.navigation.navPadding.label')"
+                            v-model="config.navPadding">
+                            <option 
+                                v-for="navPadding in navPaddings" 
+                                :key="navPadding.value" 
+                                :value="navPadding.value">{{navPadding.label}}</option>
+                        </sw-select-field>
+                    {% endblock %}
+
+                    {% block blur_elysium_slider_config_navigation_color %}
+                        <div style="position:relative;">
+                            <sw-colorpicker
+                                :label="$tc('blurElysiumSlider.general.color')"
+                                v-model="config.colors.default"
+                                colorOutput="auto"
+                                :alpha="true"
+                                :disabled="false"
+                                :colorLabels="true"
+                                :zIndex="1010">
+                            </sw-colorpicker>
+                        </div>
+                    {% endblock %}
+
+                    {% block blur_elysium_slider_config_navigation_color_active %}
+                        <div style="position:relative;">
+                            <sw-colorpicker
+                                :label="$tc('blurElysiumSlider.general.colorActive')"
+                                v-model="config.colors.active"
+                                colorOutput="auto"
+                                :alpha="true"
+                                :disabled="false"
+                                :colorLabels="true"
+                                :zIndex="1010">
+                            </sw-colorpicker>
+                        </div>
+                    {% endblock %}
+
+                </sw-container>
+
+            </sw-card>
+        {% endblock %}
+    </div>
+{% endblock %}

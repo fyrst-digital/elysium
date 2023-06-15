@@ -1,0 +1,44 @@
+.blur-esldr__nav-bullet{
+    --blur-esldr-nav-color:                rgba(0,0,0,0.25);
+    --blur-esldr-nav-color-active:         rgba(0,0,0,0.5);
+    aspect-ratio: #{'1 / 1'};
+    width: #{ 'clamp(.75rem, 2vw, 1.25rem)' };
+    padding: 0;
+    margin: 0;
+    border-radius: 10rem;
+    border: 0 none;
+    cursor: pointer;
+    transition: all .3s;
+
+    .blur-esldr__nav.bullet-size__sm & {
+        width: #{ 'clamp(.75rem, 2vw, 1rem)' };
+    }
+
+    .blur-esldr__nav.bullet-size__lg & {
+        width: #{ 'clamp(1rem, 2vw, 1.5rem)' };
+    }
+
+    .blur-esldr__nav.bullet-shape__bar & {
+        aspect-ratio: #{'5 / 1'};
+        width: #{ 'clamp(1rem, 4vw, 2rem)' };
+    }
+
+    .blur-esldr__nav.bullet-shape__bar.bullet-size__lg & {
+        width: #{ 'clamp(1.5rem, 4vw, 3rem)' };
+    }
+}
+
+.blur-esldr__nav{
+    
+    &.padding-sm {
+        padding: #{"min(max( .5rem, 3vw), 1rem)"} !important;
+    }
+    
+    &.padding-md {
+        padding: #{"min(max( 1rem, 3vw), 2rem)"} !important;
+    }
+    
+    &.padding-lg {
+        padding: #{"min(max( 1.5rem, 3vw), 3.5rem)"} !important;
+    }
+}

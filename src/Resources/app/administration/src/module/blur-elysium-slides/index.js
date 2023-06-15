@@ -1,13 +1,13 @@
-import './component/blur-elysium-slides-basic-form'; 
-import './component/blur-elysium-slides-media-form'; 
-import './component/blur-elysium-slides-content-general-appearance';
-import './component/blur-elysium-slides-content-container-settings'; 
-import './page/blur-elysium-slides-list'; // List page component
-// import './page/blur-elysium-slides-create'; // Create page component
-import './page/blur-elysium-slides-detail'; // Detail page component
+import '@elysiumSlider/module/page/blur-elysium-slides-list'; // List page component
+import '@elysiumSlider/module/page/blur-elysium-slides-detail'; // Detail page component
 import './acl'; // ACL Privilages
 
 const { Application } = Shopware;
+
+Shopware.Component.register('blur-elysium-slides-basic-form', () => import('@elysiumSlider/module/component/blur-elysium-slides-basic-form'));
+Shopware.Component.register('blur-elysium-slides-media-form', () => import('@elysiumSlider/module/component/blur-elysium-slides-media-form'));
+Shopware.Component.register('blur-elysium-slides-content-general-appearance', () => import('@elysiumSlider/module/component/blur-elysium-slides-content-general-appearance'));
+Shopware.Component.register('blur-elysium-slides-content-container-settings', () => import('@elysiumSlider/module/component/blur-elysium-slides-content-container-settings'));
 
 /**
  * Add Entity `blur_elysium_slides` to search types
@@ -31,7 +31,7 @@ Shopware.Module.register( 'blur-elysium-slides', {
     title: 'BlurElysiumSlides.entityLabel',
     description: 'BlurElysiumSlides.description',
     color: '#e868a1',
-    icon: 'default-action-quickjump',
+    icon: 'regular-sidebar',
     favicon: 'icon-module-content.png',
     entity: 'blur_elysium_slides',
 
