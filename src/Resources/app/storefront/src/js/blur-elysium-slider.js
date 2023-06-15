@@ -1,7 +1,7 @@
 import deepmerge from 'deepmerge';
 import Plugin from 'src/plugin-system/plugin.class';
-import PluginManager from 'src/plugin-system/plugin.manager';
-import Splide from '@splide';
+//import Splide from '@splide/dist/js/splide.min.js';
+import Splide from './../../node_modules/@splidejs/splide/dist/js/splide.min.js';
 
 export default class BlurElysiumSlider extends Plugin {
 
@@ -34,7 +34,6 @@ export default class BlurElysiumSlider extends Plugin {
         if (typeof this.el.dataset.blurElysiumSlider === "string" ) {
             inlineOptions = JSON.parse( this.el.dataset.blurElysiumSlider )
             this.options = deepmerge(this.options, inlineOptions)
-            console.dir(this.options)
         }
 
 
