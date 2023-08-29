@@ -66,6 +66,7 @@
     .flex-wrap,
     .flex-column,
     .align-items-start;
+    word-break: break-word;
     flex: 0 1 auto;
     height: auto;
     z-index: var(--bc-esld-zindex-container);
