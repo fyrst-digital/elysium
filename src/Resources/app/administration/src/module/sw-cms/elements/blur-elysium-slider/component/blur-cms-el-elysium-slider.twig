@@ -12,15 +12,13 @@
                         <div class="blur-cms-el-elysium-slider__slider-preview__container">
 
                             {% block blur_cms_element_elysium_slider_preview_empty_title %}
-                                <div class="blur-cms-el-elysium-slider__slider-preview__title">
-                                    {{ getPreview( 'title', 'blurElysiumSlider.cmsElement.component.preview.defaultTitleValue' ) }}
-                                </div>
+                                <div class="blur-cms-el-elysium-slider__slider-preview__title"
+                                    v-html="getPreview( 'title', 'blurElysiumSlider.cmsElement.component.preview.defaultTitleValue' )" />
                             {% endblock %}
 
                             {% block blur_cms_element_elysium_slider_preview_empty_description %}
-                                <div class="blur-cms-el-elysium-slider__slider-preview__description">
-                                    {{ getPreview( 'description', 'blurElysiumSlider.cmsElement.component.preview.defaultDescriptionValue' ) }}
-                                </div>
+                                <div class="blur-cms-el-elysium-slider__slider-preview__description"
+                                    v-html="getPreview( 'description', 'blurElysiumSlider.cmsElement.component.preview.defaultDescriptionValue' )" />
                             {% endblock %}
 
                             {% block blur_cms_element_elysium_slider_preview_empty_actions %}
