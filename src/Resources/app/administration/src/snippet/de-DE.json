@@ -53,6 +53,17 @@
                     "description": "Bitte wähle zuerst eine Bildschirm-Größe aus"
                 }
             },
+            "spacing": {
+                "label": "Abstände",
+                "paddingY": {
+                    "label": "Slider-Innenabstand (Vertikal)",
+                    "placeholder": "px oder rem Wert"
+                },
+                "paddingX": {
+                    "label": "Slider-Innenabstand (Horizontal)",
+                    "placeholder": "px oder rem Wert"
+                }
+            },
             "navigation": {
                 "label": "Navigation",
                 "active": "Zeige Slider Navigation",
