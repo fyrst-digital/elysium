@@ -28,7 +28,7 @@
                             v-if="slide.slideSettings"
                             v-model="slide.slideSettings.containerBgColor"
                             class="bc-colorpicker bc__my-0"
-                            :label="$tc('BlurElysiumSlides.settings.container.bgColor.label')"
+                            :label="$tc('blurElysiumSlider.general.bgColor')"
                             colorOutput="auto"
                             :alpha="true"
                             :colorLabels="true"
@@ -41,7 +41,7 @@
                             type="text"
                             class="bc__my-0"
                             v-model="slide.slideSettings.containerPadding" 
-                            :label="$tc('BlurElysiumSlides.settings.container.padding.label')"
+                            :label="$tc('blurElysiumSlider.general.padding')"
                             :placeholder="placeholder(slide, 'slideSettings.containerPadding', this.$tc('BlurElysiumSlides.settings.container.padding.placeholder') )"
                             />
                     {% endblock %}

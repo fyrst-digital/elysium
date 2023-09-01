@@ -11,7 +11,8 @@
             "iconColor": "Icon Color",
             "iconColorActive": "Icon Color (Active)",
             "bgColor": "Background Color",
-            "bgColorActive": "Background Color (Active)"
+            "bgColorActive": "Background Color (Active)",
+            "padding": "Padding"
         },
         "config": {
             "content": "Content",

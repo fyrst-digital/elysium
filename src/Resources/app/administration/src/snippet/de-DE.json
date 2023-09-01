@@ -11,7 +11,8 @@
             "iconColor": "Icon-Farbe",
             "iconColorActive": "Icon-Farbe (Aktiv)",
             "bgColor": "Hintergrund-Farbe",
-            "bgColorActive": "Hintergrund-Farbe (Aktiv)"
+            "bgColorActive": "Hintergrund-Farbe (Aktiv)",
+            "padding": "Innenabstand"
         },
         "config": {
             "content": "Inhalt",
