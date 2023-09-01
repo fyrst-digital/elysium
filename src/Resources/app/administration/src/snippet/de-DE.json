@@ -81,6 +81,11 @@
             "arrows": {
                 "label": "Pfeile",
                 "active": "Zeige Slider Pfeile",
+                "icons": {
+                    "label": "Icon",
+                    "arrow": "Pfeil",
+                    "chevron": "Chevron"
+                },
                 "size": {
                     "label": "Icon Größe"
                 }
