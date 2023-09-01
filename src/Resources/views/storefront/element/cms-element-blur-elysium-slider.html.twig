@@ -22,7 +22,7 @@
     {% set sliderAutoplay = element.translated.config.settings.value.autoplay %}
     {% set sliderNavigation = element.translated.config.navigation.value %}
     {% set sliderArrows = element.translated.config.arrows.value %}
-    {% set sliderAspectRatios = element.translated.config.sizing.value %}
+    {% set sliderSizing = element.translated.config.sizing.value %}
 
     {% set sliderOptions = {
         splideOptions: {
@@ -39,7 +39,7 @@
     {% block cms_element_blur_elysium_slider_css_styles %}
 
         {% sw_include '@Storefront/storefront/component/blur-elysium-slider/base-style.html.twig' with {
-            aspectRatios: sliderAspectRatios,
+            sizes: sliderSizing,
             elementId: element.id
         } only %}
     {% endblock %}

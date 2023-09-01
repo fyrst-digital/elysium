@@ -69,6 +69,11 @@ Shopware.Service('cmsService').registerCmsElement({
                 position: "in_slider"
             }
         },
+        /**
+         * @todo next-1.6.0
+         * add dynamic sizing
+         */
+        // dynamicSizing: {}
         sizing: {
             source: 'static',
             value: [
@@ -79,6 +84,10 @@ Shopware.Service('cmsService').registerCmsElement({
                         width: 4,
                         height: 3,
                     },
+                    slidePadding: {
+                        x: "1rem", 
+                        y: "1.5rem"
+                    },
                     maxHeight: null
                 },
                 {
@@ -87,6 +96,10 @@ Shopware.Service('cmsService').registerCmsElement({
                     aspectRatio: {
                         width: 5,
                         height: 3,
+                    },
+                    slidePadding: {
+                        x: "1rem", 
+                        y: "1.5rem"
                     },
                     maxHeight: null
                 },
@@ -97,6 +110,10 @@ Shopware.Service('cmsService').registerCmsElement({
                         width: 5,
                         height: 3,
                     },
+                    slidePadding: {
+                        x: "2rem", 
+                        y: "3rem"
+                    },
                     maxHeight: null
                 },
                 {
@@ -105,6 +122,10 @@ Shopware.Service('cmsService').registerCmsElement({
                     aspectRatio: {
                         width: 2,
                         height: 1,
+                    },
+                    slidePadding: {
+                        x: "2rem", 
+                        y: "3rem"
                     },
                     maxHeight: null
                 },
@@ -115,6 +136,10 @@ Shopware.Service('cmsService').registerCmsElement({
                         width: 12,
                         height: 5,
                     },
+                    slidePadding: {
+                        x: "4rem", 
+                        y: "6rem"
+                    },
                     maxHeight: null
                 },
                 {
@@ -123,6 +148,10 @@ Shopware.Service('cmsService').registerCmsElement({
                     aspectRatio: {
                         width: 16,
                         height: 7,
+                    },
+                    slidePadding: {
+                        x: "4rem", 
+                        y: "6rem"
                     },
                     maxHeight: null
                 }

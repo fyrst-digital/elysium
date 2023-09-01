@@ -42,15 +42,29 @@
                     "label": "Viewport Size",
                     "placeholder": "Select viewport"
                 },
-                "width": "Breite",
-                "height": "Höhe",
+                "aspectRatio": {
+                    "label": "Aspect ratio",
+                    "width": "Width",
+                    "height": "Height"
+                },
                 "maxHeight": {
-                    "label": "Maximale Höhe",
-                    "placeholder": "px oder rem Werte"
+                    "label": "Maximum height",
+                    "placeholder": "px or rem value"
                 },
                 "emptyViewport": {
                     "title": "Select viewport",
                     "description": "Please choose a viewport size first"
+                }
+            },
+            "spacing": {
+                "label": "Spacing",
+                "paddingY": {
+                    "label": "Slider padding (vertical)",
+                    "placeholder": "px or rem value"
+                },
+                "paddingX": {
+                    "label": "Slider padding (horizontal)",
+                    "placeholder": "px or rem value"
                 }
             },
             "navigation": {
