@@ -19,7 +19,7 @@
                         <div class="blur-es-list-item__slide-content">
                             <div>
                                 <div class="blur-es-list-item__slide-headline">
-                                    {{slideData.title}}
+                                    {{slideData.title.replace(/<\/?[^>]+>/ig, " ")}}
                                 </div>
                             </div>
                         </div>
