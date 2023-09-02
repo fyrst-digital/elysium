@@ -22,6 +22,7 @@
     --aspect-ratio-w: 4;
     --aspect-ratio-h: 3;
     --max-height: none;
+    --text-color: #ffffff;
     @extend .d-flex,
     .flex-wrap;
     position: relative;
@@ -38,7 +39,7 @@
         size: cover;
         repeat: no-repeat;
     }
-    color: var(--bc-esld-text-color);
+    color: var(--text-color);
 	max-width: 100%;
     align-items: center;
 
@@ -71,7 +72,8 @@
 
     &:before {
 
-        .cms-element-elysium-slider.has-overlay & {        
+        .cms-element-elysium-slider.has-overlay & {    
+            --z-index: 5;    
             content: '';
             position: absolute;
             top: 0;
@@ -79,7 +81,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.2);
-            z-index: var(--bc-esld-zindex-overlay);
+            z-index: var(--z-index);
         }
     }  
 
@@ -105,6 +107,7 @@
 }
 
 .cms-element-elysium-slide__container {
+    --z-index: 10;
     @extend .d-flex,
     .flex-wrap,
     .flex-column,
@@ -112,7 +115,7 @@
     word-break: break-word;
     flex: 0 1 auto;
     height: auto;
-    z-index: var(--bc-esld-zindex-container);
+    z-index: var(--z-index);
 
     &.content__x-left {
         @extend .align-items-start;
@@ -129,21 +132,32 @@
 }
 
 .cms-element-elysium-slide__title {
-    margin-bottom: var(--bc-esld-title-mb);
-    font-size: #{"clamp( var(--bc-esld-headline-font-size-min), var(--bc-esld-headline-font-size-scale), var(--bc-esld-headline-font-size-max))"};
+    --font-size-min: 1.5rem;
+    --font-size-max: 3rem;
+    --font-size-scale: 4vw;
+    --margin-b: 1rem;
+    margin-bottom: var(--margin-b);
+    font-size: #{"clamp( var(--font-size-min), var(--font-size-scale), var(--font-size-max))"};
     line-height: 1.5;
     color: inherit;
 }
 
 .cms-element-elysium-slide__description {
-    margin-bottom: var(--bc-esld-description-mb);
-    font-size: #{"clamp( var(--bc-esld-description-font-size-min), var(--bc-esld-description-font-size-scale), var(--bc-esld-description-font-size-max))"};
+    --font-size-min: 1rem;
+    --font-size-max: 1.5rem;
+    --font-size-scale: 2vw;
+    --margin-b: 1rem;
+    margin-bottom: var(--margin-b);
+    font-size: #{"clamp( var(--font-size-min), var(--font-size-scale), var(--font-size-max))"};
 }
 
 .cms-element-elysium-slide__cta-button {
+    --font-size-min: 1rem;
+    --font-size-max: 1.25rem;
+    --font-size-scale: 2vw;
     line-height: 1.5;
     padding: clamp(.5rem, 2vw, 1rem) clamp(1.5rem, 3vw, 3rem);
-    font-size: #{"clamp( var(--bc-esld-button-font-size-min), var(--bc-esld-button-font-size-scale), var(--bc-esld-button-font-size-max))"};   
+    font-size: #{"clamp( var(--font-size-min), var(--font-size-scale), var(--font-size-max))"};
 }
 
 .cms-element-elysium-slide__actions {
@@ -151,10 +165,11 @@
 }
 
 .cms-element-elysium-slide__url-overlay {
+    --z-index: 15;
 	display: block;
 	position: absolute;
 	top: 0;
-	z-index: var(--bc-esld-zindex-url-overlay);
+	z-index: var(--z-index);
 	left: 0;
 	bottom: 0;
 	right: 0;
