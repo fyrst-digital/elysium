@@ -2,8 +2,8 @@
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: minmax(0, 1fr) auto;
-    border: 1px solid transparent;
-    background-color: #b59baf;
+    border: 2px solid #ffffff;
+    background-color: #ffffff;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -17,6 +17,10 @@
     &:hover {
         border-color: #189eff;
         box-shadow: 0 0 4px #b1deff;
+    }
+
+    &.is-dragged {
+        display: none;
     }
 }
 
@@ -82,4 +86,21 @@
     background-color: #ffffff;
     border-color: #dddddd;
     border-radius: 10rem;
+}
+
+.blur-es-list-item__slide-labels {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .5rem;
+}
+
+.blur-es-list-item__drag-bullet {
+    display: flex;
+    background-color: white;
+    line-height: 1;
+    border-radius: 10rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 5px 8px;
+    cursor: pointer;
 }
