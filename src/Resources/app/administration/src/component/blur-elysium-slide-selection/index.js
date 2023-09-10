@@ -27,7 +27,10 @@ export default {
             searchTerm: '',
             searchFocus: false,
             elysiumSlides: [],
-            currentDragIndex: null
+            currentDragIndex: null,
+            draggedSlideId: null,
+            draggedSlideElement: null,
+            placeholderElement: null
         };
     },
 
@@ -55,6 +58,12 @@ export default {
 
     created() {
         this.getElysiumSlides()
+    },
+
+    mounted() {
+        this.placeholderElement = document.createElement("div")
+        this.placeholderElement.style.borderRadius = "12px"
+        this.placeholderElement.style.backgroundColor = "#eeeeee"
     },
 
     methods: {
@@ -144,18 +153,54 @@ export default {
             window.open(route.href, '_blank');
         },
 
-        startDrag( slideId, event ) {
-            event.dataTransfer.setData( 'startSlideId', slideId )
-            event.dataTransfer.setData( 'startSlideIndex', this.selectedSlides.indexOf( slideId ) )
+        startDrag( slideId, event, element ) {
+            this.draggedSlideId = slideId
+            this.draggedSlideElement = element
+            this.placeholderElement.style.height = `${element.offsetHeight}px`
+            console.dir(`${element.offsetHeight}px`)
+        },
+        
+        onDrag( slideId, event, element ) {
+            if (this.draggedSlideId === slideId) {
+                this.draggedSlideElement.classList.add('is-dragged')
+            }
+
+            /// it looks pretty ok BUT
+            /// @todo if element is moved around sometimes the position of the 
+            /// placeholder element is wrong. review this bugged behavior.
+
+
+            if( this.currentDragIndex !== this.selectedSlides.indexOf( slideId ) ) {
+                /// before current drag index is set
+                console.log("start onDrage", this.currentDragIndex)
+                element.before(this.placeholderElement)
+            } else {
+
+                element.after(this.placeholderElement)
+            }
+            this.currentDragIndex = this.selectedSlides.indexOf( slideId )
+            console.log("end onDrage", this.currentDragIndex)
         },
 
-        onDrag( slideId, event ) {
-            this.currentDragIndex = this.selectedSlides.indexOf( slideId )
+        endDrag(slideId, event, element) {
+            // this.currentDragIndex = this.selectedSlides.indexOf( slideId )
+            // element.before(this.placeholderElement)
+            // console.log("end", this.currentDragIndex)
+        },
+
+        leaveDrop(event) {
+            if (this.$refs.selectionList.contains(event.relatedTarget) === false) {
+                this.placeholderElement.remove()
+                this.draggedSlideElement.classList.remove('is-dragged')
+            }
         },
 
         onDrop( event ) {
-            this.selectedSlides.splice(event.dataTransfer.getData('startSlideIndex'), 1)
-            this.selectedSlides.splice(this.currentDragIndex, 0, event.dataTransfer.getData('startSlideId'))
+            this.selectedSlides.splice(this.selectedSlides.indexOf(this.draggedSlideId), 1)
+            let positionOffset = 1
+            this.draggedSlideElement.classList.remove('is-dragged')
+            this.selectedSlides.splice(this.currentDragIndex, 0, this.draggedSlideId)
+            this.placeholderElement.remove()
         }
     }
 };

@@ -110,8 +110,16 @@ export default {
             this.$emit('start-drag', this.selectedSlide, event, this.$refs.selectItem)
         },
 
-        overDrag( event ) {
-            this.$emit('over-drag', this.selectedSlide, event, this.$refs.selectItem)
-        }
+        enterDrag( event ) {
+            this.$emit('enter-drag', this.selectedSlide, event, this.$refs.selectItem)
+        },
+
+        endDrag( event ) {
+            this.$emit('end-drag', this.selectedSlide, event, this.$refs.selectItem)
+        },
+
+        leaveDrag( event ) {
+            this.$emit('leave-drag', this.selectedSlide, event, this.$refs.selectItem)
+        },
     }
 };

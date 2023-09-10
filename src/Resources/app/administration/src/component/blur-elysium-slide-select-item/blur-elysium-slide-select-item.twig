@@ -4,15 +4,22 @@
         ref="selectItem"
         draggable
         @dragstart="startDrag($event)"
-        @dragenter="overDrag($event)">
+        @dragenter="enterDrag($event)"
+        @dragend="endDrag($event)"
+        @dragleave="leaveDrag($event)">
 
         <template v-if="slideData && isLoading === false">
 
             {% block blur_elysium_slide_select_item_silde_container %}
                 <div class="blur-es-list-item__slide-container">
 
-                    <div class="blur-es-list-item__name-tag">
-                        {{slideData.name}}
+                    <div class="blur-es-list-item__slide-labels">
+                        <div class="blur-es-list-item__drag-bullet">
+                            <sw-icon name="regular-grip-horizontal-s" size="16" color="#999999"></sw-icon>
+                        </div>
+                        <div class="blur-es-list-item__name-tag">
+                            {{slideData.name}}
+                        </div>
                     </div>
 
                     {% block blur_elysium_slide_select_item_silde_content %} 
@@ -35,7 +42,7 @@
                             :disabled="false" 
                             :isLoading="isLoading"
                             @click="positionUp">
-                            <sw-icon name="regular-chevron-up" size="16" color="#5a5a5a"></sw-icon>
+                            <sw-icon name="regular-long-arrow-up" size="16" color="#999999"></sw-icon>
                         </sw-button>
                     {% endblock %}
 
@@ -45,7 +52,7 @@
                             :disabled="false" 
                             :isLoading="isLoading"
                             @click="positionDown">
-                            <sw-icon name="regular-chevron-down" size="16" color="#5a5a5a"></sw-icon>
+                            <sw-icon name="regular-long-arrow-down" size="16" color="#999999"></sw-icon>
                         </sw-button>
                     {% endblock %}
 
