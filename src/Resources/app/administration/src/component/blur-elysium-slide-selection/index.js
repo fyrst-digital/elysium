@@ -157,7 +157,6 @@ export default {
             this.draggedSlideId = slideId
             this.draggedSlideElement = element
             this.placeholderElement.style.height = `${element.offsetHeight}px`
-            console.dir(`${element.offsetHeight}px`)
         },
         
         onDrag( slideId, event, element ) {
@@ -165,34 +164,30 @@ export default {
                 this.draggedSlideElement.classList.add('is-dragged')
             }
 
-            /// it looks pretty ok BUT
-            /// @todo if element is moved around sometimes the position of the 
-            /// placeholder element is wrong. review this bugged behavior.
-
-
             if( this.currentDragIndex !== this.selectedSlides.indexOf( slideId ) ) {
-                /// before current drag index is set
-                console.log("start onDrage", this.currentDragIndex)
                 element.before(this.placeholderElement)
             } else {
-
                 element.after(this.placeholderElement)
             }
+
             this.currentDragIndex = this.selectedSlides.indexOf( slideId )
-            console.log("end onDrage", this.currentDragIndex)
         },
 
         endDrag(slideId, event, element) {
-            // this.currentDragIndex = this.selectedSlides.indexOf( slideId )
-            // element.before(this.placeholderElement)
-            // console.log("end", this.currentDragIndex)
+            /**
+             * @depracted empty method
+             */ 
+        },
+
+        dragEnd(event) {
+            event.target.classList.remove('is-dragged')
+            this.placeholderElement.remove()
         },
 
         leaveDrop(event) {
-            if (this.$refs.selectionList.contains(event.relatedTarget) === false) {
-                this.placeholderElement.remove()
-                this.draggedSlideElement.classList.remove('is-dragged')
-            }
+            /**
+             * @depracted empty method
+             */ 
         },
 
         onDrop( event ) {

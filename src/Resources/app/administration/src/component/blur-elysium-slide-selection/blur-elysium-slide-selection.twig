@@ -80,6 +80,7 @@
                         ref="selectionList"
                         @drop="onDrop($event)"
                         @dragleave="leaveDrop($event)"
+                        @dragend="dragEnd($event)"
                         @dragover.prevent
                         @dragenter.prevent>
                         {% block blur_elysium_slide_selection_list_item %}
@@ -90,7 +91,7 @@
                                 draggable
                                 @start-drag="startDrag"
                                 @enter-drag="onDrag"
-                                @leave-drag="endDrag"
+                                @end-drag="endDrag"
                                 @position-up="slidePositionUp"
                                 @position-down="slidePositionDown"
                                 @edit-slide="onEditSlide"

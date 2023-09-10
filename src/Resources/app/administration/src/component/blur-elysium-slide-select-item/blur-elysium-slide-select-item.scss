@@ -22,6 +22,10 @@
     &.is-dragged {
         display: none;
     }
+
+    &.is-leaving {
+        display: block;
+    }
 }
 
 .blur-es-list-item__name-tag {
