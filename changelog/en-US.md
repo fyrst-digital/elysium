@@ -1,3 +1,15 @@
+# `1.5.2` 
+
+## Changelog
+- Fix: Translations in the admin have been corrected
+- Improvement: The display of the slider has been optimized. In the slider settings there is now the possibility to configure the padding
+- Improvement: The slide selection in the admin has been optimized. The drag and drop function of the slides is now better recognizable
+
+# `1.5.1` 2023-06-15
+
+## Changelog
+- Fixed a bug where the slider was displayed incorrectly
+
 # `1.5.0` 2023-06-15
 
 ## Update Notes

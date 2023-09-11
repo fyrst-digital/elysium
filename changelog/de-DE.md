@@ -1,3 +1,15 @@
+# `1.5.2` 
+
+## Changelog
+- Änderung: Übersetzungen im Admin wurden korrigiert
+- Verbesserung: Die Darstellung des Sliders wurde optimiert. In den Slider-Einstellungen gibt es nun die Möglichkeit den Innenabstand zu konfigurieren
+- Verbesserung: Die Slide Auswahl im Admin wurde optimiert. Die Drag and Drop Funktion der einzelnen Slides ist nun besser erkennbar
+
+# `1.5.1` 2023-06-15
+
+## Changelog
+- Ein Fehler wurde behoben, bei dem der Slider fehlerhaft dargestellt wurde
+
 # `1.5.0` 2023-06-15
 
 ## Update Notes
