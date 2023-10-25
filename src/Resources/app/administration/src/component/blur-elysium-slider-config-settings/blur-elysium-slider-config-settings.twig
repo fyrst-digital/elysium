@@ -21,6 +21,18 @@
                             </sw-switch-field>
                         {% endblock %}
 
+                        {% block blur_cms_config_elysium_slider_container_width %}
+                            <sw-select-field
+                                :value="config.containerWidth"
+                                v-model="config.containerWidth"
+                                :label="$tc('blurElysiumSlider.config.containerWidth.label')"
+                                :help-text="$tc('blurElysiumSlider.config.containerWidth.helpText')"
+                            >
+                                <option value="content">{{$tc('blurElysiumSlider.config.containerWidth.content')}}</option>
+                                <option value="full">{{$tc('blurElysiumSlider.config.containerWidth.full')}}</option>
+                            </sw-select-field>
+                        {% endblock %}
+
                         {% block blur_cms_config_elysium_slider_speed %}
                             <sw-number-field 
                                 numberType="int" 

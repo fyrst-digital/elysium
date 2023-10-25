@@ -1,9 +1,9 @@
 {% block cms_element_blur_elysium_slide_root %}
     {% set slideContainerClasses = ['cms-element-elysium-slide'] %}
 
-    {% set contentVerticalAlign = ' content__x-left' %}
+    {% set contentVerticalAlign = 'content__x-left' %}
     {% if slide.slideSettings.contentVerticalAlign %}
-        {% set contentVerticalAlign = ' content__x-' ~ slide.slideSettings.contentVerticalAlign %}
+        {% set contentVerticalAlign = 'content__x-' ~ slide.slideSettings.contentVerticalAlign %}
     {% endif %}
     {% if slide.slideSettings.containerVerticalAlign %}
         {% set slideContainerClasses = slideContainerClasses|merge([
@@ -79,7 +79,7 @@
                     }
                 {% endif %}
                 
-                [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__container {
+                [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__content-box {
                     {% if slide.slideSettings.containerBgColor %}background-color: {{slide.slideSettings.containerBgColor}};{% endif %}
                     {% if slide.slideSettings.containerPadding %}padding: {{slide.slideSettings.containerPadding}};{% endif %}
                 }
@@ -87,7 +87,7 @@
                 {% if slide.slideSettings.containerBoxMode %}
                     {# @TODO make the min-width breakpoint configurable #}
                     @media screen and ( min-width: {{ theme_config('breakpoint.sm') ~ 'px' }} ) {
-                        [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__container {
+                        [data-elysium-slide-id="{{ slide.id }}"] .cms-element-elysium-slide__content-box {
                             {% if slide.slideSettings.containerMaxWidth %}
                                 flex-basis: {{ slide.slideSettings.containerMaxWidth }} !important;
                                 max-width: {{ slide.slideSettings.containerMaxWidth }} !important;                                

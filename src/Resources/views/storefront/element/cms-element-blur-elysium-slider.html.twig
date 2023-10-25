@@ -87,7 +87,8 @@
                                                     {% endif %}
 
                                                     {% sw_include '@Storefront/storefront/component/blur-elysium-slide/' ~ slideTemplate ~'.html.twig' ignore missing with {
-                                                        slide: slide
+                                                        slide: slide,
+                                                        containerWidth: element.config.settings.value.containerWidth
                                                     } only %}
                                                 {% endblock %}
                                             </li>

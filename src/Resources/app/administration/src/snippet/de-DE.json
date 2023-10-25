@@ -18,6 +18,15 @@
             "content": "Inhalt",
             "settings": "Einstellungen",
             "styling": "Styling",
+            "sliderTitle": {
+                "label": "Slider Titel (optional)"
+            },
+            "containerWidth": {
+                "label": "Breite des Inhalts-Container",
+                "content": "Breite des Seiteninhalts",
+                "full": "Volle Breite",
+                "helpText": "Definiert die Breite des Inhaltscontainers. Bei <b>Seiteninhalt</b> folgt die maximale Breite des Containers der Breite des Seiteninhalts. Bei <b>Volle Breite</b> wird der Inhalts-Container über die gesamte Breite angezeigt."
+            },
             "rewind": "Slides zurückspulen",
             "overlay": "Zeige Overlay",
             "speed": {
