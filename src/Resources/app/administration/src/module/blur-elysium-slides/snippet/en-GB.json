@@ -100,7 +100,7 @@
                 "title": "Content Container",
                 "description": "Here you can influence the behavior of the content container. For more information, see our documentation.",
                 "boxMode": {
-                    "title": "Container Width Limit",
+                    "title": "Content Box Width Limit",
                     "inputLabel": "Enable Limit",
                     "helpText": "If you <b>enable width limit</b>, the content container is automatically limited to a maximum width of 50%. You can further specify the maximum width in the settings. With <b>width limit enabled</b>, you can also align the content container horizontally. Since the content container is displayed on full width when the <b>with limit is disabled</b>, the horizontal alignment has no effect."
                 },

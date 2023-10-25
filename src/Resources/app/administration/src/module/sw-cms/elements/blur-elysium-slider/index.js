@@ -23,6 +23,7 @@ Shopware.Service('cmsService').registerCmsElement({
             source: "static",
             value: {
                 overlay: false,
+                containerWidth: 'content', /** @type 'content' | 'full' */
                 rewind: true,
                 speed: 300,
                 pauseOnHover: true,
