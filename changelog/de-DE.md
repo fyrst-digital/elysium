@@ -1,3 +1,8 @@
+# `1.5.3` 
+
+## Changelog
+- Feature: Im Erlebniswelten Slider Element kann nun die innere Container Breite des Inhalts festgelegt werden. Mögliche Optionen sind "Breite des Seiteninhalts" oder "Volle Breite".
+
 # `1.5.2` 
 
 ## Changelog

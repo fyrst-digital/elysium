@@ -1,3 +1,8 @@
+# `1.5.3` 
+
+## Changelog
+- Feature: The inner container width of the content can now be set in the CMS Slider element. Possible options are "Page content width" or "Full width".
+
 # `1.5.2` 
 
 ## Changelog
