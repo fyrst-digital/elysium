@@ -1,3 +1,8 @@
+# `1.5.4` 
+
+## Changelog
+- Bugfix: Ein Fehler in der Slide-Auswahl des Erlebniswelten Slider Elements wurde behoben. Bei abweichenden Sprachen konnten keine Slides ausgewählt werden und die Slide-Auswahl wurde nicht angezeigt. Nun sollte die gesamte Slide-Auswahl, in jeder ausgewählten Sprache, wie erwartet funktionieren.
+
 # `1.5.3` 
 
 ## Changelog

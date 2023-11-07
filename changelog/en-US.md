@@ -1,3 +1,8 @@
+# `1.5.4` 
+
+## Changelog
+- Bugfix: An error in the slide selection of the shopping experience slider element has been fixed. With different languages, no slides could be selected and the slide selection was not displayed. Now the entire slide selection should work as expected in every selected language.
+
 # `1.5.3` 
 
 ## Changelog
