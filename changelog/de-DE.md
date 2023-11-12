@@ -1,3 +1,8 @@
+# `1.5.5` 
+
+## Changelog
+- Feature: Es ist nun möglich mehrere Slides pro Ansicht anzeigen zu lassen. Bisher war die Ansicht auf einen Slide beschränkt. Im Erlebniswelten Slider Element gibt es unter **Größen** die **Slide Verhalten** Einstellungen. Es kann festgelegt werden wie viel Slides pro Ansicht angezeigt werden sollen.
+
 # `1.5.4` 
 
 ## Changelog

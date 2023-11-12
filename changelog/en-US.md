@@ -1,3 +1,8 @@
+# `1.5.5` 
+
+## Changelog
+- Feature: It is now possible to display several slides per page. Previously, the view was limited to one slide per page. The **Slide behavior** settings can be found under **Sizes** in the Shopping Experiences Slider element. You can specify how many slides should be displayed per page.
+
 # `1.5.4` 
 
 ## Changelog

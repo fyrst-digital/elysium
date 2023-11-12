@@ -89,7 +89,9 @@ Shopware.Service('cmsService').registerCmsElement({
                         x: "1rem", 
                         y: "1.5rem"
                     },
-                    maxHeight: null
+                    maxHeight: null,
+                    slidesPerPage: null,
+                    slidesGap: null
                 },
                 {
                     viewport: "sm",
@@ -102,7 +104,9 @@ Shopware.Service('cmsService').registerCmsElement({
                         x: "1rem", 
                         y: "1.5rem"
                     },
-                    maxHeight: null
+                    maxHeight: null,
+                    slidesPerPage: null,
+                    slidesGap: null
                 },
                 {
                     viewport: "md",
@@ -115,7 +119,9 @@ Shopware.Service('cmsService').registerCmsElement({
                         x: "2rem", 
                         y: "3rem"
                     },
-                    maxHeight: null
+                    maxHeight: null,
+                    slidesPerPage: null,
+                    slidesGap: null
                 },
                 {
                     viewport: "lg",
@@ -128,7 +134,9 @@ Shopware.Service('cmsService').registerCmsElement({
                         x: "2rem", 
                         y: "3rem"
                     },
-                    maxHeight: null
+                    maxHeight: null,
+                    slidesPerPage: null,
+                    slidesGap: null
                 },
                 {
                     viewport: "xl",
@@ -141,7 +149,9 @@ Shopware.Service('cmsService').registerCmsElement({
                         x: "4rem", 
                         y: "6rem"
                     },
-                    maxHeight: null
+                    maxHeight: null,
+                    slidesPerPage: null,
+                    slidesGap: null
                 },
                 {
                     viewport: "xxl",
@@ -154,7 +164,9 @@ Shopware.Service('cmsService').registerCmsElement({
                         x: "4rem", 
                         y: "6rem"
                     },
-                    maxHeight: null
+                    maxHeight: null,
+                    slidesPerPage: null,
+                    slidesGap: null
                 }
             ]
         },
