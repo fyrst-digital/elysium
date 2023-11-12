@@ -72,6 +72,42 @@
             </sw-card>
         {% endblock %}
 
+        {% block blur_elysium_slider_config_sizing_slides_behavior %}
+            <sw-card 
+                :position-identifier="positionIdentifiers.slidesBehavior"
+                :title="$tc('blurElysiumSlider.config.sizing.slidesBehavior.label')"
+                :hero="false" 
+                :large="false">
+
+                    <sw-container v-if="selectedSize !== null"
+                        columns="1fr 1fr"
+                        gap="0 2rem">
+
+                        <sw-number-field 
+                            numberType="int"
+                            :min="1"
+                            v-model="selectedSize.slidesPerPage"
+                            :allowEmpty="true"
+                            :placeholder="$tc('blurElysiumSlider.config.sizing.slidesPerPage.placeholder')"
+                            :label="$tc('blurElysiumSlider.config.sizing.slidesPerPage.label')" />
+
+                        <sw-text-field 
+                            :label="$tc('blurElysiumSlider.config.sizing.slidesGap.label')"
+                            :placeholder="$tc('blurElysiumSlider.general.unitPlaceholderPxRem')"
+                            v-model="selectedSize.slidesGap"
+                            :copyable="false" 
+                            :copyableTooltip="false" />
+
+                    </sw-container>
+
+                    <div v-else
+                        :style="emptyViewportContainerStyle">
+                        <h4 style="margin-bottom:10px;font-weight:500;">{{ $tc('blurElysiumSlider.config.sizing.emptyViewport.title') }}</h4>
+                        {{ $tc('blurElysiumSlider.config.sizing.emptyViewport.description') }}
+                    </div>
+            </sw-card>
+        {% endblock %}
+
         {% block blur_elysium_slider_config_sizing_spacing %}
             <sw-card 
                 :position-identifier="positionIdentifiers.spacing"

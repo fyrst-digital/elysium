@@ -28,13 +28,43 @@
         splideOptions: {
             arrows: sliderArrows.active,
             pagination: sliderNavigation.active,
+            mediaQuery: 'min',
+            gap: '0px',
             autoplay: sliderAutoplay.active,
             interval: sliderAutoplay.interval,
             pauseOnHover: sliderAutoplay.pauseOnHover,
             speed: element.translated.config.settings.value.speed,
-            rewind: element.translated.config.settings.value.rewind
+            rewind: element.translated.config.settings.value.rewind,
+            breakpoints: {}
         }
     } %}
+
+    {% for size in sliderSizing %}
+        {% set breakpointOptions = {} %}
+        {% set breakpoint = theme_config('breakpoint.' ~ size.viewport) %}
+
+        {% if size.slidesPerPage is not empty %}
+            {% set breakpointOptions = breakpointOptions|merge({
+                perPage: size.slidesPerPage
+            }) %}
+        {% endif %}
+
+        {% if size.slidesGap is not empty %}
+            {% set breakpointOptions = breakpointOptions|merge({
+                gap: size.slidesGap
+            }) %}
+        {% endif %}
+
+        {% if breakpointOptions|length > 0 %}
+            {% set sliderOptions = sliderOptions|merge({
+                splideOptions: sliderOptions.splideOptions|merge({
+                    breakpoints: sliderOptions.splideOptions.breakpoints|merge({
+                        (breakpoint ~ '%replace%'): breakpointOptions
+                    })
+                })
+            }) %}            
+        {% endif %}
+    {% endfor %}
 
     {% block cms_element_blur_elysium_slider_css_styles %}
 
@@ -48,7 +78,7 @@
         {# your could override sliderSettings variables on this block #}
 
         <div id="elysiumSlider-{{ element.id }}" 
-            data-blur-elysium-slider="{{sliderOptions|json_encode}}"
+            data-blur-elysium-slider="{{sliderOptions|json_encode|replace({'%replace%': ''}) }}"
             class="cms-element-elysium-slider{% if sliderOverlay %} has-overlay{% endif %}">
 
             {% block blur_elysium_control_include_header %} 

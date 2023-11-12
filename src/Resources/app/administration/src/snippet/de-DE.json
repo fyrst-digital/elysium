@@ -12,7 +12,8 @@
             "iconColorActive": "Icon-Farbe (Aktiv)",
             "bgColor": "Hintergrund-Farbe",
             "bgColorActive": "Hintergrund-Farbe (Aktiv)",
-            "padding": "Innenabstand"
+            "padding": "Innenabstand",
+            "unitPlaceholderPxRem": "px oder rem Wert"
         },
         "config": {
             "content": "Inhalt",
@@ -60,6 +61,16 @@
                 "emptyViewport": {
                     "title": "Bildschirm-Größe wählen",
                     "description": "Bitte wähle zuerst eine Bildschirm-Größe aus"
+                },
+                "slidesBehavior": {
+                    "label": "Slide Verhalten"
+                },
+                "slidesPerPage": {
+                    "label": "Slides pro Ansicht",
+                    "placeholder": "1"
+                },
+                "slidesGap": {
+                    "label": "Abstand zwischen Slides"
                 }
             },
             "spacing": {

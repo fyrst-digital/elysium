@@ -5,6 +5,7 @@ const config = {
     autoplayGeneral: "blur-elysium-slider-config-autoplay-general",
     viewportSelection: "blur-elysium-slider-config-sizing-viewport-selection",
     aspectRatio: "blur-elysium-slider-config-sizing-aspect-ratio",
+    slidesBehavior: "blur-elysium-slider-config-sizing-slides-behavior",
     spacing: "blur-elysium-slider-config-sizing-spacing",
     navigationGeneral: "blur-elysium-slider-config-navigation-general",
     navigationAppearance: "blur-elysium-slider-config-navigation-appearance",

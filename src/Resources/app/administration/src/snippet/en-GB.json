@@ -12,7 +12,8 @@
             "iconColorActive": "Icon Color (Active)",
             "bgColor": "Background Color",
             "bgColorActive": "Background Color (Active)",
-            "padding": "Padding"
+            "padding": "Padding",
+            "unitPlaceholderPxRem": "px or rem value"
         },
         "config": {
             "content": "Content",
@@ -60,6 +61,16 @@
                 "emptyViewport": {
                     "title": "Select viewport",
                     "description": "Please choose a viewport size first"
+                },
+                "slidesBehavior": {
+                    "label": "Slide Behavior"
+                },
+                "slidesPerPage": {
+                    "label": "Slides per Page",
+                    "placeholder": "1"
+                },
+                "slidesGap": {
+                    "label": "Gap between slides"
                 }
             },
             "spacing": {
