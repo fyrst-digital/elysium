@@ -6,7 +6,7 @@
         "CMS",
         "Slider"
     ],
-    "version": "1.5.4",
+    "version": "1.5.5",
     "type": "shopware-platform-plugin",
     "minimum-stability": "stable",
     "license": "MIT",
