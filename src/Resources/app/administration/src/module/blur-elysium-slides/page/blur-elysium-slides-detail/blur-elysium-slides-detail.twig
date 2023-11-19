@@ -194,6 +194,15 @@
                                 <template v-if="active === 'advanced'">
 
                                     <sw-card 
+                                        :title="$tc('blurElysiumSlides.slideSettings.slideTemplate.cardTitle')"
+                                        v-if="!isLoading && slide.slideSettings"
+                                        :isLoading="isLoading">
+                                        <blur-elysium-slide-template-selection 
+                                            :value="slide.slideSettings.slideTemplate"
+                                            @change="value => setSlideSetting('slideTemplate', value)" />
+                                    </sw-card>
+                                    
+                                    <sw-card 
                                         :position-identifier="positionIdentifiers.detail.customTemplate"
                                         :title="$tc('blurElysiumSlides.slideSettings.customTemplate.cardTitle')"
                                         v-if="!isLoading && slide.slideSettings"
@@ -209,6 +218,7 @@
                                             v-if="slide.slideSettings.customTemplateFile"
                                             v-html="$t('blurElysiumSlides.slideSettings.customTemplate.customTemplatePath', { file: slide.slideSettings.customTemplateFile } )" />
                                     </sw-card>
+
                                 </template>
                             {% endblock %}
 
