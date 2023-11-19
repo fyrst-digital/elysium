@@ -1,0 +1,16 @@
+{% block blur_elysium_slide_template_selection %}
+    <div>
+        <sw-select-field
+            :label="$tc('blurElysiumSlides.slideSettings.slideTemplate.label')"
+            :placeholder="$tc('blurElysiumSlides.slideSettings.slideTemplate.placeholder')"
+            :options="defaultSlideTemplates"
+            :value="value"
+            @change="onChange">
+            <option 
+                v-for="template in defaultSlideTemplates" 
+                :value="template.value">
+                    {{template.label}}
+                </option>
+        </sw-select-field>
+    </div>
+{% endblock %}

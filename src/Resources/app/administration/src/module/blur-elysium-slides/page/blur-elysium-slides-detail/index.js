@@ -358,5 +358,10 @@ Component.register( 'blur-elysium-slides-detail', {
                 console.warn( exception );
             });
         },
+
+        setSlideSetting( key, value ) {
+            this.slide.slideSettings[key] = value
+            console.log(key, value, this.slide.slideSettings)
+        }
     }
 });

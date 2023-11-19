@@ -17,6 +17,7 @@ Shopware.Component.register('blur-elysium-slider-config-navigation', () => impor
 Shopware.Component.register('blur-elysium-slider-config-arrows', () => import('@elysiumSlider/component/blur-elysium-slider-config-arrows'));
 Shopware.Component.register('blur-elysium-slide-selection', () => import('@elysiumSlider/component/blur-elysium-slide-selection'));
 Shopware.Component.register('blur-elysium-slide-select-item', () => import('@elysiumSlider/component/blur-elysium-slide-select-item'));
+Shopware.Component.register('blur-elysium-slide-template-selection', () => import('@elysiumSlider/component/blur-elysium-slide-template-selection'));
 
 // register text snippets gobally
 Shopware.Locale.extend('en-GB', enGB);
