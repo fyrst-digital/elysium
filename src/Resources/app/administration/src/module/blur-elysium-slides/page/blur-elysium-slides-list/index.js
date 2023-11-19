@@ -23,7 +23,6 @@ Component.register( 'blur-elysium-slides-list', {
         return {
             blur_elysium_slides: null,
             total: 0,
-            blur_elysium_slide: null,
             isLoading: false,
             term: this.$route.query ? this.$route.query.term : '',
             sortBy: 'name',
@@ -125,7 +124,6 @@ Component.register( 'blur-elysium-slides-list', {
 
         onSearch( searchTerm ) {
             this.term = searchTerm;
-            // this.clearSelection();
         },
 
         onChangeLanguage(languageId) {
