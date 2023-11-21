@@ -26,7 +26,7 @@
                         <div class="blur-es-list-item__slide-content">
                             <div>
                                 <div class="blur-es-list-item__slide-headline">
-                                    {{slideData.translated.title.replace(/<\/?[^>]+>/ig, " ")}}
+                                    {{ slideData.translated.title ? slideData.translated.title.replace(/<\/?[^>]+>/ig, " ") : $tc('blurElysiumSlider.general.noHeadline') }}
                                 </div>
                             </div>
                         </div>
