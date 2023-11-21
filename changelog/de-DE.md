@@ -1,7 +1,12 @@
+# `1.5.6` 
+
+## Changelog
+- Bugfix: Ein Fehler in der Slide-Auswahl des Erlebniswelten Slider Elements wurde behoben. Bei fehlender Slide Überschrift konnten keine Slides ausgewählt werden und die Slide-Auswahl wurde nicht angezeigt. Nun sollte die gesamte Slide-Auswahl, auch ohne eine hinterlegte Slide Überschrift, wie erwartet funktionieren.
+
 # `1.5.5` 
 
 ## Changelog
-- Feature: Es ist nun möglich mehrere Slides pro Ansicht anzeigen zu lassen. Bisher war die Ansicht auf einen Slide beschränkt. Im Erlebniswelten Slider Element gibt es unter **Größen** die **Slide Verhalten** Einstellungen. Es kann festgelegt werden wie viel Slides pro Ansicht angezeigt werden sollen.
+- Feature: Es ist nun möglich mehrere Slides pro Ansicht anzeigen zu lassen. Bisher war die Ansicht auf einen Slide beschränkt. Im Erlebniswelten Slider Element gibt es unter **Größen** die **Slide Verhalten** Einstellungen. Es kann festgelegt werden wie viel Slides pro Ansicht angezeigt werden sollen. 
 
 # `1.5.4` 
 
