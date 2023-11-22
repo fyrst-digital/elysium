@@ -46,8 +46,8 @@
                                             @item-select.prevent="selectSlide">
                                             <div class="blur-es-selection__search-result-item">
                                                 <div>
-                                                    <div>{{ item.name }}</div>
-                                                    <div style="font-weight:600;">{{ item.title }}</div>
+                                                    <div>{{ item.translated.name }}</div>
+                                                    <div style="font-weight:600;">{{ item.translated.title }}</div>
                                                 </div>
                                                 <div>
                                                     {{ selectedSlides.includes(item.id) ? $tc('blurElysiumSlides.slideSearch.removeItem') : $tc('blurElysiumSlides.slideSearch.addItem') }}

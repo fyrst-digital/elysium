@@ -1,3 +1,11 @@
+# `1.4.6`
+
+- Bugfix: Es wurde ein Fehler in der Slide Button Anzeige behoben. Wenn ein Slide erstellt wurde, ohne die URL-Overlay Option zu de-/aktivieren, wurde der Button nicht angezeigt. Dieser Fehler wurde korrigiert und der Slide Button wird wie erwartet angezeigt.
+- Bugfix: Ein Fehler in der Slide-Auswahl des Erlebniswelten Slider Elements wurde behoben. Bei abweichenden Sprachen konnten keine Slides ausgewählt werden und die Slide-Auswahl wurde nicht angezeigt. Nun sollte die gesamte Slide-Auswahl, in jeder ausgewählten Sprache, wie erwartet funktionieren.
+
+## Changelog
+- Änderung: Eine Code-Ausgabe im Template wurde entfernt
+
 # `1.4.5` 2023-05-21
 
 ## Changelog

@@ -1,3 +1,8 @@
+# `1.4.6`
+
+- Bugfix: An error in the slide button display has been fixed. If a slide was created without enabling/disabling the URL overlay option, the button was not shown. This error has been corrected and the slide button is shown as expected.
+- Bugfix: An error in the slide selection of the shopping experience slider element has been fixed. With different languages, no slides could be selected and the slide selection was not displayed. Now the entire slide selection should work as expected in every selected language.
+
 # `1.4.5` 2023-05-21
 
 ## Changelog
