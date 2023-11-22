@@ -33,7 +33,7 @@
         {% endblock %}
 
         {% block cms_element_blur_elysium_slide_actions %}
-            {% if slide.translated.button_label and slide.translated.url and slide.slideSettings.urlOverlay is same as( false ) %}
+            {% if slide.translated.button_label and slide.translated.url and ( slide.slideSettings.urlOverlay is same as( false ) or slide.slideSettings.urlOverlay is same as( null ) ) %}
                 <div class="cms-element-elysium-slide__actions">
                     
                     {% block cms_element_blur_elysium_slide_action_cta_button %}
