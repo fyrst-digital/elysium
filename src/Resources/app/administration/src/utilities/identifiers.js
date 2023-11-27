@@ -17,6 +17,7 @@ const slides = {
     detail: {
         tabs: "blur-elysium-slide-detail-tabs",
         customFields: "blur-elysium-slide-detail-custom-fields",
+        slideTemplate: "blur-elysium-slide-detail-slide-template",
         customTemplate: "blur-elysium-slide-detail-custom-template",
         base: {
             general: "blur-elysium-slide-detail-base-general",

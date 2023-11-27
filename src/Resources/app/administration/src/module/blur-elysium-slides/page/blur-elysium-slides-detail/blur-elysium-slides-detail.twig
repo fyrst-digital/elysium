@@ -19,7 +19,7 @@
 
                     {% block blur_elysium_slides_detail_view_smart_bar_action_cancel %}
                         <sw-button
-                            :disabled="isLoading"
+                            :disabled="loading.slide"
                             @click="cancel"
                         >
                             {{ $tc('sw-customer.detail.buttonCancel') }}
@@ -35,9 +35,9 @@
                                 showOnDisabledElements: true
                             }"
                             class="sw-customer-detail__save-action"
-                            :is-loading="isLoading"
+                            :is-loading="loading.slide"
                             :process-success="isSaveSuccessful"
-                            :disabled="isLoading || !( acl.can('blur_elysium_slides.editor') || ( acl.can('blur_elysium_slides.creator') && isNewSlide ) )"
+                            :disabled="loading.slide || !( acl.can('blur_elysium_slides.editor') || ( acl.can('blur_elysium_slides.creator') && isNewSlide ) )"
                             variant="primary"
                             @process-finish="saveFinish"
                             @click.prevent="onSave"
@@ -61,12 +61,11 @@
         {% endblock %}
 
 
-
         <template #content>
 
-            {% block blur_elysium_slides_detail_view_custom_template_alert %}
+            {#% block blur_elysium_slides_detail_view_custom_template_alert %}
                 <sw-alert 
-                    v-if="slide.slideSettings?.customTemplateFile" 
+                    v-if="slide && slide.slideSettings.customTemplateFile" 
                     variant="info" 
                     appearance="default" 
                     :showIcon="true" 
@@ -75,166 +74,59 @@
                     >
                     <span v-html="$tc('blurElysiumSlides.slideSettings.customTemplate.hasCustomNotice')" />
                 </sw-alert>
-            {% endblock %}
+            {% endblock %#}
 
             {% block blur_elysium_slides_detail_view_tabs %}
-                <sw-tabs 
-                    :position-identifier="positionIdentifiers.detail.tabs"
-                    :small="false" 
-                    default-item="content" 
-                    class="blur-elysium-slider__detail-tabs">
+                <div 
+                v-if="slide"
+                :style="{
+                    padding: '2rem 0'
+                }">
 
-                    {% block blur_elysium_slides_detail_view_tab_navigation %}
-                        <template slot-scope="{ active }">
+                    <sw-tabs
+                        :position-identifier="positionIdentifiers.detail.tabs">
 
-                            {% block blur_elysium_slides_detail_view_tab_navigation_content %}
-                                <sw-tabs-item
-                                    name="content"
-                                    :active-tab="active">
-                                    {{ $tc('blurElysiumSlides.slideSettingTabs.contentLabel') }}
-                                </sw-tabs-item>
-                            {% endblock %}
+                        <sw-tabs-item
+                            :route="contentRoute"
+                            :title="$tc('blurElysiumSlides.slideSettingTabs.contentLabel')">
+                            {{ $tc('blurElysiumSlides.slideSettingTabs.contentLabel') }}
+                        </sw-tabs-item>
 
-                            {% block blur_elysium_slides_detail_view_tab_navigation_display %}
-                                <sw-tabs-item
-                                    name="display"
-                                    :active-tab="active">
-                                    {{ $tc('blurElysiumSlides.slideSettingTabs.displayLabel') }}
-                                </sw-tabs-item>
-                            {% endblock %}
+                        <sw-tabs-item
+                            :route="mediaRoute"
+                            :title="$tc('blurElysiumSlides.slideSettingTabs.mediaLabel')">
+                            {{ $tc('blurElysiumSlides.slideSettingTabs.mediaLabel') }}
+                        </sw-tabs-item>
 
-                            {% block blur_elysium_slides_detail_view_tab_navigation_advanced %}
-                                <sw-tabs-item
-                                    name="advanced"
-                                    :active-tab="active">
-                                    {{ $tc('blurElysiumSlides.slideSettingTabs.advancedLabel') }}
-                                </sw-tabs-item>
-                            {% endblock %}
-                        </template>
-                    {% endblock %}
+                        <sw-tabs-item
+                            :route="displayRoute"
+                            :title="$tc('blurElysiumSlides.slideSettingTabs.displayLabel')">
+                            {{ $tc('blurElysiumSlides.slideSettingTabs.displayLabel') }}
+                        </sw-tabs-item>
 
-                    {% block blur_elysium_slides_detail_view_tab_content %}
-                        <template
-                            slot="content"
-                            slot-scope="{ active }">
+                        <sw-tabs-item
+                            :route="advancedRoute"
+                            :title="$tc('blurElysiumSlides.slideSettingTabs.advancedLabel')">
+                            {{ $tc('blurElysiumSlides.slideSettingTabs.advancedLabel') }}
+                        </sw-tabs-item>
+                    </sw-tabs>
 
-                            {% block blur_elysium_slides_detail_view_tab_content_general %}
-                                <template v-if="active === 'content'">
-
-                                    {% block blur_elysium_slides_detail_view_basic_form %}
-                                        <blur-elysium-slides-basic-form
-                                            v-if="!isLoading"
-                                            :is-loading="isLoading"
-                                            :allow-edit="acl.can('blur_elysium_slides.editor')"
-                                        />
-                                    {% endblock %}
-
-
-                                    {% block blur_elysium_slides_detail_view_media_form %}
-                                        <blur-elysium-slides-media-form
-                                            v-if="!isLoading && blurElysiumSlide"
-                                            :media="media"
-                                            :mediaSidebar="$refs.mediaSidebarItem"
-                                            :isLoading="isLoading"
-                                            :allow-edit="acl.can('blur_elysium_slides.editor')"
-                                        />
-                                    {% endblock %}
-
-
-                                    {% block blur_elysium_slides_detail_view_card_custom_fields %}
-                                        <sw-card 
-                                            :position-identifier="positionIdentifiers.detail.customFields"
-                                            :title="$tc('BlurElysiumSlides.customFields.cardTitle')"
-                                            v-if="customFieldSets !== undefined"
-                                            :isLoading="isLoading">
-
-                                            <template v-if="currentRoute == detailRoute">
-
-                                                <sw-custom-field-set-renderer
-                                                    v-if="customFieldSets.length > 0"
-                                                    :entity="slide"
-                                                    :sets="customFieldSets">
-                                                </sw-custom-field-set-renderer>
-
-                                                <sw-alert v-else variant="warning" appearance="default" :showIcon="true" :closable="false">
-                                                    {{ $tc('BlurElysiumSlides.customFields.emptyFieldSet') }}
-                                                </sw-alert>
-                                            </template>
-                                            <template v-else>
-
-                                                <sw-alert variant="info" appearance="default" :showIcon="true" :closable="false">
-                                                    {{ $tc('BlurElysiumSlides.customFields.onCreateMessage') }}
-                                                </sw-alert>
-                                            </template>
-                                        </sw-card>
-                                    {% endblock %}
-                                </template>
-                            {% endblock %}
-
-                            {% block blur_elysium_slides_detail_view_tab_content_display %}
-                                <template v-if="active === 'display'">
-                                    {% block blur_elysium_slides_detail_view_content_general_appearance %}
-                                        <blur-elysium-slides-content-general-appearance
-                                            v-if="!isLoading"
-                                            :isLoading="isLoading"
-                                            :allow-edit="acl.can('blur_slides_elysium.editor')"
-                                        />
-                                    {% endblock %}
-                                    {% block blur_elysium_slides_detail_view_content_container_form %}
-                                        <blur-elysium-slides-content-container-settings
-                                            v-if="!isLoading"
-                                            :isLoading="isLoading"
-                                            :allow-edit="acl.can('blur_slides_elysium.editor')"
-                                        />
-                                    {% endblock %}
-                                </template>
-                            {% endblock %}
-
-                            {% block blur_elysium_slides_detail_view_tab_content_advanced %}
-                                <template v-if="active === 'advanced'">
-
-                                    <sw-card 
-                                        :title="$tc('blurElysiumSlides.slideSettings.slideTemplate.cardTitle')"
-                                        v-if="!isLoading && slide.slideSettings"
-                                        :isLoading="isLoading">
-                                        <blur-elysium-slide-template-selection 
-                                            :value="slide.slideSettings.slideTemplate"
-                                            @change="value => setSlideSetting('slideTemplate', value)" />
-                                    </sw-card>
-                                    
-                                    <sw-card 
-                                        :position-identifier="positionIdentifiers.detail.customTemplate"
-                                        :title="$tc('blurElysiumSlides.slideSettings.customTemplate.cardTitle')"
-                                        v-if="!isLoading && slide.slideSettings"
-                                        :isLoading="isLoading">
-                                        <p 
-                                            v-html="$tc('blurElysiumSlides.slideSettings.customTemplate.cardDescription')" 
-                                            style="margin-bottom:1rem;" />
-                                        <sw-text-field 
-                                            v-model="slide.slideSettings.customTemplateFile"
-                                            :placeholder="'my-own-slide'" 
-                                            style="margin-bottom:1rem;" />
-                                        <div 
-                                            v-if="slide.slideSettings.customTemplateFile"
-                                            v-html="$t('blurElysiumSlides.slideSettings.customTemplate.customTemplatePath', { file: slide.slideSettings.customTemplateFile } )" />
-                                    </sw-card>
-
-                                </template>
-                            {% endblock %}
-
-                        </template>
-                    {% endblock %}
-
-                </sw-tabs>
+                    <router-view />
+                </div>
+                <div v-else>
+                    Something went wrong
+                </div>
             {% endblock %}
         </template>
 
         {% block blur_elysium_slides_detail_view_sidebar %}
             <template slot="sidebar">
-                <sw-sidebar :propagate-width="true">
+                <sw-sidebar 
+                    :propagate-width="true">
 
                     {% block blur_elysium_slides_detail_view_sidebar_media_selection %}
-                        <sw-sidebar-media-item ref="mediaSidebarItem">
+                        <sw-sidebar-media-item 
+                            :ref="(el) => { setMediaSidebar(el) }">
                             <template
                                 slot="context-menu-items"
                                 slot-scope="media"

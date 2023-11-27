@@ -1,0 +1,12 @@
+<div>
+    <template 
+        v-if="loading.slide">
+
+        <blur-card-loading />
+    </template>
+    <template
+        v-else-if="slide">
+
+        <blur-elysium-slides-basic-form />
+    </template>
+</div>

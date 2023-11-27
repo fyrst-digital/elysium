@@ -47,7 +47,7 @@
                                             <div class="blur-es-selection__search-result-item">
                                                 <div>
                                                     <div>{{ item.translated.name }}</div>
-                                                    <div style="font-weight:600;">{{ item.translated.title.replace(/<\/?[^>]+>/ig, " ") }}</div>
+                                                    <div style="font-weight:600;">{{ item.translated.title ? item.translated.title.replace(/<\/?[^>]+>/ig, " ") : $tc('blurElysiumSlider.general.noHeadline') }}</div>
                                                 </div>
                                                 <div>
                                                     {{ selectedSlides.includes(item.id) ? $tc('blurElysiumSlides.slideSearch.removeItem') : $tc('blurElysiumSlides.slideSearch.addItem') }}

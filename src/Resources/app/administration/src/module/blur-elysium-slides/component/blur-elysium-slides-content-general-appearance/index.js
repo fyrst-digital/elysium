@@ -5,6 +5,9 @@ const { Criteria } = Shopware.Data;
 const { Component, Context, Mixin } = Shopware;
 const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
 
+/**
+ * @deprecated this whole component will be removed
+ */
 export default {
     template,
 
