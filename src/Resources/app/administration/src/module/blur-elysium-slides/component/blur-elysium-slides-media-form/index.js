@@ -1,13 +1,8 @@
 import template from './blur-elysium-slides-media-form.twig';
 import { slides } from "@elysiumSlider/utilities/identifiers";
 
-const { Criteria } = Shopware.Data;
-const { Component, Context, Mixin } = Shopware;
-const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
-
-const propErrors = [
-    'name'
-];
+const { Component, Mixin } = Shopware;
+const { mapState, mapMutations } = Component.getComponentHelper();
 
 export default {
     template,
@@ -17,38 +12,56 @@ export default {
     ],
 
     mixins: [
-        Mixin.getByName('placeholder'),
+        Mixin.getByName('blur-editable'),
     ],
-
-    props: {
-        media: {
-            type: Object
-        },
-        mediaSidebar: {
-            type: Object
-        },
-        isLoading: Boolean,
-        allowEdit: {
-            type: Boolean,
-            required: false,
-            default: true,
-        }
-    },
 
     data() {
         return {
-            coverTag: 'blur-elysium-slide-cover-media',
-            coverPortraitTag: 'blur-elysium-slide-cover-portrait-media'
+            uploadTag: {
+                cover: 'blur-elysium-slide-cover-media',
+                coverPortrait: 'blur-elysium-slide-cover-portrait-media'
+            },
+            mediaTypes: {
+                slideCover: {
+                    idField: 'mediaId',
+                    objectField: 'media'
+                },
+                slideCoverPortrait: {
+                    idField: 'mediaPortraitId',
+                    objectField: 'mediaPortrait'
+                }
+            }
         };
     },
 
     computed: {
         
         ...mapState('blurElysiumSlidesDetail', [
-            'slide'
+            'slide',
+            'media',
+            'mediaSidebar',
+            'acl'
         ]),
-        
-        ...mapPropertyErrors( 'blurElysiumSlides' , propErrors),
+
+        slideCoverPreview() {
+            if (this.slide.media) {
+                return this.slide.media
+            } else if(this.media.slideCover) {
+                return this.media.slideCover
+            }
+
+            return null
+        },
+
+        slideCoverPortraitPreview() {
+            if (this.slide.mediaPortrait) {
+                return this.slide.mediaPortrait
+            } else if(this.media.slideCoverPortrait) {
+                return this.media.slideCoverPortrait
+            }
+            
+            return null
+        },
 
         positionIdentifiers() {
             return slides
@@ -61,56 +74,53 @@ export default {
         entityName() {
             return 'blur_elysium_slides'
         },
-
-        coverType() {
-            return this.getMedia( 'slideCover' )
-        }
-    },
-
-    created() {
-        if ( this.slide.mediaId ) {
-            this.getMedia( 'slideCover' )
-        }
-        if ( this.slide.mediaPortraitId ) {
-            this.getMedia( 'slideCoverPortrait' )
-        }
     },
 
     methods: {
+        ...mapMutations('blurElysiumSlidesDetail', [
+            'setSlideProperty',
+            'setSlideMedia'
+        ]),
 
-        getMedia( key ) {
-
+        fetchMedia( type ) {
             this.mediaRepository.get( 
-                this.slide[ this.media[key].slideMediaId ], 
+                this.slide[this.mediaTypes[type].idField], 
                 Shopware.Context.api 
             ).then( ( media ) => {
-                this.media[key].data = media
+                this.setSlideMedia({
+                    key: type, 
+                    value: media
+                })
             }).catch(( exception ) => {
                 console.error( exception )
-                return
             })
         },
 
-        setMedia( id, key ) {
-
-            this.mediaRepository.get( id, Shopware.Context.api )
-            .then( ( media ) => {
-                this.slide[ this.media[key].slideMediaId ] = id
-                this.media[key].data = media
-                
-            }).catch(( exception ) => {
-                console.error( exception )
-                return
+        setMedia( type, id ) {
+            this.setSlideProperty({
+                key: this.mediaTypes[type].idField, 
+                value: id
             })
+            
+            this.fetchMedia( type )
         },
 
-        resetMedia( key ) {
-            this.slide[ this.media[key].slideMediaId ] = null
-            this.media[key].data = null
+        resetMedia( type ) {
+            this.setSlideProperty({
+                key: this.mediaTypes[type].idField, 
+                value: null
+            })
+            this.setSlideProperty({
+                key: this.mediaTypes[type].objectField, 
+                value: null
+            })
+            this.setSlideMedia({
+                key: this.mediaTypes[type], 
+                value: null
+            })
         },
 
         changeCoverType( value ) {
-            console.log(value)
             this.coverType = value
         }
     }

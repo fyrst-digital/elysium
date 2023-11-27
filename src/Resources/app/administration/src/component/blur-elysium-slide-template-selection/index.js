@@ -6,6 +6,9 @@ export default {
     props: {
         value: {
             type: String
+        },
+        disabled: {
+            type: Boolean
         }
     },
 
@@ -18,18 +21,6 @@ export default {
                 }
             ]
         };
-    },
-
-    watch: {
-    },
-
-    computed: {
-    },
-
-    created() {
-    },
-
-    mounted() {
     },
 
     methods: {

@@ -1,0 +1,18 @@
+{% block blur_elysium_slide_settings_display_general %}
+    <sw-card
+        :position-identifier="positionIdentifiers.detail.display.content"
+        :title="$tc('BlurElysiumSlides.appearance.contentGeneral.title')"
+    >
+
+        <sw-select-field 
+            v-if="slide.slideSettings"
+            :disabled="!editable"
+            :value="slide.slideSettings.contentVerticalAlign"
+            :label="$tc('BlurElysiumSlides.appearance.contentGeneral.contentVerticalAlign.label')"
+            @change="value => setSlideSetting({key:'contentVerticalAlign', value: value})" >
+            <option value="left">{{ $tc('BlurElysiumSlides.appearance.contentGeneral.contentVerticalAlign.options.left') }}</option>
+            <option value="center">{{ $tc('BlurElysiumSlides.appearance.contentGeneral.contentVerticalAlign.options.center') }}</option>
+            <option value="right">{{ $tc('BlurElysiumSlides.appearance.contentGeneral.contentVerticalAlign.options.right') }}</option>
+        </sw-select-field>
+    </sw-card>
+{% endblock %}

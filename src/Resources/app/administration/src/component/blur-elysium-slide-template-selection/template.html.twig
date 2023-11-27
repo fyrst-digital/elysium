@@ -5,6 +5,7 @@
             :placeholder="$tc('blurElysiumSlides.slideSettings.slideTemplate.placeholder')"
             :options="defaultSlideTemplates"
             :value="value"
+            :disabled="disabled"
             @change="onChange">
             <option 
                 v-for="template in defaultSlideTemplates" 

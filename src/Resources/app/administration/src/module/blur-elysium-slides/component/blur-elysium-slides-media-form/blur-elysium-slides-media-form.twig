@@ -1,48 +1,47 @@
 {% block blur_elysium_slides_basic_form %}
     <sw-card
         :position-identifier="positionIdentifiers.detail.media"
-        :title="$tc('BlurElysiumSlides.mediaForm.cardTitle')"
-        :is-loading="isLoading"
-    >
+        :title="$tc('blurElysiumSlides.slideSettings.slideCover.label')">
         
         <sw-container columns="1fr 1fr" gap="32px">
 
             {% block blur_elysium_slides_media_form_cover_upload %}
                 <div>
                     <sw-upload-listener
-                        :upload-tag="coverTag"
+                        :upload-tag="uploadTag.cover"
                         auto-upload
-                        @media-upload-finish="payload => setMedia( payload.targetId, 'slideCover' )"
+                        @media-upload-finish="payload => setMedia( 'slideCover', payload.targetId )"
                     />
                     <sw-media-upload-v2
-                        :disabled="!allowEdit"
-                        :upload-tag="coverTag"
-                        :source="media.slideCover.data"
                         class="blur-elysium-slides__media-upload"
-                        :allow-multi-select="false"
                         variant="regular"
+                        file-accept="*/*"
+                        :disabled="!editable"
+                        :upload-tag="uploadTag.cover"
+                        :source="slideCoverPreview"
+                        :allow-multi-select="false"
                         :label="$tc('BlurElysiumSlides.mediaForm.uploadInput.title')"
                         :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
                         :default-folder="entityName"
-                        file-accept="*/*"
-                        @media-drop="payload => setMedia( payload.id, 'slideCover' )"
+                        @media-drop="payload => setMedia( 'slideCover', payload.id )"
                         @media-upload-remove-image="payload => resetMedia( 'slideCover' )"
                         @media-upload-sidebar-open="mediaSidebar.openContent()"
                     />            
                 </div>
             {% endblock %}
 
+
             {% block blur_elysium_slides_media_form_cover_portrait_upload %}
-                <div v-if="media.slideCover?.data?.mediaType.name !== 'VIDEO'">
+                <div v-if="slide.mediaPortrait?.mediaType.name !== 'VIDEO'">
                     <sw-upload-listener
-                        :upload-tag="coverPortraitTag"
+                        :upload-tag="uploadTag.coverPortrait"
                         auto-upload
-                        @media-upload-finish="payload => setMedia( payload.targetId, 'slideCoverPortrait' )"
+                        @media-upload-finish="payload => setMedia( 'slideCoverPortrait', payload.targetId )"
                     />
                     <sw-media-upload-v2
-                        :disabled="!allowEdit"
-                        :upload-tag="coverPortraitTag"
-                        :source="media.slideCoverPortrait.data"
+                        :disabled="!editable"
+                        :upload-tag="uploadTag.coverPortrait"
+                        :source="slideCoverPortraitPreview"
                         class="blur-elysium-slides__media-upload"
                         :allow-multi-select="false"
                         variant="regular"
@@ -50,7 +49,7 @@
                         :help-text="$tc('BlurElysiumSlides.mediaForm.coverPortrait.helpText')"
                         :default-folder="entityName"
                         file-accept="image/*"
-                        @media-drop="payload => setMedia( payload.id, 'slideCoverPortrait' )"
+                        @media-drop="payload => setMedia( 'slideCoverPortrait', payload.id )"
                         @media-upload-remove-image="payload => resetMedia( 'slideCoverPortrait' )"
                         @media-upload-sidebar-open="mediaSidebar.openContent()"
                     />            

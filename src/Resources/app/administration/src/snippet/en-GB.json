@@ -13,7 +13,8 @@
             "bgColor": "Background Color",
             "bgColorActive": "Background Color (Active)",
             "padding": "Padding",
-            "unitPlaceholderPxRem": "px or rem value"
+            "unitPlaceholderPxRem": "px or rem value",
+            "noHeadline": "No Headline"
         },
         "config": {
             "content": "Content",

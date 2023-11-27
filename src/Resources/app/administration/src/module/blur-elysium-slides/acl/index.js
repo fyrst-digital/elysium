@@ -4,20 +4,36 @@ Shopware.Service('privileges').addPrivilegeMappingEntry({
     key: 'blur_elysium_slides',
     roles: {
         viewer: {
-            privileges: ['blur_elysium_slides:read'],
+            privileges: [
+                'blur_elysium_slides:read'
+            ],
             dependencies: []
         },
         editor: {
-            privileges: [],
-            dependencies: []
+            privileges: [
+                'blur_elysium_slides:update'
+            ],
+            dependencies: [
+                'blur_elysium_slides.viewer'
+            ]
         },
         creator: {
-            privileges: ['blur_elysium_slides:create','blur_elysium_slides:update'],
-            dependencies: ['blur_elysium_slides:create']
+            privileges: [
+                'blur_elysium_slides:create',
+            ],
+            dependencies: [
+                'blur_elysium_slides.viewer',
+                'blur_elysium_slides.editor'
+            ]
         },
         deleter: {
-            privileges: [],
-            dependencies: []
+            privileges: [
+                'blur_elysium_slides:delete'
+            ],
+            dependencies: [
+                'blur_elysium_slides.viewer',
+                'blur_elysium_slides.editor'
+            ]
         }
     }
 });

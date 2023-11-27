@@ -1,0 +1,78 @@
+{% block blur_elysium_slide_settings_content_container %}
+    <sw-card
+        v-if="slide.slideSettings"
+        :position-identifier="positionIdentifiers.detail.display.container"
+        :title="$tc('BlurElysiumSlides.settings.container.title')"
+    >
+        <sw-container 
+            columns="1fr 1fr 1fr" 
+            gap="0 1rem">
+
+            <sw-select-field 
+                :disabled="!editable"
+                :value="slide.slideSettings.containerVerticalAlign"
+                :label="$tc('BlurElysiumSlides.settings.container.verticalAlign.label')"
+                @change="value => setSlideSetting({ key: 'containerVerticalAlign', value: value })">
+                <option value="top">{{ $tc('BlurElysiumSlides.settings.container.verticalAlign.options.top') }}</option>
+                <option value="center">{{ $tc('BlurElysiumSlides.settings.container.verticalAlign.options.center') }}</option>
+                <option value="bottom">{{ $tc('BlurElysiumSlides.settings.container.verticalAlign.options.bottom') }}</option>
+            </sw-select-field>
+
+            <sw-colorpicker
+                colorOutput="auto"
+                :disabled="!editable"
+                :value="slide.slideSettings.containerBgColor"
+                :label="$tc('blurElysiumSlider.general.bgColor')"
+                :alpha="true"
+                :colorLabels="true"
+                :zIndex="100"
+                @input="value => setSlideSetting({ key: 'containerBgColor', value: value })">
+            </sw-colorpicker>
+
+            <sw-text-field
+                :disabled="!editable"
+                :value="slide.slideSettings.containerPadding" 
+                :label="$tc('blurElysiumSlider.general.padding')"
+                :placeholder="$tc('BlurElysiumSlides.settings.container.padding.placeholder')"
+                @input="value => setSlideSetting({ key: 'containerPadding', value: value })"
+                />
+        </sw-container>
+
+        <h4>
+            {{ $tc('BlurElysiumSlides.settings.container.boxMode.title') }}
+            <sw-help-text 
+                :text="$tc('BlurElysiumSlides.settings.container.boxMode.helpText')"
+                :width="400"
+            />
+            </sw-help-text>
+        </h4>
+            <sw-switch-field 
+                :disabled="!editable"
+                :label="$tc('BlurElysiumSlides.settings.container.boxMode.inputLabel')" 
+                :style="{
+                    margin: 0
+                }"
+                :value="slide.slideSettings.containerBoxMode"
+                @change="value => setSlideSetting({ key: 'containerBoxMode', value: value })">
+            </sw-switch-field>
+        <sw-container columns="1fr 1fr" gap="0 1rem">
+
+            <sw-select-field 
+                :disabled="!editable"
+                :placeholder="$tc('BlurElysiumSlides.settings.container.horizontalAlign.placeholder')"
+                :value="slide.slideSettings.containerHorizontalAlign"
+                @change="value => setSlideSetting({ key: 'containerHorizontalAlign', value: value })">
+                <option value="left">{{ $tc('BlurElysiumSlides.settings.container.horizontalAlign.options.left') }}</option>
+                <option value="center">{{ $tc('BlurElysiumSlides.settings.container.horizontalAlign.options.center') }}</option>
+                <option value="right">{{ $tc('BlurElysiumSlides.settings.container.horizontalAlign.options.right') }}</option>
+            </sw-select-field>
+
+            <sw-text-field
+                :disabled="!editable"
+                :value="slide.slideSettings.containerMaxWidth" 
+                :placeholder="$tc('BlurElysiumSlides.settings.container.maxWidth.placeholder')"
+                @input="value => setSlideSetting({ key: 'containerMaxWidth', value: value })"
+            />
+        </sw-container>
+    </sw-card>
+{% endblock %}

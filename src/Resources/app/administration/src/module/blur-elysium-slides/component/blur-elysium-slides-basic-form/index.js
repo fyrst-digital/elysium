@@ -1,9 +1,8 @@
 import template from './blur-elysium-slides-basic-form.twig';
 import { slides } from "@elysiumSlider/utilities/identifiers";
 
-const { Criteria } = Shopware.Data;
-const { Component, Context, Mixin } = Shopware;
-const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
+const { Component, Mixin } = Shopware;
+const { mapMutations, mapPropertyErrors, mapState } = Component.getComponentHelper();
 
 const propErrors = [
     'name'
@@ -14,8 +13,13 @@ export default {
 
     mixins: [
         Mixin.getByName('placeholder'),
+        Mixin.getByName('blur-editable')
     ],
 
+    /**
+     * @deprecated this props will be removed
+     * allowEdit will be handled through the ACL vuex state
+     */
     props: {
         isLoading: {
             type: Boolean
@@ -30,7 +34,9 @@ export default {
     computed: {
         
         ...mapState('blurElysiumSlidesDetail', [
-            'slide'
+            'slide',
+            'loading',
+            'acl'
         ]),
         
         ...mapPropertyErrors( 'blurElysiumSlides' , propErrors),
@@ -42,5 +48,18 @@ export default {
         urlOverlayActive() {
             return this.slide.slideSettings && this.slide.slideSettings.urlOverlay ? true : false
         }
+    },
+
+    created() {
+        /**
+         * @todo set editable props in template
+         */
+        console.log(this.editable, this.slide)
+    },
+
+    methods: {
+        ...mapMutations('blurElysiumSlidesDetail', [
+            'setSlideSetting',
+        ]),
     }
 }

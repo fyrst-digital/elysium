@@ -13,7 +13,8 @@
             "bgColor": "Hintergrund-Farbe",
             "bgColorActive": "Hintergrund-Farbe (Aktiv)",
             "padding": "Innenabstand",
-            "unitPlaceholderPxRem": "px oder rem Wert"
+            "unitPlaceholderPxRem": "px oder rem Wert",
+            "noHeadline": "Keine Überschrift"
         },
         "config": {
             "content": "Inhalt",

@@ -50,17 +50,47 @@ Shopware.Module.register( 'blur-elysium-slides', {
         create: {
             component: 'blur-elysium-slides-detail',
             path: 'create',
+            redirect: {
+                name: 'blur.elysium.slides.create.content',
+            },
             meta: {
                 parentPath: 'blur.elysium.slides.index'
+            },
+            children: {
+                content: {
+                    component: 'blur-elysium-slide-settings-content',
+                    path: 'content',
+                    meta: {
+                        parentPath: 'blur.elysium.slides.index'
+                    },
+                },
+                media: {
+                    component: 'blur-elysium-slide-settings-media',
+                    path: 'media',
+                    meta: {
+                        parentPath: 'blur.elysium.slides.index'
+                    },
+                },
+                display: {
+                    component: 'blur-elysium-slide-settings-display',
+                    path: 'display',
+                    meta: {
+                        parentPath: 'blur.elysium.slides.index'
+                    },
+                },
+                advanced: {
+                    component: 'blur-elysium-slide-settings-advanced',
+                    path: 'advanced',
+                    meta: {
+                        parentPath: 'blur.elysium.slides.index'
+                    },
+                }
             }
         },
 
         detail: {
             component: 'blur-elysium-slides-detail',
             path: 'detail/:id',
-            meta: {
-                parentPath: 'blur.elysium.slides.index'
-            },
             props: {
                 default(route) {
                     return {
@@ -68,10 +98,37 @@ Shopware.Module.register( 'blur-elysium-slides', {
                     };
                 },
             },
+            redirect: {
+                name: 'blur.elysium.slides.detail.content',
+            },
+            meta: {
+                parentPath: 'blur.elysium.slides.index'
+            },
             children: {
-                base: {
-                    component: 'blur-elysium-slides-base',
-                    path: 'base',
+                content: {
+                    component: 'blur-elysium-slide-settings-content',
+                    path: 'content',
+                    meta: {
+                        parentPath: 'blur.elysium.slides.index'
+                    },
+                },
+                media: {
+                    component: 'blur-elysium-slide-settings-media',
+                    path: 'media',
+                    meta: {
+                        parentPath: 'blur.elysium.slides.index'
+                    },
+                },
+                display: {
+                    component: 'blur-elysium-slide-settings-display',
+                    path: 'display',
+                    meta: {
+                        parentPath: 'blur.elysium.slides.index'
+                    },
+                },
+                advanced: {
+                    component: 'blur-elysium-slide-settings-advanced',
+                    path: 'advanced',
                     meta: {
                         parentPath: 'blur.elysium.slides.index'
                     },
