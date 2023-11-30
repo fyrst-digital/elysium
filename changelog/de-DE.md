@@ -1,3 +1,13 @@
+# `unreleased`
+
+## Changelog
+- Änderung: Die Slide Bearbeitungsseite wurde umstrukturiert. Dies betrifft hauptsächlich die Code Qualität. Das Formular für Medien wurde in einen eigenen Tab ausgegliedert. Die Zusatzfelder Einstellungen sind nun im Tab "Erweitert" zu finden.
+
+# `1.5.6` 
+
+## Changelog
+- Bugfix: Ein Fehler in der Slide-Auswahl des Erlebniswelten Slider Elements wurde behoben. Bei fehlender Slide Überschrift konnten keine Slides ausgewählt werden und die Slide-Auswahl wurde nicht angezeigt. Nun sollte die gesamte Slide-Auswahl, auch ohne eine hinterlegte Slide Überschrift, wie erwartet funktionieren.
+
 # `1.5.5` 
 
 ## Changelog

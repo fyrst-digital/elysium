@@ -1,3 +1,13 @@
+# `unreleased`
+
+## Changelog
+- Änderung: Die Slide Bearbeitungsseite wurde umstrukturiert. Dies betrifft hauptsächlich die Code Qualität. Das Formular für Medien wurde in einen eigenen Tab ausgegliedert. Die Zusatzfelder Einstellungen sind nun im Tab "Erweitert" zu finden.
+
+# `1.5.6` 
+
+## Changelog
+- Bugfix: An error in the slide selection of the shopping experience slider element has been fixed. With empy slide headlines, no slides could be selected and the slide selection was not displayed. Now the entire slide selection should work as expected even if slide headlines are empty.
+
 # `1.5.5` 
 
 ## Changelog
