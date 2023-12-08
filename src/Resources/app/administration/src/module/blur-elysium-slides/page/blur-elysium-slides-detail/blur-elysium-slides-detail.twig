@@ -19,32 +19,71 @@
 
                     {% block blur_elysium_slides_detail_view_smart_bar_action_cancel %}
                         <sw-button
-                            :disabled="loading.slide"
+                            :disabled="!hasChanges"
+                            v-tooltip="{
+                                message: $tc('blurElysiumSlides.messages.cancelChanges')
+                            }"
                             @click="cancel"
                         >
                             {{ $tc('sw-customer.detail.buttonCancel') }}
                         </sw-button>
                     {% endblock %}
 
-                    {% block blur_elysium_slides_detail_view_smart_bar_action_save %}
+                    <sw-button-group
+                        :split-button="true"
+                    >
 
-                        <sw-button-process
-                            v-tooltip="{
-                                message: $tc('sw-privileges.tooltip.warning'),
-                                disabled: acl.can('blur_elysium_slides.editor'),
-                                showOnDisabledElements: true
-                            }"
-                            class="sw-customer-detail__save-action"
-                            :is-loading="loading.slide"
-                            :process-success="isSaveSuccessful"
-                            :disabled="loading.slide || !( acl.can('blur_elysium_slides.editor') || ( acl.can('blur_elysium_slides.creator') && isNewSlide ) )"
-                            variant="primary"
-                            @process-finish="saveFinish"
-                            @click.prevent="onSave"
-                        >
-                            {{ $tc('sw-customer.detail.buttonSave') }}
-                        </sw-button-process>
-                    {% endblock %}
+                        {% block blur_elysium_slides_detail_view_smart_bar_action_save %}
+                            <sw-button-process
+                                v-tooltip="{
+                                    message: $tc('sw-privileges.tooltip.warning'),
+                                    disabled: acl.can('blur_elysium_slides.editor'),
+                                    showOnDisabledElements: true
+                                }"
+                                class="sw-customer-detail__save-action"
+                                :is-loading="loading.slide"
+                                :process-success="isSaveSuccessful"
+                                :disabled="loading.slide || !( acl.can('blur_elysium_slides.editor') || ( acl.can('blur_elysium_slides.creator') && isNewSlide ) )"
+                                variant="primary"
+                                @process-finish="saveFinish"
+                                @click.prevent="onSave"
+                            >
+                                {{ $tc('sw-customer.detail.buttonSave') }}
+                            </sw-button-process>
+                        {% endblock %}
+
+                        <sw-context-button>
+                            <template #button>
+                                <sw-button
+                                    class="sw-product-detail__button-context-menu"
+                                    square
+                                    variant="primary"
+                                    :disabled="loading.slide || !( acl.can('blur_elysium_slides.editor') || ( acl.can('blur_elysium_slides.creator') && isNewSlide ) )"
+                                >
+                                    <sw-icon
+                                        name="regular-chevron-down-xs"
+                                        size="16"
+                                    />
+                                </sw-button>
+                            </template>
+
+                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                            <sw-context-menu-item
+                                :disabled="loading.slide || !( acl.can('blur_elysium_slides.editor') || ( acl.can('blur_elysium_slides.creator') && isNewSlide ) )"
+                                @click="onCopySlide"
+                            >
+                                {{ $tc('blurElysiumSlides.actions.buttonSaveDuplicate') }}
+                            </sw-context-menu-item>
+                            <sw-context-menu-item
+                                variant="danger"
+                                :disabled="loading.slide || !( acl.can('blur_elysium_slides.deletor')  )"
+                                @click="showDeleteModal = true"
+                            >
+                                {{ $tc('blurElysiumSlides.actions.deleteSlide') }}
+                            </sw-context-menu-item>
+                        </sw-context-button>
+                    </sw-button-group>
                 </sw-container>
             </template>
         {% endblock %}
@@ -117,6 +156,12 @@
                     Something went wrong
                 </div>
             {% endblock %}
+
+            <blur-elysium-slide-modal-delete
+                v-if="showDeleteModal === true"
+                :slide-id="slide.id" 
+                @modal-close="showDeleteModal = false" 
+                @delete-finish="onDeleteFinish" />
         </template>
 
         {% block blur_elysium_slides_detail_view_sidebar %}
@@ -131,10 +176,12 @@
                                 slot="context-menu-items"
                                 slot-scope="media"
                             >
-                                <sw-context-menu-item @click="setMedia(media.mediaItem.id, 'slideCover')">
+                                <sw-context-menu-item 
+                                    @click="setMedia(media.mediaItem.id, 'slideCover')">
                                     {{ $tc('BlurElysiumSlides.mediaForm.useAsCover') }}
                                 </sw-context-menu-item>
-                                <sw-context-menu-item @click="setMedia(media.mediaItem.id, 'slideCoverPortrait')">
+                                <sw-context-menu-item 
+                                    @click="setMedia(media.mediaItem.id, 'slideCoverPortrait')">
                                     {{ $tc('BlurElysiumSlides.mediaForm.useAsCoverPortrait') }}
                                 </sw-context-menu-item>
                             </template>

@@ -14,7 +14,8 @@
             "bgColorActive": "Hintergrund-Farbe (Aktiv)",
             "padding": "Innenabstand",
             "unitPlaceholderPxRem": "px oder rem Wert",
-            "noHeadline": "Keine Überschrift"
+            "noHeadline": "Keine Überschrift",
+            "copySuffix": "kopie"
         },
         "config": {
             "content": "Inhalt",
@@ -164,11 +165,17 @@
     },
     "blurElysiumSlides": {
         "messages": {
-            "noChanges": "Keine Änderungen"
+            "noChanges": "Keine Änderungen",
+            "deleteSlideConfirmDialogue": "Möchtest du den Slide endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden",
+            "deleteNamedSlideConfirmDialogue": "Möchtest du den Slide <b>{name}</b> endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden",
+            "copyErrorUnsavedChanges": "Es gibt ungespeicherte Änderungen. Speichere oder verwirf diese Änderungen damit du den Slide duplizieren kannst",
+            "cancelChanges": "Änderungen verwerfen und Seite neu laden"
         },
         "actions": {
             "createSlide": "Slide erstellen",
-            "toOverview": "Zur Übersicht"
+            "toOverview": "Zur Übersicht",
+            "deleteSlide": "Slide löschen",
+            "buttonSaveDuplicate": "Slide duplizieren"
         },
         "slideSearch": {
             "noResult": "Keine Slides gefunden",
@@ -200,6 +207,7 @@
         },
         "slideSettingTabs": {
             "contentLabel": "Inhalt",
+            "mediaLabel": "Medien",
             "displayLabel": "Anzeige",
             "advancedLabel": "Erweitert"
         }

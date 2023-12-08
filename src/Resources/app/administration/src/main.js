@@ -22,6 +22,8 @@ Mixin.register('blur-editable', {
     }
 });
 
+Shopware.Component.register('blur-card-loading', () => import('@elysiumSlider/component/blur-card-loading'));
+Shopware.Component.register('blur-elysium-slide-modal-delete', () => import('@elysiumSlider/component/blur-elysium-slide-modal-delete'));
 Shopware.Component.register('blur-elysium-slider-config-settings', () => import('@elysiumSlider/component/blur-elysium-slider-config-settings'));
 Shopware.Component.register('blur-elysium-slider-config-sizing', () => import('@elysiumSlider/component/blur-elysium-slider-config-sizing'));
 Shopware.Component.register('blur-elysium-slider-config-navigation', () => import('@elysiumSlider/component/blur-elysium-slider-config-navigation'));
@@ -35,7 +37,6 @@ Shopware.Component.register('blur-elysium-slide-settings-advanced', () => import
 Shopware.Component.register('blur-elysium-slide-selection', () => import('@elysiumSlider/component/blur-elysium-slide-selection'));
 Shopware.Component.register('blur-elysium-slide-select-item', () => import('@elysiumSlider/component/blur-elysium-slide-select-item'));
 Shopware.Component.register('blur-elysium-slide-template-selection', () => import('@elysiumSlider/component/blur-elysium-slide-template-selection'));
-Shopware.Component.register('blur-card-loading', () => import('@elysiumSlider/component/blur-card-loading'));
 
 // register text snippets gobally
 Shopware.Locale.extend('en-GB', enGB);

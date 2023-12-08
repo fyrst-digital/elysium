@@ -42,6 +42,8 @@ Component.register( 'blur-elysium-slides-detail', {
             entityName: 'blur_elysium_slides',
             isSaveSuccessful: false,
             isNewSlide: null,
+            hasChanges: false,
+            showDeleteModal: false,
             detailRoute: 'blur.elysium.slides.detail',
             createRoute: 'blur.elysium.slides.create'
         };
@@ -169,17 +171,21 @@ Component.register( 'blur-elysium-slides-detail', {
     watch: {
         blurElysiumSlideId() {
             this.createdComponent();
+        },
+        slide: {
+            handler: function(newValue) {
+                this.hasChanges =  this.elysiumSlidesRepository.hasChanges(newValue)
+            },
+            deep: true
         }
     },
 
     beforeCreate() {
         Shopware.State.registerModule('blurElysiumSlidesDetail', slideStates);
-        console.log(this);
     },
 
     beforeDestroy() {
-        Shopware.State.unregisterModule('blurElysiumSlidesDetail');
-        console.log('destroy')
+        Shopware.State.unregisterModule('blurElysiumSlidesDetail')
     },
 
     created() {
@@ -351,6 +357,29 @@ Component.register( 'blur-elysium-slides-detail', {
         },
 
         cancel() {
+            this.$router.go();
+        },
+
+        onCopySlide() {
+            if (this.elysiumSlidesRepository.hasChanges(this.slide)) {
+                this.createNotificationError({
+                    message: this.$tc('blurElysiumSlides.messages.copyErrorUnsavedChanges')
+                });     
+                return;
+            }
+            const cloneOptions = {
+                overwrites: {
+                    name: `${this.slide.name}-${this.$tc('blurElysiumSlider.general.copySuffix')}`,
+                },
+            };
+            this.elysiumSlidesRepository.clone(this.slide.id, Shopware.Context.api, cloneOptions).then((result) => {
+                this.$router.push({ name: 'blur.elysium.slides.detail', params: { id: result.id } });
+            }).catch((error) => {
+                console.warn(error)
+            });
+        },
+
+        onDeleteFinish() {
             this.$router.push({ name: 'blur.elysium.slides.index' });
         }
     }
