@@ -27,7 +27,8 @@ const slides = {
             content: "blur-elysium-slide-detail-display-content",
             container: "blur-elysium-slide-detail-display-container"
         },
-        media: "blur-elysium-slide-detail-media"
+        media: "blur-elysium-slide-detail-media",
+        presentationMedia: "blur-elysium-slide-detail-presentation-media",
     },
 }
 

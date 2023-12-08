@@ -1,4 +1,5 @@
 {% block blur_elysium_slides_basic_form %}
+<sw-card-view>
     <sw-card
         :position-identifier="positionIdentifiers.detail.media"
         :title="$tc('blurElysiumSlides.slideSettings.slideCover.label')">
@@ -57,4 +58,37 @@
             {% endblock %}
         </sw-container>
     </sw-card>
+
+    <sw-card
+        :position-identifier="positionIdentifiers.detail.presentationMedia"
+        :title="$tc('blurElysiumSlides.slideSettings.presentationMedia.label')">
+        
+        <sw-container columns="1fr" gap="32px">
+
+            {% block blur_elysium_slides_media_form_presentation_media_upload %}
+                <div>
+                    <sw-upload-listener
+                        :upload-tag="uploadTag.presentationMedia"
+                        auto-upload
+                        @media-upload-finish="payload => setMedia( 'presentationMedia', payload.targetId )"
+                    />
+                    <sw-media-upload-v2
+                        class="blur-elysium-slides__media-upload"
+                        variant="regular"
+                        file-accept="image/*"
+                        :disabled="!editable"
+                        :upload-tag="uploadTag.presentationMedia"
+                        :source="presentationMediaPreview"
+                        :allow-multi-select="false"
+                        :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
+                        :default-folder="entityName"
+                        @media-drop="payload => setMedia( 'presentationMedia', payload.id )"
+                        @media-upload-remove-image="payload => resetMedia( 'presentationMedia' )"
+                        @media-upload-sidebar-open="mediaSidebar.openContent()"
+                    />            
+                </div>
+            {% endblock %}
+        </sw-container>
+    </sw-card>
+</sw-card-view>
 {% endblock %}

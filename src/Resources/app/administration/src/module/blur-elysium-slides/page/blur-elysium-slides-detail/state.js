@@ -6,7 +6,8 @@ export default {
             slide: {},
             media: {
                 slideCover: null,
-                slideCoverPortrait: null
+                slideCoverPortrait: null,
+                presentationMedia: null
             },
             customFieldSets: [],
             /**

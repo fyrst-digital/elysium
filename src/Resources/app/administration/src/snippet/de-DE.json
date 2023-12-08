@@ -203,6 +203,12 @@
                 "cardDescription": "Hier kannst du eine eigene Twig-Template Datei für diesen Slide festlegen. Wenn du in diesem Feld eine Twig-Template Datei eingnetragen hast, musst du diese manuell in deinem Theme hinterlegen.",
                 "customTemplatePath": "Der Pfad zu dieser Datei lautet:<br/><span class='bc-code-inline'>/storefront/component/blur-elysium-slide/custom/<b>{file}.html.twig</b></span>",
                 "hasCustomNotice": "<b>Hinweis:</b> Dieser Slide hat eine eigene Twig-Template Datei hinterlegt. Bitte beachte dies beim verwalten des Slides."
+            },
+            "slideCover": {
+                "label": "Slide Cover"
+            },
+            "presentationMedia": {
+                "label": "Fokus Bild"
             }
         },
         "slideSettingTabs": {

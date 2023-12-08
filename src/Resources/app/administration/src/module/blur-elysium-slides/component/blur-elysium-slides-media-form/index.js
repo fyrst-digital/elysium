@@ -19,7 +19,8 @@ export default {
         return {
             uploadTag: {
                 cover: 'blur-elysium-slide-cover-media',
-                coverPortrait: 'blur-elysium-slide-cover-portrait-media'
+                coverPortrait: 'blur-elysium-slide-cover-portrait-media',
+                presentationMedia: 'blur-elysium-slide-presentation-media',
             },
             mediaTypes: {
                 slideCover: {
@@ -29,6 +30,10 @@ export default {
                 slideCoverPortrait: {
                     idField: 'mediaPortraitId',
                     objectField: 'mediaPortrait'
+                },
+                presentationMedia: {
+                    idField: 'presentationMediaId',
+                    objectField: 'presentationMedia'
                 }
             }
         };
@@ -60,6 +65,16 @@ export default {
                 return this.media.slideCoverPortrait
             }
             
+            return null
+        },
+
+        presentationMediaPreview() {
+            if (this.slide.presentationMedia) {
+                return this.slide.presentationMedia
+            } else if(this.media.presentationMedia) {
+                return this.media.presentationMedia
+            }
+
             return null
         },
 
