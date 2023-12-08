@@ -2,6 +2,7 @@
 
 ## Changelog
 - Änderung: Die Slide Bearbeitungsseite wurde umstrukturiert. Dies betrifft hauptsächlich die Code Qualität. Das Formular für Medien wurde in einen eigenen Tab ausgegliedert. Die Zusatzfelder Einstellungen sind nun im Tab "Erweitert" zu finden.
+- Verbesserung: Das Löschen eines Slides ist jetzt auch auf der Bearbeitungsseite möglich.
 
 # `1.5.6` 
 

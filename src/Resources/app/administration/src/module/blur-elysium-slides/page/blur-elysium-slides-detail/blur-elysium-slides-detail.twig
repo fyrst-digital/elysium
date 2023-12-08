@@ -55,10 +55,9 @@
                         <sw-context-button>
                             <template #button>
                                 <sw-button
-                                    class="sw-product-detail__button-context-menu"
                                     square
                                     variant="primary"
-                                    :disabled="loading.slide || !( acl.can('blur_elysium_slides.editor') || ( acl.can('blur_elysium_slides.creator') && isNewSlide ) )"
+                                    :disabled="loading.slide || !blurElysiumSlideId || !( acl.can('blur_elysium_slides.editor') || ( acl.can('blur_elysium_slides.creator') && isNewSlide ) )"
                                 >
                                     <sw-icon
                                         name="regular-chevron-down-xs"
