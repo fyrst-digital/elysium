@@ -21,7 +21,7 @@ Component.register( 'blur-elysium-slides-list', {
 
     data() {
         return {
-            blur_elysium_slides: null,
+            slides: null,
             total: 0,
             isLoading: false,
             term: this.$route.query ? this.$route.query.term : '',
@@ -41,7 +41,7 @@ Component.register( 'blur-elysium-slides-list', {
 
     computed: {
 
-        elysiumSlidesRepository() {
+        repository() {
             return this.repositoryFactory.create( 'blur_elysium_slides' );
         },
 
@@ -95,12 +95,11 @@ Component.register( 'blur-elysium-slides-list', {
             this.isLoading = true;
 
             try {
-                const items = await this.elysiumSlidesRepository.search( this.defaultCriteria, Shopware.Context.api );
+                const items = await this.repository.search( this.defaultCriteria, Shopware.Context.api );
 
                 this.total = items.total;
-                this.blur_elysium_slides = items;
+                this.slides = items;
                 this.isLoading = false;
-                this.selection = {};
             } catch {
                 this.isLoading = false;
             }
@@ -110,16 +109,8 @@ Component.register( 'blur-elysium-slides-list', {
             this.showDeleteModal = id;
         },
 
-        onCloseDeleteModal() {
-            this.showDeleteModal = false;
-        },
-
-        onConfirmDelete( id ) {
-            this.showDeleteModal = false;
-
-            return this.elysiumSlidesRepository.delete( id, Shopware.Context.api ).then(() => {
-                this.getList();
-            });
+        onDeleteFinish() {
+            this.getList();
         },
 
         onSearch( searchTerm ) {
@@ -151,6 +142,21 @@ Component.register( 'blur-elysium-slides-list', {
 
         onDeleteItems() {
             this.getList();
+        },
+
+        onCopySlide(referenceSlide) {
+            this.isLoading = true
+            const cloneOptions = {
+                overwrites: {
+                    name: `${referenceSlide.name}-${this.$tc('blurElysiumSlider.general.copySuffix')}`,
+                },
+            };
+            this.repository.clone(referenceSlide.id, Shopware.Context.api, cloneOptions).then((result) => {
+                this.getList();
+            }).catch((error) => {
+                console.warn(error)
+                this.isLoading = false
+            });
         },
 
         getElysiumSlidesColumns() {

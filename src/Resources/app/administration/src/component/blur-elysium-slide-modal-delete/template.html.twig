@@ -1,0 +1,42 @@
+{% block blur_elysium_slide_modal_delete %}
+    <sw-modal
+        :title="$tc('blurElysiumSlides.actions.deleteSlide')"
+        variant="small"
+        @modal-close="onCloseModal"
+    >
+
+        <sw-container 
+            gap="1rem">
+            {% block blur_elysium_slide_modal_delete_content %}
+                <div
+                    :style="{
+                        padding: '1rem 0'
+                    }">
+                    <slot name="content">
+                        {{ $tc('blurElysiumSlides.messages.deleteSlideConfirmDialogue') }}
+                    </slot>
+                </div>
+            {% endblock %}
+
+            {% block blur_elysium_slides_modal_delete_actions %}
+                <sw-container columns="auto auto" gap="1rem">
+                    {% block blur_elysium_slides_modal_delete_action_cancel %}
+                        <sw-button
+                            @click="onCloseModal">
+                            {{ $tc('sw-customer.list.buttonCancel') }}
+                        </sw-button>
+                    {% endblock %}
+
+                    {% block blur_elysium_slides_modal_delete_action_delete_confirm %}
+                        <sw-button
+                            variant="danger"
+                            @click="onDelete"
+                        >
+                            {{ $tc('sw-customer.list.buttonDelete') }}
+                        </sw-button>
+                    {% endblock %}
+                </sw-container>
+            {% endblock %}
+        </sw-container>
+    </sw-modal>
+{% endblock %}
