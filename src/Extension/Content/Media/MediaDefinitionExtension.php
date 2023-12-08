@@ -21,6 +21,9 @@ class MediaDefinitionExtension extends EntityExtension
         $collection->add(
             (new OneToManyAssociationField('blurElysiumSlides', ElysiumSlidesDefinition::class, 'media_portrait_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
         );
+        $collection->add(
+            (new OneToManyAssociationField('blurElysiumSlides', ElysiumSlidesDefinition::class, 'presentation_media_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
+        );
     }
 
     public function getDefinitionClass(): string

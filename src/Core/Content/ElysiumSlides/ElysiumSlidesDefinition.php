@@ -42,11 +42,16 @@ class ElysiumSlidesDefinition extends EntityDefinition {
                 new Required(), 
                 new PrimaryKey() 
             ),
-            // media association
+            // media associations
+            /// media (slide cover)
             (new FkField('media_id', 'mediaId', MediaDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('media', 'media_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
+            /// media portrait (slide cover)
             (new FkField('media_portrait_id', 'mediaPortraitId', MediaDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('mediaPortrait', 'media_portrait_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
+            /// media presentation
+            (new FkField('presentation_media_id', 'presentationMediaId', MediaDefinition::class))->addFlags(new ApiAware()),
+            (new ManyToOneAssociationField('presentationMedia', 'presentation_media_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
             // slide settings
             (new JsonField('slide_settings', 'slideSettings',))->addFlags(new ApiAware()),       
             // translation
