@@ -1,0 +1,12 @@
+{% set containerClasses = [
+    'blur-elysium-slide-image'
+] %}
+
+<div class="{{ containerClasses|join(' ') }}">
+    {% sw_thumbnails 'my-thumbnails' with {
+        media: slideData.presentationMedia,
+        attributes: {
+            'class': 'mw-100'
+        }
+    } %}
+</div>

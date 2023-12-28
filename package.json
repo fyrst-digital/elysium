@@ -1,0 +1,22 @@
+{
+  "name": "@elysium-slider/package",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint:administration": "eslint --ext .js,.ts,.vue src/Resources/app/administration/src",
+    "lint:administration:fix": "eslint --ext .js,.ts,.vue --fix src/Resources/app/administration/src",
+    "lint:storefront": "eslint --ext .js,.ts,.vue src/Resources/app/storefront/src",
+    "lint:storefront:fix": "eslint --ext .js,.ts,.vue --fix src/Resources/app/storefront/src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robert Bisovski",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.5.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.19.2"
+  }
+}

@@ -8,10 +8,15 @@ import deDE from './snippet/de-DE.json';
 import './assets/scss/global.scss'; // import global bc stylings
 import './module/blur-elysium-slides'; // import main module
 import './app/component/structure/sw-search-bar-item'; // import search bar result override
+import './module/sw-cms/extension/sw-cms-sidebar'; // import CMS Element
 import './module/sw-cms/elements/blur-elysium-slider'; // import CMS Element
-import './module/sw-cms/blocks/text-image/blur-elysium-slider-block'; // import CMS block
+import './module/sw-cms/elements/blur-elysium-banner'; // import CMS Element
+import './module/sw-cms/blocks/blur-elysium-slider'; // import CMS block
+import './module/sw-cms/blocks/blur-elysium-banner'; // import CMS block
+import './module/sw-cms/blocks/blur-elysium-block-two-col'; // import CMS block
 
-const { Mixin } = Shopware;
+/* eslint no-undef: 'off' */
+const { Mixin } = Shopware
 
 // give the mixin a name and feed it into the register function as the second argunment
 Mixin.register('blur-editable', {
@@ -23,6 +28,7 @@ Mixin.register('blur-editable', {
 });
 
 Shopware.Component.register('blur-card-loading', () => import('@elysiumSlider/component/blur-card-loading'));
+Shopware.Component.register('blur-elysium-device-switch', () => import('@elysiumSlider/component/blur-elysium-device-switch'));
 Shopware.Component.register('blur-elysium-slide-modal-delete', () => import('@elysiumSlider/component/blur-elysium-slide-modal-delete'));
 Shopware.Component.register('blur-elysium-slider-config-settings', () => import('@elysiumSlider/component/blur-elysium-slider-config-settings'));
 Shopware.Component.register('blur-elysium-slider-config-sizing', () => import('@elysiumSlider/component/blur-elysium-slider-config-sizing'));
@@ -37,6 +43,7 @@ Shopware.Component.register('blur-elysium-slide-settings-advanced', () => import
 Shopware.Component.register('blur-elysium-slide-selection', () => import('@elysiumSlider/component/blur-elysium-slide-selection'));
 Shopware.Component.register('blur-elysium-slide-select-item', () => import('@elysiumSlider/component/blur-elysium-slide-select-item'));
 Shopware.Component.register('blur-elysium-slide-template-selection', () => import('@elysiumSlider/component/blur-elysium-slide-template-selection'));
+Shopware.Component.register('blur-elysium-block-config', () => import('@elysiumSlider/component/blur-elysium-block-config'));
 
 // register text snippets gobally
 Shopware.Locale.extend('en-GB', enGB);
@@ -45,3 +52,5 @@ Shopware.Locale.extend('de-DE', deDE);
 // add blur_elysium_slides entity to custom field set selection in admin view
 const CustomFieldDataProviderService = Shopware.Service("customFieldDataProviderService");
 CustomFieldDataProviderService.addEntityName("blur_elysium_slides");
+
+console.log(Shopware.Service( 'cmsService' ))

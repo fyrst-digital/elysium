@@ -1,0 +1,10 @@
+{% set containerClasses = [
+    'blur-elysium-slide-container',
+    'd-flex',
+    'flex-wrap'
+] %}
+
+<div class="{{ containerClasses|join(' ') }}">
+    {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/content.html.twig' %}
+    {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/image.html.twig' %}
+</div>

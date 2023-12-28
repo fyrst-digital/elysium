@@ -7,21 +7,22 @@ use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
 use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
 use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
 use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
-
-use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
+use Shopware\Core\Content\Cms\DataResolver\FieldConfig;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\Struct\ElysiumSliderStruct;
 
 class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
 {
-    public $blurElysiumSlides;
-
+    /**
+     * @param EntityRepository $elysiumSlidesRepository
+     */
     public function __construct(
-        $blurElysiumSlides
+        private readonly EntityRepository $elysiumSlidesRepository
     )
     {
-        $this->blurElysiumSlides = $blurElysiumSlides;
     }
 
     public function getType(): string
@@ -45,20 +46,28 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
         
     ): void
     {
+        /** @var ElysiumSliderStruct $elysiumSliderStruct */
         $elysiumSliderStruct = new ElysiumSliderStruct();
-
-        if ( !empty( $slot->getFieldConfig()->get( 'elysiumSlideCollection' )->getValue() ) ) {
-
-            #dd($slot->getFieldConfig()->get( 'elysiumSlideCollection' )->getValue());
-            $criteria = new Criteria( $slot->getFieldConfig()->get( 'elysiumSlideCollection' )->getValue() );
+        /** @var FieldConfigCollection $fieldConfigCollection */
+        $fieldConfigCollection = $slot->getFieldConfig();
+        /** @var FieldConfig $elysiumSlideConfig */
+        $elysiumSlideConfig = $fieldConfigCollection->get( 'elysiumSlideCollection' );
+        /** @var string[] $elysiumSlideIds */
+        $elysiumSlideIds = $elysiumSlideConfig->getValue();
+        
+        if ( !empty( $elysiumSlideIds ) ) {
+            $criteria = new Criteria( $elysiumSlideIds );
             $criteria->addAssociation( 'media' );
             
-            $slideCollection = $this->blurElysiumSlides->search(
+            $slideCollection = $this->elysiumSlidesRepository->search(
                 $criteria,
                 $resolverContext->getSalesChannelContext()->getContext()
             );
+
+            /** @var ElysiumSlidesEntity[] $elysiumSlides */
+            $elysiumSlides = $slideCollection->getElements();
     
-            $elysiumSliderStruct->setSlideCollection( $slideCollection->getElements() );
+            $elysiumSliderStruct->setSlideCollection( $elysiumSlides );
     
             $slot->setData( $elysiumSliderStruct );
         }

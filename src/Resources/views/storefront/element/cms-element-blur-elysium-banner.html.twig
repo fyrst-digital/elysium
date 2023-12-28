@@ -1,0 +1,17 @@
+{% block cms_element_blur_elysium_banner_root %}
+    {% set bannerClasses = [
+        'blur-elysium-banner'
+    ] %}
+
+    {% block cms_element_blur_elysium_banner %}
+        <div class="{{ bannerClasses|join(' ') }}"
+            data-cms-element-id="{{ element.id }}">
+
+            {% block cms_element_blur_elysium_banner_slide_include %}
+                {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/slide.html.twig' with {
+                    slideData: element.data.elysiumSlide
+                } %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

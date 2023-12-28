@@ -1,0 +1,69 @@
+{% set headlineClasses = [
+    'blur-elysium-slide-headline'
+] %}
+
+{% set headlineElement = 'div' %}
+
+{% set headlineTagsWhitelist = [
+    '<br>',
+    '<i>',
+    '<b>',
+    '<u>',
+    '<strong>',
+    '<span>'
+] %}
+
+{% if slideData.slideSettings.headlineElement %}
+    {% set headlineElement = slideData.slideSettings.headlineElement %}
+{% endif %}
+
+{% set descriptionClasses = [
+    'blur-elysium-slide-description'
+] %}
+
+{% set actionsClasses = [
+    'blur-elysium-slide-actions'
+] %}
+
+{% set mainBtnClasses = [
+    'blur-elysium-slide-main-btn',
+    'btn'
+] %}
+
+{% if slideData.slideSettings.buttonAppearance %}
+    {% set mainBtnClasses = mainBtnClasses|merge([
+        'btn-' ~ slideData.slideSettings.buttonAppearance
+    ]) %}
+{% endif %}
+
+<div class="blur-elysium-slide-content">
+    {% if slideData.translated.title %}
+        <{{headlineElement|raw}} 
+            class="{{ headlineClasses|join(' ') }}">
+            {{ slideData.translated.title|striptags( headlineTagsWhitelist|join )|raw }}
+        </{{headlineElement|raw}}>
+    {% endif %}
+
+    {% if slideData.translated.title %}
+        <div class="{{ descriptionClasses|join(' ') }}">
+            {{ slideData.translated.description|raw }}
+        </div>
+    {% endif %}
+
+    {% if ( slideData.translated.button_label and slideData.translated.url ) and slideData.slideSettings.urlOverlay is not same as( true ) %}
+        <div class="{{ actionsClasses|join(' ') }}">
+            
+
+            <a href="{{ slideData.translated.url }}" 
+                title="{{ slideData.translated.button_label }}" 
+                class="{{ mainBtnClasses|join(' ') }}"
+                {% if slideData.slideSettings.urlTarget == "external" %}
+                    target="_blank"
+                    rel="noopener"
+                {% endif %}>
+                
+                {{ slideData.translated.button_label }}
+            </a>
+        </div>
+    {% endif %}
+</div>

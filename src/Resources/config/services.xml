@@ -11,6 +11,12 @@
             <tag name="shopware.cms.data_resolver" />
         </service>
 
+        <!-- Elysium Banner Data Resolver -->
+        <service id="Blur\BlurElysiumSlider\DataResolver\ElysiumBannerCmsElementResolver">
+            <argument type="service" id="blur_elysium_slides.repository"/>
+            <tag name="shopware.cms.data_resolver" />
+        </service>
+
         <!-- Elysium Slides Entity Extension -->
         <service id="Blur\BlurElysiumSlider\Extension\Content\Media\MediaDefinitionExtension">
             <tag name="shopware.entity.extension"/>

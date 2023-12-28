@@ -4,7 +4,7 @@ const breakpoints = {
 }
 
 const containerBreakpoints = {
-    "3col": {
+    '3col': {
         [breakpoints.md]: {
             columns: '1fr',
             gap: '0 1rem'
@@ -12,11 +12,11 @@ const containerBreakpoints = {
         [breakpoints.lg]: {
             columns: '1fr 1fr',
             gap: '0 1rem'
-        }        
+        }
     }
 }
 
-export { 
+export {
     breakpoints,
     containerBreakpoints
 }
