@@ -15,7 +15,8 @@
             "padding": "Innenabstand",
             "unitPlaceholderPxRem": "px oder rem Wert",
             "noHeadline": "Keine Überschrift",
-            "copySuffix": "kopie"
+            "copySuffix": "kopie",
+            "cmsBlockGroup": "Elysium Slider und Banner"
         },
         "config": {
             "content": "Inhalt",
@@ -163,6 +164,11 @@
             }
         }
     },
+    "blurElysiumBanner": {
+        "cmsElement": {
+            "label": "Elysium Banner"
+        }
+    },
     "blurElysiumSlides": {
         "messages": {
             "noChanges": "Keine Änderungen",
@@ -216,6 +222,26 @@
             "mediaLabel": "Medien",
             "displayLabel": "Anzeige",
             "advancedLabel": "Erweitert"
+        }
+    },
+    "blurElysiumBlock": {
+        "settingLabel": "Einstellungen",
+        "deviceName": {
+            "mobile": "Mobil",
+            "tablet": "Tablet",
+            "desktop": "Desktop"
+        },
+        "cmsElement": {
+            "twoCol": "Elysium Block — 2 Spalten"
+        },
+        "settings": {
+            "columnWidth": {
+                "colOneLabel": "1 Spaltenbreite",
+                "colTwoLabel": "2 Spaltenbreite"
+            },
+            "gridGapLabel": "Rasterabstand",
+            "columnWrapLabel": "Spalten umbrechen",
+            "columnStretchLabel": "Spaltenhöhe angleichen"
         }
     }
 }

@@ -1,0 +1,54 @@
+# Goals of this pipline:
+# - Spawn a shopware app dev enviroment with mariadb
+# - copy the repo project files to shopware app
+# - run tests to validate the plugin
+# - bundle plugin zip as articate
+
+# Variables information
+# $CI_PROJECT_DIR polints to repo (plugin) dir: /builds/BlurCreative/Shopware/Plugins/BlurElysiumSlider
+# $CI_PROJECT_NAME: BlurElysiumSlider
+# $CI_DEFAULT_BRANCH: master
+variables:
+  MYSQL_CMD: mysqld
+  APP_ROOT: /app
+  APP_STATIC_PLUGIN: /app/custom/static-plugins
+  MARIADB_ROOT_PASSWORD: app
+
+include:
+  - local: '/.gitlab-ci/.build.yml'
+
+# List of stages for jobs, and their order of execution
+stages: 
+  - qa
+  - release
+
+# Runs PHP Stan test
+phpstan:
+  extends: .build
+  stage: qa
+  script:
+    - vendor/bin/phpstan # test cmd
+
+# Add qa job for plugin install routine
+# Add qa job for eslint
+
+bundle:
+  extends: .build
+  stage: release
+  # add rule to run this job only on `master` (when: on_success)
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
+      when: on_success
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^feature/ || $CI_COMMIT_BRANCH  =~ /^feature/
+      when: manual
+  # set release version in composer.json with sed
+  script:
+    - bin/build-administration.sh && bin/build-storefront.sh
+    - cd $APP_STATIC_PLUGIN/$CI_PROJECT_NAME && rm -rf .git .gitignore .gitlab-ci .gitlab-ci.yml .devops
+    - cd $APP_STATIC_PLUGIN && cp -r $CI_PROJECT_NAME $CI_PROJECT_DIR/.
+    - cd $CI_PROJECT_DIR && ls -la
+  artifacts:
+    name: BlurElysiumSlider
+    paths:
+      - BlurElysiumSlider/
+    when: on_success

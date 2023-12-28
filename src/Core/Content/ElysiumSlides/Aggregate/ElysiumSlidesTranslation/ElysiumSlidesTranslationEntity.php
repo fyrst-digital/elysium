@@ -21,27 +21,27 @@ class ElysiumSlidesTranslationEntity extends TranslationEntity
     /**
      * @var string|null
      */
-    protected $name;
+    protected ?string $name;
 
     /**
      * @var string|null
      */
-    protected $title;
+    protected ?string $title;
 
     /**
      * @var string|null
      */
-    protected $description;
+    protected ?string $description;
 
     /**
      * @var string|null
      */
-    protected $buttonLabel;
+    protected ?string $buttonLabel;
 
     /**
      * @var string|null
      */
-    protected $url;
+    protected ?string $url;
 
 
     public function getElysiumSlides(): ElysiumSlidesEntity
@@ -64,51 +64,81 @@ class ElysiumSlidesTranslationEntity extends TranslationEntity
         $this->elysiumSlidesId = $elysiumSlidesId;
     }
 
-    public function getName(): string
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @return void
+     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    public function getTitle(): string
+    /**
+     * @return string|null
+     */
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @return void
+     */
     public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    public function getDescription(): string
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
     {
         return $this->description;
     }
-
+    
+    /**
+     * @return void
+     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    public function getButtonLabel(): string
+    /**
+     * @return string|null
+     */
+    public function getButtonLabel(): ?string
     {
         return $this->buttonLabel;
     }
 
+    /**
+     * @return void
+     */
     public function setButtonLabel(string $buttonLabel): void
     {
         $this->buttonLabel = $buttonLabel;
     }
 
-    public function getUrl(): string
+    /**
+     * @return string|null
+     */
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    /**
+     * @return void
+     */
     public function setUrl(string $url): void
     {
         $this->url = $url;

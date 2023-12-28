@@ -1,0 +1,39 @@
+{% block blur_cms_config_elysium_banner %}
+    <div class="sw-cms-el-config-blur-elysium-banner">
+
+        <blur-elysium-device-switch 
+            layout="default" 
+            default-viewport="desktop"
+            @change-viewport="onChangeViewport" />
+
+        <sw-entity-single-select 
+            label="Wähle einen Elysium Slide"
+            entity="blur_elysium_slides" 
+            v-model="selectedSlide" />
+
+        <sw-switch-field 
+            label="Auto sizing"
+            v-model="element.config.viewports.value[activeViewport].aspectRatio.auto" />
+
+        <sw-container
+            columns="1fr 1fr"
+            gap="0 1rem">
+
+            <sw-number-field 
+                type="int"
+                :step="1"
+                :min="1"
+                label="Seitenverhältnis Breite"
+                :disabled="element.config.viewports.value[activeViewport].aspectRatio.auto === true" 
+                v-model="element.config.viewports.value[activeViewport].aspectRatio.width" />
+
+            <sw-number-field 
+                type="int"
+                :step="1"
+                :min="1"
+                label="Seitenverhältnis Höhe"
+                :disabled="element.config.viewports.value[activeViewport].aspectRatio.auto === true" 
+                v-model="element.config.viewports.value[activeViewport].aspectRatio.height" />
+        </sw-container>
+    </div>
+{% endblock %}

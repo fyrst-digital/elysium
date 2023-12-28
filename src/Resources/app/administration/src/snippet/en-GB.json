@@ -15,7 +15,8 @@
             "padding": "Padding",
             "unitPlaceholderPxRem": "px or rem value",
             "noHeadline": "No Headline",
-            "copySuffix": "copy"
+            "copySuffix": "copy",
+            "cmsBlockGroup": "Elysium Slider and Banner"
         },
         "config": {
             "content": "Content",
@@ -163,9 +164,19 @@
             "component": {
                 "preview": {
                     "defaultTitleValue": "Elysium Slider",
-                    "defaultDescriptionValue": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacinia, erat ut tempus vehicula, nisi leo aliquam orci, non varius erat urna at diam. Sed hendrerit tincidunt nisl non convallis. Suspendisse congue sed neque id viverra.",
+                    "defaultDescriptionValue": "Wähle in den Element Einstellungen einen oder mehrere Slides und lege weitere Slider Einstellungen fest.",
                     "defaultButtonLabelValue": "See more"
                 }
+            }
+        }
+    },
+    "blurElysiumBanner": {
+        "cmsElement": {
+            "label": "Elysium Banner"
+        },
+        "component": {
+            "preview": {
+                "defaultDescriptionValue": "Wähle in den Element Einstellungen einen Slide, sowie weitere Banner Einstellungen."
             }
         }
     },
@@ -222,6 +233,26 @@
             "mediaLabel": "Media",
             "displayLabel": "Display",
             "advancedLabel": "Advanced"
+        }
+    },
+    "blurElysiumBlock": {
+        "settingLabel": "Settings",
+        "deviceName": {
+            "mobile": "Mobile",
+            "tablet": "Tablet",
+            "desktop": "Desktop"
+        },
+        "cmsElement": {
+            "twoCol": "Elysium Block — 2 Columns"
+        },
+        "settings": {
+            "columnWidth": {
+                "colOneLabel": "1 Spaltenbreite",
+                "colTwoLabel": "2 Spaltenbreite"
+            },
+            "gridGapLabel": "Grid gap",
+            "columnWrapLabel": "Column wrap",
+            "columnStretchLabel": "Equal column height"
         }
     }
 }

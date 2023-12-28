@@ -1,0 +1,26 @@
+{% block blur_cms_element_elysium_banner %}
+    <div class="blur-cms-el-elysium-banner"
+        :style="{
+            borderColor: slide !== null ? 'transparent' : null,
+            backgroundColor: slide?.slideSettings?.slideBgColor ? slide.slideSettings.slideBgColor : null
+        }">   
+
+        <div class="blur-cms-el-elysium-banner__container">
+
+            <div class="blur-cms-el-elysium-banner__title"
+                :style="{
+                    fontSize: currentCmsDeviceView === 'mobile' ? '1.25rem' : '1.5rem',
+                    color: slide?.slideSettings?.headlineTextcolor ? slide.slideSettings.headlineTextcolor : null
+                }"
+                v-html="placeholder('title', 'blurElysiumBanner.cmsElement.label')" />
+
+            <div 
+                v-if="slide?.translated?.description || slide === null"
+                :style="{
+                    lineHeight: '1.5',
+                    fontSize: currentCmsDeviceView === 'mobile' ? '.875rem' : '1rem'
+                }"
+                v-html="placeholder('description', 'blurElysiumBanner.component.preview.defaultDescriptionValue')" />
+        </div>
+    </div>
+{% endblock %}

@@ -3,15 +3,15 @@ import "./preview";
 
 Shopware.Service( 'cmsService' ).registerCmsBlock({
     name: 'blur-elysium-slider-block',
-    category: 'text-image',
+    category: 'blur-elysium-slider-banner',
     label: 'Elysium Slider',
     component: 'sw-cms-block-blur-elysium-slider-block',
     previewComponent: 'sw-cms-preview-blur-elysium-slider-block',
     defaultConfig: {
-        marginBottom: '20px',
-        marginTop: '20px',
-        marginLeft: '20px',
-        marginRight: '20px',
+        marginBottom: '',
+        marginTop: '',
+        marginLeft: '',
+        marginRight: '',
         sizingMode: 'boxed'
     },
     slots: {

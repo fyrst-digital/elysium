@@ -8,40 +8,25 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\Content\Media\Aggregate\MediaDefaultFolder\MediaDefaultFolderEntity;
+use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 
 class Lifecycle
 {
-    /** @var ContainerInterface */
-    private $container;
-
-    /** @var EntityRepository */
-    private $mediaFolderRepositroy;
-
-    /** @var EntityRepository */
-    private $mediaDefaultFolderRepositroy;
-
-    /** @var EntityRepository */
-    private $mediaFolderConfigurationRepositroy;
-
+    /** @var string */
     private const MEDIA_FOLDER_NAME = 'Elysium Slides';
 
-    /** @var string */
-    private $mediaFolderId;
+    private string $mediaFolderId;
 
-    /** @var string */
-    private $mediaDefaultFolderId;
+    private string $mediaDefaultFolderId;
 
-    /** @var string */
-    private $mediaFolderConfigurationId;
+    private ?string $mediaFolderConfigurationId;
 
     public function __construct(
-        ContainerInterface $container
+        private readonly ContainerInterface $container
     )
     {
-        $this->container = $container;
-        $this->mediaFolderRepositroy = $container->get('media_folder.repository');
-        $this->mediaDefaultFolderRepositroy = $container->get('media_default_folder.repository');
-        $this->mediaFolderConfigurationRepositroy = $container->get('media_folder_configuration.repository');
     }
 
     public function install( Context $context ): void
@@ -64,37 +49,46 @@ class Lifecycle
         $criteria->addAssociation('media_folder');
         $criteria->setLimit(1);
 
-        # get associated mediaDefaultFolderId, mediaFolderId, mediaConfigurationId
-        $mediaFolderElysiumSlides = $this->mediaDefaultFolderRepositroy->search($criteria, $context)->first();
+        /** @var EntityRepository $mediaFolderRepositroy */
+        $mediaFolderRepositroy = $this->container->get('media_folder.repository');
 
-        if ($mediaFolderElysiumSlides === null) {
-            return;
-        }
+        /** @var EntityRepository */
+        $mediaDefaultFolderRepositroy = $this->container->get('media_default_folder.repository');
 
-        # existence check
+        /** @var EntityRepository */
+        $mediaFolderConfigurationRepositroy = $this->container->get('media_folder_configuration.repository');
+
+        /** @var MediaDefaultFolderEntity $mediaFolderElysiumSlides */
+        $mediaFolderElysiumSlides = $mediaDefaultFolderRepositroy->search($criteria, $context)->first();
+
+
         if ( $mediaFolderElysiumSlides->getId() ) {
             $this->setMediaDefaultFolderId( $mediaFolderElysiumSlides->getId() );
         }
 
         # existence check
         if ( $mediaFolderElysiumSlides->getFolder() !== null ) {
-            $this->setMediaFolderId( $mediaFolderElysiumSlides->getFolder()->getId() );
-            $this->setMediaFolderConfigurationId( $mediaFolderElysiumSlides->getFolder()->getConfigurationId() );
+            /** @var MediaFolderEntity $elysiumSlidesFolder */
+            $elysiumSlidesFolder = $mediaFolderElysiumSlides->getFolder();
+            $this->setMediaFolderId( 
+                $elysiumSlidesFolder->getId() 
+            );
+            $this->setMediaFolderConfigurationId( 
+                $elysiumSlidesFolder->getConfigurationId() 
+            );
         }
 
         if ( !empty( $this->getMediaFolderId() )) {
-            # delete media folder entry
-            $this->mediaFolderRepositroy->delete( [ [ 'id' => $this->getMediaFolderId() ] ], $context );
+            $mediaFolderRepositroy->delete( [ [ 'id' => $this->getMediaFolderId() ] ], $context );
         }
 
         if ( !empty( $this->getMediaDefaultFolderId() )) {
-            # delete media folder entry
-            $this->mediaDefaultFolderRepositroy->delete( [ [ 'id' => $this->getMediaDefaultFolderId() ] ], $context );
+            $mediaDefaultFolderRepositroy->delete( [ [ 'id' => $this->getMediaDefaultFolderId() ] ], $context );
         }
 
         if ( !empty( $this->getMediaFolderConfigurationId() )) {
             # delete media folder configuration entry
-            $this->mediaFolderConfigurationRepositroy->delete( [ [ 'id' => $this->getMediaFolderConfigurationId() ] ], $context );
+            $mediaFolderConfigurationRepositroy->delete( [ [ 'id' => $this->getMediaFolderConfigurationId() ] ], $context );
         }
     }
 
@@ -108,9 +102,15 @@ class Lifecycle
         $criteria->addAssociation('folder');
         $criteria->setLimit(1);
 
-        if ( $this->mediaDefaultFolderRepositroy->search($criteria, $context)->getTotal() <= 0 ) {
+        /** @var EntityRepository */
+        $mediaDefaultFolderRepositroy = $this->container->get('media_default_folder.repository');
+        
+        /** @var EntitySearchResult */
+        $mediaDefaultFolderResult = $mediaDefaultFolderRepositroy->search($criteria, $context);
+
+        if ( $mediaDefaultFolderResult->getTotal() <= 0 ) {
             # create new media default for blur_elysium_slides
-            $this->mediaDefaultFolderRepositroy->create( [
+            $mediaDefaultFolderRepositroy->create( [
                 [
                     'id' => $this->getMediaDefaultFolderId(),
                     'associationFields' => ["media", "mediaPortrait"],
@@ -121,7 +121,10 @@ class Lifecycle
             # if there is already a default folder for blur_elysium_slides
             # check possible associations to an existing media folder linked to it
             # if there is an existing media folder association set this as mediaFolderId for security check purpose
-            $elysiumMediaFolder = $this->mediaDefaultFolderRepositroy->search($criteria, $context)->first()->getFolder();
+            /** @var MediaDefaultFolderEntity $mediaDefaultFolders */
+            $mediaDefaultFolders = $mediaDefaultFolderResult->first();
+            /** @var MediaFolderEntity $elysiumMediaFolder */
+            $elysiumMediaFolder = $mediaDefaultFolders->getFolder();
             $this->setMediaFolderId( $elysiumMediaFolder->getId() );
         }
     }
@@ -132,10 +135,11 @@ class Lifecycle
     {
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter( 'id', $this->getMediaFolderId() ));
+        /** @var EntityRepository $mediaFolderRepositroy */
+        $mediaFolderRepositroy = $this->container->get('media_folder.repository');
 
-        if ( $this->mediaFolderRepositroy->search($criteria, $context)->getTotal() <= 0 ) {
-            # create media folder
-            $this->mediaFolderRepositroy->create( [
+        if ( $mediaFolderRepositroy->search($criteria, $context)->getTotal() <= 0 ) {
+            $mediaFolderRepositroy->create( [
                 [
                     'id' => $this->getMediaFolderId(),
                     'name' => self::MEDIA_FOLDER_NAME,
@@ -156,6 +160,7 @@ class Lifecycle
 
     /**
      * Get the value of mediaFolderId
+     * @return string
      */ 
     private function getMediaFolderId(): string
     {
@@ -165,7 +170,7 @@ class Lifecycle
     /**
      * Set the value of mediaFolderId
      *
-     * @return  self
+     * @return void
      */ 
     private function setMediaFolderId( string $mediaFolderId): void
     {
@@ -183,7 +188,7 @@ class Lifecycle
     /**
      * Set the value of mediaDefaultFolderId
      *
-     * @return  self
+     * @return void
      */ 
     private function setMediaDefaultFolderId(string $mediaDefaultFolderId): void
     {
@@ -193,7 +198,7 @@ class Lifecycle
     /**
      * Get the value of mediaFolderConfigurationId
      */ 
-    private function getMediaFolderConfigurationId(): string
+    private function getMediaFolderConfigurationId(): ?string
     {
         return $this->mediaFolderConfigurationId;
     }
@@ -201,9 +206,10 @@ class Lifecycle
     /**
      * Set the value of mediaFolderConfigurationId
      *
-     * @return  self
+     * @param string|null $mediaFolderConfigurationId
+     * @return void
      */ 
-    private function setMediaFolderConfigurationId(string $mediaFolderConfigurationId): void
+    private function setMediaFolderConfigurationId(?string $mediaFolderConfigurationId): void
     {
         $this->mediaFolderConfigurationId = $mediaFolderConfigurationId;
     }
