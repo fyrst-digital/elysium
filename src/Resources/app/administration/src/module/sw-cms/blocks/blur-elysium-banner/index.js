@@ -1,7 +1,8 @@
-import "./component";
-import "./preview";
+import './component'
+import './preview'
 
-Shopware.Service( 'cmsService' ).registerCmsBlock({
+// eslint-disable-next-line no-undef
+Shopware.Service('cmsService').registerCmsBlock({
     name: 'blur-elysium-banner-block',
     category: 'blur-elysium-slider-banner',
     label: 'blurElysiumBanner.cmsElement.label',
@@ -17,4 +18,4 @@ Shopware.Service( 'cmsService' ).registerCmsBlock({
     slots: {
         main: 'blur-elysium-banner'
     }
-});
+})

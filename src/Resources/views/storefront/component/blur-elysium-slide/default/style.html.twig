@@ -7,7 +7,7 @@
 {% endif %}
 
 {% if slideStyles is not defined %}
-    {% set slslideStylesideData = null %}
+    {% set slideStyles = null %}
 {% endif %}
 
 {% if slideCover is not defined %}
@@ -17,6 +17,10 @@
 {% if slideCoverPortrait is not defined %}
     {% set slideCoverPortrait = null %}
 {% endif %}
+
+{% set slideContainerStyles = {
+    '--bg-color': slideData.slideSettings.container.bgColor
+} %}
 
 {% set headlineStyles = {
     '--color': slideData.slideSettings.headlineTextcolor
@@ -28,7 +32,16 @@
     {% if slideStyles is not empty %}
         {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
             {% for prop, value in slideStyles|filter(v => v !== null) %}
-                {{prop}}: {{value}}
+                {{prop}}: {{value}};
+            {% endfor %}
+        }
+    {% endif %}
+
+    {# general slide container styles #}
+    {% if slideContainerStyles is not empty %}
+        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-container {
+            {% for prop, value in slideContainerStyles|filter(v => v !== null) %}
+                {{prop}}: {{value}};
             {% endfor %}
         }
     {% endif %}
@@ -42,7 +55,7 @@
         }
     {% endif %}
 
-    {# viewport options #}
+    {# viewport options for cms element #}
     {% for device, options in viewportConfig %}
         @media (min-width: {{ theme_config('breakpoint.' ~ viewportMapping[device])~'px' }}) {
             {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
@@ -54,6 +67,85 @@
             }
         }            
     {% endfor %}
+
+    {# viewport dependent options for slide #}
+    {% if slideViewportStyles is not null %}
+        {% for device, options in slideViewportStyles %}
+            @media (min-width: {{ theme_config('breakpoint.' ~ viewportMapping[device])~'px' }}) {
+                {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
+                    --padding-x: {{ options.slide.paddingX ~ 'px' }};
+                    --padding-y: {{ options.slide.paddingY ~ 'px' }};
+                    --align-items: {{ options.slide.alignItems }};
+                    --justify-content: {{ options.slide.justifyContent }};
+                    {% if options.slide.borderRadius is defined %}
+                        --border-radius: {{ options.slide.borderRadius ~ 'px' }};
+                    {% else %}
+                        --border-radius: 0;
+                    {% endif %}
+                }
+                {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-container {
+                    {% if options.container.columnWrap is not same as(true) and slideData.presentationMedia is not null %}
+                        --columns: auto auto;
+                    {% else %}
+                        --columns: 1fr;
+                    {% endif %}
+                    --padding-x: {{ options.container.paddingX ~ 'px' }};
+                    --padding-y: {{ options.container.paddingY ~ 'px' }};
+                    --gap: {{ options.container.gap ~ 'px' }};
+                    --border-radius: {{ options.container.borderRadius ~ 'px' }};
+                    {% if options.container.maxWidthDisabled is not same as(true) %}
+                        --max-width: {{ options.container.maxWidth ~ 'px' }};
+                    {% endif %}
+                    --align-items: {{ options.container.alignItems }};
+                    {% if options.container.justifyContent is defined %} 
+                        --justify-content: {{ options.container.justifyContent }};
+                    {% endif %}
+                }
+                {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-content {
+                    {% if options.container.order is same as('reverse') %}
+                        --order: 2;
+                    {% else %}
+                        --order: 1;
+                    {% endif %}
+                    {% if options.content.textAlign is defined %}
+                        --text-align: {{ options.content.textAlign }};
+                    {% else %}
+                        --text-align: left;
+                    {% endif %}
+                    {% if options.content.maxWidth is defined and options.content.maxWidthDisabled is not same as(true) %}
+                        --max-width: {{ options.content.maxWidth ~ 'px' }};
+                    {% endif %}
+                    --padding-x: {{ options.content.paddingX ~ 'px' }};
+                    --padding-y: {{ options.content.paddingY ~ 'px' }};
+                }
+                {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-image {
+                    {% if options.container.order is same as('reverse') %}
+                        --order: 1;
+                    {% else %}
+                        --order: 2;
+                    {% endif %}
+                    {% if options.image.justifyContent is defined %}
+                        --justify-content: {{ options.image.justifyContent }};
+                    {% endif %}
+                    {% if options.image.imageFullWidth is defined and options.image.imageFullWidth is same as(true) %}
+                        --image-width: 100%;
+                    {% else %}
+                        --image-width: auto;
+                    {% endif %}
+                    {% if options.image.maxWidth is defined and options.image.maxWidthDisabled is not same as(true) %}
+                        --max-width: {{ options.image.maxWidth ~ 'px' }};
+                    {% endif %}
+                }
+                {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-headline {
+                    {% if options.headline.fontSize is defined and options.headline.fontSize is not empty %}
+                        font-size: {{ options.headline.fontSize ~ 'px' }};
+                    {% else %}
+                        font-size: revert;    
+                    {% endif %}
+                }
+            }
+        {% endfor %}
+    {% endif %}
 
     {# slide cover (default) #}
     {% if slideCover is not null %}

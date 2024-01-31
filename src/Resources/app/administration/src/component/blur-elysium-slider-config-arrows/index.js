@@ -1,66 +1,62 @@
 // import './blur-elysium-slider-config-navigation.scss'
-import template from './blur-elysium-slider-config-arrows.twig';
-import { containerBreakpoints } from "@elysiumSlider/utilities/layout";
-import { config } from "@elysiumSlider/utilities/identifiers";
-
-const { Criteria } = Shopware.Data;
-const { Component, Context, Mixin } = Shopware;
-const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
+import template from './blur-elysium-slider-config-arrows.twig'
+import { containerBreakpoints } from '@elysiumSlider/utilities/layout'
+import { config } from '@elysiumSlider/utilities/identifiers'
 
 export default {
     template,
 
     props: {
         config: {
-            type: Object,
+            type: Object
         }
     },
 
-    data() {
+    data () {
         return {
             positions: [
-                { 
-                    value: "in_slider", 
-                    label: this.$tc('blurElysiumSlider.config.navigation.position.inSlider') 
+                {
+                    value: 'in_slider',
+                    label: this.$tc('blurElysiumSlider.config.navigation.position.inSlider')
                 }
             ],
             icons: [
-                { 
-                    value: "arrow-head", 
-                    label: this.$tc('blurElysiumSlider.config.arrows.icons.arrow') 
+                {
+                    value: 'arrow-head',
+                    label: this.$tc('blurElysiumSlider.config.arrows.icons.arrow')
                 },
-                { 
-                    value: "arrow", 
-                    label: this.$tc('blurElysiumSlider.config.arrows.icons.chevron') 
+                {
+                    value: 'arrow',
+                    label: this.$tc('blurElysiumSlider.config.arrows.icons.chevron')
                 }
             ],
             sizes: [
-                { 
-                    value: "sm", 
-                    label: this.$tc('blurElysiumSlider.general.small') 
+                {
+                    value: 'sm',
+                    label: this.$tc('blurElysiumSlider.general.small')
                 },
-                { 
-                    value: "md", 
-                    label: this.$tc('blurElysiumSlider.general.medium') 
+                {
+                    value: 'md',
+                    label: this.$tc('blurElysiumSlider.general.medium')
                 },
-                { 
-                    value: "lg", 
-                    label: this.$tc('blurElysiumSlider.general.large') 
+                {
+                    value: 'lg',
+                    label: this.$tc('blurElysiumSlider.general.large')
                 }
-            ],
-        };
+            ]
+        }
     },
 
     watch: {
     },
 
     computed: {
-        positionIdentifiers() {
+        positionIdentifiers () {
             return config
         },
-        containerBreakpoints() {
-            return containerBreakpoints;
+        containerBreakpoints () {
+            return containerBreakpoints
         }
 
     }
-};
+}

@@ -1,6 +1,26 @@
+const get = (t, path) =>
+  path.split(".").reduce((r, k) => r?.[k], t)
+
+const set = (t, path, value) => {
+    if (typeof t != "object") return
+    if (path == "") throw Error("empty path")
+
+    const pos = path.indexOf(".")
+    const paths = path.split('.')
+
+    /// if path is undefined create empty object
+    if (t[paths[0]] === undefined) {
+        t[paths[0]] = {}
+    }
+
+    return pos == -1
+        ? (t[path] = value, value)
+        : set(t[path.slice(0, pos)], path.slice(pos + 1), value) 
+}
+
 export default {
     namespaced: true,
-    state() {
+    state () {
         return {
             apiContext: {},
             slide: {},
@@ -10,6 +30,8 @@ export default {
                 presentationMedia: null
             },
             customFieldSets: [],
+            /** @type 'mobile' | 'tablet' | 'desktop' */
+            viewport: 'desktop',
             /**
              * @deprecated check if this method is nessecary. if not removee it
              */
@@ -27,50 +49,55 @@ export default {
         }
     },
     mutations: {
-        setApiContext(state, apiContext) {
-            state.apiContext = apiContext;
+        setApiContext (state, apiContext) {
+            state.apiContext = apiContext
         },
-        setSlide(state, slide) {
-            state.slide = slide;
+        setSlide (state, slide) {
+            state.slide = slide
         },
-        setSlideProperty(state, payload) {
-            state.slide[payload.key] = payload.value;
-            console.log('setSlideProperty', payload.key, payload.value)
+        setSlideProperty (state, payload) {
+            state.slide[payload.key] = payload.value
         },
-        setSlideSetting(state, payload) {
-            state.slide.slideSettings[payload.key] = payload.value
+        setSlideSetting (state, payload) {
+            set(state.slide.slideSettings, payload.key, payload.value)
         },
-        setSlideMedia(state, payload) {
+        setViewportSetting (state, payload) {
+            set(state.slide.slideSettings.viewports[state.viewport], payload.key, payload.value)
+        },
+        setSlideMedia (state, payload) {
             state.media[payload.key] = payload.value
         },
-        setCustomFieldSets(state, value) {
+        setCustomFieldSets (state, value) {
             state.customFieldSets = value
         },
-        setAcl(state, payload) {
-            state.acl[payload.role] = payload.state;
+        setViewport (state, value) {
+            state.viewport = value
+        },
+        setAcl (state, payload) {
+            state.acl[payload.role] = payload.state
         },
         /**
          * @deprecated check if this method is nessecary. if not remove it
          */
-        setLocalMode(state, value) {
-            state.localMode = value;
+        setLocalMode (state, value) {
+            state.localMode = value
         },
-        setMediaSidebar(state, value) {
-            state.mediaSidebar = value;
+        setMediaSidebar (state, value) {
+            state.mediaSidebar = value
         },
-        setLoading(state, payload) {
-            const name = payload.key;
-            const data = payload.loading;
+        setLoading (state, payload) {
+            const name = payload.key
+            const data = payload.loading
 
             if (typeof data !== 'boolean') {
-                return false;
+                return false
             }
 
             if (state.loading[name] !== undefined) {
-                state.loading[name] = data;
-                return true;
+                state.loading[name] = data
+                return true
             }
-            return false;
-        },
+            return false
+        }
     }
 }

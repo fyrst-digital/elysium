@@ -1,11 +1,13 @@
-import template from './blur-elysium-slides-detail.twig';
-import './blur-elysium-slides-detail.scss';
-import slideStates from './state';
-import { slides } from "@elysiumSlider/utilities/identifiers";
+import template from './blur-elysium-slides-detail.twig'
+import './blur-elysium-slides-detail.scss'
+import slideStates from './state'
+import slideSettings from './slide-settings'
+import { slides } from '@elysiumSlider/utilities/identifiers'
 
-const { Component, Mixin } = Shopware;
-const { Criteria } = Shopware.Data;
-const { mapMutations, mapState } = Component.getComponentHelper();
+// eslint-disable-next-line no-undef
+const { Component, Mixin, Data, State, Context } = Shopware
+const { Criteria } = Data
+const { mapMutations, mapState } = Component.getComponentHelper()
 
 /**
  * @todo improve code quality in `blur-elysium-slides-detail` component
@@ -15,18 +17,18 @@ const { mapMutations, mapState } = Component.getComponentHelper();
  * - make `ACL` stateful and reactive
  */
 
-Component.register( 'blur-elysium-slides-detail', {
+Component.register('blur-elysium-slides-detail', {
     template,
 
     inject: [
         'repositoryFactory',
-        'acl',
+        'acl'
     ],
 
     mixins: [
         Mixin.getByName('notification'),
         Mixin.getByName('discard-detail-page-changes')('blur_elysium_slides'),
-        Mixin.getByName('placeholder'),
+        Mixin.getByName('placeholder')
     ],
 
     props: {
@@ -34,10 +36,10 @@ Component.register( 'blur-elysium-slides-detail', {
             type: String,
             required: false,
             default: null
-        },
+        }
     },
 
-    data() {
+    data () {
         return {
             entityName: 'blur_elysium_slides',
             isSaveSuccessful: false,
@@ -46,13 +48,13 @@ Component.register( 'blur-elysium-slides-detail', {
             showDeleteModal: false,
             detailRoute: 'blur.elysium.slides.detail',
             createRoute: 'blur.elysium.slides.create'
-        };
+        }
     },
 
-    metaInfo() {
+    metaInfo () {
         return {
-            title: this.$createTitle( this.identifier ),
-        };
+            title: this.$createTitle(this.identifier)
+        }
     },
 
     computed: {
@@ -64,7 +66,7 @@ Component.register( 'blur-elysium-slides-detail', {
             'acl'
         ]),
 
-        contentRoute() {
+        contentRoute () {
             if (this.blurElysiumSlideId) {
                 return { name: 'blur.elysium.slides.detail.content', params: { id: this.blurElysiumSlideId } }
             }
@@ -72,15 +74,15 @@ Component.register( 'blur-elysium-slides-detail', {
             return { name: 'blur.elysium.slides.create.content' }
         },
 
-        mediaRoute() {
+        mediaRoute () {
             if (this.blurElysiumSlideId) {
                 return { name: 'blur.elysium.slides.detail.media', params: { id: this.blurElysiumSlideId } }
             }
 
             return { name: 'blur.elysium.slides.create.media' }
         },
-        
-        displayRoute() {
+
+        displayRoute () {
             if (this.blurElysiumSlideId) {
                 return { name: 'blur.elysium.slides.detail.display', params: { id: this.blurElysiumSlideId } }
             }
@@ -88,7 +90,7 @@ Component.register( 'blur-elysium-slides-detail', {
             return { name: 'blur.elysium.slides.create.display' }
         },
 
-        advancedRoute() {
+        advancedRoute () {
             if (this.blurElysiumSlideId) {
                 return { name: 'blur.elysium.slides.detail.advanced', params: { id: this.blurElysiumSlideId } }
             }
@@ -96,104 +98,102 @@ Component.register( 'blur-elysium-slides-detail', {
             return { name: 'blur.elysium.slides.create.advanced' }
         },
 
-        identifier() {
-            return this.slideLabel;
+        identifier () {
+            return this.slideLabel
         },
 
-        positionIdentifiers() {
+        positionIdentifiers () {
             return slides
         },
 
-        currentRoute() {
-            return this.$route.name;
+        currentRoute () {
+            return this.$route.name
         },
 
-        slideLabel() {
-
+        slideLabel () {
             if (!this.$i18n) {
-                return '';
+                return ''
             }
 
             // return name
-            return this.placeholder(this.slide, 'name', this.$tc('BlurElysiumSlides.actions.newSlide') );
+            return this.placeholder(this.slide, 'name', this.$tc('BlurElysiumSlides.actions.newSlide'))
         },
 
-        elysiumSlidesRepository() {
-            return this.repositoryFactory.create('blur_elysium_slides');
+        elysiumSlidesRepository () {
+            return this.repositoryFactory.create('blur_elysium_slides')
         },
 
-        elysiumSlidesSyncRepository() {
-            return this.repositoryFactory.create('blur_elysium_slides', null, { useSync: true });
+        elysiumSlidesSyncRepository () {
+            return this.repositoryFactory.create('blur_elysium_slides', null, { useSync: true })
         },
 
-        customFieldSetRepository() {
-            return this.repositoryFactory.create( 'custom_field_set' );
+        customFieldSetRepository () {
+            return this.repositoryFactory.create('custom_field_set')
         },
 
-        mediaRepository() {
-            return this.repositoryFactory.create('media');
+        mediaRepository () {
+            return this.repositoryFactory.create('media')
         },
 
-        defaultCriteria() {
-            const criteria = new Criteria();
+        defaultCriteria () {
+            const criteria = new Criteria()
 
-            return criteria;
+            return criteria
         },
-    
-        customFieldSetCriteria() {
-            const criteria = new Criteria();
-    
+
+        customFieldSetCriteria () {
+            const criteria = new Criteria()
+
             criteria.addFilter(
-                Criteria.equals( 'relations.entityName', this.entityName )
-            );
-    
-            criteria.getAssociation( 'customFields' )
-                    .addSorting(Criteria.sort('config.customFieldPosition'));
+                Criteria.equals('relations.entityName', this.entityName)
+            )
 
-    
-            return criteria;
+            criteria.getAssociation('customFields')
+                    .addSorting(Criteria.sort('config.customFieldPosition'))
+
+            return criteria
         },
 
         editMode: {
-            get() {
+            get () {
                 if (typeof this.$route.query.edit === 'boolean') {
-                    return this.$route.query.edit;
+                    return this.$route.query.edit
                 }
 
-                return this.$route.query.edit === 'true';
+                return this.$route.query.edit === 'true'
             },
-            set(editMode) {
-                this.$router.push({ name: this.$route.name, query: { edit: editMode } });
-            },
-        },
+            set (editMode) {
+                this.$router.push({ name: this.$route.name, query: { edit: editMode } })
+            }
+        }
     },
 
     watch: {
-        blurElysiumSlideId() {
-            this.createdComponent();
+        blurElysiumSlideId () {
+            this.createdComponent()
         },
         slide: {
-            handler: function(newValue) {
-                this.hasChanges =  this.elysiumSlidesRepository.hasChanges(newValue)
+            handler: function (newValue) {
+                this.hasChanges = this.elysiumSlidesRepository.hasChanges(newValue)
             },
             deep: true
         }
     },
 
-    beforeCreate() {
-        Shopware.State.registerModule('blurElysiumSlidesDetail', slideStates);
+    beforeCreate () {
+        State.registerModule('blurElysiumSlidesDetail', slideStates)
     },
 
-    beforeDestroy() {
-        Shopware.State.unregisterModule('blurElysiumSlidesDetail')
+    beforeDestroy () {
+        State.unregisterModule('blurElysiumSlidesDetail')
     },
 
-    created() {
+    created () {
         this.setAclStates([
             'viewer',
             'editor',
             'creator',
-            'deleter',
+            'deleter'
         ])
         this.createdComponent()
         this.loadCustomFieldSets()
@@ -203,51 +203,50 @@ Component.register( 'blur-elysium-slides-detail', {
         ...mapMutations('blurElysiumSlidesDetail', [
             'setApiContext',
             'setSlide',
+            'setSlideSetting',
             'setCustomFieldSets',
+            'setViewport',
             'setAcl',
             'setMediaSidebar',
             'setLoading'
         ]),
 
-        setAclStates( roles ) {
+        setAclStates (roles) {
             roles.forEach(role => {
                 this.setAcl({
-                    role: role, 
+                    role,
                     state: this.acl.can(`blur_elysium_slides.${role}`)
                 })
-            });
+            })
         },
 
-        createdComponent() {
-            if (this.blurElysiumSlideId === null) {  
-                console.log('create comp')
+        createdComponent () {
+            if (this.blurElysiumSlideId === null) {
                 this.createSlide()
             } else {
                 this.setLoading('slide', true)
-                this.loadSlide() 
+                this.loadSlide()
             }
         },
 
-        createSlide() {
-            Shopware.State.commit('context/resetLanguageToDefault');
-            let newSlide = this.elysiumSlidesRepository.create( Shopware.Context.api )
-            newSlide.slideSettings = {}
+        createSlide () {
+            State.commit('context/resetLanguageToDefault')
+            const newSlide = this.elysiumSlidesRepository.create(Context.api)
+            newSlide.slideSettings = slideSettings
 
-            this.setSlide( newSlide )
-            console.log('createSlide', this.slide)
+            this.setSlide(newSlide)
         },
 
-        loadCustomFieldSets() {
-
-            this.customFieldSetRepository.search( this.customFieldSetCriteria, Shopware.Context.api )
-            .then( ( result ) => {
-                this.setCustomFieldSets( result )
-            }).catch(( exception ) => {
-                console.warn( exception )
-            });
+        loadCustomFieldSets () {
+            this.customFieldSetRepository.search(this.customFieldSetCriteria, Context.api)
+            .then((result) => {
+                this.setCustomFieldSets(result)
+            }).catch((exception) => {
+                console.warn(exception)
+            })
         },
 
-        loadSlide() {
+        loadSlide () {
             this.setLoading({
                 key: 'slide',
                 loading: true
@@ -255,132 +254,154 @@ Component.register( 'blur-elysium-slides-detail', {
 
             this.elysiumSlidesRepository.get(
                 this.blurElysiumSlideId,
-                Shopware.Context.api,
-                this.defaultCriteria,
-            ).then(( slide ) => {
+                Context.api,
+                this.defaultCriteria
+            ).then((slide) => {
+                const viewports = [
+                    'mobile',
+                    'tablet',
+                    'desktop'
+                ]
+                if (slide.slideSettings.viewports === undefined) {
+                    /// check whole configuration object
+                    slide.slideSettings.viewports = {
+                        mobile: {},
+                        tablet: {},
+                        desktop: {},
+                    }
+                } else {
+                    /// check single viewports
+                    viewports.forEach((viewport) => {
+                        if (slide.slideSettings.viewports[viewport] === undefined) {
+                            slide.slideSettings.viewports[viewport] = {}
+                        }                        
+                    })
+                }
+                console.log(slide.slideSettings.viewports?.mobile, slide.slideSettings)
                 this.setSlide(slide)
                 this.setLoading({
                     key: 'slide',
                     loading: false
                 })
-            }).catch(( exception ) => {
-                console.warn( exception )
+            }).catch((exception) => {
+                console.warn(exception)
             })
         },
 
-        saveFinish() {
+        saveFinish () {
             this.isSaveSuccessful = false
         },
 
-        detailPush( id ) {
-            this.$router.push({ name: 'blur.elysium.slides.detail', params: { id: id } });
+        detailPush (id) {
+            this.$router.push({ name: 'blur.elysium.slides.detail', params: { id } })
         },
 
-        async onSave() {
+        async onSave () {
             /**
-             * @todo 
+             * @todo
              * - rewrite save method and improve code quality
              * - get rid of `this.blurElysiumSlide`
              */
-            
+
             this.setLoading({
                 key: 'slide',
                 loading: true
             })
 
-            this.isSaveSuccessful = false;
+            this.isSaveSuccessful = false
 
-            if ( !( this.slide === null || this.slide === undefined ) ) {
-
+            if (!(this.slide === null || this.slide === undefined)) {
                 // throw error notification if slide name is missing or empty
-                if ( this.slide.name === undefined || this.slide.name === "" ) {
+                if (this.slide.name === undefined || this.slide.name === '') {
                     this.createNotificationError({
                         message: this.$tc('BlurElysiumSlides.messages.missingSlideNameError')
-                    });                    
+                    })
                 }
 
                 // save slide
-                return this.elysiumSlidesRepository.save( this.slide ).then((result) => {
+                return this.elysiumSlidesRepository.save(this.slide).then((result) => {
                     this.createNotificationSuccess({
                         message: this.$tc('BlurElysiumSlides.messages.saveSlideSuccess')
-                    });
+                    })
 
                     if (this.slide._isNew === true) {
-                        this.detailPush(JSON.parse( result.config.data ).id)
+                        this.detailPush(JSON.parse(result.config.data).id)
                     } else {
-                        this.isSaveSuccessful = true;
+                        this.isSaveSuccessful = true
                         this.loadSlide()
                     }
-                }).catch(( exception ) => {
+                }).catch((exception) => {
                     this.createNotificationError({
-                        message: this.$tc('BlurElysiumSlides.messages.createSlideError'),
-                    });
-                    console.warn( exception )
+                        message: this.$tc('BlurElysiumSlides.messages.createSlideError')
+                    })
+                    console.warn(exception)
                     this.setLoading({
                         key: 'slide',
                         loading: false
                     })
-                });
-                
+                })
             } else {
-
                 console.error('Slide Entity is missing')
 
                 // throw error notification if slide name is missing or empty
                 this.createNotificationError({
-                    message: this.$tc('BlurElysiumSlides.messages.missingSlideEntity'),
-                });
+                    message: this.$tc('BlurElysiumSlides.messages.missingSlideEntity')
+                })
             }
         },
 
-        saveOnLanguageChange() {
-            return this.onSave();
+        saveOnLanguageChange () {
+            return this.onSave()
         },
 
-        abortOnLanguageChange() {
-            return this.elysiumSlidesRepository.hasChanges(this.slide);
+        abortOnLanguageChange () {
+            return this.elysiumSlidesRepository.hasChanges(this.slide)
         },
 
-        onChangeLanguage( languageId ) {
-            Shopware.State.commit('context/setApiLanguageId', languageId);
-            
-            this.setApiContext(Shopware.Context.api)
+        onChangeLanguage (languageId) {
+            State.commit('context/setApiLanguageId', languageId)
+
+            this.setApiContext(Context.api)
 
             // when product exists
-            if ( this.blurElysiumSlideId ) {
-                return this.loadSlide();
+            if (this.blurElysiumSlideId) {
+                return this.loadSlide()
             }
         },
 
-        onActivateCustomerEditMode() {
-            this.editMode = true;
+        onActivateCustomerEditMode () {
+            this.editMode = true
         },
 
-        cancel() {
-            this.$router.go();
+        cancel () {
+            this.$router.go()
         },
 
-        onCopySlide() {
+        onCopySlide () {
             if (this.elysiumSlidesRepository.hasChanges(this.slide)) {
                 this.createNotificationError({
                     message: this.$tc('blurElysiumSlides.messages.copyErrorUnsavedChanges')
-                });     
-                return;
+                })
+                return
             }
             const cloneOptions = {
                 overwrites: {
-                    name: `${this.slide.name}-${this.$tc('blurElysiumSlider.general.copySuffix')}`,
-                },
-            };
-            this.elysiumSlidesRepository.clone(this.slide.id, Shopware.Context.api, cloneOptions).then((result) => {
-                this.$router.push({ name: 'blur.elysium.slides.detail', params: { id: result.id } });
+                    name: `${this.slide.name}-${this.$tc('blurElysiumSlider.general.copySuffix')}`
+                }
+            }
+            this.elysiumSlidesRepository.clone(this.slide.id, Context.api, cloneOptions).then((result) => {
+                this.$router.push({ name: 'blur.elysium.slides.detail', params: { id: result.id } })
             }).catch((error) => {
                 console.warn(error)
-            });
+            })
         },
 
-        onDeleteFinish() {
-            this.$router.push({ name: 'blur.elysium.slides.index' });
+        onDeleteFinish () {
+            this.$router.push({ name: 'blur.elysium.slides.index' })
+        },
+
+        onChangeViewport (viewport) {
+            this.setViewport(viewport)
         }
     }
-});
+})

@@ -114,12 +114,20 @@
                 </sw-alert>
             {% endblock %#}
 
+            <blur-elysium-device-switch 
+                layout="tab"
+                :style="{
+                    backgroundColor: 'white'
+                }"
+                @change-viewport="onChangeViewport" />
+
             {% block blur_elysium_slides_detail_view_tabs %}
                 <div 
                 v-if="slide"
                 :style="{
-                    padding: '2rem 0'
+                    padding: '1rem 0'
                 }">
+
 
                     <sw-tabs
                         :position-identifier="positionIdentifiers.detail.tabs">

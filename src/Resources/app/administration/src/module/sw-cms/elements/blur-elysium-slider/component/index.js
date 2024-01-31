@@ -1,22 +1,23 @@
-import template from './blur-cms-el-elysium-slider.twig';
-import './blur-cms-el-elysium-slider.scss';
+import template from './blur-cms-el-elysium-slider.twig'
+import './blur-cms-el-elysium-slider.scss'
 
-const { Component, Mixin } = Shopware;
-const { Criteria } = Shopware.Data;
+// eslint-disable-next-line no-undef
+const { Component, Mixin, Data, Context } = Shopware
+const { Criteria } = Data
 
-Shopware.Component.register( 'blur-cms-el-elysium-slider', {
+Component.register('blur-cms-el-elysium-slider', {
     template,
 
     inject: [
         'repositoryFactory',
-        'acl',
+        'acl'
     ],
 
     mixins: [
         Mixin.getByName('cms-element')
     ],
 
-    data() {
+    data () {
         return {
             editable: true,
             isLoading: true,
@@ -28,31 +29,31 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
             sliderDotColor: null,
             sliderDotActiveColor: null,
             selectedSlidesCollection: null
-        };
+        }
     },
 
     computed: {
         selectedSlidesIds: {
-            
+
             // getter
-            get() {
+            get () {
                 return this.element.config.elysiumSlideCollection.value
             },
             // setter
-            set(newValue) {
+            set (newValue) {
                 this.element.config.elysiumSlideCollection.value = newValue
             }
-            
+
         },
 
-        elysiumSlidesRepository() {
-            return this.repositoryFactory.create('blur_elysium_slides');
+        elysiumSlidesRepository () {
+            return this.repositoryFactory.create('blur_elysium_slides')
         }
     },
 
     watch: {
         'element.config.elysiumSlideCollection.value': {
-            handler() {
+            handler () {
                 if (this.selectedSlidesIds.length === 0) {
                     this.selectedSlidesCollection = null
                 } else {
@@ -62,47 +63,46 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
         }
     },
 
-    created() {
+    created () {
         this.createdComponent()
     },
 
     methods: {
-        createdComponent() {
-            this.initElementConfig( 'blur-elysium-slider' )
+        createdComponent () {
+            this.initElementConfig('blur-elysium-slider')
         },
 
-        getSlides() {
+        getSlides () {
             const criteria = new Criteria()
-            criteria.setIds( this.selectedSlidesIds )
+            criteria.setIds(this.selectedSlidesIds)
 
-            this.elysiumSlidesRepository.search( criteria, Shopware.Context.api ).then(( res ) => {
+            this.elysiumSlidesRepository.search(criteria, Context.api).then((res) => {
                 this.selectedSlidesCollection = res
                 this.isLoading = false
-            }).catch( ( e ) => {
-                console.warn( e );
-            });
+            }).catch((e) => {
+                console.warn(e)
+            })
         },
 
-        getPreview( property, defaultSnippet ) {
-            if ( this.selectedSlidesCollection?.length > 0 && this.selectedSlidesCollection[this.slideIndex]?.[property] ) {
+        getPreview (property, defaultSnippet) {
+            if (this.selectedSlidesCollection?.length > 0 && this.selectedSlidesCollection[this.slideIndex]?.[property]) {
                 return this.selectedSlidesCollection[this.slideIndex][property]
             }
 
-            return this.$tc( defaultSnippet )
+            return this.$tc(defaultSnippet)
         },
 
-        getSlideSetting( property ) {
-            if ( this.selectedSlidesCollection?.length > 0 && this.selectedSlidesCollection[this.slideIndex]?.slideSettings?.[property] ) {
+        getSlideSetting (property) {
+            if (this.selectedSlidesCollection?.length > 0 && this.selectedSlidesCollection[this.slideIndex]?.slideSettings?.[property]) {
                 return this.selectedSlidesCollection[this.slideIndex].slideSettings[property]
             }
 
             return null
         },
 
-        getSlideMedia( property ) {
-            if ( this.selectedSlidesCollection?.length > 0 && this.selectedSlidesCollection[this.slideIndex]?.media?.[property] ) {
-                
-                if (this.selectedSlidesCollection[this.slideIndex].media.thumbnails?.length > 0 ) {
+        getSlideMedia (property) {
+            if (this.selectedSlidesCollection?.length > 0 && this.selectedSlidesCollection[this.slideIndex]?.media?.[property]) {
+                if (this.selectedSlidesCollection[this.slideIndex].media.thumbnails?.length > 0) {
                     return this.selectedSlidesCollection[this.slideIndex].media.thumbnails.last()[property]
                 } else {
                     return this.selectedSlidesCollection[this.slideIndex].media[property]
@@ -112,14 +112,14 @@ Shopware.Component.register( 'blur-cms-el-elysium-slider', {
             return null
         },
 
-        slideArrowClick( iterator ) {
-            let previewDataLength = parseInt( this.selectedSlidesCollection.length, 10 ) - 1;
+        slideArrowClick (iterator) {
+            const previewDataLength = parseInt(this.selectedSlidesCollection.length, 10) - 1
 
-            if ( parseInt( iterator, 10 ) === 1 && this.slideIndex < previewDataLength ) {
-                this.slideIndex += parseInt( iterator, 10 );
-            } else if ( parseInt( iterator, 10 ) === -1 && this.slideIndex > 0 ) {
-                this.slideIndex += parseInt( iterator, 10 );
+            if (parseInt(iterator, 10) === 1 && this.slideIndex < previewDataLength) {
+                this.slideIndex += parseInt(iterator, 10)
+            } else if (parseInt(iterator, 10) === -1 && this.slideIndex > 0) {
+                this.slideIndex += parseInt(iterator, 10)
             }
-        },
+        }
     }
-});
+})

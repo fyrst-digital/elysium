@@ -1,0 +1,28 @@
+<div :style="{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        marginBottom: '32px'
+    }">
+
+    <component is="h4" 
+        :style="{
+            fontSize: '16px',
+            fontWeight: '500',
+            margin: '0'
+        }">
+        <slot name="title">
+            <span v-html="title" />
+        </slot>
+    </component>
+
+    <div v-if="content !== false"
+        :style="{
+            fontSize: '14px',
+            lineHeight: '1.5'
+        }">
+        <slot name="content">
+            <span v-html="content" />
+        </slot>
+    </div>
+</div>

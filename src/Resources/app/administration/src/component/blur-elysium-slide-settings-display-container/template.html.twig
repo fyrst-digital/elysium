@@ -1,0 +1,286 @@
+{% block blur_elysium_slide_settings_display_general %}
+    <sw-card
+        :position-identifier="positionIdentifiers.detail.display.content"
+        :title="$tc('blurElysiumSlides.slideSettings.display.slideContainer')"
+    >
+
+        <blur-card-section>
+
+            <blur-paragraph
+                :title="$tc('blurElysiumSlides.slideSettings.display.containerElementAppearance.title')" 
+                :content="$tc('blurElysiumSlides.slideSettings.display.containerElementAppearance.description')" />
+
+            <sw-container 
+                columns="1fr 1fr 1fr 1fr"
+                gap="0 1rem">
+
+                <div :style="{
+                    gridColumn: '1 / 5',
+                    marginBottom: '32px'
+                }">
+                
+                    <sw-switch-field 
+                        :label="$tc('blurElysiumSlides.slideSettings.display.containerElementAppearance.columnWrap.label')"
+                        :value="viewportSettings.container?.columnWrap ?? defaultViewportValues(true, false, false)"
+                        :style="{
+                            margin: '0'
+                        }"
+                        @change="value => setViewportSetting({key:'container.columnWrap', value: value})"
+                    />
+                    <p>
+                        {{$tc('blurElysiumSlides.slideSettings.display.containerElementAppearance.columnWrap.helpText')}}
+                    </p>
+                </div>
+
+                <sw-number-field 
+                    type="int"
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.maxWidth')"
+                    :step="1"
+                    :min="0"
+                    :disabled="viewportSettings.container?.maxWidthDisabled ?? defaultViewportValues(true, true, true)"
+                    :value="viewportSettings.container?.maxWidth ?? defaultViewportValues(0, 0, 0)"
+                    @change="value => setViewportSetting({key:'container.maxWidth', value: value})"
+                />
+
+                <sw-switch-field 
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.noMaxWidth')"
+                    :value="viewportSettings.container?.maxWidthDisabled ?? defaultViewportValues(true, true, true)"
+                    :style="{
+                        padding: '0 20px',
+                        gridColumn: '2 / 5'
+                    }"
+                    @change="value => setViewportSetting({key:'container.maxWidthDisabled', value: value})"
+                />
+
+                <sw-select-field 
+                    :label="$tc('blurElysiumSlides.slideSettings.display.containerElementAppearance.order.label')"
+                    :helpText="$tc('blurElysiumSlides.slideSettings.display.containerElementAppearance.order.helpText')"
+                    :value="viewportSettings.container?.order ?? defaultViewportValues('default', 'default', 'default')"
+                    :style="{
+                        gridColumn: '1 / 3'
+                    }"
+                    @change="value => setViewportSetting({key:'container.order', value: value})" >
+                    <option value="default">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.containerElementAppearance.order.default') }}
+                    </option>
+                    <option value="reverse">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.containerElementAppearance.order.reverse') }}
+                    </option>
+                </sw-select-field>
+
+                <sw-select-field 
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.alignX')"
+                    :value="viewportSettings.container?.justifyContent ?? defaultViewportValues('normal', 'normal', 'normal')"
+                    :helpText="$tc('blurElysiumSlides.slideSettings.display.containerElementAppearance.justifyContent.helpText')"
+                    @change="value => setViewportSetting({key:'container.justifyContent', value: value})" >
+                    <option value="normal">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.normal') }}
+                    </option>
+                    <option value="flex-start">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.left') }}
+                    </option>
+                    <option value="center">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.center') }}
+                    </option>
+                    <option value="flex-end">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.right') }}
+                    </option>
+                    <option value="stretch">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.stretch') }}
+                    </option>
+                    <option value="space-between">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.spaceBetween') }}
+                    </option>
+                    <option value="space-around">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.spaceAround') }}
+                    </option>
+                </sw-select-field>
+
+                <sw-select-field 
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.alignY')"
+                    :value="viewportSettings.container?.alignItems ?? defaultViewportValues('center', 'center', 'center')"
+                    @change="value => setViewportSetting({key:'container.alignItems', value: value})" >
+                    <option value="flex-start">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.top') }}
+                    </option>
+                    <option value="center">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.center') }}
+                    </option>
+                    <option value="flex-end">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.bottom') }}
+                    </option>
+                </sw-select-field>
+
+                <sw-number-field 
+                    type="int"
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.paddingX')"
+                    :step="1"
+                    :min="0"
+                    :value="viewportSettings.container?.paddingX ?? defaultViewportValues(15, 15, 15)"
+                    @change="value => setViewportSetting({key:'container.paddingX', value: value})"
+                />
+
+                <sw-number-field 
+                    type="int"
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.paddingY')"
+                    :step="1"
+                    :min="0"
+                    :value="viewportSettings.container?.paddingY ?? defaultViewportValues(15, 15, 15)"
+                    @change="value => setViewportSetting({key:'container.paddingY', value: value})"
+                />
+
+                <sw-number-field 
+                    type="int"
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.gap')"
+                    :step="1"
+                    :min="0"
+                    :value="viewportSettings.container?.gap ?? defaultViewportValues(20, 20, 20)"
+                    @change="value => setViewportSetting({key:'container.gap', value: value})"
+                />
+
+                <sw-number-field 
+                    type="int"
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.borderRadius')"
+                    :step="1"
+                    :min="0"
+                    :value="viewportSettings.container?.borderRadius ?? defaultViewportValues(0, 0, 0)"
+                    @change="value => setViewportSetting({key:'container.borderRadius', value: value})"
+                />
+
+                <sw-colorpicker 
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.backgroundColor')"
+                    :value="slide.slideSettings.container?.bgColor"
+                    :style="{
+                        gridColumn: '1 / 3'
+                    }"
+                    @input="value => setSlideSetting({key:'container.bgColor', value: value})"
+                />
+            </sw-container>
+        </blur-card-section>
+
+        <blur-card-section>
+
+            <blur-paragraph
+                :title="$tc('blurElysiumSlides.slideSettings.display.contentElementAppearance.title')" 
+                :content="$tc('blurElysiumSlides.slideSettings.display.contentElementAppearance.description')" />
+
+            <sw-container 
+                columns="1fr 1fr 1fr 1fr"
+                gap="0 1rem">
+
+                <sw-number-field 
+                    type="int"
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.maxWidth')"
+                    :step="1"
+                    :min="0"
+                    :disabled="viewportSettings.content?.maxWidthDisabled ?? defaultViewportValues(true, true, true)"
+                    :value="viewportSettings.content?.maxWidth ?? defaultViewportValues(0, 0, 0)"
+                    :style="{
+                        gridColumn: '1 / 2'
+                    }"
+                    @change="value => setViewportSetting({key:'content.maxWidth', value: value})"
+                />
+
+                <sw-switch-field 
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.noMaxWidth')"
+                    :value="viewportSettings.content?.maxWidthDisabled ?? defaultViewportValues(true, true, true)"
+                    :style="{
+                        padding: '0 20px',
+                        gridColumn: '2 / 5'
+                    }"
+                    @change="value => setViewportSetting({key:`content.maxWidthDisabled`, value: value})"
+                />
+
+                <sw-select-field 
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.textAlign')"
+                    :value="viewportSettings.content?.textAlign ?? defaultViewportValues('left', 'left', 'left')"
+                    @change="value => setViewportSetting({key:'content.textAlign', value: value})" >
+                    <option value="left">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.left') }}
+                    </option>
+                    <option value="center">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.center') }}
+                    </option>
+                    <option value="right">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.right') }}
+                    </option>
+                </sw-select-field>
+
+                <sw-number-field 
+                    type="int"
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.paddingX')"
+                    :step="1"
+                    :min="0"
+                    :value="viewportSettings.content?.paddingX ?? defaultViewportValues(0, 0, 0)"
+                    @change="value => setViewportSetting({key:'content.paddingX', value: value})"
+                />
+
+                <sw-number-field 
+                    type="int"
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.paddingY')"
+                    :step="1"
+                    :min="0"
+                    :value="viewportSettings.content?.paddingY ?? defaultViewportValues(0, 0, 0)"
+                    @change="value => setViewportSetting({key:'content.paddingY', value: value})"
+                />
+
+            </sw-container>
+        </blur-card-section>
+
+        <div>
+            <blur-paragraph
+                :title="$tc('blurElysiumSlides.slideSettings.display.imageElementAppearance.title')" 
+                :content="$tc('blurElysiumSlides.slideSettings.display.imageElementAppearance.description')" />
+        
+            <sw-container 
+                columns="1fr 1fr 1fr 1fr"
+                gap="0 1rem">
+
+                <sw-switch-field 
+                    label="Bild auf gesamte Breite strecken"
+                    :style="{
+                        margin: '0 0 24px',
+                        gridColumn: '1 / 5'
+                    }"
+                    :value="viewportSettings.image?.imageFullWidth ? viewportSettings.image.imageFullWidth : false"
+                    @change="value => setViewportSetting({key:'image.imageFullWidth', value: value})"
+                />
+
+                <sw-select-field 
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.alignX')"
+                    :value="viewportSettings.image?.justifyContent ?? defaultViewportValues('center', 'center', 'center')"
+                    @change="value => setViewportSetting({key:'image.justifyContent', value: value})">
+                    <option value="flex-start">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.left') }}
+                    </option>
+                    <option value="center">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.center') }}
+                    </option>
+                    <option value="flex-end">
+                        {{ $tc('blurElysiumSlides.slideSettings.display.common.right') }}
+                    </option>
+                </sw-select-field>
+
+                <sw-number-field 
+                    type="int"
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.noMaxWidth')"
+                    :step="1"
+                    :min="0"
+                    :disabled="viewportSettings.image?.maxWidthDisabled ?? defaultViewportValues(true, true, true)"
+                    :value="viewportSettings.image?.maxWidth ?? defaultViewportValues(0, 0, 0)"
+                    @change="value => setViewportSetting({key:'image.maxWidth', value: value})"
+                />
+
+                <sw-switch-field 
+                    :label="$tc('blurElysiumSlides.slideSettings.display.common.noMaxWidth')"
+                    :value="viewportSettings.image?.maxWidthDisabled ?? defaultViewportValues(true, true, true)"
+                    :style="{
+                        padding: '0 20px',
+                        gridColumn: '3 / 5'
+                    }"
+                    @change="value => setViewportSetting({key:'image.maxWidthDisabled', value: value})"
+                />
+            </sw-container>
+        </div>
+    </sw-card>
+{% endblock %}

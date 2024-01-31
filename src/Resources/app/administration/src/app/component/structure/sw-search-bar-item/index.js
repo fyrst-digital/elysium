@@ -1,5 +1,8 @@
-import template from './sw-search-bar-item.html.twig';
+import template from './sw-search-bar-item.html.twig'
 
-Shopware.Component.override('sw-search-bar-item', {
+// eslint-disable-next-line no-undef
+const { Component } = Shopware
+
+Component.override('sw-search-bar-item', {
     template
 })

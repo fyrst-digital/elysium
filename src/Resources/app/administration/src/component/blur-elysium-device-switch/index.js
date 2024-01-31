@@ -6,7 +6,7 @@ export default {
     props: {
         viewports: {
             type: Array,
-            default() {
+            default () {
                 return ['mobile', 'tablet', 'desktop']
             }
         },
@@ -23,14 +23,14 @@ export default {
         }
     },
 
-    data() {
+    data () {
         return {
             activeViewport: this.defaultViewport
         }
     },
 
     computed: {
-        containerStyle() {
+        containerStyle () {
             const styles = {
                 display: 'flex',
                 gap: '2rem',
@@ -39,7 +39,7 @@ export default {
             }
 
             if (this.layout === 'tab') {
-                styles.padding = '10px 25px 0'
+                styles.padding = '15px 25px 0'
                 styles.borderBottom = '1px solid #ddd'
                 styles.marginBottom = '-1px'
             }
@@ -47,7 +47,7 @@ export default {
             return styles
         },
 
-        itemStyle() {
+        itemStyle () {
             const styles = {
                 display: 'flex',
                 alignItems: 'center',
@@ -72,7 +72,7 @@ export default {
     },
 
     methods: {
-        conditionalItemStyle(viewport) {
+        conditionalItemStyle (viewport) {
             const styles = {
                 color: viewport === this.activeViewport ? '#3498db' : '#758CA3'
             }
@@ -84,7 +84,7 @@ export default {
             return styles
         },
 
-        changeViewport(viewport) {
+        changeViewport (viewport) {
             this.activeViewport = viewport
             this.$emit('change-viewport', viewport)
         }

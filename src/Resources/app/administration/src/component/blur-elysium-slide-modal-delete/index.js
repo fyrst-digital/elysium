@@ -1,5 +1,8 @@
-import template from './template.html.twig';
-import { slides } from "@elysiumSlider/utilities/identifiers";
+import template from './template.html.twig'
+import { slides } from '@elysiumSlider/utilities/identifiers'
+
+// eslint-disable-next-line no-undef
+const { Context } = Shopware
 
 export default {
     template,
@@ -16,31 +19,31 @@ export default {
     },
 
     computed: {
-        repository() {
-            return this.repositoryFactory.create( 'blur_elysium_slides' );
+        repository () {
+            return this.repositoryFactory.create('blur_elysium_slides')
         },
 
-        positionIdentifiers() {
+        positionIdentifiers () {
             return slides
         }
     },
 
     methods: {
-        onCloseModal() {
+        onCloseModal () {
             this.$emit('modal-close')
         },
 
-        onDelete() {
-            this.repository.delete( this.slideId, Shopware.Context.api ).then(() => {
+        onDelete () {
+            this.repository.delete(this.slideId, Context.api).then(() => {
                 this.$emit('delete-finish')
             }).catch((error) => {
                 console.error(error)
                 this.$emit('delete-error')
-            });
+            })
         }
     },
 
-    beforeDestroy() {
+    beforeDestroy () {
         this.$emit('modal-close')
     }
 }

@@ -1,4 +1,4 @@
-import template from './template.html.twig';
+import template from './template.html.twig'
 
 export default {
     template,
@@ -12,7 +12,7 @@ export default {
         }
     },
 
-    data() {
+    data () {
         return {
             defaultSlideTemplates: [
                 {
@@ -20,12 +20,12 @@ export default {
                     value: 'default'
                 }
             ]
-        };
+        }
     },
 
     methods: {
-        onChange(value) {
+        onChange (value) {
             this.$emit('change', value)
         }
     }
-};
+}
