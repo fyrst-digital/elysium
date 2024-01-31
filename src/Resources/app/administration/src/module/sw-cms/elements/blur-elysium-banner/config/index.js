@@ -1,10 +1,11 @@
-import template from './template.twig';
-import { config } from "@elysiumSlider/utilities/identifiers";
+import template from './template.twig'
+import { config } from '@elysiumSlider/utilities/identifiers'
 
-const { Component, Mixin } = Shopware;
-const { Criteria, EntityCollection } = Shopware.Data;
+// eslint-disable-next-line no-undef
+const { Component, Data, Context } = Shopware
+const { Criteria } = Data
 
-Shopware.Component.register( 'blur-cms-el-config-elysium-banner', {
+Component.register('blur-cms-el-config-elysium-banner', {
     template,
 
     inject: ['repositoryFactory'],
@@ -13,63 +14,61 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-banner', {
         'cms-element'
     ],
 
-    data() {
+    data () {
         return {
             blurElysiumSlide: null,
-            labelProp: "label",
+            labelProp: 'label',
             selectModel: [],
             activeViewport: 'desktop'
-        };
+        }
     },
 
     computed: {
-        positionIdentifiers() {
+        positionIdentifiers () {
             return config
         },
 
         selectedSlide: {
-            get() {
+            get () {
                 return this.element.config.elysiumSlide.value
             },
 
-            set(newValue) {
+            set (newValue) {
                 this.element.config.elysiumSlide.value = newValue
             }
         },
 
-        elysiumSlidesRepository() {
-            return this.repositoryFactory.create('blur_elysium_slides');
+        elysiumSlidesRepository () {
+            return this.repositoryFactory.create('blur_elysium_slides')
         },
 
-        defaultCriteria() {
-            const defaultCriteria = new Criteria();
+        defaultCriteria () {
+            const defaultCriteria = new Criteria()
 
             defaultCriteria.addSorting(Criteria.sort(
-                'name', 
-                'ASC', 
+                'name',
+                'ASC',
                 true
-            ));
+            ))
 
-
-            return defaultCriteria;
+            return defaultCriteria
         },
 
-        context() {
-            return { ...Shopware.Context.api };
+        context () {
+            return { ...Context.api }
         }
     },
 
-    created() {
+    created () {
         this.initElementConfig('blur-elysium-banner')
-        console.log(this.viewports, this.element.config.viewports.value[this.activeViewport])
     },
 
     watch: {
     },
 
     methods: {
-        onChangeViewport(viewport) {
+        onChangeViewport (viewport) {
             this.activeViewport = viewport
         }
     }
-});
+})

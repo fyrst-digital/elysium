@@ -1,8 +1,9 @@
-import template from './template.html.twig';
-import { slides } from "@elysiumSlider/utilities/identifiers";
+import template from './template.html.twig'
+import { slides } from '@elysiumSlider/utilities/identifiers'
 
-const { Component, Mixin } = Shopware;
-const { mapMutations, mapState } = Component.getComponentHelper();
+// eslint-disable-next-line no-undef
+const { Component, Mixin } = Shopware
+const { mapMutations, mapState } = Component.getComponentHelper()
 
 export default {
     template,
@@ -18,18 +19,14 @@ export default {
             'acl'
         ]),
 
-        positionIdentifiers() {
+        positionIdentifiers () {
             return slides
         }
     },
 
-    created() {
-        console.log(this.editable)
-    },
-
     methods: {
         ...mapMutations('blurElysiumSlidesDetail', [
-            'setSlideSetting',
-        ]),
+            'setSlideSetting'
+        ])
     }
 }

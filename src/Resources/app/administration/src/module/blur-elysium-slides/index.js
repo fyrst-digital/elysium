@@ -1,31 +1,32 @@
-import '@elysiumSlider/module/page/blur-elysium-slides-list'; // List page component
-import '@elysiumSlider/module/page/blur-elysium-slides-detail'; // Detail page component
-import './acl'; // ACL Privilages
+import '@elysiumSlider/module/page/blur-elysium-slides-list' // List page component
+import '@elysiumSlider/module/page/blur-elysium-slides-detail' // Detail page component
+import './acl' // ACL Privilages
 
-const { Application } = Shopware;
+// eslint-disable-next-line no-undef
+const { Application, Component, Module } = Shopware
 
-Shopware.Component.register('blur-elysium-slides-basic-form', () => import('@elysiumSlider/module/component/blur-elysium-slides-basic-form'));
-Shopware.Component.register('blur-elysium-slides-media-form', () => import('@elysiumSlider/module/component/blur-elysium-slides-media-form'));
-Shopware.Component.register('blur-elysium-slides-content-general-appearance', () => import('@elysiumSlider/module/component/blur-elysium-slides-content-general-appearance'));
-Shopware.Component.register('blur-elysium-slides-content-container-settings', () => import('@elysiumSlider/module/component/blur-elysium-slides-content-container-settings'));
+Component.register('blur-elysium-slides-basic-form', () => import('@elysiumSlider/module/component/blur-elysium-slides-basic-form'))
+Component.register('blur-elysium-slides-media-form', () => import('@elysiumSlider/module/component/blur-elysium-slides-media-form'))
+Component.register('blur-elysium-slides-content-general-appearance', () => import('@elysiumSlider/module/component/blur-elysium-slides-content-general-appearance'))
+Component.register('blur-elysium-slides-content-container-settings', () => import('@elysiumSlider/module/component/blur-elysium-slides-content-container-settings'))
 
 /**
  * Add Entity `blur_elysium_slides` to search types
  */
-Application.addServiceProviderDecorator( 'searchTypeService' , searchTypeService => {
+Application.addServiceProviderDecorator('searchTypeService', searchTypeService => {
     searchTypeService.upsertType('blur_elysium_slides', {
         entityName: 'blur_elysium_slides',
         placeholderSnippet: 'BlurElysiumSlides.placeholderSearchBar',
         listingRoute: 'blur.elysium.slides.index'
-    });
+    })
 
-    return searchTypeService;
-});
+    return searchTypeService
+})
 
 /**
  * Register Module
  */
-Shopware.Module.register( 'blur-elysium-slides', {
+Module.register('blur-elysium-slides', {
     type: 'plugin',
     name: 'blur_elysium_slides',
     title: 'BlurElysiumSlides.entityLabel',
@@ -51,7 +52,7 @@ Shopware.Module.register( 'blur-elysium-slides', {
             component: 'blur-elysium-slides-detail',
             path: 'create',
             redirect: {
-                name: 'blur.elysium.slides.create.content',
+                name: 'blur.elysium.slides.create.content'
             },
             meta: {
                 parentPath: 'blur.elysium.slides.index'
@@ -62,28 +63,28 @@ Shopware.Module.register( 'blur-elysium-slides', {
                     path: 'content',
                     meta: {
                         parentPath: 'blur.elysium.slides.index'
-                    },
+                    }
                 },
                 media: {
                     component: 'blur-elysium-slide-settings-media',
                     path: 'media',
                     meta: {
                         parentPath: 'blur.elysium.slides.index'
-                    },
+                    }
                 },
                 display: {
                     component: 'blur-elysium-slide-settings-display',
                     path: 'display',
                     meta: {
                         parentPath: 'blur.elysium.slides.index'
-                    },
+                    }
                 },
                 advanced: {
                     component: 'blur-elysium-slide-settings-advanced',
                     path: 'advanced',
                     meta: {
                         parentPath: 'blur.elysium.slides.index'
-                    },
+                    }
                 }
             }
         },
@@ -92,14 +93,14 @@ Shopware.Module.register( 'blur-elysium-slides', {
             component: 'blur-elysium-slides-detail',
             path: 'detail/:id',
             props: {
-                default(route) {
+                default (route) {
                     return {
-                        blurElysiumSlideId: route.params.id,
-                    };
-                },
+                        blurElysiumSlideId: route.params.id
+                    }
+                }
             },
             redirect: {
-                name: 'blur.elysium.slides.detail.content',
+                name: 'blur.elysium.slides.detail.content'
             },
             meta: {
                 parentPath: 'blur.elysium.slides.index'
@@ -110,28 +111,28 @@ Shopware.Module.register( 'blur-elysium-slides', {
                     path: 'content',
                     meta: {
                         parentPath: 'blur.elysium.slides.index'
-                    },
+                    }
                 },
                 media: {
                     component: 'blur-elysium-slide-settings-media',
                     path: 'media',
                     meta: {
                         parentPath: 'blur.elysium.slides.index'
-                    },
+                    }
                 },
                 display: {
                     component: 'blur-elysium-slide-settings-display',
                     path: 'display',
                     meta: {
                         parentPath: 'blur.elysium.slides.index'
-                    },
+                    }
                 },
                 advanced: {
                     component: 'blur-elysium-slide-settings-advanced',
                     path: 'advanced',
                     meta: {
                         parentPath: 'blur.elysium.slides.index'
-                    },
+                    }
                 }
             }
         }
@@ -146,5 +147,5 @@ Shopware.Module.register( 'blur-elysium-slides', {
         parent: 'sw-content',
         position: 100,
         privilege: 'blur_elysium_slides.viewer'
-    }],
-});
+    }]
+})

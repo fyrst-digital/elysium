@@ -28,6 +28,7 @@ phpstan:
   stage: qa
   script:
     - vendor/bin/phpstan # test cmd
+  when: always
 
 # Add qa job for plugin install routine
 # Add qa job for eslint

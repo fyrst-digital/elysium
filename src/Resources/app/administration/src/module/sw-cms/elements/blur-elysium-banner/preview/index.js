@@ -1,5 +1,6 @@
-import template from './template.twig';
+import template from './template.twig'
 
-Shopware.Component.register( 'blur-cms-el-preview-elysium-banner', {
+// eslint-disable-next-line no-undef
+Shopware.Component.register('blur-cms-el-preview-elysium-banner', {
     template
-});
+})

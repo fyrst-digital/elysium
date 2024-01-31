@@ -1,18 +1,25 @@
 .blur-elysium-slide {
-    --padding-x: 1rem;
-    --padding-y: 1rem;
+    --padding-x: 15px;
+    --padding-y: 15px;
     --bg-color: transparent;
     --bg-size: cover;
     --bg-pos-x: center;
     --bg-pos-y: center;
     --aspect-ratio: auto;
     --border-radius: 0;
+    --align-items: center;
+    --justify-content: center;
+    --gradient-color-start: transparent;
+    --gradient-color-end: transparent;
+    --gradient-deg: 45deg;
+    --bg-gradient: linear-gradient(var(--gradient-deg), var(--gradient-color-start), var(--gradient-color-end));
     width: 100%;
     background: {
         color: var(--bg-color);
         size: var(--bg-size);
         position-x: var(--bg-pos-x);
         position-y: var(--bg-pos-y);
+        image: var(--bg-gradient);
     };
     border-radius: var(--border-radius);
     aspect-ratio: var(--aspect-ratio);
@@ -20,12 +27,70 @@
     padding-right: var(--padding-x);
     padding-top: var(--padding-y);
     padding-bottom: var(--padding-y);
+    align-items: var(--align-items);
+    justify-content: var(--justify-content);
 }
 
 .blur-elysium-slide-container {
-    flex-shrink: 1;
-    flex-grow: 1;
+    --columns: 1fr;
+    --padding-x: 15px;
+    --padding-y: 15px;
+    --gap: 20px;
+    --align-items: center;
+    --justify-content: normal;
+    --max-width: none;
+    --border-radius: 0;
+    --bg-color: transparent;
+    grid-template-columns: var(--columns);
+    grid-gap: var(--gap);
+    justify-content: var(--justify-content);
+    align-items: var(--align-items);
+    max-width: var(--max-width);
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
+    padding-top: var(--padding-y);
+    padding-bottom: var(--padding-y);
+    border-radius: var(--border-radius);
+    background: {
+        color: var(--bg-color);
+    };
+    overflow: hidden;
     flex-basis: 100%;
+    width: 100%;
+}
+
+.blur-elysium-slide-content {
+    --padding-x: 0;
+    --padding-y: 0;
+    --order: 1;
+    --max-width: none;
+    --text-align: left;
+    order: var(--order);
+    width: 100%;
+    max-width: var(--max-width);
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
+    padding-top: var(--padding-y);
+    padding-bottom: var(--padding-y);
+    text-align: var(--text-align);
+}
+
+.blur-elysium-slide-image {
+    --align-items: center;
+    --justify-content: center;
+    --order: 2;
+    --max-width: none;
+    --image-width: auto;
+    display: flex;
+    justify-content: var(--justify-content);
+    align-items: var(--align-items);
+    order: var(--order);
+    width: 100%;
+    max-width: var(--max-width);
+
+    img {
+        width: var(--image-width);
+    }
 }
 
 .blur-elysium-slide-headline {
@@ -35,5 +100,7 @@
 
 .blur-elysium-slide-description {
     --color: inherit;
+    --font-size: inherit;
     color: var(--color);
+    font-size: var(--font-size);
 }

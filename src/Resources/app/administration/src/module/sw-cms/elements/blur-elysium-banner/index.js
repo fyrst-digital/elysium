@@ -1,7 +1,8 @@
-import './component';
-import './config';
-import './preview';
+import './component'
+import './config'
+import './preview'
 
+// eslint-disable-next-line no-undef
 Shopware.Service('cmsService').registerCmsElement({
     name: 'blur-elysium-banner',
     label: 'blurElysiumBanner.cmsElement.label',
@@ -14,7 +15,7 @@ Shopware.Service('cmsService').registerCmsElement({
             value: '' /** @type string */
         },
         /** @type object */
-        viewports: { 
+        viewports: {
             /** @type 'static' | 'source' */
             source: 'static',
             /** @type object<StandardDevices> */
@@ -41,7 +42,7 @@ Shopware.Service('cmsService').registerCmsElement({
                         auto: true
                     }
                 }
-            } 
+            }
         }
     }
-});
+})

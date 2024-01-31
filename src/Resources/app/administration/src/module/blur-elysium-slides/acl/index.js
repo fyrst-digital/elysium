@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 Shopware.Service('privileges').addPrivilegeMappingEntry({
     category: 'permissions',
     parent: 'content',
@@ -19,7 +20,7 @@ Shopware.Service('privileges').addPrivilegeMappingEntry({
         },
         creator: {
             privileges: [
-                'blur_elysium_slides:create',
+                'blur_elysium_slides:create'
             ],
             dependencies: [
                 'blur_elysium_slides.viewer',
@@ -36,4 +37,4 @@ Shopware.Service('privileges').addPrivilegeMappingEntry({
             ]
         }
     }
-});
+})

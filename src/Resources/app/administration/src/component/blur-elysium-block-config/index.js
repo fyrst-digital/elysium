@@ -1,6 +1,8 @@
-import template from './template.html.twig';
+import template from './template.html.twig'
 
-const { mapState } = Shopware.Component.getComponentHelper();
+// eslint-disable-next-line no-undef
+const { Component, State } = Shopware
+const { mapState } = Component.getComponentHelper()
 
 export default {
     template,
@@ -11,14 +13,14 @@ export default {
         }
     },
 
-    data() {
+    data () {
         return {
             activeViewport: 'desktop'
         }
     },
 
     watch: {
-        currentCmsDeviceView(value) {
+        currentCmsDeviceView (value) {
             this.activeViewport = value.split('-')[0]
         }
     },
@@ -28,13 +30,13 @@ export default {
             'currentCmsDeviceView'
         ]),
 
-        viewports() {
+        viewports () {
             return Object.keys(this.settings.viewports)
         }
     },
 
     methods: {
-        changeViewport( viewport ) {
+        changeViewport (viewport) {
             let viewportState = viewport
 
             this.activeViewport = viewport
@@ -42,12 +44,12 @@ export default {
             if (viewportState === 'tablet') {
                 viewportState = 'tablet-landscape'
             }
-            
-            Shopware.State.commit('cmsPageState/setCurrentCmsDeviceView', viewportState)
+
+            State.commit('cmsPageState/setCurrentCmsDeviceView', viewportState)
         }
     },
 
-    created() {
+    created () {
         this.activeViewport = this.currentCmsDeviceView
     }
-};
+}

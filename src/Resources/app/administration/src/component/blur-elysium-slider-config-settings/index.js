@@ -1,41 +1,33 @@
 // import './blur-elysium-slider-config-navigation.scss'
-import template from './blur-elysium-slider-config-settings.twig';
-import { containerBreakpoints } from "@elysiumSlider/utilities/layout";
-import { config } from "@elysiumSlider/utilities/identifiers";
-
-const { Criteria } = Shopware.Data;
-const { Component, Context, Mixin } = Shopware;
-const { mapPropertyErrors, mapState } = Shopware.Component.getComponentHelper();
+import template from './blur-elysium-slider-config-settings.twig'
+import { containerBreakpoints } from '@elysiumSlider/utilities/layout'
+import { config } from '@elysiumSlider/utilities/identifiers'
 
 export default {
     template,
 
     props: {
         config: {
-            type: Object,
+            type: Object
         }
     },
 
-    data() {
+    data () {
         return {
-            
-        };
+
+        }
     },
 
     watch: {
     },
 
     computed: {
-        positionIdentifiers() {
+        positionIdentifiers () {
             return config
         },
-        containerBreakpoints() {
-            return containerBreakpoints;
+        containerBreakpoints () {
+            return containerBreakpoints
         }
 
-    },
-
-    created() {
-        console.log(this.config)
     }
-};
+}

@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-/* eslint no-undef: 'off' */
+// eslint-disable-next-line no-undef
 const { Component } = Shopware
 
 Component.override('sw-cms-sidebar', {

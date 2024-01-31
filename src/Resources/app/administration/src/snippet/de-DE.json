@@ -200,9 +200,20 @@
         },
         "slideSettings": {
             "headline": {
-                "label": "Überschrift",
+                "title": "Überschrift",
+                "label": "Inhalt",
                 "placeholder": "Mein großartiger Slide!",
                 "helpText": "Lege eine Überschrift für den Slide fest. Du kannst folgende HTML Tags nutzen: br, i, u, b, strong und span."
+            },
+            "slide": {
+                "bgColor": "Hintergrundfarbe",
+                "bgGradient": {
+                    "title": "Hintergrundverlauf",
+                    "startColor": "Primärfarbe",
+                    "endColor": "Sekundärfarbe",
+                    "gradientType": "Verlaufstyp",
+                    "gradientDeg": "Verlaufsgrad"
+                }
             },
             "customTemplate": {
                 "cardTitle": "Eigenes Template",
@@ -215,6 +226,67 @@
             },
             "presentationMedia": {
                 "label": "Fokus Bild"
+            },
+            "display": {
+                "slideAppearance": {
+                    "title": "Slide Anzeige",
+                    "description": "Bestimmt die Abstände und Kantenrundung des Slides. Diese Einstellungen sind Geräteabhängig.",
+                    "justifyContent": {
+                        "helpText": "Diese Einstellung hat nur eine sichtbare Auswirkung wenn die maximale Breite des Containerelements aktiv ist"
+                    }
+                },
+                "containerAlignment": {
+                    "title": "Container Ausrichtung",
+                    "description": "Bestimmt die Ausrichtung des inneren Slide Containerelements. Diese Einstellungen sind Geräteabhängig."
+                },
+                "slideContainer": "Slide Container",
+                "containerElementAppearance": {
+                    "title": "Containerelement Anzeige",
+                    "description": "Diese Anzeigeeinstellungen beziehen sich auf das Containerelement und sind Geräteabhängig. Das Containerelement beinhaltet das Inhalts- und Bildelement",
+                    "columnWrap": {
+                        "label": "Elemente umbrechen",
+                        "helpText": "Bricht alle Container Elemente um und stellt diese unter- statt nebeneinander dar."
+                    },
+                    "order": {
+                        "label": "Layout Reihenfolge",
+                        "helpText": "Legt Reihenfolge der Container Elemente fest",
+                        "default": "Standard (Inhalt — Bild)",
+                        "reverse": "Umgekehrt (Bild — Inhalt)"
+                    },
+                    "justifyContent": {
+                        "helpText": "Diese Einstellung hat nur eine sichtbare Auswirkung wenn die maximale Breite des Inhalt- oder Bildelements aktiv ist"
+                    }
+                },
+                "contentElementAppearance": {
+                    "title": "Inhaltselement Anzeige",
+                    "description": "Diese Anzeigeeinstellungen beziehen sich auf das Inhaltselement und sind Geräteabhängig. Das Inhaltselement beinhaltet die Überschrift, Beschreibung und Button."
+                },
+                "imageElementAppearance": {
+                    "title": "Bildelement Anzeige",
+                    "description": "Diese Anzeigeeinstellungen beziehen sich auf das Bildelement und sind Geräteabhängig. Das Bildelement beinhaltet das Fokus Bild."
+                },
+                "common": {
+                    "fontSize": "Schriftgröße",
+                    "paddingX": "Abstand Horizontal (px)",
+                    "paddingY": "Abstand Vertikal (px)",
+                    "gap": "Abstand Zwischenraum (px)",
+                    "borderRadius": "Kantenrundung (px)",
+                    "alignX": "Horizontale Ausrichtung",
+                    "alignY": "Vertikale Ausrichtung",
+                    "textAlign": "Textausrichtung",
+                    "center": "Zentriert",
+                    "top": "Oben",
+                    "bottom": "Unten",
+                    "left": "Links",
+                    "right": "Rechts",
+                    "normal": "Normal",
+                    "stretch": "Strecken",
+                    "spaceBetween": "Zwischenraum strecken",
+                    "spaceAround": "Zwischenraum umschließen",
+                    "maxWidth": "Maximale Breite (px)",
+                    "noMaxWidth": "Keine maximale Begrenzung",
+                    "backgroundColor": "Hintergrundfarbe"
+                }
             }
         },
         "slideSettingTabs": {

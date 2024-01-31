@@ -3,14 +3,6 @@
     'd-flex'
 ] %}
 
-{% if slideData.slideSettings.containerVerticalAlign is same as('top') %}
-    {% set slideClasses = slideClasses|merge(['align-items-start']) %}
-{% elseif slideData.slideSettings.containerVerticalAlign is same as('center') %}
-    {% set slideClasses = slideClasses|merge(['align-items-center']) %}
-{% elseif slideData.slideSettings.containerVerticalAlign is same as('bottom') %}
-    {% set slideClasses = slideClasses|merge(['align-items-end']) %}
-{% endif %}
-
 {% if slideData is null %}
     <div class="{{ slideClasses|join(' ') }}">
         No slide data
@@ -22,8 +14,12 @@
         {% block cms_element_blur_elysium_banner_style %}
             {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/style.html.twig' with {
                 slideStyles: {
-                    '--bg-color': slideData.slideSettings.slideBgColor
+                    '--bg-color': slideData.slideSettings.slide.bgColor,
+                    '--gradient-color-start': slideData.slideSettings.slide.bgGradient.startColor,
+                    '--gradient-color-end': slideData.slideSettings.slide.bgGradient.endColor,
+                    '--gradient-deg': slideData.slideSettings.slide.bgGradient.gradientDeg ? slideData.slideSettings.slide.bgGradient.gradientDeg ~ 'deg' : null
                 },
+                slideViewportStyles: slideData.slideSettings.viewports,
                 slideCover: slideData.media,
                 slideCoverPortrait: slideData.mediaPortrait
             } %}

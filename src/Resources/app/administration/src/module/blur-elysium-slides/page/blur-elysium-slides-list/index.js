@@ -1,14 +1,15 @@
-import template from './blur-elysium-slides-list.twig';
-import './blur-elysium-slides-list.scss';
+import template from './blur-elysium-slides-list.twig'
+import './blur-elysium-slides-list.scss'
 
-const { Component, Mixin } = Shopware;
-const { Criteria } = Shopware.Data;
+// eslint-disable-next-line no-undef
+const { Component, Mixin, Data, State, Context } = Shopware
+const { Criteria } = Data
 
-Component.register( 'blur-elysium-slides-list', {
+Component.register('blur-elysium-slides-list', {
     template,
 
     inject: [
-        'repositoryFactory', 
+        'repositoryFactory',
         'acl',
         'filterFactory'
     ],
@@ -16,10 +17,10 @@ Component.register( 'blur-elysium-slides-list', {
     mixins: [
         Mixin.getByName('notification'),
         Mixin.getByName('salutation'),
-        Mixin.getByName('listing'),
+        Mixin.getByName('listing')
     ],
 
-    data() {
+    data () {
         return {
             slides: null,
             total: 0,
@@ -30,136 +31,135 @@ Component.register( 'blur-elysium-slides-list', {
             sortDirection: 'ASC',
             showDeleteModal: false,
             filterCriteria: []
-        };
+        }
     },
 
-    metaInfo() {
+    metaInfo () {
         return {
             title: this.$createTitle()
-        };
+        }
     },
 
     computed: {
 
-        repository() {
-            return this.repositoryFactory.create( 'blur_elysium_slides' );
+        repository () {
+            return this.repositoryFactory.create('blur_elysium_slides')
         },
 
-        elysiumSlidesColumns() {
-            return this.getElysiumSlidesColumns();
+        elysiumSlidesColumns () {
+            return this.getElysiumSlidesColumns()
         },
 
-        defaultCriteria() {
-            const defaultCriteria = new Criteria( this.page, this.limit );
+        defaultCriteria () {
+            const defaultCriteria = new Criteria(this.page, this.limit)
 
-            this.naturalSorting = this.sortBy === 'name';
+            this.naturalSorting = this.sortBy === 'name'
 
-            defaultCriteria.setTerm(this.term);
+            defaultCriteria.setTerm(this.term)
 
             this.sortBy.split(',').forEach(sortBy => {
-
-                defaultCriteria.addSorting( Criteria.sort(
-                    sortBy, 
-                    this.sortDirection, 
+                defaultCriteria.addSorting(Criteria.sort(
+                    sortBy,
+                    this.sortDirection,
                     this.naturalSorting
-                ));
-            });
+                ))
+            })
 
             this.filterCriteria.forEach(filter => {
-                defaultCriteria.addFilter(filter);
-            });
+                defaultCriteria.addFilter(filter)
+            })
 
-            return defaultCriteria;
-        },
+            return defaultCriteria
+        }
     },
 
     watch: {
         defaultCriteria: {
-            handler() {
-                this.getList();
+            handler () {
+                this.getList()
             },
             deep: true
-        },
+        }
     },
 
-    created() {
-        this.createdComponent();
+    created () {
+        this.createdComponent()
     },
 
     methods: {
-        createdComponent() {
-            this.getList();
+        createdComponent () {
+            this.getList()
         },
 
-        async getList() {
-            this.isLoading = true;
+        async getList () {
+            this.isLoading = true
 
             try {
-                const items = await this.repository.search( this.defaultCriteria, Shopware.Context.api );
+                const items = await this.repository.search(this.defaultCriteria, Context.api)
 
-                this.total = items.total;
-                this.slides = items;
-                this.isLoading = false;
+                this.total = items.total
+                this.slides = items
+                this.isLoading = false
             } catch {
-                this.isLoading = false;
+                this.isLoading = false
             }
         },
 
-        onDelete( id ) {
-            this.showDeleteModal = id;
+        onDelete (id) {
+            this.showDeleteModal = id
         },
 
-        onDeleteFinish() {
-            this.getList();
+        onDeleteFinish () {
+            this.getList()
         },
 
-        onSearch( searchTerm ) {
-            this.term = searchTerm;
+        onSearch (searchTerm) {
+            this.term = searchTerm
         },
 
-        onChangeLanguage(languageId) {
-            Shopware.State.commit('context/setApiLanguageId', languageId);
-            this.getList();
+        onChangeLanguage (languageId) {
+            State.commit('context/setApiLanguageId', languageId)
+            this.getList()
         },
 
-        onInlineEditSave(promise) {
+        onInlineEditSave (promise) {
             promise.then(() => {
                 this.createNotificationSuccess({
-                    message: this.$tc('sw-customer.detail.messageSaveSuccess'),
-                });
+                    message: this.$tc('sw-customer.detail.messageSaveSuccess')
+                })
             }).catch(() => {
-                this.getList();
+                this.getList()
                 this.createNotificationError({
-                    message: this.$tc('sw-customer.detail.messageSaveError'),
-                });
-            });
+                    message: this.$tc('sw-customer.detail.messageSaveError')
+                })
+            })
         },
 
-        updateCriteria(criteria) {
-            this.page = 1;
-            this.filterCriteria = criteria;
+        updateCriteria (criteria) {
+            this.page = 1
+            this.filterCriteria = criteria
         },
 
-        onDeleteItems() {
-            this.getList();
+        onDeleteItems () {
+            this.getList()
         },
 
-        onCopySlide(referenceSlide) {
+        onCopySlide (referenceSlide) {
             this.isLoading = true
             const cloneOptions = {
                 overwrites: {
-                    name: `${referenceSlide.name}-${this.$tc('blurElysiumSlider.general.copySuffix')}`,
-                },
-            };
-            this.repository.clone(referenceSlide.id, Shopware.Context.api, cloneOptions).then((result) => {
-                this.getList();
+                    name: `${referenceSlide.name}-${this.$tc('blurElysiumSlider.general.copySuffix')}`
+                }
+            }
+            this.repository.clone(referenceSlide.id, Context.api, cloneOptions).then((result) => {
+                this.getList()
             }).catch((error) => {
                 console.warn(error)
                 this.isLoading = false
-            });
+            })
         },
 
-        getElysiumSlidesColumns() {
+        getElysiumSlidesColumns () {
             const columns = [{
                 property: 'name',
                 dataIndex: 'name',
@@ -170,7 +170,7 @@ Component.register( 'blur-elysium-slides-list', {
                 allowResize: true,
                 primary: true,
                 useCustomSort: true,
-                naturalSorting: true,
+                naturalSorting: true
             }, {
                 property: 'title',
                 dataIndex: 'title',
@@ -182,10 +182,10 @@ Component.register( 'blur-elysium-slides-list', {
                 sortable: false,
                 primary: false,
                 useCustomSort: false,
-                naturalSorting: false,
-            }];
+                naturalSorting: false
+            }]
 
-            return columns;
+            return columns
         }
     }
-});
+})

@@ -1,12 +1,13 @@
-import template from './blur-elysium-slides-basic-form.twig';
-import { slides } from "@elysiumSlider/utilities/identifiers";
+import template from './blur-elysium-slides-basic-form.twig'
+import { slides } from '@elysiumSlider/utilities/identifiers'
 
-const { Component, Mixin } = Shopware;
-const { mapMutations, mapPropertyErrors, mapState } = Component.getComponentHelper();
+// eslint-disable-next-line no-undef
+const { Component, Mixin } = Shopware
+const { mapMutations, mapPropertyErrors, mapState } = Component.getComponentHelper()
 
 const propErrors = [
     'name'
-];
+]
 
 export default {
     template,
@@ -27,39 +28,49 @@ export default {
         allowEdit: {
             type: Boolean,
             required: false,
-            default: true,
+            default: true
         }
     },
 
     computed: {
-        
+
         ...mapState('blurElysiumSlidesDetail', [
             'slide',
+            'viewport',
             'loading',
             'acl'
         ]),
-        
-        ...mapPropertyErrors( 'blurElysiumSlides' , propErrors),
 
-        positionIdentifiers() {
+        ...mapPropertyErrors('blurElysiumSlides', propErrors),
+
+        positionIdentifiers () {
             return slides
         },
 
-        urlOverlayActive() {
-            return this.slide.slideSettings && this.slide.slideSettings.urlOverlay ? true : false
-        }
-    },
+        viewportSettings () {
+            return this.slide.slideSettings.viewports[this.viewport]
+        },
 
-    created() {
-        /**
-         * @todo set editable props in template
-         */
-        console.log(this.editable, this.slide)
+        urlOverlayActive () {
+            return !!(this.slide.slideSettings && this.slide.slideSettings.urlOverlay)
+        }
     },
 
     methods: {
         ...mapMutations('blurElysiumSlidesDetail', [
             'setSlideSetting',
+            'setViewportSetting'
         ]),
+
+        defaultViewportValues (mobileValue, tabletValue, desktopValue) {
+
+            const defaultValues = {
+                mobile: mobileValue,
+                tablet: tabletValue,
+                desktop: desktopValue
+            }
+
+            return defaultValues[this.viewport]
+        }
     }
 }

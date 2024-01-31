@@ -1,11 +1,12 @@
-import template from './blur-cms-el-config-elysium-slider.twig';
-import './blur-cms-el-config-elysium-slider.scss';
-import { config } from "@elysiumSlider/utilities/identifiers";
+import template from './blur-cms-el-config-elysium-slider.twig'
+import './blur-cms-el-config-elysium-slider.scss'
+import { config } from '@elysiumSlider/utilities/identifiers'
 
-const { Component, Mixin } = Shopware;
-const { Criteria, EntityCollection } = Shopware.Data;
+// eslint-disable-next-line no-undef
+const { Component, Data, Context } = Shopware
+const { Criteria } = Data
 
-Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
+Component.register('blur-cms-el-config-elysium-slider', {
     template,
 
     inject: ['repositoryFactory'],
@@ -14,53 +15,52 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
         'cms-element'
     ],
 
-    data() {
+    data () {
         return {
             blurElysiumSlides: null,
-            labelProp: "label",
+            labelProp: 'label',
             selectModel: []
-        };
+        }
     },
 
     computed: {
-        positionIdentifiers() {
+        positionIdentifiers () {
             return config
         },
         selectedSlides: {
-            get() {
+            get () {
                 return this.element.config.elysiumSlideCollection.value
             },
 
-            set(newValue) {
+            set (newValue) {
                 // Note: we are using destructuring assignment syntax here.
                 this.element.config.elysiumSlideCollection.value = newValue
             }
         },
 
-        elysiumSlidesRepository() {
-            return this.repositoryFactory.create('blur_elysium_slides');
+        elysiumSlidesRepository () {
+            return this.repositoryFactory.create('blur_elysium_slides')
         },
 
-        defaultCriteria() {
-            const defaultCriteria = new Criteria();
+        defaultCriteria () {
+            const defaultCriteria = new Criteria()
 
-            defaultCriteria.addSorting( Criteria.sort(
-                'name', 
-                'ASC', 
+            defaultCriteria.addSorting(Criteria.sort(
+                'name',
+                'ASC',
                 true
-            ));
+            ))
 
-
-            return defaultCriteria;
+            return defaultCriteria
         },
 
-        context() {
-            return { ...Shopware.Context.api };
-        },
+        context () {
+            return { ...Context.api }
+        }
     },
 
-    created() {
-        this.getSlides();
+    created () {
+        this.getSlides()
     },
 
     watch: {
@@ -68,50 +68,47 @@ Shopware.Component.register( 'blur-cms-el-config-elysium-slider', {
 
     methods: {
 
-        getSlides() {
-            this.elysiumSlidesRepository.search( this.defaultCriteria, Shopware.Context.api ).then(( res ) => {
-                this.blurElysiumSlides = res;
+        getSlides () {
+            this.elysiumSlidesRepository.search(this.defaultCriteria, Context.api).then((res) => {
+                this.blurElysiumSlides = res
 
                 if (res.length === 0) {
                     this.selectedSlides = []
                 } else {
                     this.selectedSlides = this.filterOrphans(res)
                 }
-                    
-            }).catch( ( e ) => {
-                console.warn( e );
-            });
+            }).catch((e) => {
+                console.warn(e)
+            })
         },
 
-        onChange( content ) {
-            this.emitChanges(content);
+        onChange (content) {
+            this.emitChanges(content)
         },
 
-
-        emitChanges( content ) {
+        emitChanges (content) {
             if (content !== this.element.config.elysiumSlideCollection.value) {
-                this.element.config.elysiumSlideCollection.value = content;
-                this.$emit('element-update', this.element);
+                this.element.config.elysiumSlideCollection.value = content
+                this.$emit('element-update', this.element)
             }
         },
 
-        onCreateSlide() {
-            let route = this.$router.resolve({name: 'blur.elysium.slides.create'})
+        onCreateSlide () {
+            const route = this.$router.resolve({ name: 'blur.elysium.slides.create' })
             window.open(route.href, '_blank')
         },
 
-        onSlideOverview() {
-            let route = this.$router.resolve({name: 'blur.elysium.slides.index'})
+        onSlideOverview () {
+            const route = this.$router.resolve({ name: 'blur.elysium.slides.index' })
             window.open(route.href, '_blank')
         },
 
-        filterOrphans( slides ) {
-
-            return this.selectedSlides.filter( (selectedSlide, index) => {
+        filterOrphans (slides) {
+            return this.selectedSlides.filter((selectedSlide, index) => {
                 return slides.find((slide) => {
                     return slide.id === selectedSlide
                 })
             })
         }
     }
-});
+})

@@ -1,12 +1,11 @@
-import template from './template.html.twig';
-import './style.scss';
+import template from './template.html.twig'
+import './style.scss'
 
-const { 
-    mapState,
-    mapMutations,
-} = Shopware.Component.getComponentHelper();
+// eslint-disable-next-line no-undef
+const { Component } = Shopware
+const { mapState } = Component.getComponentHelper()
 
-Shopware.Component.register( 'sw-cms-block-blur-elysium-block-two-col', {
+Component.register('sw-cms-block-blur-elysium-block-two-col', {
     template,
 
     computed: {
@@ -14,7 +13,7 @@ Shopware.Component.register( 'sw-cms-block-blur-elysium-block-two-col', {
             'currentCmsDeviceView'
         ]),
 
-        settings() {
+        settings () {
             if (this.$parent.$props.block?.customFields) {
                 return this.$parent.$props.block.customFields
             }
@@ -22,21 +21,21 @@ Shopware.Component.register( 'sw-cms-block-blur-elysium-block-two-col', {
             return null
         },
 
-        dispayColumns() {
-            return this.getSettingsByDevice(this.currentCmsDeviceView).columnWrap === true ? 
-                '1fr' : 
-                `${this.getSettingsByDevice(this.currentCmsDeviceView).width.colOne}fr ${this.getSettingsByDevice(this.currentCmsDeviceView).width.colTwo}fr`
+        dispayColumns () {
+            return this.getSettingsByDevice(this.currentCmsDeviceView).columnWrap === true
+                ? '1fr'
+                : `${this.getSettingsByDevice(this.currentCmsDeviceView).width.colOne}fr ${this.getSettingsByDevice(this.currentCmsDeviceView).width.colTwo}fr`
         },
 
-        displayGridGap() {
-            if (this.getSettingsByDevice(this.currentCmsDeviceView).gridGap !== "") {
+        displayGridGap () {
+            if (this.getSettingsByDevice(this.currentCmsDeviceView).gridGap !== '') {
                 return this.getSettingsByDevice(this.currentCmsDeviceView).gridGap
             }
 
             return null
         },
 
-        displayStretch() {
+        displayStretch () {
             if (this.settings.columnStretch === true) {
                 return 'stretch'
             }
@@ -46,8 +45,8 @@ Shopware.Component.register( 'sw-cms-block-blur-elysium-block-two-col', {
     },
 
     methods: {
-        getSettingsByDevice( device ) {
+        getSettingsByDevice (device) {
             return this.settings.viewports[device.split('-')[0]]
-        },
-    },
-});
+        }
+    }
+})

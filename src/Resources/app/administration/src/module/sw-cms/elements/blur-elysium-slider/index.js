@@ -1,7 +1,8 @@
-import './component';
-import './config';
-import './preview';
+import './component'
+import './config'
+import './preview'
 
+// eslint-disable-next-line no-undef
 Shopware.Service('cmsService').registerCmsElement({
     name: 'blur-elysium-slider',
     label: 'blurElysiumSlider.cmsElement.label',
@@ -14,13 +15,13 @@ Shopware.Service('cmsService').registerCmsElement({
             value: []
         },
         content: {
-            source: "static",
+            source: 'static',
             value: {
-                title: ""
+                title: ''
             }
         },
         settings: {
-            source: "static",
+            source: 'static',
             value: {
                 overlay: false,
                 containerWidth: 'content', /** @type 'content' | 'full' */
@@ -35,39 +36,39 @@ Shopware.Service('cmsService').registerCmsElement({
             }
         },
         navigation: {
-            source: "static",
+            source: 'static',
             value: {
                 active: true,
-                position: "below_slider",
-                align: "center",
-                shape: "circle",
+                position: 'below_slider',
+                align: 'center',
+                shape: 'circle',
                 colors: {
-                    "default": "",
-                    "active": ""
+                    default: '',
+                    active: ''
                 },
-                size: "md",
-                navPadding: "md"
+                size: 'md',
+                navPadding: 'md'
             }
         },
         arrows: {
-            source: "static",
+            source: 'static',
             value: {
                 active: true,
                 icon: {
-                    "default": "arrow-head",
-                    "customPrev": "",
-                    "customNext": ""
+                    default: 'arrow-head',
+                    customPrev: '',
+                    customNext: ''
                 },
                 colors: {
-                    "default": "",
-                    "active": ""
+                    default: '',
+                    active: ''
                 },
                 bgColors: {
-                    "default": "",
-                    "active": ""
+                    default: '',
+                    active: ''
                 },
-                size: "md",
-                position: "in_slider"
+                size: 'md',
+                position: 'in_slider'
             }
         },
         /**
@@ -79,90 +80,90 @@ Shopware.Service('cmsService').registerCmsElement({
             source: 'static',
             value: [
                 {
-                    viewport: "xs",
+                    viewport: 'xs',
                     position: 1,
                     aspectRatio: {
                         width: 4,
-                        height: 3,
+                        height: 3
                     },
                     slidePadding: {
-                        x: "1rem", 
-                        y: "1.5rem"
+                        x: '1rem',
+                        y: '1.5rem'
                     },
                     maxHeight: null,
                     slidesPerPage: null,
                     slidesGap: null
                 },
                 {
-                    viewport: "sm",
+                    viewport: 'sm',
                     position: 2,
                     aspectRatio: {
                         width: 5,
-                        height: 3,
+                        height: 3
                     },
                     slidePadding: {
-                        x: "1rem", 
-                        y: "1.5rem"
+                        x: '1rem',
+                        y: '1.5rem'
                     },
                     maxHeight: null,
                     slidesPerPage: null,
                     slidesGap: null
                 },
                 {
-                    viewport: "md",
+                    viewport: 'md',
                     position: 3,
                     aspectRatio: {
                         width: 5,
-                        height: 3,
+                        height: 3
                     },
                     slidePadding: {
-                        x: "2rem", 
-                        y: "3rem"
+                        x: '2rem',
+                        y: '3rem'
                     },
                     maxHeight: null,
                     slidesPerPage: null,
                     slidesGap: null
                 },
                 {
-                    viewport: "lg",
+                    viewport: 'lg',
                     position: 4,
                     aspectRatio: {
                         width: 2,
-                        height: 1,
+                        height: 1
                     },
                     slidePadding: {
-                        x: "2rem", 
-                        y: "3rem"
+                        x: '2rem',
+                        y: '3rem'
                     },
                     maxHeight: null,
                     slidesPerPage: null,
                     slidesGap: null
                 },
                 {
-                    viewport: "xl",
+                    viewport: 'xl',
                     position: 5,
                     aspectRatio: {
                         width: 12,
-                        height: 5,
+                        height: 5
                     },
                     slidePadding: {
-                        x: "4rem", 
-                        y: "6rem"
+                        x: '4rem',
+                        y: '6rem'
                     },
                     maxHeight: null,
                     slidesPerPage: null,
                     slidesGap: null
                 },
                 {
-                    viewport: "xxl",
+                    viewport: 'xxl',
                     position: 6,
                     aspectRatio: {
                         width: 16,
-                        height: 7,
+                        height: 7
                     },
                     slidePadding: {
-                        x: "4rem", 
-                        y: "6rem"
+                        x: '4rem',
+                        y: '6rem'
                     },
                     maxHeight: null,
                     slidesPerPage: null,
@@ -174,56 +175,56 @@ Shopware.Service('cmsService').registerCmsElement({
             source: 'static',
             value: [
                 {
-                    viewport: "xs",
+                    viewport: 'xs',
                     position: 1,
                     aspectRatio: {
                         width: 4,
-                        height: 3,
+                        height: 3
                     },
                     maxHeight: null
                 },
                 {
-                    viewport: "sm",
+                    viewport: 'sm',
                     position: 2,
                     aspectRatio: {
                         width: 5,
-                        height: 3,
+                        height: 3
                     },
                     maxHeight: null
                 },
                 {
-                    viewport: "md",
+                    viewport: 'md',
                     position: 3,
                     aspectRatio: {
                         width: 5,
-                        height: 3,
+                        height: 3
                     },
                     maxHeight: null
                 },
                 {
-                    viewport: "lg",
+                    viewport: 'lg',
                     position: 4,
                     aspectRatio: {
                         width: 2,
-                        height: 1,
+                        height: 1
                     },
                     maxHeight: null
                 },
                 {
-                    viewport: "xl",
+                    viewport: 'xl',
                     position: 5,
                     aspectRatio: {
                         width: 12,
-                        height: 5,
+                        height: 5
                     },
                     maxHeight: null
                 },
                 {
-                    viewport: "xxl",
+                    viewport: 'xxl',
                     position: 6,
                     aspectRatio: {
                         width: 16,
-                        height: 7,
+                        height: 7
                     },
                     maxHeight: null
                 }
@@ -262,4 +263,4 @@ Shopware.Service('cmsService').registerCmsElement({
             value: null
         }
     }
-});
+})

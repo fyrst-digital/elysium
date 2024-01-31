@@ -30,5 +30,10 @@ module.exports = {
 	rules: {
         "indent": [0, "tab"],
         "no-tabs": 0,
+		"no-console": [
+			"warn", {
+				allow: ["warn", "error"]
+			}
+		]
     }
 }
