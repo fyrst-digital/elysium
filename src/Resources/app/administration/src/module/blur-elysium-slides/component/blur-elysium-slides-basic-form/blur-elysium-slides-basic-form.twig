@@ -180,19 +180,40 @@
             :title="$tc('BlurElysiumSlides.baseForm.linkingCardTitle')"
         >
 
+        <sw-alert 
+            v-if="slide.slideSettings.slide?.linking?.type === undefined" 
+            variant="warning" 
+            appearance="default" 
+            :showIcon="true" 
+            :closable="false"
+            >
+            <span v-html="'Kein Link Typ vorhanden. Bitte wähle einen Verlinkungstyp und speichere deine Änderung, damit weitere Optionen sichtbar werden'" />
+        </sw-alert>
+
+        <sw-select-field 
+            v-if="slide.slideSettings"
+            :label="$tc('blurElysiumSlides.baseForm.linkType.label')"
+            :placeholder="$tc('blurElysiumSlides.baseForm.linkType.placeholder')"
+            :value="slide.slideSettings.slide?.linking?.type"
+            @change="value => setSlideSetting({ key: 'slide.linking.type', value: value })">
+            <option value="custom">{{ $tc('blurElysiumSlides.baseForm.linkType.custom') }}</option>
+            <option value="product">{{ $tc('blurElysiumSlides.baseForm.linkType.product') }}</option>
+        </sw-select-field>
+
+
+        <template v-if="slide.slideSettings.slide?.linking?.type === 'custom'">
+            <blur-elysium-slide-settings-linking-custom />
+        </template>
+        <template v-else-if="slide.slideSettings.slide?.linking?.type === 'product'">
+            <blur-elysium-slide-settings-linking-product />
+        </template>
+        <!--
+
+        -->
+
         {% block blur_elysium_slides_linking_form %}
             <sw-container columns="1fr 1fr" gap="0 2rem" align="center">
                 
-                {% block blur_elysium_slides_input_url %}
-                    <sw-field
-                        type="text"
-                        v-model="slide.url"
-                        :label="$tc('BlurElysiumSlides.baseForm.urlInput.title')"
-                        :placeholder="$tc('BlurElysiumSlides.baseForm.urlInput.placeholder')"
-                        :helpText="$tc('BlurElysiumSlides.baseForm.urlInput.helpText')"
-                    />
-                {% endblock %}
-
                 {% block blur_elysium_slides_input_url_target %}
                     <sw-select-field 
                         v-if="slide.slideSettings"
@@ -203,6 +224,16 @@
                         <option value="internal">{{ $tc('BlurElysiumSlides.settingsForm.urlSettings.target.options.internal') }}</option>
                         <option value="external">{{ $tc('BlurElysiumSlides.settingsForm.urlSettings.target.options.external') }}</option>
                     </sw-select-field>
+                {% endblock %}
+
+                {% block blur_elysium_slides_input_url_overlay %}
+                    <sw-switch-field 
+                        v-if="slide.slideSettings"
+                        :label="$tc('BlurElysiumSlides.settingsForm.urlSettings.overlay.inputLabel')" 
+                        :helpText="$tc('BlurElysiumSlides.settingsForm.urlSettings.overlay.description')"
+                        :value="slide.slideSettings.urlOverlay"
+                        @change="value => setSlideSetting({ key: 'urlOverlay', value: value })">
+                    </sw-switch-field>
                 {% endblock %}
 
                 {% block blur_elysium_slides_input_button_label %}
@@ -237,18 +268,6 @@
                 {% endblock %}
                 
             </sw-container>
-
-            {% block blur_elysium_slides_input_url_overlay %}
-                <sw-switch-field 
-                    v-if="slide.slideSettings"
-                    :label="$tc('BlurElysiumSlides.settingsForm.urlSettings.overlay.inputLabel')" 
-                    :value="slide.slideSettings.urlOverlay"
-                    @change="value => setSlideSetting({ key: 'urlOverlay', value: value })">
-                </sw-switch-field>                
-                <p>
-                    {{ $tc('BlurElysiumSlides.settingsForm.urlSettings.overlay.description') }}
-                </p>
-            {% endblock %}
         {% endblock %}
         </sw-card>
     {% endblock %}

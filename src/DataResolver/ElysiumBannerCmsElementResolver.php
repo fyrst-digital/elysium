@@ -58,6 +58,8 @@ class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
             $criteria->addAssociation('media');
             $criteria->addAssociation('media.mediaFolder');
             $criteria->addAssociation('media.mediaFolder.configuration');
+            $criteria->addAssociation('product.media');
+            $criteria->addAssociation('product.cover');
 
             /** @var EntitySearchResult $elysiumSlideResult */
             $elysiumSlideResult = $this->elysiumSlidesRepository->search(

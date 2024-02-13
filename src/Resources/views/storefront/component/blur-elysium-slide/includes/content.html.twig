@@ -1,0 +1,87 @@
+{% block blur_elysium_slide_content %}
+    {% set headlineClasses = [
+        'blur-elysium-slide-headline'
+    ] %}
+
+    {% set headlineElement = 'div' %}
+
+    {% set headlineTagsWhitelist = [
+        '<br>',
+        '<i>',
+        '<b>',
+        '<u>',
+        '<strong>',
+        '<span>'
+    ] %}
+
+    {% if slideData.slideSettings.headlineElement %}
+        {% set headlineElement = slideData.slideSettings.headlineElement %}
+    {% endif %}
+
+    {% set descriptionClasses = [
+        'blur-elysium-slide-description'
+    ] %}
+
+    {% set actionsClasses = [
+        'blur-elysium-slide-actions'
+    ] %}
+
+    {% set mainBtnClasses = [
+        'blur-elysium-slide-main-btn',
+        'btn'
+    ] %}
+
+    {% if slideData.slideSettings.buttonAppearance %}
+        {% set mainBtnClasses = mainBtnClasses|merge([
+            'btn-' ~ slideData.slideSettings.buttonAppearance
+        ]) %}
+    {% endif %}
+
+    {% set headlineContent = slideData.translated.title|striptags( headlineTagsWhitelist|join )|raw %}
+    {% set descriptionContent = slideData.translated.description|raw %}
+    {% set showActions = ( slideData.translated.button_label and slideData.translated.url ) and slideData.slideSettings.urlOverlay is not same as( true ) %}
+    {% set actionMainUrl = slideData.translated.url %}
+    {% set actionMainLabel = slideData.translated.button_label %}
+
+    {% block blur_elysium_slide_content_element %}
+        <div class="blur-elysium-slide-content">
+            {% block blur_elysium_slide_headline %}
+
+                {% if headlineContent %}
+                    <{{headlineElement|raw}} 
+                        class="{{ headlineClasses|join(' ') }}">
+                        {{ headlineContent }}
+                    </{{headlineElement|raw}}>
+                {% endif %}
+            {% endblock %}
+
+            {% block blur_elysium_slide_description %}
+                {% if descriptionContent %}
+                    <div class="{{ descriptionClasses|join(' ') }}">
+                        {{ descriptionContent }}
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+            {% block blur_elysium_slide_actions %}
+                {% if showActions %}
+                    <div class="{{ actionsClasses|join(' ') }}">
+                        
+                        {% block blur_elysium_slide_action_main %}
+                            <a href="{{ actionMainUrl }}" 
+                                title="{{ actionMainLabel }}" 
+                                class="{{ mainBtnClasses|join(' ') }}"
+                                {% if slideData.slideSettings.urlTarget == "external" %}
+                                    target="_blank"
+                                    rel="noopener"
+                                {% endif %}>
+                                
+                                {{ actionMainLabel }}
+                            </a>
+                        {% endblock %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}

@@ -1,5 +1,18 @@
 export default {
     slide: {
+        /** @type object<slideLinking> | null */
+        linking: {
+            /** @type 'custom' | 'product' */
+            type: 'custom',
+            /** @type string | null */
+            productId: null,
+            /** @type 'internal' | 'external' */
+            target: 'internal',
+            /** @type 'primary' | 'secondary' */
+            buttonAppearance: 'primary',
+            /** @type boolean */
+            urlOverlay: false
+        },
         /** @type string | null */
         bgColor: null,
         /** @type object<bgGardient> | null */
@@ -7,7 +20,7 @@ export default {
             startColor: '',
             endColor: '',
             gradientType: '',
-            gradientDeg: ''
+            gradientDeg: 45
         }
     },
     container: {

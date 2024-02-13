@@ -26,6 +26,15 @@
     '--color': slideData.slideSettings.headlineTextcolor
 } %}
 
+{% set presentationMedia = slideData.presentationMedia %}
+
+{% if slideData.product is not same as(null) and slideData.slideSettings.slide.linking.type is same as('product') %}
+
+    {% if slideData.product.cover and slideData.presentationMedia is null %}
+        {% set presentationMedia = slideData.product.cover.media %}
+    {% endif %}
+{% endif %}
+
 {% apply spaceless %}
 <style id="style-{{ slideData.id }}" style="display:none !important; visibility:hidden !important;">
     {# general slide styles #}
@@ -84,7 +93,7 @@
                     {% endif %}
                 }
                 {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-container {
-                    {% if options.container.columnWrap is not same as(true) and slideData.presentationMedia is not null %}
+                    {% if options.container.columnWrap is not same as(true) and presentationMedia is not null %}
                         --columns: auto auto;
                     {% else %}
                         --columns: 1fr;

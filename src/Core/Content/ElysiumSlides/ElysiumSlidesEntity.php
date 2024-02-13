@@ -7,6 +7,5 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 
 class ElysiumSlidesEntity extends Entity
 {
-
     use EntityIdTrait;
 }
