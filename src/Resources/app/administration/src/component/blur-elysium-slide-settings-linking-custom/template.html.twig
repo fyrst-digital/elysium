@@ -1,0 +1,14 @@
+{% block blur_elysium_slide_settings_linking_custom %}
+    <sw-container columns="1fr 1fr" gap="0 2rem" align="center">
+        
+        {% block blur_elysium_slide_settings_linking_custom_url %}
+            <sw-text-field
+                v-model="slide.url"
+                :label="$tc('BlurElysiumSlides.baseForm.urlInput.title')"
+                :placeholder="$tc('BlurElysiumSlides.baseForm.urlInput.placeholder')"
+                :helpText="$tc('BlurElysiumSlides.baseForm.urlInput.helpText')"
+            />
+        {% endblock %}
+        
+    </sw-container>
+{% endblock %}

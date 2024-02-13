@@ -19,7 +19,7 @@ export default {
 
     /**
      * @deprecated this props will be removed
-     * allowEdit will be handled through the ACL vuex state
+     * isLoading and allowEdit will be handled through the ACL vuex state
      */
     props: {
         isLoading: {
@@ -29,6 +29,15 @@ export default {
             type: Boolean,
             required: false,
             default: true
+        }
+    },
+
+    watch: {
+        slide: {
+            handler: function(value) {
+                console.log("watch the watchmen", value)
+            },
+            deep: true
         }
     },
 
@@ -72,5 +81,5 @@ export default {
 
             return defaultValues[this.viewport]
         }
-    }
+    },
 }

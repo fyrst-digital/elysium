@@ -1,3 +1,5 @@
+{% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/container.html.twig' %}
+
 {% set slideClasses = [
     'blur-elysium-slide',
     'd-flex'
@@ -12,7 +14,7 @@
         data-elysium-slide-id="{{ slideData.id }}">
         
         {% block cms_element_blur_elysium_banner_style %}
-            {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/style.html.twig' with {
+            {% sw_include '@Storefront/storefront/component/blur-elysium-slide/includes/style.html.twig' with {
                 slideStyles: {
                     '--bg-color': slideData.slideSettings.slide.bgColor,
                     '--gradient-color-start': slideData.slideSettings.slide.bgGradient.startColor,
@@ -25,8 +27,6 @@
             } %}
         {% endblock %}
 
-        {% block cms_element_blur_elysium_banner_container %}
-            {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/container.html.twig' %}
-        {% endblock %}
+        {{ block('blur_elysium_slide_container') }}
     </div>
 {% endif %}

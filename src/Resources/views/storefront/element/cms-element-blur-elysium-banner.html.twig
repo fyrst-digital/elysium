@@ -1,4 +1,5 @@
 {% block cms_element_blur_elysium_banner_root %}
+
     {% set bannerClasses = [
         'blur-elysium-banner'
     ] %}
@@ -7,8 +8,20 @@
         <div class="{{ bannerClasses|join(' ') }}"
             data-cms-element-id="{{ element.id }}">
 
+            {% set slideTemplate = 'default' %}
+            {% set slideFile = 'slide.html.twig' %}
+
+            {% if element.data.elysiumSlide.product is not same as(null) and element.data.elysiumSlide.slideSettings.slide.linking.type is same as('product') %}
+                {% set slideFile = 'slide-product.html.twig' %}
+            {% endif %}
+
+            {% if element.data.elysiumSlide.slideSettings.customTemplateFile is not empty %}
+                {% set slideTemplate = 'custom' %}
+                {% set slideFile = element.data.elysiumSlide.slideSettings.customTemplateFile ~ '.html.twig' %}
+            {% endif %}
+
             {% block cms_element_blur_elysium_banner_slide_include %}
-                {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/slide.html.twig' with {
+                {% sw_include '@Storefront/storefront/component/blur-elysium-slide/' ~ slideTemplate ~ '/' ~ slideFile ignore missing with {
                     slideData: element.data.elysiumSlide
                 } %}
             {% endblock %}

@@ -1,0 +1,16 @@
+{% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/content.html.twig' %}
+{% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/image.html.twig' %}
+
+{% block blur_elysium_slide_container %}
+    {% set containerClasses = [
+        'blur-elysium-slide-container',
+        'd-grid',
+    ] %}
+
+    {% block blur_elysium_slide_container_element %}
+        <div class="{{ containerClasses|join(' ') }}">
+            {{ block('blur_elysium_slide_content') }}
+            {{ block('blur_elysium_slide_image') }}
+        </div>
+    {% endblock %}
+{% endblock %}

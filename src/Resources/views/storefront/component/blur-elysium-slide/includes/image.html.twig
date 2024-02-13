@@ -1,0 +1,20 @@
+{% block blur_elysium_slide_image %}
+    {% set containerClasses = [
+        'blur-elysium-slide-image'
+    ] %}
+
+    {% set imageMedia = slideData.presentationMedia %}
+
+    {% block blur_elysium_slide_image_element %}
+        {% if imageMedia %}           
+            <div class="{{ containerClasses|join(' ') }}">
+                {% sw_thumbnails 'elysium-slide-thumbnails' with {
+                    media: imageMedia,
+                    attributes: {
+                        'class': 'mw-100'
+                    }
+                } %}
+            </div>
+        {% endif %}
+    {% endblock %}
+{% endblock %}

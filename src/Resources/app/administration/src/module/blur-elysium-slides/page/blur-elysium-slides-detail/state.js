@@ -60,6 +60,7 @@ export default {
         },
         setSlideSetting (state, payload) {
             set(state.slide.slideSettings, payload.key, payload.value)
+            console.log(state.slide.slideSettings, payload.key, payload.value)
         },
         setViewportSetting (state, payload) {
             set(state.slide.slideSettings.viewports[state.viewport], payload.key, payload.value)

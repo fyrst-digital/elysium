@@ -1,0 +1,10 @@
+{% block blur_elysium_slide_settings_linking_product %}
+    <sw-container columns="1fr" gap="0 2rem" align="center">
+        
+        <sw-entity-single-select 
+            entity="product" 
+            :label="$tc('blurElysiumSlides.settings.linkProduct.label')"
+            v-model="slide.productId" />
+        
+    </sw-container>
+{% endblock %}

@@ -19,6 +19,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
+use Shopware\Core\Content\Product\ProductDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToOneAssociationField;
 
 class ElysiumSlidesDefinition extends EntityDefinition {
 
@@ -42,6 +44,9 @@ class ElysiumSlidesDefinition extends EntityDefinition {
                 new Required(), 
                 new PrimaryKey() 
             ),
+            // product association
+            (new FkField('product_id', 'productId', ProductDefinition::class))->addFlags(new ApiAware()),
+            (new OneToOneAssociationField('product', 'product_id', 'id', ProductDefinition::class, true))->addFlags(new ApiAware()),
             // media associations
             /// media (slide cover)
             (new FkField('media_id', 'mediaId', MediaDefinition::class))->addFlags(new ApiAware()),
