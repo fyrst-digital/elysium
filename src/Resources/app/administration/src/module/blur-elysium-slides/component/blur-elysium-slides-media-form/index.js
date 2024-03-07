@@ -13,70 +13,82 @@ export default {
     ],
 
     mixins: [
-        Mixin.getByName('blur-editable')
+        Mixin.getByName('blur-editable'),
+        Mixin.getByName('notification')
     ],
 
     data () {
         return {
             uploadTag: {
-                cover: 'blur-elysium-slide-cover-media',
+                slideCover: 'blur-elysium-slide-cover',
+                slideCoverMobile: 'blur-elysium-slide-cover-mobile',
+                slideCoverTablet: 'blur-elysium-slide-cover-tablet',
+                slideCoverVideo: 'blur-elysium-slide-cover-video',
                 coverPortrait: 'blur-elysium-slide-cover-portrait-media',
                 presentationMedia: 'blur-elysium-slide-presentation-media'
-            },
-            mediaTypes: {
-                slideCover: {
-                    idField: 'mediaId',
-                    objectField: 'media'
-                },
-                slideCoverPortrait: {
-                    idField: 'mediaPortraitId',
-                    objectField: 'mediaPortrait'
-                },
-                presentationMedia: {
-                    idField: 'presentationMediaId',
-                    objectField: 'presentationMedia'
-                }
             }
         }
     },
 
-    computed: {
+    watch: {
+        slide: {
+            handler: function(slide) {
+                console.log('watch slide', slide)
+            },
+            deep: true
+        }
+    },
 
+    computed: {
         ...mapState('blurElysiumSlidesDetail', [
             'slide',
-            'media',
             'mediaSidebar',
+            'viewport',
             'acl'
         ]),
 
-        slideCoverPreview () {
-            if (this.slide.media) {
-                return this.slide.media
-            } else if (this.media.slideCover) {
-                return this.media.slideCover
+        slideCover () {
+            if (this.slide.slideCover) {
+                return this.slide.slideCover
             }
 
             return null
         },
 
-        slideCoverPortraitPreview () {
-            if (this.slide.mediaPortrait) {
-                return this.slide.mediaPortrait
-            } else if (this.media.slideCoverPortrait) {
-                return this.media.slideCoverPortrait
+        slideCoverMobile () {
+            if (this.slide.slideCoverMobile) {
+                return this.slide.slideCoverMobile
             }
 
             return null
         },
 
-        presentationMediaPreview () {
+        slideCoverTablet () {
+            if (this.slide.slideCoverTablet) {
+                return this.slide.slideCoverTablet
+            }
+
+            return null
+        },
+
+        slideCoverVideo () {
+            if (this.slide.slideCoverVideo) {
+                return this.slide.slideCoverVideo
+            }
+
+            return null
+        },
+
+        presentationMedia () {
             if (this.slide.presentationMedia) {
                 return this.slide.presentationMedia
-            } else if (this.media.presentationMedia) {
-                return this.media.presentationMedia
             }
 
             return null
+        },
+
+        viewportSettings () {
+            return this.slide.slideSettings.viewports[this.viewport]
         },
 
         positionIdentifiers () {
@@ -95,16 +107,16 @@ export default {
     methods: {
         ...mapMutations('blurElysiumSlidesDetail', [
             'setSlideProperty',
-            'setSlideMedia'
+            'setViewportSetting'
         ]),
 
-        fetchMedia (type) {
+        fetchMedia (propertyId, property) {
             this.mediaRepository.get(
-                this.slide[this.mediaTypes[type].idField],
+                this.slide[propertyId],
                 Context.api
             ).then((media) => {
-                this.setSlideMedia({
-                    key: type,
+                this.setSlideProperty({
+                    key: property,
                     value: media
                 })
             }).catch((exception) => {
@@ -112,32 +124,49 @@ export default {
             })
         },
 
-        setMedia (type, id) {
+        setMedia (property, media, allowedType = null) {
+            if (media.mimeType.split('/')[0] !== allowedType) {
+                let mediaTypeSnippet = this.$tc(`blurElysiumSlides.mediaType.${allowedType}`)
+                this.createNotificationWarning({
+                    title: this.$t('blurElysiumSlides.messages.mediaTypeNotAllowedTitle'),
+                    message: this.$t('blurElysiumSlides.messages.mediaTypeNotAllowed', { snippet: mediaTypeSnippet })
+                })
+                console.warn('media type not allowed')
+                return
+            }
+
+            let propertyId = `${property}Id`
+            
             this.setSlideProperty({
-                key: this.mediaTypes[type].idField,
-                value: id
+                key: propertyId,
+                value: media.id
             })
 
-            this.fetchMedia(type)
+            this.fetchMedia(propertyId, property)
         },
 
-        resetMedia (type) {
+        resetMedia (property) {
+            let propertyId = `${property}Id`
+
             this.setSlideProperty({
-                key: this.mediaTypes[type].idField,
+                key: property,
                 value: null
             })
             this.setSlideProperty({
-                key: this.mediaTypes[type].objectField,
-                value: null
-            })
-            this.setSlideMedia({
-                key: this.mediaTypes[type],
+                key: propertyId,
                 value: null
             })
         },
 
-        changeCoverType (value) {
-            this.coverType = value
+        defaultViewportValues (mobileValue, tabletValue, desktopValue) {
+
+            const defaultValues = {
+                mobile: mobileValue,
+                tablet: tabletValue,
+                desktop: desktopValue
+            }
+
+            return defaultValues[this.viewport]
         }
     }
 }

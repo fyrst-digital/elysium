@@ -1,4 +1,8 @@
 {
+    "blurElysiumSettings": {
+        "label": "Elysium Slider",
+        "breakpointsDescription": "Elysium Slider, Banner und Slides verwenden Geräteeinstellungen für die Smartphone, Tablet und Desktop Ansicht. Du kannst die Gerätegrößen, welche im Theme verwendet werden sollen, selbst definieren.<br/>Hierbei werden die Breakpoints des Shopware Themes genutzt. In der unteren Auswahl werden die Standard Pixelwerte des Shopware Themes angezeigt. <b>Diese können je nach verwendeten Theme oder Individualentwicklungen abweichen.</b>"
+    },
     "blurElysiumSlider": {
         "general": {
             "active": "Active",
@@ -188,6 +192,10 @@
             "copyErrorUnsavedChanges": "There are unsaved changes. Save or discard these changes so that you can duplicate the slide",
             "cancelChanges": "Discard changes and reload page"
         },
+        "mediaType": {
+            "image": "<b>Images</b>",
+            "video": "<b>Videos</b>"
+        },
         "actions": {
             "createSlide": "Create Slide",
             "toOverview": "To Overview",
@@ -222,7 +230,14 @@
                 "hasCustomNotice": "<b>Notice:</b> This slide has its own Twig template file defined. Please note this when managing the slide."
             },
             "slideCover": {
-                "label": "Slide Cover"
+                "label": "Slide Cover",
+                "useAsSlideCoverImage": "Use as Slide Cover Image",
+                "useAsSlideCover": "Use as Slide Cover",
+                "useAsFocusImage": "Use as Focus Image"
+            },
+            "slideCoverImage": {
+                "title": "Cover Image",
+                "description": "Adds an image as slide background. The cover image can be defined for mobile, tablet and desktop viewport. The desktop image serves as default. <br/>Valid image formats are <code>jpg</code>, <code>png</code>, <code>webp</code>, <code>svg</code>, <code>avif</code>"
             },
             "presentationMedia": {
                 "label": "Focus Image"

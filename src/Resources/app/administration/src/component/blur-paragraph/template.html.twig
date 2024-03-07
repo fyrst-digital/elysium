@@ -5,16 +5,19 @@
         marginBottom: '32px'
     }">
 
-    <component is="h4" 
-        :style="{
-            fontSize: '16px',
-            fontWeight: '500',
-            margin: '0'
-        }">
-        <slot name="title">
-            <span v-html="title" />
-        </slot>
-    </component>
+    <slot name="title">
+        <component 
+            v-if="title"
+            is="h4" 
+            :style="{
+                fontSize: '16px',
+                fontWeight: '500',
+                margin: '0'
+            }">
+            
+                <span v-html="title" />
+        </component>
+    </slot>
 
     <div v-if="content !== false"
         :style="{

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>Device breakpoints</title>
+        <title lang="de-DE">Gerätegrößen</title>
+
+        <input-field type="single-select">
+            <name>mobile</name>
+            <label>Smartphone</label>
+            <helpText>The value of mobile starting pixel has to be 0</helpText>
+            <helpText lang="de-DE">The value of mobile starting pixel has to be 0</helpText>
+            <default>xs</default>
+            <disabled>true</disabled>
+            <options>
+                <option>
+                    <id>xs</id>
+                    <name>XS</name>
+                    <name lang="de-DE">XS</name>
+                </option>
+            </options>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>tablet</name>
+            <label>Tablet</label>
+            <helpText>Default value: Medium (md: > 768px)</helpText>
+            <helpText lang="de-DE">Standardwert: Medium (md: > 768px)</helpText>
+            <default>md</default>
+            <options>
+                <option>
+                    <id>xs</id>
+                    <name>Small (xs: > 0px)</name>
+                    <name lang="de-DE">Klein (xs: > 0px)</name>
+                </option>
+                <option>
+                    <id>sm</id>
+                    <name>Small (sm: > 576px)</name>
+                    <name lang="de-DE">Klein (sm: > 576px)</name>
+                </option>
+                <option>
+                    <id>md</id>
+                    <name>Medium (md: > 768px)</name>
+                    <name lang="de-DE">Medium (md: > 768px)</name>
+                </option>
+                <option>
+                    <id>lg</id>
+                    <name>Large (lg: > 992px)</name>
+                    <name lang="de-DE">Groß (lg: > 992px)</name>
+                </option>
+                <option>
+                    <id>xl</id>
+                    <name>Large (xl: > 1200px)</name>
+                    <name lang="de-DE">Groß (xl: > 1200px)</name>
+                </option>
+                <option>
+                    <id>xxl</id>
+                    <name>Large (xxl: > 1400px)</name>
+                    <name lang="de-DE">Groß (xxl: > 1400px)</name>
+                </option>
+            </options>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>desktop</name>
+            <label>Desktop</label>
+            <helpText>Default value: Large (xl: > 1200px)</helpText>
+            <helpText lang="de-DE">Standardwert: Groß (xl: > 1200px)</helpText>
+            <default>xl</default>
+            <options>
+                <option>
+                    <id>xs</id>
+                    <name>Small (xs: > 0px)</name>
+                    <name lang="de-DE">Klein (xs: > 0px)</name>
+                </option>
+                <option>
+                    <id>sm</id>
+                    <name>Small (sm: > 576px)</name>
+                    <name lang="de-DE">Klein (sm: > 576px)</name>
+                </option>
+                <option>
+                    <id>md</id>
+                    <name>Medium (md: > 768px)</name>
+                    <name lang="de-DE">Medium (md: > 768px)</name>
+                </option>
+                <option>
+                    <id>lg</id>
+                    <name>Large (lg: > 992px)</name>
+                    <name lang="de-DE">Groß (lg: > 992px)</name>
+                </option>
+                <option>
+                    <id>xl</id>
+                    <name>Large (xl: > 1200px)</name>
+                    <name lang="de-DE">Groß (xl: > 1200px)</name>
+                </option>
+                <option>
+                    <id>xxl</id>
+                    <name>Large (xxl: > 1400px)</name>
+                    <name lang="de-DE">Groß (xxl: > 1400px)</name>
+                </option>
+            </options>
+        </input-field>
+    </card>
+
+</config>

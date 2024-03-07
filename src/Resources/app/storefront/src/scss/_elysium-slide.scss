@@ -12,14 +12,16 @@
     --gradient-color-start: transparent;
     --gradient-color-end: transparent;
     --gradient-deg: 45deg;
-    --bg-gradient: linear-gradient(var(--gradient-deg), var(--gradient-color-start), var(--gradient-color-end));
+    --bg-image: linear-gradient(var(--gradient-deg), var(--gradient-color-start), var(--gradient-color-end));
+    position: relative;
     width: 100%;
     background: {
+        repeat: no-repeat;
         color: var(--bg-color);
         size: var(--bg-size);
         position-x: var(--bg-pos-x);
         position-y: var(--bg-pos-y);
-        image: var(--bg-gradient);
+        image: var(--bg-image);
     };
     border-radius: var(--border-radius);
     aspect-ratio: var(--aspect-ratio);
@@ -29,6 +31,25 @@
     padding-bottom: var(--padding-y);
     align-items: var(--align-items);
     justify-content: var(--justify-content);
+}
+
+.blur-elysium-slide-cover-picture {
+    display: contents;
+}
+
+.blur-elysium-slide-cover-image,
+.blur-elysium-slide-cover-video {
+    --object-fit: cover;
+    --object-pos-x: center;
+    --object-pos-y: center;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    z-index: 1;
+    object-fit: var(--object-fit);
+    object-position: var(--object-pos-x) var(--object-pos-y);
 }
 
 .blur-elysium-slide-container {
@@ -41,15 +62,14 @@
     --max-width: none;
     --border-radius: 0;
     --bg-color: transparent;
+    position: relative;
+    z-index: 5;
     grid-template-columns: var(--columns);
     grid-gap: var(--gap);
     justify-content: var(--justify-content);
     align-items: var(--align-items);
     max-width: var(--max-width);
-    padding-left: var(--padding-x);
-    padding-right: var(--padding-x);
-    padding-top: var(--padding-y);
-    padding-bottom: var(--padding-y);
+    padding: var(--padding-y) var(--padding-x);
     border-radius: var(--border-radius);
     background: {
         color: var(--bg-color);

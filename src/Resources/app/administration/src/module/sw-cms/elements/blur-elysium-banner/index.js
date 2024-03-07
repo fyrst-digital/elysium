@@ -25,21 +25,21 @@ Shopware.Service('cmsService').registerCmsElement({
                     aspectRatio: {
                         width: 1,
                         height: 1,
-                        auto: true
+                        auto: false
                     }
                 },
                 tablet: {
                     aspectRatio: {
                         width: 4,
                         height: 3,
-                        auto: true
+                        auto: false
                     }
                 },
                 desktop: {
                     aspectRatio: {
                         width: 16,
                         height: 9,
-                        auto: true
+                        auto: false
                     }
                 }
             }

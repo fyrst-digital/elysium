@@ -5,8 +5,8 @@ export default {
 
     props: {
         title: {
-            type: String,
-            default: 'Title'
+            type: String | Boolean,
+            default: false
         },
 
         content: {

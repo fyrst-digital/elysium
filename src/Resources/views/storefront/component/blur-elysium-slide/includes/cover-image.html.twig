@@ -1,0 +1,54 @@
+{% block blur_elysium_slide_cover_image %}
+    {% set slideCovers = {} %}
+
+    {% if slideData.slideCoverMobile %}
+        {% set slideCovers = slideCovers|merge({
+            mobile: slideData.slideCoverMobile
+        }) %}
+    {% endif %}
+
+    {% if slideData.slideCoverTablet %}
+        {% set slideCovers = slideCovers|merge({
+            tablet: slideData.slideCoverTablet
+        }) %}
+    {% endif %}
+
+    {% if slideData.slideCover %}
+        {% set slideCovers = slideCovers|merge({
+            desktop: slideData.slideCover
+        }) %}
+    {% endif %}
+
+    {% if slideCovers|length > 0 %}
+        {% set slideCoverDefault = slideCovers|first %}
+
+        {% block blur_elysium_slide_cover_image_picture %}
+            <picture 
+                class="blur-elysium-slide-cover-picture">
+
+                {% if slideCovers|length > 1 %}
+                    {% for viewport, media in slideCovers|reverse %}
+                        <source
+                            {% if media.thumbnails|length > 0 %}
+                                srcset="{{create_srcset(media.thumbnails)}}"
+                            {% else %}
+                                srcset="{{media.url}}"
+                            {% endif %}
+                            media="screen and (min-width:{{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[viewport])~'px' }})" />
+                    {% endfor %}
+                {% endif %}
+
+                <img 
+                    src="{{slideCoverDefault.url}}"
+                    {% if slideCoverDefault.thumbnails|length > 0 %}
+                        srcset="{{create_srcset(slideCoverDefault.thumbnails)}}"
+                    {% endif %}
+                    width="100%"
+                    height="100%"
+                    alt=""
+                    class="blur-elysium-slide-cover-image" />
+
+            </picture>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

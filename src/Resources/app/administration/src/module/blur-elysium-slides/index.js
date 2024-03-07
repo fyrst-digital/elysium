@@ -33,11 +33,11 @@ Module.register('blur-elysium-slides', {
     description: 'BlurElysiumSlides.description',
     color: '#e868a1',
     icon: 'regular-sidebar',
-    favicon: 'icon-module-content.png',
+    iconComponent: 'blur-elysium-icon',
+    // favicon: 'icon-module-content.png',
     entity: 'blur_elysium_slides',
 
     routes: {
-
         index: {
             components: {
                 default: 'blur-elysium-slides-list'
@@ -135,17 +135,41 @@ Module.register('blur-elysium-slides', {
                     }
                 }
             }
+        },
+
+        settings: {
+            component: 'blur-elysium-settings',
+            path: 'settings',
+            meta: {
+                icon: 'regular-cog',
+                parentPath: 'sw.settings.index.plugins',
+            }
         }
     },
 
-    navigation: [{
-        id: 'blur-elysium-slides',
-        label: 'BlurElysiumSlides.entityLabel',
-        color: '#ff3d58',
-        path: 'blur.elysium.slides.index',
-        icon: 'default-shopping-paper-bag-product',
-        parent: 'sw-content',
-        position: 100,
-        privilege: 'blur_elysium_slides.viewer'
-    }]
+    navigation: [
+        {
+            id: 'blur-elysium-slides',
+            label: 'BlurElysiumSlides.entityLabel',
+            color: '#ff3d58',
+            path: 'blur.elysium.slides.index',
+            icon: 'default-shopping-paper-bag-product',
+            parent: 'sw-content',
+            position: 100,
+            privilege: 'blur_elysium_slides.viewer'
+        },
+        {
+            id: 'blur-elysium-settings',
+            label: 'blurElysiumSettings.label',
+            path: 'blur.elysium.slides.settings',
+            parent: 'sw-settings',
+        }
+    ],
+
+    settingsItem: [{
+        group: 'plugins', // shop, system, plugins
+        to: 'blur.elysium.slides.settings',
+        iconComponent: 'blur-elysium-icon',
+        label: 'blurElysiumSettings.label'
+    }],
 })

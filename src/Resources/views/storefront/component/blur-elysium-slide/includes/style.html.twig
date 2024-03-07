@@ -10,13 +10,23 @@
     {% set slideStyles = null %}
 {% endif %}
 
+{% if slideCoverMobile is not defined %}
+    {% set slideCoverMobile = null %}
+{% endif %}
+
+{% if slideCoverTablet is not defined %}
+    {% set slideCoverTablet = null %}
+{% endif %}
+
 {% if slideCover is not defined %}
     {% set slideCover = null %}
 {% endif %}
 
-{% if slideCoverPortrait is not defined %}
-    {% set slideCoverPortrait = null %}
-{% endif %}
+{% set slideCovers = {
+    mobile: slideCoverMobile,
+    tablet: slideCoverTablet,
+    desktop: slideCover
+} %}
 
 {% set slideContainerStyles = {
     '--bg-color': slideData.slideSettings.container.bgColor
@@ -66,7 +76,7 @@
 
     {# viewport options for cms element #}
     {% for device, options in viewportConfig %}
-        @media (min-width: {{ theme_config('breakpoint.' ~ viewportMapping[device])~'px' }}) {
+        @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
             {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
                 {% if options.aspectRatio.auto is not same as(true) %}
                     --aspect-ratio: {{options.aspectRatio.width}} / {{options.aspectRatio.height}};
@@ -80,7 +90,7 @@
     {# viewport dependent options for slide #}
     {% if slideViewportStyles is not null %}
         {% for device, options in slideViewportStyles %}
-            @media (min-width: {{ theme_config('breakpoint.' ~ viewportMapping[device])~'px' }}) {
+            @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
                 {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
                     --padding-x: {{ options.slide.paddingX ~ 'px' }};
                     --padding-y: {{ options.slide.paddingY ~ 'px' }};
@@ -92,6 +102,20 @@
                         --border-radius: 0;
                     {% endif %}
                 }
+                {% if options.coverImage %}
+                    {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-cover-image {
+                        {% for key, value in options.coverImage %}
+                            {{ '--' ~ camel_to_kebab_case(key) }}: {{ value }};
+                        {% endfor %}
+                    }
+                {% endif %}
+                {% if options.coverVideo %}
+                    {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-cover-video {
+                        {% for key, value in options.coverVideo %}
+                            {{ '--' ~ camel_to_kebab_case(key) }}: {{ value }};
+                        {% endfor %}
+                    }
+                {% endif %}
                 {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-container {
                     {% if options.container.columnWrap is not same as(true) and presentationMedia is not null %}
                         --columns: auto auto;
@@ -154,50 +178,6 @@
                 }
             }
         {% endfor %}
-    {% endif %}
-
-    {# slide cover (default) #}
-    {% if slideCover is not null %}
-        {% if slideCover.thumbnails.elements and slideCover.mediaFolder.configuration.createThumbnails is same as(true) %}
-            
-            {# sort array by thumbnail width so that the media query order is correct #}
-            {% for thumbnail in slideCover.thumbnails.elements|sort((a, b) => a.width <=> b.width ) %}
-                @media screen {% if loop.first is same as(false) %} and (min-width: {{ thumbnail.width ~ 'px' }}){% endif %} {
-                    {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
-                        background-image: url( "{{ thumbnail.url }}" );
-                    }
-                }
-            {% endfor %}
-        {% else %}
-            {# fallback if no thumbnails are available #}
-            @media screen {
-                {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
-                    background-image: url( "{{ slideCover.url }}" );
-                }
-            }
-        {% endif %}
-    {% endif %}
-
-    {# slide cover (portrait) #}
-    {% if slideCoverPortrait is not null %}
-        {% if slideCoverPortrait.thumbnails.elements and slideCoverPortrait.mediaFolder.configuration.createThumbnails is same as(true) %}
-            
-            {# sort array by thumbnail width so that the media query order is correct #}
-            {% for thumbnail in slideCoverPortrait.thumbnails.elements|sort((a, b) => a.width <=> b.width ) %}
-                @media screen and (orientation: portrait) {% if loop.first is same as(false) %} and (min-width: {{ thumbnail.width ~ 'px' }}){% endif %} {
-                    {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
-                        background-image: url( "{{ thumbnail.url }}" );
-                    }
-                }
-            {% endfor %}
-        {% else %}
-            {# fallback if no thumbnails are available #}
-            @media screen and (orientation: portrait) {
-                {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
-                    background-image: url( "{{ slideCoverPortrait.url }}" );
-                }
-            }
-        {% endif %}
     {% endif %}
 </style>
 {% endapply %}

@@ -1,0 +1,17 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_body %}
+    {% set blurElysiumBreakpoints = {
+        mobile: 'xs',
+        tablet: 'md',
+        desktop: 'xl'
+    } %}
+
+    {% if config('BlurElysiumSlider.breakpoints') %}
+        {% set blurElysiumBreakpoints = blurElysiumBreakpoints|merge(
+            config('BlurElysiumSlider.breakpoints')
+        ) %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
