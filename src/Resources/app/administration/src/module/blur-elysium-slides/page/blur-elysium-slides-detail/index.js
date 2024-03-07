@@ -61,10 +61,15 @@ Component.register('blur-elysium-slides-detail', {
 
         ...mapState('blurElysiumSlidesDetail', [
             'slide',
+            'viewport',
             'customFieldSets',
             'loading',
             'acl'
         ]),
+
+        parentRoute () {
+            return this.$route.meta.parentPath ?? null
+        },
 
         contentRoute () {
             if (this.blurElysiumSlideId) {
@@ -203,6 +208,7 @@ Component.register('blur-elysium-slides-detail', {
         ...mapMutations('blurElysiumSlidesDetail', [
             'setApiContext',
             'setSlide',
+            'setSlideProperty',
             'setSlideSetting',
             'setCustomFieldSets',
             'setViewport',
@@ -402,6 +408,61 @@ Component.register('blur-elysium-slides-detail', {
 
         onChangeViewport (viewport) {
             this.setViewport(viewport)
+        },
+
+        setSlideCoverImage (media) {
+            let mappedViewportFields = {
+                mobile: 'slideCoverMobile',
+                tablet: 'slideCoverTablet',
+                desktop: 'slideCover'
+            }
+            
+            if (this.mediaType(media.mimeType) === 'image') {
+                this.setSlideProperty({
+                    key: `${mappedViewportFields[this.viewport]}Id`,
+                    value: media.id
+                })
+                this.setSlideProperty({
+                    key: mappedViewportFields[this.viewport],
+                    value: media
+                })
+            } else {
+                console.warn('media must be an image')
+            }
+        },
+
+        setSlideCoverVideo (media) {
+            if (this.mediaType(media.mimeType) === 'video') {
+                this.setSlideProperty({
+                    key: 'slideCoverVideoId',
+                    value: media.id
+                })
+                this.setSlideProperty({
+                    key: 'slideCoverVideo',
+                    value: media
+                })
+            } else {
+                console.warn('media must be an image')
+            }
+        },
+
+        setFocusImage (media) {
+            if (this.mediaType(media.mimeType) === 'image') {
+                this.setSlideProperty({
+                    key: 'presentationMediaId',
+                    value: media.id
+                })
+                this.setSlideProperty({
+                    key: 'presentationMedia',
+                    value: media
+                })
+            } else {
+                console.warn('media must be an image')
+            }
+        },
+
+        mediaType (mimeType) {
+            return mimeType.split('/')[0]
         }
     }
 })

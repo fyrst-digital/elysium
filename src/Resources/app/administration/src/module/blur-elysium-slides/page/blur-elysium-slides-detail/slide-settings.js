@@ -13,6 +13,10 @@ export default {
             /** @type boolean */
             urlOverlay: false
         },
+        cover: {
+            /** @type boolean */
+            mobileFirst: false
+        },
         /** @type string | null */
         bgColor: null,
         /** @type object<bgGardient> | null */
@@ -89,6 +93,22 @@ export default {
                 /** @type 'flex-start' | 'center' | 'flex-end' */
                 justifyContent: 'center',
             },
+            coverImage: {
+                /** @type 'left' | 'center' | 'right' */
+                objectPosX: 'center',
+                /** @type 'top' | 'center' | 'bottom' */
+                objectPosY: 'center',
+                /** @type 'cover' | 'contain' | 'auto' */
+                objectFit: 'cover'
+            },
+            coverVideo: {
+                /** @type 'left' | 'center' | 'right' */
+                objectPosX: 'center',
+                /** @type 'top' | 'center' | 'bottom' */
+                objectPosY: 'center',
+                /** @type 'cover' | 'contain' | 'auto' */
+                objectFit: 'cover'
+            },
             headline: {
                 /** @type int | null */
                 fontSize: null
@@ -133,6 +153,22 @@ export default {
                 /** @type 'flex-start' | 'center' | 'flex-end' */
                 justifyContent: 'center',
             },
+            coverImage: {
+                /** @type 'left' | 'center' | 'right' */
+                objectPosX: 'center',
+                /** @type 'top' | 'center' | 'bottom' */
+                objectPosY: 'center',
+                /** @type 'cover' | 'contain' | 'auto' */
+                objectFit: 'cover'
+            },
+            coverVideo: {
+                /** @type 'left' | 'center' | 'right' */
+                objectPosX: 'center',
+                /** @type 'top' | 'center' | 'bottom' */
+                objectPosY: 'center',
+                /** @type 'cover' | 'contain' | 'auto' */
+                objectFit: 'cover'
+            },
             headline: {
                 /** @type int | null */
                 fontSize: null
@@ -172,6 +208,22 @@ export default {
                 alignItems: 'center',
                 /** @type 'flex-start' | 'center' | 'flex-end' */
                 justifyContent: 'center',
+            },
+            coverImage: {
+                /** @type 'left' | 'center' | 'right' */
+                objectPosX: 'center',
+                /** @type 'top' | 'center' | 'bottom' */
+                objectPosY: 'center',
+                /** @type 'cover' | 'contain' | 'auto' */
+                objectFit: 'cover'
+            },
+            coverVideo: {
+                /** @type 'left' | 'center' | 'right' */
+                objectPosX: 'center',
+                /** @type 'top' | 'center' | 'bottom' */
+                objectPosY: 'center',
+                /** @type 'cover' | 'contain' | 'auto' */
+                objectFit: 'cover'
             },
             headline: {
                 /** @type int | null */

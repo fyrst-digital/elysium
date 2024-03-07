@@ -16,7 +16,7 @@ export default {
 
             if (this.last === false) {
                 styles.borderBottom = '1px solid var(--color-gray-200)'
-                styles.marginBottom = '30px'
+                styles.marginBottom = '32px'
             }
 
             return styles

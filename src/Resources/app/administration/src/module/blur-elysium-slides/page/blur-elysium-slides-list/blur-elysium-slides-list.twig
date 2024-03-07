@@ -13,14 +13,20 @@
 
         {% block blur_elysium_slides_list_view_smart_bar_header %}
             <template slot="smart-bar-header">
-                <div class="smart-bar-header__title-container">
+                <div class="smart-bar-header__title-container"
+                    :style="{
+                        gap: '16px'
+                    }">
 
                     {% block blur_elysium_slides_list_view_smart_bar_header_icon %}
-                        <sw-icon name="regular-sidebar" color="#e868a1"></sw-icon>
+                        <blur-elysium-icon 
+                            color="#e868a1"
+                            size="20" />
                     {% endblock %}
 
                     {% block blur_elysium_slides_list_view_smart_bar_header_title %}
                         <h2 class="smart-bar-header__title">
+
                             {{ $tc('BlurElysiumSlides.entityLabel') }}
 
                             {% block blur_elysium_slides_list_view_smart_bar_header_amount %}

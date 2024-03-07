@@ -159,19 +159,6 @@
                 }
             }
         },
-        "mediaForm": {
-            "cardTitle": "Medien",
-            "uploadInput": {
-                "title": "Slide Cover",
-                "helpText": "Dieses Medium wird als Hintergrund des Slides verwendet. Du kannst Bilder (jpg, png, webp, svg, avif) oder Videos (mp4, webm) verwenden."
-            },
-            "coverPortrait": {
-                "title": "Slide Cover (Portrait-Modus)",
-                "helpText": "Dieses Bild wird als Hintergrund des Slides verwendet wenn sich das Endgerät (z.b. Smartphonme oder Tablet) im Portrait-Modus (\"Hochformat\") befindet. Du kannst hier nur Bilder (jpg, png, webp, svg, avif) verwenden"
-            },
-            "useAsCover": "Als Cover nutzen",
-            "useAsCoverPortrait": "Als Portrait-Cover nutzen"
-        },
         "customFields": {
             "cardTitle": "Zusatzfelder",
             "onCreateMessage": "Bitte speichere zuerst den Slide. Danach kannst du die Zusatzfelder pflegen.",

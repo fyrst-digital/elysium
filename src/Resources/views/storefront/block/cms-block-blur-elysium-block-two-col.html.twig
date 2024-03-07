@@ -5,13 +5,6 @@
         'd-grid'
     ] %}
 
-    {# @todo make that mapping global and configurable #}
-    {% set viewportMapping = {
-        mobile: 'xs',
-        tablet: 'md',
-        desktop: 'xl'
-    } %}
-
     {% if block.customFields.columnStretch is same as(true) %}
         {% set blockClasses = blockClasses|merge(['align-items-stretch']) %}
     {% else %}
@@ -28,7 +21,7 @@
             }
 
             {% for device, options in block.customFields.viewports %}
-                @media (min-width: {{ theme_config('breakpoint.' ~ viewportMapping[device])~'px' }}) {
+                @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
                     [data-cms-block="{{ block.id }}"] {
                         {% if options.columnWrap is same as(true) %}
                             --columns: 1fr;

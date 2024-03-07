@@ -32,5 +32,12 @@
         <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition">
             <tag name="shopware.entity.definition" entity="blur_elysium_slides_translation" />
         </service>
+
+        <service id="Blur\BlurElysiumSlider\Twig\CamelToKebabCase" public="true">
+            <tag name="twig.extension"/> <!--Required-->
+        </service>
+        <service id="Blur\BlurElysiumSlider\Twig\CreateSrcset" public="true">
+            <tag name="twig.extension"/> <!--Required-->
+        </service>
     </services>
 </container>

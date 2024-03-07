@@ -1,0 +1,24 @@
+{% block blur_elysium_slide_media_upload %}
+    <div :style="{
+            marginBottom: '32px'
+        }">
+        <sw-upload-listener
+            :upload-tag="uploadTag"
+            auto-upload
+            @media-upload-finish="uploadFinished"
+        />
+        <sw-media-upload-v2
+            class="blur-elysium-slide-media-upload"
+            variant="regular"
+            :file-accept="allowedFile"
+            :disabled="disabled"
+            :upload-tag="uploadTag"
+            :source="media"
+            :allow-multi-select="false"
+            :default-folder="'blur_elysium_slides'"
+            @media-drop="mediaDropped"
+            @media-upload-remove-image="mediaRemove"
+            @media-upload-sidebar-open="mediaSidebarOpen"
+        />            
+    </div>
+{% endblock %}

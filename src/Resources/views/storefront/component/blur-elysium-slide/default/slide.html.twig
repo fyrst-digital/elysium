@@ -1,4 +1,6 @@
 {% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/container.html.twig' %}
+{% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/cover-image.html.twig' %}
+{% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/cover-video.html.twig' %}
 
 {% set slideClasses = [
     'blur-elysium-slide',
@@ -22,11 +24,14 @@
                     '--gradient-deg': slideData.slideSettings.slide.bgGradient.gradientDeg ? slideData.slideSettings.slide.bgGradient.gradientDeg ~ 'deg' : null
                 },
                 slideViewportStyles: slideData.slideSettings.viewports,
-                slideCover: slideData.media,
-                slideCoverPortrait: slideData.mediaPortrait
+                slideCoverMobile: slideData.slideCoverMobile,
+                slideCoverTablet: slideData.slideCoverTablet,
+                slideCover: slideData.slideCover
             } %}
         {% endblock %}
 
+        {{ block('blur_elysium_slide_cover_image') }}
+        {{ block('blur_elysium_slide_cover_video') }}
         {{ block('blur_elysium_slide_container') }}
     </div>
 {% endif %}

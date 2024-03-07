@@ -24,11 +24,6 @@ export default {
         return {
             apiContext: {},
             slide: {},
-            media: {
-                slideCover: null,
-                slideCoverPortrait: null,
-                presentationMedia: null
-            },
             customFieldSets: [],
             /** @type 'mobile' | 'tablet' | 'desktop' */
             viewport: 'desktop',
@@ -64,9 +59,7 @@ export default {
         },
         setViewportSetting (state, payload) {
             set(state.slide.slideSettings.viewports[state.viewport], payload.key, payload.value)
-        },
-        setSlideMedia (state, payload) {
-            state.media[payload.key] = payload.value
+            console.log('what', state.slide.slideSettings.viewports, payload.key, payload.value)
         },
         setCustomFieldSets (state, value) {
             state.customFieldSets = value

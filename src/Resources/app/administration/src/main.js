@@ -30,8 +30,10 @@ Mixin.register('blur-editable', {
 Component.register('blur-card-loading', () => import('@elysiumSlider/component/blur-card-loading'))
 Component.register('blur-card-section', () => import('@elysiumSlider/component/blur-card-section'))
 Component.register('blur-paragraph', () => import('@elysiumSlider/component/blur-paragraph'))
+Component.register('blur-elysium-icon', () => import('@elysiumSlider/component/blur-elysium-icon'))
 Component.register('blur-elysium-device-switch', () => import('@elysiumSlider/component/blur-elysium-device-switch'))
 Component.register('blur-elysium-device-hint', () => import('@elysiumSlider/component/blur-elysium-device-hint'))
+Component.register('blur-elysium-slide-media-upload', () => import('@elysiumSlider/component/blur-elysium-slide-media-upload'))
 Component.register('blur-elysium-slide-modal-delete', () => import('@elysiumSlider/component/blur-elysium-slide-modal-delete'))
 Component.register('blur-elysium-slider-config-settings', () => import('@elysiumSlider/component/blur-elysium-slider-config-settings'))
 Component.register('blur-elysium-slider-config-sizing', () => import('@elysiumSlider/component/blur-elysium-slider-config-sizing'))
@@ -48,6 +50,7 @@ Component.register('blur-elysium-slide-settings-advanced', () => import('@elysiu
 Component.register('blur-elysium-slide-selection', () => import('@elysiumSlider/component/blur-elysium-slide-selection'))
 Component.register('blur-elysium-slide-select-item', () => import('@elysiumSlider/component/blur-elysium-slide-select-item'))
 Component.register('blur-elysium-slide-template-selection', () => import('@elysiumSlider/component/blur-elysium-slide-template-selection'))
+Component.register('blur-elysium-settings', () => import('@elysiumSlider/component/blur-elysium-settings'))
 Component.register('blur-elysium-block-config', () => import('@elysiumSlider/component/blur-elysium-block-config'))
 
 // register text snippets gobally

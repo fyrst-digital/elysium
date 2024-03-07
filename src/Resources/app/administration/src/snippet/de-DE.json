@@ -1,4 +1,8 @@
 {
+    "blurElysiumSettings": {
+        "label": "Elysium Slider",
+        "breakpointsDescription": "Elysium Slider, Banner und Slides verwenden Geräteeinstellungen für die Smartphone, Tablet und Desktop Ansicht. Du kannst die Gerätegrößen, welche im Theme verwendet werden sollen, selbst definieren.<br/>Hierbei werden die Breakpoints des Shopware Themes genutzt. In der unteren Auswahl werden die Standard Pixelwerte des Shopware Themes angezeigt. <b>Diese können je nach verwendeten Theme oder Individualentwicklungen abweichen.</b>"
+    },
     "blurElysiumSlider": {
         "general": {
             "active": "Aktiv",
@@ -175,7 +179,13 @@
             "deleteSlideConfirmDialogue": "Möchtest du den Slide endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden",
             "deleteNamedSlideConfirmDialogue": "Möchtest du den Slide <b>{name}</b> endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden",
             "copyErrorUnsavedChanges": "Es gibt ungespeicherte Änderungen. Speichere oder verwirf diese Änderungen damit du den Slide duplizieren kannst",
-            "cancelChanges": "Änderungen verwerfen und Seite neu laden"
+            "cancelChanges": "Änderungen verwerfen und Seite neu laden",
+            "mediaTypeNotAllowed": "Das Medium wird in diesem Feld nicht unterstützt. Dieses Feld erlaubt nur {snippet}",
+            "mediaTypeNotAllowedTitle": "Dateiformat nicht erlaubt"
+        },
+        "mediaType": {
+            "image": "<b>Bilder</b>",
+            "video": "<b>Videos</b>"
         },
         "actions": {
             "createSlide": "Slide erstellen",
@@ -222,7 +232,24 @@
                 "hasCustomNotice": "<b>Hinweis:</b> Dieser Slide hat eine eigene Twig-Template Datei hinterlegt. Bitte beachte dies beim verwalten des Slides."
             },
             "slideCover": {
-                "label": "Slide Cover"
+                "label": "Slide Cover",
+                "useAsSlideCoverImage": "Als Slide Cover Bild",
+                "useAsSlideCover": "Als Slide Cover verwenden",
+                "useAsFocusImage": "Als Fokus Bild verwenden"
+            },
+            "slideCoverImage": {
+                "title": "Cover Bild",
+                "description": "Fügt ein Bild als Slide Hintergrund hinzu. Das Cover Bild kann für die Ansichten Mobile, Tablet und Desktop definiert werden. Wenn für die Mobile Ansicht kein Bild hinterlegt ist, dient der Desktop als Standard. <br/>Gültige Bildformate sind <code>jpg</code>, <code>png</code>, <code>webp</code>, <code>svg</code>, <code>avif</code>",
+                "posY": "Bild Position (Vertikal)",
+                "posX": "Bild Position (Horizontal)",
+                "fit": "Bild Anpassung"
+            },
+            "slideCoverVideo": {
+                "title": "Cover Video",
+                "description": "Fügt ein Video als Slide Hintergrund hinzu. Das eingestellte Cover Video gilt für alle Ansichten.<br/>Gültige Videoformate sind <code>mp4</code>",
+                "posY": "Video Position (Vertikal)",
+                "posX": "Video Position (Horizontal)",
+                "fit": "Video Anpassung"
             },
             "presentationMedia": {
                 "label": "Fokus Bild"
@@ -285,7 +312,10 @@
                     "spaceAround": "Zwischenraum umschließen",
                     "maxWidth": "Maximale Breite (px)",
                     "noMaxWidth": "Keine maximale Begrenzung",
-                    "backgroundColor": "Hintergrundfarbe"
+                    "backgroundColor": "Hintergrundfarbe",
+                    "fitCover": "Füllen",
+                    "fitContain": "Beibehalten",
+                    "fitAuto": "Auto"
                 }
             }
         },
