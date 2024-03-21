@@ -24,7 +24,8 @@ Shopware.Service('cmsService').registerCmsElement({
             source: 'static',
             value: {
                 overlay: false,
-                containerWidth: 'content', /** @type 'content' | 'full' */
+                /** @type 'content' | 'full' */
+                containerWidth: 'content', 
                 rewind: true,
                 speed: 300,
                 pauseOnHover: true,
@@ -32,7 +33,19 @@ Shopware.Service('cmsService').registerCmsElement({
                     active: true,
                     interval: 5000,
                     pauseOnHover: true
-                }
+                },
+                viewports: {
+                    /** @type object<DeviceSettings> */
+                    mobile: {
+                        slidesPerPage: 1
+                    },
+                    tablet: {
+                        slidesPerPage: 1
+                    },
+                    desktop: {
+                        slidesPerPage: 1
+                    }
+                },
             }
         },
         navigation: {
@@ -41,13 +54,27 @@ Shopware.Service('cmsService').registerCmsElement({
                 active: true,
                 position: 'below_slider',
                 align: 'center',
+                /** @type 'circle' | 'bar' | 'ring' */
                 shape: 'circle',
                 colors: {
                     default: '',
                     active: ''
                 },
-                size: 'md',
-                navPadding: 'md'
+                viewports: {
+                    /** @type object<DeviceSettings> */
+                    mobile: {
+                        size: 'sm',
+                        gap: 16,
+                    },
+                    tablet: {
+                        size: 'sm',
+                        gap: 20,
+                    },
+                    desktop: {
+                        size: 'md',
+                        gap: 24,
+                    }
+                },
             }
         },
         arrows: {
@@ -67,168 +94,67 @@ Shopware.Service('cmsService').registerCmsElement({
                     default: '',
                     active: ''
                 },
-                size: 'md',
-                position: 'in_slider'
+                position: 'in_slider',
+                viewports: {
+                    /** @type object<DeviceSettings> */
+                    mobile: {
+                        size: 16,
+                    },
+                    tablet: {
+                        size: 20,
+                    },
+                    desktop: {
+                        size: 24,
+                    }
+                }
             }
         },
-        /**
-         * @todo next-1.6.0
-         * add dynamic sizing
-         */
-        // dynamicSizing: {}
         sizing: {
             source: 'static',
-            value: [
-                {
-                    viewport: 'xs',
-                    position: 1,
-                    aspectRatio: {
-                        width: 4,
-                        height: 3
+            value: {
+                viewports: {
+                    /** @type object<DeviceSettings> */
+                    mobile: {
+                        aspectRatio: {
+                            width: 1,
+                            height: 1,
+                            auto: false
+                        },
+                        /** @type int | 'screen' | null */
+                        maxHeight: null,
+                        maxHeightScreen: false,
+                        paddingY: 0,
+                        paddingX: 0,
+                        slidesGap: 0
                     },
-                    slidePadding: {
-                        x: '1rem',
-                        y: '1.5rem'
+                    tablet: {
+                        aspectRatio: {
+                            width: 4,
+                            height: 3,
+                            auto: false
+                        },
+                        /** @type int | 'screen' | null */
+                        maxHeight: null,
+                        maxHeightScreen: false,
+                        paddingY: 0,
+                        paddingX: 0,
+                        slidesGap: 0
                     },
-                    maxHeight: null,
-                    slidesPerPage: null,
-                    slidesGap: null
+                    desktop: {
+                        aspectRatio: {
+                            width: 16,
+                            height: 9,
+                            auto: false
+                        },
+                        /** @type int | 'screen' | null */
+                        maxHeight: null,
+                        maxHeightScreen: false,
+                        paddingY: 0,
+                        paddingX: 0,
+                        slidesGap: 0
+                    }
                 },
-                {
-                    viewport: 'sm',
-                    position: 2,
-                    aspectRatio: {
-                        width: 5,
-                        height: 3
-                    },
-                    slidePadding: {
-                        x: '1rem',
-                        y: '1.5rem'
-                    },
-                    maxHeight: null,
-                    slidesPerPage: null,
-                    slidesGap: null
-                },
-                {
-                    viewport: 'md',
-                    position: 3,
-                    aspectRatio: {
-                        width: 5,
-                        height: 3
-                    },
-                    slidePadding: {
-                        x: '2rem',
-                        y: '3rem'
-                    },
-                    maxHeight: null,
-                    slidesPerPage: null,
-                    slidesGap: null
-                },
-                {
-                    viewport: 'lg',
-                    position: 4,
-                    aspectRatio: {
-                        width: 2,
-                        height: 1
-                    },
-                    slidePadding: {
-                        x: '2rem',
-                        y: '3rem'
-                    },
-                    maxHeight: null,
-                    slidesPerPage: null,
-                    slidesGap: null
-                },
-                {
-                    viewport: 'xl',
-                    position: 5,
-                    aspectRatio: {
-                        width: 12,
-                        height: 5
-                    },
-                    slidePadding: {
-                        x: '4rem',
-                        y: '6rem'
-                    },
-                    maxHeight: null,
-                    slidesPerPage: null,
-                    slidesGap: null
-                },
-                {
-                    viewport: 'xxl',
-                    position: 6,
-                    aspectRatio: {
-                        width: 16,
-                        height: 7
-                    },
-                    slidePadding: {
-                        x: '4rem',
-                        y: '6rem'
-                    },
-                    maxHeight: null,
-                    slidesPerPage: null,
-                    slidesGap: null
-                }
-            ]
-        },
-        aspectRatio: {
-            source: 'static',
-            value: [
-                {
-                    viewport: 'xs',
-                    position: 1,
-                    aspectRatio: {
-                        width: 4,
-                        height: 3
-                    },
-                    maxHeight: null
-                },
-                {
-                    viewport: 'sm',
-                    position: 2,
-                    aspectRatio: {
-                        width: 5,
-                        height: 3
-                    },
-                    maxHeight: null
-                },
-                {
-                    viewport: 'md',
-                    position: 3,
-                    aspectRatio: {
-                        width: 5,
-                        height: 3
-                    },
-                    maxHeight: null
-                },
-                {
-                    viewport: 'lg',
-                    position: 4,
-                    aspectRatio: {
-                        width: 2,
-                        height: 1
-                    },
-                    maxHeight: null
-                },
-                {
-                    viewport: 'xl',
-                    position: 5,
-                    aspectRatio: {
-                        width: 12,
-                        height: 5
-                    },
-                    maxHeight: null
-                },
-                {
-                    viewport: 'xxl',
-                    position: 6,
-                    aspectRatio: {
-                        width: 16,
-                        height: 7
-                    },
-                    maxHeight: null
-                }
-            ]
+            }
         },
         sliderNavigation: {
             source: 'static',

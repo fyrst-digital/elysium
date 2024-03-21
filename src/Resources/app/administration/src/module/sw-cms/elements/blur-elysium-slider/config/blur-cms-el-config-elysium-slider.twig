@@ -21,7 +21,7 @@
                             <sw-tabs-item
                                 name="settings"
                                 :active-tab="active">
-                                {{ $tc('blurElysiumSlider.config.settings') }}
+                                {{ $tc('blurElysiumSlider.config.settings.label') }}
                             </sw-tabs-item>                            
                         {% endblock %}
 
@@ -57,83 +57,106 @@
                         slot="content"
                         slot-scope="{ active }">
 
+                        {% block blur_cms_config_elysium_slider_tabs_device_switch %}
+                            <blur-elysium-device-switch 
+                                layout="default" 
+                                default-viewport="desktop"
+                                :show-labels="false"
+                                :gap="20"
+                                :style="{
+                                    marginBottom: '20px'
+                                }"
+                                @change-viewport="onChangeViewport" />
+                        {% endblock %}
+
                         {% block blur_cms_config_elysium_slider_content %}
                             <template v-if="active === 'content'">
 
-                                {% block blur_cms_config_elysium_slider_content_general %}
-                                    <sw-card 
-                                        :position-identifier="positionIdentifiers.contentGeneral">
+                                <sw-card
+                                    :position-identifier="positionIdentifiers.content.DEFAULT">
 
-                                        {% block blur_cms_config_elysium_slider_title %}
-                                            <sw-text-field 
-                                                v-model="element.config.content.value.title" 
-                                                :label="$tc('blurElysiumSlider.config.sliderTitle.label')" />
-                                        {% endblock %}
+                                    {% block blur_cms_config_elysium_slider_content_general %}
+                                        <blur-card-section 
+                                            :position-identifier="positionIdentifiers.content.sectionGeneral">
 
-                                    </sw-card>
-                                {% endblock %}
+                                            {% block blur_cms_config_elysium_slider_title %}
+                                                <sw-text-field 
+                                                    v-model="element.config.content.value.title" 
+                                                    :label="$tc('blurElysiumSlider.config.sliderTitle.label')" />
+                                            {% endblock %}
 
-                                {% block blur_cms_config_elysium_slider_card_slide_collection %}
-                                    <sw-card 
-                                        :position-identifier="positionIdentifiers.slideCollection"
-                                        :title="$tc('blurElysiumSlider.cmsElement.settings.slideCollectionTitle')">
+                                        </blur-card-section>
+                                    {% endblock %}
 
-                                        {% block blur_cms_config_elysium_slider_no_slides_dialogue %}
-                                            <template v-if="blurElysiumSlides && blurElysiumSlides.length === 0">
-                                                <div class="blur-elysium-slider-config__no-slides">
-                                                    <p style="margin-bottom:1rem;line-height:1.5;">
-                                                        {{ $tc( 'blurElysiumSlides.slideSelection.message.noSlides' ) }}
-                                                    </p>
-                                                    <div class="blur-elysium-slider-config__no-slides-actions">
-                                                        <sw-button
-                                                            variant="primary"
-                                                            @click="onCreateSlide">
-                                                            {{ $tc( 'blurElysiumSlides.actions.createSlide' ) }}
-                                                        </sw-button>
-                                                        <sw-button
-                                                            @click="onSlideOverview">
-                                                            {{ $tc( 'blurElysiumSlides.actions.toOverview' ) }}
-                                                        </sw-button>
+                                    {% block blur_cms_config_elysium_slider_card_slide_collection %}
+                                        <blur-card-section 
+                                            :last="true"
+                                            :position-identifier="positionIdentifiers.content.sectionSlideSelection">
+
+                                            <blur-paragraph 
+                                                :title="$tc('blurElysiumSlider.cmsElement.settings.slideCollectionTitle')"
+                                                />
+
+                                            {% block blur_cms_config_elysium_slider_no_slides_dialogue %}
+                                                <template v-if="blurElysiumSlides && blurElysiumSlides.length === 0">
+                                                    <div class="blur-elysium-slider-config__no-slides">
+                                                        <p style="margin-bottom:1rem;line-height:1.5;">
+                                                            {{ $tc( 'blurElysiumSlides.slideSelection.message.noSlides' ) }}
+                                                        </p>
+                                                        <div class="blur-elysium-slider-config__no-slides-actions">
+                                                            <sw-button
+                                                                variant="primary"
+                                                                @click="onCreateSlide">
+                                                                {{ $tc( 'blurElysiumSlides.actions.createSlide' ) }}
+                                                            </sw-button>
+                                                            <sw-button
+                                                                @click="onSlideOverview">
+                                                                {{ $tc( 'blurElysiumSlides.actions.toOverview' ) }}
+                                                            </sw-button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </template>
-                                        {% endblock %}
+                                                </template>
+                                            {% endblock %}
 
-                                        {% block blur_cms_config_elysium_slide_selection_component %}
-                                            <blur-elysium-slide-selection 
-                                                :selected-slides="selectedSlides" />
-                                        {% endblock %}
-                                    </sw-card>
-                                {% endblock %}
-
+                                            {% block blur_cms_config_elysium_slide_selection_component %}
+                                                <blur-elysium-slide-selection 
+                                                    :selected-slides="selectedSlides" />
+                                            {% endblock %}
+                                        </blur-card-section>
+                                    {% endblock %}
+                                </sw-card>
                             </template>
                         {% endblock %}
 
                         {% block blur_cms_config_elysium_slider_settings %}
                             <template v-if="active === 'settings'">
                                 <blur-elysium-slider-config-settings 
-                                    :config="element.config.settings.value" />
+                                    :config="element.config.settings.value" 
+                                    :currentViewport="activeViewport" />
                             </template>
                         {% endblock %}
 
                         {% block blur_cms_config_elysium_slider_sizing %}
                             <template v-if="active === 'sizing'">
                                 <blur-elysium-slider-config-sizing 
-                                    :sizing="element.config.sizing.value" />
+                                    :config="element.config.sizing.value"
+                                    :currentViewport="activeViewport" />
                             </template>
                         {% endblock %}
 
                         {% block blur_cms_config_elysium_slider_navigation %}
                             <template v-if="active === 'navigation'">
                                 <blur-elysium-slider-config-navigation
-                                    :config="element.config.navigation.value" />
+                                    :config="element.config.navigation.value"
+                                    :currentViewport="activeViewport" />
                             </template>
                         {% endblock %}
 
                         {% block blur_cms_config_elysium_slider_arrows %}
                             <template v-if="active === 'arrows'">
                                 <blur-elysium-slider-config-arrows
-                                    :config="element.config.arrows.value" />
+                                    :config="element.config.arrows.value" 
+                                    :currentViewport="activeViewport" />
                             </template>
                         {% endblock %}
 

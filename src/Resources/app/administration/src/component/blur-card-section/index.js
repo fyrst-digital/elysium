@@ -1,9 +1,16 @@
 import template from './template.html.twig'
+import './style.scss'
 
 export default {
     template,
 
     props: {
+        positionIdentifier: {
+            type: String,
+            required: false,
+            default: null,
+        },
+
         last: {
             type: Boolean,
             default: false
@@ -11,15 +18,14 @@ export default {
     },
 
     computed: {
-        styles () {
-            const styles = {}
+        classes () {
+            const classes = ['blur-card-section']
 
-            if (this.last === false) {
-                styles.borderBottom = '1px solid var(--color-gray-200)'
-                styles.marginBottom = '32px'
+            if (this.last === true) {
+                classes.push('last')
             }
 
-            return styles
+            return classes
         }
     }
 }

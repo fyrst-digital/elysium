@@ -44,21 +44,6 @@
                 "title": "Slide Label",
                 "placeholder": "Enter a Name for your Slide",
                 "helpText": "Set a name for the slide. This name will only be used to identify the slide"
-            },
-            "descriptionInput": {
-                "title": "Description",
-                "placeholder": "Enter a Description for your Slide",
-                "helpText": "Set a short description text for the slide. This will be displayed under the headline."
-            },
-            "buttonLabelInput": {
-                "title": "Button Label",
-                "placeholder": "Enter a Button Label for your Slide",
-                "helpText": "Set the label of the button. If no label is provided no button will be display."
-            },
-            "urlInput": {
-                "title": "Slide URL",
-                "placeholder": "Enter a URL for your Slide",
-                "helpText": "Set the linking of the slide. This can be both an absolute and a relative URL."
             }
         },
         "settings": {
@@ -74,27 +59,6 @@
             },
             "slideBgColor": {
                 "title": "Slide Background color"
-            },
-            "sllideCssClass": {
-                "title": "CSS Class",
-                "placeholder": "my-slide-styling",
-                "helpText": "Set one or more CSS classes, separated by a space, for the slide."
-
-            },
-            "buttonAppearance": {
-                "label": "Button Appearance",
-                "placeholder": "Choose a Color",
-                "helpText": "Sets the appearance of the button. The colors are based on the theme settings.",
-                "options": {
-                    "primary": "Primary",
-                    "secondary": "Secondary",
-                    "success": "Success",
-                    "danger": "Danger",
-                    "warning": "Warning",
-                    "info": "Information",
-                    "light": "Light",
-                    "dark": "Dark"
-                }
             },
             "container": {
                 "title": "Content Container",
@@ -144,22 +108,6 @@
                         "center": "Center",
                         "right": "Right"
                     }
-                }
-            }
-        },
-        "settingsForm": {
-            "urlSettings": {
-                "target": {
-                    "label": "Slide URL Target",
-                    "placeholder": "Choose Target",
-                    "options": {
-                        "internal": "Internal",
-                        "external": "External"
-                    }
-                },
-                "overlay": {
-                    "description": "When the URL overlay is activated, the button is hidden and the entire slide is used as a linking area.",
-                    "inputLabel": "URL Overlay"
                 }
             }
         },

@@ -1,15 +1,20 @@
 {% block blur_elysium_slider_config_arrows %}
-    <div>
+    <sw-card
+        :position-identifier="positionIdentifiers.arrows.DEFAULT"
+        >
 
         {% block blur_elysium_slider_config_arrows_general %}
-            <sw-card 
-                :position-identifier="positionIdentifiers.arrowsGeneral"
-                :hero="false" 
-                :large="false">
+            <blur-card-section 
+                :position-identifier="positionIdentifiers.arrows.sectionGeneral"
+                >
+
+                <blur-paragraph
+                    :title="$tc('blurElysiumSlider.general.general')"
+                    />
 
                 <sw-container 
                     columns="1fr"
-                    gap="2rem">
+                    gap="24px">
 
                     {% block blur_elysium_slider_config_arrows_active %}
                         <sw-switch-field 
@@ -18,20 +23,22 @@
                             :label="$tc('blurElysiumSlider.config.arrows.active')" />
                     {% endblock %}
 
-                    </sw-container>
-            </sw-card>
+                </sw-container>
+            </blur-card-section>
         {% endblock %}
 
         {% block blur_elysium_slider_config_arrows_appearance %}
-            <sw-card 
+            <blur-card-section 
                 :position-identifier="positionIdentifiers.arrowsAppearance"
-                :title="$tc('blurElysiumSlider.general.appearance')"
-                :hero="false" 
-                :large="false">
+                >
+
+                <blur-paragraph
+                    :title="$tc('blurElysiumSlider.general.appearance')"
+                    />
 
                 <sw-container 
                     columns="1fr 1fr"
-                    gap="0 2rem"
+                    gap="24px"
                     :breakpoints="containerBreakpoints['3col']">
 
                     {% block blur_elysium_slider_config_arrows_icons %}
@@ -45,15 +52,15 @@
                         </sw-select-field>
                     {% endblock %}
 
-                    {% block blur_elysium_slider_config_arrow_button_size %}
-                        <sw-select-field 
+                    {% block blur_elysium_slider_config_arrow_icon_size %}
+                        <sw-number-field 
+                            numberType="int"
+                            :step="1"
                             :label="$tc('blurElysiumSlider.config.arrows.size.label')"
-                            v-model="config.size">
-                            <option 
-                                v-for="size in sizes" 
-                                :key="size.value" 
-                                :value="size.value">{{size.label}}</option>
-                        </sw-select-field>
+                            v-model="viewportConfig.size">
+                            <template #suffix>Px</template>
+                            <template #hint><blur-elysium-device-hint /></template>
+                        </sw-number-field>
                     {% endblock %}
 
                     {% block blur_elysium_slider_config_arrow_color %}
@@ -114,7 +121,7 @@
 
                 </sw-container>
 
-            </sw-card>
+            </blur-card-section>
         {% endblock %}
-    </div>
+    </sw-card>
 {% endblock %}

@@ -1,6 +1,6 @@
 import template from './blur-cms-el-config-elysium-slider.twig'
 import './blur-cms-el-config-elysium-slider.scss'
-import { config } from '@elysiumSlider/utilities/identifiers'
+import { cmsSliderConfig } from '@elysiumSlider/utilities/identifiers'
 
 // eslint-disable-next-line no-undef
 const { Component, Data, Context } = Shopware
@@ -19,13 +19,14 @@ Component.register('blur-cms-el-config-elysium-slider', {
         return {
             blurElysiumSlides: null,
             labelProp: 'label',
-            selectModel: []
+            selectModel: [],
+            activeViewport: 'desktop'
         }
     },
 
     computed: {
         positionIdentifiers () {
-            return config
+            return cmsSliderConfig
         },
         selectedSlides: {
             get () {
@@ -109,6 +110,10 @@ Component.register('blur-cms-el-config-elysium-slider', {
                     return slide.id === selectedSlide
                 })
             })
+        },
+
+        onChangeViewport (viewport) {
+            this.activeViewport = viewport
         }
     }
 })

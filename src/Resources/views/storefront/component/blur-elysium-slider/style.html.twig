@@ -1,0 +1,98 @@
+{% set viewports = {
+    mobile: {
+        sizing: element.config.sizing.value.viewports.mobile,
+        arrows: element.config.arrows.value.viewports.mobile,
+        navigation: element.config.navigation.value.viewports.mobile
+    },
+    tablet: {
+        sizing: element.config.sizing.value.viewports.tablet,
+        arrows: element.config.arrows.value.viewports.tablet,
+        navigation: element.config.navigation.value.viewports.tablet
+
+    },
+    desktop: {
+        sizing: element.config.sizing.value.viewports.desktop,
+        arrows: element.config.arrows.value.viewports.desktop,
+        navigation: element.config.navigation.value.viewports.desktop
+    }
+} %}
+
+{% apply spaceless %}
+    <style>
+        {% if (sliderArrows.colors.default or sliderArrows.colors.active) or 
+            (sliderArrows.bgColors.default or sliderArrows.bgColors.active) is not empty %}
+
+            #elysiumSlider-{{ element.id }} 
+            .blur-elysium-slide {
+                {% if sliderArrows.colors.default %}
+                    --arrow-icon-color: {{sliderArrows.colors.default}};
+                {% endif %}
+                {% if sliderArrows.bgColors.default %}
+                    --arrow-bg-color: {{sliderArrows.bgColors.default}};
+                {% endif %}
+                {% if sliderArrows.colors.active %}
+                    --arrow-color-active: {{sliderArrows.colors.active}};
+                {% endif %}
+                {% if sliderArrows.bgColors.active %}
+                    --arrow-bg-color-active: {{sliderArrows.bgColors.active}};
+                {% endif %}
+            }
+        {% endif %}
+        {# viewport options for cms element #}
+        {% for device, options in viewports %}
+            @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
+                #elysiumSlider-{{ element.id }}
+                .blur-elysium-slide
+                {
+                    {% if options.sizing.aspectRatio.auto is not same as(true) %}
+                        --aspect-ratio: {{options.sizing.aspectRatio.width}} / {{options.sizing.aspectRatio.height}};
+                    {% else %}
+                        --aspect-ratio: auto;
+                    {% endif %}
+                    {% if options.sizing.maxHeightScreen is same as(true) %}
+                        --max-height: 100vh;
+                    {% elseif options.sizing.maxHeight is not empty %}
+                        --max-height: {{ options.sizing.maxHeight ~ 'px' }};
+                    {% else %}
+                        --max-height: none;
+                    {% endif %}
+                }
+                #elysiumSlider-{{ element.id }}
+                .blur-elysium-slider
+                {
+                    {% if options.sizing.paddingY is not empty %}
+                        --padding-y: {{ options.sizing.paddingY ~ 'px' }};
+                    {% endif %}
+                    {% if options.sizing.paddingX is not empty %}
+                        --padding-x: {{ options.sizing.paddingX ~ 'px' }};
+                    {% endif %}
+                    {% if options.arrows.size is not empty %}
+                        --arrow-icon-size: {{ options.arrows.size ~ 'px' }};
+                    {% endif %}
+                    {% if options.navigation.gap is not empty %}
+                        --nav-bullet-gap: {{ options.navigation.gap ~ 'px' }};
+                    {% endif %}
+                    {% if sliderNavigation.shape is same as('circle') %}
+                        {% if options.navigation.size is same as('sm') %}
+                            --nav-bullet-size: 12px;
+                        {% elseif options.navigation.size is same as('lg') %}
+                            --nav-bullet-size: 20px;
+                        {% else %}
+                            --nav-bullet-size: 16px;
+                        {% endif %}
+                    {% endif %}
+                    {% if sliderNavigation.shape is same as('bar') %}
+                        {% if options.navigation.size is same as('sm') %}
+                            --nav-bullet-size: 24px;
+                        {% elseif options.navigation.size is same as('lg') %}
+                            --nav-bullet-size: 40px;
+                        {% else %}
+                            --nav-bullet-size: 32px;
+                        {% endif %}
+                    {% endif %}
+                }
+            }            
+        {% endfor %}
+        {% block cms_element_blur_elysium_slider_css_styles_extend %}{% endblock %}
+    </style>
+{% endapply %}

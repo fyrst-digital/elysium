@@ -6,98 +6,101 @@
         >
 
         {% block blur_elysium_slides_basic_form %}
-            <sw-container columns="1fr" gap="0 32px">
 
-                {% block blur_elysium_slides_input_name %}
-                    <sw-text-field
-                        v-model="slide.name" 
-                        :error="blurElysiumSlidesNameError"
-                        :label="$tc('BlurElysiumSlides.baseForm.labelInput.title')"
-                        :placeholder="$tc('BlurElysiumSlides.baseForm.labelInput.placeholder')"
-                        :helpText="$tc('BlurElysiumSlides.baseForm.labelInput.helpText')"
-                        required
-                    />
-                {% endblock %}
+            {% block blur_elysium_slides_input_name %}
+                <sw-text-field
+                    v-model="slide.name" 
+                    :error="blurElysiumSlidesNameError"
+                    :label="$tc('BlurElysiumSlides.baseForm.labelInput.title')"
+                    :placeholder="$tc('BlurElysiumSlides.baseForm.labelInput.placeholder')"
+                    :helpText="$tc('BlurElysiumSlides.baseForm.labelInput.helpText')"
+                    required
+                />
+            {% endblock %}
 
-                {% block blur_elysium_slides_input_headline %}
-                    <blur-card-section>
+            {% block blur_elysium_slides_input_headline %}
+                <blur-card-section>
 
-                        <blur-paragraph 
-                            :title="$tc('blurElysiumSlides.slideSettings.headline.title')"
+                    <blur-paragraph 
+                        :title="$tc('blurElysiumSlides.slideSettings.headline.title')"
+                        :style="{
+                            marginBottom: '16px'
+                        }" />
+
+                    <sw-container columns="1fr 1fr 1fr 1fr" gap="24px">
+                        <sw-text-field
+                            v-model="slide.title" 
+                            :label="$tc('blurElysiumSlides.slideSettings.headline.label')"
+                            :placeholder="$tc('blurElysiumSlides.slideSettings.headline.placeholder')"
+                            :helpText="$tc('blurElysiumSlides.slideSettings.headline.helpText')"
                             :style="{
-                                marginBottom: '16px'
+                                gridColumn: '1 / 5'
                             }" />
 
-                        <sw-container columns="1fr 1fr 1fr 1fr" gap="0 16px">
-                            <sw-text-field
-                                v-model="slide.title" 
-                                :label="$tc('blurElysiumSlides.slideSettings.headline.label')"
-                                :placeholder="$tc('blurElysiumSlides.slideSettings.headline.placeholder')"
-                                :helpText="$tc('blurElysiumSlides.slideSettings.headline.helpText')"
-                                :style="{
-                                    gridColumn: '1 / 5'
-                                }" />
+                        <sw-number-field 
+                            type="int"
+                            :label="$tc('blurElysiumSlides.slideSettings.display.common.fontSize')"
+                            :step="1"
+                            :min="0"
+                            :value="viewportSettings.headline.fontSize"
+                            @change="value => setViewportSetting({key:'headline.fontSize', value: value})"
+                        >
+                            <template #hint>
+                                <blur-elysium-device-hint />
+                            </template>
+                        </sw-number-field> 
 
-                            <sw-number-field 
-                                type="int"
-                                :label="$tc('blurElysiumSlides.slideSettings.display.common.fontSize')"
-                                :step="1"
-                                :min="0"
-                                :value="viewportSettings.headline?.fontSize"
-                                @change="value => setViewportSetting({key:'headline.fontSize', value: value})"
-                            >
-                                <template #hint>
-                                    <blur-elysium-device-hint />
-                                </template>
-                            </sw-number-field> 
+                        {% block blur_elysium_slides_input_headline_element %}
+                            <sw-select-field 
+                                :label="$tc('BlurElysiumSlides.settings.headline.element.label')"
+                                :helpText="$tc('BlurElysiumSlides.settings.headline.element.helpText')"
+                                :value="slide.slideSettings.slide.headline.element"
+                                @change="value => setSlideSetting({key:'slide.headline.element', value: value})">
+                                <option value="div">{{ $tc('blurElysiumSlider.general.default') }}</option>
+                                <option value="h1">{{ 'H1' }}</option>
+                                <option value="h2">{{ 'H2' }}</option>
+                                <option value="h3">{{ 'H3' }}</option>
+                                <option value="h4">{{ 'H4' }}</option>
+                                <option value="h5">{{ 'H5' }}</option>
+                                <option value="h6">{{ 'H6' }}</option>
+                            </sw-select-field>
+                        {% endblock %}
 
-                            {% block blur_elysium_slides_input_headline_element %}
-                                <sw-select-field 
-                                    v-if="slide.slideSettings"
-                                    :value="slide.slideSettings.headlineElement"
-                                    :label="$tc('BlurElysiumSlides.settings.headline.element.label')"
-                                    :placeholder="$tc('BlurElysiumSlides.settings.headline.element.placeholder')"
-                                    :helpText="$tc('BlurElysiumSlides.settings.headline.element.helpText')"
-                                    @change="value => setSlideSetting({key:'headlineElement', value: value})">
-                                    <option value="h1">{{ 'H1' }}</option>
-                                    <option value="h2">{{ 'H2' }}</option>
-                                    <option value="h3">{{ 'H3' }}</option>
-                                    <option value="h4">{{ 'H4' }}</option>
-                                    <option value="h5">{{ 'H5' }}</option>
-                                    <option value="h6">{{ 'H6' }}</option>
-                                </sw-select-field>
-                            {% endblock %}
+                        {% block blur_elysium_slides_input_headline_textcolor %}
+                            <sw-colorpicker
+                                colorOutput="auto"
+                                :value="slide.slideSettings.slide.headline.color"
+                                :label="$tc('blurElysiumSlider.general.textColor')"
+                                :alpha="true"
+                                :colorLabels="true"
+                                :zIndex="100"
+                                @input="value => setSlideSetting({ key: 'slide.headline.color', value: value })">
+                            </sw-colorpicker>
+                        {% endblock %}
+                    </sw-container>
+                </blur-card-section>
+            {% endblock %}
 
-                            {% block blur_elysium_slides_input_headline_textcolor %}
-                                <sw-colorpicker
-                                    v-if="slide.slideSettings"
-                                    colorOutput="auto"
-                                    :value="slide.slideSettings.headlineTextcolor"
-                                    :label="$tc('BlurElysiumSlides.settings.headline.textcolor.label')"
-                                    :alpha="true"
-                                    :colorLabels="true"
-                                    :zIndex="100"
-                                    @input="value => setSlideSetting({ key: 'headlineTextcolor', value: value })">
-                                </sw-colorpicker>
-                            {% endblock %}
-                        </sw-container>
-                    </blur-card-section>
-                {% endblock %}
+            {% block blur_elysium_slides_input_description %}
+                <blur-card-section>
 
-                {% block blur_elysium_slides_input_description %}
+                    <blur-paragraph 
+                        :title="$tc('blurElysiumSlides.slideSettings.description.label')"
+                        :style="{
+                            marginBottom: '24px'
+                        }" />
+
                     <sw-text-editor
                         v-model="slide.description"
-                        :label="$tc('BlurElysiumSlides.baseForm.descriptionInput.title')"
                     />
-                {% endblock %}
-            </sw-container> 
+                </blur-card-section>
+            {% endblock %} 
         {% endblock %}
 
         {% block blur_elysium_slides_setting_slide_bg_color %}
             <sw-colorpicker
-                v-if="slide.slideSettings"
                 colorOutput="auto"
-                :value="slide.slideSettings.slide?.bgColor" 
+                :value="slide.slideSettings.slide.bgColor" 
                 :label="$tc('blurElysiumSlides.slideSettings.slide.bgColor')"
                 :alpha="true"
                 :colorLabels="true"
@@ -111,17 +114,16 @@
             <blur-paragraph 
                 :title="$tc('blurElysiumSlides.slideSettings.slide.bgGradient.title')"
                 :style="{
-                    marginBottom: '16px'
+                    marginBottom: '24px'
                 }" />
 
             <sw-container 
                 columns="repeat(4, minmax(0, 1fr))" 
-                gap="0 16px">
+                gap="24px">
 
                 <sw-colorpicker
-                    v-if="slide.slideSettings"
                     colorOutput="auto"
-                    :value="slide.slideSettings.slide?.bgGradient?.startColor" 
+                    :value="slide.slideSettings.slide.bgGradient.startColor" 
                     :label="$tc('blurElysiumSlides.slideSettings.slide.bgGradient.startColor')"
                     :alpha="true"
                     :colorLabels="true"
@@ -130,9 +132,8 @@
                 </sw-colorpicker>
 
                 <sw-colorpicker
-                    v-if="slide.slideSettings"
                     colorOutput="auto"
-                    :value="slide.slideSettings.slide?.bgGradient?.endColor" 
+                    :value="slide.slideSettings.slide.bgGradient.endColor" 
                     :label="$tc('blurElysiumSlides.slideSettings.slide.bgGradient.endColor')"
                     :alpha="true"
                     :colorLabels="true"
@@ -141,20 +142,18 @@
                 </sw-colorpicker>
 
                 <sw-select-field 
-                    v-if="slide.slideSettings"
-                    :value="slide.slideSettings.slide?.bgGradient?.gradientType ?? 'linear-gradient'"
+                    :value="slide.slideSettings.slide.bgGradient.gradientType"
                     :label="$tc('blurElysiumSlides.slideSettings.slide.bgGradient.gradientType')"
                     @change="value => setSlideSetting({key:'slide.bgGradient.gradientType', value: value})">
                     <option value="linear-gradient">Linear</option>
                 </sw-select-field>
 
                 <sw-number-field
-                    v-if="slide.slideSettings"
                     type="int"
                     :step="1"
                     :min="-360"
                     :max="360"
-                    :value="slide.slideSettings.slide?.bgGradient?.gradientDeg ?? 45" 
+                    :value="slide.slideSettings.slide.bgGradient.gradientDeg" 
                     :label="$tc('blurElysiumSlides.slideSettings.slide.bgGradient.gradientDeg')"
                     @change="value => setSlideSetting({ key: 'slide.bgGradient.gradientDeg', value: value })"
                 />
@@ -163,12 +162,11 @@
 
         {% block blur_elysium_slides_setting_slide_css_class %}
             <sw-text-field
-                v-if="slide.slideSettings"
-                :value="slide.slideSettings.slideCssClass" 
-                :label="$tc('BlurElysiumSlides.settings.sllideCssClass.title')"
-                :placeholder="$tc('BlurElysiumSlides.settings.sllideCssClass.placeholder')"
-                :helpText="$tc('BlurElysiumSlides.settings.sllideCssClass.helpText')"
-                @input="value => setSlideSetting({ key: 'slideCssClass', value: value })"
+                :label="$tc('blurElysiumSlides.slideSettings.slide.cssClass.label')"
+                :placeholder="$tc('blurElysiumSlides.slideSettings.slide.cssClass.placeholder')"
+                :helpText="$tc('blurElysiumSlides.slideSettings.slide.cssClass.helpText')"
+                :value="slide.slideSettings.slide.cssClass" 
+                @input="value => setSlideSetting({ key: 'slide.cssClass', value: value })"
             />
         {% endblock %}
         </sw-card>
@@ -180,95 +178,75 @@
             :title="$tc('BlurElysiumSlides.baseForm.linkingCardTitle')"
         >
 
-        <sw-alert 
-            v-if="slide.slideSettings.slide?.linking?.type === undefined" 
-            variant="warning" 
-            appearance="default" 
-            :showIcon="true" 
-            :closable="false"
-            >
-            <span v-html="'Kein Link Typ vorhanden. Bitte wähle einen Verlinkungstyp und speichere deine Änderung, damit weitere Optionen sichtbar werden'" />
-        </sw-alert>
+            <blur-card-section last>
 
-        <sw-select-field 
-            v-if="slide.slideSettings"
-            :label="$tc('blurElysiumSlides.baseForm.linkType.label')"
-            :placeholder="$tc('blurElysiumSlides.baseForm.linkType.placeholder')"
-            :value="slide.slideSettings.slide?.linking?.type"
-            @change="value => setSlideSetting({ key: 'slide.linking.type', value: value })">
-            <option value="custom">{{ $tc('blurElysiumSlides.baseForm.linkType.custom') }}</option>
-            <option value="product">{{ $tc('blurElysiumSlides.baseForm.linkType.product') }}</option>
-        </sw-select-field>
+                {% block blur_elysium_slides_linking_form %}
+                    <sw-container columns="1fr 1fr" gap="24px" align="center">
 
+                        <sw-select-field 
+                            :label="$tc('blurElysiumSlides.linking.type.label')"
+                            :value="slide.slideSettings.slide.linking.type"
+                            @change="value => setSlideSetting({ key: 'slide.linking.type', value: value })">
+                            <option value="custom">{{ $tc('blurElysiumSlides.linking.type.custom') }}</option>
+                            <option value="product">{{ $tc('blurElysiumSlides.linking.type.product') }}</option>
+                        </sw-select-field>
 
-        <template v-if="slide.slideSettings.slide?.linking?.type === 'custom'">
-            <blur-elysium-slide-settings-linking-custom />
-        </template>
-        <template v-else-if="slide.slideSettings.slide?.linking?.type === 'product'">
-            <blur-elysium-slide-settings-linking-product />
-        </template>
-        <!--
+                        <template v-if="slide.slideSettings.slide?.linking?.type === 'custom'">
+                            <blur-elysium-slide-settings-linking-custom />
+                        </template>
+                        <template v-else-if="slide.slideSettings.slide?.linking?.type === 'product'">
+                            <blur-elysium-slide-settings-linking-product />
+                        </template>
+                        
 
-        -->
+                        {% block blur_elysium_slides_input_button_label %}
+                            <sw-text-field
+                                v-model="slide.button_label" 
+                                :label="$tc('blurElysiumSlides.linking.button.label.label')"
+                                :placeholder="$tc('blurElysiumSlides.linking.button.label.placeholder')"
+                                :helpText="$tc('blurElysiumSlides.linking.button.label.helpText')"
+                                :disabled="slide.slideSettings.slide.linking.overlay === true"
+                            />
+                        {% endblock %}
 
-        {% block blur_elysium_slides_linking_form %}
-            <sw-container columns="1fr 1fr" gap="0 2rem" align="center">
-                
-                {% block blur_elysium_slides_input_url_target %}
-                    <sw-select-field 
-                        v-if="slide.slideSettings"
-                        :label="$tc('BlurElysiumSlides.settingsForm.urlSettings.target.label')"
-                        :placeholder="$tc('BlurElysiumSlides.settingsForm.urlSettings.target.placeholder')"
-                        :value="slide.slideSettings.urlTarget"
-                        @change="value => setSlideSetting({ key: 'urlTarget', value: value })">
-                        <option value="internal">{{ $tc('BlurElysiumSlides.settingsForm.urlSettings.target.options.internal') }}</option>
-                        <option value="external">{{ $tc('BlurElysiumSlides.settingsForm.urlSettings.target.options.external') }}</option>
-                    </sw-select-field>
+                        {% block blur_elysium_slides_input_button_appearance %}
+                            <sw-select-field 
+                                :label="$tc('blurElysiumSlides.linking.button.appearance.label')"
+                                :helpText="$tc('blurElysiumSlides.linking.button.appearance.helpText')"
+                                :disabled="slide.slideSettings.slide.linking.overlay === true"
+                                :value="slide.slideSettings.slide.linking.buttonAppearance"
+                                @change="value => setSlideSetting({ key: 'slide.linking.buttonAppearance', value: value })">
+                                <option value="primary">{{ $tc('blurElysiumSlider.general.colorStates.primary') }}</option>
+                                <option value="secondary">{{ $tc('blurElysiumSlider.general.colorStates.secondary') }}</option>
+                                <option value="success">{{ $tc('blurElysiumSlider.general.colorStates.success') }}</option>
+                                <option value="danger">{{ $tc('blurElysiumSlider.general.colorStates.danger') }}</option>
+                                <option value="warning">{{ $tc('blurElysiumSlider.general.colorStates.warning') }}</option>
+                                <option value="info">{{ $tc('blurElysiumSlider.general.colorStates.info') }}</option>
+                                <option value="light">{{ $tc('blurElysiumSlider.general.colorStates.light') }}</option>
+                                <option value="dark">{{ $tc('blurElysiumSlider.general.colorStates.dark') }}</option>
+                            </sw-select-field>
+                        {% endblock %}
+
+                        {% block blur_elysium_slides_input_url_target %}
+                            <sw-switch-field 
+                                :label="$tc('blurElysiumSlides.linking.openExternal')" 
+                                :value="slide.slideSettings.slide.linking.openExternal"
+                                @change="value => setSlideSetting({ key: 'slide.linking.openExternal', value: value })">
+                            </sw-switch-field>
+                        {% endblock %}
+
+                        {% block blur_elysium_slides_input_url_overlay %}
+                            <sw-switch-field 
+                                :label="$tc('blurElysiumSlides.linking.overlay.label')" 
+                                :helpText="$tc('blurElysiumSlides.linking.overlay.helpText')"
+                                :value="slide.slideSettings.slide.linking.overlay"
+                                @change="value => setSlideSetting({ key: 'slide.linking.overlay', value: value })">
+                            </sw-switch-field>
+                        {% endblock %}
+                        
+                    </sw-container>
                 {% endblock %}
-
-                {% block blur_elysium_slides_input_url_overlay %}
-                    <sw-switch-field 
-                        v-if="slide.slideSettings"
-                        :label="$tc('BlurElysiumSlides.settingsForm.urlSettings.overlay.inputLabel')" 
-                        :helpText="$tc('BlurElysiumSlides.settingsForm.urlSettings.overlay.description')"
-                        :value="slide.slideSettings.urlOverlay"
-                        @change="value => setSlideSetting({ key: 'urlOverlay', value: value })">
-                    </sw-switch-field>
-                {% endblock %}
-
-                {% block blur_elysium_slides_input_button_label %}
-                    <sw-text-field
-                        v-model="slide.button_label" 
-                        :label="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.title')"
-                        :placeholder="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.placeholder')"
-                        :helpText="$tc('BlurElysiumSlides.baseForm.buttonLabelInput.helpText')"
-                        :disabled="urlOverlayActive"
-                        :class="'bc__my-0'"
-                    />
-                {% endblock %}
-
-                {% block blur_elysium_slides_input_button_appearance %}
-                    <sw-select-field 
-                        v-if="slide.slideSettings"
-                        :value="slide.slideSettings.buttonAppearance"
-                        :label="$tc('BlurElysiumSlides.settings.buttonAppearance.label')"
-                        :placeholder="$tc('BlurElysiumSlides.settings.buttonAppearance.placeholder')"
-                        :helpText="$tc('BlurElysiumSlides.settings.buttonAppearance.helpText')"
-                        :disabled="urlOverlayActive"
-                        @change="value => setSlideSetting({ key: 'buttonAppearance', value: value })">
-                        <option value="primary">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.primary') }}</option>
-                        <option value="secondary">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.secondary') }}</option>
-                        <option value="success">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.success') }}</option>
-                        <option value="danger">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.danger') }}</option>
-                        <option value="warning">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.warning') }}</option>
-                        <option value="info">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.info') }}</option>
-                        <option value="light">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.light') }}</option>
-                        <option value="dark">{{ $tc('BlurElysiumSlides.settings.buttonAppearance.options.dark') }}</option>
-                    </sw-select-field>
-                {% endblock %}
-                
-            </sw-container>
-        {% endblock %}
+            </blur-card-section>
         </sw-card>
     {% endblock %}
 </div>

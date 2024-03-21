@@ -4,11 +4,7 @@
         'blur-esldr__nav',
         'd-flex', 
         'w-100',
-        'gap-3',
-        config.navPadding is not empty ? 'padding-' ~ config.navPadding : 'padding-md',
-        'justify-content-' ~ config.align,
-        'bullet-shape__' ~ config.shape,
-        'bullet-size__' ~ config.size
+        'bullet-shape__' ~ config.shape
     ] %}
 
     {% if config.position is same as("in_slider") %}
@@ -20,6 +16,7 @@
     {% endif %}
 
     <style>
+            {#
         #elysiumSlider-{{ elementId }} .blur-esldr__nav-bullet {
             {% if config.colors.default %}
                 --blur-esldr-nav-color: {{config.colors.default}};
@@ -34,7 +31,7 @@
                 --blur-esldr-nav-color-active: {{config.colors.active}};
             {% endif %}
             background-color: var(--blur-esldr-nav-color-active);
-        }
+        }#}
     </style>
 
     {% if config.active is same as(true) %}

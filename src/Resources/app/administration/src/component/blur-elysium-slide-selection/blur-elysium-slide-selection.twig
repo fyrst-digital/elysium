@@ -79,7 +79,6 @@
                     <div class="blur-es-selection__list"
                         ref="selectionList"
                         @drop="onDrop($event)"
-                        @dragleave="leaveDrop($event)"
                         @dragend="dragEnd($event)"
                         @dragover.prevent
                         @dragenter.prevent>
@@ -91,7 +90,6 @@
                                 draggable
                                 @start-drag="startDrag"
                                 @enter-drag="onDrag"
-                                @end-drag="endDrag"
                                 @position-up="slidePositionUp"
                                 @position-down="slidePositionDown"
                                 @edit-slide="onEditSlide"

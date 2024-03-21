@@ -1,74 +1,97 @@
 {% block blur_elysium_slider_config_settings %}
-    <div>
+    <sw-card
+        :position-identifier="positionIdentifiers.settings.DEFAULT">
 
         {% block blur_cms_config_elysium_slider_settings_general %}
-            <sw-card 
-                :position-identifier="positionIdentifiers.autoplayGeneral">
+            <blur-card-section
+                :position-identifier="positionIdentifiers.settings.sectionGeneral">
 
-                <sw-container columns="1fr 1fr" gap="0 2rem">
+                <blur-paragraph
+                    :title="$tc('blurElysiumSlider.config.settings.general')"
+                    />
 
-                        {% block blur_cms_config_elysium_slider_rewind %}
-                            <sw-switch-field 
-                                :label="$tc('blurElysiumSlider.config.rewind')"
-                                v-model="config.rewind">
-                            </sw-switch-field>
-                        {% endblock %}
+                <sw-container columns="1fr 1fr" gap="24px">
 
-                        {% block blur_cms_config_elysium_slider_overlay %}
-                            <sw-switch-field 
-                                :label="$tc('blurElysiumSlider.config.overlay')"
-                                v-model="config.overlay">
-                            </sw-switch-field>
-                        {% endblock %}
+                    {% block blur_cms_config_elysium_slider_rewind %}
+                        <sw-switch-field 
+                            :label="$tc('blurElysiumSlider.config.settings.rewind')"
+                            v-model="config.rewind">
+                        </sw-switch-field>
+                    {% endblock %}
 
-                        {% block blur_cms_config_elysium_slider_container_width %}
-                            <sw-select-field
-                                :value="config.containerWidth"
-                                v-model="config.containerWidth"
-                                :label="$tc('blurElysiumSlider.config.containerWidth.label')"
-                                :help-text="$tc('blurElysiumSlider.config.containerWidth.helpText')"
-                            >
-                                <option value="content">{{$tc('blurElysiumSlider.config.containerWidth.content')}}</option>
-                                <option value="full">{{$tc('blurElysiumSlider.config.containerWidth.full')}}</option>
-                            </sw-select-field>
-                        {% endblock %}
+                    {% block blur_cms_config_elysium_slider_overlay %}
+                        <sw-switch-field 
+                            :label="$tc('blurElysiumSlider.config.settings.overlay')"
+                            v-model="config.overlay">
+                        </sw-switch-field>
+                    {% endblock %}
 
-                        {% block blur_cms_config_elysium_slider_speed %}
-                            <sw-number-field 
-                                numberType="int" 
-                                v-model="config.speed"
-                                :label="$tc('blurElysiumSlider.config.speed.label')"
-                                :placeholder="$tc('blurElysiumSlider.config.speed.placeholder')"
-                                :step="null" 
-                                :min="null" 
-                                :max="null" 
-                                :digits="null"
-                                :allowEmpty="false">
-                            </sw-number-field>                                        
-                        {% endblock %}
+                    {% block blur_cms_config_elysium_slider_slides_per_page %}
+                        <sw-number-field 
+                            v-if="viewportConfig"
+                            v-model="viewportConfig.slidesPerPage"
+                            numberType="int" 
+                            :label="$tc('blurElysiumSlider.config.settings.slidesPerPage.label')"
+                            :placeholder="$tc('blurElysiumSlider.config.settings.slidesPerPage.placeholder')"
+                            :step="1" 
+                            :min="1"
+                            :digits="null"
+                            :allowEmpty="false">
+                            <template #hint><blur-elysium-device-hint /></template>
+                        </sw-number-field>
+                    {% endblock %}
 
+                    {% block blur_cms_config_elysium_slider_speed %}
+                        <sw-number-field 
+                            numberType="int" 
+                            v-model="config.speed"
+                            :label="$tc('blurElysiumSlider.config.settings.speed.label')"
+                            :placeholder="$tc('blurElysiumSlider.config.settings.speed.placeholder')"
+                            :step="null" 
+                            :min="null" 
+                            :max="null" 
+                            :digits="null"
+                            :allowEmpty="false">
+                            <template #suffix>ms</template>
+                        </sw-number-field>                                        
+                    {% endblock %}
 
+                    {% block blur_cms_config_elysium_slider_container_width %}
+                        <sw-select-field
+                            :value="config.containerWidth"
+                            v-model="config.containerWidth"
+                            :label="$tc('blurElysiumSlider.config.settings.containerWidth.label')"
+                            :help-text="$tc('blurElysiumSlider.config.settings.containerWidth.helpText')"
+                        >
+                            <option value="content">{{$tc('blurElysiumSlider.config.settings.containerWidth.content')}}</option>
+                            <option value="full">{{$tc('blurElysiumSlider.config.settings.containerWidth.full')}}</option>
+                        </sw-select-field>
+                    {% endblock %}
                 </sw-container>
-            </sw-card>
+            </blur-card-section>
         {% endblock %}
 
         {% block blur_cms_config_elysium_slider_settings_autoplay %}
-            <sw-card 
-                :title="$tc('blurElysiumSlider.config.autoplay.label')" 
-                :position-identifier="positionIdentifiers.autoplayGeneral">
+            <blur-card-section
+                :last="true"
+                :position-identifier="positionIdentifiers.settings.sectionAutoplay">
 
-                <sw-container columns="1fr 1fr" gap="0 2rem">
+                <blur-paragraph
+                    :title="$tc('blurElysiumSlider.config.settings.autoplay.label')"
+                    />
+
+                <sw-container columns="1fr 1fr" gap="24px">
 
                     {% block blur_cms_config_elysium_slider_autoplay_active %}
                         <sw-switch-field 
-                            :label="$tc('blurElysiumSlider.config.autoplay.active')" 
+                            :label="$tc('blurElysiumSlider.config.settings.autoplay.active')" 
                             v-model="config.autoplay.active">
                         </sw-switch-field>
                     {% endblock %}
 
                     {% block blur_cms_config_elysium_slider_autoplay_pause_on_hover %}
                         <sw-switch-field 
-                            :label="$tc('blurElysiumSlider.config.autoplay.pauseOnHover')" 
+                            :label="$tc('blurElysiumSlider.config.settings.autoplay.pauseOnHover')" 
                             v-model="config.autoplay.pauseOnHover">
                         </sw-switch-field>
                     {% endblock %}
@@ -77,17 +100,18 @@
                         <sw-number-field 
                             numberType="int" 
                             v-model="config.autoplay.interval"
-                            :label="$tc('blurElysiumSlider.config.autoplay.interval.label')"
-                            :placeholder="$tc('blurElysiumSlider.config.autoplay.interval.placeholder')"
+                            :label="$tc('blurElysiumSlider.config.settings.autoplay.interval.label')"
+                            :placeholder="$tc('blurElysiumSlider.config.settings.autoplay.interval.placeholder')"
                             :step="null" 
                             :min="3000" 
                             :max="null" 
                             :digits="null"
                             :allowEmpty="false">
+                            <template #suffix>ms</template>
                         </sw-number-field>
                     {% endblock %}
                 </sw-container>
-            </sw-card>
+            </blur-card-section>
         {% endblock %}
-    </div>
+    </sw-card>
 {% endblock %}

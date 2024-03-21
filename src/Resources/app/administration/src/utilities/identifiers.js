@@ -1,3 +1,32 @@
+const cmsSliderConfig = {
+    tabs: 'blur-elysium-slider-config-tabs',
+    content: {
+        DEFAULT: 'blur-elysium-slider-config-content',
+        sectionGeneral: 'blur-elysium-slider-config-content-general',
+        sectionSlideSelection: 'blur-elysium-slider-config-content-slide-selection'
+    },
+    settings: {
+        DEFAULT: 'blur-elysium-slider-config-settings',
+        sectionGeneral: 'blur-elysium-slider-config-settings-general',
+        sectionAutoplay: 'blur-elysium-slider-config-settings-autoplay'
+    },
+    sizing: {
+        DEFAULT: 'blur-elysium-slider-config-sizing',
+        sectionAspectRatio: 'blur-elysium-slider-config-sizing-aspect-ratio',
+        sectionSpacing: 'blur-elysium-slider-config-sizing-spacing',
+    },
+    navigation: {
+        DEFAULT: 'blur-elysium-slider-config-navigation',
+        sectionGeneral: 'blur-elysium-slider-config-navigation-general',
+        sectionAppearance: 'blur-elysium-slider-config-navigation-appearance'
+    },
+    arrows: {
+        DEFAULT: 'blur-elysium-slider-config-arrows',
+        sectionGeneral: 'blur-elysium-slider-config-arrows-general',
+        sectionAppearance: 'blur-elysium-slider-config-arrows-appearance'
+    }
+}
+
 const config = {
     tabs: 'blur-elysium-slider-config-tabs',
     contentGeneral: 'blur-elysium-slider-config-content-general',
@@ -33,6 +62,7 @@ const slides = {
 }
 
 export {
+    cmsSliderConfig,
     config,
     slides
 }

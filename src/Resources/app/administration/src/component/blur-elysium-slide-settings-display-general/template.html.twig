@@ -15,7 +15,7 @@
                     type="int"
                     :label="$tc('blurElysiumSlides.slideSettings.display.common.paddingX')"
                     :step="1"
-                    :value="viewportSettings.slide?.paddingX ?? defaultViewportValues(15, 15, 15)"
+                    :value="viewportSettings.slide.paddingX"
                     @change="value => setViewportSetting({key:'slide.paddingX', value: value})"
                 />
 
@@ -23,7 +23,7 @@
                     type="int"
                     :label="$tc('blurElysiumSlides.slideSettings.display.common.paddingY')"
                     :step="1"
-                    :value="viewportSettings.slide?.paddingY ?? defaultViewportValues(15, 15, 15)"
+                    :value="viewportSettings.slide.paddingY"
                     @change="value => setViewportSetting({key:'slide.paddingY', value: value})"
                 />
 
@@ -32,14 +32,14 @@
                     :label="$tc('blurElysiumSlides.slideSettings.display.common.borderRadius')"
                     placeholder="0"
                     :step="1"
-                    :value="viewportSettings.slide?.borderRadius ?? defaultViewportValues(0, 0, 0)"
+                    :value="viewportSettings.slide.borderRadius"
                     @change="value => setViewportSetting({key:'slide.borderRadius', value: value})"
                 />
             </sw-container>
         </blur-card-section>
 
         <blur-card-section
-            :last="true">
+            last>
     
             <blur-paragraph
                 :title="$tc('blurElysiumSlides.slideSettings.display.containerAlignment.title')" 
@@ -50,7 +50,7 @@
                 <sw-select-field 
                     :label="$tc('blurElysiumSlides.slideSettings.display.common.alignX')"
                     :helpText="$tc('blurElysiumSlides.slideSettings.display.slideAppearance.justifyContent.helpText')"
-                    :value="viewportSettings.slide?.justifyContent ?? defaultViewportValues('center', 'center', 'center')"
+                    :value="viewportSettings.slide.justifyContent"
                     @change="value => setViewportSetting({key:'slide.justifyContent', value: value})" >
                     <option value="flex-start">
                         {{ $tc('blurElysiumSlides.slideSettings.display.common.left') }}
@@ -65,7 +65,7 @@
 
                 <sw-select-field 
                     :label="$tc('blurElysiumSlides.slideSettings.display.common.alignY')"
-                    :value="viewportSettings.slide?.alignItems ?? defaultViewportValues('center', 'center', 'center')"
+                    :value="viewportSettings.slide.alignItems"
                     @change="value => setViewportSetting({key:'slide.alignItems', value: value})" >
                     <option value="flex-start">
                         {{ $tc('blurElysiumSlides.slideSettings.display.common.top') }}

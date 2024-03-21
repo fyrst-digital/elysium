@@ -1,15 +1,18 @@
 {% block blur_elysium_slider_config_navigation %}
-    <div>
+    <sw-card
+        :position-identifier="positionIdentifiers.navigation.DEFAULT">
 
         {% block blur_elysium_slider_config_navigation_general %}
-            <sw-card 
-                :position-identifier="positionIdentifiers.navigationGeneral"
-                :hero="false" 
-                :large="false">
+            <blur-card-section 
+                :position-identifier="positionIdentifiers.navigation.sectionGeneral"
+                >
+
+                <blur-paragraph 
+                    :title="$tc('blurElysiumSlider.general.general')" />
 
                 <sw-container 
                     columns="1fr"
-                    gap="2rem">
+                    gap="24px">
 
                     {% block blur_elysium_slider_config_navigation_active %}
                         <sw-switch-field 
@@ -20,7 +23,7 @@
                 
                     <sw-container 
                         columns="1fr 1fr 1fr"
-                        gap="0 2rem"
+                        gap="24px"
                         :breakpoints="containerBreakpoints['3col']">
 
                         {% block blur_elysium_slider_config_navigation_position %}
@@ -47,19 +50,21 @@
                     </sw-container>
 
                 </sw-container>
-            </sw-card>
+            </blur-card-section>
         {% endblock %}
 
         {% block blur_elysium_slider_config_navigation_appearance %}
-            <sw-card 
-                :position-identifier="positionIdentifiers.navigationAppearance"
-                :title="$tc('blurElysiumSlider.general.appearance')"
-                :hero="false" 
-                :large="false">
+            <blur-card-section 
+                :last="true"
+                :position-identifier="positionIdentifiers.navigation.sectionAppearance"
+                >
+
+                <blur-paragraph 
+                    :title="$tc('blurElysiumSlider.general.appearance')" />
 
                 <sw-container 
                     columns="1fr 1fr 1fr"
-                    gap="0 2rem"
+                    gap="24px"
                     :breakpoints="containerBreakpoints['3col']">
 
                     {% block blur_elysium_slider_config_navigation_shape %}
@@ -76,23 +81,24 @@
                     {% block blur_elysium_slider_config_navigation_sizes %}
                         <sw-select-field 
                             :label="$tc('blurElysiumSlider.config.navigation.size.label')"
-                            v-model="config.size">
+                            v-model="viewportConfig.size">
                             <option 
                                 v-for="size in sizes" 
                                 :key="size.value" 
                                 :value="size.value">{{size.label}}</option>
+                            <template #hint><blur-elysium-device-hint /></template>
                         </sw-select-field>
                     {% endblock %}
 
-                    {% block blur_elysium_slider_config_navigation_navpadding %}
-                        <sw-select-field 
+                    {% block blur_elysium_slider_config_navigation_gap %}
+                        <sw-number-field 
+                            numberType="int"
                             :label="$tc('blurElysiumSlider.config.navigation.navPadding.label')"
-                            v-model="config.navPadding">
-                            <option 
-                                v-for="navPadding in navPaddings" 
-                                :key="navPadding.value" 
-                                :value="navPadding.value">{{navPadding.label}}</option>
-                        </sw-select-field>
+                            :step="1"
+                            v-model="viewportConfig.gap">
+                            <template #suffix>Px</template>
+                            <template #hint><blur-elysium-device-hint /></template>
+                        </sw-number-field>
                     {% endblock %}
 
                     {% block blur_elysium_slider_config_navigation_color %}
@@ -125,7 +131,7 @@
 
                 </sw-container>
 
-            </sw-card>
+            </blur-card-section>
         {% endblock %}
-    </div>
+    </sw-card>
 {% endblock %}

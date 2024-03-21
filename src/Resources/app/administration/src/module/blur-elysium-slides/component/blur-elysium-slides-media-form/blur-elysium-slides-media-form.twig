@@ -51,7 +51,7 @@
                 
                 <sw-select-field 
                     :label="$tc('blurElysiumSlides.slideSettings.slideCoverImage.posY')"
-                    :value="viewportSettings.coverImage?.objectPosY ?? defaultViewportValues('center', 'center', 'center')"
+                    :value="viewportSettings.coverImage.objectPosY"
                     @change="value => setViewportSetting({key:'coverImage.objectPosY', value: value})" >
                     <option value="top">
                         {{ $tc('blurElysiumSlides.slideSettings.display.common.top') }}
@@ -66,7 +66,7 @@
                 
                 <sw-select-field 
                     :label="$tc('blurElysiumSlides.slideSettings.slideCoverImage.posX')"
-                    :value="viewportSettings.coverImage?.objectPosX ?? defaultViewportValues('center', 'center', 'center')"
+                    :value="viewportSettings.coverImage.objectPosX"
                     @change="value => setViewportSetting({key:'coverImage.objectPosX', value: value})" >
                     <option value="left">
                         {{ $tc('blurElysiumSlides.slideSettings.display.common.left') }}
@@ -81,7 +81,7 @@
                 
                 <sw-select-field 
                     :label="$tc('blurElysiumSlides.slideSettings.slideCoverImage.fit')"
-                    :value="viewportSettings.coverImage?.objectFit ?? defaultViewportValues('cover', 'cover', 'cover')"
+                    :value="viewportSettings.coverImage.objectFit"
                     @change="value => setViewportSetting({key:'coverImage.objectFit', value: value})" >
                     <option value="cover">
                         {{ $tc('blurElysiumSlides.slideSettings.display.common.fitCover') }}
@@ -120,7 +120,7 @@
                 
                 <sw-select-field 
                     :label="$tc('blurElysiumSlides.slideSettings.slideCoverVideo.posY')"
-                    :value="viewportSettings.coverVideo?.objectPosY ?? defaultViewportValues('center', 'center', 'center')"
+                    :value="viewportSettings.coverVideo.objectPosY"
                     @change="value => setViewportSetting({key:'coverVideo.objectPosY', value: value})" >
                     <option value="top">
                         {{ $tc('blurElysiumSlides.slideSettings.display.common.top') }}
@@ -135,7 +135,7 @@
                 
                 <sw-select-field 
                     :label="$tc('blurElysiumSlides.slideSettings.slideCoverVideo.posX')"
-                    :value="viewportSettings.coverVideo?.objectPosX ?? defaultViewportValues('center', 'center', 'center')"
+                    :value="viewportSettings.coverVideo.objectPosX"
                     @change="value => setViewportSetting({key:'coverVideo.objectPosX', value: value})" >
                     <option value="left">
                         {{ $tc('blurElysiumSlides.slideSettings.display.common.left') }}
@@ -150,7 +150,7 @@
                 
                 <sw-select-field 
                     :label="$tc('blurElysiumSlides.slideSettings.slideCoverVideo.fit')"
-                    :value="viewportSettings.coverVideo?.objectFit ?? defaultViewportValues('cover', 'cover', 'cover')"
+                    :value="viewportSettings.coverVideo.objectFit"
                     @change="value => setViewportSetting({key:'coverVideo.objectFit', value: value})" >
                     <option value="cover">
                         {{ $tc('blurElysiumSlides.slideSettings.display.common.fitCover') }}
@@ -169,33 +169,44 @@
     <sw-card
         :position-identifier="positionIdentifiers.detail.presentationMedia"
         :title="$tc('blurElysiumSlides.slideSettings.presentationMedia.label')">
-        
-        <sw-container columns="1fr" gap="32px">
 
-            {% block blur_elysium_slides_media_form_presentation_media_upload %}
-                <div>
-                    <sw-upload-listener
-                        :upload-tag="uploadTag.presentationMedia"
-                        auto-upload
-                        @media-upload-finish="payload => setMedia( 'presentationMedia', payload.targetId )"
-                    />
-                    <sw-media-upload-v2
-                        class="blur-elysium-slides__media-upload"
-                        variant="regular"
-                        file-accept="image/*"
-                        :disabled="!editable"
-                        :upload-tag="uploadTag.presentationMedia"
-                        :source="presentationMedia"
-                        :allow-multi-select="false"
-                        :help-text="$tc('BlurElysiumSlides.mediaForm.uploadInput.helpText')"
-                        :default-folder="entityName"
-                        @media-drop="payload => setMedia( 'presentationMedia', payload, 'image' )"
-                        @media-upload-remove-image="payload => resetMedia( 'presentationMedia' )"
-                        @media-upload-sidebar-open="mediaSidebar.openContent()"
-                    />            
-                </div>
-            {% endblock %}
-        </sw-container>
+        <blur-card-section 
+            last>
+
+            <blur-paragraph
+                :content="$tc('blurElysiumSlides.slideSettings.presentationMedia.description')" 
+                :style="{
+                    marginBottom: '0'
+                }" />
+        
+            <sw-container 
+                columns="1fr" 
+                gap="32px">
+
+                {% block blur_elysium_slides_media_form_presentation_media_upload %}
+                    <div>
+                        <sw-upload-listener
+                            :upload-tag="uploadTag.presentationMedia"
+                            auto-upload
+                            @media-upload-finish="payload => setMedia( 'presentationMedia', payload.targetId )"
+                        />
+                        <sw-media-upload-v2
+                            class="blur-elysium-slides__media-upload"
+                            variant="regular"
+                            file-accept="image/*"
+                            :disabled="!editable"
+                            :upload-tag="uploadTag.presentationMedia"
+                            :source="presentationMedia"
+                            :allow-multi-select="false"
+                            :default-folder="entityName"
+                            @media-drop="payload => setMedia( 'presentationMedia', payload, 'image' )"
+                            @media-upload-remove-image="payload => resetMedia( 'presentationMedia' )"
+                            @media-upload-sidebar-open="mediaSidebar.openContent()"
+                        />            
+                    </div>
+                {% endblock %}
+            </sw-container>
+        </blur-card-section>
     </sw-card>
 </div>
 {% endblock %}

@@ -12,7 +12,7 @@
         No slide data
     </div>
 {% else %}
-    <div class="{{ slideClasses|join(' ') }}{% if slideData.slideSettings.slideCssClass %} {{ slideData.slideSettings.slideCssClass }}{% endif %}"
+    <div class="{{ slideClasses|join(' ') }}{% if slideData.slideSettings.slide.cssClass %} {{ slideData.slideSettings.slide.cssClass }}{% endif %}"
         data-elysium-slide-id="{{ slideData.id }}">
         
         {% block cms_element_blur_elysium_banner_style %}
@@ -23,10 +23,7 @@
                     '--gradient-color-end': slideData.slideSettings.slide.bgGradient.endColor,
                     '--gradient-deg': slideData.slideSettings.slide.bgGradient.gradientDeg ? slideData.slideSettings.slide.bgGradient.gradientDeg ~ 'deg' : null
                 },
-                slideViewportStyles: slideData.slideSettings.viewports,
-                slideCoverMobile: slideData.slideCoverMobile,
-                slideCoverTablet: slideData.slideCoverTablet,
-                slideCover: slideData.slideCover
+                slideViewportStyles: slideData.slideSettings.viewports
             } %}
         {% endblock %}
 
