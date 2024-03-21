@@ -2,38 +2,16 @@
     {% set selectorClass = '.blur-elysium-slide' %}
 {% endif %}
 
-{% if viewportConfig is not defined %}
-    {% set viewportConfig = element.config.viewports.value %}
-{% endif %}
-
 {% if slideStyles is not defined %}
     {% set slideStyles = null %}
 {% endif %}
-
-{% if slideCoverMobile is not defined %}
-    {% set slideCoverMobile = null %}
-{% endif %}
-
-{% if slideCoverTablet is not defined %}
-    {% set slideCoverTablet = null %}
-{% endif %}
-
-{% if slideCover is not defined %}
-    {% set slideCover = null %}
-{% endif %}
-
-{% set slideCovers = {
-    mobile: slideCoverMobile,
-    tablet: slideCoverTablet,
-    desktop: slideCover
-} %}
 
 {% set slideContainerStyles = {
     '--bg-color': slideData.slideSettings.container.bgColor
 } %}
 
 {% set headlineStyles = {
-    '--color': slideData.slideSettings.headlineTextcolor
+    '--color': slideData.slideSettings.slide.headline.color
 } %}
 
 {% set presentationMedia = slideData.presentationMedia %}
@@ -73,19 +51,6 @@
             {% endfor %}
         }
     {% endif %}
-
-    {# viewport options for cms element #}
-    {% for device, options in viewportConfig %}
-        @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
-            {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
-                {% if options.aspectRatio.auto is not same as(true) %}
-                    --aspect-ratio: {{options.aspectRatio.width}} / {{options.aspectRatio.height}};
-                {% else %}
-                    --aspect-ratio: auto;
-                {% endif %}
-            }
-        }            
-    {% endfor %}
 
     {# viewport dependent options for slide #}
     {% if slideViewportStyles is not null %}

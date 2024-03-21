@@ -1,17 +1,27 @@
 export default {
+    /** @type string | null */
+    slideTemplate: null,
+    /** @type string | null */
+    customTemplateFile: null,
     slide: {
+        headline: {
+            /** @type string | null */
+            color: null,
+            /** @type 'div' | 'h1' */
+            element: 'div'
+        },
         /** @type object<slideLinking> | null */
         linking: {
             /** @type 'custom' | 'product' */
             type: 'custom',
-            /** @type string | null */
-            productId: null,
             /** @type 'internal' | 'external' */
             target: 'internal',
             /** @type 'primary' | 'secondary' */
             buttonAppearance: 'primary',
             /** @type boolean */
-            urlOverlay: false
+            openExternal: false,
+            /** @type boolean */
+            overlay: false
         },
         cover: {
             /** @type boolean */
@@ -23,9 +33,11 @@ export default {
         bgGradient: {
             startColor: '',
             endColor: '',
-            gradientType: '',
+            gradientType: 'linear-gradient',
             gradientDeg: 45
-        }
+        },
+        /** @type string | null */
+        cssClass: null
     },
     container: {
         /** @type string | null */
@@ -136,12 +148,36 @@ export default {
                 maxWidthDisabled: true,
                 /** @type int */
                 gap: 20,
+                /** @type 'normal' | 'stretch' | 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around' */
+                justifyContent: 'normal',
                 /** @type 'stretch' | 'flex-start' | 'center' | 'flex-end' */
                 alignItems: 'center',
                 /** @type boolean */
                 columnWrap: false,
                 /** @type 'default' | 'reverse' */
                 order: 'default'
+            },
+            content: {
+                /** @type int */
+                paddingX: 0,
+                /** @type int */
+                paddingY: 0,
+                /** @type int */
+                maxWidth: 0,
+                /** @type boolean */ 
+                maxWidthDisabled: true,
+                /** @type 'left' | 'center' | 'right' */ 
+                textAlign: 'left'
+            },
+            image: {
+                /** @type 'flex-start' | 'center' | 'flex-end' */
+                justifyContent: 'center',
+                /** @type int */
+                maxWidth: 0,
+                /** @type boolean */
+                maxWidthDisabled: true,
+                /** @type boolean */
+                imageFullWidth: false,
             },
             slide: {
                 /** @type int */
@@ -192,12 +228,36 @@ export default {
                 maxWidthDisabled: true,
                 /** @type int */
                 gap: 20,
+                /** @type 'normal' | 'stretch' | 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around' */
+                justifyContent: 'normal',
                 /** @type 'stretch' | 'flex-start' | 'center' | 'flex-end' */
                 alignItems: 'center',
                 /** @type boolean */
                 columnWrap: false,
                 /** @type 'default' | 'reverse' */
                 order: 'default'
+            },
+            content: {
+                /** @type int */
+                paddingX: 0,
+                /** @type int */
+                paddingY: 0,
+                /** @type int */
+                maxWidth: 0,
+                /** @type boolean */ 
+                maxWidthDisabled: true,
+                /** @type 'left' | 'center' | 'right' */ 
+                textAlign: 'left'
+            },
+            image: {
+                /** @type 'flex-start' | 'center' | 'flex-end' */
+                justifyContent: 'center',
+                /** @type int */
+                maxWidth: 0,
+                /** @type boolean */
+                maxWidthDisabled: true,
+                /** @type boolean */
+                imageFullWidth: false,
             },
             slide: {
                 /** @type int */
@@ -234,21 +294,5 @@ export default {
                 fontSize: null
             }
         }
-    },
-    slideCover: {
-        /** @type 'cover' | 'contain' | 'auto' */
-        bgSize: 'cover',
-        /** @type 'left' | 'center' | 'right' */
-        bgPosX: 'center',
-        /** @type 'top' | 'center' | 'bottom' */
-        bgPosY: 'center'
-    },
-    slideCoverPortrait: {
-        /** @type 'cover' | 'contain' | 'auto' */
-        bgSize: 'cover',
-        /** @type 'left' | 'center' | 'right' */
-        bgPosX: 'center',
-        /** @type 'top' | 'center' | 'bottom' */
-        bgPosY: 'center'
     }
 }

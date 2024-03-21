@@ -6,6 +6,7 @@
     "blurElysiumSlider": {
         "general": {
             "active": "Active",
+            "general": "General",
             "appearance": "Appearance",
             "small": "Small",
             "medium": "Medium",
@@ -18,37 +19,55 @@
             "bgColorActive": "Background Color (Active)",
             "padding": "Padding",
             "unitPlaceholderPxRem": "px or rem value",
+            "unitPlaceholderPx": "in pixel",
             "noHeadline": "No Headline",
             "copySuffix": "copy",
-            "cmsBlockGroup": "Elysium Slider and Banner"
+            "cmsBlockGroup": "Elysium Slider and Banner",
+            "colorStates": {
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "success": "Success",
+                "danger": "Danger",
+                "warning": "Warning",
+                "info": "Information",
+                "light": "Light",
+                "dark": "Dark"
+            }
         },
         "config": {
             "content": "Content",
-            "settings": "Settings",
             "styling": "Styling",
             "sliderTitle": {
                 "label": "Slider Title (optional)"
             },
-            "containerWidth": {
-                "label": "Content Container width",
-                "content": "Page Content width",
-                "full": "Full width",
-                "helpText": "Define the content container width. On <b>Page Content</b> the maximum width of the container follows the paqe content width. On <b>Full width</b> the content container is in full width"
-            },
-            "rewind": "Rewind Slides",
-            "overlay": "Show Overlay",
-            "speed": {
-                "label": "Slide Speed",
-                "placeholder": "Time in Millisecond"
-            },
-            "autoplay": {
-                "label": "Autoplay",
-                "active": "Activate Autoplay",
-                "interval":{ 
-                    "label": "Interval",
+            "settings": {
+                "label": "Settings",
+                "general": "General",
+                "slidesPerPage": {
+                    "label": "Slides per view",
+                    "placeholder": "1"
+                },
+                "containerWidth": {
+                    "label": "Content Container width",
+                    "content": "Page Content width",
+                    "full": "Full width",
+                    "helpText": "Define the content container width. On <b>Page Content</b> the maximum width of the container follows the paqe content width. On <b>Full width</b> the content container is in full width"
+                },
+                "rewind": "Rewind Slides",
+                "overlay": "Show Overlay",
+                "speed": {
+                    "label": "Slide Speed",
                     "placeholder": "Time in Millisecond"
                 },
-                "pauseOnHover": "Pause Autoplay on Mouseover"
+                "autoplay": {
+                    "label": "Autoplay",
+                    "active": "Activate Autoplay",
+                    "interval":{ 
+                        "label": "Interval",
+                        "placeholder": "Time in Millisecond"
+                    },
+                    "pauseOnHover": "Pause Autoplay on Mouseover"
+                }
             },
             "sizing":  {
                 "label": "Sizing",
@@ -63,32 +82,23 @@
                 },
                 "maxHeight": {
                     "label": "Maximum height",
-                    "placeholder": "px or rem value"
+                    "placeholder": "in pixel"
                 },
                 "emptyViewport": {
                     "title": "Select viewport",
                     "description": "Please choose a viewport size first"
                 },
-                "slidesBehavior": {
-                    "label": "Slide Behavior"
-                },
-                "slidesPerPage": {
-                    "label": "Slides per Page",
-                    "placeholder": "1"
-                },
-                "slidesGap": {
-                    "label": "Gap between slides"
-                }
-            },
-            "spacing": {
-                "label": "Spacing",
-                "paddingY": {
-                    "label": "Slider padding (vertical)",
-                    "placeholder": "px or rem value"
-                },
-                "paddingX": {
-                    "label": "Slider padding (horizontal)",
-                    "placeholder": "px or rem value"
+                "spacing": {
+                    "label": "Spacing",
+                    "slidesGap": {
+                        "label": "Gap between slides"
+                    },
+                    "paddingY": {
+                        "label": "Slider padding (vertical)"
+                    },
+                    "paddingX": {
+                        "label": "Slider padding (horizontal)"
+                    }
                 }
             },
             "navigation": {
@@ -207,6 +217,38 @@
             "addItem": "Add",
             "removeItem": "Remove"
         },
+        "linking": {
+            "type": {
+                "label": "Type",
+                "placeholder": "Choose a linking type",
+                "custom": "Custom",
+                "product": "Product"
+            },
+            "product": {
+                "label": "Product selection"
+            },
+            "custom": {
+                "label": "URL",
+                "placeholder": "Enter URL",
+                "helpText": "Set the linking of the slide. This can be both an absolute and a relative URL."
+            },
+            "button": {
+                "label": {
+                    "label": "Button label",
+                    "placeholder": "Enter a Button Label for your Slide",
+                    "helpText": "Set the label of the button. If no label is provided no button will be display."
+                },
+                "appearance": {
+                    "label": "Button Appearance",
+                    "helpText": "Sets the appearance of the button. The colors are based on the theme settings."
+                }
+            },
+            "openExternal": "Open in new Tab",
+            "overlay": {
+                "label": "Link Overlay",
+                "helpText": "Hilfe"
+            }
+        },
         "slideSelection": {
             "message": {
                 "noSlides": "Seems you haven't any Slides yet. Head over to the Elysium Slides Module and create some."
@@ -222,6 +264,18 @@
                 "label": "Headline",
                 "placeholder": "My awesome Slide!",
                 "helpText": "Set a heading for the slide. You can use the HTML tags br, i, u, b, strong and span."
+            },
+            "description": {
+                "label": "Description",
+                "placeholder": "Enter a Description for your Slide",
+                "helpText": "Set a short description text for the slide. This will be displayed under the headline."
+            },
+            "slide": {
+                "cssClass": {
+                    "label": "CSS Class",
+                    "placeholder": "my-slide-styling",
+                    "helpText": "Set one or more CSS classes, separated by a space, for the slide."
+                }
             },
             "customTemplate": {
                 "cardTitle": "Custom Template",

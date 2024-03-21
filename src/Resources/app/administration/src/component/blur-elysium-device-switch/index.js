@@ -20,6 +20,23 @@ export default {
             type: String,
             /** @type 'default' | 'tab' */
             default: 'default'
+        },
+
+        justify: {
+            type: String,
+            /** @type 'start' | 'center' | 'end' */
+            default: 'center'
+        },
+
+        gap: {
+            type: Number,
+            default: 30
+        },
+
+        showLabels: {
+            type: Boolean,
+            /** @type Boolean */
+            default: true
         }
     },
 
@@ -33,8 +50,8 @@ export default {
         containerStyle () {
             const styles = {
                 display: 'flex',
-                gap: '2rem',
-                justifyContent: 'center',
+                gap: `${this.gap}px`,
+                justifyContent: this.justify,
                 flexDirection: 'row'
             }
 

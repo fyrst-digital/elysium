@@ -41,21 +41,6 @@
                 "title": "Slide Name",
                 "placeholder": "Slide Name eingeben",
                 "helpText": "Lege einen Namen für den Slide fest. Dieser Name wird nur zur Identifikation des Slides genutzt"
-            },
-            "descriptionInput": {
-                "title": "Kurzbeschreibung",
-                "placeholder": "Kurzbeschreibung eingeben",
-                "helpText": "Lege einen Kurzbeschreibungs-Text für den Slide fest. Dieser wird unter der Überschrift angezeigt."
-            },
-            "buttonLabelInput": {
-                "title": "Button Beschriftung",
-                "placeholder": "Mehr Erfahren",
-                "helpText": "Lege die Beschriftung des Buttons fest. Ist keine Beschriftung hinterlegt, wird der Button nicht angezeigt."
-            },
-            "urlInput": {
-                "title": "Slide URL",
-                "placeholder": "Slide URL eingeben",
-                "helpText": "Lege die Verlinkung des Slides fest. Dies kann sowohl eine absolute als auch eine relative URL sein."
             }
         },
         "settings": {
@@ -71,26 +56,6 @@
             },
             "slideBgColor": {
                 "title": "Slide Hintergrundfarbe"
-            },
-            "sllideCssClass": {
-                "title": "CSS Klasse",
-                "placeholder": "Lege eine oder mehrere CSS Klassen fest",
-                "helpText": "Lege eine oder mehrere CSS Klassen, getrennt durch ein Leerzeichen, für den Slide fest."
-            },
-            "buttonAppearance": {
-                "label": "Button Farbgebung",
-                "placeholder": "Wähle eine Button-Farbe",
-                "helpText": "Legt die Farbgebung des Buttons fest. Die Farben orientieren sich an den Einstellungen des Themes.",
-                "options": {
-                    "primary": "Primärfarbe",
-                    "secondary": "Sekundärfarbe",
-                    "success": "Erfolg",
-                    "danger": "Fehler",
-                    "warning": "Hinweis",
-                    "info": "Information",
-                    "light": "Hell",
-                    "dark": "Dunkel"
-                }
             },
             "container": {
                 "title": "Inhalts-Container",
@@ -140,22 +105,6 @@
                         "center": "Zentriert",
                         "right": "Rechts"
                     }
-                }
-            }
-        },
-        "settingsForm": {
-            "urlSettings": {
-                "target": {
-                    "label": "URL Ziel",
-                    "placeholder": "Ziel wählen",
-                    "options": {
-                        "internal": "Intern",
-                        "external": "Extern"
-                    }
-                },
-                "overlay": {
-                    "description": "Bei aktivierten URL Overlay wird der Button ausgeblenden und der gesamte Slide als Verlinkungs-Fläche genutzt",
-                    "inputLabel": "URL Overlay"
                 }
             }
         },

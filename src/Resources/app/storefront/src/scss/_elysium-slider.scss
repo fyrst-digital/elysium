@@ -1,91 +1,58 @@
 .cms-element-elysium-slider {
     position: relative;
+
+    &.slide-container-boxed {
+
+        .blur-elysium-slide-container {
+            @each $breakpoint, $container-max-width in $container-max-widths {
+
+                @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+                    --max-width: #{$container-max-width};
+                }
+            }
+        }
+    }
+
+    &.slide-overlay {
+        .blur-elysium-slide::before {
+            content: '';
+            display: block;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.25);
+            z-index: 2;
+        }
+    }
 }
 
 .blur-elysium-slider {
+    --arrow-padding: 10px;
+    --arrow-radius: 20rem;
+    --arrow-icon-size: 24px;
+    --arrow-icon-color: rgba(0,0,0,0.25);
+    --arrow-icon-color-active: rgba(0,0,0,.75);
+    --arrow-bg-color: transparent;
+    --arrow-bg-color-active: transparent;
+    --arrow-border-width: 2px;
+    --arrow-border-color: transparent;
+    --nav-padding-y: 20px;
+    --nav-padding-x: 20px;
+    --nav-bullet-color: rgba(0,0,0,0.25);
+    --nav-bullet-color-active: rgba(0,0,0,0.5);
+    --nav-bullet-aspect-ratio: 1 / 1;
+    --nav-bullet-size: 16px;
+    --nav-bullet-gap: 16px;
+    --nav-bullet-border-width: 0;
+    --nav-bullet-border-color: transparent;
     position: relative;
+    padding: var(--padding-y) var(--padding-x);
 }
 
 .blur-elysium-slide__wrapper {
     position: relative;
 }
-
-.cms-element-elysium-slide {
-    --padding-y: 1.5rem;
-    --padding-y-min: 2rem;
-    --padding-y-max: 6rem;
-    --padding-y-scale: 6vw;
-    --padding-x: 1rem;
-    --padding-x-min: 1rem;
-    --padding-x-max: 8rem;
-    --padding-x-scale: 6vw;
-    --aspect-ratio-w: 4;
-    --aspect-ratio-h: 3;
-    --max-height: none;
-    --text-color: #ffffff;
-    @extend .d-flex,
-    .flex-wrap;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    aspect-ratio: #{"var(--aspect-ratio-w) / var(--aspect-ratio-h)"};
-    max-height: var(--max-height);
-    padding: var(--padding-y) var(--padding-x);
-    /// @todo next-1.6.0
-    /// needed for dynamic sizing method
-    // padding: clamp( var( --bc-esld-padding-y-min), var(--bc-esld-padding-y-scale), var(--bc-esld-padding-y-max) ) clamp( var( --bc-esld-padding-x-min), var(--bc-esld-padding-x-scale), var(--bc-esld-padding-x-max) );
-    background: {
-        position: center center;
-        size: cover;
-        repeat: no-repeat;
-    }
-    color: var(--text-color);
-	max-width: 100%;
-    align-items: center;
-
-    @include media-breakpoint-up( sm ) {
-        --aspect-ratio-w: 5;
-        --aspect-ratio-h: 3;
-    }
-
-    @include media-breakpoint-up( md ) {
-        --padding-y: 2rem;
-        --padding-x: 3rem;
-    }
-
-    @include media-breakpoint-up( lg ) {
-        --aspect-ratio-w: 2;
-        --aspect-ratio-h: 1;
-    }
-
-    @include media-breakpoint-up( xl ) {
-        --padding-y: 4rem;
-        --padding-x: 6rem;
-        --aspect-ratio-w: 12;
-        --aspect-ratio-h: 5;
-    }
-
-    @include media-breakpoint-up( xxl ) {
-        --aspect-ratio-w: 16;
-        --aspect-ratio-h: 7;
-    }
-
-    &:before {
-
-        .cms-element-elysium-slider.has-overlay & {    
-            --z-index: 5;    
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.2);
-            z-index: var(--z-index);
-        }
-    }
-}
-
 
 .cms-element-elysium-slide__container {
     @extend .d-flex,

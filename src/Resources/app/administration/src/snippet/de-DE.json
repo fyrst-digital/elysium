@@ -5,50 +5,71 @@
     },
     "blurElysiumSlider": {
         "general": {
+            "default": "Standard",
             "active": "Aktiv",
+            "general": "Allgemein",
             "appearance": "Erscheinungbild",
             "small": "Klein",
             "medium": "Medium",
             "large": "Groß",
             "color": "Farbe",
             "colorActive": "Farbe (Aktiv)",
-            "iconColor": "Icon-Farbe",
-            "iconColorActive": "Icon-Farbe (Aktiv)",
-            "bgColor": "Hintergrund-Farbe",
-            "bgColorActive": "Hintergrund-Farbe (Aktiv)",
+            "textColor": "Textfarbe",
+            "iconColor": "Iconfarbe",
+            "iconColorActive": "Iconfarbe (Aktiv)",
+            "bgColor": "Hintergrundfarbe",
+            "bgColorActive": "Hintergrundfarbe (Aktiv)",
             "padding": "Innenabstand",
             "unitPlaceholderPxRem": "px oder rem Wert",
+            "unitPlaceholderPx": "in Pixeln",
             "noHeadline": "Keine Überschrift",
             "copySuffix": "kopie",
-            "cmsBlockGroup": "Elysium Slider und Banner"
+            "cmsBlockGroup": "Elysium Slider und Banner",
+            "colorStates": {
+                "primary": "Primärfarbe",
+                "secondary": "Sekundärfarbe",
+                "success": "Erfolg",
+                "danger": "Fehler",
+                "warning": "Hinweis",
+                "info": "Information",
+                "light": "Hell",
+                "dark": "Dunkel"
+            }
         },
         "config": {
             "content": "Inhalt",
-            "settings": "Einstellungen",
             "styling": "Styling",
             "sliderTitle": {
                 "label": "Slider Titel (optional)"
             },
-            "containerWidth": {
-                "label": "Breite des Inhalts-Container",
-                "content": "Breite des Seiteninhalts",
-                "full": "Volle Breite",
-                "helpText": "Definiert die Breite des Inhaltscontainers. Bei <b>Seiteninhalt</b> folgt die maximale Breite des Containers der Breite des Seiteninhalts. Bei <b>Volle Breite</b> wird der Inhalts-Container über die gesamte Breite angezeigt."
-            },
-            "rewind": "Slides zurückspulen",
-            "overlay": "Zeige Overlay",
-            "speed": {
-                "label": "Slide-Geschwindigkeit",
-                "placeholder": "Zeit in Millisekunden"
-            },
-            "autoplay": {
-                "label": "Auto-Wiedergabe",
-                "active": "Auto-Wiedergabe aktivieren",
-                "interval":{ 
-                    "label": "Auto-Wiedergabe Intervall",
+            "settings": {
+                "label": "Einstellungen",
+                "general": "Allgemein",
+                "slidesPerPage": {
+                    "label": "Slides pro Ansicht",
+                    "placeholder": "1"
+                },
+                "containerWidth": {
+                    "label": "Breite des Inhalts-Container",
+                    "content": "Breite des Seiteninhalts",
+                    "full": "Volle Breite",
+                    "helpText": "Definiert die Breite des Inhaltscontainers. Bei <b>Seiteninhalt</b> folgt die maximale Breite des Containers der Breite des Seiteninhalts. Bei <b>Volle Breite</b> wird der Inhalts-Container über die gesamte Breite angezeigt."
+                },
+                "rewind": "Slides zurückspulen",
+                "overlay": "Zeige Overlay",
+                "speed": {
+                    "label": "Slide-Geschwindigkeit",
                     "placeholder": "Zeit in Millisekunden"
                 },
-                "pauseOnHover": "Pausiere Auto-Wiedergabe bei Hover"
+                "autoplay": {
+                    "label": "Auto-Wiedergabe",
+                    "active": "Auto-Wiedergabe aktivieren",
+                    "interval":{ 
+                        "label": "Auto-Wiedergabe Intervall",
+                        "placeholder": "Zeit in Millisekunden"
+                    },
+                    "pauseOnHover": "Pausiere Auto-Wiedergabe bei Hover"
+                }
             },
             "sizing":  {
                 "label": "Größen",
@@ -63,32 +84,23 @@
                 },
                 "maxHeight": {
                     "label": "Maximale Höhe",
-                    "placeholder": "px oder rem Wert"
+                    "placeholder": "in Pixeln"
                 },
                 "emptyViewport": {
                     "title": "Bildschirm-Größe wählen",
                     "description": "Bitte wähle zuerst eine Bildschirm-Größe aus"
                 },
-                "slidesBehavior": {
-                    "label": "Slide Verhalten"
-                },
-                "slidesPerPage": {
-                    "label": "Slides pro Ansicht",
-                    "placeholder": "1"
-                },
-                "slidesGap": {
-                    "label": "Abstand zwischen Slides"
-                }
-            },
-            "spacing": {
-                "label": "Abstände",
-                "paddingY": {
-                    "label": "Slider-Innenabstand (Vertikal)",
-                    "placeholder": "px oder rem Wert"
-                },
-                "paddingX": {
-                    "label": "Slider-Innenabstand (Horizontal)",
-                    "placeholder": "px oder rem Wert"
+                "spacing": {
+                    "label": "Abstände",
+                    "slidesGap": {
+                        "label": "Abstand zwischen Slides"
+                    },
+                    "paddingY": {
+                        "label": "Slider-Innenabstand (Vertikal)"
+                    },
+                    "paddingX": {
+                        "label": "Slider-Innenabstand (Horizontal)"
+                    }
                 }
             },
             "navigation": {
@@ -193,6 +205,38 @@
             "deleteSlide": "Slide löschen",
             "buttonSaveDuplicate": "Slide duplizieren"
         },
+        "linking": {
+            "type": {
+                "label": "Typ",
+                "placeholder": "Wähle ein Verlinkungstyp",
+                "custom": "Individuell",
+                "product": "Produkt"
+            },
+            "product": {
+                "label": "Produkt Auswahl"
+            },
+            "custom": {
+                "label": "URL",
+                "placeholder": "URL eingeben",
+                "helpText": "Lege die Verlinkung des Slides fest. Dies kann sowohl eine absolute als auch eine relative URL sein."
+            },
+            "button": {
+                "label": {
+                    "label": "Button Beschriftung",
+                    "placeholder": "Mehr Erfahren",
+                    "helpText": "Lege die Beschriftung des Buttons fest. Ist keine Beschriftung hinterlegt, wird der Button nicht angezeigt."
+                },
+                "appearance": {
+                    "label": "Button Farbgebung",
+                    "helpText": "Legt die Farbgebung des Buttons fest. Die Farben orientieren sich an den Einstellungen des Themes."
+                }
+            },
+            "openExternal": "In neuem Tab öffnen",
+            "overlay": {
+                "label": "Link Overlay",
+                "helpText": "When the overlay option is active, the entire slide is used as linking area. In this case the Button is hidden."
+            }
+        },
         "slideSearch": {
             "noResult": "Keine Slides gefunden",
             "addItem": "Hinzufügen",
@@ -215,6 +259,11 @@
                 "placeholder": "Mein großartiger Slide!",
                 "helpText": "Lege eine Überschrift für den Slide fest. Du kannst folgende HTML Tags nutzen: br, i, u, b, strong und span."
             },
+            "description": {
+                "label": "Kurzbeschreibung",
+                "placeholder": "Kurzbeschreibung eingeben",
+                "helpText": "Lege einen Kurzbeschreibungs-Text für den Slide fest. Dieser wird unter der Überschrift angezeigt."
+            },
             "slide": {
                 "bgColor": "Hintergrundfarbe",
                 "bgGradient": {
@@ -223,6 +272,11 @@
                     "endColor": "Sekundärfarbe",
                     "gradientType": "Verlaufstyp",
                     "gradientDeg": "Verlaufsgrad"
+                },
+                "cssClass": {
+                    "label": "CSS Klasse",
+                    "placeholder": "Lege eine oder mehrere CSS Klassen fest",
+                    "helpText": "Lege eine oder mehrere CSS Klassen, getrennt durch ein Leerzeichen, für den Slide fest."    
                 }
             },
             "customTemplate": {

@@ -1,28 +1,7 @@
 {% block cms_element_blur_elysium_slider_root %}
-
-    {% set sliderOverlay = element.translated.config.sliderOverlay.value %}
-    {% set sliderSettingsNav = element.translated.config.sliderNavigation.value %}
-    {% set slideSpeed = element.translated.config.slideSpeed.value %}
-    {% set sliderArrowColors = element.translated.config.sliderArrowColor.value %}
-    {% set sliderAspectRatio = element.translated.config.aspectRatio.value %}
-
-    {% set sliderSettings = {
-        nav: sliderSettingsNav,
-        navContainer: '[data-base-slider-nav=true]',
-        controls: true,
-        loop: false,
-        rewind: true,
-        speed: slideSpeed,
-        autoplay: sliderAutoplay,
-        autoplayTimeout: sliderAutoplayTimeout,
-        autoplayHoverPause: true,
-        autoplayButtonOutput: false
-    } %}
-
     {% set sliderAutoplay = element.translated.config.settings.value.autoplay %}
     {% set sliderNavigation = element.translated.config.navigation.value %}
     {% set sliderArrows = element.translated.config.arrows.value %}
-    {% set sliderSizing = element.translated.config.sizing.value %}
 
     {% set sliderOptions = {
         splideOptions: {
@@ -39,39 +18,45 @@
         }
     } %}
 
-    {% for size in sliderSizing %}
-        {% set breakpointOptions = {} %}
-        {% set breakpoint = theme_config('breakpoint.' ~ size.viewport) %}
+    {% set cmsSliderClasses = [
+        'cms-element-elysium-slider'
+    ] %}
 
-        {% if size.slidesPerPage is not empty %}
-            {% set breakpointOptions = breakpointOptions|merge({
-                perPage: size.slidesPerPage
-            }) %}
-        {% endif %}
+    {% if element.config.settings.value.containerWidth is same as('content') %}
+        {% set cmsSliderClasses = cmsSliderClasses|merge([
+            'slide-container-boxed'
+        ]) %}
+    {% endif %}
 
-        {% if size.slidesGap is not empty %}
-            {% set breakpointOptions = breakpointOptions|merge({
-                gap: size.slidesGap
-            }) %}
-        {% endif %}
+    {% if element.config.settings.value.overlay is same as(true) %}
+        {% set cmsSliderClasses = cmsSliderClasses|merge([
+            'slide-overlay'
+        ]) %}
+    {% endif %}
 
-        {% if breakpointOptions|length > 0 %}
-            {% set sliderOptions = sliderOptions|merge({
-                splideOptions: sliderOptions.splideOptions|merge({
-                    breakpoints: sliderOptions.splideOptions.breakpoints|merge({
-                        (breakpoint ~ '%replace%'): breakpointOptions
-                    })
-                })
-            }) %}            
-        {% endif %}
-    {% endfor %}
+    {# set breakpoint specific splide slider options #}
+    {% set breakpointSliderOptions = {
+        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): {
+            perPage: element.config.settings.value.viewports.mobile.slidesPerPage ?? 1,
+            gap: element.config.sizing.value.viewports.mobile.slidesGap ?? 0
+        },
+        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)): {
+            perPage: element.config.settings.value.viewports.tablet.slidesPerPage ?? 1,
+            gap: element.config.sizing.value.viewports.tablet.slidesGap ?? 0
+        },
+        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)): {
+            perPage: element.config.settings.value.viewports.desktop.slidesPerPage ?? 1,
+            gap: element.config.sizing.value.viewports.desktop.slidesGap ?? 0
+        }
+    } %}
+    {% set sliderOptions = sliderOptions|merge({
+        splideOptions: sliderOptions.splideOptions|merge({
+            breakpoints: breakpointSliderOptions
+        })
+    }) %}
 
     {% block cms_element_blur_elysium_slider_css_styles %}
-
-        {% sw_include '@Storefront/storefront/component/blur-elysium-slider/base-style.html.twig' with {
-            sizes: sliderSizing,
-            elementId: element.id
-        } only %}
+        {% sw_include '@Storefront/storefront/component/blur-elysium-slider/style.html.twig' %}
     {% endblock %}
 
     {% block cms_element_blur_elysium_slider %}
@@ -79,7 +64,7 @@
 
         <div id="elysiumSlider-{{ element.id }}" 
             data-blur-elysium-slider="{{sliderOptions|json_encode|replace({'%replace%': ''}) }}"
-            class="cms-element-elysium-slider{% if sliderOverlay %} has-overlay{% endif %}">
+            class="{{cmsSliderClasses|join(' ')}}">
 
             {% block blur_elysium_control_include_header %} 
                 {% if element.translated.config.content.value.title is not empty %} 
@@ -110,16 +95,17 @@
                                             <li class="cms-element-elysium-slide__wrapper splide__slide">
 
                                                 {% block cms_element_blur_elysium_slide_include %}
-                                                    {% set slideTemplate = 'slide' %}
+                                                    {% set slideTemplate = 'default' %}
+                                                    {% set slideFile = 'slide.html.twig' %}
 
-                                                    {% if slide.slideSettings.customTemplateFile %}
-                                                        {% set slideTemplate = 'custom/' ~ slide.slideSettings.customTemplateFile %}
+                                                    {% if slide.slideSettings.customTemplateFile is not empty %}
+                                                        {% set slideTemplate = 'custom' %}
+                                                        {% set slideFile = slide.slideSettings.customTemplateFile ~ '.html.twig' %}
                                                     {% endif %}
 
-                                                    {% sw_include '@Storefront/storefront/component/blur-elysium-slide/' ~ slideTemplate ~'.html.twig' ignore missing with {
-                                                        slide: slide,
-                                                        containerWidth: element.config.settings.value.containerWidth
-                                                    } only %}
+                                                    {% sw_include '@Storefront/storefront/component/blur-elysium-slide/' ~ slideTemplate ~ '/' ~ slideFile ignore missing with {
+                                                        slideData: slide
+                                                    } %}
                                                 {% endblock %}
                                             </li>
                                         {% endfor %}
@@ -152,5 +138,3 @@
         </div>  
     {% endblock %}  
 {% endblock %}
-
-

@@ -64,20 +64,50 @@ export default {
                 this.itemStyles.backgroundColor = this.slideData.slideSettings.slideBgColor
             }
 
-            if (this.slideMedia && this.allowedImageExtension.includes(this.slideMedia.fileExtension)) {
-                if (this.slideMedia.thumbnails?.length > 0) {
-                    this.itemStyles.backgroundImage = `url( ${this.slideMedia.thumbnails.last().url} )`
+            if (this.slideCover !== null) {
+                if (this.slideCover.thumbnails?.length > 0) {
+                    this.itemStyles.backgroundImage = `url( ${this.slideCover.thumbnails.last().url} )`
                 } else {
-                    this.itemStyles.backgroundImage = `url( ${this.slideMedia.url} )`
+                    this.itemStyles.backgroundImage = `url( ${this.slideCover.url} )`
                 }
             }
 
             return this.itemStyles
+        },
+
+        slideCovers () {
+            let covers = {}
+            if (this.slideData.slideCoverMobile) {
+                covers.mobile = this.slideData.slideCoverMobile
+            }
+            if (this.slideData.slideCoverTablet) {
+                covers.tablet = this.slideData.slideCoverTablet
+            }
+            if (this.slideData.slideCover) {
+                covers.desktop = this.slideData.slideCover
+            }
+            return covers
+        },
+
+        slideCover () {
+            let array = Object.values(this.slideCovers)
+
+            if (array.length > 0) {
+                return array.reverse()[0]
+            }
+
+            return null
         }
     },
 
     created () {
         this.getElysiumSlide()
+    },
+
+    watch: {
+        slideData () {
+            console.log(Object.values(this.slideCovers).reverse()[0], this.slideCover)
+        }
     },
 
     methods: {

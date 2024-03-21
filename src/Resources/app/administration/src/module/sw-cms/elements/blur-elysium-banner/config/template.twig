@@ -3,7 +3,10 @@
 
         <blur-elysium-device-switch 
             layout="default" 
+            justify="right"
             default-viewport="desktop"
+            :show-labels="false"
+            :gap="20"
             @change-viewport="onChangeViewport" />
 
         <sw-entity-single-select 

@@ -1,0 +1,31 @@
+.blur-card-section {
+    &:not(.last) {
+        padding-bottom: 32px;
+        margin-bottom: 32px;
+        border-bottom: 1px solid var(--color-gray-200);
+    }
+
+    .sw-field--switch,
+    .sw-field,
+    .sw-text-editor {
+        margin: 0;
+    }
+
+    .sw-field--switch {
+        padding: 10px 0;
+
+        .sw-field__label {
+            display: inline-flex;
+            gap: 20px;
+            grid-template-columns: auto 1fr !important;
+
+            label {
+                padding: 0;
+            }
+        }
+    }
+
+    .sw-field--switch__content {
+        gap: 20px;
+    }
+}

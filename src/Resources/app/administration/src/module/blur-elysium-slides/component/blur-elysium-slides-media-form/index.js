@@ -156,17 +156,6 @@ export default {
                 key: propertyId,
                 value: null
             })
-        },
-
-        defaultViewportValues (mobileValue, tabletValue, desktopValue) {
-
-            const defaultValues = {
-                mobile: mobileValue,
-                tablet: tabletValue,
-                desktop: desktopValue
-            }
-
-            return defaultValues[this.viewport]
         }
     }
 }

@@ -2,13 +2,15 @@ import template from './blur-elysium-slides-detail.twig'
 import './blur-elysium-slides-detail.scss'
 import slideStates from './state'
 import slideSettings from './slide-settings'
+// import { deepMergeObject } from 'src/core/service/utils/object.utils';
 import { slides } from '@elysiumSlider/utilities/identifiers'
 
 // eslint-disable-next-line no-undef
-const { Component, Mixin, Data, State, Context } = Shopware
+const { Component, Mixin, Data, State, Context, Utils } = Shopware
 const { Criteria } = Data
 const { mapMutations, mapState } = Component.getComponentHelper()
 
+console.log(Utils.object.deepMergeObject)
 /**
  * @todo improve code quality in `blur-elysium-slides-detail` component
  * - replace state commits with mutations
@@ -263,27 +265,8 @@ Component.register('blur-elysium-slides-detail', {
                 Context.api,
                 this.defaultCriteria
             ).then((slide) => {
-                const viewports = [
-                    'mobile',
-                    'tablet',
-                    'desktop'
-                ]
-                if (slide.slideSettings.viewports === undefined) {
-                    /// check whole configuration object
-                    slide.slideSettings.viewports = {
-                        mobile: {},
-                        tablet: {},
-                        desktop: {},
-                    }
-                } else {
-                    /// check single viewports
-                    viewports.forEach((viewport) => {
-                        if (slide.slideSettings.viewports[viewport] === undefined) {
-                            slide.slideSettings.viewports[viewport] = {}
-                        }                        
-                    })
-                }
-                console.log(slide.slideSettings.viewports?.mobile, slide.slideSettings)
+                let mergedSlideSettings = Utils.object.deepMergeObject(slideSettings, slide.slideSettings)
+                slide.slideSettings = mergedSlideSettings
                 this.setSlide(slide)
                 this.setLoading({
                     key: 'slide',

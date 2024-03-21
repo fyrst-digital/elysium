@@ -13,13 +13,12 @@
             {% block blur_elysium_slide_settings_advanced_slide_template %}
                 <sw-card 
                     :title="$tc('blurElysiumSlides.slideSettings.slideTemplate.cardTitle')"
-                    :position-identifier="positionIdentifiers.detail.slideTemplate"
-                    v-if="slide.slideSettings">
+                    :position-identifier="positionIdentifiers.detail.slideTemplate">
 
                     {% block blur_elysium_slide_settings_advanced_slide_template_selection %}
                         <blur-elysium-slide-template-selection 
                             :disabled="!editable"
-                            :value="slide.slideSettings?.slideTemplate"
+                            :value="slide.slideSettings.slideTemplate"
                             @change="value => setSlideSetting({key:'slideTemplate', value: value})" />
                     {% endblock %}
                 </sw-card>
@@ -28,17 +27,17 @@
             {% block blur_elysium_slide_settings_advanced_custom_template %}
                 <sw-card 
                     :title="$tc('blurElysiumSlides.slideSettings.customTemplate.cardTitle')"
-                    :position-identifier="positionIdentifiers.detail.customTemplate"
-                    v-if="slide.slideSettings">
+                    :position-identifier="positionIdentifiers.detail.customTemplate">
 
                     <sw-container 
                         gap="1rem"
                         columns="1fr">
+
                         <p v-html="$tc('blurElysiumSlides.slideSettings.customTemplate.cardDescription')" />
                         <sw-text-field 
                             :disabled="!editable"
-                            :value="slide.slideSettings.customTemplateFile"
                             :placeholder="$tc('blurElysiumSlides.slideSettings.customTemplate.customTemplateFile.placeholder')" 
+                            :value="slide.slideSettings.customTemplateFile"
                             @input="value => setSlideSetting({key:'customTemplateFile', value: value})" />
                     </sw-container>
 

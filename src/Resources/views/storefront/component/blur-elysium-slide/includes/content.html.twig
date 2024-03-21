@@ -14,8 +14,8 @@
         '<span>'
     ] %}
 
-    {% if slideData.slideSettings.headlineElement %}
-        {% set headlineElement = slideData.slideSettings.headlineElement %}
+    {% if slideData.slideSettings.slide.headline.element %}
+        {% set headlineElement = slideData.slideSettings.slide.headline.element %}
     {% endif %}
 
     {% set descriptionClasses = [
@@ -31,17 +31,17 @@
         'btn'
     ] %}
 
-    {% if slideData.slideSettings.buttonAppearance %}
+    {% if slideData.slideSettings.slide.linking.buttonAppearance %}
         {% set mainBtnClasses = mainBtnClasses|merge([
-            'btn-' ~ slideData.slideSettings.buttonAppearance
+            'btn-' ~ slideData.slideSettings.slide.linking.buttonAppearance
         ]) %}
     {% endif %}
 
     {% set headlineContent = slideData.translated.title|striptags( headlineTagsWhitelist|join )|raw %}
     {% set descriptionContent = slideData.translated.description|raw %}
-    {% set showActions = ( slideData.translated.button_label and slideData.translated.url ) and slideData.slideSettings.urlOverlay is not same as( true ) %}
+    {% set showActions = slideData.translated.url and slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
     {% set actionMainUrl = slideData.translated.url %}
-    {% set actionMainLabel = slideData.translated.button_label %}
+    {% set actionMainLabel = slideData.translated.button_label ?? 'blurElysium.slide.buttonLabel'|trans %}
 
     {% block blur_elysium_slide_content_element %}
         <div class="blur-elysium-slide-content">
@@ -71,7 +71,7 @@
                             <a href="{{ actionMainUrl }}" 
                                 title="{{ actionMainLabel }}" 
                                 class="{{ mainBtnClasses|join(' ') }}"
-                                {% if slideData.slideSettings.urlTarget == "external" %}
+                                {% if slideData.slideSettings.slide.linking.openExternal is same as(true) %}
                                     target="_blank"
                                     rel="noopener"
                                 {% endif %}>

@@ -1,6 +1,8 @@
 .blur-elysium-slide {
-    --padding-x: 15px;
     --padding-y: 15px;
+    --padding-offset-y: 0px;
+    --padding-x: 15px;
+    --padding-offset-x: 0px;
     --bg-color: transparent;
     --bg-size: cover;
     --bg-pos-x: center;
@@ -25,12 +27,10 @@
     };
     border-radius: var(--border-radius);
     aspect-ratio: var(--aspect-ratio);
-    padding-left: var(--padding-x);
-    padding-right: var(--padding-x);
-    padding-top: var(--padding-y);
-    padding-bottom: var(--padding-y);
+    padding: calc(var(--padding-y) + var(--padding-offset-y)) calc(var(--padding-x) + var(--padding-offset-x));
     align-items: var(--align-items);
     justify-content: var(--justify-content);
+    max-height: var(--max-height);
 }
 
 .blur-elysium-slide-cover-picture {
