@@ -66,6 +66,9 @@
                     {% else %}
                         --border-radius: 0;
                     {% endif %}
+                    {% if options.description.fontSize is not empty %}
+                        --slide-description-font-size: {{ options.description.fontSize ~ 'px' }};
+                    {% endif %}
                 }
                 {% if options.coverImage %}
                     {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-cover-image {

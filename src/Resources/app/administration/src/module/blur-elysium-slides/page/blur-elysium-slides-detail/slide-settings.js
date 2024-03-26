@@ -10,6 +10,10 @@ export default {
             /** @type 'div' | 'h1' */
             element: 'div'
         },
+        description: {
+            /** @type string | null */
+            color: null
+        },
         /** @type object<slideLinking> | null */
         linking: {
             /** @type 'custom' | 'product' */
@@ -127,7 +131,7 @@ export default {
             },
             description: {
                 /** @type int | null */
-                fontSize: null
+                fontSize: 14
             },
             button: {
                 /** @type 'default' | 'sm' | 'lg' */
@@ -211,7 +215,11 @@ export default {
             },
             description: {
                 /** @type int | null */
-                fontSize: null
+                fontSize: 16
+            },
+            button: {
+                /** @type 'default' | 'sm' | 'lg' */
+                size: 'default'
             }
         },
         desktop: {
@@ -291,7 +299,11 @@ export default {
             },
             description: {
                 /** @type int | null */
-                fontSize: null
+                fontSize: 20
+            },
+            button: {
+                /** @type 'default' | 'sm' | 'lg' */
+                size: 'default'
             }
         }
     }

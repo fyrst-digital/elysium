@@ -92,7 +92,38 @@
 
                     <sw-text-editor
                         v-model="slide.description"
-                    />
+                        :style="{
+                            marginBottom: '24px'
+                        }" />
+                    
+                    <sw-container 
+                        columns="1fr 1fr" 
+                        gap="24px">
+
+                        <sw-colorpicker
+                            colorOutput="auto"
+                            :label="$tc('blurElysiumSlider.general.textColor')"
+                            :alpha="true"
+                            :colorLabels="true"
+                            :zIndex="100"
+                            :value="slide.slideSettings.slide.description.color"
+                            @input="value => setSlideSetting({ key: 'slide.description.color', value: value })">
+                        </sw-colorpicker>
+
+                        <sw-number-field 
+                            type="int"
+                            :label="$tc('blurElysiumSlides.slideSettings.display.common.fontSize')"
+                            :step="1"
+                            :min="0"
+                            :value="viewportSettings.description.fontSize"
+                            @change="value => setViewportSetting({key:'description.fontSize', value: value})"
+                        >
+                            <template #hint>
+                                <blur-elysium-device-hint />
+                            </template>
+                        </sw-number-field> 
+                    </sw-container>
+
                 </blur-card-section>
             {% endblock %} 
         {% endblock %}

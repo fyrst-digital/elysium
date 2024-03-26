@@ -10,6 +10,8 @@
     --aspect-ratio: auto;
     --border-radius: 0;
     --align-items: center;
+    --slide-description-color: inherit;
+    --slide-description-font-size: inherit;
     --justify-content: center;
     --gradient-color-start: transparent;
     --gradient-color-end: transparent;
@@ -119,8 +121,6 @@
 }
 
 .blur-elysium-slide-description {
-    --color: inherit;
-    --font-size: inherit;
-    color: var(--color);
-    font-size: var(--font-size);
+    color: var(--slide-description-color);
+    font-size: var(--slide-description-font-size);
 }
