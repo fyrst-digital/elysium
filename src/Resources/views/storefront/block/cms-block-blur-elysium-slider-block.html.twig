@@ -3,7 +3,7 @@
     {% block block_blur_elysium_slider_main_slot %}
         {% set element = block.slots.getSlot('main') %}
 
-        <div class="col-md-12" data-cms-element-id="{{ element.id }}">
+        <div class="blur-elysium-block slider-block" data-cms-element-id="{{ element.id }}">
             {% block block_blur_elysium_slider_main_slot_incldue %}
                 {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
             {% endblock %}
