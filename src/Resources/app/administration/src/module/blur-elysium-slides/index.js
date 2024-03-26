@@ -142,7 +142,7 @@ Module.register('blur-elysium-slides', {
             path: 'settings',
             meta: {
                 icon: 'regular-cog',
-                parentPath: 'sw.settings.index.plugins',
+                parentPath: 'sw.settings.index.plugins'
             }
         }
     },
@@ -162,7 +162,7 @@ Module.register('blur-elysium-slides', {
             id: 'blur-elysium-settings',
             label: 'blurElysiumSettings.label',
             path: 'blur.elysium.slides.settings',
-            parent: 'sw-settings',
+            parent: 'sw-settings'
         }
     ],
 
@@ -171,5 +171,5 @@ Module.register('blur-elysium-slides', {
         to: 'blur.elysium.slides.settings',
         iconComponent: 'blur-elysium-icon',
         label: 'blurElysiumSettings.label'
-    }],
+    }]
 })

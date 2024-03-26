@@ -9,13 +9,9 @@ export default {
         }
     },
 
-    created () {
-        console.log(this)
-    },
-
     methods: {
-        async onSave() {
-            this.$refs.systemConfig.saveAll();
+        async onSave () {
+            this.$refs.systemConfig.saveAll()
         }
     }
 }

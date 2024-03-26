@@ -35,9 +35,6 @@ export default {
         }
     },
 
-    watch: {
-    },
-
     computed: {
         slideMedia () {
             if (this.slideData && this.slideData.media) {
@@ -76,7 +73,7 @@ export default {
         },
 
         slideCovers () {
-            let covers = {}
+            const covers = {}
             if (this.slideData.slideCoverMobile) {
                 covers.mobile = this.slideData.slideCoverMobile
             }
@@ -90,7 +87,7 @@ export default {
         },
 
         slideCover () {
-            let array = Object.values(this.slideCovers)
+            const array = Object.values(this.slideCovers)
 
             if (array.length > 0) {
                 return array.reverse()[0]
@@ -102,12 +99,6 @@ export default {
 
     created () {
         this.getElysiumSlide()
-    },
-
-    watch: {
-        slideData () {
-            console.log(Object.values(this.slideCovers).reverse()[0], this.slideCover)
-        }
     },
 
     methods: {

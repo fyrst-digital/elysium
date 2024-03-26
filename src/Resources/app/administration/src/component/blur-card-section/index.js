@@ -8,7 +8,7 @@ export default {
         positionIdentifier: {
             type: String,
             required: false,
-            default: null,
+            default: null
         },
 
         last: {

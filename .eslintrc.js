@@ -34,6 +34,15 @@ module.exports = {
 			"warn", {
 				allow: ["warn", "error"]
 			}
+		],
+		"no-warning-comments": [
+			"warn", 
+			{ 
+				"terms": [ 
+					"deprecated"
+				], 
+				"location": "anywhere" 
+			}
 		]
     }
 }

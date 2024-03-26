@@ -1,8 +1,7 @@
 import template from './blur-elysium-slides-detail.twig'
 import './blur-elysium-slides-detail.scss'
 import slideStates from './state'
-import slideSettings from './slide-settings'
-// import { deepMergeObject } from 'src/core/service/utils/object.utils';
+import defaultSlideSettings from './slide-settings'
 import { slides } from '@elysiumSlider/utilities/identifiers'
 
 // eslint-disable-next-line no-undef
@@ -10,7 +9,6 @@ const { Component, Mixin, Data, State, Context, Utils } = Shopware
 const { Criteria } = Data
 const { mapMutations, mapState } = Component.getComponentHelper()
 
-console.log(Utils.object.deepMergeObject)
 /**
  * @todo improve code quality in `blur-elysium-slides-detail` component
  * - replace state commits with mutations
@@ -48,6 +46,7 @@ Component.register('blur-elysium-slides-detail', {
             isNewSlide: null,
             hasChanges: false,
             showDeleteModal: false,
+            defaultSlideSettings: structuredClone(defaultSlideSettings),
             detailRoute: 'blur.elysium.slides.detail',
             createRoute: 'blur.elysium.slides.create'
         }
@@ -240,8 +239,7 @@ Component.register('blur-elysium-slides-detail', {
         createSlide () {
             State.commit('context/resetLanguageToDefault')
             const newSlide = this.elysiumSlidesRepository.create(Context.api)
-            newSlide.slideSettings = slideSettings
-
+            Object.assign(newSlide, { slideSettings: this.defaultSlideSettings })
             this.setSlide(newSlide)
         },
 
@@ -265,7 +263,7 @@ Component.register('blur-elysium-slides-detail', {
                 Context.api,
                 this.defaultCriteria
             ).then((slide) => {
-                let mergedSlideSettings = Utils.object.deepMergeObject(slideSettings, slide.slideSettings)
+                const mergedSlideSettings = Utils.object.deepMergeObject(this.defaultSlideSettings, slide.slideSettings)
                 slide.slideSettings = mergedSlideSettings
                 this.setSlide(slide)
                 this.setLoading({
@@ -394,12 +392,12 @@ Component.register('blur-elysium-slides-detail', {
         },
 
         setSlideCoverImage (media) {
-            let mappedViewportFields = {
+            const mappedViewportFields = {
                 mobile: 'slideCoverMobile',
                 tablet: 'slideCoverTablet',
                 desktop: 'slideCover'
             }
-            
+
             if (this.mediaType(media.mimeType) === 'image') {
                 this.setSlideProperty({
                     key: `${mappedViewportFields[this.viewport]}Id`,

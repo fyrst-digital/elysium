@@ -21,7 +21,7 @@ export default {
         ]),
 
         hasCustomFields () {
-            if (this.customFieldSets.first().customFields.length > 0) {
+            if (this.customFieldSets.total > 0 && this.customFieldSets.first().customFields.length > 0) {
                 return true
             }
 

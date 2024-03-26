@@ -28,9 +28,5 @@ export default {
         ...mapMutations('blurElysiumSlidesDetail', [
             'setSlideSetting'
         ])
-    },
-
-    created() {
-        console.log(this.slide)
     }
 }

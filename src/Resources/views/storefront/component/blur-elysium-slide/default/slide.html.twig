@@ -12,23 +12,30 @@
         No slide data
     </div>
 {% else %}
-    <div class="{{ slideClasses|join(' ') }}{% if slideData.slideSettings.slide.cssClass %} {{ slideData.slideSettings.slide.cssClass }}{% endif %}"
-        data-elysium-slide-id="{{ slideData.id }}">
-        
-        {% block cms_element_blur_elysium_banner_style %}
-            {% sw_include '@Storefront/storefront/component/blur-elysium-slide/includes/style.html.twig' with {
-                slideStyles: {
-                    '--bg-color': slideData.slideSettings.slide.bgColor,
-                    '--gradient-color-start': slideData.slideSettings.slide.bgGradient.startColor,
-                    '--gradient-color-end': slideData.slideSettings.slide.bgGradient.endColor,
-                    '--gradient-deg': slideData.slideSettings.slide.bgGradient.gradientDeg ? slideData.slideSettings.slide.bgGradient.gradientDeg ~ 'deg' : null
-                },
-                slideViewportStyles: slideData.slideSettings.viewports
-            } %}
-        {% endblock %}
+    {% block blur_elysium_slide %}
+        <div class="{{ slideClasses|join(' ') }}{% if slideData.slideSettings.slide.cssClass %} {{ slideData.slideSettings.slide.cssClass }}{% endif %}"
+            data-elysium-slide-id="{{ slideData.id }}">
 
-        {{ block('blur_elysium_slide_cover_image') }}
-        {{ block('blur_elysium_slide_cover_video') }}
-        {{ block('blur_elysium_slide_container') }}
-    </div>
+            {% block blur_elysium_slide_prepend %}{% endblock %}
+            
+            {% block cms_element_blur_elysium_banner_style %}
+                {% sw_include '@Storefront/storefront/component/blur-elysium-slide/includes/style.html.twig' with {
+                    slideStyles: {
+                        '--bg-color': slideData.slideSettings.slide.bgColor,
+                        '--gradient-color-start': slideData.slideSettings.slide.bgGradient.startColor,
+                        '--gradient-color-end': slideData.slideSettings.slide.bgGradient.endColor,
+                        '--gradient-deg': slideData.slideSettings.slide.bgGradient.gradientDeg ? slideData.slideSettings.slide.bgGradient.gradientDeg ~ 'deg' : null
+                    },
+                    slideViewportStyles: slideData.slideSettings.viewports
+                } %}
+            {% endblock %}
+
+            {{ block('blur_elysium_slide_cover_image') }}
+            {{ block('blur_elysium_slide_cover_video') }}
+            {{ block('blur_elysium_slide_container') }}
+
+            {% block blur_elysium_slide_append %}{% endblock %}
+
+        </div>
+    {% endblock %}
 {% endif %}

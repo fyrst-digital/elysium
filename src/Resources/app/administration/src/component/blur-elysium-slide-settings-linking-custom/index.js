@@ -3,7 +3,7 @@ import { slides } from '@elysiumSlider/utilities/identifiers'
 
 // eslint-disable-next-line no-undef
 const { Component, Mixin } = Shopware
-const { mapMutations, mapState } = Component.getComponentHelper()
+const { mapState } = Component.getComponentHelper()
 
 export default {
     template,
@@ -22,9 +22,9 @@ export default {
         positionIdentifiers () {
             return slides
         }
-    },
+    }
 
-    /** 
+    /**
      * @deprecated
     methods: {
         ...mapMutations('blurElysiumSlidesDetail', [

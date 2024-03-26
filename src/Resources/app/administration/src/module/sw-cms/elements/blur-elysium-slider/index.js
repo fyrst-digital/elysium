@@ -25,7 +25,7 @@ Shopware.Service('cmsService').registerCmsElement({
             value: {
                 overlay: false,
                 /** @type 'content' | 'full' */
-                containerWidth: 'content', 
+                containerWidth: 'content',
                 rewind: true,
                 speed: 300,
                 pauseOnHover: true,
@@ -45,7 +45,7 @@ Shopware.Service('cmsService').registerCmsElement({
                     desktop: {
                         slidesPerPage: 1
                     }
-                },
+                }
             }
         },
         navigation: {
@@ -64,17 +64,17 @@ Shopware.Service('cmsService').registerCmsElement({
                     /** @type object<DeviceSettings> */
                     mobile: {
                         size: 'sm',
-                        gap: 16,
+                        gap: 16
                     },
                     tablet: {
                         size: 'sm',
-                        gap: 20,
+                        gap: 20
                     },
                     desktop: {
                         size: 'md',
-                        gap: 24,
+                        gap: 24
                     }
-                },
+                }
             }
         },
         arrows: {
@@ -98,13 +98,13 @@ Shopware.Service('cmsService').registerCmsElement({
                 viewports: {
                     /** @type object<DeviceSettings> */
                     mobile: {
-                        size: 16,
+                        size: 16
                     },
                     tablet: {
-                        size: 20,
+                        size: 20
                     },
                     desktop: {
-                        size: 24,
+                        size: 24
                     }
                 }
             }
@@ -153,7 +153,7 @@ Shopware.Service('cmsService').registerCmsElement({
                         paddingX: 0,
                         slidesGap: 0
                     }
-                },
+                }
             }
         },
         sliderNavigation: {

@@ -13,7 +13,7 @@ const cmsSliderConfig = {
     sizing: {
         DEFAULT: 'blur-elysium-slider-config-sizing',
         sectionAspectRatio: 'blur-elysium-slider-config-sizing-aspect-ratio',
-        sectionSpacing: 'blur-elysium-slider-config-sizing-spacing',
+        sectionSpacing: 'blur-elysium-slider-config-sizing-spacing'
     },
     navigation: {
         DEFAULT: 'blur-elysium-slider-config-navigation',

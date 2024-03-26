@@ -28,7 +28,7 @@ export default {
             return slides
         }
     },
-    
+
     methods: {
         ...mapMutations('blurElysiumSlidesDetail', [
             'setSlideSetting',
@@ -36,7 +36,6 @@ export default {
         ]),
 
         defaultViewportValues (mobileValue, tabletValue, desktopValue) {
-
             const defaultValues = {
                 mobile: mobileValue,
                 tablet: tabletValue,

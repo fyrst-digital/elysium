@@ -30,15 +30,6 @@ export default {
         }
     },
 
-    watch: {
-        slide: {
-            handler: function(slide) {
-                console.log('watch slide', slide)
-            },
-            deep: true
-        }
-    },
-
     computed: {
         ...mapState('blurElysiumSlidesDetail', [
             'slide',
@@ -126,7 +117,7 @@ export default {
 
         setMedia (property, media, allowedType = null) {
             if (media.mimeType.split('/')[0] !== allowedType) {
-                let mediaTypeSnippet = this.$tc(`blurElysiumSlides.mediaType.${allowedType}`)
+                const mediaTypeSnippet = this.$tc(`blurElysiumSlides.mediaType.${allowedType}`)
                 this.createNotificationWarning({
                     title: this.$t('blurElysiumSlides.messages.mediaTypeNotAllowedTitle'),
                     message: this.$t('blurElysiumSlides.messages.mediaTypeNotAllowed', { snippet: mediaTypeSnippet })
@@ -135,8 +126,8 @@ export default {
                 return
             }
 
-            let propertyId = `${property}Id`
-            
+            const propertyId = `${property}Id`
+
             this.setSlideProperty({
                 key: propertyId,
                 value: media.id
@@ -146,7 +137,7 @@ export default {
         },
 
         resetMedia (property) {
-            let propertyId = `${property}Id`
+            const propertyId = `${property}Id`
 
             this.setSlideProperty({
                 key: property,

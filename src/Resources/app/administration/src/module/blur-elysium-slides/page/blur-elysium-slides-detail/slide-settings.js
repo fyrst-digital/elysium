@@ -78,9 +78,9 @@ export default {
                 paddingY: 0,
                 /** @type int */
                 maxWidth: 0,
-                /** @type boolean */ 
+                /** @type boolean */
                 maxWidthDisabled: true,
-                /** @type 'left' | 'center' | 'right' */ 
+                /** @type 'left' | 'center' | 'right' */
                 textAlign: 'left'
             },
             image: {
@@ -91,7 +91,7 @@ export default {
                 /** @type boolean */
                 maxWidthDisabled: true,
                 /** @type boolean */
-                imageFullWidth: false,
+                imageFullWidth: false
             },
             slide: {
                 /** @type int */
@@ -103,7 +103,7 @@ export default {
                 /** @type 'stretch' | 'flex-start' | 'center' | 'flex-end' */
                 alignItems: 'center',
                 /** @type 'flex-start' | 'center' | 'flex-end' */
-                justifyContent: 'center',
+                justifyContent: 'center'
             },
             coverImage: {
                 /** @type 'left' | 'center' | 'right' */
@@ -164,9 +164,9 @@ export default {
                 paddingY: 0,
                 /** @type int */
                 maxWidth: 0,
-                /** @type boolean */ 
+                /** @type boolean */
                 maxWidthDisabled: true,
-                /** @type 'left' | 'center' | 'right' */ 
+                /** @type 'left' | 'center' | 'right' */
                 textAlign: 'left'
             },
             image: {
@@ -177,7 +177,7 @@ export default {
                 /** @type boolean */
                 maxWidthDisabled: true,
                 /** @type boolean */
-                imageFullWidth: false,
+                imageFullWidth: false
             },
             slide: {
                 /** @type int */
@@ -187,7 +187,7 @@ export default {
                 /** @type 'stretch' | 'flex-start' | 'center' | 'flex-end' */
                 alignItems: 'center',
                 /** @type 'flex-start' | 'center' | 'flex-end' */
-                justifyContent: 'center',
+                justifyContent: 'center'
             },
             coverImage: {
                 /** @type 'left' | 'center' | 'right' */
@@ -244,9 +244,9 @@ export default {
                 paddingY: 0,
                 /** @type int */
                 maxWidth: 0,
-                /** @type boolean */ 
+                /** @type boolean */
                 maxWidthDisabled: true,
-                /** @type 'left' | 'center' | 'right' */ 
+                /** @type 'left' | 'center' | 'right' */
                 textAlign: 'left'
             },
             image: {
@@ -257,7 +257,7 @@ export default {
                 /** @type boolean */
                 maxWidthDisabled: true,
                 /** @type boolean */
-                imageFullWidth: false,
+                imageFullWidth: false
             },
             slide: {
                 /** @type int */
@@ -267,7 +267,7 @@ export default {
                 /** @type 'stretch' | 'flex-start' | 'center' | 'flex-end' */
                 alignItems: 'center',
                 /** @type 'flex-start' | 'center' | 'flex-end' */
-                justifyContent: 'center',
+                justifyContent: 'center'
             },
             coverImage: {
                 /** @type 'left' | 'center' | 'right' */

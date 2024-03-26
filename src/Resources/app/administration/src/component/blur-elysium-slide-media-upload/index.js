@@ -25,17 +25,17 @@ export default {
         uploadFinished (payload) {
             this.$emit('upload-finished', payload)
         },
-        
+
         mediaDropped (payload) {
             this.$emit('media-dropped', payload)
         },
-        
+
         mediaRemove () {
             this.$emit('media-remove')
         },
-        
+
         mediaSidebarOpen () {
             this.$emit('media-sidebar-open')
         }
-    },
+    }
 }

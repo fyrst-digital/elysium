@@ -32,15 +32,6 @@ export default {
         }
     },
 
-    watch: {
-        slide: {
-            handler: function(value) {
-                console.log("watch the watchmen", value)
-            },
-            deep: true
-        }
-    },
-
     computed: {
 
         ...mapState('blurElysiumSlidesDetail', [
@@ -72,7 +63,6 @@ export default {
         ]),
 
         defaultViewportValues (mobileValue, tabletValue, desktopValue) {
-
             const defaultValues = {
                 mobile: mobileValue,
                 tablet: tabletValue,
@@ -81,5 +71,5 @@ export default {
 
             return defaultValues[this.viewport]
         }
-    },
+    }
 }
