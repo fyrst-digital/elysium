@@ -1,0 +1,21 @@
+{% block cms_block_blur_elysium_block_one_col %}
+    {% set blockClasses = [
+        'blur-elysium-block',
+        'one-col',
+        'd-grid'
+    ] %}
+
+    {% block cms_block_blur_elysium_block_two_col_element %}
+        <div class="{{ blockClasses|join(' ') }}" 
+            data-cms-block="{{ block.id }}">
+
+            {% block cms_block_blur_elysium_block_slot_main %}
+                {% set element = block.slots.getSlot('main') %}
+
+                {% block cms_block_blur_elysium_block_slot_one_incldue %}
+                    {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+                {% endblock %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
