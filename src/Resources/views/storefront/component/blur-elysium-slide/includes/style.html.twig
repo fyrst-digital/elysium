@@ -24,128 +24,142 @@
 {% endif %}
 
 {% apply spaceless %}
-<style id="style-{{ slideData.id }}" style="display:none !important; visibility:hidden !important;">
-    {# general slide styles #}
-    {% if slideStyles is not empty %}
-        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
-            {% for prop, value in slideStyles|filter(v => v !== null) %}
-                {{prop}}: {{value}};
-            {% endfor %}
-        }
-    {% endif %}
+    {% block blur_elysium_slide_style %}
+        <style id="style-{{ slideData.id }}" style="display:none !important; visibility:hidden !important;">
+            {% block blur_elysium_slide_style_prepend %}{% endblock %}
 
-    {# general slide container styles #}
-    {% if slideContainerStyles is not empty %}
-        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-container {
-            {% for prop, value in slideContainerStyles|filter(v => v !== null) %}
-                {{prop}}: {{value}};
-            {% endfor %}
-        }
-    {% endif %}
-
-    {# slide headline styles #}
-    {% if headlineStyles is not empty %}
-        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-headline {
-            {% for prop, value in headlineStyles|filter(v => v !== null) %}
-                {{prop}}: {{value}}
-            {% endfor %}
-        }
-    {% endif %}
-
-    {# viewport dependent options for slide #}
-    {% if slideViewportStyles is not null %}
-        {% for device, options in slideViewportStyles %}
-            @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
+            {# general slide styles #}
+            {% block blur_elysium_slide_style_slide %}
                 {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
-                    --padding-x: {{ options.slide.paddingX ~ 'px' }};
-                    --padding-y: {{ options.slide.paddingY ~ 'px' }};
-                    --align-items: {{ options.slide.alignItems }};
-                    --justify-content: {{ options.slide.justifyContent }};
-                    {% if options.slide.borderRadius is defined %}
-                        --border-radius: {{ options.slide.borderRadius ~ 'px' }};
-                    {% else %}
-                        --border-radius: 0;
+                    {% if slideStyles is not empty %}
+                        {% for prop, value in slideStyles|filter(v => v !== null) %}
+                            {{prop}}: {{value}};
+                        {% endfor %}
                     {% endif %}
-                    {% if options.description.fontSize is not empty %}
-                        --slide-description-font-size: {{ options.description.fontSize ~ 'px' }};
-                    {% endif %}
+
+                    {% block blur_elysium_slide_style_slide_append %}{% endblock %}
                 }
-                {% if options.coverImage %}
-                    {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-cover-image {
-                        {% for key, value in options.coverImage %}
-                            {{ '--' ~ camel_to_kebab_case(key) }}: {{ value }};
-                        {% endfor %}
-                    }
-                {% endif %}
-                {% if options.coverVideo %}
-                    {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-cover-video {
-                        {% for key, value in options.coverVideo %}
-                            {{ '--' ~ camel_to_kebab_case(key) }}: {{ value }};
-                        {% endfor %}
-                    }
-                {% endif %}
+            {% endblock %}
+
+            {# general slide container styles #}
+            {% if slideContainerStyles is not empty %}
                 {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-container {
-                    {% if options.container.columnWrap is not same as(true) and presentationMedia is not null %}
-                        --columns: auto auto;
-                    {% else %}
-                        --columns: 1fr;
-                    {% endif %}
-                    --padding-x: {{ options.container.paddingX ~ 'px' }};
-                    --padding-y: {{ options.container.paddingY ~ 'px' }};
-                    --gap: {{ options.container.gap ~ 'px' }};
-                    --border-radius: {{ options.container.borderRadius ~ 'px' }};
-                    {% if options.container.maxWidthDisabled is not same as(true) %}
-                        --max-width: {{ options.container.maxWidth ~ 'px' }};
-                    {% endif %}
-                    --align-items: {{ options.container.alignItems }};
-                    {% if options.container.justifyContent is defined %} 
-                        --justify-content: {{ options.container.justifyContent }};
-                    {% endif %}
+                    {% for prop, value in slideContainerStyles|filter(v => v !== null) %}
+                        {{prop}}: {{value}};
+                    {% endfor %}
                 }
-                {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-content {
-                    {% if options.container.order is same as('reverse') %}
-                        --order: 2;
-                    {% else %}
-                        --order: 1;
-                    {% endif %}
-                    {% if options.content.textAlign is defined %}
-                        --text-align: {{ options.content.textAlign }};
-                    {% else %}
-                        --text-align: left;
-                    {% endif %}
-                    {% if options.content.maxWidth is defined and options.content.maxWidthDisabled is not same as(true) %}
-                        --max-width: {{ options.content.maxWidth ~ 'px' }};
-                    {% endif %}
-                    --padding-x: {{ options.content.paddingX ~ 'px' }};
-                    --padding-y: {{ options.content.paddingY ~ 'px' }};
-                }
-                {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-image {
-                    {% if options.container.order is same as('reverse') %}
-                        --order: 1;
-                    {% else %}
-                        --order: 2;
-                    {% endif %}
-                    {% if options.image.justifyContent is defined %}
-                        --justify-content: {{ options.image.justifyContent }};
-                    {% endif %}
-                    {% if options.image.imageFullWidth is defined and options.image.imageFullWidth is same as(true) %}
-                        --image-width: 100%;
-                    {% else %}
-                        --image-width: auto;
-                    {% endif %}
-                    {% if options.image.maxWidth is defined and options.image.maxWidthDisabled is not same as(true) %}
-                        --max-width: {{ options.image.maxWidth ~ 'px' }};
-                    {% endif %}
-                }
+            {% endif %}
+
+            {# slide headline styles #}
+            {% if headlineStyles is not empty %}
                 {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-headline {
-                    {% if options.headline.fontSize is defined and options.headline.fontSize is not empty %}
-                        font-size: {{ options.headline.fontSize ~ 'px' }};
-                    {% else %}
-                        font-size: revert;    
-                    {% endif %}
+                    {% for prop, value in headlineStyles|filter(v => v !== null) %}
+                        {{prop}}: {{value}}
+                    {% endfor %}
                 }
-            }
-        {% endfor %}
-    {% endif %}
-</style>
+            {% endif %}
+
+            {# viewport dependent options for slide #}
+            {% if slideViewportStyles is not null %}
+                {% for device, options in slideViewportStyles %}
+                    @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
+                        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
+                            --padding-x: {{ options.slide.paddingX ~ 'px' }};
+                            --padding-y: {{ options.slide.paddingY ~ 'px' }};
+                            --align-items: {{ options.slide.alignItems }};
+                            --justify-content: {{ options.slide.justifyContent }};
+                            --slide-container-gap: {{ options.container.gap ~ 'px' }};
+                            {% if options.slide.borderRadius is defined %}
+                                --border-radius: {{ options.slide.borderRadius ~ 'px' }};
+                            {% else %}
+                                --border-radius: 0;
+                            {% endif %}
+                            {% if options.description.fontSize is not empty %}
+                                --slide-description-font-size: {{ options.description.fontSize ~ 'px' }};
+                            {% endif %}
+                            {% if options.container.columnWrap is not same as(true) and presentationMedia is not null %}
+                                --slide-container-direction: row;
+                            {% else %}
+                                --slide-container-direction: column;
+                            {% endif %}
+                            {% if options.image.maxWidth is defined and options.image.maxWidthDisabled is not same as(true) %}
+                                --slide-image-flex-basis: {{ options.image.maxWidth ~ 'px' }};
+                                --slide-image-max-w: {{ options.image.maxWidth ~ 'px' }};
+                                --slide-image-flex-grow: 0;
+                            {% endif %}
+                            {% if options.content.maxWidth is defined and options.content.maxWidthDisabled is not same as(true) %}
+                                --slide-content-flex-basis: {{ options.content.maxWidth ~ 'px' }};
+                                --slide-content-flex-grow: 0;
+                            {% endif %}
+                        }
+                        {% if options.coverImage %}
+                            {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-cover-image {
+                                {% for key, value in options.coverImage %}
+                                    {{ '--' ~ camel_to_kebab_case(key) }}: {{ value }};
+                                {% endfor %}
+                            }
+                        {% endif %}
+                        {% if options.coverVideo %}
+                            {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-cover-video {
+                                {% for key, value in options.coverVideo %}
+                                    {{ '--' ~ camel_to_kebab_case(key) }}: {{ value }};
+                                {% endfor %}
+                            }
+                        {% endif %}
+                        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-container {
+                            --padding-x: {{ options.container.paddingX ~ 'px' }};
+                            --padding-y: {{ options.container.paddingY ~ 'px' }};
+                            
+                            --border-radius: {{ options.container.borderRadius ~ 'px' }};
+                            {% if options.container.maxWidthDisabled is not same as(true) %}
+                                --max-width: {{ options.container.maxWidth ~ 'px' }};
+                            {% endif %}
+                            --align-items: {{ options.container.alignItems }};
+                            {% if options.container.justifyContent is defined %} 
+                                --justify-content: {{ options.container.justifyContent }};
+                            {% endif %}
+                        }
+                        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-content {
+                            {% if options.container.order is same as('reverse') %}
+                                --order: 2;
+                            {% else %}
+                                --order: 1;
+                            {% endif %}
+                            {% if options.content.textAlign is defined %}
+                                --text-align: {{ options.content.textAlign }};
+                            {% else %}
+                                --text-align: left;
+                            {% endif %}
+                            --padding-x: {{ options.content.paddingX ~ 'px' }};
+                            --padding-y: {{ options.content.paddingY ~ 'px' }};
+                        }
+                        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-image {
+                            {% if options.container.order is same as('reverse') %}
+                                --order: 1;
+                            {% else %}
+                                --order: 2;
+                            {% endif %}
+                            {% if options.image.justifyContent is defined %}
+                                --justify-content: {{ options.image.justifyContent }};
+                            {% endif %}
+                            {% if options.image.imageFullWidth is defined and options.image.imageFullWidth is same as(true) %}
+                                --image-width: 100%;
+                            {% else %}
+                                --image-width: auto;
+                            {% endif %}
+                        }
+                        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] .blur-elysium-slide-headline {
+                            {% if options.headline.fontSize is defined and options.headline.fontSize is not empty %}
+                                font-size: {{ options.headline.fontSize ~ 'px' }};
+                            {% else %}
+                                font-size: revert;    
+                            {% endif %}
+                        }
+                    }
+                {% endfor %}
+            {% endif %}
+
+            {% block blur_elysium_slide_style_append %}{% endblock %}
+        </style>
+    {% endblock %}
 {% endapply %}

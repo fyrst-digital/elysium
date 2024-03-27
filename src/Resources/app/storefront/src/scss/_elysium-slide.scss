@@ -10,6 +10,15 @@
     --aspect-ratio: auto;
     --border-radius: 0;
     --align-items: center;
+    --slide-container-display: flex;
+    --slide-container-gap: 20px;
+    --slide-container-direction: row;
+    --slide-container-flex-wrap: nowrap;
+    --slide-content-flex-grow: 1;
+    --slide-content-flex-basis: 0%;
+    --slide-image-flex-grow: 1;
+    --slide-image-flex-basis: 0%;
+    --slide-image-max-w: none;
     --slide-description-color: inherit;
     --slide-description-font-size: inherit;
     --justify-content: center;
@@ -55,10 +64,8 @@
 }
 
 .blur-elysium-slide-container {
-    --columns: 1fr;
     --padding-x: 15px;
     --padding-y: 15px;
-    --gap: 20px;
     --align-items: center;
     --justify-content: normal;
     --max-width: none;
@@ -66,8 +73,10 @@
     --bg-color: transparent;
     position: relative;
     z-index: 5;
-    grid-template-columns: var(--columns);
-    grid-gap: var(--gap);
+    display: var(--slide-container-display);
+    flex-direction: var(--slide-container-direction);
+    flex-wrap: var(--slide-container-flex-wrap);
+    gap: var(--slide-container-gap);
     justify-content: var(--justify-content);
     align-items: var(--align-items);
     max-width: var(--max-width);
@@ -88,8 +97,9 @@
     --max-width: none;
     --text-align: left;
     order: var(--order);
+    flex: var(--slide-content-flex-grow) 0 var(--slide-content-flex-basis);
     width: 100%;
-    max-width: var(--max-width);
+    max-width: var(--slide-image-max-w);
     padding-left: var(--padding-x);
     padding-right: var(--padding-x);
     padding-top: var(--padding-y);
@@ -101,17 +111,16 @@
     --align-items: center;
     --justify-content: center;
     --order: 2;
-    --max-width: none;
-    --image-width: auto;
     display: flex;
+    flex: var(--slide-image-flex-grow) 0 var(--slide-image-flex-basis);
     justify-content: var(--justify-content);
     align-items: var(--align-items);
     order: var(--order);
     width: 100%;
-    max-width: var(--max-width);
+    max-width: var(--slide-image-max-w);
 
     img {
-        width: var(--image-width);
+        width: 100%;
     }
 }
 
