@@ -42,16 +42,19 @@ eslint:
   when: always
 
 # Add qa job for plugin install routine
-
 bundle:
   extends: .build
   stage: release
   # add rule to run this job only on `master` (when: on_success)
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
-      when: on_success
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^feature/ || $CI_COMMIT_BRANCH  =~ /^feature/
+    - if: ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME || $CI_COMMIT_BRANCH) =~ /(feature)/
       when: manual
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
+      when: manual
+    - if: $CI_COMMIT_TAG =~ /(staging|alpha|beta|prerelease|-)/
+      when: manual
+    - if: $CI_COMMIT_TAG
+      when: on_success
   # set release version in composer.json with sed
   script:
     - bin/build-administration.sh && bin/build-storefront.sh
