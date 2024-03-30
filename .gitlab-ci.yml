@@ -30,8 +30,18 @@ phpstan:
     - vendor/bin/phpstan # test cmd
   when: always
 
+# Run eslint for storefront and administration
+eslint:
+  extends: .build
+  stage: qa
+  script:
+    - cd $APP_STATIC_PLUGIN/$CI_PROJECT_NAME
+    - npm install
+    - npm run lint:administration
+    - npm run lint:storefront
+  when: always
+
 # Add qa job for plugin install routine
-# Add qa job for eslint
 
 bundle:
   extends: .build
