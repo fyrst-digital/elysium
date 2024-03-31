@@ -80,7 +80,8 @@
                 "aspectRatio": {
                     "label": "Seitenverhältnis",
                     "width": "Breite",
-                    "height": "Höhe"
+                    "height": "Höhe",
+                    "description": "Legt das Seitenverhältnis und somit die Größe des Sliders fest. Die Höhe kann auf einen maximal Wert begreenzt werden."
                 },
                 "maxHeight": {
                     "label": "Maximale Höhe",
@@ -183,6 +184,17 @@
     "blurElysiumBanner": {
         "cmsElement": {
             "label": "Elysium Banner"
+        },
+        "component": {
+            "preview": {
+                "defaultDescriptionValue": "Wähle in den Element Einstellungen einen Slide, sowie weitere Banner Einstellungen."
+            }
+        },
+        "config": {
+            "selectSlide": "Wähle einen Elysium Slide",
+            "autoSizing": "Automatische Größe",
+            "aspectRatioWidth": "Seitenverhältnis: Breite",
+            "aspectRatioHeight": "Seitenverhältnis: Höhe"
         }
     },
     "blurElysiumSlides": {
@@ -234,7 +246,7 @@
             "openExternal": "In neuem Tab öffnen",
             "overlay": {
                 "label": "Link Overlay",
-                "helpText": "When the overlay option is active, the entire slide is used as linking area. In this case the Button is hidden."
+                "helpText": "Wenn die Overlay Option aktiv ist, wird der gesamte Slide als Verlinkungsfläche verwendet. In diesem Fall wird der Button ausgeblendet."
             }
         },
         "slideSearch": {
@@ -253,11 +265,20 @@
             }
         },
         "slideSettings": {
+            "slideLabel": {
+                "label": "Slide Name",
+                "placeholder": "mein-neuer-slide",
+                "helpText": "Lege einen Namen für den Slide fest. Dieser Name wird nur zur Identifikation des Slides genutzt"
+            },
             "headline": {
                 "title": "Überschrift",
                 "label": "Inhalt",
                 "placeholder": "Mein großartiger Slide!",
-                "helpText": "Lege eine Überschrift für den Slide fest. Du kannst folgende HTML Tags nutzen: br, i, u, b, strong und span."
+                "helpText": "Lege eine Überschrift für den Slide fest. Du kannst folgende HTML Tags nutzen: br, i, u, b, strong und span.",
+                "element": {
+                    "label": "HTML Element",
+                    "helpText": "Lege ein HTML Element für deine Überschrift fest. Ist kein Element ausgewählt wird ein <b>div</b> Element verwendet"
+                }
             },
             "description": {
                 "label": "Kurzbeschreibung",
@@ -265,9 +286,8 @@
                 "helpText": "Lege einen Kurzbeschreibungs-Text für den Slide fest. Dieser wird unter der Überschrift angezeigt."
             },
             "slide": {
-                "bgColor": "Hintergrundfarbe",
                 "bgGradient": {
-                    "title": "Hintergrundverlauf",
+                    "title": "Farbverlauf",
                     "startColor": "Primärfarbe",
                     "endColor": "Sekundärfarbe",
                     "gradientType": "Verlaufstyp",
@@ -279,10 +299,17 @@
                     "helpText": "Lege eine oder mehrere CSS Klassen, getrennt durch ein Leerzeichen, für den Slide fest."    
                 }
             },
+            "slideTemplate": {
+                "cardTitle": "Slide Vorlage",
+                "label": "Wähle deine Slide Vorlage"
+            },
             "customTemplate": {
                 "cardTitle": "Eigenes Template",
                 "cardDescription": "Hier kannst du eine eigene Twig-Template Datei für diesen Slide festlegen. Wenn du in diesem Feld eine Twig-Template Datei eingnetragen hast, musst du diese manuell in deinem Theme hinterlegen.",
                 "customTemplatePath": "Der Pfad zu dieser Datei lautet:<br/><span class='bc-code-inline'>/storefront/component/blur-elysium-slide/custom/<b>{file}.html.twig</b></span>",
+                "customTemplateFile": {
+                    "placeholder": "mein-slide-template"
+                },
                 "hasCustomNotice": "<b>Hinweis:</b> Dieser Slide hat eine eigene Twig-Template Datei hinterlegt. Bitte beachte dies beim verwalten des Slides."
             },
             "slideCover": {
@@ -294,19 +321,20 @@
             "slideCoverImage": {
                 "title": "Cover Bild",
                 "description": "Fügt ein Bild als Slide Hintergrund hinzu. Das Cover Bild kann für die Ansichten Mobile, Tablet und Desktop definiert werden. Wenn für die Mobile Ansicht kein Bild hinterlegt ist, dient der Desktop als Standard. <br/>Gültige Bildformate sind <code>jpg</code>, <code>png</code>, <code>webp</code>, <code>svg</code>, <code>avif</code>",
-                "posY": "Bild Position (Vertikal)",
-                "posX": "Bild Position (Horizontal)",
+                "posY": "Bild Position — Vertikal",
+                "posX": "Bild Position — Horizontal",
                 "fit": "Bild Anpassung"
             },
             "slideCoverVideo": {
                 "title": "Cover Video",
                 "description": "Fügt ein Video als Slide Hintergrund hinzu. Das eingestellte Cover Video gilt für alle Ansichten.<br/>Gültige Videoformate sind <code>mp4</code>",
-                "posY": "Video Position (Vertikal)",
-                "posX": "Video Position (Horizontal)",
+                "posY": "Video Position — Vertikal",
+                "posX": "Video Position — Horizontal",
                 "fit": "Video Anpassung"
             },
             "presentationMedia": {
-                "label": "Fokus Bild"
+                "label": "Fokus Bild",
+                "description": "Das Fokus Bild wird als eigenständiges Bild, neben dem Inhaltsbereich, angezeigt."
             },
             "display": {
                 "slideAppearance": {
@@ -325,7 +353,7 @@
                     "title": "Containerelement Anzeige",
                     "description": "Diese Anzeigeeinstellungen beziehen sich auf das Containerelement und sind Geräteabhängig. Das Containerelement beinhaltet das Inhalts- und Bildelement",
                     "columnWrap": {
-                        "label": "Elemente umbrechen",
+                        "label": "Elemente untereinander darstellen",
                         "helpText": "Bricht alle Container Elemente um und stellt diese unter- statt nebeneinander dar."
                     },
                     "order": {
@@ -344,17 +372,19 @@
                 },
                 "imageElementAppearance": {
                     "title": "Bildelement Anzeige",
-                    "description": "Diese Anzeigeeinstellungen beziehen sich auf das Bildelement und sind Geräteabhängig. Das Bildelement beinhaltet das Fokus Bild."
+                    "description": "Diese Anzeigeeinstellungen beziehen sich auf das Bildelement und sind Geräteabhängig. Das Bildelement beinhaltet das Fokus Bild.",
+                    "fullWidth": "Bild auf gesamte Breite strecken"
                 },
                 "common": {
                     "fontSize": "Schriftgröße",
-                    "paddingX": "Abstand Horizontal (px)",
-                    "paddingY": "Abstand Vertikal (px)",
-                    "gap": "Abstand Zwischenraum (px)",
-                    "borderRadius": "Kantenrundung (px)",
+                    "paddingX": "Abstand — Horizontal",
+                    "paddingY": "Abstand — Vertikal",
+                    "gap": "Abstand Zwischenraum",
+                    "borderRadius": "Kantenrundung",
                     "alignX": "Horizontale Ausrichtung",
                     "alignY": "Vertikale Ausrichtung",
                     "textAlign": "Textausrichtung",
+                    "textColor": "Textfarbe",
                     "center": "Zentriert",
                     "top": "Oben",
                     "bottom": "Unten",
@@ -364,7 +394,7 @@
                     "stretch": "Strecken",
                     "spaceBetween": "Zwischenraum strecken",
                     "spaceAround": "Zwischenraum umschließen",
-                    "maxWidth": "Maximale Breite (px)",
+                    "maxWidth": "Maximale Breite",
                     "noMaxWidth": "Keine maximale Begrenzung",
                     "backgroundColor": "Hintergrundfarbe",
                     "fitCover": "Füllen",
@@ -392,8 +422,8 @@
         },
         "settings": {
             "columnWidth": {
-                "colOneLabel": "1 Spaltenbreite",
-                "colTwoLabel": "2 Spaltenbreite"
+                "colOneLabel": "Breite — 1. Spalte",
+                "colTwoLabel": "Breite — 2. Spalte"
             },
             "gridGapLabel": "Rasterabstand",
             "columnWrapLabel": "Spalten umbrechen",

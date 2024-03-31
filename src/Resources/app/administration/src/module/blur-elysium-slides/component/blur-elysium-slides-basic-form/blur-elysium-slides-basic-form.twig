@@ -11,9 +11,9 @@
                 <sw-text-field
                     v-model="slide.name" 
                     :error="blurElysiumSlidesNameError"
-                    :label="$tc('BlurElysiumSlides.baseForm.labelInput.title')"
-                    :placeholder="$tc('BlurElysiumSlides.baseForm.labelInput.placeholder')"
-                    :helpText="$tc('BlurElysiumSlides.baseForm.labelInput.helpText')"
+                    :label="$tc('blurElysiumSlides.slideSettings.slideLabel.label')"
+                    :placeholder="$tc('blurElysiumSlides.slideSettings.slideLabel.placeholder')"
+                    :helpText="$tc('blurElysiumSlides.slideSettings.slideLabel.helpText')"
                     required
                 />
             {% endblock %}
@@ -45,6 +45,9 @@
                             :value="viewportSettings.headline.fontSize"
                             @change="value => setViewportSetting({key:'headline.fontSize', value: value})"
                         >
+                            <template #suffix>
+                                Px
+                            </template>
                             <template #hint>
                                 <blur-elysium-device-hint />
                             </template>
@@ -52,11 +55,11 @@
 
                         {% block blur_elysium_slides_input_headline_element %}
                             <sw-select-field 
-                                :label="$tc('BlurElysiumSlides.settings.headline.element.label')"
-                                :helpText="$tc('BlurElysiumSlides.settings.headline.element.helpText')"
+                                :label="$tc('blurElysiumSlides.slideSettings.headline.element.label')"
+                                :helpText="$tc('blurElysiumSlides.slideSettings.headline.element.helpText')"
                                 :value="slide.slideSettings.slide.headline.element"
                                 @change="value => setSlideSetting({key:'slide.headline.element', value: value})">
-                                <option value="div">{{ $tc('blurElysiumSlider.general.default') }}</option>
+                                <option value="div">{{ 'DIV' }}</option>
                                 <option value="h1">{{ 'H1' }}</option>
                                 <option value="h2">{{ 'H2' }}</option>
                                 <option value="h3">{{ 'H3' }}</option>
@@ -70,7 +73,7 @@
                             <sw-colorpicker
                                 colorOutput="auto"
                                 :value="slide.slideSettings.slide.headline.color"
-                                :label="$tc('blurElysiumSlider.general.textColor')"
+                                :label="$tc('blurElysiumSlides.slideSettings.display.common.textColor')"
                                 :alpha="true"
                                 :colorLabels="true"
                                 :zIndex="100"
@@ -102,7 +105,7 @@
 
                         <sw-colorpicker
                             colorOutput="auto"
-                            :label="$tc('blurElysiumSlider.general.textColor')"
+                            :label="$tc('blurElysiumSlides.slideSettings.display.common.textColor')"
                             :alpha="true"
                             :colorLabels="true"
                             :zIndex="100"
@@ -118,6 +121,9 @@
                             :value="viewportSettings.description.fontSize"
                             @change="value => setViewportSetting({key:'description.fontSize', value: value})"
                         >
+                            <template #suffix>
+                                Px
+                            </template>
                             <template #hint>
                                 <blur-elysium-device-hint />
                             </template>
@@ -132,7 +138,7 @@
             <sw-colorpicker
                 colorOutput="auto"
                 :value="slide.slideSettings.slide.bgColor" 
-                :label="$tc('blurElysiumSlides.slideSettings.slide.bgColor')"
+                :label="$tc('blurElysiumSlides.slideSettings.display.common.backgroundColor')"
                 :alpha="true"
                 :colorLabels="true"
                 :zIndex="100"

@@ -78,7 +78,8 @@
                 "aspectRatio": {
                     "label": "Aspect ratio",
                     "width": "Width",
-                    "height": "Height"
+                    "height": "Height",
+                    "description": "Defines the aspect ratio and therefore the size of the slider. The height can be limited to a maximum value."
                 },
                 "maxHeight": {
                     "label": "Maximum height",
@@ -192,6 +193,12 @@
             "preview": {
                 "defaultDescriptionValue": "Wähle in den Element Einstellungen einen Slide, sowie weitere Banner Einstellungen."
             }
+        },
+        "config": {
+            "selectSlide": "Select an Elysium Slide",
+            "autoSizing": "Auto Sizing",
+            "aspectRatioWidth": "Aspect ratio: Width",
+            "aspectRatioHeight": "Aspect ratio: Height"
         }
     },
     "blurElysiumSlides": {
@@ -246,7 +253,7 @@
             "openExternal": "Open in new Tab",
             "overlay": {
                 "label": "Link Overlay",
-                "helpText": "Hilfe"
+                "helpText": "When the overlay option is active, the entire slide is used as linking area. In this case the Button is hidden."
             }
         },
         "slideSelection": {
@@ -260,10 +267,20 @@
             }
         },
         "slideSettings": {
+            "slideLabel": {
+                "label": "Slide name",
+                "placeholder": "my-new-slide",
+                "helpText": "Set a name for the slide. This name will only be used to identify the slide"
+            },
             "headline": {
-                "label": "Headline",
+                "title": "Headline",
+                "label": "Content",
                 "placeholder": "My awesome Slide!",
-                "helpText": "Set a heading for the slide. You can use the HTML tags br, i, u, b, strong and span."
+                "helpText": "Set a heading for the slide. You can use the HTML tags br, i, u, b, strong and span.",
+                "element": {
+                    "label": "HTML Element",
+                    "helpText": "Specify an HTML element for your heading. If no element is selected, a <b>div</b> element is used"
+                }
             },
             "description": {
                 "label": "Description",
@@ -271,6 +288,13 @@
                 "helpText": "Set a short description text for the slide. This will be displayed under the headline."
             },
             "slide": {
+                "bgGradient": {
+                    "title": "Color gradient",
+                    "startColor": "Primary color",
+                    "endColor": "Secondary color",
+                    "gradientType": "Gradient type",
+                    "gradientDeg": "Gradient degree"
+                },
                 "cssClass": {
                     "label": "CSS Class",
                     "placeholder": "my-slide-styling",
@@ -281,20 +305,98 @@
                 "cardTitle": "Custom Template",
                 "cardDescription": "Here you can define your own Twig template file for this slide. If you have entered a Twig template file in this field, you must store it manually in your theme.",
                 "customTemplatePath": "The path to this file is:<br/><span class='bc-code-inline'>/storefront/component/blur-elysium-slide/custom/<b>{file}.html.twig</b></span>",
+                "customTemplateFile": {
+                    "placeholder": "my-slide-template"
+                },
                 "hasCustomNotice": "<b>Notice:</b> This slide has its own Twig template file defined. Please note this when managing the slide."
             },
             "slideCover": {
-                "label": "Slide Cover",
-                "useAsSlideCoverImage": "Use as Slide Cover Image",
-                "useAsSlideCover": "Use as Slide Cover",
-                "useAsFocusImage": "Use as Focus Image"
+                "label": "Slide cover",
+                "useAsSlideCoverImage": "Use as Slide cover image",
+                "useAsSlideCover": "Use as Slide cover",
+                "useAsFocusImage": "Use as Focus image"
             },
             "slideCoverImage": {
-                "title": "Cover Image",
-                "description": "Adds an image as slide background. The cover image can be defined for mobile, tablet and desktop viewport. The desktop image serves as default. <br/>Valid image formats are <code>jpg</code>, <code>png</code>, <code>webp</code>, <code>svg</code>, <code>avif</code>"
+                "title": "Cover image",
+                "description": "Adds an image as slide background. The cover image can be defined for mobile, tablet and desktop viewport. The desktop image serves as default. <br/>Valid image formats are <code>jpg</code>, <code>png</code>, <code>webp</code>, <code>svg</code>, <code>avif</code>",
+                "posY": "Image position — vertical",
+                "posX": "Image position — horizontal",
+                "fit": "Image fit"
+            },
+            "slideCoverVideo": {
+                "title": "Cover video",
+                "description": "Adds a video as slide background. The set cover video applies to all views.<br/>Valid video formats are <code>mp4</code>",
+                "posY": "Video position — vertical",
+                "posX": "Video position — horizontal",
+                "fit": "Video fit"
             },
             "presentationMedia": {
-                "label": "Focus Image"
+                "label": "Focus image",
+                "description": "The focus image is displayed as a separate image next to the content area."
+            },
+            "display": {
+                "common": {
+                    "fontSize": "Font size",
+                    "paddingX": "Spacing — horizontal",
+                    "paddingY": "Spacing — vertical",
+                    "gap": "Gap spacing",
+                    "borderRadius": "Border radius",
+                    "alignX": "Horizontal alignment",
+                    "alignY": "Vertical alignment",
+                    "textColor": "Text color",
+                    "backgroundColor": "Background color",
+                    "center": "Center",
+                    "top": "Top",
+                    "bottom": "Bottom",
+                    "left": "Left",
+                    "right": "Right",
+                    "normal": "Normal",
+                    "stretch": "Stretch",
+                    "fitCover": "Fill",
+                    "fitContain": "Contain",
+                    "fitAuto": "Auto",
+                    "textAlign": "Text alignment",
+                    "maxWidth": "Maximum width",
+                    "noMaxWidth": "No maximum width"
+                },
+                "slideAppearance": {
+                    "title": "Slide area",
+                    "description": "Determines the spacing and edge rounding of the slide. These settings are device-dependent.",
+                    "justifyContent": {
+                        "helpText": "This setting only has a visible effect if the maximum width of the container element is active"
+                    }
+                },
+                "containerAlignment": {
+                    "title": "Container alignment",
+                    "description": "Determines the alignment of the inner slide container element. These settings are device-dependent."
+                },
+                "slideContainer": "Slide container",
+                "containerElementAppearance": {
+                    "title": "Container element appearance",
+                    "description": "These display settings relate to the container element and are device-dependent. The container element contains the content and image element",
+                    "columnWrap": {
+                        "label": "Display elements one below the other",
+                        "helpText": "Breaks all container elements and displays them below each other instead of next to each other."
+                    },
+                    "order": {
+                        "label": "Layout order",
+                        "helpText": "Defines the order of the container elements",
+                        "default": "Default (Content — Image)",
+                        "reverse": "Reverse (Image — Content)"
+                    },
+                    "justifyContent": {
+                        "helpText": "This setting only has a visible effect if the maximum width of the content or image element is active"
+                    }
+                },
+                "contentElementAppearance": {
+                    "title": "Content element appearance",
+                    "description": "These display settings relate to the content element and are device-dependent. The content element contains the heading, description and button."
+                },
+                "imageElementAppearance": {
+                    "title": "Image element appearance",
+                    "description": "These display settings relate to the picture element and are device-dependent. The picture element contains the focus picture.",
+                    "fullWidth": "Stretch image to full width"
+                }
             }
         },
         "slideSettingTabs": {
@@ -316,8 +418,8 @@
         },
         "settings": {
             "columnWidth": {
-                "colOneLabel": "1 Spaltenbreite",
-                "colTwoLabel": "2 Spaltenbreite"
+                "colOneLabel": "Width — 1. Column",
+                "colTwoLabel": "Width — 2. Column"
             },
             "gridGapLabel": "Grid gap",
             "columnWrapLabel": "Column wrap",

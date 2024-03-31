@@ -1,6 +1,6 @@
 export default {
-    /** @type string | null */
-    slideTemplate: null,
+    /** @type string | 'default' | null */
+    slideTemplate: 'default',
     /** @type string | null */
     customTemplateFile: null,
     slide: {

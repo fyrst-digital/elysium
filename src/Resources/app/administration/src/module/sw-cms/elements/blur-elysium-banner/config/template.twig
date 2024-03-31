@@ -10,12 +10,12 @@
             @change-viewport="onChangeViewport" />
 
         <sw-entity-single-select 
-            label="Wähle einen Elysium Slide"
+            :label="$tc('blurElysiumBanner.config.selectSlide')"
             entity="blur_elysium_slides" 
             v-model="selectedSlide" />
 
         <sw-switch-field 
-            label="Auto sizing"
+            :label="$tc('blurElysiumBanner.config.autoSizing')"
             v-model="element.config.viewports.value[activeViewport].aspectRatio.auto" />
 
         <sw-container
@@ -26,7 +26,7 @@
                 type="int"
                 :step="1"
                 :min="1"
-                label="Seitenverhältnis Breite"
+                :label="$tc('blurElysiumBanner.config.aspectRatioWidth')"
                 :disabled="element.config.viewports.value[activeViewport].aspectRatio.auto === true" 
                 v-model="element.config.viewports.value[activeViewport].aspectRatio.width" />
 
@@ -34,7 +34,7 @@
                 type="int"
                 :step="1"
                 :min="1"
-                label="Seitenverhältnis Höhe"
+                :label="$tc('blurElysiumBanner.config.aspectRatioHeight')"
                 :disabled="element.config.viewports.value[activeViewport].aspectRatio.auto === true" 
                 v-model="element.config.viewports.value[activeViewport].aspectRatio.height" />
         </sw-container>

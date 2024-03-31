@@ -39,24 +39,9 @@
         },
         "baseForm": {
             "generalCardTitle": "General",
-            "linkingCardTitle": "Linking",
-            "labelInput": {
-                "title": "Slide Label",
-                "placeholder": "Enter a Name for your Slide",
-                "helpText": "Set a name for the slide. This name will only be used to identify the slide"
-            }
+            "linkingCardTitle": "Linking"
         },
         "settings": {
-            "headline": {
-                "element": {
-                    "label": "HTML Element",
-                    "placeholder": "H1, H2, H3, ...",
-                    "helpText": "Lege ein HTML Element für deine Überschrift fest. Ist kein Element ausgewählt wird ein <b>div</b> Element verwendet"
-                },
-                "textcolor": {
-                    "label": "Textcolor"
-                }
-            },
             "slideBgColor": {
                 "title": "Slide Background color"
             },

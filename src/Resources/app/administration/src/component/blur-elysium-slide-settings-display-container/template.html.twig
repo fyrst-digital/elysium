@@ -14,7 +14,7 @@
                 columns="1fr 1fr 1fr 1fr"
                 gap="24px"
                 :style="{
-                    alignItems: 'center'
+                    alignItems: 'flex-end'
                 }">
 
                 <div :style="{
@@ -51,7 +51,7 @@
                     :label="$tc('blurElysiumSlides.slideSettings.display.common.noMaxWidth')"
                     :value="viewportSettings.container.maxWidthDisabled"
                     :style="{
-                        padding: '0 20px',
+                        padding: '14px',
                         gridColumn: '2 / 5'
                     }"
                     @change="value => setViewportSetting({key:'container.maxWidthDisabled', value: value})"
@@ -181,7 +181,7 @@
                 columns="1fr 1fr 1fr 1fr"
                 gap="24px"
                 :style="{
-                    alignItems: 'center'
+                    alignItems: 'flex-end'
                 }">
 
                 <sw-number-field 
@@ -203,7 +203,7 @@
                     :label="$tc('blurElysiumSlides.slideSettings.display.common.noMaxWidth')"
                     :value="viewportSettings.content.maxWidthDisabled"
                     :style="{
-                        padding: '0 20px',
+                        padding: '14px',
                         gridColumn: '2 / 5'
                     }"
                     @change="value => setViewportSetting({key:`content.maxWidthDisabled`, value: value})"
@@ -262,7 +262,7 @@
                 }">
 
                 <sw-switch-field 
-                    label="Bild auf gesamte Breite strecken"
+                    :label="$tc('blurElysiumSlides.slideSettings.display.imageElementAppearance.fullWidth')"
                     :style="{
                         gridColumn: '1 / 5'
                     }"
@@ -293,13 +293,15 @@
                     :disabled="viewportSettings.image.maxWidthDisabled"
                     :value="viewportSettings.image.maxWidth"
                     @change="value => setViewportSetting({key:'image.maxWidth', value: value})"
-                />
+                >
+                    <template #suffix>Px</template>
+                </sw-number-field>
 
                 <sw-switch-field 
                     :label="$tc('blurElysiumSlides.slideSettings.display.common.noMaxWidth')"
                     :value="viewportSettings.image.maxWidthDisabled"
                     :style="{
-                        padding: '0 20px',
+                        padding: '14px',
                         gridColumn: '3 / 5'
                     }"
                     @change="value => setViewportSetting({key:'image.maxWidthDisabled', value: value})"
