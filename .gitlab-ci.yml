@@ -19,8 +19,19 @@ include:
 
 # List of stages for jobs, and their order of execution
 stages: 
+  - build
   - qa
   - release
+
+build-app:
+  stage: build
+  image: shopware/development:8.2-composer-2
+  cache:
+    key: test-cache
+    paths:
+      - /meddl
+  before_script:
+    - cd / && mkdir meddl
 
 # Runs PHP Stan test
 phpstan:

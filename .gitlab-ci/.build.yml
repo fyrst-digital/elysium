@@ -6,6 +6,7 @@
       entrypoint: [ "sh", "-c", "docker-entrypoint.sh $MYSQL_CMD" ]
   before_script:
     - mysql -uroot -papp -hdatabase -e 'CREATE database `app`' # create database `app` for shopware
+    - cd / && ls -la
     - cd /app && composer create-project shopware/production:v6.5.8.7 . # create shopware project under /app dir
     - composer require --dev phpstan/phpstan # add phpstan
     - cp $CI_PROJECT_DIR/.devops/phpstan.neon . # copy phpstan config to shopware app
