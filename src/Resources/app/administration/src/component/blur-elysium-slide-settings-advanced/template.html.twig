@@ -11,17 +11,17 @@
             v-else-if="slide">
 
             {% block blur_elysium_slide_settings_advanced_slide_template %}
+                <!--
                 <sw-card 
                     :title="$tc('blurElysiumSlides.slideSettings.slideTemplate.cardTitle')"
                     :position-identifier="positionIdentifiers.detail.slideTemplate">
 
-                    {% block blur_elysium_slide_settings_advanced_slide_template_selection %}
-                        <blur-elysium-slide-template-selection 
-                            :disabled="!editable"
-                            :value="slide.slideSettings.slideTemplate"
-                            @change="value => setSlideSetting({key:'slideTemplate', value: value})" />
-                    {% endblock %}
+                    <blur-elysium-slide-template-selection 
+                        :disabled="!editable"
+                        :value="slide.slideSettings.slideTemplate"
+                        @change="value => setSlideSetting({key:'slideTemplate', value: value})" />
                 </sw-card>
+                -->
             {% endblock %}
 
             {% block blur_elysium_slide_settings_advanced_custom_template %}

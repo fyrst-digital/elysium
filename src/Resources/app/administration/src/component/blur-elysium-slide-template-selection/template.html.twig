@@ -2,10 +2,9 @@
     <div>
         <sw-select-field
             :label="$tc('blurElysiumSlides.slideSettings.slideTemplate.label')"
-            :placeholder="$tc('blurElysiumSlides.slideSettings.slideTemplate.placeholder')"
             :options="defaultSlideTemplates"
-            :value="value"
             :disabled="disabled"
+            :value="value"
             @change="onChange">
             <option 
                 v-for="template in defaultSlideTemplates" 
