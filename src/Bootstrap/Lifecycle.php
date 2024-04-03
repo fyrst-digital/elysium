@@ -308,13 +308,6 @@ class Lifecycle
              */
             try {
                 $repository->update($updateSlideSettings, $context);
-                $this->notificationService->createNotification(
-                    [
-                        'status' => 'success',
-                        'message' => 'Elysium Slide settings has been successfully converted'
-                    ],
-                    $context
-                );
             } catch (\Exception $e) {
                 $this->notificationService->createNotification(
                     [
