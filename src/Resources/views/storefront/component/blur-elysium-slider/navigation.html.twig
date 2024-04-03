@@ -15,25 +15,6 @@
         ]) %}
     {% endif %}
 
-    <style>
-            {#
-        #elysiumSlider-{{ elementId }} .blur-esldr__nav-bullet {
-            {% if config.colors.default %}
-                --blur-esldr-nav-color: {{config.colors.default}};
-            {% endif %}
-            background-color: var(--blur-esldr-nav-color);
-        }
-        #elysiumSlider-{{ elementId }} .blur-esldr__nav-bullet:active,
-        #elysiumSlider-{{ elementId }} .blur-esldr__nav-bullet:focus,
-        #elysiumSlider-{{ elementId }} .blur-esldr__nav-bullet.is-active,
-        #elysiumSlider-{{ elementId }} .blur-esldr__nav-bullet:hover {
-            {% if config.colors.active %}
-                --blur-esldr-nav-color-active: {{config.colors.active}};
-            {% endif %}
-            background-color: var(--blur-esldr-nav-color-active);
-        }#}
-    </style>
-
     {% if config.active is same as(true) %}
         <ul class="splide__pagination {% block component_blur_elysium_slider_navigation_classes %}{{ navigationClasses|join(' ') }}{% endblock %}"></ul>
     {% endif %}

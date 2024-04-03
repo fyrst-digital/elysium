@@ -19,7 +19,7 @@
                     {% block blur_elysium_slider_config_arrows_active %}
                         <sw-switch-field 
                             style="margin: 0;"
-                            v-model="config.active" 
+                            v-model="arrowsConfig.active" 
                             :label="$tc('blurElysiumSlider.config.arrows.active')" />
                     {% endblock %}
 
@@ -44,7 +44,7 @@
                     {% block blur_elysium_slider_config_arrows_icons %}
                         <sw-select-field 
                             :label="$tc('blurElysiumSlider.config.arrows.icons.label')"
-                            v-model="config.icon.default">
+                            v-model="arrowsConfig.icon.default">
                             <option 
                                 v-for="icon in icons" 
                                 :key="icon.value" 
@@ -57,7 +57,7 @@
                             numberType="int"
                             :step="1"
                             :label="$tc('blurElysiumSlider.config.arrows.size.label')"
-                            v-model="viewportConfig.size">
+                            v-model="arrowsViewportConfig.size">
                             <template #suffix>Px</template>
                             <template #hint><blur-elysium-device-hint /></template>
                         </sw-number-field>
@@ -67,7 +67,7 @@
                         <div style="position:relative;">
                             <sw-colorpicker
                                 :label="$tc('blurElysiumSlider.general.iconColor')"
-                                v-model="config.colors.default"
+                                v-model="arrowsConfig.colors.default"
                                 colorOutput="auto"
                                 :alpha="true"
                                 :disabled="false"
@@ -81,7 +81,7 @@
                         <div style="position:relative;">
                             <sw-colorpicker
                                 :label="$tc('blurElysiumSlider.general.iconColorActive')"
-                                v-model="config.colors.active"
+                                v-model="arrowsConfig.colors.active"
                                 colorOutput="auto"
                                 :alpha="true"
                                 :disabled="false"
@@ -95,7 +95,7 @@
                         <div style="position:relative;">
                             <sw-colorpicker
                                 :label="$tc('blurElysiumSlider.general.bgColor')"
-                                v-model="config.bgColors.default"
+                                v-model="arrowsConfig.bgColors.default"
                                 colorOutput="auto"
                                 :alpha="true"
                                 :disabled="false"
@@ -109,7 +109,7 @@
                         <div style="position:relative;">
                             <sw-colorpicker
                                 :label="$tc('blurElysiumSlider.general.bgColorActive')"
-                                v-model="config.bgColors.active"
+                                v-model="arrowsConfig.bgColors.active"
                                 colorOutput="auto"
                                 :alpha="true"
                                 :disabled="false"

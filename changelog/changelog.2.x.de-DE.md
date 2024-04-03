@@ -1,3 +1,9 @@
+# unreleased - Version 2.1.0
+
+## Changelog
+
+- Verbesserung: Eine Post Update Konvertierung der Slide Einstellungen wurde hinzugefügt. Bei deer Aktualisierung von Version 1.5 auf 2.1 werden somit alle Slide Einstellungen automatisch übernommen.
+
 # Version 2.0.0
 
 ## Wichtiger Hinweis

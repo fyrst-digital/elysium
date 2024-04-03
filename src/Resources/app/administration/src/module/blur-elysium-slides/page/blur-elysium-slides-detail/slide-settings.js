@@ -18,8 +18,6 @@ export default {
         linking: {
             /** @type 'custom' | 'product' */
             type: 'custom',
-            /** @type 'internal' | 'external' */
-            target: 'internal',
             /** @type 'primary' | 'secondary' */
             buttonAppearance: 'primary',
             /** @type boolean */

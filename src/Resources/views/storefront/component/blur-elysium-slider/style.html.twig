@@ -1,19 +1,19 @@
 {% set viewports = {
     mobile: {
-        sizing: element.config.sizing.value.viewports.mobile,
-        arrows: element.config.arrows.value.viewports.mobile,
-        navigation: element.config.navigation.value.viewports.mobile
+        sizing: element.config.viewports.value.mobile.sizing,
+        arrows: element.config.viewports.value.mobile.arrows,
+        navigation: element.config.viewports.value.mobile.navigation
     },
     tablet: {
-        sizing: element.config.sizing.value.viewports.tablet,
-        arrows: element.config.arrows.value.viewports.tablet,
-        navigation: element.config.navigation.value.viewports.tablet
+        sizing: element.config.viewports.value.tablet.sizing,
+        arrows: element.config.viewports.value.tablet.arrows,
+        navigation: element.config.viewports.value.tablet.navigation
 
     },
     desktop: {
-        sizing: element.config.sizing.value.viewports.desktop,
-        arrows: element.config.arrows.value.viewports.desktop,
-        navigation: element.config.navigation.value.viewports.desktop
+        sizing: element.config.viewports.value.desktop.sizing,
+        arrows: element.config.viewports.value.desktop.arrows,
+        navigation: element.config.viewports.value.desktop.navigation
     }
 } %}
 
@@ -56,16 +56,16 @@
                     {% else %}
                         --max-height: none;
                     {% endif %}
+                    {% if options.sizing.paddingY %}
+                        --padding-offset-y: {{ options.sizing.paddingY ~ 'px' }};
+                    {% endif %}
+                    {% if options.sizing.paddingX %}
+                        --padding-offset-x: {{ options.sizing.paddingX ~ 'px' }};
+                    {% endif %}
                 }
                 #elysiumSlider-{{ element.id }}
                 .blur-elysium-slider
                 {
-                    {% if options.sizing.paddingY is not empty %}
-                        --padding-y: {{ options.sizing.paddingY ~ 'px' }};
-                    {% endif %}
-                    {% if options.sizing.paddingX is not empty %}
-                        --padding-x: {{ options.sizing.paddingX ~ 'px' }};
-                    {% endif %}
                     {% if options.arrows.size is not empty %}
                         --arrow-icon-size: {{ options.arrows.size ~ 'px' }};
                     {% endif %}

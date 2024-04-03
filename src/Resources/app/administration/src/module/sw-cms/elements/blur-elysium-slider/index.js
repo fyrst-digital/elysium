@@ -34,6 +34,9 @@ Shopware.Service('cmsService').registerCmsElement({
                     interval: 5000,
                     pauseOnHover: true
                 },
+                /**
+                 * @deprecated - remove in 2.1. see ISSUE-48
+                 */
                 viewports: {
                     /** @type object<DeviceSettings> */
                     mobile: {
@@ -60,6 +63,9 @@ Shopware.Service('cmsService').registerCmsElement({
                     default: '',
                     active: ''
                 },
+                /**
+                 * @deprecated - remove in 2.1. see ISSUE-48
+                 */
                 viewports: {
                     /** @type object<DeviceSettings> */
                     mobile: {
@@ -95,6 +101,9 @@ Shopware.Service('cmsService').registerCmsElement({
                     active: ''
                 },
                 position: 'in_slider',
+                /**
+                 * @deprecated - remove in 2.1. see ISSUE-48
+                 */
                 viewports: {
                     /** @type object<DeviceSettings> */
                     mobile: {
@@ -109,6 +118,9 @@ Shopware.Service('cmsService').registerCmsElement({
                 }
             }
         },
+        /**
+         * @deprecated - remove in 2.1. see ISSUE-48
+         */
         sizing: {
             source: 'static',
             value: {
@@ -156,37 +168,85 @@ Shopware.Service('cmsService').registerCmsElement({
                 }
             }
         },
-        sliderNavigation: {
+        viewports: {
             source: 'static',
-            value: true
-        },
-        sliderOverlay: {
-            source: 'static',
-            value: false
-        },
-        slideSpeed: {
-            source: 'static',
-            value: 300
-        },
-        sliderAutoplay: {
-            source: 'static',
-            value: true
-        },
-        sliderAutoplayTimeout: {
-            source: 'static',
-            value: 5000
-        },
-        sliderArrowColor: {
-            source: 'static',
-            value: null
-        },
-        sliderDotColor: {
-            source: 'static',
-            value: null
-        },
-        sliderDotActiveColor: {
-            source: 'static',
-            value: null
+            value: {
+                mobile: {
+                    settings: {
+                        slidesPerPage: 1
+                    },
+                    navigation: {
+                        size: 'sm',
+                        gap: 16                        
+                    },
+                    arrows: {
+                        iconSize: 16
+                    },
+                    sizing: {
+                        aspectRatio: {
+                            width: 1,
+                            height: 1,
+                            auto: false
+                        },
+                        /** @type int | 'screen' | null */
+                        maxHeight: null,
+                        maxHeightScreen: false,
+                        paddingY: 40,
+                        paddingX: 40,
+                        slidesGap: 0
+                    }
+                },
+                tablet: {
+                    settings: {
+                        slidesPerPage: 1
+                    },
+                    navigation: {
+                        size: 'sm',
+                        gap: 20                        
+                    },
+                    arrows: {
+                        iconSize: 20
+                    },
+                    sizing: {
+                        aspectRatio: {
+                            width: 4,
+                            height: 3,
+                            auto: false
+                        },
+                        /** @type int | 'screen' | null */
+                        maxHeight: null,
+                        maxHeightScreen: false,
+                        paddingY: 64,
+                        paddingX: 64,
+                        slidesGap: 0
+                    }
+                },
+                desktop: {
+                    settings: {
+                        slidesPerPage: 1
+                    },
+                    navigation: {
+                        size: 'md',
+                        gap: 24                        
+                    },
+                    arrows: {
+                        iconSize: 24
+                    },
+                    sizing: {
+                        aspectRatio: {
+                            width: 16,
+                            height: 9,
+                            auto: false
+                        },
+                        /** @type int | 'screen' | null */
+                        maxHeight: null,
+                        maxHeightScreen: false,
+                        paddingY: 64,
+                        paddingX: 80,
+                        slidesGap: 0
+                    }
+                }
+            }
         }
     }
 })
