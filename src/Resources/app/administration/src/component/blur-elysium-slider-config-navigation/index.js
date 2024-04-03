@@ -82,9 +82,6 @@ export default {
         }
     },
 
-    watch: {
-    },
-
     computed: {
         positionIdentifiers () {
             return cmsSliderConfig
@@ -92,8 +89,11 @@ export default {
         containerBreakpoints () {
             return containerBreakpoints
         },
-        viewportConfig () {
-            return this.config.viewports?.[this.currentViewport] ?? null
+        navigationConfig () {
+            return this.config.navigation.value
+        },
+        navigationViewportConfig () {
+            return this.config.viewports.value[this.currentViewport].navigation
         }
     }
 }

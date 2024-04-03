@@ -37,16 +37,16 @@
     {# set breakpoint specific splide slider options #}
     {% set breakpointSliderOptions = {
         (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): {
-            perPage: element.config.settings.value.viewports.mobile.slidesPerPage ?? 1,
-            gap: element.config.sizing.value.viewports.mobile.slidesGap ?? 0
+            perPage: element.config.viewports.value.mobile.settings.slidesPerPage ?? 1,
+            gap: element.config.viewports.value.mobile.sizing.slidesGap ?? 0
         },
         (theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)): {
-            perPage: element.config.settings.value.viewports.tablet.slidesPerPage ?? 1,
-            gap: element.config.sizing.value.viewports.tablet.slidesGap ?? 0
+            perPage: element.config.viewports.value.tablet.settings.slidesPerPage ?? 1,
+            gap: element.config.viewports.value.tablet.sizing.slidesGap ?? 0
         },
         (theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)): {
-            perPage: element.config.settings.value.viewports.desktop.slidesPerPage ?? 1,
-            gap: element.config.sizing.value.viewports.desktop.slidesGap ?? 0
+            perPage: element.config.viewports.value.desktop.settings.slidesPerPage ?? 1,
+            gap: element.config.viewports.value.desktop.sizing.slidesGap ?? 0
         }
     } %}
     {% set sliderOptions = sliderOptions|merge({

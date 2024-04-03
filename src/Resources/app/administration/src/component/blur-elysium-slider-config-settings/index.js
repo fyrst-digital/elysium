@@ -22,8 +22,15 @@ export default {
         containerBreakpoints () {
             return containerBreakpoints
         },
-        viewportConfig () {
-            return this.config.viewports?.[this.currentViewport] ?? null
+        settingsConfig () {
+            return this.config.settings.value
+        },
+        settingsViewportConfig () {
+            return this.config.viewports.value[this.currentViewport].settings
         }
+    },
+
+    created () {
+        console.log(this)
     }
 }

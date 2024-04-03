@@ -17,7 +17,7 @@
                     {% block blur_elysium_slider_config_navigation_active %}
                         <sw-switch-field 
                             style="margin: 0;"
-                            v-model="config.active" 
+                            v-model="navigationConfig.active" 
                             :label="$tc('blurElysiumSlider.config.navigation.active')" />
                     {% endblock %}
                 
@@ -29,7 +29,7 @@
                         {% block blur_elysium_slider_config_navigation_position %}
                             <sw-select-field 
                                 :label="$tc('blurElysiumSlider.config.navigation.position.label')"
-                                v-model="config.position">
+                                v-model="navigationConfig.position">
                                 <option 
                                     v-for="position in positions" 
                                     :key="position.value" 
@@ -40,7 +40,7 @@
                         {% block blur_elysium_slider_config_navigation_align %}
                             <sw-select-field 
                                 :label="$tc('blurElysiumSlider.config.navigation.align.label')"
-                                v-model="config.align">
+                                v-model="navigationConfig.align">
                                 <option 
                                     v-for="align in aligns" 
                                     :key="align.value" 
@@ -70,7 +70,7 @@
                     {% block blur_elysium_slider_config_navigation_shape %}
                         <sw-select-field 
                             :label="$tc('blurElysiumSlider.config.navigation.shape.label')"
-                            v-model="config.shape">
+                            v-model="navigationConfig.shape">
                             <option 
                                 v-for="shape in shapes" 
                                 :key="shape.value" 
@@ -81,7 +81,7 @@
                     {% block blur_elysium_slider_config_navigation_sizes %}
                         <sw-select-field 
                             :label="$tc('blurElysiumSlider.config.navigation.size.label')"
-                            v-model="viewportConfig.size">
+                            v-model="navigationViewportConfig.size">
                             <option 
                                 v-for="size in sizes" 
                                 :key="size.value" 
@@ -95,7 +95,7 @@
                             numberType="int"
                             :label="$tc('blurElysiumSlider.config.navigation.navPadding.label')"
                             :step="1"
-                            v-model="viewportConfig.gap">
+                            v-model="navigationViewportConfig.gap">
                             <template #suffix>Px</template>
                             <template #hint><blur-elysium-device-hint /></template>
                         </sw-number-field>
@@ -105,7 +105,7 @@
                         <div style="position:relative;">
                             <sw-colorpicker
                                 :label="$tc('blurElysiumSlider.general.color')"
-                                v-model="config.colors.default"
+                                v-model="navigationConfig.colors.default"
                                 colorOutput="auto"
                                 :alpha="true"
                                 :disabled="false"
@@ -119,7 +119,7 @@
                         <div style="position:relative;">
                             <sw-colorpicker
                                 :label="$tc('blurElysiumSlider.general.colorActive')"
-                                v-model="config.colors.active"
+                                v-model="navigationConfig.colors.active"
                                 colorOutput="auto"
                                 :alpha="true"
                                 :disabled="false"

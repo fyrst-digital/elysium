@@ -15,21 +15,20 @@
                     {% block blur_cms_config_elysium_slider_rewind %}
                         <sw-switch-field 
                             :label="$tc('blurElysiumSlider.config.settings.rewind')"
-                            v-model="config.rewind">
+                            v-model="settingsConfig.rewind">
                         </sw-switch-field>
                     {% endblock %}
 
                     {% block blur_cms_config_elysium_slider_overlay %}
                         <sw-switch-field 
                             :label="$tc('blurElysiumSlider.config.settings.overlay')"
-                            v-model="config.overlay">
+                            v-model="settingsConfig.overlay">
                         </sw-switch-field>
                     {% endblock %}
 
                     {% block blur_cms_config_elysium_slider_slides_per_page %}
                         <sw-number-field 
-                            v-if="viewportConfig"
-                            v-model="viewportConfig.slidesPerPage"
+                            v-model="settingsViewportConfig.slidesPerPage"
                             numberType="int" 
                             :label="$tc('blurElysiumSlider.config.settings.slidesPerPage.label')"
                             :placeholder="$tc('blurElysiumSlider.config.settings.slidesPerPage.placeholder')"
@@ -44,7 +43,7 @@
                     {% block blur_cms_config_elysium_slider_speed %}
                         <sw-number-field 
                             numberType="int" 
-                            v-model="config.speed"
+                            v-model="settingsConfig.speed"
                             :label="$tc('blurElysiumSlider.config.settings.speed.label')"
                             :placeholder="$tc('blurElysiumSlider.config.settings.speed.placeholder')"
                             :step="null" 
@@ -58,8 +57,8 @@
 
                     {% block blur_cms_config_elysium_slider_container_width %}
                         <sw-select-field
-                            :value="config.containerWidth"
-                            v-model="config.containerWidth"
+                            :value="settingsConfig.containerWidth"
+                            v-model="settingsConfig.containerWidth"
                             :label="$tc('blurElysiumSlider.config.settings.containerWidth.label')"
                             :help-text="$tc('blurElysiumSlider.config.settings.containerWidth.helpText')"
                         >
@@ -85,21 +84,21 @@
                     {% block blur_cms_config_elysium_slider_autoplay_active %}
                         <sw-switch-field 
                             :label="$tc('blurElysiumSlider.config.settings.autoplay.active')" 
-                            v-model="config.autoplay.active">
+                            v-model="settingsConfig.autoplay.active">
                         </sw-switch-field>
                     {% endblock %}
 
                     {% block blur_cms_config_elysium_slider_autoplay_pause_on_hover %}
                         <sw-switch-field 
                             :label="$tc('blurElysiumSlider.config.settings.autoplay.pauseOnHover')" 
-                            v-model="config.autoplay.pauseOnHover">
+                            v-model="settingsConfig.autoplay.pauseOnHover">
                         </sw-switch-field>
                     {% endblock %}
 
                     {% block blur_cms_config_elysium_slider_autoplay_timeout %}
                         <sw-number-field 
                             numberType="int" 
-                            v-model="config.autoplay.interval"
+                            v-model="settingsConfig.autoplay.interval"
                             :label="$tc('blurElysiumSlider.config.settings.autoplay.interval.label')"
                             :placeholder="$tc('blurElysiumSlider.config.settings.autoplay.interval.placeholder')"
                             :step="null" 

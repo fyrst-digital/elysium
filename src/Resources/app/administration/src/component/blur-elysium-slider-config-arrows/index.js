@@ -57,8 +57,11 @@ export default {
         containerBreakpoints () {
             return containerBreakpoints
         },
-        viewportConfig () {
-            return this.config.viewports?.[this.currentViewport] ?? null
+        arrowsConfig () {
+            return this.config.arrows.value
+        },
+        arrowsViewportConfig () {
+            return this.config.viewports.value[this.currentViewport].arrows
         }
     }
 }

@@ -131,7 +131,7 @@
                         {% block blur_cms_config_elysium_slider_settings %}
                             <template v-if="active === 'settings'">
                                 <blur-elysium-slider-config-settings 
-                                    :config="element.config.settings.value" 
+                                    :config="element.config" 
                                     :currentViewport="activeViewport" />
                             </template>
                         {% endblock %}
@@ -139,7 +139,7 @@
                         {% block blur_cms_config_elysium_slider_sizing %}
                             <template v-if="active === 'sizing'">
                                 <blur-elysium-slider-config-sizing 
-                                    :config="element.config.sizing.value"
+                                    :config="element.config"
                                     :currentViewport="activeViewport" />
                             </template>
                         {% endblock %}
@@ -147,7 +147,7 @@
                         {% block blur_cms_config_elysium_slider_navigation %}
                             <template v-if="active === 'navigation'">
                                 <blur-elysium-slider-config-navigation
-                                    :config="element.config.navigation.value"
+                                    :config="element.config"
                                     :currentViewport="activeViewport" />
                             </template>
                         {% endblock %}
@@ -155,7 +155,7 @@
                         {% block blur_cms_config_elysium_slider_arrows %}
                             <template v-if="active === 'arrows'">
                                 <blur-elysium-slider-config-arrows
-                                    :config="element.config.arrows.value" 
+                                    :config="element.config" 
                                     :currentViewport="activeViewport" />
                             </template>
                         {% endblock %}
