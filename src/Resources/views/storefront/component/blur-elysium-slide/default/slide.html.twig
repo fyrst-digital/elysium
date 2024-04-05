@@ -19,16 +19,7 @@
             {% block blur_elysium_slide_prepend %}{% endblock %}
             
             {% block cms_element_blur_elysium_banner_style %}
-                {% sw_include '@Storefront/storefront/component/blur-elysium-slide/includes/style.html.twig' with {
-                    slideStyles: {
-                        '--bg-color': slideData.slideSettings.slide.bgColor,
-                        '--gradient-color-start': slideData.slideSettings.slide.bgGradient.startColor,
-                        '--gradient-color-end': slideData.slideSettings.slide.bgGradient.endColor,
-                        '--gradient-deg': slideData.slideSettings.slide.bgGradient.gradientDeg ? slideData.slideSettings.slide.bgGradient.gradientDeg ~ 'deg' : null,
-                        '--slide-description-color': slideData.slideSettings.slide.description.color
-                    },
-                    slideViewportStyles: slideData.slideSettings.viewports
-                } %}
+                {% sw_include '@Storefront/storefront/component/blur-elysium-slide/includes/style.html.twig' %}
             {% endblock %}
 
             {{ block('blur_elysium_slide_cover_image') }}

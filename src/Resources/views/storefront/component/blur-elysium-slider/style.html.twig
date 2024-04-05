@@ -45,22 +45,22 @@
                 .blur-elysium-slide
                 {
                     {% if options.sizing.aspectRatio.auto is not same as(true) %}
-                        --aspect-ratio: {{options.sizing.aspectRatio.width}} / {{options.sizing.aspectRatio.height}};
+                        --slide-aspect-ratio: {{options.sizing.aspectRatio.width}} / {{options.sizing.aspectRatio.height}};
                     {% else %}
-                        --aspect-ratio: auto;
+                        --slide-aspect-ratio: auto;
                     {% endif %}
                     {% if options.sizing.maxHeightScreen is same as(true) %}
-                        --max-height: 100vh;
+                        --slide-max-height: 100vh;
                     {% elseif options.sizing.maxHeight is not empty %}
-                        --max-height: {{ options.sizing.maxHeight ~ 'px' }};
+                        --slide-max-height: {{ options.sizing.maxHeight ~ 'px' }};
                     {% else %}
-                        --max-height: none;
+                        --slide-max-height: none;
                     {% endif %}
                     {% if options.sizing.paddingY %}
-                        --padding-offset-y: {{ options.sizing.paddingY ~ 'px' }};
+                        --slide-padding-offset-y: {{ options.sizing.paddingY ~ 'px' }};
                     {% endif %}
                     {% if options.sizing.paddingX %}
-                        --padding-offset-x: {{ options.sizing.paddingX ~ 'px' }};
+                        --slide-padding-offset-x: {{ options.sizing.paddingX ~ 'px' }};
                     {% endif %}
                 }
                 #elysiumSlider-{{ element.id }}

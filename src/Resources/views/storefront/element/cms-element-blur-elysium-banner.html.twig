@@ -16,9 +16,9 @@
                         .blur-elysium-slide
                         {
                             {% if options.aspectRatio.auto is not same as(true) %}
-                                --aspect-ratio: {{options.aspectRatio.width}} / {{options.aspectRatio.height}};
+                                --slide-aspect-ratio: {{options.aspectRatio.width}} / {{options.aspectRatio.height}};
                             {% else %}
-                                --aspect-ratio: auto;
+                                --slide-aspect-ratio: auto;
                             {% endif %}
                         }
                     }            

@@ -125,7 +125,7 @@ export default {
             },
             headline: {
                 /** @type int | null */
-                fontSize: null
+                fontSize: 20
             },
             description: {
                 /** @type int | null */
@@ -209,7 +209,7 @@ export default {
             },
             headline: {
                 /** @type int | null */
-                fontSize: null
+                fontSize: 24
             },
             description: {
                 /** @type int | null */
@@ -293,7 +293,7 @@ export default {
             },
             headline: {
                 /** @type int | null */
-                fontSize: null
+                fontSize: 32
             },
             description: {
                 /** @type int | null */

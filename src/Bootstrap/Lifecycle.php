@@ -256,9 +256,9 @@ class Lifecycle
                     }
 
                     if ($containerAlignItems !== null) {
-                        $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['alignItems'] = $containerAlignItems;
-                        $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['alignItems'] = $containerAlignItems;
-                        $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['alignItems'] = $containerAlignItems;
+                        $convertedSlideSettings['slideSettings']['viewports']['mobile']['slide']['alignItems'] = $containerAlignItems;
+                        $convertedSlideSettings['slideSettings']['viewports']['tablet']['slide']['alignItems'] = $containerAlignItems;
+                        $convertedSlideSettings['slideSettings']['viewports']['desktop']['slide']['alignItems'] = $containerAlignItems;
                     }
                 }
 
@@ -275,9 +275,9 @@ class Lifecycle
                     }
 
                     if ($containerJustifyContent !== null) {
-                        $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['justifyContent'] = $containerJustifyContent;
-                        $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['justifyContent'] = $containerJustifyContent;
-                        $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['justifyContent'] = $containerJustifyContent;
+                        $convertedSlideSettings['slideSettings']['viewports']['mobile']['slide']['justifyContent'] = $containerJustifyContent;
+                        $convertedSlideSettings['slideSettings']['viewports']['tablet']['slide']['justifyContent'] = $containerJustifyContent;
+                        $convertedSlideSettings['slideSettings']['viewports']['desktop']['slide']['justifyContent'] = $containerJustifyContent;
                     }
                 }
 

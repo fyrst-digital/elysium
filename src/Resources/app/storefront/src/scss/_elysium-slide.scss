@@ -1,47 +1,71 @@
 .blur-elysium-slide {
-    --padding-y: 15px;
-    --padding-offset-y: 0px;
-    --padding-x: 15px;
-    --padding-offset-x: 0px;
-    --bg-color: transparent;
-    --bg-size: cover;
-    --bg-pos-x: center;
-    --bg-pos-y: center;
-    --aspect-ratio: auto;
-    --border-radius: 0;
-    --align-items: center;
-    --slide-container-display: flex;
-    --slide-container-gap: 20px;
-    --slide-container-direction: row;
-    --slide-container-flex-wrap: nowrap;
-    --slide-content-flex-grow: 1;
-    --slide-content-flex-basis: 0%;
-    --slide-image-flex-grow: 1;
-    --slide-image-flex-basis: 0%;
-    --slide-image-max-w: none;
-    --slide-description-color: inherit;
-    --slide-description-font-size: inherit;
-    --justify-content: center;
-    --gradient-color-start: transparent;
-    --gradient-color-end: transparent;
-    --gradient-deg: 45deg;
-    --bg-image: linear-gradient(var(--gradient-deg), var(--gradient-color-start), var(--gradient-color-end));
+    /** Slide vars */
+    --slide-padding-y: 15px;
+    --slide-padding-offset-y: 0px;
+    --slide-padding-x: 15px;
+    --slide-padding-offset-x: 0px;
+    --slide-align-items: center;
+    --slide-justify-content: center;
+    --slide-border-radius: 0px;
+    --slide-aspect-ratio: auto;
+    --slide-gradient-color-start: transparent;
+    --slide-gradient-color-end: transparent;
+    --slide-gradient-deg: 45deg;
+    --slide-bg-color: transparent;
+    --slide-bg-image: linear-gradient(var(--slide-gradient-deg), var(--slide-gradient-color-start), var(--slide-gradient-color-end));
+    /** Slide cover vars */
+    --cover-object-fit: cover;
+    --cover-object-pos-x: center;
+    --cover-object-pos-y: center;
+    /** Slide container vars */
+    --container-display: flex;
+    --container-padding-y: 15px;
+    --container-padding-x: 15px;
+    --container-gap: 20px;
+    --container-border-radius: 0px;
+    --container-align-items: center;
+    --container-justify-content: normal;
+    --container-direction: row;
+    --container-flex-wrap: nowrap;
+    --container-max-width: none;
+    /** Slide content vars */
+    --content-display: flex;
+    --content-direction: column;
+    --content-gap: 24px;
+    --content-padding-x: 0px;
+    --content-padding-y: 0px;
+    --content-order: 1;
+    --content-flex-grow: 1;
+    --content-flex-basis: 0%;
+    --content-text-align: left;
+    --content-max-width: none;
+    /** Slide image vars */
+    --image-flex-grow: 1;
+    --image-flex-basis: 0%;
+    --image-max-w: none;
+    --image-align-items: center;
+    --image-justify-content: center;
+    --image-order: 2;
+    /** Slide description vars */
+    --description-color: inherit;
+    --description-font-size: inherit;
+    /** Slide headline vars */
+    --headline-color: inherit;
+    --headline-font-size: 20px;
+
     position: relative;
     width: 100%;
     background: {
         repeat: no-repeat;
-        color: var(--bg-color);
-        size: var(--bg-size);
-        position-x: var(--bg-pos-x);
-        position-y: var(--bg-pos-y);
-        image: var(--bg-image);
+        color: var(--slide-bg-color);
+        image: var(--slide-bg-image);
     };
-    border-radius: var(--border-radius);
-    aspect-ratio: var(--aspect-ratio);
-    padding: calc(var(--padding-y) + var(--padding-offset-y)) calc(var(--padding-x) + var(--padding-offset-x));
-    align-items: var(--align-items);
-    justify-content: var(--justify-content);
-    max-height: var(--max-height);
+    border-radius: var(--slide-border-radius);
+    aspect-ratio: var(--slide-aspect-ratio);
+    padding: calc(var(--slide-padding-y) + var(--slide-padding-offset-y)) calc(var(--slide-padding-x) + var(--slide-padding-offset-x));
+    align-items: var(--slide-align-items);
+    justify-content: var(--slide-justify-content);
+    max-height: var(--slide-max-height);
 }
 
 .blur-elysium-slide-cover-picture {
@@ -50,40 +74,30 @@
 
 .blur-elysium-slide-cover-image,
 .blur-elysium-slide-cover-video {
-    --object-fit: cover;
-    --object-pos-x: center;
-    --object-pos-y: center;
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     user-select: none;
     z-index: 1;
-    object-fit: var(--object-fit);
-    object-position: var(--object-pos-x) var(--object-pos-y);
+    object-fit: var(--cover-object-fit);
+    object-position: var(--cover-object-pos-x) var(--cover-object-pos-y);
 }
 
 .blur-elysium-slide-container {
-    --padding-x: 15px;
-    --padding-y: 15px;
-    --align-items: center;
-    --justify-content: normal;
-    --max-width: none;
-    --border-radius: 0;
-    --bg-color: transparent;
     position: relative;
     z-index: 5;
-    display: var(--slide-container-display);
-    flex-direction: var(--slide-container-direction);
-    flex-wrap: var(--slide-container-flex-wrap);
-    gap: var(--slide-container-gap);
-    justify-content: var(--justify-content);
-    align-items: var(--align-items);
-    max-width: var(--max-width);
-    padding: var(--padding-y) var(--padding-x);
-    border-radius: var(--border-radius);
+    display: var(--container-display);
+    flex-direction: var(--container-direction);
+    flex-wrap: var(--container-flex-wrap);
+    gap: var(--container-gap);
+    justify-content: var(--container-justify-content);
+    align-items: var(--container-align-items);
+    max-width: var(--container-max-width);
+    padding: var(--container-padding-y) var(--container-padding-x);
+    border-radius: var(--container-border-radius);
     background: {
-        color: var(--bg-color);
+        color: var(--container-bg-color);
     };
     overflow: hidden;
     flex-basis: 100%;
@@ -91,32 +105,25 @@
 }
 
 .blur-elysium-slide-content {
-    --padding-x: 0;
-    --padding-y: 0;
-    --order: 1;
-    --max-width: none;
-    --text-align: left;
-    order: var(--order);
-    flex: var(--slide-content-flex-grow) 0 var(--slide-content-flex-basis);
+    display: var(--content-display);
+    flex-direction: var(--content-direction);
+    gap: var(--content-gap);
+    order: var(--content-order);
+    flex: var(--content-flex-grow) 0 var(--content-flex-basis);
     width: 100%;
-    padding-left: var(--padding-x);
-    padding-right: var(--padding-x);
-    padding-top: var(--padding-y);
-    padding-bottom: var(--padding-y);
-    text-align: var(--text-align);
+    padding: var(--content-padding-y) var(--content-padding-x);
+    text-align: var(--content-text-align);
+    // max-width: var(--content-max-width);
 }
 
 .blur-elysium-slide-image {
-    --align-items: center;
-    --justify-content: center;
-    --order: 2;
     display: flex;
-    flex: var(--slide-image-flex-grow) 0 var(--slide-image-flex-basis);
-    justify-content: var(--justify-content);
-    align-items: var(--align-items);
-    order: var(--order);
+    flex: var(--image-flex-grow) 0 var(--image-flex-basis);
+    justify-content: var(--image-justify-content);
+    align-items: var(--image-align-items);
+    order: var(--image-order);
     width: 100%;
-    max-width: var(--slide-image-max-w);
+    max-width: var(--image-max-w);
 
     img {
         width: 100%;
@@ -124,11 +131,12 @@
 }
 
 .blur-elysium-slide-headline {
-    --color: inherit;
-    color: var(--color);
+    color: var(--headline-color);
+    font-size: var(--headline-font-size);
+    margin: 0;
 }
 
 .blur-elysium-slide-description {
-    color: var(--slide-description-color);
-    font-size: var(--slide-description-font-size);
+    color: var(--description-color);
+    font-size: var(--description-font-size);
 }
