@@ -29,8 +29,8 @@ Application.addServiceProviderDecorator('searchTypeService', searchTypeService =
 Module.register('blur-elysium-slides', {
     type: 'plugin',
     name: 'blur_elysium_slides',
-    title: 'BlurElysiumSlides.entityLabel',
-    description: 'BlurElysiumSlides.description',
+    title: 'blurElysiumSlides.label',
+    description: 'blurElysiumSlides.description',
     color: '#e868a1',
     icon: 'regular-sidebar',
     iconComponent: 'blur-elysium-icon',

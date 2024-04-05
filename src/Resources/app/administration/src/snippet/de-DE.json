@@ -198,6 +198,8 @@
         }
     },
     "blurElysiumSlides": {
+        "label": "Elysium Slides",
+        "description": "Hier kannst du Slides für Elysium Erlebniswelten Elemente erstellen.",
         "messages": {
             "noChanges": "Keine Änderungen",
             "deleteSlideConfirmDialogue": "Möchtest du den Slide endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden",

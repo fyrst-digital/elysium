@@ -202,6 +202,8 @@
         }
     },
     "blurElysiumSlides": {
+        "label": "Elysium Slides",
+        "description": "Here you can create Slides for Elysium Shopping Experiences elements.",
         "messages": {
             "noChanges": "No changes",
             "deleteSlideConfirmDialogue": "Do you want to delete the slide permanently? This action cannot be undone",

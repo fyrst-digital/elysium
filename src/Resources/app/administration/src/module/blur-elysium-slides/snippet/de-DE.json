@@ -13,7 +13,7 @@
     },
     "BlurElysiumSlides": {
         "entityLabel": "Elysium Slides",
-        "description": "Hier kannst du einzelne Slides für den Elysium Slider erstellen.",
+        "description": "Hier kannst du Slides für Elysium Erlebniswelten Elemente erstellen.",
         "placeholderSearchBar": "Slides Suchen",
         "messages": {
             "emptySlidesTitle": "Keine Slides gefunden",

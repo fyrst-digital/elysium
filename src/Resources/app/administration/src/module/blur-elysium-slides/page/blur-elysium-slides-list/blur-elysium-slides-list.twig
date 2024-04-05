@@ -160,14 +160,29 @@
                     {% block blur_elysium_slides_list_view_empty_state %}
                         <template v-if="!isLoading && !total">
                             <sw-empty-state
-                                v-if="filterCriteria.length"
-                                :title="$tc('sw-customer.filter.messageEmptyTitle')"
-                                :subline="$tc('sw-customer.filter.messageEmptySubline')"
-                            />
-                            <sw-empty-state
-                                v-else
                                 :title="$tc('BlurElysiumSlides.messages.emptySlidesTitle')"
-                            />
+                            >
+                                <template #icon>
+                                    <blur-elysium-icon 
+                                        color="#e868a1"
+                                        :size="64" />
+                                </template>
+
+                                <template #actions>
+                                    <sw-button
+                                        v-tooltip="{
+                                            message: $tc('sw-privileges.tooltip.warning'),
+                                            disabled: acl.can('blur_elysium_slides.creator'),
+                                            showOnDisabledElements: true
+                                        }"
+                                        variant="ghost"
+                                        :disabled="!acl.can('blur_elysium_slides.creator')"
+                                        :router-link="{ name: 'blur.elysium.slides.create' }"
+                                    >
+                                        {{ $tc('BlurElysiumSlides.actions.createSlide') }}
+                                    </sw-button>
+                                </template>
+                            </sw-empty-state>
                         </template>
                     {% endblock %}
                 </div>
