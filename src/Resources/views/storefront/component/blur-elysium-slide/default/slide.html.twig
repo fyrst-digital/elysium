@@ -7,6 +7,10 @@
     'd-flex'
 ] %}
 
+{% if showContainerWrapper is not defined %}  
+    {% set showContainerWrapper = false %}
+{% endif %}
+
 {% if slideData is null %}
     <div class="{{ slideClasses|join(' ') }}">
         No slide data
@@ -24,7 +28,16 @@
 
             {{ block('blur_elysium_slide_cover_image') }}
             {{ block('blur_elysium_slide_cover_video') }}
-            {{ block('blur_elysium_slide_container') }}
+
+            {% block blur_elysium_slide_container_wrapper %}
+                {% if showContainerWrapper is same as(true) %}
+                    <div class="container d-flex blur-elysium-slide-container-wrapper">
+                {% endif %}
+                {{ block('blur_elysium_slide_container') }}
+                {% if showContainerWrapper is same as(true) %}
+                    </div>
+                {% endif %}
+            {% endblock %}
 
             {% block blur_elysium_slide_append %}{% endblock %}
 

@@ -2,6 +2,7 @@
     {% set sliderAutoplay = element.translated.config.settings.value.autoplay %}
     {% set sliderNavigation = element.translated.config.navigation.value %}
     {% set sliderArrows = element.translated.config.arrows.value %}
+    {% set slideContainerWrapper = false %}
 
     {% set sliderOptions = {
         splideOptions: {
@@ -23,9 +24,7 @@
     ] %}
 
     {% if element.config.settings.value.containerWidth is same as('content') %}
-        {% set cmsSliderClasses = cmsSliderClasses|merge([
-            'slide-container-boxed'
-        ]) %}
+        {% set slideContainerWrapper = true %}
     {% endif %}
 
     {% if element.config.settings.value.overlay is same as(true) %}
@@ -104,7 +103,8 @@
                                                     {% endif %}
 
                                                     {% sw_include '@Storefront/storefront/component/blur-elysium-slide/' ~ slideTemplate ~ '/' ~ slideFile ignore missing with {
-                                                        slideData: slide
+                                                        slideData: slide,
+                                                        showContainerWrapper: slideContainerWrapper
                                                     } %}
                                                 {% endblock %}
                                             </li>

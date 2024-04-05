@@ -84,6 +84,11 @@
     object-position: var(--cover-object-pos-x) var(--cover-object-pos-y);
 }
 
+.blur-elysium-slide-container-wrapper {
+    align-items: var(--slide-align-items);
+    justify-content: var(--slide-justify-content);
+}
+
 .blur-elysium-slide-container {
     position: relative;
     z-index: 5;
