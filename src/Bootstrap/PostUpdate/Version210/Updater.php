@@ -207,6 +207,7 @@ class Updater
                 $convertedCmsElementConfig = [];
                 $convertedCmsElementConfig['id'] = $id;
                 $convertedCmsElementConfig['config'] = $cmsElementConfig;
+                $convertedCmsElementConfig['config']['viewports']['source'] = 'static';
 
                 $aspectRatioConfig = [
                     'mobile' => $this->getPropertyFromViewportArray('xs', $cmsElementConfig['aspectRatio']['value']),
@@ -230,10 +231,11 @@ class Updater
                 $this->notificationService->createNotification(
                     [
                         'status' => 'error',
-                        'message' => 'Something went wrong during the Elysium Slide settings conversion'
+                        'message' => 'Something went wrong during the Elysium Slider config conversion'
                     ],
                     $this->context
                 );
+                throw $e;
             }
         }
     }
