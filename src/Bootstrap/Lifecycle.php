@@ -60,6 +60,7 @@ class Lifecycle
                 $this->container->get(Connection::class),
                 $updateContext->getContext(),
                 $this->container->get('blur_elysium_slides.repository'),
+                $this->container->get('cms_slot.repository'),
                 $this->notificationService
             );
         }

@@ -10,6 +10,8 @@ use Shopware\Administration\Notification\NotificationService;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210\SlideSettings;
+use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 
 class Updater
 {
@@ -17,14 +19,16 @@ class Updater
         private readonly Connection $connection,
         private readonly Context $context,
         private readonly EntityRepository $slidesRepository,
+        private readonly EntityRepository $cmsSlotRepository,
         private readonly NotificationService $notificationService
     ) {
     }
 
     public function run(): void
     {
-        $this->cmsSlotRemoveDeprecatedConfig();
         $this->convertSlideSettings();
+        $this->convertCmsSliderConfig();
+        $this->cmsSlotRemoveDeprecatedConfig();
     }
 
     private function cmsSlotRemoveDeprecatedConfig(): void
@@ -186,5 +190,60 @@ class Updater
                 );
             }
         }
+    }
+
+    private function convertCmsSliderConfig(): void
+    {
+        $criteria = new Criteria();
+        $criteria->addFilter(new EqualsFilter('type', 'blur-elysium-slider'));
+        $result = $this->cmsSlotRepository->search($criteria, $this->context);
+        $updatedCmsElementsConfig = [];
+
+        if ($result->getTotal() > 0) {
+
+            foreach ($result->getElements() as $id => $cmsElement) {
+                /** @var CmsSlotEntity $cmsElement */
+                $cmsElementConfig = $cmsElement->getConfig();
+                $convertedCmsElementConfig = [];
+                $convertedCmsElementConfig['id'] = $id;
+                $convertedCmsElementConfig['config'] = $cmsElementConfig;
+
+                $aspectRatioConfig = [
+                    'mobile' => $this->getPropertyFromViewportArray('xs', $cmsElementConfig['aspectRatio']['value']),
+                    'tablet' => $this->getPropertyFromViewportArray('md', $cmsElementConfig['aspectRatio']['value']),
+                    'desktop' => $this->getPropertyFromViewportArray('xxl', $cmsElementConfig['aspectRatio']['value'])
+                ];
+
+                foreach ($aspectRatioConfig as $viewport => $config) {
+                    $convertedCmsElementConfig['config']['viewports']['value'][$viewport]['sizing']['aspectRatio'] = $config['aspectRatio'];
+                }
+
+                $updatedCmsElementsConfig[] = $convertedCmsElementConfig;
+            }
+
+            /**
+             * @todo make message translation aware
+             */
+            try {
+                $this->cmsSlotRepository->update($updatedCmsElementsConfig, $this->context);
+            } catch (\Exception $e) {
+                $this->notificationService->createNotification(
+                    [
+                        'status' => 'error',
+                        'message' => 'Something went wrong during the Elysium Slide settings conversion'
+                    ],
+                    $this->context
+                );
+            }
+        }
+    }
+
+    function getPropertyFromViewportArray(string $viewport, array $config, ?string $property = null): mixed
+    {
+        $result = array_merge(...\array_filter($config, function ($value) use ($viewport) {
+            return $value['viewport'] === $viewport;
+        }));
+
+        return $result;
     }
 }
