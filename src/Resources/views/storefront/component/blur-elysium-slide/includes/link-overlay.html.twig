@@ -1,0 +1,12 @@
+{% block blur_elysium_slide_link_overlay %}
+    {% if slideData.slideSettings.slide.linking.overlay is same as( true ) and actionMainUrl %}
+        <a href="{{ actionMainUrl }}" 
+            class="blur-elysium-slide-link-overlay"
+            aria-label="{{ headlineContent }}"
+            {% if slideData.slideSettings.slide.linking.openExternal is same as(true) %}
+                target="_blank"
+                rel="noopener"
+            {% endif %}>
+        </a>
+    {% endif %}
+{% endblock %}
