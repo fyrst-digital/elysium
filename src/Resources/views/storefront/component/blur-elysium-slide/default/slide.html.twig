@@ -1,6 +1,7 @@
 {% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/container.html.twig' %}
 {% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/cover-image.html.twig' %}
 {% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/cover-video.html.twig' %}
+{% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/link-overlay.html.twig' %}
 
 {% set slideClasses = [
     'blur-elysium-slide',
@@ -10,6 +11,9 @@
 {% if showContainerWrapper is not defined %}  
     {% set showContainerWrapper = false %}
 {% endif %}
+
+{% set headlineContent = slideData.translated.title|striptags( headlineTagsWhitelist|join ) %}
+{% set actionMainUrl = slideData.translated.url %}
 
 {% if slideData is null %}
     <div class="{{ slideClasses|join(' ') }}">
@@ -38,6 +42,8 @@
                     </div>
                 {% endif %}
             {% endblock %}
+
+            {{ block('blur_elysium_slide_link_overlay') }}
 
             {% block blur_elysium_slide_append %}{% endblock %}
 

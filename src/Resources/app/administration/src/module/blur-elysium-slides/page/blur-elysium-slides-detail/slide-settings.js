@@ -1,8 +1,4 @@
 export default {
-    /** @type string | 'default' | null */
-    slideTemplate: 'default',
-    /** @type string | null */
-    customTemplateFile: null,
     slide: {
         headline: {
             /** @type string | null */
@@ -133,7 +129,7 @@ export default {
             },
             button: {
                 /** @type 'default' | 'sm' | 'lg' */
-                size: 'default'
+                size: 'sm'
             }
         },
         tablet: {
@@ -301,8 +297,12 @@ export default {
             },
             button: {
                 /** @type 'default' | 'sm' | 'lg' */
-                size: 'default'
+                size: 'lg'
             }
         }
-    }
+    },
+    /** @type string | 'default' | null */
+    slideTemplate: 'default',
+    /** @type string | null */
+    customTemplateFile: null
 }

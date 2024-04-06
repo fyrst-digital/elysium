@@ -16,7 +16,7 @@ use Shopware\Core\Content\Media\Aggregate\MediaDefaultFolder\MediaDefaultFolderE
 use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Administration\Notification\NotificationService;
-use Blur\BlurElysiumSlider\Bootstrap\UpdateMigration\Update210CmsSlotSliderRemoveSizing;
+use Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210\Updater as Version210Updater;
 
 class Lifecycle
 {
@@ -52,17 +52,22 @@ class Lifecycle
 
     public function postUpdate(UpdateContext $updateContext): void
     {
-        /** @var Connection $connection */
-        $connection = $this->container->get(Connection::class);
 
-        if (\version_compare($updateContext->getCurrentPluginVersion(), '2.1.0', '<')) {
-            (new Update210CmsSlotSliderRemoveSizing($connection))->execute();
-            $this->convertSlideSettings210($updateContext->getContext());
+        $postUpdater = [];
 
-            /**
-             * example for feature data conversion of repositories on post update
-             * $this->postUpdate210($updateContext->getContext());
-             */
+        if (\version_compare($updateContext->getCurrentPluginVersion(), '2.0.0', '<')) {
+            $postUpdater['2.0.0'] = new Version210Updater(
+                $this->container->get(Connection::class),
+                $updateContext->getContext(),
+                $this->container->get('blur_elysium_slides.repository'),
+                $this->notificationService
+            );
+        }
+
+        if (\count($postUpdater) > 0) {
+            foreach ($postUpdater as $key => $update) {
+                $update->run();
+            }
         }
     }
 
@@ -177,146 +182,6 @@ class Lifecycle
                     'defaultFolderId' => $this->getMediaDefaultFolderId()
                 ]
             ], $context);
-        }
-    }
-
-    private function convertSlideSettings210(
-        Context $context
-    ): void {
-        $criteria = new Criteria();
-        /* EntityRepository $cmsSlotRepository */
-        $repository = $this->container->get('blur_elysium_slides.repository');
-        $result = $repository->search($criteria, $context);
-        $updateSlideSettings = [];
-
-        if ($result->getTotal() > 0) {
-
-            foreach ($result->getElements() as $id => $slide) {
-                $slideSettings = $slide->get('slideSettings');
-                $convertedSlideSettings = [];
-                $convertedSlideSettings['id'] = $id;
-
-                /**
-                 * convert slide settings
-                 */
-                # slide headline 
-                $convertedSlideSettings['slideSettings']['slide']['headline']['element'] = isset($slideSettings['headlineElement']) && !empty($slideSettings['headlineElement']) ? $slideSettings['headlineElement'] : 'div';
-                $convertedSlideSettings['slideSettings']['slide']['headline']['color'] = isset($slideSettings['headlineTextcolor']) && !empty($slideSettings['headlineTextcolor']) ? $slideSettings['headlineTextcolor'] : null;
-                # slide general
-                $convertedSlideSettings['slideSettings']['slide']['bgColor'] = isset($slideSettings['slideBgColor']) && !empty($slideSettings['slideBgColor']) ? $slideSettings['slideBgColor'] : null;
-                $convertedSlideSettings['slideSettings']['slide']['cssClass'] = isset($slideSettings['slideCssClass']) && !empty($slideSettings['slideCssClass']) ? $slideSettings['slideCssClass'] : null;
-                # slide linking
-                $convertedSlideSettings['slideSettings']['slide']['linking']['overlay'] = isset($slideSettings['urlOverlay']) && !empty($slideSettings['urlOverlay']) ? $slideSettings['urlOverlay'] : false;
-                $convertedSlideSettings['slideSettings']['slide']['linking']['openExternal'] = isset($slideSettings['urlTarget']) && $slideSettings['urlTarget'] === 'external' ? true : false;
-                $convertedSlideSettings['slideSettings']['slide']['linking']['buttonAppearance'] = isset($slideSettings['buttonAppearance']) && !empty($slideSettings['buttonAppearance']) ? $slideSettings['buttonAppearance'] : 'primary';
-                # container
-                $convertedSlideSettings['slideSettings']['container']['bgColor'] = isset($slideSettings['containerBgColor']) && !empty($slideSettings['containerBgColor']) ? $slideSettings['containerBgColor'] : null;
-
-                # container padding
-                if (isset($slideSettings['containerPadding']) && !empty($slideSettings['containerPadding'])) {
-                    $containerPaddingInt = (int) filter_var($slideSettings['containerPadding'], FILTER_SANITIZE_NUMBER_INT);
-
-                    if (!empty($containerPaddingInt)) {
-                        # viewport mobile
-                        $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['paddingX'] = $containerPaddingInt;
-                        $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['paddingY'] = $containerPaddingInt;
-                        # viewport tablet
-                        $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['paddingX'] = $containerPaddingInt;
-                        $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['paddingY'] = $containerPaddingInt;
-                        # viewport desktop
-                        $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['paddingX'] = $containerPaddingInt;
-                        $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['paddingY'] = $containerPaddingInt;
-                    }
-                }
-
-                # container max width
-                if (isset($slideSettings['containerMaxWidth']) && !empty($slideSettings['containerMaxWidth'])) {
-                    $containerMaxWidthInt = (int) filter_var($slideSettings['containerMaxWidth'], FILTER_SANITIZE_NUMBER_INT);
-
-                    if (!empty($containerMaxWidthInt)) {
-                        # viewport mobile
-                        $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['maxWidth'] = $containerMaxWidthInt;
-                        # viewport tablet
-                        $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['maxWidth'] = $containerMaxWidthInt;
-                        # viewport desktop
-                        $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['maxWidth'] = $containerMaxWidthInt;
-                    }
-                }
-
-                # container vertical align
-                if (isset($slideSettings['containerVerticalAlign']) && !empty($slideSettings['containerVerticalAlign'])) {
-                    $containerAlignItems = null;
-
-                    if ($slideSettings['containerVerticalAlign'] === 'center') {
-                        $containerAlignItems = 'center';
-                    } elseif ($slideSettings['containerVerticalAlign'] === 'top') {
-                        $containerAlignItems = 'flex-start';
-                    } elseif ($slideSettings['containerVerticalAlign'] === 'bottom') {
-                        $containerAlignItems = 'flex-end';
-                    }
-
-                    if ($containerAlignItems !== null) {
-                        $convertedSlideSettings['slideSettings']['viewports']['mobile']['slide']['alignItems'] = $containerAlignItems;
-                        $convertedSlideSettings['slideSettings']['viewports']['tablet']['slide']['alignItems'] = $containerAlignItems;
-                        $convertedSlideSettings['slideSettings']['viewports']['desktop']['slide']['alignItems'] = $containerAlignItems;
-                    }
-                }
-
-                # container horizontal align
-                if (isset($slideSettings['containerHorizontalAlign']) && !empty($slideSettings['containerHorizontalAlign'])) {
-                    $containerJustifyContent = null;
-
-                    if ($slideSettings['containerHorizontalAlign'] === 'center') {
-                        $containerJustifyContent = 'center';
-                    } elseif ($slideSettings['containerHorizontalAlign'] === 'left') {
-                        $containerJustifyContent = 'flex-start';
-                    } elseif ($slideSettings['containerHorizontalAlign'] === 'right') {
-                        $containerJustifyContent = 'flex-end';
-                    }
-
-                    if ($containerJustifyContent !== null) {
-                        $convertedSlideSettings['slideSettings']['viewports']['mobile']['slide']['justifyContent'] = $containerJustifyContent;
-                        $convertedSlideSettings['slideSettings']['viewports']['tablet']['slide']['justifyContent'] = $containerJustifyContent;
-                        $convertedSlideSettings['slideSettings']['viewports']['desktop']['slide']['justifyContent'] = $containerJustifyContent;
-                    }
-                }
-
-                # content vertical align
-                if (isset($slideSettings['contentVerticalAlign']) && !empty($slideSettings['contentVerticalAlign'])) {
-                    $contentTextAlign = null;
-
-                    if ($slideSettings['contentVerticalAlign'] === 'center') {
-                        $contentTextAlign = 'center';
-                    } elseif ($slideSettings['contentVerticalAlign'] === 'left') {
-                        $contentTextAlign = 'left';
-                    } elseif ($slideSettings['contentVerticalAlign'] === 'right') {
-                        $contentTextAlign = 'right';
-                    }
-
-                    if ($contentTextAlign !== null) {
-                        $convertedSlideSettings['slideSettings']['viewports']['mobile']['content']['textAlign'] = $contentTextAlign;
-                        $convertedSlideSettings['slideSettings']['viewports']['tablet']['content']['textAlign'] = $contentTextAlign;
-                        $convertedSlideSettings['slideSettings']['viewports']['desktop']['content']['textAlign'] = $contentTextAlign;
-                    }
-                }
-
-                $updateSlideSettings[] = $convertedSlideSettings;
-            }
-
-            /**
-             * @todo make message translation aware
-             */
-            try {
-                $repository->update($updateSlideSettings, $context);
-            } catch (\Exception $e) {
-                $this->notificationService->createNotification(
-                    [
-                        'status' => 'error',
-                        'message' => 'Something went wrong during the Elysium Slide settings conversion'
-                    ],
-                    $context
-                );
-            }
         }
     }
 

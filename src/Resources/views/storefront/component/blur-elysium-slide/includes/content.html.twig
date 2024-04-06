@@ -37,10 +37,8 @@
         ]) %}
     {% endif %}
 
-    {% set headlineContent = slideData.translated.title|striptags( headlineTagsWhitelist|join ) %}
     {% set descriptionContent = slideData.translated.description %}
-    {% set showActions = slideData.translated.url and slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
-    {% set actionMainUrl = slideData.translated.url %}
+    {% set showActions = actionMainUrl and slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
     {% set actionMainLabel = slideData.translated.button_label ?? 'blurElysium.slide.buttonLabel'|trans %}
 
     {% block blur_elysium_slide_content_element %}
