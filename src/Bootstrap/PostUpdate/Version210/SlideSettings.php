@@ -6,6 +6,9 @@ namespace Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210;
 
 class SlideSettings
 {
+    /**
+     * @var mixed[]
+     */
     public array $slideSettings = [
         'slide' => [],
         'viewports' => [
@@ -48,6 +51,9 @@ class SlideSettings
         ]
     ];
 
+    /**
+     * @return mixed[]
+     */
     public function getSettings(): array
     {
         foreach ($this->slideSettings['viewports'] as $viewport => $value) {
@@ -57,6 +63,10 @@ class SlideSettings
         return $this->slideSettings;
     }
 
+    /**
+     * @param mixed[] $replace
+     * @return mixed[]
+     */
     private function buildViewportSettings(?array $replace = null): array
     {
         $settings = [

@@ -250,7 +250,7 @@ class Updater
                 }
 
                 # slide speed
-                $convertedCmsElementConfig['config']['settings']['value']['speed'] = $cmsElementConfig['slideSpeed']['value'];
+                $convertedCmsElementConfig['config']['settings']['value']['speed'] = isset($cmsElementConfig['slideSpeed']['value']) ? $cmsElementConfig['slideSpeed']['value'] : null;
 
                 $updatedCmsElementsConfig[] = $convertedCmsElementConfig;
             }
@@ -273,8 +273,16 @@ class Updater
         }
     }
 
+    /**
+     * @param mixed[]|null $config
+     * @return mixed
+     */
     private function getPropertyFromViewportArray(string $viewport, ?array $config, ?string $property = null): mixed
     {
+        if ($config === null) {
+            return null;
+        }
+
         $result = array_merge(...\array_filter($config, function ($value) use ($viewport) {
             return $value['viewport'] === $viewport;
         }));
@@ -293,10 +301,6 @@ class Updater
             return $intValue * 16;
         }
 
-        if ($intValue !== false) {
-            return $intValue;
-        }
-
-        return null;
+        return $intValue;
     }
 }

@@ -29,8 +29,4 @@ export default {
             return this.config.viewports.value[this.currentViewport].settings
         }
     },
-
-    created () {
-        console.log(this)
-    }
 }

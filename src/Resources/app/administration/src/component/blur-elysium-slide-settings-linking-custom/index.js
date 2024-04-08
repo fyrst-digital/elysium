@@ -23,14 +23,4 @@ export default {
             return slides
         }
     }
-
-    /**
-     * @deprecated
-    methods: {
-        ...mapMutations('blurElysiumSlidesDetail', [
-            'setSlideSetting',
-            'setViewportSetting'
-        ])
-    }
-    */
 }

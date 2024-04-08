@@ -47,7 +47,7 @@ Shopware.Service('cmsService').registerCmsElement({
                 colors: {
                     default: '',
                     active: ''
-                },
+                }
             }
         },
         arrows: {
@@ -79,7 +79,7 @@ Shopware.Service('cmsService').registerCmsElement({
                     },
                     navigation: {
                         size: 'sm',
-                        gap: 16                        
+                        gap: 16
                     },
                     arrows: {
                         iconSize: 16
@@ -104,7 +104,7 @@ Shopware.Service('cmsService').registerCmsElement({
                     },
                     navigation: {
                         size: 'sm',
-                        gap: 20                        
+                        gap: 20
                     },
                     arrows: {
                         iconSize: 20
@@ -129,7 +129,7 @@ Shopware.Service('cmsService').registerCmsElement({
                     },
                     navigation: {
                         size: 'md',
-                        gap: 24                        
+                        gap: 24
                     },
                     arrows: {
                         iconSize: 24

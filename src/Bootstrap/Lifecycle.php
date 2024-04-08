@@ -29,11 +29,15 @@ class Lifecycle
 
     private ?string $mediaFolderConfigurationId;
 
+    /**
+     * @var NotificationService $notificationService
+     */
     private NotificationService $notificationService;
 
     public function __construct(
         private readonly ContainerInterface $container
     ) {
+        /** @phpstan-ignore-next-line */
         $this->notificationService = $container->get(NotificationService::class);
     }
 
@@ -52,14 +56,19 @@ class Lifecycle
 
     public function postUpdate(UpdateContext $updateContext): void
     {
-
+        /**
+         * @var array<mixed>
+         */
         $postUpdater = [];
 
-        if (\version_compare($updateContext->getCurrentPluginVersion(), '2.0.0', '<')) {
-            $postUpdater['2.0.0'] = new Version210Updater(
+        if (\version_compare($updateContext->getCurrentPluginVersion(), $version = '2.0.0', '<')) {
+            $postUpdater[$version] = new Version210Updater(
+                /** @phpstan-ignore-next-line */
                 $this->container->get(Connection::class),
                 $updateContext->getContext(),
+                /** @phpstan-ignore-next-line */
                 $this->container->get('blur_elysium_slides.repository'),
+                /** @phpstan-ignore-next-line */
                 $this->container->get('cms_slot.repository'),
                 $this->notificationService
             );

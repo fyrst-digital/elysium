@@ -190,7 +190,7 @@ class ElysiumSlidesEntity extends Entity
     /**
      * Set the value of slideCoverMobileId
      * @param  string|null  $slideCoverMobileId
-     * @return  self
+     * @return  void
      */
     public function setSlideCoverMobileId($slideCoverMobileId): void
     {
