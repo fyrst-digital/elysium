@@ -2,12 +2,13 @@
 
 ## Changelog
 
-- Verbesserung: Eine Post Update Konvertierung der Slide Einstellungen wurde hinzugefügt. Bei deer Aktualisierung von Version 1.5 auf 2.1 werden somit alle Slide Einstellungen automatisch übernommen.
+- Verbesserung: Eine Post Update Konvertierung der Slide und Slider Einstellungen wurde hinzugefügt. Bei der Aktualisierung von Version 1.5 auf 2.1 werden somit Slide und Slider Einstellungen automatisch übernommen.
+Hinweis: Daten aus Versionen kleiner als 1.5 werden **nicht übernommen**. Wir empfehlen außerdem in jedem Fall **vor dem Update eine Datenbank Sicherung** anzulegen
 
 # Version 2.0.0
 
 ## Wichtiger Hinweis
-Das **2.0 Update enthält Breaking Changes**. Bitte prüfe die Aktualisierung von Version 1.x auf 2.0 in einer Staging Umgebung um dauerhaften Datenverlust zu vermeiden.
+Das **2.0 Update enthält Breaking Changes**. Bitte prüfe die Aktualisierung von Version 1 auf 2.0 in einer Staging Umgebung um dauerhaften Datenverlust zu vermeiden.
 Diese Version enthält tiefgreifende, strukturelle Veränderungen. Diese Änderungen sind im Hinblick auf eine effiziente und zukunftssichere Weiterentwicklung der Elysium Erweiterung unvermeidbar gewesen.
 
 ## Update Notes

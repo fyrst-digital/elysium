@@ -39,7 +39,16 @@ class Updater
             LEFT JOIN `cms_slot` ON `cms_slot_translation`.`cms_slot_id` = `cms_slot`.`id`
             SET `config` = JSON_REMOVE(
             `config`, 
-            '$.sizing'
+            '$.sizing',
+            '$.aspectRatio',
+            '$.slideSpeed',
+            '$.sliderOverlay',
+            '$.sliderAutoplay',
+            '$.sliderDotColor',
+            '$.sliderArrowColor',
+            '$.sliderNavigation',
+            '$.sliderDotActiveColor',
+            '$.sliderAutoplayTimeout'
             )
             WHERE `cms_slot`.`type` = :element",
             [
@@ -83,7 +92,7 @@ class Updater
 
                 # container padding
                 if (isset($slideSettings['containerPadding']) && !empty($slideSettings['containerPadding'])) {
-                    $containerPaddingInt = (int) filter_var($slideSettings['containerPadding'], FILTER_SANITIZE_NUMBER_INT);
+                    $containerPaddingInt = $this->convertStringToIntUnit($slideSettings['containerPadding']);
 
                     if (!empty($containerPaddingInt)) {
                         # viewport mobile
@@ -100,7 +109,7 @@ class Updater
 
                 # container max width
                 if (isset($slideSettings['containerMaxWidth']) && !empty($slideSettings['containerMaxWidth'])) {
-                    $containerMaxWidthInt = (int) filter_var($slideSettings['containerMaxWidth'], FILTER_SANITIZE_NUMBER_INT);
+                    $containerMaxWidthInt = $this->convertStringToIntUnit($slideSettings['containerMaxWidth']);
 
                     if (!empty($containerMaxWidthInt)) {
                         # viewport mobile
@@ -209,15 +218,39 @@ class Updater
                 $convertedCmsElementConfig['config'] = $cmsElementConfig;
                 $convertedCmsElementConfig['config']['viewports']['source'] = 'static';
 
-                $aspectRatioConfig = [
-                    'mobile' => $this->getPropertyFromViewportArray('xs', $cmsElementConfig['aspectRatio']['value']),
-                    'tablet' => $this->getPropertyFromViewportArray('md', $cmsElementConfig['aspectRatio']['value']),
-                    'desktop' => $this->getPropertyFromViewportArray('xxl', $cmsElementConfig['aspectRatio']['value'])
+                $viewportConfig = [
+                    'mobile' => [
+                        'aspectRatio' => isset($cmsElementConfig['aspectRatio']['value']) ? $this->getPropertyFromViewportArray('xs', $cmsElementConfig['aspectRatio']['value']) : null,
+                        'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('xs', $cmsElementConfig['sizing']['value']) : null,
+                        'arrows' => [
+                            'iconSize' => 16
+                        ]
+                    ],
+                    'tablet' => [
+                        'aspectRatio' => isset($cmsElementConfig['aspectRatio']['value']) ? $this->getPropertyFromViewportArray('md', $cmsElementConfig['aspectRatio']['value']) : null,
+                        'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('md', $cmsElementConfig['sizing']['value']) : null,
+                        'arrows' => [
+                            'iconSize' => 20
+                        ]
+                    ],
+                    'desktop' => [
+                        'aspectRatio' => isset($cmsElementConfig['aspectRatio']['value']) ? $this->getPropertyFromViewportArray('xxl', $cmsElementConfig['aspectRatio']['value']) : null,
+                        'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('xxl', $cmsElementConfig['sizing']['value']) : null,
+                        'arrows' => [
+                            'iconSize' => 24
+                        ]
+                    ]
                 ];
 
-                foreach ($aspectRatioConfig as $viewport => $config) {
-                    $convertedCmsElementConfig['config']['viewports']['value'][$viewport]['sizing']['aspectRatio'] = $config['aspectRatio'];
+                foreach ($viewportConfig as $viewport => $config) {
+                    $convertedCmsElementConfig['config']['viewports']['value'][$viewport]['sizing']['aspectRatio'] = isset($config['aspectRatio']['aspectRatio']) && !empty($config['aspectRatio']['aspectRatio']) ? $config['aspectRatio']['aspectRatio'] : null;
+                    $convertedCmsElementConfig['config']['viewports']['value'][$viewport]['sizing']['maxHeight'] = isset($config['sizing']['maxHeight']) && !empty($config['sizing']['maxHeight']) ? $this->convertStringToIntUnit($config['sizing']['maxHeight']) : null;
+                    $convertedCmsElementConfig['config']['viewports']['value'][$viewport]['settings']['slidesPerPage'] = isset($config['sizing']['slidesPerPage']) && !empty($config['sizing']['slidesPerPage']) ? $config['sizing']['slidesPerPage'] : 1;
+                    $convertedCmsElementConfig['config']['viewports']['value'][$viewport]['arrows']['iconSize'] = $config['arrows']['iconSize'];
                 }
+
+                # slide speed
+                $convertedCmsElementConfig['config']['settings']['value']['speed'] = $cmsElementConfig['slideSpeed']['value'];
 
                 $updatedCmsElementsConfig[] = $convertedCmsElementConfig;
             }
@@ -240,12 +273,30 @@ class Updater
         }
     }
 
-    function getPropertyFromViewportArray(string $viewport, array $config, ?string $property = null): mixed
+    private function getPropertyFromViewportArray(string $viewport, ?array $config, ?string $property = null): mixed
     {
         $result = array_merge(...\array_filter($config, function ($value) use ($viewport) {
             return $value['viewport'] === $viewport;
         }));
 
         return $result;
+    }
+
+    function convertStringToIntUnit(string $value): ?int
+    {
+        /**
+         * Function is aware of rem unit. If rem is provided in $value string, null will be returned
+         */
+        $intValue = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+
+        if ($intValue !== false && \preg_match('/rem/', $value) === 1) {
+            return $intValue * 16;
+        }
+
+        if ($intValue !== false) {
+            return $intValue;
+        }
+
+        return null;
     }
 }

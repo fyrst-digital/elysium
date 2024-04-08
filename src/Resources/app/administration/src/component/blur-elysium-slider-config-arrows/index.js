@@ -26,11 +26,11 @@ export default {
             icons: [
                 {
                     value: 'arrow-head',
-                    label: this.$tc('blurElysiumSlider.config.arrows.icons.arrow')
+                    label: this.$tc('blurElysiumSlider.config.arrows.icons.chevron')
                 },
                 {
                     value: 'arrow',
-                    label: this.$tc('blurElysiumSlider.config.arrows.icons.chevron')
+                    label: this.$tc('blurElysiumSlider.config.arrows.icons.arrow')
                 }
             ],
             sizes: [

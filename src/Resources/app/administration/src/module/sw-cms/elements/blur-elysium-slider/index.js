@@ -33,21 +33,6 @@ Shopware.Service('cmsService').registerCmsElement({
                     active: true,
                     interval: 5000,
                     pauseOnHover: true
-                },
-                /**
-                 * @deprecated - remove in 2.1. see ISSUE-48
-                 */
-                viewports: {
-                    /** @type object<DeviceSettings> */
-                    mobile: {
-                        slidesPerPage: 1
-                    },
-                    tablet: {
-                        slidesPerPage: 1
-                    },
-                    desktop: {
-                        slidesPerPage: 1
-                    }
                 }
             }
         },
@@ -63,24 +48,6 @@ Shopware.Service('cmsService').registerCmsElement({
                     default: '',
                     active: ''
                 },
-                /**
-                 * @deprecated - remove in 2.1. see ISSUE-48
-                 */
-                viewports: {
-                    /** @type object<DeviceSettings> */
-                    mobile: {
-                        size: 'sm',
-                        gap: 16
-                    },
-                    tablet: {
-                        size: 'sm',
-                        gap: 20
-                    },
-                    desktop: {
-                        size: 'md',
-                        gap: 24
-                    }
-                }
             }
         },
         arrows: {
@@ -100,72 +67,7 @@ Shopware.Service('cmsService').registerCmsElement({
                     default: '',
                     active: ''
                 },
-                position: 'in_slider',
-                /**
-                 * @deprecated - remove in 2.1. see ISSUE-48
-                 */
-                viewports: {
-                    /** @type object<DeviceSettings> */
-                    mobile: {
-                        size: 16
-                    },
-                    tablet: {
-                        size: 20
-                    },
-                    desktop: {
-                        size: 24
-                    }
-                }
-            }
-        },
-        /**
-         * @deprecated - remove in 2.1. see ISSUE-48
-         */
-        sizing: {
-            source: 'static',
-            value: {
-                viewports: {
-                    /** @type object<DeviceSettings> */
-                    mobile: {
-                        aspectRatio: {
-                            width: 1,
-                            height: 1,
-                            auto: false
-                        },
-                        /** @type int | 'screen' | null */
-                        maxHeight: null,
-                        maxHeightScreen: false,
-                        paddingY: 0,
-                        paddingX: 0,
-                        slidesGap: 0
-                    },
-                    tablet: {
-                        aspectRatio: {
-                            width: 4,
-                            height: 3,
-                            auto: false
-                        },
-                        /** @type int | 'screen' | null */
-                        maxHeight: null,
-                        maxHeightScreen: false,
-                        paddingY: 0,
-                        paddingX: 0,
-                        slidesGap: 0
-                    },
-                    desktop: {
-                        aspectRatio: {
-                            width: 16,
-                            height: 9,
-                            auto: false
-                        },
-                        /** @type int | 'screen' | null */
-                        maxHeight: null,
-                        maxHeightScreen: false,
-                        paddingY: 0,
-                        paddingX: 0,
-                        slidesGap: 0
-                    }
-                }
+                position: 'in_slider'
             }
         },
         viewports: {
