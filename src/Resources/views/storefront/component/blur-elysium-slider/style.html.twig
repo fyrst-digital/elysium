@@ -23,7 +23,7 @@
             (sliderArrows.bgColors.default or sliderArrows.bgColors.active) is not empty %}
 
             #elysiumSlider-{{ element.id }} 
-            .blur-elysium-slide {
+            .blur-elysium-slider {
                 {% if sliderArrows.colors.default %}
                     --arrow-icon-color: {{sliderArrows.colors.default}};
                 {% endif %}
@@ -31,13 +31,23 @@
                     --arrow-bg-color: {{sliderArrows.bgColors.default}};
                 {% endif %}
                 {% if sliderArrows.colors.active %}
-                    --arrow-color-active: {{sliderArrows.colors.active}};
+                    --arrow-icon-color-active: {{sliderArrows.colors.active}};
                 {% endif %}
                 {% if sliderArrows.bgColors.active %}
                     --arrow-bg-color-active: {{sliderArrows.bgColors.active}};
                 {% endif %}
+                {% if sliderNavigation.align is same as('start') or sliderNavigation.align is same as('end') %}
+                    --nav-justify-content: {{ 'flex-' ~ sliderNavigation.align }};
+                {% endif %}
+                {% if sliderNavigation.colors.default %}
+                    --nav-bullet-color: {{sliderNavigation.colors.default}};
+                {% endif %}
+                {% if sliderNavigation.colors.active %}
+                    --nav-bullet-color-active: {{sliderNavigation.colors.active}};
+                {% endif %}
             }
         {% endif %}
+
         {# viewport options for cms element #}
         {% for device, options in viewports %}
             @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
@@ -66,8 +76,8 @@
                 #elysiumSlider-{{ element.id }}
                 .blur-elysium-slider
                 {
-                    {% if options.arrows.size is not empty %}
-                        --arrow-icon-size: {{ options.arrows.size ~ 'px' }};
+                    {% if options.arrows.iconSize is not empty %}
+                        --arrow-icon-size: {{ options.arrows.iconSize ~ 'px' }};
                     {% endif %}
                     {% if options.navigation.gap is not empty %}
                         --nav-bullet-gap: {{ options.navigation.gap ~ 'px' }};

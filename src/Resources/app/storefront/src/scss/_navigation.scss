@@ -1,6 +1,7 @@
 .blur-esldr__nav {
     padding: var(--nav-padding-y) var(--nav-padding-x);
     gap: var(--nav-bullet-gap);
+    justify-content: var(--nav-justify-content);
 }
 
 .blur-esldr__nav-bullet {

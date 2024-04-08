@@ -27,6 +27,7 @@
     --arrow-border-color: transparent;
     --nav-padding-y: 20px;
     --nav-padding-x: 20px;
+    --nav-justify-content: center;
     --nav-bullet-color: rgba(0,0,0,0.25);
     --nav-bullet-color-active: rgba(0,0,0,0.5);
     --nav-bullet-aspect-ratio: 1 / 1;
@@ -34,6 +35,10 @@
     --nav-bullet-gap: 16px;
     --nav-bullet-border-width: 0;
     --nav-bullet-border-color: transparent;
+    position: relative;
+}
+
+.blur-elysium-slide__wrapper {
     position: relative;
 }
 
