@@ -72,7 +72,7 @@ class ElysiumSlidesDefinition extends EntityDefinition
             (new TranslatedField('name'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('title'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('description'))->addFlags(new ApiAware(), new Inherited()),
-            (new TranslatedField('button_label'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('buttonLabel'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('url'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('customFields'))->addFlags(new ApiAware()),
             (new TranslationsAssociationField(

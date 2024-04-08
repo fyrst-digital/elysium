@@ -65,6 +65,7 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
 
             /** @var ElysiumSlidesEntity[] $elysiumSlides */
             $elysiumSlides = $slideCollection->getElements();
+
             $elysiumSliderStruct->setSlideCollection($elysiumSlides);
             $slot->setData($elysiumSliderStruct);
         }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation;
 
@@ -29,12 +31,12 @@ class ElysiumSlidesTranslationDefinition extends EntityTranslationDefinition
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
-            ( new StringField( 'name', 'name' ) )->addFlags( new Required() ),
-            ( new StringField( 'title', 'title' ) )->addFlags( new ApiAware(), new AllowHtml() ),
-            ( new LongTextField( 'description', 'description' ) )->addFlags( new ApiAware(), new AllowHtml() ),
-            ( new StringField( 'button_label', 'button_label' ) )->addFlags( new ApiAware() ),
-            ( new LongTextField( 'url', 'url' ) )->addFlags( new ApiAware() ),
-            ( new CustomFields())->addFlags(new ApiAware() )
+            (new StringField('name', 'name'))->addFlags(new Required()),
+            (new StringField('title', 'title'))->addFlags(new ApiAware(), new AllowHtml()),
+            (new LongTextField('description', 'description'))->addFlags(new ApiAware(), new AllowHtml()),
+            (new StringField('button_label', 'buttonLabel'))->addFlags(new ApiAware()),
+            (new LongTextField('url', 'url'))->addFlags(new ApiAware()),
+            (new CustomFields())->addFlags(new ApiAware())
         ]);
     }
 }

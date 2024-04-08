@@ -3,6 +3,7 @@
         "sliderControls": {
             "prev": "Vorheriger Slide",
             "next": "Nächster Slide"
-        }
+        },
+        "buttonLabel": "Mehr Erfahren"
     }
 }

@@ -98,7 +98,7 @@ class ElysiumSlidesEntity extends Entity
     /**
      * @var ?string
      */
-    protected ?string $button_label;
+    protected ?string $buttonLabel;
 
     /**
      * @var ?string
@@ -408,22 +408,22 @@ class ElysiumSlidesEntity extends Entity
     }
 
     /**
-     * Get the value of button_label
+     * Get the value of buttonLabel
      * @return  ?string
      */
     public function getButtonLabel(): ?string
     {
-        return $this->button_label;
+        return $this->buttonLabel;
     }
 
     /**
-     * Set the value of button_label
-     * @param   ?string  $button_label  
+     * Set the value of buttonLabel
+     * @param   ?string  $buttonLabel  
      * @return  void
      */
-    public function setButtonLabel(?string $button_label): void
+    public function setButtonLabel(?string $buttonLabel): void
     {
-        $this->button_label = $button_label;
+        $this->buttonLabel = $buttonLabel;
     }
 
     /**

@@ -12,7 +12,7 @@
 
     {% set actionMainUrl = seoUrl('frontend.detail.page', {'productId': slideData.product.id}) %}
 
-    {% if slideData.translated.button_label is null %}
+    {% if slideData.translated.buttonLabel is null %}
         {% set showActions = false %}
     {% else %}
         {% set showActions = true %}
