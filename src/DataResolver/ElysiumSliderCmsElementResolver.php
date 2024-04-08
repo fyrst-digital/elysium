@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\DataResolver;
 
@@ -21,8 +23,7 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
      */
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository
-    )
-    {
+    ) {
     }
 
     public function getType(): string
@@ -30,35 +31,33 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
         return 'blur-elysium-slider';
     }
 
-    public function collect( 
-        CmsSlotEntity $slot, 
+    public function collect(
+        CmsSlotEntity $slot,
         ResolverContext $resolverContext
 
-    ): ?CriteriaCollection
-    {
+    ): ?CriteriaCollection {
         return null;
     }
 
     public function enrich(
-        CmsSlotEntity $slot, 
-        ResolverContext $resolverContext, 
+        CmsSlotEntity $slot,
+        ResolverContext $resolverContext,
         ElementDataCollection $result
-        
-    ): void
-    {
+
+    ): void {
         /** @var ElysiumSliderStruct $elysiumSliderStruct */
         $elysiumSliderStruct = new ElysiumSliderStruct();
         /** @var FieldConfigCollection $fieldConfigCollection */
         $fieldConfigCollection = $slot->getFieldConfig();
         /** @var FieldConfig $elysiumSlideConfig */
-        $elysiumSlideConfig = $fieldConfigCollection->get( 'elysiumSlideCollection' );
+        $elysiumSlideConfig = $fieldConfigCollection->get('elysiumSlideCollection');
         /** @var string[] $elysiumSlideIds */
         $elysiumSlideIds = $elysiumSlideConfig->getValue();
-        
-        if ( !empty( $elysiumSlideIds ) ) {
-            $criteria = new Criteria( $elysiumSlideIds );
-            $criteria->addAssociation( 'media' );
-            
+
+        if (!empty($elysiumSlideIds)) {
+            $criteria = new Criteria($elysiumSlideIds);
+            $criteria->addAssociation('media');
+
             $slideCollection = $this->elysiumSlidesRepository->search(
                 $criteria,
                 $resolverContext->getSalesChannelContext()->getContext()
@@ -66,10 +65,8 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
 
             /** @var ElysiumSlidesEntity[] $elysiumSlides */
             $elysiumSlides = $slideCollection->getElements();
-    
-            $elysiumSliderStruct->setSlideCollection( $elysiumSlides );
-    
-            $slot->setData( $elysiumSliderStruct );
+            $elysiumSliderStruct->setSlideCollection($elysiumSlides);
+            $slot->setData($elysiumSliderStruct);
         }
     }
 }
