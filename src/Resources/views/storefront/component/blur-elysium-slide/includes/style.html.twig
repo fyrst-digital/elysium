@@ -65,6 +65,8 @@
                             {# Slide container vars #}
                             {% if options.container.columnWrap is same as(true) %}
                                 --container-direction: column;
+                            {% else %}
+                                --container-direction: row;
                             {% endif %}
                             {% if options.container.gap %}
                                 --container-gap: {{ options.container.gap ~ 'px' }};
@@ -121,6 +123,9 @@
                             {% endif %}
                             {% if options.content.paddingY %}
                                 --content-padding-y: {{ options.content.paddingY ~ 'px' }};
+                            {% endif %}
+                            {% if options.content.maxWidth %}
+                                --content-max-w: {{ options.content.maxWidth ~ 'px' }};
                             {% endif %}
 
                             {# Slide headline vars #}

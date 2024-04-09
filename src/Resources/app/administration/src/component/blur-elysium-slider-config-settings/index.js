@@ -28,5 +28,5 @@ export default {
         settingsViewportConfig () {
             return this.config.viewports.value[this.currentViewport].settings
         }
-    },
+    }
 }

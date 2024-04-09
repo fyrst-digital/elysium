@@ -13,7 +13,10 @@
 {% endif %}
 
 {% set headlineContent = slideData.translated.title|striptags( headlineTagsWhitelist|join ) %}
+{% set descriptionContent = slideData.translated.description %}
 {% set actionMainUrl = slideData.translated.url %}
+{% set showActions = actionMainUrl and slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
+{% set actionMainLabel = slideData.translated.buttonLabel ?? 'blurElysiumSlides.buttonLabel'|trans %}
 
 {% if slideData is null %}
     <div class="{{ slideClasses|join(' ') }}">

@@ -38,7 +38,7 @@
     --content-flex-grow: 1;
     --content-flex-basis: 0%;
     --content-text-align: left;
-    --content-max-width: none;
+    --content-max-w: none;
     /** Slide image vars */
     --image-flex-grow: 1;
     --image-flex-basis: 0%;
@@ -66,6 +66,7 @@
     align-items: var(--slide-align-items);
     justify-content: var(--slide-justify-content);
     max-height: var(--slide-max-height);
+    overflow: hidden;
 }
 
 .blur-elysium-slide-cover-picture {
@@ -118,7 +119,7 @@
     width: 100%;
     padding: var(--content-padding-y) var(--content-padding-x);
     text-align: var(--content-text-align);
-    // max-width: var(--content-max-width);
+    max-width: var(--content-max-w);
 }
 
 .blur-elysium-slide-image {

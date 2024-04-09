@@ -63,6 +63,6 @@ const CustomFieldDataProviderService = Shopware.Service('customFieldDataProvider
 CustomFieldDataProviderService.addEntityName('blur_elysium_slides')
 
 /**
- * @deprecated component will be purged in 2.0
+ * @deprecated component will be purged in 3.0
  */
 Component.register('blur-elysium-slide-settings-content-container', () => import('@elysiumSlider/component/blur-elysium-slide-settings-content-container'))
