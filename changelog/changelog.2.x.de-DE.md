@@ -1,9 +1,9 @@
-# unreleased - Version 2.1.0
+# Version 2.1.0
 
 ## Changelog
 
-- Verbesserung: Eine Post Update Konvertierung der Slide und Slider Einstellungen wurde hinzugefügt. Bei der Aktualisierung von Version 1.5 auf 2.1 werden somit Slide und Slider Einstellungen automatisch übernommen.
-Hinweis: Daten aus Versionen kleiner als 1.5 werden **nicht übernommen**. Wir empfehlen außerdem in jedem Fall **vor dem Update eine Datenbank Sicherung** anzulegen
+- Feature: Eine Post Update Konvertierung der Slide und Slider Einstellungen wurde hinzugefügt. Bei der Aktualisierung von Version 1.5 auf 2.1 werden somit Slide und Slider Einstellungen automatisch übernommen. **Hinweis**: Daten aus Versionen kleiner als 1.5 werden **nicht übernommen**. Wir empfehlen außerdem dringend **vor einem Update eine Datenbank Sicherung** anzulegen
+- Fehlerbehebung: Fehler im Slide Template wurden behoben und das allgemeine Styling optimiert
 
 # Version 2.0.0
 

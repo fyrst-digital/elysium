@@ -1,3 +1,10 @@
+# Version 2.1.0
+
+## Changelog
+
+- Feature: A post update conversion of the slide and slider settings has been added. When updating from version 1.5 to 2.1, slide and slider settings are automatically applied. **Note**: Data from versions lower than 1.5 will **not be converted**. We also strongly recommend **creating a database backup** before the update
+- Bugfix: Errors in the slide template have been fixed and the general styling has been optimized
+
 # Version 2.0.0
 
 ## Important note
