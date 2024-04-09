@@ -1,40 +1,40 @@
 # Version 2.1.0
 
-## Changelog
+### Changelog
 
 - Feature: Eine Post Update Konvertierung der Slide und Slider Einstellungen wurde hinzugefügt. Bei der Aktualisierung von Version 1.5 auf 2.1 werden somit Slide und Slider Einstellungen automatisch übernommen. **Hinweis**: Daten aus Versionen kleiner als 1.5 werden **nicht übernommen**. Wir empfehlen außerdem dringend **vor einem Update eine Datenbank Sicherung** anzulegen
 - Fehlerbehebung: Fehler im Slide Template wurden behoben und das allgemeine Styling optimiert
 
 # Version 2.0.0
 
-## Wichtiger Hinweis
+### Wichtiger Hinweis
 Das **2.0 Update enthält Breaking Changes**. Bitte prüfe die Aktualisierung von Version 1 auf 2.0 in einer Staging Umgebung um dauerhaften Datenverlust zu vermeiden.
 Diese Version enthält tiefgreifende, strukturelle Veränderungen. Diese Änderungen sind im Hinblick auf eine effiziente und zukunftssichere Weiterentwicklung der Elysium Erweiterung unvermeidbar gewesen.
 
-## Update Notes
+### Update Notes
 
-### Banner Erlebniswelt-Element wurde hinzugefügt  
+#### Banner Erlebniswelt-Element wurde hinzugefügt  
 Slides können nun in einem Banner Erlebniswelt Element aufbereitet und einzeln ausgespielt werden. Zusätzlich wurden zwei weitere Block Elemente hinzugefügt. Diese befinden sich in der neuen Block Kategorie **Elysium Slider und Banner**.  
 
 Der **Elysium Banner** Block ist für die Darstellung eines einzelnen Banner gedacht.  
 Der **Elysium Block — 2 Spalten** ist für die Darstellung von zwei Bannern optimiert. Es können aber auch andere Erlebniswelt Elemente in diesem Block verwendet werden. Das besondere an diesem Block sind erweiterte Darstellungsoptionen für die Smartphone, Tablet und Desktop Ansicht. Diese Block-Einstellungen finden sich in der Sidebar des Erlebniswelten Layout Designers.  
 
-### Erweiterung der Elysium Slides Konfiguration
+#### Erweiterung der Elysium Slides Konfiguration
 Die Konfiguration der Elysium Slides wurde grundlegend neu strukturiert und erweitert. Neben vielen neuen Optionen zur Darstellung kann nun auch ein **Fokus Bild** verwendet werden. Dieses Fokus Bild wird neben den Inhaltsbereich und losgelöst vom Slide Cover angezeigt.  
 Auch wurden die Slide Cover Bilder verbessert. Es können für die Smartphone, Tablet oder Desktop Ansicht verschiedene Bilder festgelegt werden.  
 
 Zudem kann, neben der individuellen Verlinkung, nun auch ein Produkt verknüpft werden. Es werden dann automatisch die Produktinformationen wie Bezeichnung, Beschreibung und Bild angezeigt. Diese Informationen können aber optional vom Slide überschrieben werden, indem man im Slide zum Beispiel die Slide Überschrift oder das Fokus Bild einsetzt.
 
-### Konsistente Einstellungen für Smartphone, Tablet und Desktop
+#### Konsistente Einstellungen für Smartphone, Tablet und Desktop
 In den Einstellugnen von Slides, Slider- und Banner- Elementen findet sich nun eine einheitliche Konfiguration für Smartphone, Tablet und Desktop Ansicht.  
 Erkennbar an den entsprechenden Geräte-Icons. Mit Klick auf ein Geräte-Icon kann die Konfiguration für diese Ansicht speziell optimiert werden. Welche Einstellungen Geräteabhängig sind, erkennst du an einem entsprechenden Indikator unterhalb einer Option.  
 
 Weiter können die Gerätegrößen, also ab welcher Bildschirmbreite welche Ansicht zum tragen kommt, vom Nutzer angepasst werden. Die Gerätegrößen können unter 'Einstellungen → Erweiterungen → Elysium Slider' eingestellt werden.
 
-### Optimierung der Slide Templates und Styles
+#### Optimierung der Slide Templates und Styles
 Die Template Struktur sowie CSS Styles von Slides wurde überarbeitet und logischer gegliedert. Falls du eigene Templates verwendest, prüfe diese auf entsprechende Änderungen.
 
-## Changelog
+### Changelog
 - Feature: Banner Erlebniswelt Element wurde hinzugefügt
 - Feature: Erlebniswelt Block 'Elysium Banner' wurde hinzugefügt
 - Feature: Erlebniswelt Block 'Elysium Block — 2 Spalten' wurde hinzugefügt
