@@ -261,15 +261,6 @@
                     alignItems: 'flex-end'
                 }">
 
-                <sw-switch-field 
-                    :label="$tc('blurElysiumSlides.slideSettings.display.imageElementAppearance.fullWidth')"
-                    :style="{
-                        gridColumn: '1 / 5'
-                    }"
-                    :value="viewportSettings.image.imageFullWidth ? viewportSettings.image.imageFullWidth : false"
-                    @change="value => setViewportSetting({key:'image.imageFullWidth', value: value})"
-                />
-
                 <sw-select-field 
                     :label="$tc('blurElysiumSlides.slideSettings.display.common.alignX')"
                     :value="viewportSettings.image.justifyContent"

@@ -97,6 +97,10 @@
                                                     {% set slideTemplate = 'default' %}
                                                     {% set slideFile = 'slide.html.twig' %}
 
+                                                    {% if slide.product is not same as(null) and slide.slideSettings.slide.linking.type is same as('product') %}
+                                                        {% set slideFile = 'slide-product.html.twig' %}
+                                                    {% endif %}
+
                                                     {% if slide.slideSettings.customTemplateFile is not empty %}
                                                         {% set slideTemplate = 'custom' %}
                                                         {% set slideFile = slide.slideSettings.customTemplateFile ~ '.html.twig' %}

@@ -4,6 +4,7 @@
             "prev": "Vorheriger Slide",
             "next": "Nächster Slide"
         },
-        "buttonLabel": "Mehr Erfahren"
+        "buttonLabel": "Mehr Erfahren",
+        "buttonLabelProduct": "Zum Produkt"
     }
 }

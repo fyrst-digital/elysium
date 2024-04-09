@@ -57,6 +57,9 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
         if (!empty($elysiumSlideIds)) {
             $criteria = new Criteria($elysiumSlideIds);
             $criteria->addAssociation('media');
+            $criteria->addAssociation('product');
+            $criteria->addAssociation('product.media');
+            $criteria->addAssociation('product.cover');
 
             $slideCollection = $this->elysiumSlidesRepository->search(
                 $criteria,
@@ -65,7 +68,6 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
 
             /** @var ElysiumSlidesEntity[] $elysiumSlides */
             $elysiumSlides = $slideCollection->getElements();
-
             $elysiumSliderStruct->setSlideCollection($elysiumSlides);
             $slot->setData($elysiumSliderStruct);
         }

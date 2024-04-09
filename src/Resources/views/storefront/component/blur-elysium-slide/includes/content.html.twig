@@ -37,10 +37,6 @@
         ]) %}
     {% endif %}
 
-    {% set descriptionContent = slideData.translated.description %}
-    {% set showActions = actionMainUrl and slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
-    {% set actionMainLabel = slideData.translated.buttonLabel ?? 'blurElysiumSlides.buttonLabel'|trans %}
-
     {% block blur_elysium_slide_content_element %}
         <div class="blur-elysium-slide-content">
             {% block blur_elysium_slide_headline %}

@@ -70,7 +70,7 @@ class Updater
                 $slideSettings = $slide->get('slideSettings');
                 $convertedSlideSettings = [];
                 $convertedSlideSettings['id'] = $id;
-                $convertedSlideSettings['slideSettings'] = $defaultSlideSettings;
+                $convertedSlideSettings['slideSettings'] = \array_replace_recursive($defaultSlideSettings, $slideSettings);
 
                 /**
                  * convert slide settings
@@ -221,21 +221,21 @@ class Updater
                 $viewportConfig = [
                     'mobile' => [
                         'aspectRatio' => isset($cmsElementConfig['aspectRatio']['value']) ? $this->getPropertyFromViewportArray('xs', $cmsElementConfig['aspectRatio']['value']) : null,
-                        'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('xs', $cmsElementConfig['sizing']['value']) : null,
+                        'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('xs', $cmsElementConfig['sizing']['value'], ['paddingY' => 40, 'paddingX' => 40]) : null,
                         'arrows' => [
                             'iconSize' => 16
                         ]
                     ],
                     'tablet' => [
                         'aspectRatio' => isset($cmsElementConfig['aspectRatio']['value']) ? $this->getPropertyFromViewportArray('md', $cmsElementConfig['aspectRatio']['value']) : null,
-                        'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('md', $cmsElementConfig['sizing']['value']) : null,
+                        'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('md', $cmsElementConfig['sizing']['value'], ['paddingY' => 40, 'paddingX' => 40]) : null,
                         'arrows' => [
                             'iconSize' => 20
                         ]
                     ],
                     'desktop' => [
                         'aspectRatio' => isset($cmsElementConfig['aspectRatio']['value']) ? $this->getPropertyFromViewportArray('xxl', $cmsElementConfig['aspectRatio']['value']) : null,
-                        'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('xxl', $cmsElementConfig['sizing']['value']) : null,
+                        'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('xxl', $cmsElementConfig['sizing']['value'], ['paddingY' => 40, 'paddingX' => 40]) : null,
                         'arrows' => [
                             'iconSize' => 24
                         ]
@@ -277,7 +277,7 @@ class Updater
      * @param mixed[]|null $config
      * @return mixed
      */
-    private function getPropertyFromViewportArray(string $viewport, ?array $config, ?string $property = null): mixed
+    private function getPropertyFromViewportArray(string $viewport, ?array $config, ?array $enrich = null, ?string $property = null): mixed
     {
         if ($config === null) {
             return null;
@@ -286,6 +286,10 @@ class Updater
         $result = array_merge(...\array_filter($config, function ($value) use ($viewport) {
             return $value['viewport'] === $viewport;
         }));
+
+        if ($enrich !== null) {
+            $result = \array_replace_recursive($result, $enrich);
+        }
 
         return $result;
     }

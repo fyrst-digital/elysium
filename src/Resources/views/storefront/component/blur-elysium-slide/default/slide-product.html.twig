@@ -1,29 +1,36 @@
 {% sw_extends '@Storefront/storefront/component/blur-elysium-slide/default/slide.html.twig' %}
 
-{% block blur_elysium_slide_content_element %}
-
-    {% if slideData.product.translated.name and slideData.translated.title is null %}
-        {% set headlineContent = slideData.product.translated.name %}
-    {% endif %}
-
-    {% if slideData.product.translated.description and slideData.translated.description is null %}
-        {% set descriptionContent = slideData.product.translated.description|raw %}
-    {% endif %}
-
-    {% set actionMainUrl = seoUrl('frontend.detail.page', {'productId': slideData.product.id}) %}
-
-    {% if slideData.translated.buttonLabel is null %}
-        {% set showActions = false %}
-    {% else %}
-        {% set showActions = true %}
+{% block blur_elysium_slide_image_element %}
+    {# overwrite focus image #}
+    {% if slideData.product.cover and slideData.presentationMedia is null %}
+        {% set imageMedia = slideData.product.cover.media %}
     {% endif %}
 
     {{ parent() }}
 {% endblock %}
 
-{% block blur_elysium_slide_image_element %}
-    {% if slideData.product.cover and slideData.presentationMedia is null %}
-        {% set imageMedia = slideData.product.cover.media %}
+{% block blur_elysium_slide %}
+    {# overwrite headline content #}
+    {% if slideData.product.translated.name and slideData.translated.title is null %}
+        {% set headlineContent = slideData.product.translated.name %}
+    {% endif %}
+    
+    {# overwrite description content #}
+    {% if slideData.product.translated.description and slideData.translated.description is null %}
+        {% set descriptionContent = slideData.product.translated.description|raw %}
+    {% endif %}
+
+    {# overwrite actions #}
+    {% if slideData.product.id %}
+        {% set actionMainUrl = seoUrl('frontend.detail.page', {'productId': slideData.product.id}) %}
+    {% endif %}
+
+    {% if slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
+        {% set showActions = true %}
+    {% endif %}
+
+    {% if slideData.translated.buttonLabel is empty %}
+        {% set actionMainLabel = 'blurElysiumSlides.buttonLabelProduct'|trans %}
     {% endif %}
 
     {{ parent() }}

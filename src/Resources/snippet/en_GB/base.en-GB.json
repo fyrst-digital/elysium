@@ -4,6 +4,7 @@
             "prev": "Previous Slide",
             "next": "Next Slide"
         },
-        "buttonLabel": "Learn more"
+        "buttonLabel": "Learn more",
+        "buttonLabelProduct": "See Product"
     }
 }
