@@ -275,6 +275,7 @@ class Updater
 
     /**
      * @param mixed[]|null $config
+     * @param mixed[]|null $enrich
      * @return mixed
      */
     private function getPropertyFromViewportArray(string $viewport, ?array $config, ?array $enrich = null, ?string $property = null): mixed
