@@ -54,7 +54,7 @@ bundle:
     - if: $CI_COMMIT_TAG =~ /(staging|alpha|beta|prerelease|-)/
       when: manual
     - if: $CI_COMMIT_TAG
-      when: on_success
+      when: always
   # set release version in composer.json with sed
   script:
     - bin/build-administration.sh && bin/build-storefront.sh
@@ -65,7 +65,7 @@ bundle:
     name: BlurElysiumSlider
     paths:
       - BlurElysiumSlider/
-    when: on_success
+    when: always
 
 # Add qa job for plugin install routine
 changelog:
@@ -75,8 +75,11 @@ changelog:
     - npm install
     - npm run md:changelog
     - ls -la && pwd
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: always
   artifacts:
     name: changelog
     paths:
       - "changelog/.mdout/*"
-    when: on_success
+    when: always
