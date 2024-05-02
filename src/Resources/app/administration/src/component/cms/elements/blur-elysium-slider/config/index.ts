@@ -1,4 +1,3 @@
-import EntityCollection from 'src/core/data/entity-collection.data'
 import template from './template.html.twig'
 
 const { Component, Mixin, Data, Context } = Shopware
@@ -42,7 +41,7 @@ export default Component.wrapComponentConfig({
         },
 
         /**
-         * @todo since we just looking for at least one slide exist we can not filter orphans at this point
+         * @deprecated since we just looking for at least one slide exist we can not filter orphans at this point
          * move this function to slide-selection component
          */
         filterOrphans (slides: any) {
