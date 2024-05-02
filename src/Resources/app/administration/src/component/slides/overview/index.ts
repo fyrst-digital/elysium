@@ -1,4 +1,3 @@
-import EntityCollection from 'src/core/data/entity-collection.data'
 import { module } from 'blurElysium/meta';
 import template from './template.html.twig'
 
@@ -8,7 +7,7 @@ const { Criteria } = Data
 type SortDirection = 'ASC' | 'DESC' 
 
 interface Data {
-    slidesCollection: EntityCollection<'blur_elysium_slides'>;
+    slidesCollection: any;
     slidesColumns: any[];
     isLoading: boolean;
     searchTerm: string,
@@ -120,7 +119,7 @@ export default Component.wrapComponentConfig({
             this.isLoading = true
 
             this.slidesRepository.search(this.defaultCriteria, Context.api)
-            .then((result: EntityCollection<'blur_elysium_slides'>) => {
+            .then((result: any) => {
                 this.slidesCollection = result
                 this.total = typeof result.total === 'number' ? result.total : 0
                 this.isLoading = false
