@@ -1,0 +1,21 @@
+<div :class="['blur-elysium-cms-slide-skeleton']">
+
+    <div v-if="typeof badge === 'string'"
+        v-html="badge"
+        :class="['blur-elysium-cms-slide-skeleton-badge']" />
+    
+
+    <div :class="['blur-elysium-cms-slide-skeleton-container']">
+
+        <div 
+            :class="['blur-elysium-cms-slide-skeleton-title']"
+            v-if="typeof title === 'string'"
+            v-html="title" />
+
+        <div 
+            :class="['blur-elysium-cms-slide-skeleton-description']"
+            v-if="typeof description === 'string'"
+            v-html="description" />
+    </div>
+
+</div>

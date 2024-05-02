@@ -69,7 +69,7 @@ class ElysiumSlidesDefinition extends EntityDefinition
             // slide settings
             (new JsonField('slide_settings', 'slideSettings',))->addFlags(new ApiAware()),
             // translation
-            (new TranslatedField('name'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('name'))->addFlags(new ApiAware(), new Required(), new Inherited()),
             (new TranslatedField('title'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('description'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('buttonLabel'))->addFlags(new ApiAware(), new Inherited()),

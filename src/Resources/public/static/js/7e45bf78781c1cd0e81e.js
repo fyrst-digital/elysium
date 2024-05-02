@@ -1,0 +1,1 @@
+"use strict";(window["webpackJsonpPluginblur-elysium-slider"]=window["webpackJsonpPluginblur-elysium-slider"]||[]).push([[2510],{2510:function(e,i,n){n.r(i),n.d(i,{default:function(){return r}});let{Component:l}=Shopware;var r=l.wrapComponentConfig({template:"<div>\n    <blur-elysium-slides-form-general />\n    <blur-elysium-slides-form-linking />\n</div>"})}}]);

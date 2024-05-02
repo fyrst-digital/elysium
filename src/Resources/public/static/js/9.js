@@ -1,1 +1,0 @@
-(this["webpackJsonpPluginblur-elysium-slider"]=this["webpackJsonpPluginblur-elysium-slider"]||[]).push([[9],{dS0x:function(e,i,s){"use strict";s.r(i);i.default={template:'<div>\n    <sw-icon name="regular-expand-arrows" size="12" /> Geräteabhängig\n</div>'}}}]);

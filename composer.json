@@ -6,7 +6,7 @@
         "CMS",
         "Slider"
     ],
-    "version": "2.1.0",
+    "version": "3.0.0",
     "type": "shopware-platform-plugin",
     "minimum-stability": "stable",
     "license": "MIT",
@@ -16,13 +16,13 @@
         }
     ],
     "require": {
-        "shopware/core": "6.5.*"
+        "shopware/core": "6.6.*"
     },
     "extra": {
         "shopware-plugin-class": "Blur\\BlurElysiumSlider\\BlurElysiumSlider",
         "label": {
-            "de-DE": "Elysium Slider",
-            "en-GB": "Elysium Slider"
+            "de-DE": "Elysium Slider und Banner",
+            "en-GB": "Elysium Slider and Banner"
         },
         "description": {
             "de-DE": "Ein flexibler, wiederverwendbarer und umfangreicher Slider für die Shopware 6 Erlebniswelten",

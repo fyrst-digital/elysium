@@ -1,0 +1,98 @@
+<sw-card
+    position-identifier="positionIdentifiers.placeholder"
+    :content-padding="false">
+
+    <blur-card-section
+        :title="$tc('blurElysiumSlider.config.settings.general')">
+
+        <sw-container 
+            columns="repeat(2, 1fr)" 
+            gap="30px">
+
+            {% block blur_cms_config_elysium_slider_rewind %}
+                <sw-switch-field 
+                    :label="$tc('blurElysiumSlider.config.settings.rewind')"
+                    v-model:value="settingsConfig.rewind" />
+            {% endblock %}
+
+            {% block blur_cms_config_elysium_slider_overlay %}
+                <sw-switch-field 
+                    :label="$tc('blurElysiumSlider.config.settings.overlay')"
+                    v-model:value="settingsConfig.overlay" />
+            {% endblock %}
+
+            {% block blur_cms_config_elysium_slider_slides_per_page %}
+                <blur-device-number-field 
+                    :label="$tc('blurElysiumSlider.config.settings.slidesPerPage.label')"
+                    :unit="false"
+                    :device="currentViewport"
+                    v-model:value="settingsViewportConfig.slidesPerPage" />
+            {% endblock %}
+
+            {% block blur_cms_config_elysium_slider_speed %}
+                <sw-number-field 
+                    numberType="int" 
+                    v-model:value="settingsConfig.speed"
+                    :label="$tc('blurElysiumSlider.config.settings.speed.label')"
+                    :step="null" 
+                    :min="300" 
+                    :max="null" 
+                    :digits="null"
+                    :allowEmpty="false">
+                    <template #suffix>ms</template>
+                </sw-number-field>                                        
+            {% endblock %}
+
+            {% block blur_cms_config_elysium_slider_container_width %}
+                <sw-select-field
+                    v-model:value="settingsConfig.containerWidth"
+                    :label="$tc('blurElysiumSlider.config.settings.containerWidth.label')"
+                    :help-text="$tc('blurElysiumSlider.config.settings.containerWidth.helpText')"
+                >
+                    <option value="content">{{$tc('blurElysiumSlider.config.settings.containerWidth.content')}}</option>
+                    <option value="full">{{$tc('blurElysiumSlider.config.settings.containerWidth.full')}}</option>
+                </sw-select-field>
+            {% endblock %}
+        </sw-container>
+
+    </blur-card-section>
+
+    <blur-card-section
+        :title="$tc('blurElysiumSlider.config.settings.autoplay.label')">
+
+        <sw-container 
+            columns="repeat(2, 1fr)" 
+            gap="30px">
+
+            {% block blur_cms_config_elysium_slider_autoplay_active %}
+                <sw-switch-field 
+                    :label="$tc('blurElysiumSlider.config.settings.autoplay.active')" 
+                    v-model:value="settingsConfig.autoplay.active" />
+            {% endblock %}
+
+            {% block blur_cms_config_elysium_slider_autoplay_pause_on_hover %}
+                <sw-switch-field 
+                    :label="$tc('blurElysiumSlider.config.settings.autoplay.pauseOnHover')" 
+                    v-model="settingsConfig.autoplay.pauseOnHover" />
+            {% endblock %}
+
+            {% block blur_cms_config_elysium_slider_autoplay_timeout %}
+                <sw-number-field 
+                    numberType="int" 
+                    v-model:value="settingsConfig.autoplay.interval"
+                    :label="$tc('blurElysiumSlider.config.settings.autoplay.interval.label')"
+                    :placeholder="$tc('blurElysiumSlider.config.settings.autoplay.interval.placeholder')"
+                    :step="null" 
+                    :min="3000" 
+                    :max="null" 
+                    :digits="null"
+                    :allowEmpty="false">
+                    <template #suffix>ms</template>
+                </sw-number-field>
+            {% endblock %}
+
+        </sw-container>
+
+    </blur-card-section>
+
+</sw-card>

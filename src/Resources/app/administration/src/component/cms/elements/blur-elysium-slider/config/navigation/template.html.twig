@@ -1,0 +1,90 @@
+<sw-card
+    position-identifier="positionIdentifiers.placeholder"
+    :content-padding="false">
+
+    <blur-card-section
+        :title="$tc('blurElysium.general.general')">
+
+        <sw-container 
+            columns="repeat(2, 1fr)" 
+            gap="30px">
+
+            <sw-switch-field 
+                v-model:value="navigationConfig.active" 
+                :label="$tc('blurElysiumSlider.config.navigation.active')" 
+                :style="{
+                    gridColumn: '1 / span 2'
+                }"/>
+
+            <sw-select-field 
+                :label="$tc('blurElysiumSlider.config.navigation.position.label')"
+                v-model:value="navigationConfig.position">
+                <option 
+                    v-for="position in positions" 
+                    :key="position.value" 
+                    :value="position.value">{{position.label}}</option>
+            </sw-select-field>
+
+            <sw-select-field 
+                :label="$tc('blurElysiumSlider.config.navigation.align.label')"
+                v-model:value="navigationConfig.align">
+                <option 
+                    v-for="align in aligns" 
+                    :key="align.value" 
+                    :value="align.value">{{align.label}}</option>
+            </sw-select-field>
+
+        </sw-container>
+
+    </blur-card-section>
+
+    <blur-card-section
+        :title="$tc('blurElysium.general.appearance')">
+
+        <sw-container 
+            columns="repeat(2, 1fr)" 
+            gap="30px">
+
+            <sw-select-field 
+                :label="$tc('blurElysiumSlider.config.navigation.shape.label')"
+                v-model:value="navigationConfig.shape">
+                <option 
+                    v-for="shape in shapes" 
+                    :key="shape.value" 
+                    :value="shape.value">{{shape.label}}</option>
+            </sw-select-field>
+
+            <blur-device-select-field 
+                :label="$tc('blurElysiumSlider.config.navigation.size.label')"
+                :options="sizes"
+                :device="currentViewport"
+                v-model:value="navigationViewportConfig.size" />
+
+            <blur-device-number-field 
+                v-model:value="navigationViewportConfig.gap"
+                :label="$tc('blurElysiumSlider.config.navigation.navPadding.label')"
+                :device="currentViewport"/>
+
+            <sw-colorpicker
+                :label="$tc('blurElysium.general.color')"
+                v-model:value="navigationConfig.colors.default"
+                colorOutput="auto"
+                :alpha="true"
+                :disabled="false"
+                :colorLabels="true"
+                :zIndex="1010" />
+
+            <sw-colorpicker
+                :label="$tc('blurElysium.general.colorActive')"
+                v-model:value="navigationConfig.colors.active"
+                colorOutput="auto"
+                :alpha="true"
+                :disabled="false"
+                :colorLabels="true"
+                :zIndex="1010" />
+
+        </sw-container>
+
+    </blur-card-section>
+
+</sw-card>

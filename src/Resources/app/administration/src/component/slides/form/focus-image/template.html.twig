@@ -1,0 +1,31 @@
+<sw-card
+    position-identifier="positionIdentifier.placeholder"
+    :content-padding="0">
+
+    <template #title>
+        <blur-card-title 
+            :title="$tc('blurElysiumSlides.forms.slideFocusImage.label')" 
+            icon="blurph-check-square-offset-bold" />
+    </template>
+
+    <blur-card-section
+        :description="$tc('blurElysiumSlides.forms.slideFocusImage.description')">
+
+        <sw-container
+            columns="1fr"
+            gap="30px">
+
+            <blur-elysium-media-upload 
+                allowed-file="image/*"
+                :uploadTag="'blur-elysium-slide-focus-image'" 
+                :media="focusImageMedia" 
+                @media-remove="payload => resetMedia( 'presentationMedia' )"
+                @upload-finished="payload => setMedia( 'presentationMedia', payload.targetId )"
+                @media-dropped="payload => setMedia( 'presentationMedia', payload.id, 'image')"
+                @media-sidebar-open="mediaSidebar.openContent()" />
+
+        </sw-container>
+
+    </blur-card-section>
+
+</sw-card>

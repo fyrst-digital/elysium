@@ -1,0 +1,45 @@
+<sw-card>
+
+    <blur-device-switch 
+        layout="row"
+        show-label="false"
+        :default-viewport="currentCmsDeviceView"
+        @change-viewport="changeViewport" 
+        :style="{
+            padding: '0',
+            width: '100%',
+            justifyContent: 'center'
+        }" />
+
+    <sw-entity-single-select 
+        :label="$tc('blurElysiumBanner.config.selectSlide')"
+        entity="blur_elysium_slides" 
+        v-model:value="selectedSlide" />
+
+
+    <sw-switch-field 
+        :label="$tc('blurElysiumBanner.config.autoSizing')"
+        v-model:value="viewportConfig.aspectRatio.auto" />
+
+    <sw-container
+        columns="1fr 1fr"
+        gap="0 1rem">
+
+        <blur-device-number-field 
+            v-model:value="viewportConfig.aspectRatio.width"
+            :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
+            :unit="false"
+            :device="activeViewport"
+            :disabled="viewportConfig.aspectRatio.auto === true"/>
+
+        <blur-device-number-field 
+            v-model:value="viewportConfig.aspectRatio.height"
+            :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
+            :unit="false"
+            :device="activeViewport"
+            :disabled="viewportConfig.aspectRatio.auto === true"/>
+
+    </sw-container>
+
+</sw-card>
+

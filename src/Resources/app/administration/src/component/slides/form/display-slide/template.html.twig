@@ -1,0 +1,72 @@
+<sw-card
+    position-identifier="positionIdentifier.placeholder"
+    :content-padding="0"
+>
+
+    <template #title>
+        <blur-card-title 
+            :title="$tc('blurElysiumSlides.forms.displaySlide.label')" 
+            icon="blurph-slideshow-bold" />
+    </template>
+
+    <blur-card-section
+        :title="$tc('blurElysium.general.spacing')"
+        title-icon="blurph-ruler-bold">
+
+        <sw-container
+            columns="repeat(4, minmax(0, 1fr))"
+            gap="30px">
+
+            <blur-device-number-field 
+                :label="$tc('blurElysium.general.paddingX')"
+                :device="deviceView"
+                v-model:value="slideViewportSettings.slide.paddingX" /> 
+
+            <blur-device-number-field 
+                :label="$tc('blurElysium.general.paddingY')"
+                :device="deviceView"
+                v-model:value="slideViewportSettings.slide.paddingY" /> 
+
+            <blur-device-number-field 
+                :label="$tc('blurElysium.general.borderRadius')"
+                :device="deviceView"
+                v-model:value="slideViewportSettings.slide.borderRadius" /> 
+
+        </sw-container>
+
+    </blur-card-section>
+
+    <blur-card-section
+        :title="$tc('blurElysium.general.alignment')"
+        :description="$tc('blurElysiumSlides.forms.displaySlide.alignmentDescription')"
+        title-icon="blurph-arrows-out-line-horizontal-bold">
+
+        <sw-container
+            columns="repeat(4, minmax(0, 1fr))"
+            gap="30px">
+
+            <blur-device-select-field 
+                :label="$tc('blurElysium.general.alignX')" 
+                :device="deviceView"
+                :options="[
+                    { id: 'flex-start', name: $tc('blurElysium.general.left') },
+                    { id: 'center', name: $tc('blurElysium.general.center') },
+                    { id: 'flex-end', name: $tc('blurElysium.general.bottom') }
+                ]"
+                v-model:value="slideViewportSettings.slide.justifyContent" />
+
+            <blur-device-select-field 
+                :label="$tc('blurElysium.general.alignY')" 
+                :device="deviceView"
+                :options="[
+                    { id: 'flex-start', name: $tc('blurElysium.general.top') },
+                    { id: 'center', name: $tc('blurElysium.general.center') },
+                    { id: 'flex-end', name: $tc('blurElysium.general.bottom') }
+                ]"
+                v-model:value="slideViewportSettings.slide.alignItems" />
+
+        </sw-container>
+
+    </blur-card-section>
+
+</sw-card>

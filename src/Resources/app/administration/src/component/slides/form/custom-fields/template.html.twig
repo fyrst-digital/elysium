@@ -1,0 +1,52 @@
+<sw-card
+    position-identifier="positionIdentifier.placeholder"
+    :content-padding="0">
+
+    <template #title>
+        <blur-card-title 
+            :title="$tc('blurElysiumSlides.forms.customFields.label')" 
+            icon="blurph-check-square-offset-bold" />
+    </template>
+
+    <blur-card-section>
+
+        <template
+            v-if="customFieldSet && slide._isNew !== true">
+
+            <sw-custom-field-set-renderer
+                v-if="hasCustomFields"
+                :entity="slide"
+                :sets="customFieldSet" />
+
+            <sw-alert 
+                v-else 
+                variant="warning" 
+                appearance="default" 
+                :showIcon="true" 
+                :closable="false"
+                :style="{
+                    marginBottom: '0'
+                }">
+                {{ $tc('blurElysiumSlides.forms.customFields.emptyFieldSet') }}
+            </sw-alert>
+
+        </template>
+
+        <template
+            v-else>
+
+            <sw-alert 
+                variant="info" 
+                appearance="default" 
+                :showIcon="true" 
+                :closable="false"
+                :style="{
+                    marginBottom: '0'
+                }">
+                {{ $tc('blurElysiumSlides.forms.customFields.newSlide') }}
+            </sw-alert>
+
+        </template>
+
+    </blur-card-section>
+</sw-card>
