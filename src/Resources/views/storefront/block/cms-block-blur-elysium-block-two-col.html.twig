@@ -29,7 +29,7 @@
                             --columns: {{ options.width.colOne}}fr {{ options.width.colTwo}}fr;
                         {% endif %}
                         {% if options.gridGap is not empty %}
-                            --gap: {{ options.gridGap}};
+                            --gap: {{ options.gridGap ~ 'px' }};
                         {% endif %}
                     }
                 }            
@@ -42,7 +42,7 @@
             data-cms-block="{{ block.id }}">
 
             {% block cms_block_blur_elysium_block_slot_one %}
-                {% set element = block.slots.getSlot('one') %}
+                {% set element = block.slots.getSlot('left') %}
 
                 {% block cms_block_blur_elysium_block_slot_one_incldue %}
                     {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
@@ -50,7 +50,7 @@
             {% endblock %}
 
             {% block cms_block_blur_elysium_block_slot_two %}
-                {% set element = block.slots.getSlot('two') %}
+                {% set element = block.slots.getSlot('right') %}
 
                 {% block cms_block_blur_elysium_block_slot_two_incldue %}
                     {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}

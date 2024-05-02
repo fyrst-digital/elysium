@@ -1,0 +1,50 @@
+.blur-elysium-cms-slide-skeleton {
+    --slide-bg-color: #f9f9f9;
+    --slide-border-color: #dddddd;
+    --slide-aspect-ratio: auto;
+    --slide-bg-pos-y: center;
+    --slide-bg-pos-x: center;
+    --slide-bg-size: cover;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position: var(--slide-bg-pos-y) var(--slide-bg-pos-x);
+    background-color: var(--slide-bg-color);
+    background-size: var(--slide-bg-size);
+    border: 2px dashed var(--slide-border-color);
+    border-radius: 10px;
+    padding: 50px 30px;
+    aspect-ratio: var(--slide-aspect-ratio);
+    position: relative;
+}
+.blur-elysium-cms-slide-skeleton-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+    text-align: center;
+    max-width: 600px;
+}
+.blur-elysium-cms-slide-skeleton-title {
+    font-weight: 600;
+    font-size: 24px;
+}
+.blur-elysium-cms-slide-skeleton-description {
+    line-height: 1.5;
+    font-size: 16px;
+}
+.blur-elysium-cms-slide-skeleton-badge {
+    position: absolute;
+    inset: 0 auto auto 0;
+    font-size: 14px;
+    margin: 8px;
+    background-color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    line-height: 1.25;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}

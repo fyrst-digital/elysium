@@ -1,0 +1,105 @@
+<sw-page>
+
+    <template #search-bar>
+
+        <sw-search-bar
+            initial-search-type="blur_elysium_slides"
+            :initial-search="searchTerm"
+            @search="onSearch"/>
+
+    </template>
+
+    <template #smart-bar-header>
+
+        <div :style="styles.moduleHeading">
+            <blur-elysium-slides-icon 
+                :color="module.color" />
+
+            <h2>
+                {{ $t('blurElysiumSlides.label') }}
+                <span :style="{
+                        fontWeight: 'normal'
+                    }">
+                    ({{ total }})
+                </span>
+            </h2>
+        </div>
+    </template>
+
+    <template #language-switch>
+
+        <sw-language-switch 
+            @on-change="onChangeLanguage" />
+
+    </template>
+
+    <template #smart-bar-actions>
+
+        <sw-button
+            variant="primary"
+            :router-link="{ name: 'blur.elysium.slides.create' }">
+            {{ $tc('blurElysium.action.createSlide') }}
+        </sw-button>
+    </template>
+
+    <template #content>
+
+        <sw-entity-listing
+            v-if="total > 0"
+            :items="slidesCollection"
+            :repository="slidesRepository"
+            :columns="slidesColumns"
+            :is-loading="isLoading"
+            :sort-by="sortBy"
+            :sort-direction="sortDirection"
+            @column-sort="columnSort"
+            @delete-item-finish="finishDeleteItems"
+            @items-delete-finish="finishDeleteItems">
+
+            <template #more-actions="{ item }">
+
+                <sw-context-menu-item
+                    @click="copySlide(item)"
+                >
+                    {{ $tc('blurElysiumSlides.actions.copySlide') }}
+                </sw-context-menu-item>
+
+                <sw-context-menu-item
+                    :router-link="{ name: 'blur.elysium.slides.detail', params: { id: item.id }}"
+                >
+                    {{ $tc('blurElysiumSlides.actions.editSlide') }}
+                </sw-context-menu-item>
+            </template>
+
+        </sw-entity-listing>
+
+        <template v-if="isLoading === false && total === 0">
+            
+            <sw-empty-state
+                :title="$tc('blurElysiumSlides.emptySlidesTitle')"
+                :subline="$tc('blurElysiumSlides.emptySlidesSubline')"
+                :auto-height="true"
+                :style="{
+                    minHeight: '50vh',
+                    padding: '40px 20px'
+                }">
+
+                <template #icon>
+                    <img
+                        :src="assetFilter('/administration/static/img/empty-states/media-empty-state.svg')"
+                        :alt="$tc('blurElysiumSlides.emptySlidesTitle')"
+                    >
+                </template>
+
+                <template #actions>
+
+                    <sw-button
+                        :router-link="{ name: 'blur.elysium.slides.create' }">
+                        {{ $tc('blurElysium.action.createSlide') }}
+                    </sw-button>
+                </template>
+            </sw-empty-state>
+        </template>
+    </template>
+
+</sw-page>

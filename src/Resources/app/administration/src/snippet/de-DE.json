@@ -1,49 +1,258 @@
 {
-    "blurElysiumSettings": {
-        "label": "Elysium Slider",
-        "breakpointsDescription": "Elysium Slider, Banner und Slides verwenden Geräteeinstellungen für die Smartphone, Tablet und Desktop Ansicht. Du kannst die Gerätegrößen, welche im Theme verwendet werden sollen, selbst definieren.<br/>Hierbei werden die Breakpoints des Shopware Themes genutzt. In der unteren Auswahl werden die Standard Pixelwerte des Shopware Themes angezeigt. <b>Diese können je nach verwendeten Theme oder Individualentwicklungen abweichen.</b>"
+    "global": {
+        "entities": {
+            "blur_elysium_slides": "Elysium Slides"
+        }
     },
-    "blurElysiumSlider": {
+    "blurElysium": {
+        "settingsLabel": "Elysium Einstellungen",
+        "settings": {
+            "label": "Elysium Einstellungen",
+            "breakpointsDescription": "Elysium Slider, Banner und Slides verwenden Geräteeinstellungen für die Smartphone-, Tablet- und Desktop-Ansicht. Die im Storefront verwendeten Gerätegrößen kannst du selbst festlegen. Die Standard Gerätegrößen des Shopware Themes werden hier verwendet. Die untere Auswahl zeigt diese Standard Pixel Werte. <b>Je nach verwendetem Theme oder eigenen Entwicklungen können diese variieren.</b>"
+        },
+        "cmsBlockGroup": "Elysium Blöcke",
         "general": {
-            "default": "Standard",
-            "active": "Aktiv",
+            "placeholderSearchBar": "Nach Slide suchen...",
+            "noHeadline": "Keine Überschrift",
+            "removeItem": "Entfernen",
+            "addItem": "Hinzufügen",
             "general": "Allgemein",
-            "appearance": "Erscheinungbild",
+            "appearance": "Erscheinung",
+            "content": "Inhalt",
+            "copySuffix": "kopie",
+            "backgroundColor": "Hintergrundfarbe",
+            "fontSize": "Schriftgröße",
+            "textColor": "Texttfarbe",
+            "unitPx": "Px",
+            "color": "Farbe",
+            "colorActive": "Farbe: Aktiv",
+            "iconColor": "Iconfarbe",
+            "iconColorActive": "Iconfarbe: Aktiv",
+            "bgColor": "Hintergrundfarbe",
+            "bgColorActive": "Hintergrundfarbe: Aktiv",
+            "colorStates": {
+                "primary": "Primär",
+                "secondary": "Sekundär",
+                "success": "Erfolg",
+                "danger": "Fehler",
+                "warning": "Warnung",
+                "info": "Info",
+                "light": "Hell",
+                "dark": "Dunkel"
+            },
             "small": "Klein",
             "medium": "Medium",
             "large": "Groß",
-            "color": "Farbe",
-            "colorActive": "Farbe (Aktiv)",
-            "textColor": "Textfarbe",
-            "iconColor": "Iconfarbe",
-            "iconColorActive": "Iconfarbe (Aktiv)",
-            "bgColor": "Hintergrundfarbe",
-            "bgColorActive": "Hintergrundfarbe (Aktiv)",
-            "padding": "Innenabstand",
-            "unitPlaceholderPxRem": "px oder rem Wert",
-            "unitPlaceholderPx": "in Pixeln",
-            "noHeadline": "Keine Überschrift",
-            "copySuffix": "kopie",
-            "cmsBlockGroup": "Elysium Slider und Banner",
-            "colorStates": {
-                "primary": "Primärfarbe",
-                "secondary": "Sekundärfarbe",
-                "success": "Erfolg",
-                "danger": "Fehler",
-                "warning": "Hinweis",
-                "info": "Information",
-                "light": "Hell",
-                "dark": "Dunkel"
+            "textAlign": "Textausrichtung",
+            "top": "Oben",
+            "center": "Zentriert",
+            "bottom": "Unten",
+            "left": "Links",
+            "right": "Rechts",
+            "spacing": "Abstände",
+            "gap": "Abstand: Zwischenraum",
+            "paddingX": "Abstand: Vertikal",
+            "paddingY": "Abstand: Horizontal",
+            "borderRadius": "Kantenrundung",
+            "alignment": "Ausrichtung",
+            "alignX": "Ausrichtung: Horizontal",
+            "alignY": "Ausrichtung: Vertikal",
+            "jusitifyContent": "Elementangleichung",
+            "jusitifyNormal": "Normal",
+            "jusitifyStart": "Beginn",
+            "jusitifyCenter": "Zentriert",
+            "jusitifyEnd": "Ende",
+            "jusitifyStretch": "Strecken",
+            "jusitifyBetween": "Zwischenraum aufteilen: Abstand zur Begrenzung",
+            "jusitifyAroud": "Zwischenraum aufteilen: An Begrenzung heften",
+            "alignItems": "Elementausrichtung",
+            "alignStart": "Beginn",
+            "alignCenter": "Zentriert",
+            "alignEnd": "Ende",
+            "objectPosY": "Objekt Position: Vertikal",
+            "objectPosX": "Objekt Position: Horizontal",
+            "objectFit": "Objekt Anpassung",
+            "fitCover": "Füllen (Auf gesamten Bereich)",
+            "fitContain": "Beibehalten",
+            "fitAuto": "Automatisch"
+        },
+        "action": {
+            "createSlide": "Create Slide erstellen",
+            "toOverview": "Zur Übersicht"
+        },
+        "messages": {
+            "deviceSettingNote": "Diese Einstellung ist geräteabhängig. Aktuelles Gerät: {device}"
+        },
+        "device": {
+            "phone": "Telefon",
+            "tablet": "Tablet",
+            "desktop": "Desktop"
+        }
+    },
+    "blurElysiumSlides": {
+        "label": "Elysium Slides",
+        "description": "Hier kannst du Slides für Elysium Erlebniswelten Elemente erstellen.",
+        "emptySlidesTitle": "Keine Elysium Slides gefunden",
+        "messages": {
+            "cancelSlideCreation": "Slide Erstellung abbrechen und zur Übersicht zurückkehren",
+            "cancelSlideChanges": "Änderungen verwerfen und die Seite neu laden",
+            "slideDeleteConfirm": "Möchtest du den Slide wirklich löschen?",
+            "slideDeleteSucces": "Slide wurde gelöscht",
+            "slideDeleteError": "Beim Löschen des Slides ist ein Fehler aufgetreten",
+            "slideSavedSuccess": "Slide <b>{slide}</b> wurde gespeichert",
+            "emptySlideNameErrorTitle": "Kein Slide Name",
+            "emptySlideNameError": "Bitte gib einen Namen für den Slide an",
+            "slideSaveError": "Etwas ging schief. Der Slide konnte nicht gespeichert werden"
+        },
+        "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
+        "actions": {
+            "confirmAction": "Aktion bestätigen",
+            "newSlide": "Slide erstellen",
+            "copySlide": "Slide kopieren",
+            "editSlide": "Slide bearbeiten",
+            "deleteSlide": "Slide löschen"
+        },
+        "grid": {
+            "nameLabel": "Name",
+            "headlineLabel": "Überschrift"
+        },
+        "settings": {
+            "baseLabel": "Allgemein",
+            "mediaLabel": "Medien",
+            "displayLabel": "Anzeige",
+            "advancedLabel": "Erweitert"
+        },
+        "forms": {
+            "generalTitle": "Allgemein",
+            "useMediaAsSlideCover": "Als Slide Cover verwenden",
+            "useMediaAsFocusImage": "Als Fokusbild verwenden",
+            "slideName": {
+                "label": "Slide Name",
+                "placeholder": "mein-slide"
+            },
+            "slideHeadline": {
+                "label": "Überschrift",
+                "placeholder": "Mein fantastischer Slide!"
+            },
+            "slideCssClass": {
+                "label": "Slide CSS Klassen",
+                "placeholder": "custom-class second-custom-class",
+                "helpText": "Gib eine oder mehrere CSS-Klassen, getrennt durch ein Leerzeichen, an."
+            },
+            "slideHeadlineElement": {
+                "label": "HTML Element",
+                "helpText": "Gib ein HTML-Element für die Überschrift an. Ist kein Element ausgewählt, wird ein <b>div</b> verwendet"
+            },
+            "slideDescription": {
+                "label": "Beschreibung"
+            },
+            "slideBackground": {
+                "label": "Hintergrund"
+            },
+            "slideGradient": {
+                "label": "Verlauf",
+                "startColor": "Primäre Farbe",
+                "endColor": "Sekundäre Farbe",
+                "gradientType": "Typ",
+                "gradientTypeLinear": "Linear",
+                "gradientDeg": "Verlaufsgrad"
+            },
+            "slideLinking": {
+                "label": "Verlinkung",
+                "typeLabel": "Typ",
+                "typeCustom": "Individuell",
+                "typeProduct": "Produkt",
+                "customUrl": "Individuelle Adresse",
+                "customUrlPlaceholder": "/mein/shop/pfad oder https://example.com",
+                "customUrlHelpText": "Legt die Verlinkte Adresse fest. Dies kann sowohl eine absolute als auch eine relative Adresse sein",
+                "selectProduct": "Produkt wählen"
+            },
+            "slideButtonLabel": { 
+                "label": "Buttonbeschriftung",
+                "placeholder": "Mehr Erfahren",
+                "helpText": "Legt eine Buttonbeschriftung fest. Ist keine Beschriftung angegeben, wird der Button nicht angezeigt."
+            },
+            "slideButtonAppearance": {
+                "label": "Buttonerscheinung",
+                "helpText": "Definiert die Buttonerscheinung. Die Farben basieren auf dem verwendeten Theme"
+            },
+            "slideLinkingOpenExternal": "In neuem Fenster öffnen",
+            "slideLinkingOverlay": {
+                "label": "Verlinkung als Overlay",
+                "helpText": "Ist diese Option aktiv, wird der gesamte Slide als Verknüpfungsfläche genutzt. In diesem Fall wird der Button ausgeblendet"
+            },
+            "slideCover": {
+                "label": "Slide Cover"
+            },
+            "slideCoverImage": {
+                "label": "Cover Bild",
+                "description": "Füge ein Bild als Slide Hintergrund hinzu. Das Cover Bild kann für Smartphone-, Tablet- und Desktop-Ansicht definiert werden. Das Desktop Bild dient als Standard. Gültige Bildformate sind jpg, png, webp, svg, avif"
+            },
+            "slideFocusImage": {
+                "label": "Fokusbild",
+                "description": "Das Fokusbild wird als separates Bild neben dem Inhaltsbereich angezeigt."
+            },
+            "slideCoverVideo": {
+                "label": "Cover Video",
+                "description": "Füge ein Video als Slide Hintergrund hinzu. Das Cover Video gilt für alle Ansichten. Gültige Videoformate sind mp4"
+            },
+            "displaySlide": {
+                "label": "Slide",
+                "alignmentDescription": "Diese Einstellungen bestimmen die Ausrichtung des inneren Containers"
+            },
+            "displayContainer": {
+                "label": "Container",
+                "description": "Diese Einstellungen betreffen den Slide Container. Der Slide Container umschließt das Inhalts und Bildelement",
+                "alignmentDescription": "Diese Einstellungen beeinflussen die Ausrichtung der inneren Containerelemente. Wenn die Elemente untereinander angezeigt werden, werden diese Einstellungen umgekehrt"
+            },
+            "slideDirectionColumn": {
+                "label": "Elemente untereinander anzeigen"
+            },
+            "slideContentOrder": {
+                "label": "Layout Reihenfolge",
+                "default": "Standard (Inhalt — Bild)",
+                "reverse": "Umgekehrt (Bild — Inhalt)",
+                "helpText": "Bestimmt die Reihenfolge der Containerelemente"
+            },
+            "slideWidth": {
+                "label": "Breitenbeschränkung",
+                "noMaxWidth": "Breite nicht beschränken"
+            },
+            "customTemplateFile": {
+                "label": "Custom template file",
+                "description": "Here you can define your own Twig template file for this slide. If you enter a Twig template file in this field, you will need to add it to your theme or extension by yourself.",
+                "placeholder": "my-slide-template",
+                "pathInfo": "The path to this file is:<br/><code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code"
+            },
+            "customFields": {
+                "label": "Zusatzfelder",
+                "emptyFieldSet": "Es wurden noch keine Zusatzfelder für Elysium Slides erstellt. In den Zusatzfelder Einstellungen kann ein Set für Elysium Slides erstellt werden",
+                "newSlide": "Um Zusatzfelder zu verwenden, speichern zuerst den Slide"
             }
         },
+        "slideSelection": {
+            "noSlides": "Anscheinend sind noch keine Slides vorhanden. Im Elysium Slides Modul können Slides erstellt und anschließend hier verknüpft werden",
+            "searchLabel": "Slides wählen",
+            "listLabel": "Slide Auswahl",
+            "listNoSelection": "Klicke in das Suchfeld und wähle deine Slides. Du findest deine Slides unter <b>Inhalt → Elysium Slides</b>, wo du auch neue Slides erstellen kannst."
+        },
+        "slideSearch": {
+            "noResult": "Keine Slides gefunden"
+        }
+    },
+    "blurElysiumSlider": {
+        "label": "Elysium Slider",
+        "messages": {
+            "cmsDescription": "Wähle in den Element Einstellungen einen oder mehrere Slides und lege weitere Slider Einstellungen fest."
+        },
         "config": {
-            "content": "Inhalt",
-            "styling": "Styling",
-            "sliderTitle": {
-                "label": "Slider Titel (optional)"
+            "contentLabel": "Inhalt",
+            "content": {
+                "sliderTitle": "Slider Überschrift (optional)",
+                "slideCollectionTitle": "Slide Auswahl"
             },
+            "settingsLabel": "Einstellungen",
             "settings": {
-                "label": "Einstellungen",
                 "general": "Allgemein",
                 "slidesPerPage": {
                     "label": "Slides pro Ansicht",
@@ -53,7 +262,7 @@
                     "label": "Breite des Inhalts-Container",
                     "content": "Breite des Seiteninhalts",
                     "full": "Volle Breite",
-                    "helpText": "Definiert die Breite des Inhaltscontainers. Bei <b>Seiteninhalt</b> folgt die maximale Breite des Containers der Breite des Seiteninhalts. Bei <b>Volle Breite</b> wird der Inhalts-Container über die gesamte Breite angezeigt."
+                    "helpText": "Lege die Breite des Inhalts-Container fest. Bei <b>Seiteninhalt</b> folgt die maximale Breite des Containers der Breite des Seiteninhalts. Bei <b>Volle Breite</b> wird der Inhalts-Container über die gesamte Breite angezeigt"
                 },
                 "rewind": "Slides zurückspulen",
                 "overlay": "Zeige Overlay",
@@ -71,41 +280,36 @@
                     "pauseOnHover": "Pausiere Auto-Wiedergabe bei Hover"
                 }
             },
+            "sizingLabel": "Größen",
             "sizing":  {
                 "label": "Größen",
                 "selectViewport": {
-                    "label": "Bildschirm-Größe",
-                    "placeholder": "Größe auswählen"
+                    "label": "Viewport Size",
+                    "placeholder": "Select viewport"
                 },
                 "aspectRatio": {
                     "label": "Seitenverhältnis",
                     "width": "Breite",
                     "height": "Höhe",
-                    "description": "Legt das Seitenverhältnis und somit die Größe des Sliders fest. Die Höhe kann auf einen maximal Wert begreenzt werden."
+                    "description": "Legt das Seitenverhältnis und somit die Größe des Sliders fest. Die Höhe kann auf einen maximal Pixelwert beschränkt werden."
                 },
                 "maxHeight": {
                     "label": "Maximale Höhe",
                     "placeholder": "in Pixeln"
                 },
                 "emptyViewport": {
-                    "title": "Bildschirm-Größe wählen",
-                    "description": "Bitte wähle zuerst eine Bildschirm-Größe aus"
+                    "title": "Select viewport",
+                    "description": "Please choose a viewport size first"
                 },
                 "spacing": {
                     "label": "Abstände",
                     "slidesGap": {
                         "label": "Abstand zwischen Slides"
-                    },
-                    "paddingY": {
-                        "label": "Slider-Innenabstand (Vertikal)"
-                    },
-                    "paddingX": {
-                        "label": "Slider-Innenabstand (Horizontal)"
                     }
                 }
             },
+            "navigationLabel": "Navigation",
             "navigation": {
-                "label": "Navigation",
                 "active": "Zeige Slider Navigation",
                 "position": {
                     "label": "Position",
@@ -130,6 +334,7 @@
                     "label": "Abstand"
                 }
             },
+            "arrowsLabel": "Pfeile",
             "arrows": {
                 "label": "Pfeile",
                 "active": "Zeige Slider Pfeile",
@@ -139,297 +344,32 @@
                     "chevron": "Chevron"
                 },
                 "size": {
-                    "label": "Icon Größe"
-                }
-            }
-        },
-        "cmsElement": {
-            "label": "Elysium Slider",
-            "config": {
-                "slidesSelect": {
-                    "label": "Elysium Slides",
-                    "placeholder": "Wähle deine Slides"
-                },
-                "aspectRatio": {
-                    "landscape": {
-                        "label": "Landscape (Standard)"
-                    },
-                    "portrait": {
-                        "label": "Portrait"
-                    },
-                    "width": {
-                        "placeholder": "Breite"
-                    },
-                    "height": {
-                        "placeholder": "Höhe"
-                    }
-                }
-            },
-            "settings": {
-                "slideCollectionTitle": "Slide-Auswahl",
-                "aspectRatioTitle": "Seitenverhältnis",
-                "autoplayTitle": "Auto-Wiedergabe",
-                "arrowStylingTitle": "Slider-Pfeile",
-                "navigationStylingTitle": "Slider-Navigation"
-            },
-            "component": {
-                "preview": {
-                    "defaultTitleValue": "Elysium Slider",
-                    "defaultDescriptionValue": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacinia, erat ut tempus vehicula, nisi leo aliquam orci, non varius erat urna at diam. Sed hendrerit tincidunt nisl non convallis. Suspendisse congue sed neque id viverra.",
-                    "defaultButtonLabelValue": "Mehr erfahren"
+                    "label": "Icongröße"
                 }
             }
         }
     },
     "blurElysiumBanner": {
-        "cmsElement": {
-            "label": "Elysium Banner"
-        },
-        "component": {
-            "preview": {
-                "defaultDescriptionValue": "Wähle in den Element Einstellungen einen Slide, sowie weitere Banner Einstellungen."
-            }
-        },
+        "label": "Elysium Banner",
         "config": {
-            "selectSlide": "Wähle einen Elysium Slide",
-            "autoSizing": "Automatische Größe",
-            "aspectRatioWidth": "Seitenverhältnis: Breite",
-            "aspectRatioHeight": "Seitenverhältnis: Höhe"
-        }
-    },
-    "blurElysiumSlides": {
-        "label": "Elysium Slides",
-        "description": "Hier kannst du Slides für Elysium Erlebniswelten Elemente erstellen.",
+            "selectSlide": "Slide wählen",
+            "autoSizing": "Automatische Größe"
+        },
         "messages": {
-            "noChanges": "Keine Änderungen",
-            "deleteSlideConfirmDialogue": "Möchtest du den Slide endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden",
-            "deleteNamedSlideConfirmDialogue": "Möchtest du den Slide <b>{name}</b> endgültig löschen? Diese Aktion kann nicht rückgängig gemacht werden",
-            "copyErrorUnsavedChanges": "Es gibt ungespeicherte Änderungen. Speichere oder verwirf diese Änderungen damit du den Slide duplizieren kannst",
-            "cancelChanges": "Änderungen verwerfen und Seite neu laden",
-            "mediaTypeNotAllowed": "Das Medium wird in diesem Feld nicht unterstützt. Dieses Feld erlaubt nur {snippet}",
-            "mediaTypeNotAllowedTitle": "Dateiformat nicht erlaubt"
-        },
-        "mediaType": {
-            "image": "<b>Bilder</b>",
-            "video": "<b>Videos</b>"
-        },
-        "actions": {
-            "createSlide": "Slide erstellen",
-            "toOverview": "Zur Übersicht",
-            "deleteSlide": "Slide löschen",
-            "buttonSaveDuplicate": "Slide duplizieren"
-        },
-        "linking": {
-            "type": {
-                "label": "Typ",
-                "placeholder": "Wähle ein Verlinkungstyp",
-                "custom": "Individuell",
-                "product": "Produkt"
-            },
-            "product": {
-                "label": "Produkt Auswahl"
-            },
-            "custom": {
-                "label": "URL",
-                "placeholder": "URL eingeben",
-                "helpText": "Lege die Verlinkung des Slides fest. Dies kann sowohl eine absolute als auch eine relative URL sein."
-            },
-            "button": {
-                "label": {
-                    "label": "Button Beschriftung",
-                    "placeholder": "Mehr Erfahren",
-                    "helpText": "Lege die Beschriftung des Buttons fest. Ist keine Beschriftung hinterlegt, wird der Button nicht angezeigt."
-                },
-                "appearance": {
-                    "label": "Button Farbgebung",
-                    "helpText": "Legt die Farbgebung des Buttons fest. Die Farben orientieren sich an den Einstellungen des Themes."
-                }
-            },
-            "openExternal": "In neuem Tab öffnen",
-            "overlay": {
-                "label": "Link Overlay",
-                "helpText": "Wenn die Overlay Option aktiv ist, wird der gesamte Slide als Verlinkungsfläche verwendet. In diesem Fall wird der Button ausgeblendet."
-            }
-        },
-        "slideSearch": {
-            "noResult": "Keine Slides gefunden",
-            "addItem": "Hinzufügen",
-            "removeItem": "Entfernen"
-        },
-        "slideSelection": {
-            "message": {
-                "noSlides": "Anscheinend hast du noch keine Slides angelegt. Geh zum Elysium Slides Modul und erstelle deine Slides."
-            },
-            "label": "Wähle deine Slides",
-            "list": {
-                "label": "Slide-Auswahl",
-                "helptext": "Klicke in das Suchfeld und wähle aus deiner Slide Sammlung aus. Du kannst nach dem Slide-Namen und -Titel suchen. Deine Slides findest du unter <b>Inhalte &rsaquo; Elysium Slides</b>, dort kannst du auch neue Slides erstellen."
-            }
-        },
-        "slideSettings": {
-            "slideLabel": {
-                "label": "Slide Name",
-                "placeholder": "mein-neuer-slide",
-                "helpText": "Lege einen Namen für den Slide fest. Dieser Name wird nur zur Identifikation des Slides genutzt"
-            },
-            "headline": {
-                "title": "Überschrift",
-                "label": "Inhalt",
-                "placeholder": "Mein großartiger Slide!",
-                "helpText": "Lege eine Überschrift für den Slide fest. Du kannst folgende HTML Tags nutzen: br, i, u, b, strong und span.",
-                "element": {
-                    "label": "HTML Element",
-                    "helpText": "Lege ein HTML Element für deine Überschrift fest. Ist kein Element ausgewählt wird ein <b>div</b> Element verwendet"
-                }
-            },
-            "description": {
-                "label": "Kurzbeschreibung",
-                "placeholder": "Kurzbeschreibung eingeben",
-                "helpText": "Lege einen Kurzbeschreibungs-Text für den Slide fest. Dieser wird unter der Überschrift angezeigt."
-            },
-            "slide": {
-                "bgGradient": {
-                    "title": "Farbverlauf",
-                    "startColor": "Primärfarbe",
-                    "endColor": "Sekundärfarbe",
-                    "gradientType": "Verlaufstyp",
-                    "gradientDeg": "Verlaufsgrad"
-                },
-                "cssClass": {
-                    "label": "CSS Klasse",
-                    "placeholder": "Lege eine oder mehrere CSS Klassen fest",
-                    "helpText": "Lege eine oder mehrere CSS Klassen, getrennt durch ein Leerzeichen, für den Slide fest."    
-                }
-            },
-            "slideTemplate": {
-                "cardTitle": "Slide Vorlage",
-                "label": "Wähle deine Slide Vorlage"
-            },
-            "customTemplate": {
-                "cardTitle": "Eigenes Template",
-                "cardDescription": "Hier kannst du eine eigene Twig-Template Datei für diesen Slide festlegen. Wenn du in diesem Feld eine Twig-Template Datei eingnetragen hast, musst du diese manuell in deinem Theme hinterlegen.",
-                "customTemplatePath": "Der Pfad zu dieser Datei lautet:<br/><span class='bc-code-inline'>/storefront/component/blur-elysium-slide/custom/<b>{file}.html.twig</b></span>",
-                "customTemplateFile": {
-                    "placeholder": "mein-slide-template"
-                },
-                "hasCustomNotice": "<b>Hinweis:</b> Dieser Slide hat eine eigene Twig-Template Datei hinterlegt. Bitte beachte dies beim verwalten des Slides."
-            },
-            "slideCover": {
-                "label": "Slide Cover",
-                "useAsSlideCoverImage": "Als Slide Cover Bild",
-                "useAsSlideCover": "Als Slide Cover verwenden",
-                "useAsFocusImage": "Als Fokus Bild verwenden"
-            },
-            "slideCoverImage": {
-                "title": "Cover Bild",
-                "description": "Fügt ein Bild als Slide Hintergrund hinzu. Das Cover Bild kann für die Ansichten Mobile, Tablet und Desktop definiert werden. Wenn für die Mobile Ansicht kein Bild hinterlegt ist, dient der Desktop als Standard. <br/>Gültige Bildformate sind <code>jpg</code>, <code>png</code>, <code>webp</code>, <code>svg</code>, <code>avif</code>",
-                "posY": "Bild Position — Vertikal",
-                "posX": "Bild Position — Horizontal",
-                "fit": "Bild Anpassung"
-            },
-            "slideCoverVideo": {
-                "title": "Cover Video",
-                "description": "Fügt ein Video als Slide Hintergrund hinzu. Das eingestellte Cover Video gilt für alle Ansichten.<br/>Gültige Videoformate sind <code>mp4</code>",
-                "posY": "Video Position — Vertikal",
-                "posX": "Video Position — Horizontal",
-                "fit": "Video Anpassung"
-            },
-            "presentationMedia": {
-                "label": "Fokus Bild",
-                "description": "Das Fokus Bild wird als eigenständiges Bild, neben dem Inhaltsbereich, angezeigt."
-            },
-            "display": {
-                "slideAppearance": {
-                    "title": "Slide Anzeige",
-                    "description": "Bestimmt die Abstände und Kantenrundung des Slides. Diese Einstellungen sind Geräteabhängig.",
-                    "justifyContent": {
-                        "helpText": "Diese Einstellung hat nur eine sichtbare Auswirkung wenn die maximale Breite des Containerelements aktiv ist"
-                    }
-                },
-                "containerAlignment": {
-                    "title": "Container Ausrichtung",
-                    "description": "Bestimmt die Ausrichtung des inneren Slide Containerelements. Diese Einstellungen sind Geräteabhängig."
-                },
-                "slideContainer": "Slide Container",
-                "containerElementAppearance": {
-                    "title": "Containerelement Anzeige",
-                    "description": "Diese Anzeigeeinstellungen beziehen sich auf das Containerelement und sind Geräteabhängig. Das Containerelement beinhaltet das Inhalts- und Bildelement",
-                    "columnWrap": {
-                        "label": "Elemente untereinander darstellen",
-                        "helpText": "Bricht alle Container Elemente um und stellt diese unter- statt nebeneinander dar."
-                    },
-                    "order": {
-                        "label": "Layout Reihenfolge",
-                        "helpText": "Legt Reihenfolge der Container Elemente fest",
-                        "default": "Standard (Inhalt — Bild)",
-                        "reverse": "Umgekehrt (Bild — Inhalt)"
-                    },
-                    "justifyContent": {
-                        "helpText": "Diese Einstellung hat nur eine sichtbare Auswirkung wenn die maximale Breite des Inhalt- oder Bildelements aktiv ist"
-                    }
-                },
-                "contentElementAppearance": {
-                    "title": "Inhaltselement Anzeige",
-                    "description": "Diese Anzeigeeinstellungen beziehen sich auf das Inhaltselement und sind Geräteabhängig. Das Inhaltselement beinhaltet die Überschrift, Beschreibung und Button."
-                },
-                "imageElementAppearance": {
-                    "title": "Bildelement Anzeige",
-                    "description": "Diese Anzeigeeinstellungen beziehen sich auf das Bildelement und sind Geräteabhängig. Das Bildelement beinhaltet das Fokus Bild.",
-                    "fullWidth": "Bild auf gesamte Breite strecken"
-                },
-                "common": {
-                    "fontSize": "Schriftgröße",
-                    "paddingX": "Abstand — Horizontal",
-                    "paddingY": "Abstand — Vertikal",
-                    "gap": "Abstand Zwischenraum",
-                    "borderRadius": "Kantenrundung",
-                    "alignX": "Horizontale Ausrichtung",
-                    "alignY": "Vertikale Ausrichtung",
-                    "textAlign": "Textausrichtung",
-                    "textColor": "Textfarbe",
-                    "center": "Zentriert",
-                    "top": "Oben",
-                    "bottom": "Unten",
-                    "left": "Links",
-                    "right": "Rechts",
-                    "normal": "Normal",
-                    "stretch": "Strecken",
-                    "spaceBetween": "Zwischenraum strecken",
-                    "spaceAround": "Zwischenraum umschließen",
-                    "maxWidth": "Maximale Breite",
-                    "noMaxWidth": "Keine maximale Begrenzung",
-                    "backgroundColor": "Hintergrundfarbe",
-                    "fitCover": "Füllen",
-                    "fitContain": "Beibehalten",
-                    "fitAuto": "Auto"
-                }
-            }
-        },
-        "slideSettingTabs": {
-            "contentLabel": "Inhalt",
-            "mediaLabel": "Medien",
-            "displayLabel": "Anzeige",
-            "advancedLabel": "Erweitert"
+            "cmsDescription": "Wähle in den Element Einstellungen einen Slide und lege weitere Banner Einstellungen, wie zum Beispiel die Größe, fest."
         }
     },
     "blurElysiumBlock": {
         "settingLabel": "Einstellungen",
-        "deviceName": {
-            "mobile": "Mobil",
-            "tablet": "Tablet",
-            "desktop": "Desktop"
-        },
-        "cmsElement": {
-            "twoCol": "Elysium Block — 2 Spalten"
-        },
         "settings": {
             "columnWidth": {
-                "colOneLabel": "Breite — 1. Spalte",
-                "colTwoLabel": "Breite — 2. Spalte"
+                "colOneLabel": "Breite: 1. Spalte",
+                "colTwoLabel": "Breite: 2. Spalte"
             },
             "gridGapLabel": "Rasterabstand",
             "columnWrapLabel": "Spalten umbrechen",
             "columnStretchLabel": "Spaltenhöhe angleichen"
-        }
+        },
+        "blockTwoColLabel": "Elysium Block — 2 Spalten"
     }
 }

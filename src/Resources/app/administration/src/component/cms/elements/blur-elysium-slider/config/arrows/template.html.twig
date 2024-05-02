@@ -1,0 +1,77 @@
+<sw-card
+    position-identifier="positionIdentifiers.placeholder"
+    :content-padding="false">
+
+    <blur-card-section
+        :title="$tc('blurElysium.general.general')">
+
+        <sw-container 
+            columns="repeat(1, 1fr)" 
+            gap="30px">
+
+            <sw-switch-field 
+                v-model:value="arrowsConfig.active" 
+                :label="$tc('blurElysiumSlider.config.arrows.active')" />
+
+        </sw-container>
+
+    </blur-card-section>
+
+    <blur-card-section
+        :title="$tc('blurElysium.general.appearance')">
+
+        <sw-container 
+            columns="repeat(2, 1fr)" 
+            gap="30px">
+
+            <sw-select-field 
+                :label="$tc('blurElysiumSlider.config.arrows.icons.label')"
+                :options="icons"
+                v-model:value="arrowsConfig.icon.default" />
+
+            <blur-device-number-field 
+                v-model:value="arrowsViewportConfig.iconSize"
+                :label="$tc('blurElysiumSlider.config.arrows.size.label')"
+                :device="currentViewport"/>
+
+            <sw-colorpicker
+                :label="$tc('blurElysium.general.iconColor')"
+                v-model:value="arrowsConfig.colors.default"
+                colorOutput="auto"
+                :alpha="true"
+                :disabled="false"
+                :colorLabels="true"
+                :zIndex="1010" />
+
+            <sw-colorpicker
+                :label="$tc('blurElysium.general.iconColorActive')"
+                v-model:value="arrowsConfig.colors.active"
+                colorOutput="auto"
+                :alpha="true"
+                :disabled="false"
+                :colorLabels="true"
+                :zIndex="1010" />
+                            
+            <sw-colorpicker
+                :label="$tc('blurElysium.general.bgColor')"
+                v-model:value="arrowsConfig.bgColors.default"
+                colorOutput="auto"
+                :alpha="true"
+                :disabled="false"
+                :colorLabels="true"
+                :zIndex="1010" />
+
+            <sw-colorpicker
+                :label="$tc('blurElysium.general.bgColorActive')"
+                v-model:value="arrowsConfig.bgColors.active"
+                colorOutput="auto"
+                :alpha="true"
+                :disabled="false"
+                :colorLabels="true"
+                :zIndex="1010" />
+
+        </sw-container>
+
+    </blur-card-section>
+
+</sw-card>

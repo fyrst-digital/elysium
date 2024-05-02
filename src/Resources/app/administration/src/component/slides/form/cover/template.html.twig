@@ -1,0 +1,146 @@
+<sw-card
+    position-identifier="positionIdentifier.placeholder"
+    :content-padding="0">
+
+    <template #title>
+        <blur-card-title 
+            :title="$tc('blurElysiumSlides.forms.slideCover.label')" 
+            icon="blurph-check-square-offset-bold" />
+    </template>
+
+    <sw-container
+        columns="repeat(2, minmax(0, 1fr))"
+        rows="auto 1fr"
+        gap="30px"
+        :style="{
+            gridAutoFlow: 'column',
+            padding: '30px'
+        }">
+
+        <blur-card-section
+            :title="$tc('blurElysiumSlides.forms.slideCoverImage.label')"
+            :description="$tc('blurElysiumSlides.forms.slideCoverImage.description')"
+            title-icon="blurph-image-bold"
+            last
+            :style="{
+                display: 'contents'
+            }">
+
+            <sw-container
+                columns="1fr"
+                gap="30px">
+
+                <blur-elysium-media-upload 
+                    allowed-file="image/*"
+                    :uploadTag="coverImageUploadTag" 
+                    :media="coverImageMedia" 
+                    @media-remove="payload => resetMedia( coverImageProperty )"
+                    @upload-finished="payload => setMedia( coverImageProperty, payload.targetId )"
+                    @media-dropped="payload => setMedia( coverImageProperty, payload.id, 'image')"
+                    @media-sidebar-open="mediaSidebar.openContent()" />
+
+                <sw-container
+                    columns="repeat(1, minmax(0, 1fr))"
+                    gap="30px">
+
+                    <blur-device-select-field 
+                        :device="deviceView"
+                        :label="$tc('blurElysium.general.objectPosY')"
+                        :options="[
+                            { id: 'top', name: $tc('blurElysium.general.top') },
+                            { id: 'center', name: $tc('blurElysium.general.center') },
+                            { id: 'bottom', name: $tc('blurElysium.general.bottom') }
+                        ]"
+                        v-model:value="slideViewportSettings.coverImage.objectPosY" />
+
+                    <blur-device-select-field 
+                        :device="deviceView"
+                        :label="$tc('blurElysium.general.objectPosX')"
+                        :options="[
+                            { id: 'left', name: $tc('blurElysium.general.left') },
+                            { id: 'center', name: $tc('blurElysium.general.center') },
+                            { id: 'right', name: $tc('blurElysium.general.right') }
+                        ]"
+                        v-model:value="slideViewportSettings.coverImage.objectPosX" />
+
+                    <blur-device-select-field 
+                        :device="deviceView"
+                        :label="$tc('blurElysium.general.objectFit')"
+                        :options="[
+                            { id: 'cover', name: $tc('blurElysium.general.fitCover') },
+                            { id: 'contain', name: $tc('blurElysium.general.fitContain') },
+                            { id: 'auto', name: $tc('blurElysium.general.fitAuto') }
+                        ]"
+                        v-model:value="slideViewportSettings.coverImage.objectFit" />
+
+                </sw-container>
+
+            </sw-container>
+
+        </blur-card-section>
+
+        <blur-card-section
+            :title="$tc('blurElysiumSlides.forms.slideCoverVideo.label')"
+            :description="$tc('blurElysiumSlides.forms.slideCoverVideo.description')"
+            title-icon="blurph-video-bold"
+            last
+            :style="{
+                display: 'contents'
+            }">
+
+            <sw-container
+                columns="1fr"
+                gap="30px">
+
+                <blur-elysium-media-upload 
+                    allowed-file="image/*"
+                    :uploadTag="'blur-elysium-slide-cover-video'" 
+                    :media="coverVideoMedia" 
+                    @media-remove="payload => resetMedia( 'slideCoverVideo' )"
+                    @upload-finished="payload => setMedia( 'slideCoverVideo', payload.targetId )"
+                    @media-dropped="payload => setMedia( 'slideCoverVideo', payload.id, 'image')"
+                    @media-sidebar-open="mediaSidebar.openContent()" />
+
+                <sw-container
+                    columns="repeat(1, minmax(0, 1fr))"
+                    gap="30px">
+
+                    <blur-device-select-field 
+                        :device="deviceView"
+                        :label="$tc('blurElysium.general.objectPosY')"
+                        :options="[
+                            { id: 'top', name: $tc('blurElysium.general.top') },
+                            { id: 'center', name: $tc('blurElysium.general.center') },
+                            { id: 'bottom', name: $tc('blurElysium.general.bottom') }
+                        ]"
+                        v-model:value="slideViewportSettings.coverVideo.objectPosY" />
+
+                    <blur-device-select-field 
+                        :device="deviceView"
+                        :label="$tc('blurElysium.general.objectPosX')"
+                        :options="[
+                            { id: 'left', name: $tc('blurElysium.general.left') },
+                            { id: 'center', name: $tc('blurElysium.general.center') },
+                            { id: 'right', name: $tc('blurElysium.general.right') }
+                        ]"
+                        v-model:value="slideViewportSettings.coverVideo.objectPosX" />
+
+                    <blur-device-select-field 
+                        :device="deviceView"
+                        :label="$tc('blurElysium.general.objectFit')"
+                        :options="[
+                            { id: 'cover', name: $tc('blurElysium.general.fitCover') },
+                            { id: 'contain', name: $tc('blurElysium.general.fitContain') },
+                            { id: 'auto', name: $tc('blurElysium.general.fitAuto') }
+                        ]"
+                        v-model:value="slideViewportSettings.coverVideo.objectFit" />
+
+                </sw-container>
+
+            </sw-container>
+
+        </blur-card-section>
+
+    </sw-container>
+
+</sw-card>

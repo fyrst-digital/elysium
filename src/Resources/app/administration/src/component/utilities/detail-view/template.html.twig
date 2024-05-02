@@ -1,0 +1,21 @@
+<div 
+    :class="['blur-detail-view']">
+
+    <div :class="['blur-detail-view-start']">
+    
+        <div :class="['blur-detail-view-start-wrapper']"
+            :style="startWrapperStyles">
+            <slot name="start" />
+        </div>
+    </div>
+
+    <div :class="['blur-detail-view-content']">
+        <slot name="content" />
+    </div>
+
+    <div :class="['blur-detail-view-end']"
+        :style="endStyles">
+        <slot name="end" />
+    </div>
+
+</div>
