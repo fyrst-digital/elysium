@@ -1,3 +1,8 @@
+# Version 3.0.1
+
+## Changelog
+- Fehlerbehebung: Die Slide Beschreibung wird nun wie erwartet gespeichert
+
 # Version 3.0.0
 
 ## Update Notes

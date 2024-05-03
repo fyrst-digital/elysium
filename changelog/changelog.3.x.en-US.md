@@ -1,3 +1,8 @@
+# Version 3.0.1
+
+## Changelog
+- Bugfix: The slide description is now saved as expected
+
 # Version 3.0.0
 
 ## Update Notes
