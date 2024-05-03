@@ -2,6 +2,7 @@
 
 ## Changelog
 - Bugfix: The slide description is now saved as expected
+- Bugfix: The slide description is now saved as expected
 
 # Version 3.0.0
 

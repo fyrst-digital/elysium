@@ -4,6 +4,16 @@
             "blur_elysium_slides": "Elysium Slides"
         }
     },
+    "sw-profile": {
+        "tabSearchPreferences": {
+            "modules": {
+                "blur_elysium_slides": {
+                    "name": "Slide Name",
+                    "title": "Slide Überschrift"
+                }
+            }
+        }
+    },
     "blurElysium": {
         "settingsLabel": "Elysium Einstellungen",
         "settings": {
@@ -77,7 +87,7 @@
             "fitAuto": "Automatisch"
         },
         "action": {
-            "createSlide": "Create Slide erstellen",
+            "createSlide": "Slide erstellen",
             "toOverview": "Zur Übersicht"
         },
         "messages": {

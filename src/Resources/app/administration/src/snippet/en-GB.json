@@ -4,6 +4,16 @@
             "blur_elysium_slides": "Elysium Slides"
         }
     },
+    "sw-profile": {
+        "tabSearchPreferences": {
+            "modules": {
+                "blur_elysium_slides": {
+                    "name": "Slide name",
+                    "title": "Slide title"
+                }
+            }
+        }
+    },
     "blurElysium": {
         "settingsLabel": "Elysium settings",
         "settings": {
