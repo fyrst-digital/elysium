@@ -2,7 +2,7 @@
 
 ## Changelog
 - Fehlerbehebung: Die Slide Beschreibung wird nun wie erwartet gespeichert
-- Fehlerbehebung: Correction of text snippets in the administration
+- Fehlerbehebung: Korrektur von Textbausteinen in der Administration
 
 # Version 3.0.0
 

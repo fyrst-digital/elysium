@@ -2,7 +2,7 @@
 
 ## Changelog
 - Bugfix: The slide description is now saved as expected
-- Bugfix: The slide description is now saved as expected
+- Bugfix: Correction of text snippets in the administration
 
 # Version 3.0.0
 
