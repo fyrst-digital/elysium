@@ -1,3 +1,8 @@
+# unreleased
+
+## Changelog
+- Bugfix: Prevent breaking overflow in cms two-col block 
+
 # Version 3.0.1
 
 ## Changelog
