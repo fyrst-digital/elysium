@@ -33,6 +33,12 @@
             <tag name="shopware.entity.definition" entity="blur_elysium_slides_translation" />
         </service>
 
+        <service id="Blur\BlurElysiumSlider\Subscriber\CacheInvalidationSubscriber">
+            <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheInvalidator"/>
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
+            <tag name="kernel.event_listener" event="Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent" method="invalidateCmsPageIds" priority="2001" />
+        </service>
+
         <service id="Blur\BlurElysiumSlider\Twig\CamelToKebabCase" public="true">
             <tag name="twig.extension"/> <!--Required-->
         </service>
