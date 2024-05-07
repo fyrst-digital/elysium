@@ -14,7 +14,7 @@
     {% block cms_block_blur_elysium_block_two_col_style %}
         <style>
             [data-cms-block="{{ block.id }}"] {
-                --columns: 1fr;
+                --columns: minmax(0, 1fr);
                 --gap: 0;
                 grid-template-columns: var(--columns);
                 grid-gap: var(--gap);
@@ -24,9 +24,9 @@
                 @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
                     [data-cms-block="{{ block.id }}"] {
                         {% if options.columnWrap is same as(true) %}
-                            --columns: 1fr;
+                            --columns: minmax(0, 1fr);
                         {% else %}
-                            --columns: {{ options.width.colOne}}fr {{ options.width.colTwo}}fr;
+                            --columns: minmax(0, {{ options.width.colOne}}fr) minmax(0, {{ options.width.colTwo}}fr);
                         {% endif %}
                         {% if options.gridGap is not empty %}
                             --gap: {{ options.gridGap}};
