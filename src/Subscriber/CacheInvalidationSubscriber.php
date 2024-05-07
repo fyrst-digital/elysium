@@ -19,7 +19,7 @@ class CacheInvalidationSubscriber
     ) {
     }
 
-    public function invalidateCmsPageIds(EntityWrittenContainerEvent $event)
+    public function invalidateCmsPageIds(EntityWrittenContainerEvent $event): void
     {
         $slideIds = $event->getPrimaryKeys(ElysiumSlidesDefinition::ENTITY_NAME);
 
