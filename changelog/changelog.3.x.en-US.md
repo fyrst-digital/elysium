@@ -1,3 +1,8 @@
+# Version 3.1.1
+
+## Changelog
+- Bugfix: The UI icons in the administration have been adjusted. These are also displayed correctly again from Shopware 6.6.2.
+
 # Version 3.1.0
 
 ## Changelog

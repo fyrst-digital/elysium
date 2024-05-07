@@ -31,7 +31,7 @@ Component.override('sw-search-bar-item', () => import('blurElysium/extension/sw-
 /**
  * Register components
 */
-Component.extend('blur-icon', 'sw-icon', () => import('blurElysium/component/icon'))
+Component.register('blur-icon', () => import('blurElysium/component/icon'))
 Component.register('blur-card-title', () => import('blurElysium/component/utilities/card-title'))
 Component.register('blur-card-section', () => import('blurElysium/component/utilities/card-section'))
 Component.register('blur-device-switch', () => import('blurElysium/component/utilities/device-switch'))
