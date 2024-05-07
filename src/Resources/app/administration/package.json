@@ -8,9 +8,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@shopware-ag/meteor-admin-sdk": "^5.0.2",
-    "vue": "^3.4.21"
-  }
+  "license": "ISC"
 }

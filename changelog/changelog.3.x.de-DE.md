@@ -1,4 +1,4 @@
-# unreleased
+# Version 3.1.0
 
 ## Changelog
 - Verbesserung: Beim speichern eines Slides wird nun der Cache aller Erlebniswelten, welche ein Elysium Element zugewiesen haben, invalidiert. Somit werden Änderungen am Slide im Storefront sofort sichtbar, ohne den Cache löschen zu müssen
