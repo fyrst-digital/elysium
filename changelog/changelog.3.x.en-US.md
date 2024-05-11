@@ -1,3 +1,9 @@
+# unreleased
+
+## Changelog
+- Change: The **Auto playback interval** setting in the CMS slider now has a minimum value of 200 instead of 3000
+- Bugfix: Correct CSS class names in CMS blocks. This results in  styling fixes
+
 # Version 3.1.1
 
 ## Changelog
