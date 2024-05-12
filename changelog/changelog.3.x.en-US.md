@@ -1,7 +1,7 @@
 # unreleased
 
 ## Changelog
-- Improvement: Role permissions have been added in the Elysium Slides Modul
+- Improvement: Role permissions have been added in the Elysium Slides module
 - Change: The **Auto playback interval** setting in the CMS slider now has a minimum value of 200 instead of 3000
 - Bugfix: Correct CSS class names in CMS blocks. This results in  styling fixes
 
