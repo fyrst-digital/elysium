@@ -37,7 +37,8 @@
 
         <sw-button
             variant="primary"
-            :router-link="{ name: 'blur.elysium.slides.create' }">
+            :disabled="!permissionCreate"
+            :router-link="permissionCreate === true ? { name: 'blur.elysium.slides.create' } : null">
             {{ $tc('blurElysium.action.createSlide') }}
         </sw-button>
     </template>
@@ -52,6 +53,7 @@
             :is-loading="isLoading"
             :sort-by="sortBy"
             :sort-direction="sortDirection"
+            :allow-delete="permissionDelete"
             @column-sort="columnSort"
             @delete-item-finish="finishDeleteItems"
             @items-delete-finish="finishDeleteItems">
@@ -59,13 +61,15 @@
             <template #more-actions="{ item }">
 
                 <sw-context-menu-item
+                    :disabled="!permissionCreate"
                     @click="copySlide(item)"
                 >
                     {{ $tc('blurElysiumSlides.actions.copySlide') }}
                 </sw-context-menu-item>
 
                 <sw-context-menu-item
-                    :router-link="{ name: 'blur.elysium.slides.detail', params: { id: item.id }}"
+                    :disabled="!permissionView"
+                    :router-link="permissionView === true ? { name: 'blur.elysium.slides.detail', params: { id: item.id }} : null"
                 >
                     {{ $tc('blurElysiumSlides.actions.editSlide') }}
                 </sw-context-menu-item>

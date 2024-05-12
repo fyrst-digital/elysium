@@ -32,7 +32,7 @@
 
             <sw-button-process
                 :is-loading="isLoading"
-                :disabled="false"
+                :disabled="!(permissionCreate || permissionEdit)"
                 variant="primary"
                 @click.prevent="saveSlide"
             >
@@ -56,15 +56,15 @@
                 </template>
 
                 <sw-context-menu-item
-                    :disabled="false"
+                    :disabled="!permissionCreate"
                     @click="onCopySlide">
                     {{ $tc('blurElysiumSlides.actions.copySlide') }}
                 </sw-context-menu-item>
 
                 <sw-context-menu-item
                     variant="danger"
-                    :disabled="false"
-                    @click="showDeleteModal = true">
+                    :disabled="!permissionDelete"
+                    @click="permissionDelete === true ? showDeleteModal = true : null">
                     {{ $tc('blurElysiumSlides.actions.deleteSlide') }}
                 </sw-context-menu-item>
 
