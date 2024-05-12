@@ -1,6 +1,6 @@
 import { module } from 'blurElysium/meta'
 
-const { Module } = Shopware
+const { Module, Service } = Shopware
 
 Module.register('blur-elysium-slides', {
     type: 'plugin',
@@ -135,7 +135,8 @@ Module.register('blur-elysium-slides', {
             path: 'settings',
             meta: {
                 icon: 'regular-cog',
-                parentPath: 'sw.settings.index.plugins'
+                parentPath: 'sw.settings.index.plugins',
+                privilege: 'blur_elysium_slides.viewer'
             }
         }
     },
@@ -161,6 +162,48 @@ Module.register('blur-elysium-slides', {
         group: 'plugins',
         to: 'blur.elysium.slides.settings',
         iconComponent: 'blur-elysium-icon',
-        label: 'blurElysium.settings.Label'
+        label: 'blurElysium.settingsLabel',
+        privilege: 'blur_elysium_slides.viewer'
     }]
 });
+
+Service('privileges')
+    .addPrivilegeMappingEntry({
+        category: 'permissions',
+        parent: 'content',
+        key: 'blur_elysium_slides',
+        roles: {
+            viewer: {
+                privileges: [
+                    'blur_elysium_slides:read'
+                ],
+                dependencies: []
+            },
+            editor: {
+                privileges: [
+                    'blur_elysium_slides:update'
+                ],
+                dependencies: [
+                    'blur_elysium_slides.viewer'
+                ]
+            },
+            creator: {
+                privileges: [
+                    'blur_elysium_slides:create'
+                ],
+                dependencies: [
+                    'blur_elysium_slides.viewer',
+                    'blur_elysium_slides.editor'
+                ]
+            },
+            deleter: {
+                privileges: [
+                    'blur_elysium_slides:delete'
+                ],
+                dependencies: [
+                    'blur_elysium_slides.viewer',
+                    'blur_elysium_slides.editor'
+                ]
+            }
+        }
+    });

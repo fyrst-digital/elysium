@@ -14,6 +14,13 @@
             }
         }
     },
+    "sw-privileges": {
+        "permissions": {
+            "blur_elysium_slides": {
+                "label": "Elysium Slides"
+            }
+        }
+    },
     "blurElysium": {
         "settingsLabel": "Elysium settings",
         "settings": {

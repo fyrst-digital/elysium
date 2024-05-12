@@ -35,6 +35,7 @@
         <sw-button
             variant="primary"
             class="sw-extension-config__save-action"
+            :disabled="!permissonEdit"
             @click.prevent="onSave"
         >
             {{ $tc('global.default.save') }}

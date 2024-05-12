@@ -21,7 +21,8 @@ export default Component.wrapComponentConfig({
     template,
 
     inject: [
-        'repositoryFactory'
+        'repositoryFactory',
+        'acl'
     ],
 
     setup () {
@@ -109,6 +110,22 @@ export default Component.wrapComponentConfig({
             return criteria
         },
 
+        permissionView() {
+            return this.acl.can('blur_elysium_slides.viewer')
+        },
+
+        permissionCreate() {
+            return this.acl.can('blur_elysium_slides.creator')
+        },
+
+        permissionEdit() {
+            return this.acl.can('blur_elysium_slides.editor')
+        },
+
+        permissionDelete() {
+            return this.acl.can('blur_elysium_slides.deleter')
+        },
+
         assetFilter() {
             return Filter.getByName('asset');
         },
@@ -144,6 +161,10 @@ export default Component.wrapComponentConfig({
         },
 
         copySlide (slide: any) {
+            if (this.permissionCreate !== true) {
+                return
+            }
+
             this.isLoading = true
 
             const cloneOptions = {

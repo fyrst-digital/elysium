@@ -10,7 +10,8 @@ export default Component.wrapComponentConfig({
     template,
 
     inject: [
-        'repositoryFactory'
+        'repositoryFactory',
+        'acl'
     ],
 
     mixins: [
@@ -136,7 +137,23 @@ export default Component.wrapComponentConfig({
 
         metaTitle () {
             return this.placeholder(this.slide, <any>'name', this.$tc('blurElysiumSlides.actions.newSlide'))
-        }
+        },
+
+        permissionView() {
+            return this.acl.can('blur_elysium_slides.viewer')
+        },
+
+        permissionCreate() {
+            return this.acl.can('blur_elysium_slides.creator')
+        },
+
+        permissionEdit() {
+            return this.acl.can('blur_elysium_slides.editor')
+        },
+
+        permissionDelete() {
+            return this.acl.can('blur_elysium_slides.deleter')
+        },
     },
 
     methods: {
@@ -207,6 +224,10 @@ export default Component.wrapComponentConfig({
         },
 
         async saveSlide () {
+            if (!((this.newSlide && this.permissionCreate) || this.permissionEdit)) {
+                return
+            }
+
             this.isLoading = true
 
             this.slidesRepository.save(this.slide)
@@ -269,6 +290,10 @@ export default Component.wrapComponentConfig({
         },
 
         onCopySlide () {
+            if (this.permissionCreate !== true) {
+                return
+            }
+
             if (this.slidesRepository.hasChanges(this.slide)) {
                 this.createNotificationError({
                     message: this.$tc('blurElysiumSlides.messages.copyErrorUnsavedChanges')

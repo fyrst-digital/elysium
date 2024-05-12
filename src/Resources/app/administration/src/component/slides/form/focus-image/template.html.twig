@@ -19,6 +19,7 @@
                 allowed-file="image/*"
                 :uploadTag="'blur-elysium-slide-focus-image'" 
                 :media="focusImageMedia" 
+                :disabled="!(permissionCreate || permissionEdit)"
                 @media-remove="payload => resetMedia( 'presentationMedia' )"
                 @upload-finished="payload => setMedia( 'presentationMedia', payload.targetId )"
                 @media-dropped="payload => setMedia( 'presentationMedia', payload.id, 'image')"

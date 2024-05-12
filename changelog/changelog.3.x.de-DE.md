@@ -1,6 +1,7 @@
 # unreleased
 
 ## Changelog
+- Verbesserung: Rollen Berechtigungen wurden im Elysium Slides Mobul hinzugefügt
 - Änderung: Die Einstellung **Auto-Wiedergabe Intervall** im CMS Slider hat nun einen Minimalwer von 200 statt 3000
 - Fehlerbehebung: Korrentur von CSS Klassennamen in CMS Blöcken. Daraus ergeben sich Fehlerbehebungen im Styling
 

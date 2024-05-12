@@ -12,7 +12,8 @@ export default Component.wrapComponentConfig({
     ],
 
     inject: [
-        'repositoryFactory'
+        'repositoryFactory',
+        'acl'
     ],
 
     computed: {
@@ -29,7 +30,23 @@ export default Component.wrapComponentConfig({
             }
 
             return null            
-        }
+        },
+
+        permissionView() {
+            return this.acl.can('blur_elysium_slides.viewer')
+        },
+
+        permissionCreate() {
+            return this.acl.can('blur_elysium_slides.creator')
+        },
+
+        permissionEdit() {
+            return this.acl.can('blur_elysium_slides.editor')
+        },
+
+        permissionDelete() {
+            return this.acl.can('blur_elysium_slides.deleter')
+        },
     },
 
     methods: {
@@ -45,5 +62,9 @@ export default Component.wrapComponentConfig({
                 this.fetchMedia(value, 'presentationMedia')
             }
         },
-    }
+    },
+    
+    created() {
+        console.log(this.permissionEdit)
+    },
 })
