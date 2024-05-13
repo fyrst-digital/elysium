@@ -30,7 +30,7 @@ module.exports = {
 			"warn", 
 			{ 
 				"terms": [ 
-					"deprecated"
+					"deprecated", "todo"
 				], 
 				"location": "anywhere" 
 			}

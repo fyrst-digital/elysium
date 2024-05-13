@@ -27,6 +27,7 @@ Locale.extend('de-DE', deDE)
  * Component extensions
  */
 Component.override('sw-search-bar-item', () => import('blurElysium/extension/sw-search-bar-item'));
+Component.override('sw-media-quickinfo-usage', () => import('blurElysium/extension/sw-media-quickinfo-usage'));
 
 /**
  * Register components

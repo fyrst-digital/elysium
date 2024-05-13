@@ -1,6 +1,7 @@
 # unreleased
 
 ## Changelog
+- Improvement: The information in which Elysium Slide a medium is used is now displayed in the media management. When deleting a linked medium, a corresponding message appears
 - Improvement: Role permissions have been added in the Elysium Slides module
 - Change: The **Auto playback interval** setting in the CMS slider now has a minimum value of 200 instead of 3000
 - Bugfix: Correct CSS class names in CMS blocks. This results in  styling fixes
