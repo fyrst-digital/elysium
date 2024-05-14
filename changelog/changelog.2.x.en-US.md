@@ -1,3 +1,9 @@
+# Version 2.2.1
+
+## Changelog
+- Bugfix: When content exceeds the specified aspect ratio, a Slide is now displayed in its entirety
+- Bugfix: Prevent breaking overflow in 'Elysium Banner' Shopping Expierence block 
+
 # Version 2.2.0
 
 ## Changelog

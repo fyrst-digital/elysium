@@ -8,5 +8,8 @@
 }
 
 .blur-elysium-block {
+    --block-columns: minmax(0, 1fr);
+    grid-template-columns: var(--block-columns);
     padding: 0;
+
 }

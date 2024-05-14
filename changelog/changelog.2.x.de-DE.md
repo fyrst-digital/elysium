@@ -1,3 +1,9 @@
+# Version 2.2.1
+
+## Changelog
+- Fehlerbehebung: Ein Slide wird nun volllständig angezeigt wenn der Inhalt das angegebene Seitenverhältnis überschreitet
+- Fehlerbehebung: Ein Darstellungsfehler, bei dem es zum Überlauf der Boxen im Elysium Block 'Elysium Banner' kommen konnte, wurde behoben
+
 # Version 2.2.0
 
 ## Changelog
