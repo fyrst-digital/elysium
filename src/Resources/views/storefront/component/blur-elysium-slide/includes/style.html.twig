@@ -95,6 +95,10 @@
                                 --image-flex-basis: {{ options.image.maxWidth ~ 'px' }};
                                 --image-max-w: {{ options.image.maxWidth ~ 'px' }};
                                 --image-flex-grow: 0;
+                            {% else %}
+                                --image-flex-grow: 1;
+                                --image-flex-basis: 0%;
+                                --image-max-w: none;
                             {% endif %}
                             {% if options.container.order is same as('reverse') %}
                                 --image-order: 1;
@@ -131,6 +135,8 @@
                             {% endif %}
                             {% if options.content.maxWidth is defined and options.content.maxWidthDisabled is not same as(true) %}
                                 --content-max-w: {{ options.content.maxWidth ~ 'px' }};
+                            {% else %}
+                                --content-max-w: none;
                             {% endif %}
 
                             {# Slide headline vars #}
