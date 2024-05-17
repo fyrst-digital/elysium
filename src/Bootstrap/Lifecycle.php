@@ -151,7 +151,13 @@ class Lifecycle
             $mediaDefaultFolderRepositroy->create([
                 [
                     'id' => $this->getMediaDefaultFolderId(),
-                    'associationFields' => ["media", "mediaPortrait"],
+                    'associationFields' => [
+                        'slideCover',
+                        'slideCoverMobile',
+                        'slideCoverTablet',
+                        'slideCoverVideo',
+                        'presentationMedia',
+                    ],
                     'entity' => 'blur_elysium_slides'
                 ]
             ], $context);
