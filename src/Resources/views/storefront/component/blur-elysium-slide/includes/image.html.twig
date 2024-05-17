@@ -9,10 +9,7 @@
         {% if imageMedia %}           
             <div class="{{ containerClasses|join(' ') }}">
                 {% sw_thumbnails 'elysium-slide-thumbnails' with {
-                    media: imageMedia,
-                    attributes: {
-                        'class': 'mw-100'
-                    }
+                    media: imageMedia
                 } %}
             </div>
         {% endif %}

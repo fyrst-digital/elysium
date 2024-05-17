@@ -222,6 +222,15 @@
                 "description": "Diese Einstellungen betreffen den Slide Container. Der Slide Container umschließt das Inhalts und Bildelement",
                 "alignmentDescription": "Diese Einstellungen beeinflussen die Ausrichtung der inneren Containerelemente. Wenn die Elemente untereinander angezeigt werden, werden diese Einstellungen umgekehrt"
             },
+            "displayContent": {
+                "label": "Inhaltselement"
+            },
+            "displayImage": {
+                "label": "Bildelement"
+            },
+            "focusImage": {
+                "fullWidth": "Bild auf volle Breite strecken"
+            },
             "slideDirectionColumn": {
                 "label": "Elemente untereinander anzeigen"
             },

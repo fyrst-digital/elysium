@@ -42,6 +42,7 @@
     /** Slide image vars */
     --image-flex-grow: 1;
     --image-flex-basis: 0%;
+    --image-width: auto;
     --image-max-w: none;
     --image-align-items: center;
     --image-justify-content: center;
@@ -66,7 +67,6 @@
     align-items: var(--slide-align-items);
     justify-content: var(--slide-justify-content);
     max-height: var(--slide-max-height);
-    overflow: hidden;
 }
 
 .blur-elysium-slide-cover-picture {
@@ -132,7 +132,7 @@
     max-width: var(--image-max-w);
 
     img {
-        width: 100%;
+        width: var(--image-width);
     }
 }
 
