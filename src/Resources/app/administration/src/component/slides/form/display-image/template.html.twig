@@ -20,6 +20,13 @@
                 gap="30px"
                 align="end">
 
+                <sw-switch-field 
+                    :label="$tc('blurElysiumSlides.forms.focusImage.fullWidth')"
+                    :style="{
+                        gridColumn: '1 / span 2'
+                    }"
+                    v-model:value="slideViewportSettings.image.imageFullWidth" />
+
                 <blur-device-number-field 
                     :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
                     :device="deviceView"

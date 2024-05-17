@@ -3,8 +3,12 @@
 ## Changelog
 - Improvement: The information in which Elysium Slide a medium is used is now displayed in the media management. When deleting a linked medium, a corresponding message appears
 - Improvement: Role permissions have been added in the Elysium Slides module
+- Improvement: In the slide settings, the option **Stretch image to full width** has been added to the image element
 - Change: The **Auto playback interval** setting in the CMS slider now has a minimum value of 200 instead of 3000
-- Bugfix: Correct CSS class names in CMS blocks. This results in  styling fixes
+- Change: The focus image is now displayed in automatic width by default instead of full width
+- Bugfix: Correct CSS class names in CMS blocks. This results in styling fixes
+- Fehlerbehebung: Correct the aspect ratio. When the content of the slide exceeds the aspect ratio, the height of the slide adjusts to fit the content. This means that the content is no longer cut off.
+- Fehlerbehebung: Text snippets in the administration have been corrected
 
 # Version 3.1.1
 

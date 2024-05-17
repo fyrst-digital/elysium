@@ -223,6 +223,15 @@
                 "description": "These settings affect the slide container. The slide container encloses the content and the image element",
                 "alignmentDescription": "These settings affect the alignment of the inner container elements. If the elements displayed one below the other, these settings are reversed."
             },
+            "displayContent": {
+                "label": "Content element"
+            },
+            "displayImage": {
+                "label": "Image element"
+            },
+            "focusImage": {
+                "fullWidth": "Stretch image to full width"
+            },
             "slideDirectionColumn": {
                 "label": "Display elements one below the other"
             },
