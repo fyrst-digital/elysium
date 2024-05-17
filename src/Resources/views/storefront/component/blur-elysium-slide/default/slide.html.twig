@@ -12,6 +12,15 @@
     {% set showContainerWrapper = false %}
 {% endif %}
 
+{% set headlineTagsWhitelist = [
+    '<br>',
+    '<i>',
+    '<b>',
+    '<u>',
+    '<strong>',
+    '<span>'
+] %}
+
 {% set headlineContent = slideData.translated.title|striptags( headlineTagsWhitelist|join ) %}
 {% set descriptionContent = slideData.translated.description %}
 {% set actionMainUrl = slideData.translated.url %}

@@ -6,8 +6,9 @@
 - Verbesserung: In den Slide Einstellung wurde die Option **Bild auf volle Breite strecken** dem Bildelement hinzugefügt
 - Änderung: Die Einstellung **Auto-Wiedergabe Intervall** im CMS Slider hat nun einen Minimalwer von 200 statt 3000
 - Änderung: Das Fokusbild wird nun standardmäßig in automatischer satt in voller Breite angezeigt
-- Fehlerbehebung: Korrentur von CSS Klassennamen in CMS Blöcken. Daraus ergeben sich Fehlerbehebungen im Styling
-- Fehlerbehebung: Korrentur des Seitenverhältnis. Wenn der Inhalt des Slides das Seitenverhätlis überschreiten, passt sich die Slide Höhe entsprechend dem Inhalt an. Somit wird der Inhalt nicht mehr abgeschnitten
+- Fehlerbehebung: Die HTML-Tags i, u, b, strong, br und span werden nun wieder wie erwartet im Frontend angezeigt
+- Fehlerbehebung: Korrektur von CSS Klassennamen in CMS Blöcken. Daraus ergeben sich Fehlerbehebungen im Styling
+- Fehlerbehebung: Korrektur des Seitenverhältnis. Wenn der Inhalt des Slides das Seitenverhätlis überschreiten, passt sich die Slide Höhe entsprechend dem Inhalt an. Somit wird der Inhalt nicht mehr abgeschnitten
 - Fehlerbehebung: Textbausteine in der Administration wurden korrigiert
 
 # Version 3.1.1

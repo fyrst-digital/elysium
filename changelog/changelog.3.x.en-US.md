@@ -6,9 +6,10 @@
 - Improvement: In the slide settings, the option **Stretch image to full width** has been added to the image element
 - Change: The **Auto playback interval** setting in the CMS slider now has a minimum value of 200 instead of 3000
 - Change: The focus image is now displayed in automatic width by default instead of full width
+- Bugfix: HTML tags i, u, b, strong, br and span are now displayed as expected in the frontend
 - Bugfix: Correct CSS class names in CMS blocks. This results in styling fixes
-- Fehlerbehebung: Correct the aspect ratio. When the content of the slide exceeds the aspect ratio, the height of the slide adjusts to fit the content. This means that the content is no longer cut off.
-- Fehlerbehebung: Text snippets in the administration have been corrected
+- Bugfix: Correct the aspect ratio. When the content of the slide exceeds the aspect ratio, the height of the slide adjusts to fit the content. This means that the content is no longer cut off.
+- Bugfix: Text snippets in the administration have been corrected
 
 # Version 3.1.1
 
