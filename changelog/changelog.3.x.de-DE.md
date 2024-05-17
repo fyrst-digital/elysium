@@ -1,4 +1,4 @@
-# unreleased
+# 3.2.0
 
 ## Changelog
 - Verbesserung: In der Medienverwaltung wird nun die Information angezeigt, in welchem Elysium Slide ein Medium verwendet wird. Beim löschen eines verknüpften Mediums erscheint entsprechender Hinweis 
