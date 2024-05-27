@@ -1,3 +1,8 @@
+# 3.2.1
+
+## Changelog
+- Change: The SQL syntax of database migration 1707906587 has been changed to support older MySQL and MariaDB versions. **IMPORTANT NOTE** Starting with version 4, the database versions recommended by Shopware are supported without exception
+
 # 3.2.0
 
 ## Changelog
