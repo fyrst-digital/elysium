@@ -2,7 +2,8 @@
 
 ## Changelog
 - Change: The SQL syntax of the database migration 1707906587 has been changed to support MariaDB versions 10.3 and higher.
-Bugfix: The Headline HTML tags i, u, b, strong, br and span are now displayed as expected in the frontend
+- Bugfix: The Headline HTML tags i, u, b, strong, br and span are now displayed as expected in the frontend
+- Bugfix: Fixed behavior of maximum width of content and image elements
 
 # Version 2.2.1
 

@@ -3,6 +3,7 @@
 ## Changelog
 - Änderung: Die SQL Syntax der Datenbank Migration 1707906587 wurde geändert um MariaDB Versionen ab 10.3 zu unterstützen
 - Fehlerbehebung: Die HTML-Tags i, u, b, strong, br und span der Überschrift werden nun wieder wie erwartet im Frontend angezeigt
+- Fehlerbehebung: Verhalten der maximalen Breite des Inhalts- und Bildelements wurde korrigiert
 
 # Version 2.2.1
 
