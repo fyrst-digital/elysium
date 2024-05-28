@@ -5,15 +5,6 @@
 
     {% set headlineElement = 'div' %}
 
-    {% set headlineTagsWhitelist = [
-        '<br>',
-        '<i>',
-        '<b>',
-        '<u>',
-        '<strong>',
-        '<span>'
-    ] %}
-
     {% if slideData.slideSettings.slide.headline.element %}
         {% set headlineElement = slideData.slideSettings.slide.headline.element %}
     {% endif %}
