@@ -1,3 +1,8 @@
+# Version 2.2.2
+
+## Changelog
+- Change: The SQL syntax of the database migration 1707906587 has been changed to support MariaDB versions 10.3 and higher.
+
 # Version 2.2.1
 
 ## Changelog

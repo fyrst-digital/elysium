@@ -1,7 +1,12 @@
+# Version 2.2.2
+
+## Changelog
+- Änderung: Die SQL Syntax der Datenbank Migration 1707906587 wurde geändert um MariaDB Versionen ab 10.3 zu unterstützen.
+
 # Version 2.2.1
 
 ## Changelog
-- Fehlerbehebung: Ein Slide wird nun volllständig angezeigt wenn der Inhalt das angegebene Seitenverhältnis überschreitet
+- Fehlerbehebung: Ein Slide wird nun vollständig angezeigt wenn der Inhalt das angegebene Seitenverhältnis überschreitet
 - Fehlerbehebung: Ein Darstellungsfehler, bei dem es zum Überlauf der Boxen im Elysium Block 'Elysium Banner' kommen konnte, wurde behoben
 
 # Version 2.2.0

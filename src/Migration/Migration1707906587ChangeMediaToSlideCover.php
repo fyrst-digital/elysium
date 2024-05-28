@@ -19,8 +19,8 @@ class Migration1707906587ChangeMediaToSlideCover extends MigrationStep
         // implement update
         $sql = <<<SQL
         ALTER TABLE `blur_elysium_slides`
-        RENAME COLUMN `media_id` TO `slide_cover_id`,
-        RENAME COLUMN `media_portrait_id` TO `slide_cover_mobile_id`
+        CHANGE `media_id` `slide_cover_id` BINARY(16) NULL,
+        CHANGE `media_portrait_id` `slide_cover_mobile_id` BINARY(16) NULL;
 SQL;
 
         // add custom field column
