@@ -2,16 +2,18 @@ import './style.scss'
 
 import template from './template.html.twig'
 
-const { Component } = Shopware
-const { mapState } = Component.getComponentHelper()
-
+const { Component, Store } = Shopware
 export default Component.wrapComponentConfig({
     template,
 
     computed: {
-        ...mapState ('cmsPageState', [
-            'currentCmsDeviceView'
-        ]),
+        cmsPageState() {
+            return Store.get('cmsPageState');
+        },
+
+        activeViewport () {
+            return this.cmsPageState.currentCmsDeviceView.split('-')[0]
+        },
 
         blockSettings () {
             if (this.$attrs?.block?.type === 'blur-elysium-block-two-col') {
@@ -22,14 +24,14 @@ export default Component.wrapComponentConfig({
         },
 
         dispayColumns () {
-            return this.getSettingsByDevice(this.currentCmsDeviceView).columnWrap === true
+            return this.getSettingsByDevice(this.activeViewport).columnWrap === true
                 ? '1fr'
-                : `${this.getSettingsByDevice(this.currentCmsDeviceView).width.colOne}fr ${this.getSettingsByDevice(this.currentCmsDeviceView).width.colTwo}fr`
+                : `${this.getSettingsByDevice(this.activeViewport).width.colOne}fr ${this.getSettingsByDevice(this.activeViewport).width.colTwo}fr`
         },
 
         displayGridGap () {
-            if (this.getSettingsByDevice(this.currentCmsDeviceView).gridGap) {
-                return this.getSettingsByDevice(this.currentCmsDeviceView).gridGap
+            if (this.getSettingsByDevice(this.activeViewport).gridGap) {
+                return this.getSettingsByDevice(this.activeViewport).gridGap
             }
 
             return null
@@ -46,7 +48,7 @@ export default Component.wrapComponentConfig({
 
     methods: {
         getSettingsByDevice (device: string) {
-            return this.blockSettings.viewports[device.split('-')[0]]
+            return this.blockSettings.viewports[device]
         }
     }
 })

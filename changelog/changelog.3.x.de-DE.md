@@ -1,3 +1,8 @@
+# 3.3.0
+
+## Changelog
+- Änderung: Aufgrund einer Änderung des State Managers ab Shopware 6.6.4, kam es beim einfügen von Elysium Blöcken im Erlebniswelten Layout Editor zu Fehlern. Dies wurde angepasst und das einfügen von Blöcken sollte wie erwartet funktionieren.
+
 # 3.2.1
 
 ## Changelog

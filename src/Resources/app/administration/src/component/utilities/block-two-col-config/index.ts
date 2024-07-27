@@ -1,8 +1,7 @@
 import template from './template.html.twig'
 
 // eslint-disable-next-line no-undef
-const { Component, State } = Shopware
-const { mapState } = Component.getComponentHelper()
+const { Component, Store } = Shopware
 
 export default Component.wrapComponentConfig({
     template,
@@ -20,15 +19,15 @@ export default Component.wrapComponentConfig({
     },
 
     watch: {
-        currentCmsDeviceView (value) {
+        'cmsPageState.currentCmsDeviceView' (value) {
             this.activeViewport = value.split('-')[0]
         }
     },
 
     computed: {
-        ...mapState('cmsPageState', [
-            'currentCmsDeviceView'
-        ]),
+        cmsPageState() {
+            return Store.get('cmsPageState');
+        },
 
         viewports () {
             return Object.keys(this.settings.viewports)
@@ -36,7 +35,8 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        changeViewport (viewport: string) {
+        changeViewport (viewport: any) {
+            console.log("changeViewport", this.cmsPageState)
             let viewportState = viewport
 
             this.activeViewport = viewport
@@ -45,11 +45,11 @@ export default Component.wrapComponentConfig({
                 viewportState = 'tablet-landscape'
             }
 
-            State.commit('cmsPageState/setCurrentCmsDeviceView', viewportState)
+            this.cmsPageState.setCurrentCmsDeviceView(viewportState)
         }
     },
 
     created () {
-        this.activeViewport = this.currentCmsDeviceView
+        this.activeViewport = this.cmsPageState.currentCmsDeviceView
     }
 })

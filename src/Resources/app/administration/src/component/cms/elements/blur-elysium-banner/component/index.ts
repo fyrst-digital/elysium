@@ -1,8 +1,7 @@
 import template from './template.html.twig'
 
-const { Component, Mixin, Data, Context } = Shopware
+const { Component, Mixin, Data, Store, Context } = Shopware
 const { Criteria } = Data
-const { mapState } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
     template,
@@ -23,15 +22,17 @@ export default Component.wrapComponentConfig({
     ],
 
     watch: {
-        'config.elysiumSlide.value'(value) {
-            this.loadPreviewSlide()
+        'config.elysiumSlide.value'(value: string) {
+            if (value !== '') {
+                this.loadPreviewSlide()
+            }
         }
     },
 
     computed: {
-        ...mapState('cmsPageState', [
-            'currentCmsDeviceView'
-        ]),
+        cmsPageState() {
+            return Store.get('cmsPageState');
+        },
 
         slidesRepository () {
             return this.repositoryFactory.create('blur_elysium_slides')
@@ -44,7 +45,7 @@ export default Component.wrapComponentConfig({
         },
 
         activeViewport () {
-            return this.currentCmsDeviceView.split('-')[0]
+            return this.cmsPageState.currentCmsDeviceView.split('-')[0]
         },
 
         config () {

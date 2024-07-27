@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin, Data, Context } = Shopware
+const { Component, Mixin, Data, Store } = Shopware
 const { Criteria } = Data
 
 export default Component.wrapComponentConfig({

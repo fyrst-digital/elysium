@@ -1,3 +1,8 @@
+# 3.3.0
+
+## Changelog
+- Change: Due to a changes in the State Manager as of Shopware 6.6.4, errors occurred when inserting Elysium blocks in the Shopping Experiences Layout Editor. This has been adjusted and the insertion of blocks should work as expected.
+
 # 3.2.1
 
 ## Changelog
