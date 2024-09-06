@@ -3,7 +3,9 @@
         'blur-elysium-slide-image'
     ] %}
 
-    {% set imageMedia = slideData.presentationMedia %}
+    {% if imageMedia is not defined %}
+        {% set imageMedia = slideData.presentationMedia %}
+    {% endif %}
 
     {% block blur_elysium_slide_image_element %}
         {% if imageMedia %}           

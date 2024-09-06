@@ -24,20 +24,28 @@
                 <option value="product">{{ $tc('blurElysiumSlides.forms.slideLinking.typeProduct') }}</option>
             </sw-select-field>
 
-            <template v-if="slide.slideSettings.slide?.linking?.type === 'custom'">
-                <sw-text-field
-                    v-model:value="slide.url"
-                    :label="$tc('blurElysiumSlides.forms.slideLinking.customUrl')"
-                    :placeholder="$tc('blurElysiumSlides.forms.slideLinking.customUrlPlaceholder')"
-                    :helpText="$tc('blurElysiumSlides.forms.slideLinking.customUrlHelpText')"
-                />
-            </template>
-            <template v-else-if="slide.slideSettings.slide?.linking?.type === 'product'">
-                <sw-entity-single-select 
-                    entity="product" 
-                    :label="$tc('blurElysiumSlides.forms.slideLinking.selectProduct')"
-                    v-model:value="slide.productId" />
-            </template>
+            <sw-text-field
+                v-if="slide.slideSettings.slide?.linking?.type === 'custom'"
+                v-model:value="slide.url"
+                :label="$tc('blurElysiumSlides.forms.slideLinking.customUrl')"
+                :placeholder="$tc('blurElysiumSlides.forms.slideLinking.customUrlPlaceholder')"
+                :helpText="$tc('blurElysiumSlides.forms.slideLinking.customUrlHelpText')"
+            />
+
+            <sw-entity-single-select 
+                v-else-if="slide.slideSettings.slide?.linking?.type === 'product'"
+                entity="product" 
+                :label="$tc('blurElysiumSlides.forms.slideLinking.selectProduct')"
+                v-model:value="slide.productId" />
+
+            <mt-switch 
+                v-if="slide.slideSettings.slide?.linking?.type === 'product'"
+                @change="slide.slideSettings.slide.linking.showProductFocusImage = $event"
+                :checked="slide.slideSettings.slide.linking.showProductFocusImage"
+                :label="$tc('blurElysiumSlides.forms.slideLinking.showProductFocusImage')" 
+                :style="{
+                    gridColumnEnd: 'span 2'
+                }"/>
 
             <sw-text-field
                 v-model:value="slide.buttonLabel" 
@@ -62,14 +70,16 @@
                 <option value="dark">{{ $tc('blurElysium.general.colorStates.dark') }}</option>
             </sw-select-field>
 
-            <sw-switch-field 
-                :label="$tc('blurElysiumSlides.forms.slideLinkingOpenExternal')" 
-                v-model:value="slide.slideSettings.slide.linking.openExternal"/>
-            
-            <sw-switch-field 
-                :label="$tc('blurElysiumSlides.forms.slideLinkingOverlay.label')" 
+            <mt-switch 
+                @change="slide.slideSettings.slide.linking.openExternal = $event"
+                :checked="slide.slideSettings.slide.linking.openExternal"
+                :label="$tc('blurElysiumSlides.forms.slideLinkingOpenExternal')" />
+
+            <mt-switch 
+                @change="slide.slideSettings.slide.linking.overlay = $event"
+                :checked="slide.slideSettings.slide.linking.overlay"
                 :helpText="$tc('blurElysiumSlides.forms.slideLinkingOverlay.helpText')"
-                v-model:value="slide.slideSettings.slide.linking.overlay" />
+                :label="$tc('blurElysiumSlides.forms.slideLinkingOverlay.label')" />
 
         </sw-container>
 

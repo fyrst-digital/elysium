@@ -182,9 +182,10 @@
                 "customUrl": "Individuelle Adresse",
                 "customUrlPlaceholder": "/mein/shop/pfad oder https://example.com",
                 "customUrlHelpText": "Legt die Verlinkte Adresse fest. Dies kann sowohl eine absolute als auch eine relative Adresse sein",
-                "selectProduct": "Produkt wählen"
+                "selectProduct": "Produkt wählen",
+                "showProductFocusImage": "Produktbild anzeigen"
             },
-            "slideButtonLabel": { 
+            "slideButtonLabel": {
                 "label": "Buttonbeschriftung",
                 "placeholder": "Mehr Erfahren",
                 "helpText": "Legt eine Buttonbeschriftung fest. Ist keine Beschriftung angegeben, wird der Button nicht angezeigt."
@@ -299,7 +300,7 @@
                 "autoplay": {
                     "label": "Auto-Wiedergabe",
                     "active": "Auto-Wiedergabe aktivieren",
-                    "interval":{ 
+                    "interval": {
                         "label": "Auto-Wiedergabe Intervall",
                         "placeholder": "Zeit in Millisekunden"
                     },
@@ -307,7 +308,7 @@
                 }
             },
             "sizingLabel": "Größen",
-            "sizing":  {
+            "sizing": {
                 "label": "Größen",
                 "selectViewport": {
                     "label": "Viewport Size",

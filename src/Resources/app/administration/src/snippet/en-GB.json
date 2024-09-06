@@ -183,9 +183,10 @@
                 "customUrl": "Custom URL",
                 "customUrlPlaceholder": "/my/url/path or https://example.com",
                 "customUrlHelpText": "Set the linking URL of the slide. This can be both an absolute or a relative URL.",
-                "selectProduct": "Select product"
+                "selectProduct": "Select product",
+                "showProductFocusImage": "Show product image"
             },
-            "slideButtonLabel": { 
+            "slideButtonLabel": {
                 "label": "Button label",
                 "placeholder": "Learn more",
                 "helpText": "Set the button label. If there is no label, no button is displayed."
@@ -300,7 +301,7 @@
                 "autoplay": {
                     "label": "Autoplay",
                     "active": "Activate Autoplay",
-                    "interval":{ 
+                    "interval": {
                         "label": "Autoplay interval",
                         "placeholder": "Time in Millisecond"
                     },
@@ -308,7 +309,7 @@
                 }
             },
             "sizingLabel": "Sizing",
-            "sizing":  {
+            "sizing": {
                 "label": "Sizing",
                 "selectViewport": {
                     "label": "Viewport Size",

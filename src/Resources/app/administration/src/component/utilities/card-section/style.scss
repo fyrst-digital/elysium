@@ -13,11 +13,17 @@
         border-bottom: 0;
     }
 
+    .mt-field,
     .sw-field, 
     .sw-field--switch, 
+    .mt-field--switch,
     .sw-text-editor,
     h4 {
         margin: 0;
+    }
+
+    .mt-field__label {
+        gap: var(--mt-label-gap, 8px);
     }
 
     code {

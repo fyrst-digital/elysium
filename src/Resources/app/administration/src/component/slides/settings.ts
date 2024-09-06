@@ -1,3 +1,6 @@
+/**
+ * @todo use native TypeScript types instead of JSDoc
+ */
 export default {
     slide: {
         headline: {
@@ -19,7 +22,9 @@ export default {
             /** @type boolean */
             openExternal: false,
             /** @type boolean */
-            overlay: false
+            overlay: false,
+            /** @type boolean */
+            showProductFocusImage: true
         },
         cover: {
             /** @type boolean */
