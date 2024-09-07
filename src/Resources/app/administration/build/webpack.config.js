@@ -1,4 +1,5 @@
 const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = (webpack) => {
     // Exclude the plugin's icons from being loaded via a url-loader
@@ -17,7 +18,8 @@ module.exports = (webpack) => {
         resolve: {
             alias: {
                 blurElysium: path.join(__dirname, '..', 'src')
-            }
+            },
+            plugins: [new TsconfigPathsPlugin()]
         },
         module: {
             rules: [

@@ -1,21 +1,17 @@
 {
-  "extends": [
-    "../../../../../../../vendor/shopware/administration/Resources/app/administration/tsconfig.json"
-],
-  "files": [
-    "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/global.types.ts",
-    "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/html-shim.d.ts",
-    "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/entity-schema-definition.d.ts"
-  ],
   "compilerOptions": {
     "rootDirs": [
-      "./src",
+      "./",
       "../../../../../../../vendor/shopware/administration/Resources/app/administration/src"
     ],
-    "typeRoots": [
-      "./node_modules/vue/dist/vue.d.ts"
-    ]
+    "baseUrl": "./",
+    "paths": {
+      "blurElysium/*": ["src/*"],
+    }
   },
-  "include": ["./src/**/*", "./scripts/**/*"],
+  "include": [
+    "./src/**/*", 
+    "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/**/*"
+  ],
   "exclude": ["node_modules"]
 }
