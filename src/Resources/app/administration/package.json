@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/webpack-env": "^1.18.5",
     "tsconfig-paths-webpack-plugin": "^4.1.0"
   }
 }

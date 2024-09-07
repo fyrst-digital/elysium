@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "types": [
+      "@types/webpack-env"
+    ],
     "rootDirs": [
       "./",
       "../../../../../../../vendor/shopware/administration/Resources/app/administration/src"
@@ -7,6 +10,7 @@
     "baseUrl": "./",
     "paths": {
       "blurElysium/*": ["src/*"],
+      "shopware/*": ["../../../../../../../vendor/shopware/administration/Resources/app/administration/src/*"],
     },
     "lib": [
       "ES2020",
@@ -19,7 +23,7 @@
   },
   "include": [
     "./src/**/*", 
-    "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/**/*"
+    "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/**/*",
   ],
   "exclude": ["node_modules"]
 }
