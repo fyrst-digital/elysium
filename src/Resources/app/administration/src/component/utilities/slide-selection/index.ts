@@ -38,7 +38,7 @@ export default Component.wrapComponentConfig({
             }
         },
 
-        searchTerm(value: string) {
+        searchTerm () {
             this.loadSlides()
         }
     },
@@ -72,7 +72,7 @@ export default Component.wrapComponentConfig({
             this.searchFocus = true
         },
 
-        blurSearch (event: any) {
+        blurSearch (event) {
             if (event.relatedTarget !== null) {
                 this.searchFocus = false
             }
@@ -84,7 +84,7 @@ export default Component.wrapComponentConfig({
             })
         },
 
-        selectSlide (value: any) {
+        selectSlide (value) {
             // call if slide is selected
             // add slide to this.selectedSlides if is not in collection
             // remove slide from this.selectedSlides if is in collection
@@ -106,38 +106,38 @@ export default Component.wrapComponentConfig({
             this.searchFocus = false
         },
 
-        slideIsSelected (slide: any) {
+        slideIsSelected (slide) {
             if (this.selectedSlides.includes(slide.id)) {
                 return true
             }
             return false
         },
 
-        slideLoaded (slide: any, slideId: string) {
+        slideLoaded (slide, slideId: string) {
             if (slide === null) {
                 this.onRemoveSlide(slideId)
             }
         },
 
-        onDrop (event: any) {
+        onDrop () {
             this.selectedSlides.splice(this.selectedSlides.indexOf(this.draggedSlideId), 1)
             this.draggedSlideElement.classList.remove('is-dragged')
             this.selectedSlides.splice(this.currentDragIndex, 0, this.draggedSlideId)
             this.placeholderElement.remove()
         },
 
-        dragEnd (event: any) {
+        dragEnd (event) {
             event.target.classList.remove('is-dragged')
             this.placeholderElement.remove()
         },
 
-        startDrag (slideId: any, event: any, element: any) {
+        startDrag (slideId, event, element) {
             this.draggedSlideId = slideId
             this.draggedSlideElement = element
             this.placeholderElement.style.height = `${element.offsetHeight}px`
         },
 
-        onDrag (slideId: any, event: any, element: any) {
+        onDrag (slideId, event, element) {
             if (this.draggedSlideId === slideId) {
                 this.draggedSlideElement.classList.add('is-dragged')
             }
@@ -151,7 +151,7 @@ export default Component.wrapComponentConfig({
             this.currentDragIndex = this.selectedSlides.indexOf(slideId)
         },
 
-        slidePositionUp (slide: any) {
+        slidePositionUp (slide) {
             const currentIndexPos = this.selectedSlides.indexOf(slide)
             const upIndexPos = currentIndexPos - 1
 
@@ -163,7 +163,7 @@ export default Component.wrapComponentConfig({
             }
         },
 
-        slidePositionDown (slide: any) {
+        slidePositionDown (slide) {
             const currentIndexPos = this.selectedSlides.indexOf(slide)
             const downIndexPos = currentIndexPos + 1
             const maxIndex = this.selectedSlides.length - 1
@@ -176,11 +176,11 @@ export default Component.wrapComponentConfig({
             }
         },
 
-        onRemoveSlide (slide: any) {
+        onRemoveSlide (slide) {
             this.selectedSlides.splice(this.selectedSlides.indexOf(slide), 1)
         },
 
-        onEditSlide (slide: any) {
+        onEditSlide (slide) {
             const route = this.$router.resolve({ name: 'blur.elysium.slides.detail', params: { id: slide } })
             window.open(route.href, '_blank')
         },

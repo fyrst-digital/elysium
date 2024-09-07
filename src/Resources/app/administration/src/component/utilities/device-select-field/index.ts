@@ -9,8 +9,7 @@ export default Component.wrapComponentConfig({
     emits: ['update:value'],
 
     methods: {
-        update (value: any) {
-            //this.$emit('update', value)
+        update (value) {
             this.$emit('update:value', value)
         }
     },

@@ -1,7 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin, Data, Context } = Shopware
-const { Criteria } = Data
+const { Component, Mixin } = Shopware
 
 export default Component.wrapComponentConfig({
     template,
@@ -27,7 +26,7 @@ export default Component.wrapComponentConfig({
                 return this.element.config.elysiumSlideCollection.value
             },
 
-            set (value: any) {
+            set (value) {
                 // Note: we are using destructuring assignment syntax here.
                 this.element.config.elysiumSlideCollection.value = value
             }
@@ -44,9 +43,9 @@ export default Component.wrapComponentConfig({
          * @deprecated since we just looking for at least one slide exist we can not filter orphans at this point
          * move this function to slide-selection component
          */
-        filterOrphans (slides: any) {
-            return this.selectedSlides.filter((selectedSlide: any, index: any) => {
-                return slides.find((slide: any) => {
+        filterOrphans (slides) {
+            return this.selectedSlides.filter((selectedSlide) => {
+                return slides.find((slide) => {
                     return slide.id === selectedSlide
                 })
             })

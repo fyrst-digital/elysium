@@ -101,7 +101,7 @@ export default Component.wrapComponentConfig({
         },
 
         slideSkeletonStyles () {
-            const styles: any = {}
+            const styles: Partial<CSSStyleDeclaration> = {}
 
             if (this.previewSlide !== null) {
                 styles['--slide-border-color'] = 'transparent'

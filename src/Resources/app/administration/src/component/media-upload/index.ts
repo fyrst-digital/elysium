@@ -1,7 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware 
-const { mapMutations, mapState } = Component.getComponentHelper()
+const { Component } = Shopware
 
 export default Component.wrapComponentConfig({
     template,
@@ -25,11 +24,11 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        uploadFinished (payload: any) {
+        uploadFinished (payload) {
             this.$emit('upload-finished', payload)
         },
 
-        mediaDropped (payload: any) {
+        mediaDropped (payload) {
             this.$emit('media-dropped', payload)
         },
 

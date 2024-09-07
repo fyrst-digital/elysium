@@ -54,10 +54,9 @@ export default {
             this.elysiumSlidesRepository.search(
                 this.elysiumSlidesCriteria,
                 Context.api
-            ).then((slides: any) => {
+            ).then((slides) => {
                 this.elysiumSlidesUsageCollection = slides
                 this.isLoading = false
-                console.log(this.elysiumSlidesUsageCollection)
             }).catch((exception) => {
                 console.warn(exception)
                 this.isLoading = false

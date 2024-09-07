@@ -1,7 +1,4 @@
-import { computed } from "vue";
-
 const { Mixin, Component, Context } = Shopware;
-const { mapMutations, mapState } = Component.getComponentHelper()
 
 // give the mixin a name and feed it into the register function as the second argument
 export default Mixin.register('blur-media', Component.wrapComponentConfig({
@@ -12,7 +9,7 @@ export default Mixin.register('blur-media', Component.wrapComponentConfig({
 
     computed: {
 
-        mediaRepository (): any {
+        mediaRepository () {
             return this.repositoryFactory.create('media')
         },
     },
@@ -38,7 +35,7 @@ export default Mixin.register('blur-media', Component.wrapComponentConfig({
          * @param mediaId 
          * @param allowedType 
          */
-        setMedia (property: string, mediaId: string, allowedType = null) {
+        setMedia (property: string, mediaId: string) {
             const propertyId = `${property}Id`
 
             this.setSlideProperty({

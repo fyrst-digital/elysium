@@ -136,7 +136,7 @@ export default Component.wrapComponentConfig({
             this.isLoading = true
 
             this.slidesRepository.search(this.defaultCriteria, Context.api)
-            .then((result: any) => {
+            .then((result) => {
                 this.slidesCollection = result
                 this.total = typeof result.total === 'number' ? result.total : 0
                 this.isLoading = false
@@ -160,7 +160,7 @@ export default Component.wrapComponentConfig({
             this.loadSlides()
         },
 
-        copySlide (slide: any) {
+        copySlide (slide) {
             if (this.permissionCreate !== true) {
                 return
             }
@@ -173,7 +173,7 @@ export default Component.wrapComponentConfig({
                 }
             }
 
-            this.slidesRepository.clone(slide.id, cloneOptions).then((result) => {
+            this.slidesRepository.clone(slide.id, cloneOptions).then(() => {
                 this.loadSlides()
             }).catch((error) => {
                 console.warn(error)

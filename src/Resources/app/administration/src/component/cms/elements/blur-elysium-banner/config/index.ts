@@ -1,7 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin, Data, Store } = Shopware
-const { Criteria } = Data
+const { Component, Mixin } = Shopware
 
 export default Component.wrapComponentConfig({
     template,
@@ -27,7 +26,7 @@ export default Component.wrapComponentConfig({
                 return this.element.config.elysiumSlide.value
             },
 
-            set (value: any) {
+            set (value) {
                 // Note: we are using destructuring assignment syntax here.
                 this.element.config.elysiumSlide.value = value
             }

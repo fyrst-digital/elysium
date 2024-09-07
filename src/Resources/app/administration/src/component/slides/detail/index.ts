@@ -74,7 +74,7 @@ export default Component.wrapComponentConfig({
             'deviceView'
         ]),
 
-        contentRoute (): any {
+        contentRoute () {
             if (this.newSlide === false) {
                 return { name: 'blur.elysium.slides.detail.content', params: { id: this.slideId } }
             }
@@ -82,7 +82,7 @@ export default Component.wrapComponentConfig({
             return { name: 'blur.elysium.slides.create.content' }
         },
 
-        mediaRoute (): any {
+        mediaRoute () {
             if (this.newSlide === false) {
                 return { name: 'blur.elysium.slides.detail.media', params: { id: this.slideId } }
             }
@@ -90,7 +90,7 @@ export default Component.wrapComponentConfig({
             return { name: 'blur.elysium.slides.create.media' }
         },
 
-        displayRoute (): any {
+        displayRoute () {
             if (this.newSlide === false) {
                 return { name: 'blur.elysium.slides.detail.display', params: { id: this.slideId } }
             }
@@ -98,7 +98,7 @@ export default Component.wrapComponentConfig({
             return { name: 'blur.elysium.slides.create.display' }
         },
 
-        advancedRoute (): any {
+        advancedRoute () {
             if (this.newSlide === false) {
                 return { name: 'blur.elysium.slides.detail.advanced', params: { id: this.slideId } }
             }
@@ -136,7 +136,7 @@ export default Component.wrapComponentConfig({
         },
 
         metaTitle () {
-            return this.placeholder(this.slide, <any>'name', this.$tc('blurElysiumSlides.actions.newSlide'))
+            return this.placeholder(this.slide, 'name', this.$tc('blurElysiumSlides.actions.newSlide'))
         },
 
         permissionView() {
@@ -210,7 +210,7 @@ export default Component.wrapComponentConfig({
                 this.slideId,
                 Context.api,
                 new Criteria
-            ).then((slide: any) => {
+            ).then((slide) => {
                 const mergedSlideSettings = Utils.object.deepMergeObject(this.defaultSlideSettings, slide.slideSettings)
                 slide.slideSettings = mergedSlideSettings
                 this.setSlide(slide)
@@ -257,7 +257,7 @@ export default Component.wrapComponentConfig({
             this.isLoading = true
 
             this.slidesRepository.save(this.slide)
-            .then((result: any) => {
+            .then((result) => {
 
                 this.createNotificationSuccess({
                     message: this.$t('blurElysiumSlides.messages.slideSavedSuccess', { slide: this.slide.name })
@@ -308,8 +308,6 @@ export default Component.wrapComponentConfig({
         onChangeLanguage (languageId: string) {
             State.commit('context/setApiLanguageId', languageId)
 
-            // this.setApiContext(Context.api)
-
             if (this.slideId) {
                 this.loadSlide()
             }
@@ -326,7 +324,7 @@ export default Component.wrapComponentConfig({
                 })
                 return
             }
-            const cloneOptions = <any>{
+            const cloneOptions = {
                 overwrites: {
                     name: `${this.slide.name}-${this.$tc('blurElysium.general.copySuffix')}`
                 }
@@ -334,15 +332,15 @@ export default Component.wrapComponentConfig({
 
             this.isLoading = true
 
-            this.slidesRepository.clone(this.slide.id, cloneOptions).then((result: any) => {
+            this.slidesRepository.clone(this.slide.id, cloneOptions).then((result) => {
                 this.$router.push({ name: 'blur.elysium.slides.detail', params: { id: result.id } })
-            }).catch((error: any) => {
+            }).catch((error) => {
                 console.warn(error)
             })
         },
 
-        setSlideCoverImage (media: any) {
-            const mappedViewportFields = <any>{
+        setSlideCoverImage (media) {
+            const mappedViewportFields = {
                 mobile: 'slideCoverMobile',
                 tablet: 'slideCoverTablet',
                 desktop: 'slideCover'
@@ -362,7 +360,7 @@ export default Component.wrapComponentConfig({
             }
         },
 
-        setSlideCoverVideo (media: any) {
+        setSlideCoverVideo (media) {
             if (this.mediaType(media.mimeType) === 'video') {
                 this.setSlideProperty({
                     key: 'slideCoverVideoId',
@@ -377,7 +375,7 @@ export default Component.wrapComponentConfig({
             }
         },
 
-        setFocusImage (media: any) {
+        setFocusImage (media) {
             if (this.mediaType(media.mimeType) === 'image') {
                 this.setSlideProperty({
                     key: 'presentationMediaId',

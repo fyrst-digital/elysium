@@ -68,19 +68,19 @@ export default Component.wrapComponentConfig({
             this.$emit('remove-slide', this.selectedSlide)
         },
 
-        startDrag (event: any) {
+        startDrag (event) {
             this.$emit('start-drag', this.selectedSlide, event, this.$refs.selectItem)
         },
 
-        enterDrag (event: any) {
+        enterDrag (event) {
             this.$emit('enter-drag', this.selectedSlide, event, this.$refs.selectItem)
         },
 
-        endDrag (event: any) {
+        endDrag (event) {
             this.$emit('end-drag', this.selectedSlide, event, this.$refs.selectItem)
         },
 
-        leaveDrag (event: any) {
+        leaveDrag (event) {
             this.$emit('leave-drag', this.selectedSlide, event, this.$refs.selectItem)
         }
     },

@@ -35,8 +35,7 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        changeViewport (viewport: any) {
-            console.log("changeViewport", this.cmsPageState)
+        changeViewport (viewport) {
             let viewportState = viewport
 
             this.activeViewport = viewport

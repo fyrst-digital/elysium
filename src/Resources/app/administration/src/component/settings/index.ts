@@ -22,13 +22,8 @@ export default Component.wrapComponentConfig({
     methods: {
         async onSave () {
             if (this.permissionEdit) {
-                // @ts-ignore
                 this.$refs.systemConfig.saveAll()
             }
         }
-    },
-
-    created() {
-        console.log(this.permissionEdit)
     },
 })

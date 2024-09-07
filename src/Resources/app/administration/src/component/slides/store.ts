@@ -11,19 +11,19 @@ export default {
     },
 
     mutations: {
-        setSlide(state: any, slide: any) {
+        setSlide(state, slide) {
             state.slide = slide;
         },
-        setSlideProperty (state: any, payload: any) {
+        setSlideProperty (state, payload) {
             state.slide[payload.key] = payload.value
         },
-        setCustomFieldSet(state: any, customFieldSet: any) {
+        setCustomFieldSet(state, customFieldSet) {
             state.customFieldSet = customFieldSet;
         },
-        setMediaSidebar (state: any, value: any) {
+        setMediaSidebar (state, value) {
             state.mediaSidebar = value
         },
-        setDeviceView(state: any, deviceView: string) {
+        setDeviceView(state, deviceView) {
             state.deviceView = deviceView;
         },
     }

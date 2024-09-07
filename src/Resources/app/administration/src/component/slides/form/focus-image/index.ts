@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin, Context } = Shopware 
+const { Component, Mixin } = Shopware 
 const { mapMutations, mapState } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
@@ -62,9 +62,5 @@ export default Component.wrapComponentConfig({
                 this.fetchMedia(value, 'presentationMedia')
             }
         },
-    },
-    
-    created() {
-        console.log(this.permissionEdit)
     },
 })

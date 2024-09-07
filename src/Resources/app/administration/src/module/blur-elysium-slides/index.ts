@@ -11,7 +11,7 @@ Module.register('blur-elysium-slides', {
     entity: 'blur_elysium_slides',
 
     /** Search configuration */
-    defaultSearchConfiguration: <any>{
+    defaultSearchConfiguration: {
         _searchable: true,
         name: {
             _searchable: true,
@@ -85,7 +85,7 @@ Module.register('blur-elysium-slides', {
             path: 'detail/:id',
             component: 'blur-elysium-slides-detail',
             props: {
-                default (route: any) {
+                default (route) {
                     return {
                         slideId: route.params.id
                     }
@@ -146,11 +146,7 @@ Module.register('blur-elysium-slides', {
         {
             id: 'blur-elysium-slides',
             label: 'blurElysiumSlides.label',
-            /** @deprecated may be useless */
-            // color: '#ff3d58',
             path: 'blur.elysium.slides.overview',
-            /** @deprecated may be useless */
-            // icon: 'default-shopping-paper-bag-product',
             parent: 'sw-content',
             position: 100,
             privilege: 'blur_elysium_slides.viewer'

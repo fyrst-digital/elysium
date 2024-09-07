@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin, Context } = Shopware 
+const { Component, Mixin } = Shopware 
 const { mapMutations, mapState } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
@@ -29,7 +29,7 @@ export default Component.wrapComponentConfig({
         },
 
         coverImageUploadTag () {
-            const uploadTag = <any>{
+            const uploadTag = {
                 mobile: 'blur-elysium-slide-cover-mobile',
                 tablet: 'blur-elysium-slide-cover-tablet',
                 desktop: 'blur-elysium-slide-cover'
