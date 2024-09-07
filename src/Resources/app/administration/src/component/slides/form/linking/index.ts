@@ -20,6 +20,16 @@ export default Component.wrapComponentConfig({
         slideViewportSettings () {
             return this.slide.slideSettings.viewports[this.deviceView]
         },
+
+        validateProduct () {
+            if (this.slide.slideSettings.slide.linking.type === 'product' && (this.slide.productId === undefined || this.slide.productId === null || this.slide.productId === '')) {
+                return {
+                    detail: this.$t('blurElysiumSlides.messages.productLinkingMissingEntity'),
+                }
+            }
+
+            return false
+        }
     },
 
     methods: {

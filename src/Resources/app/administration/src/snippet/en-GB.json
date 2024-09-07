@@ -120,7 +120,9 @@
             "slideSavedSuccess": "Slide <b>{slide}</b> has been saved",
             "emptySlideNameErrorTitle": "No Slide name",
             "emptySlideNameError": "Please provide a Slide name",
-            "slideSaveError": "Something went wrong. The Slide couldn't be saved"
+            "slideSaveError": "Something went wrong. The Slide couldn't be saved",
+            "productLinkingMissingEntity": "Please select a product you would like to link",
+            "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten."
         },
         "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
         "actions": {
@@ -248,7 +250,7 @@
             },
             "customTemplateFile": {
                 "label": "Custom template file",
-                "description": "Here you can define your own Twig template file for this slide. If you enter a Twig template file in this field, you will need to add it to your theme or extension by yourself.",
+                "description": "Here you can define your own Twig template file. If you enter a Twig template file, you will need to add it to your theme or extension by yourself.",
                 "placeholder": "my-slide-template",
                 "pathInfo": "The path to this file is:<br/><code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code"
             },

@@ -154,6 +154,25 @@ export default Component.wrapComponentConfig({
         permissionDelete() {
             return this.acl.can('blur_elysium_slides.deleter')
         },
+
+        tabContentHasError () {
+            if (this.slide.slideSettings.slide.linking.type === 'product' && (this.slide.productId === undefined || this.slide.productId === null || this.slide.productId === '')) {
+                return true
+            }
+
+            return false
+        },
+
+        tabAdvancedHasWarning () {
+            if (this.slide.slideSettings.customTemplateFile) {
+                return true
+            }
+            return false
+        },
+
+        tabAdvancedWarningMessage () {
+            return this.$t('blurElysiumSlides.messages.customTemplateFileDefinedNotice')
+        }
     },
 
     methods: {
@@ -225,6 +244,13 @@ export default Component.wrapComponentConfig({
 
         async saveSlide () {
             if (!((this.newSlide && this.permissionCreate) || this.permissionEdit)) {
+                return
+            }
+
+            if (this.slide.slideSettings.slide.linking.type === 'product' && (this.slide.productId === undefined || this.slide.productId === null || this.slide.productId === '')) {
+                this.createNotificationError({
+                    message: this.$t('blurElysiumSlides.messages.productLinkingMissingEntity')
+                })
                 return
             }
 
@@ -310,7 +336,7 @@ export default Component.wrapComponentConfig({
 
             this.slidesRepository.clone(this.slide.id, cloneOptions).then((result: any) => {
                 this.$router.push({ name: 'blur.elysium.slides.detail', params: { id: result.id } })
-            }).catch((error) => {
+            }).catch((error: any) => {
                 console.warn(error)
             })
         },

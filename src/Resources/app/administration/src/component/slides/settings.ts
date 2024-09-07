@@ -93,11 +93,17 @@ export default <SlideSettings>{
         tablet: defineViewportConfig({
             headline: {
                 fontSize: 32
+            },
+            description: {
+                fontSize: 16
             }
         }),
         desktop: defineViewportConfig({
             headline: {
                 fontSize: 40
+            },
+            description: {
+                fontSize: 20
             }
         })
     },

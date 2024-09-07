@@ -36,6 +36,7 @@
                 v-else-if="slide.slideSettings.slide?.linking?.type === 'product'"
                 entity="product" 
                 :label="$tc('blurElysiumSlides.forms.slideLinking.selectProduct')"
+                :error="validateProduct"
                 v-model:value="slide.productId" />
 
             <mt-switch 

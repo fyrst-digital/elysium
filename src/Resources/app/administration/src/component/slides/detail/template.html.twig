@@ -93,7 +93,8 @@
 
                     <sw-tabs-item
                         :route="contentRoute"
-                        :title="$tc('blurElysiumSlides.settings.baseLabel')">
+                        :title="$tc('blurElysiumSlides.settings.baseLabel')"
+                        :hasError="tabContentHasError">
                         {{ $tc('blurElysiumSlides.settings.baseLabel') }}
                     </sw-tabs-item>
 
@@ -111,7 +112,9 @@
 
                     <sw-tabs-item
                         :route="advancedRoute"
-                        :title="$tc('blurElysiumSlides.settings.advancedLabel')">
+                        :title="$tc('blurElysiumSlides.settings.advancedLabel')"
+                        :hasWarning="tabAdvancedHasWarning"
+                        :warningTooltip="tabAdvancedWarningMessage">
                         {{ $tc('blurElysiumSlides.settings.advancedLabel') }}
                     </sw-tabs-item>
 

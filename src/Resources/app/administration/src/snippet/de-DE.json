@@ -119,7 +119,9 @@
             "slideSavedSuccess": "Slide <b>{slide}</b> wurde gespeichert",
             "emptySlideNameErrorTitle": "Kein Slide Name",
             "emptySlideNameError": "Bitte gib einen Namen für den Slide an",
-            "slideSaveError": "Etwas ging schief. Der Slide konnte nicht gespeichert werden"
+            "slideSaveError": "Etwas ging schief. Der Slide konnte nicht gespeichert werden",
+            "productLinkingMissingEntity": "Bitte wähle ein Produkt welches du verknüpfen möchtest",
+            "customTemplateFileDefinedNotice": "Du hast eine eigene Template Datei festgelegt. Einige Einstellungen könnten überschrieben werden."
         },
         "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
         "actions": {
@@ -246,10 +248,10 @@
                 "noMaxWidth": "Breite nicht beschränken"
             },
             "customTemplateFile": {
-                "label": "Custom template file",
-                "description": "Here you can define your own Twig template file for this slide. If you enter a Twig template file in this field, you will need to add it to your theme or extension by yourself.",
-                "placeholder": "my-slide-template",
-                "pathInfo": "The path to this file is:<br/><code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code"
+                "label": "Eigene Template Datei",
+                "description": "Hier kannst du eine eigene Twig Template Datei definieren. Wenn du hier einen Dateinamen einträgst, musst du diese Datei manuell zum Theme oder einer Erweiterung hinzufügen.",
+                "placeholder": "mein-slide-template",
+                "pathInfo": "Der Pfad zu dieser Datei lautet:<br/><code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code"
             },
             "customFields": {
                 "label": "Zusatzfelder",
