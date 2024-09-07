@@ -20,6 +20,9 @@
                             {% else %}
                                 --slide-aspect-ratio: auto;
                             {% endif %}
+                            {% if options.maxHeight is not empty %}
+                                --slide-max-height: {{options.maxHeight ~ 'px'}};
+                            {% endif %}
                         }
                     }            
                 {% endfor %}

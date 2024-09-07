@@ -36,21 +36,27 @@ Shopware.Service('cmsService').registerCmsElement({
                         width: 1,
                         height: 1,
                         auto: false
-                    }
+                    },
+                    /** @type null | number */
+                    maxHeight: null
                 },
                 tablet: {
                     aspectRatio: {
                         width: 4,
                         height: 3,
                         auto: false
-                    }
+                    },
+                    /** @type null | number */
+                    maxHeight: null
                 },
                 desktop: {
                     aspectRatio: {
                         width: 16,
                         height: 9,
                         auto: false
-                    }
+                    },
+                    /** @type null | number */
+                    maxHeight: null
                 }
             }
         }

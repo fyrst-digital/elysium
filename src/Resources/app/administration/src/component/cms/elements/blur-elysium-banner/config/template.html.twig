@@ -16,7 +16,6 @@
         entity="blur_elysium_slides" 
         v-model:value="selectedSlide" />
 
-
     <sw-switch-field 
         :label="$tc('blurElysiumBanner.config.autoSizing')"
         v-model:value="viewportConfig.aspectRatio.auto" />
@@ -38,6 +37,12 @@
             :unit="false"
             :device="activeViewport"
             :disabled="viewportConfig.aspectRatio.auto === true"/>
+
+        <blur-device-number-field 
+            v-model:value="viewportConfig.maxHeight"
+            :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
+            :unit="$tc('blurElysium.general.unitPx')"
+            :device="activeViewport" />
 
     </sw-container>
 
