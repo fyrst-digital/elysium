@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "lint:administration": "eslint --ext .js,.ts,.vue src/Resources/app/administration/src",
-    "lint:administration:fix": "eslint --ext .js,.ts,.vue --fix src/Resources/app/administration/src",
+    "lint:administration": "eslint --ext .ts,.vue src/Resources/app/administration/src",
+    "lint:administration:fix": "eslint --ext .ts,.vue --fix src/Resources/app/administration/src",
     "lint:storefront": "eslint --ext .js,.ts,.vue src/Resources/app/storefront/src",
     "lint:storefront:fix": "eslint --ext .js,.ts,.vue --fix src/Resources/app/storefront/src",
     "md:changelog": "marked-it-cli changelog/ --output=changelog/.mdout --overwrite",

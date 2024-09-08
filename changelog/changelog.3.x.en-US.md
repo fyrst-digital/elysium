@@ -1,3 +1,9 @@
+# 3.4.0
+
+## Changelog
+- The product image of a slide can now be hidden for the linking type 'Product'
+- A maximum height can now be set in the CMS banner element
+
 # 3.3.0
 
 ## Changelog

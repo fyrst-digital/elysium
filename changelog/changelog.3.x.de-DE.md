@@ -1,3 +1,9 @@
+# 3.4.0
+
+## Changelog
+- Das Produktbild eines Slides kann nun beim Verlinkungstyp 'Produkt' ausgeblendet werden
+- Im CMS Banner Element kann nun eine maximale Höhe festgelegt werden
+
 # 3.3.0
 
 ## Changelog
