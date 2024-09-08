@@ -22,7 +22,7 @@ export default Component.wrapComponentConfig({
     ],
 
     watch: {
-        'config.elysiumSlideCollection.value'(value: Array<any>) {
+        'config.elysiumSlideCollection.value'(value) {
             if (value.length > 0) {
                 this.loadPreviewSlide()
             } else {

@@ -1,4 +1,3 @@
-
 import defaultSlideSettings from 'blurElysium/component/slides/settings'
 import template from './template.html.twig'
 

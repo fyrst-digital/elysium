@@ -1,5 +1,6 @@
 import { module } from 'blurElysium/meta';
 import template from './template.html.twig'
+import EntityCollection from 'shopware/core/data/entity-collection.data';
 
 const { Component, Mixin, Data, State, Filter, Context } = Shopware
 const { Criteria } = Data
@@ -7,8 +8,8 @@ const { Criteria } = Data
 type SortDirection = 'ASC' | 'DESC' 
 
 interface Data {
-    slidesCollection: any;
-    slidesColumns: any[];
+    slidesCollection: EntityCollection<'blur_elysium_slides'>;
+    slidesColumns: object[];
     isLoading: boolean;
     searchTerm: string,
     sortBy: string;
@@ -192,5 +193,6 @@ export default Component.wrapComponentConfig({
 
     created () {
         this.loadSlides()
+        console.log(this)
     },
 })

@@ -13,6 +13,7 @@
   "author": "Robert Bisovski",
   "license": "MIT",
   "devDependencies": {
+    "@shopware-ag/entity-schema-types": "^5.8.14",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
     "eslint": "^8.57.0",
