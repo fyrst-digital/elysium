@@ -132,6 +132,8 @@
     max-width: var(--image-max-w);
 
     img {
+        @extend .d-block !optional;
+        @extend .img-fluid !optional;
         width: var(--image-width);
     }
 }
