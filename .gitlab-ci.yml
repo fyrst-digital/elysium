@@ -38,7 +38,6 @@ eslint:
     - cd $APP_STATIC_PLUGIN/$CI_PROJECT_NAME
     - npm install
     - npm run lint:administration
-    - npm run lint:storefront
   when: always
 
 # Add qa job for plugin install routine

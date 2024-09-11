@@ -16,12 +16,13 @@
             align="start"
             gap="30px">
 
-            <sw-switch-field 
-                :label="$tc('blurElysiumSlides.forms.slideDirectionColumn.label')"
-                :value="slideViewportSettings.container.columnWrap" 
+            <mt-switch 
+                @change="slideViewportSettings.container.columnWrap = $event"
+                :checked="slideViewportSettings.container.columnWrap"
+                :label="$tc('blurElysiumSlides.forms.slideDirectionColumn.label')" 
                 :style="{
                     alignSelf: 'center'
-                }" />
+                }"/>
 
             <sw-select-field 
                 :label="$tc('blurElysiumSlides.forms.slideContentOrder.label')"
