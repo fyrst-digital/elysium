@@ -17,6 +17,10 @@ use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Administration\Notification\NotificationService;
 use Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210\Updater as Version210Updater;
+use Shopware\Core\Content\Media\Aggregate\MediaDefaultFolder\MediaDefaultFolderCollection;
+use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderCollection;
+use Shopware\Core\Content\Media\Aggregate\MediaFolderConfiguration\MediaFolderConfigurationCollection;
+use Shopware\Core\Content\Media\MediaCollection;
 
 class Lifecycle
 {
@@ -88,18 +92,17 @@ class Lifecycle
         $criteria->addAssociation('media_folder');
         $criteria->setLimit(1);
 
-        /** @var EntityRepository $mediaFolderRepositroy */
+        /** @var EntityRepository<MediaFolderCollection> $mediaFolderRepositroy */
         $mediaFolderRepositroy = $this->container->get('media_folder.repository');
 
-        /** @var EntityRepository */
+        /** @var EntityRepository<MediaDefaultFolderCollection> $mediaDefaultFolderRepositroy */
         $mediaDefaultFolderRepositroy = $this->container->get('media_default_folder.repository');
 
-        /** @var EntityRepository */
+        /** @var EntityRepository<MediaFolderConfigurationCollection> $mediaFolderConfigurationRepositroy */
         $mediaFolderConfigurationRepositroy = $this->container->get('media_folder_configuration.repository');
 
         /** @var MediaDefaultFolderEntity $mediaFolderElysiumSlides */
         $mediaFolderElysiumSlides = $mediaDefaultFolderRepositroy->search($criteria, $context)->first();
-
 
         if ($mediaFolderElysiumSlides->getId()) {
             $this->setMediaDefaultFolderId($mediaFolderElysiumSlides->getId());
@@ -140,10 +143,10 @@ class Lifecycle
         $criteria->addAssociation('folder');
         $criteria->setLimit(1);
 
-        /** @var EntityRepository */
+        /** @var EntityRepository<MediaDefaultFolderCollection> $mediaDefaultFolderRepositroy */
         $mediaDefaultFolderRepositroy = $this->container->get('media_default_folder.repository');
 
-        /** @var EntitySearchResult */
+        /** @var EntitySearchResult<MediaDefaultFolderCollection> $mediaDefaultFolderResult */
         $mediaDefaultFolderResult = $mediaDefaultFolderRepositroy->search($criteria, $context);
 
         if ($mediaDefaultFolderResult->getTotal() <= 0) {
@@ -178,7 +181,7 @@ class Lifecycle
     ): void {
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('id', $this->getMediaFolderId()));
-        /** @var EntityRepository $mediaFolderRepositroy */
+        /** @var EntityRepository<MediaFolderCollection> $mediaFolderRepositroy */
         $mediaFolderRepositroy = $this->container->get('media_folder.repository');
 
         if ($mediaFolderRepositroy->search($criteria, $context)->getTotal() <= 0) {

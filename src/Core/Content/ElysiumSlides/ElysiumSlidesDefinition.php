@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
 
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
-
 use Shopware\Core\Content\Media\MediaDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
@@ -19,9 +17,11 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\JsonField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToOneAssociationField;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 
 class ElysiumSlidesDefinition extends EntityDefinition
 {
@@ -36,6 +36,11 @@ class ElysiumSlidesDefinition extends EntityDefinition
     public function getEntityClass(): string
     {
         return ElysiumSlidesEntity::class;
+    }
+
+    function getCollectionClass(): string
+    {
+        return ElysiumSlidesCollection::class;
     }
 
     protected function defineFields(): FieldCollection

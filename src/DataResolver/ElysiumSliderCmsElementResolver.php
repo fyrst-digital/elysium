@@ -13,18 +13,18 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
 use Shopware\Core\Content\Cms\DataResolver\FieldConfig;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\Struct\ElysiumSliderStruct;
 
 class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
 {
     /**
-     * @param EntityRepository $elysiumSlidesRepository
+     * @param EntityRepository<ElysiumSlidesCollection> $elysiumSlidesRepository
      */
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

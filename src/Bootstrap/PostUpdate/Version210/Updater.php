@@ -10,19 +10,27 @@ use Shopware\Administration\Notification\NotificationService;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210\SlideSettings;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
+use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotCollection;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 
 class Updater
 {
+    /**
+     * @param Connection $connection
+     * @param Context $context
+     * @param EntityRepository<ElysiumSlidesCollection> $slidesRepository
+     * @param EntityRepository<CmsSlotCollection> $cmsSlotRepository
+     * @param NotificationService $notificationService
+     */
     function __construct(
         private readonly Connection $connection,
         private readonly Context $context,
         private readonly EntityRepository $slidesRepository,
         private readonly EntityRepository $cmsSlotRepository,
         private readonly NotificationService $notificationService
-    ) {
-    }
+    ) {}
 
     public function run(): void
     {

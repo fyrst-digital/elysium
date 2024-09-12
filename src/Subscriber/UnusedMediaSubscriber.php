@@ -16,21 +16,8 @@ class UnusedMediaSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function removeUsedMedia(UnusedMediaSearchEvent $event): void
-    {
-        /**
-         * This event is only triggered on CLI use
-         */
-        #dd('meddl');
-        $idsToBeDeleted = $event->getUnusedIds();
-
-        $doNotDeleteTheseIds = $this->getUsedMediaIds($idsToBeDeleted);
-
-        $event->markAsUsed($doNotDeleteTheseIds);
-    }
-
-    private function getUsedMediaIds(array $idsToBeDeleted): array
-    {
-        return [];
-    }
+    /**
+     * @todo Find unused Elysium Slide Media (CLI usage only)
+     */
+    public function removeUsedMedia(UnusedMediaSearchEvent $event): void {}
 }

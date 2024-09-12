@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\DataResolver;
 
@@ -10,43 +12,39 @@ use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
-use Shopware\Core\Content\Cms\DataResolver\FieldConfig;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\Struct\ElysiumBannerStruct;
 
 class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
 {
     /**
-     * @param EntityRepository $elysiumSlidesRepository
+     * @param EntityRepository<ElysiumSlidesCollection> $elysiumSlidesRepository
      */
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository
-    )
-    {
-    }
+    ) {}
 
     public function getType(): string
     {
         return 'blur-elysium-banner';
     }
 
-    public function collect( 
-        CmsSlotEntity $slot, 
+    public function collect(
+        CmsSlotEntity $slot,
         ResolverContext $resolverContext
 
-    ): ?CriteriaCollection
-    {
+    ): ?CriteriaCollection {
         return null;
     }
 
     public function enrich(
-        CmsSlotEntity $slot, 
-        ResolverContext $resolverContext, 
+        CmsSlotEntity $slot,
+        ResolverContext $resolverContext,
         ElementDataCollection $result
-        
-    ): void
-    {
+
+    ): void {
         $elysiumBannerStruct = new ElysiumBannerStruct();
         /** @var FieldConfigCollection $fieldConfigCollection */
         $fieldConfigCollection = $slot->getFieldConfig();
@@ -61,7 +59,7 @@ class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
             $criteria->addAssociation('product.media');
             $criteria->addAssociation('product.cover');
 
-            /** @var EntitySearchResult $elysiumSlideResult */
+            /** @var EntitySearchResult<ElysiumSlidesCollection> $elysiumSlideResult */
             $elysiumSlideResult = $this->elysiumSlidesRepository->search(
                 $criteria,
                 $resolverContext->getSalesChannelContext()->getContext()
