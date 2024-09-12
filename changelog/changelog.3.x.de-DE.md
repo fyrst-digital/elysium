@@ -1,3 +1,9 @@
+# 3.4.1
+
+## Changelog
+- Ein Fehler in der Slide Einstellung (Anzeige) "Elemente untereinander anzeigen" wurde behoben. Die Option kann nur wieder korrekt angewählt werden und funktioniert wie erwartet
+- Dem Fokusbild Element wurden CSS styles hinzugefügt die eine Überschneidung mit dem Container verhindern
+
 # 3.4.0
 
 ## Changelog

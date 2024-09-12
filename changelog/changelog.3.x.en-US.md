@@ -1,3 +1,9 @@
+# 3.4.1
+
+## Changelog
+- A bug in the Slide settings (display) "Display elements one below the other" has been fixed. The option can now be selected correctly again and works as expected.
+- CSS styles were added to the focus image element to prevent overlap with the container.
+
 # 3.4.0
 
 ## Changelog

@@ -16,4 +16,9 @@ class ElysiumSlidesCollection extends EntityCollection
     {
         return ElysiumSlidesEntity::class;
     }
+
+    public function getApiAlias(): string
+    {
+        return 'elysium_slides_collection';
+    }
 }
