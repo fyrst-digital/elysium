@@ -1,7 +1,9 @@
+
 {% block blur_elysium_slide_image %}
     {% set containerClasses = [
         'blur-elysium-slide-image'
     ] %}
+    {% set lazyLoading = lazyLoading|default(false) %}
 
     {% if imageMedia is not defined %}
         {% set imageMedia = slideData.presentationMedia %}
@@ -10,8 +12,11 @@
     {% block blur_elysium_slide_image_element %}
         {% if imageMedia %}           
             <div class="{{ containerClasses|join(' ') }}">
-                {% sw_thumbnails 'elysium-slide-thumbnails' with {
-                    media: imageMedia
+                {% sw_thumbnails 'elysium-slide-focus-image' with {
+                    media: imageMedia,
+                    attributes: {
+                        'loading': lazyLoading === true ? 'lazy' : 'eager'
+                    }
                 } %}
             </div>
         {% endif %}

@@ -5,6 +5,7 @@
 - **Adjustment and optimization of the admin UI.** The admin UI for the Elysium components (slides, slider, and banner settings) has been revised.  
 The icon in device-dependent inputs can now be clicked to switch between views.  
 The input fields in all settings have been made more compact and clearer to enable more effective editing.
+- A lazy loading option has been added to the banner element.
 
 # 3.4.1
 

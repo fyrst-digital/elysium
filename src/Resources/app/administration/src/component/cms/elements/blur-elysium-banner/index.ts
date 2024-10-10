@@ -24,6 +24,10 @@ Shopware.Service('cmsService').registerCmsElement({
             source: 'static', /** @type 'static' | 'source' */
             value: '' /** @type string */
         },
+        lazyLoading: { 
+            source: 'static',
+            value: true
+        },
         /** @type object */
         viewports: {
             /** @type 'static' | 'source' */

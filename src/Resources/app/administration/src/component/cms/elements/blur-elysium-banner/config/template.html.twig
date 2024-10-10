@@ -31,6 +31,14 @@
                 v-model:value="selectedSlide" />
         </blur-column>
 
+        <blur-column>
+            <mt-switch 
+                class="blur-switch-input"
+                :label="$tc('blurElysiumBanner.config.lazyLoading')"
+                :checked="config.lazyLoading.value" 
+                @change="config.lazyLoading.value = $event"/>
+        </blur-column>
+
     </blur-section>
 
     <blur-section
