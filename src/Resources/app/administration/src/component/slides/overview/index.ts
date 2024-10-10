@@ -193,6 +193,5 @@ export default Component.wrapComponentConfig({
 
     created () {
         this.loadSlides()
-        console.log(this)
     },
 })

@@ -1,15 +1,21 @@
 import template from './template.html.twig'
 
-const { Component } = Shopware
+const { Component, Mixin } = Shopware
+
+/** 
+ * @todo #120 - https://gitlab.com/BlurCreative/Shopware/Plugins/BlurElysiumSlider/-/issues/120
+ * Problem: In every slider config component we pass always the same config object as prop.
+ * Solution: Create a state via pinia with the config object and subscribe it in the child component.
+ */
 
 export default Component.wrapComponentConfig({
     template,
 
+    mixins: [
+        Mixin.getByName('blur-device-utilities')
+    ],
+
     props: {
-        currentViewport: {
-            type: String,
-            default: 'desktop'
-        },
         config: {
             type: Object,
             required: true,
@@ -18,34 +24,35 @@ export default Component.wrapComponentConfig({
 
     data () {
         return {
+            viewportsSettings: this.config.viewports.value,
             positions: [
                 {
-                    id: 'in_slider',
-                    name: this.$tc('blurElysiumSlider.config.navigation.position.inSlider')
+                    value: 'in_slider',
+                    label: this.$tc('blurElysiumSlider.config.navigation.position.inSlider')
                 }
             ],
             icons: [
                 {
-                    id: 'arrow-head',
-                    name: this.$tc('blurElysiumSlider.config.arrows.icons.chevron')
+                    value: 'arrow-head',
+                    label: this.$tc('blurElysiumSlider.config.arrows.icons.chevron')
                 },
                 {
-                    id: 'arrow',
-                    name: this.$tc('blurElysiumSlider.config.arrows.icons.arrow')
+                    value: 'arrow',
+                    label: this.$tc('blurElysiumSlider.config.arrows.icons.arrow')
                 }
             ],
             sizes: [
                 {
-                    id: 'sm',
-                    name: this.$tc('blurElysium.general.small')
+                    value: 'sm',
+                    label: this.$tc('blurElysium.general.small')
                 },
                 {
-                    id: 'md',
-                    name: this.$tc('blurElysium.general.medium')
+                    value: 'md',
+                    label: this.$tc('blurElysium.general.medium')
                 },
                 {
-                    id: 'lg',
-                    name: this.$tc('blurElysium.general.large')
+                    value: 'lg',
+                    label: this.$tc('blurElysium.general.large')
                 }
             ]
         }
@@ -56,7 +63,7 @@ export default Component.wrapComponentConfig({
             return this.config.arrows.value
         },
         arrowsViewportConfig () {
-            return this.config.viewports.value[this.currentViewport].arrows
+            return this.config.viewports.value[this.deviceView].arrows
         }
-    }
+    },
 })

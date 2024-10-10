@@ -1,17 +1,17 @@
+{% set arrowClasses = [
+    'btn',
+    'position-absolute',
+    'z-3',
+    'translate-middle-y',
+    'top-50',
+    'border-0',
+    'blur-esldr__arrow-btn'
+] %}
+
+{% set iconPrev = config.icon.default ~ '-left' %}
+{% set iconNext = config.icon.default ~ '-right' %}
+
 {% block component_blur_elysium_slider_arrows %}
-
-    {% set arrowClasses = [
-        'btn',
-        'position-absolute',
-        'z-3',
-        'translate-middle-y',
-        'top-50',
-        'border-0',
-        'blur-esldr__arrow-btn'
-    ] %}
-
-    {% set iconPrev = config.icon.default ~ '-left' %}
-    {% set iconNext = config.icon.default ~ '-right' %}
 
     {% if config.active %}
         <div class="blur-elysium-slider__controls splide__arrows"

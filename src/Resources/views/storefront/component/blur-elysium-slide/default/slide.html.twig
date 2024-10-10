@@ -33,6 +33,7 @@
     </div>
 {% else %}
     {% block blur_elysium_slide %}
+
         <div class="{{ slideClasses|join(' ') }}{% if slideData.slideSettings.slide.cssClass %} {{ slideData.slideSettings.slide.cssClass }}{% endif %}"
             data-elysium-slide-id="{{ slideData.id }}">
 

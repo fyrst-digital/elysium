@@ -1,3 +1,11 @@
+# 3.5.0
+
+## Changelog
+- **Wechsel der geräteabhängigen Einstellungen zu Mobile First Ansatz.** Diese Einstellungen sind nun optional und erben den Wert der kleineren Geräteansicht (Mobile First Ansatz). Wenn beispielsweise eine Einstellung nur in der mobilen Ansicht gesetzt ist, wird diese für Tablet und Desktop übernommen. Das gilt für Einstellungen der Slides und der Erlebniswelt Element Slider und Banner
+- **Anpassung und Optimierung der Admin UI.** Die Admin UI der Elysium-Komponenten Slides-, Slider- und Banner-Einstellungen wurde überarbeitet.  
+Das Icon in geräteabhängigen Eingaben kann nun angeklickt werden, um zwischen den Ansichten zu wechseln.  
+Die Eingabemasken in allen Einstellungen wurden kompakter und übersichtlicher gestaltet, um eine effektivere Bearbeitung zu ermöglichen.
+
 # 3.4.1
 
 ## Changelog

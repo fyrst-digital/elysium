@@ -8,13 +8,21 @@ export default Component.wrapComponentConfig({
 
     mixins: [
         Mixin.getByName('notification'),
-        Mixin.getByName('blur-media')
+        Mixin.getByName('blur-media'),
+        Mixin.getByName('blur-device-utilities'),
+        Mixin.getByName('blur-style-utilities')
     ],
 
     inject: [
         'repositoryFactory',
         'acl'
     ],
+
+    data () {
+        return {
+            activeTab: 'coverImage'
+        }
+    },
 
     computed: {
 
@@ -26,6 +34,19 @@ export default Component.wrapComponentConfig({
 
         slideViewportSettings () {
             return this.slide.slideSettings.viewports[this.deviceView]
+        },
+
+        tabs () {
+            return [
+                {
+                    label: 'Image',
+                    name: 'coverImage',
+                },
+                {
+                    label: 'Video',
+                    name: 'coverVideo',
+                },
+            ]
         },
 
         coverImageUploadTag () {
@@ -114,5 +135,8 @@ export default Component.wrapComponentConfig({
                 this.fetchMedia(value, 'slideCover')
             }
         },
+    },
+
+    mounted () {
     }
 })

@@ -1,11 +1,11 @@
-{% block component_blur_elysium_slider_navigation %}
+{% set navigationClasses = [
+    'blur-esldr__nav',
+    'd-flex', 
+    'w-100',
+    'bullet-shape__' ~ config.shape
+] %}
 
-    {% set navigationClasses = [
-        'blur-esldr__nav',
-        'd-flex', 
-        'w-100',
-        'bullet-shape__' ~ config.shape
-    ] %}
+{% block component_blur_elysium_slider_navigation %}
 
     {% if config.position is same as("in_slider") %}
         {% set navigationClasses = navigationClasses|merge([

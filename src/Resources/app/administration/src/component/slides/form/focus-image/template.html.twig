@@ -1,19 +1,35 @@
-<sw-card
-    position-identifier="positionIdentifier.placeholder"
-    :content-padding="0">
+<mt-card
+    position-identifier="blurElysium.slide.form.focusImage"
+    :title="$tc('blurElysiumSlides.forms.slideFocusImage.label')" 
+    :subtitle="$tc('blurElysiumSlides.forms.slideFocusImage.description')"
+    :class="['content-no-padding']">
 
-    <template #title>
-        <blur-card-title 
-            :title="$tc('blurElysiumSlides.forms.slideFocusImage.label')" 
-            icon="blurph-check-square-offset-bold" />
+    <template #headerRight>
+
+        <blur-device-switch 
+            layout="row"
+            show-label="false"
+            :default-viewport="deviceView"
+            :style="{
+                padding: '0',
+                width: '100%',
+                justifyContent: 'center',
+                '--container-gap': '12px',
+                '--icon-padding': '6px',
+                '--icon-bg-color': '#ffffff',
+                '--icon-hover-bg-color': 'var(--color-gray-100)',
+            }" />
     </template>
 
-    <blur-card-section
-        :description="$tc('blurElysiumSlides.forms.slideFocusImage.description')">
+    <blur-section>
 
-        <sw-container
-            columns="1fr"
-            gap="30px">
+        <blur-column
+            padding
+            :cols="12"
+            :cols-desktop="8"
+            :style="viewStyle({
+                desktop: { borderRight: '1px solid var(--color-border-primary-default)' }
+            })">
 
             <blur-elysium-media-upload 
                 allowed-file="image/*"
@@ -24,9 +40,49 @@
                 @upload-finished="payload => setMedia( 'presentationMedia', payload.targetId )"
                 @media-dropped="payload => setMedia( 'presentationMedia', payload.id, 'image')"
                 @media-sidebar-open="mediaSidebar.openContent()" />
+        </blur-column>
 
-        </sw-container>
+        <blur-column
+            padding
+            :cols="12"
+            :cols-desktop="4">
 
-    </blur-card-section>
+            <blur-section
+                gap-y>
 
-</sw-card>
+                <blur-column>
+                    <mt-switch 
+                        class="blur-switch-input"
+                        @change="slideViewportSettings.image.imageFullWidth = $event"
+                        :checked="slideViewportSettings.image.imageFullWidth"
+                        :label="$tc('blurElysiumSlides.forms.focusImage.fullWidth')" />
+                </blur-column>
+
+                <blur-column>
+                    <blur-number-input 
+                        :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
+                        :placeholder="viewportsPlaceholder('image.maxWidth', $t('blurElysium.general.noLimit'))"
+                        :show-device="true"
+                        :device="deviceView"
+                        @on-device="deviceSwitch"
+                        v-model:value="slideViewportSettings.image.maxWidth" /> 
+                </blur-column>
+
+                <blur-column>
+                    <blur-select-input 
+                        :label="$tc('blurElysium.general.jusitifyContent')" 
+                        :placeholder="viewportsPlaceholder('image.justifyContent', 'center', 'blurElysium.general')"
+                        :options="[
+                            { value: 'flex-start', label: $tc('blurElysium.general.jusitifyStart') },
+                            { value: 'center', label: $tc('blurElysium.general.jusitifyCenter') },
+                            { value: 'flex-end', label: $tc('blurElysium.general.jusitifyEnd') }
+                        ]"
+                        :device="deviceView"
+                        :show-device="true"
+                        @on-device="deviceSwitch"
+                        v-model:value="slideViewportSettings.image.justifyContent" />
+                </blur-column>
+            </blur-section>
+        </blur-column>
+    </blur-section>
+</mt-card>

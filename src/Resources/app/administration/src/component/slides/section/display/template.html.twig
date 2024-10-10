@@ -1,6 +1,38 @@
-<div>
-    <blur-elysium-slides-form-display-slide />
-    <blur-elysium-slides-form-display-container />
-    <blur-elysium-slides-form-display-content />
-    <blur-elysium-slides-form-display-image />
-</div>
+<mt-card
+    position-identifier="blurElysium.slide.section.display"
+    :title="cardTitle"
+    :subtitle="cardDescription"
+    :class="['content-no-padding']">
+
+    <template #headerRight>
+
+        <blur-device-switch 
+            layout="row"
+            show-label="false"
+            :default-viewport="deviceView"
+            :style="{
+                padding: '0',
+                width: '100%',
+                justifyContent: 'center',
+                '--container-gap': '12px',
+                '--icon-padding': '6px',
+                '--icon-bg-color': '#ffffff',
+                '--icon-hover-bg-color': 'var(--color-gray-100)',
+            }" />
+    </template>
+
+    <template #tabs>
+        <mt-tabs
+            :defaultItem="activeTab"
+            :items="tabs"
+            @new-item-active="activeTab = $event"
+        />
+    </template>
+
+    <blur-elysium-slides-form-slide
+        v-if="activeTab === 'slide'" />
+    <blur-elysium-slides-form-container
+        v-if="activeTab === 'container'" />
+    <blur-elysium-slides-form-content
+        v-if="activeTab === 'content'" />
+</mt-card>

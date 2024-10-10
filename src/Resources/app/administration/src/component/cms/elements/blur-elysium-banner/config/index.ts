@@ -6,14 +6,9 @@ export default Component.wrapComponentConfig({
     template,
 
     mixins: [
-        Mixin.getByName('cms-element')
+        Mixin.getByName('cms-element'),
+        Mixin.getByName('blur-device-utilities')
     ],
-
-    data() {
-        return {
-            activeViewport: 'desktop'
-        }
-    },
 
     computed: {
 
@@ -37,18 +32,12 @@ export default Component.wrapComponentConfig({
         },
 
         viewportConfig () {
-            return this.config.viewports.value[this.activeViewport]
+            return this.config.viewports.value[this.deviceView]
         }
-    },
-
-    methods: {
-
-        changeViewport (viewport: string) {
-            this.activeViewport = viewport
-        },
     },
 
     created() {
         this.initElementConfig('blur-elysium-banner')
+        this.viewportsSettings = this.config.viewports.value
     },
 })

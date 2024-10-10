@@ -1,189 +1,131 @@
-<sw-card
-    position-identifier="positionIdentifier.placeholder"
-    :content-padding="false">
+<blur-section 
+    gap
+    padding>
 
-    <blur-card-section>
+    <blur-column 
+        :cols="12"
+        :cols-tablet="6">
 
-        <sw-container
-            columns="repeat(2, 1fr)"
-            gap="30px">
+        <blur-text-input 
+            :label="$tc('blurElysiumSlides.forms.slideName.label')"
+            :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))"
+            :error="nameError"
+            :model-value="slide.name"
+            @update-value="value => slide.name = value"
+            required />
+    </blur-column>
 
-            <sw-text-field 
-                :label="$tc('blurElysiumSlides.forms.slideName.label')"
-                :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))"
-                :error="nameError"
-                v-model:value="slide.name"
-                required
-            />
+    <blur-column 
+        :cols="12"
+        :cols-tablet="6">
 
-            <sw-text-field
-                :label="$tc('blurElysiumSlides.forms.slideCssClass.label')"
-                :placeholder="$tc('blurElysiumSlides.forms.slideCssClass.placeholder')"
-                :helpText="$tc('blurElysiumSlides.forms.slideCssClass.helpText')"
-                v-model:value="slide.slideSettings.slide.cssClass" 
-            />
+        <blur-text-input 
+            :label="$tc('blurElysiumSlides.forms.slideCssClass.label')"
+            :placeholder="$tc('blurElysiumSlides.forms.slideCssClass.placeholder')"
+            :helpText="$tc('blurElysiumSlides.forms.slideCssClass.helpText')"
+            :model-value="slide.slideSettings.slide.cssClass"
+            @update-value="value => slide.slideSettings.slide.cssClass = value" />
 
-        </sw-container>
+    </blur-column>
 
-    </blur-card-section>
+</blur-section>
 
-    <blur-card-section
-        :title="$tc('blurElysiumSlides.forms.slideHeadline.label')"
-        title-icon="blurph-text-h-one-bold">
+<blur-section 
+    gap
+    padding
+    :title="$tc('blurElysiumSlides.forms.slideHeadline.label')"
+    title-icon="blurph-text-h-one-bold">
 
-        <sw-container
-            columns="repeat(1, 1fr)"
-            gap="30px">
+    <blur-column 
+        :cols="12"
+        :cols-tablet="6">
 
-            <sw-text-field 
-                :placeholder="placeholder(slide, 'title', $tc('blurElysiumSlides.forms.slideHeadline.placeholder'))"
-                v-model:value="slide.title"
-            />
+        <blur-text-input 
+            :style="deviceStyle({
+                mobile: { gridColumnEnd: 'span 12' },
+                desktop: { gridColumnEnd: 'span 6' },
+            })"
+            :label="$tc('blurElysium.general.content')"
+            :placeholder="placeholder(slide, 'title', $tc('blurElysiumSlides.forms.slideHeadline.placeholder'))"
+            :model-value="slide.title"
+            @update-value="value => slide.title = value" />
+    </blur-column>
 
-            <sw-container
-                columns="repeat(4, 1fr)"
-                gap="30px">
+    <blur-column 
+        :cols="12"
+        :cols-tablet="6"
+        :cols-desktop="2">
 
-                <blur-device-number-field 
-                    :label="$tc('blurElysium.general.fontSize')"
-                    :device="deviceView"
-                    @on-device="switchDevice"
-                    v-model:value="slideViewportSettings.headline.fontSize" /> 
+        <blur-number-input 
+            :label="$tc('blurElysium.general.fontSize')"
+            :placeholder="viewportsPlaceholder('headline.fontSize', 20)"
+            :device="deviceView"
+            :show-device="true"
+            @on-device="deviceSwitch"
+            v-model:value="slideViewportSettings.headline.fontSize" /> 
+    </blur-column>
 
-                <sw-select-field 
-                    :label="$tc('blurElysiumSlides.forms.slideHeadlineElement.label')"
-                    :helpText="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')"
-                    v-model:value="slide.slideSettings.slide.headline.element">
-                    <option value="div">{{ 'DIV' }}</option>
-                    <option value="h1">{{ 'H1' }}</option>
-                    <option value="h2">{{ 'H2' }}</option>
-                    <option value="h3">{{ 'H3' }}</option>
-                    <option value="h4">{{ 'H4' }}</option>
-                    <option value="h5">{{ 'H5' }}</option>
-                    <option value="h6">{{ 'H6' }}</option>
-                </sw-select-field>
+    <blur-column 
+        :cols="12"
+        :cols-tablet="6"
+        :cols-desktop="2">
 
-                <sw-colorpicker
-                    colorOutput="auto"
-                    v-model:value="slide.slideSettings.slide.headline.color"
-                    :label="$tc('blurElysium.general.textColor')"
-                    :alpha="true"
-                    :colorLabels="true"
-                    :zIndex="100">
-                </sw-colorpicker>
+        <blur-select-input 
+            :options="[
+                { value: 'div', label: 'DIV' },
+                { value: 'h1', label: 'H1' },
+                { value: 'h2', label: 'H2' },
+                { value: 'h3', label: 'H3' },
+                { value: 'h4', label: 'H4' },
+                { value: 'h5', label: 'H5' },
+                { value: 'h6', label: 'H6' }
+            ]"
+            :label="$tc('blurElysiumSlides.forms.slideHeadlineElement.label')"
+            :helpText="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')"
+            v-model:value="slide.slideSettings.slide.headline.element" />
+    </blur-column>
 
-            </sw-container>
-            
-        </sw-container>
+    <blur-column 
+        :cols="12"
+        :cols-tablet="6"
+        :cols-desktop="2">
 
-    </blur-card-section>
+        <blur-colorpicker
+            :label="$tc('blurElysium.general.textColor')"
+            v-model:value="slide.slideSettings.slide.headline.color" />
+    </blur-column>
 
-    <blur-card-section
-        :title="$tc('blurElysiumSlides.forms.slideDescription.label')"
-        title-icon="blurph-textbox-bold">
+</blur-section>
 
-        <sw-container
-            columns="minmax(300px, 3fr) minmax(150px, 1fr)"
-            align="start"
-            justify="start"
-            gap="30px">
+<blur-section 
+    gap
+    padding
+    :title="$tc('blurElysiumSlides.forms.slideDescription.label')"
+    title-icon="blurph-textbox-bold">
 
-            <sw-text-editor
-                v-model:value="slide.description"
-                :label="$tc('blurElysium.general.content')"
-                :style="{ width: '100%' }" />
+    <blur-column
+        :cols-desktop="8">
 
-            <sw-container
-                columns="1fr"
-                align="start"
-                justify="start"
-                gap="30px">
+        <sw-text-editor
+            v-model:value="slide.description"
+            :label="$tc('blurElysium.general.content')" />
+    </blur-column>
 
-                <sw-colorpicker
-                    colorOutput="auto"
-                    :label="$tc('blurElysium.general.textColor')"
-                    :alpha="true"
-                    :colorLabels="true"
-                    :zIndex="100"
-                    v-model:value="slide.slideSettings.slide.description.color" />
+    <blur-column
+        :cols-desktop="4">
 
-                <blur-device-number-field 
-                    type="int"
-                    :label="$tc('blurElysium.general.fontSize')"
-                    :step="1"
-                    :min="0" 
-                    :device="deviceView"
-                    v-model:value="slideViewportSettings.description.fontSize" />
+        <blur-colorpicker
+            :label="$tc('blurElysium.general.textColor')"
+            v-model:value="slide.slideSettings.slide.description.color" />
 
-            </sw-container>
+        <blur-number-input 
+            :label="$tc('blurElysium.general.fontSize')"
+            :device="deviceView"
+            :placeholder="devicePlaceholder('description.fontSize', 14)"
+            :show-device="true"
+            @on-device="deviceSwitch"
+            v-model:value="slideViewportSettings.description.fontSize" /> 
 
-        </sw-container>
+    </blur-column>
 
-    </blur-card-section>
-
-    <sw-container
-        columns="1fr 2fr"
-        gap="0">
-
-        <blur-card-section
-            :title="$tc('blurElysiumSlides.forms.slideBackground.label')"
-            title-icon="blurph-paint-bucket-bold"
-            last>
-
-            <sw-colorpicker
-                colorOutput="auto"
-                v-model:value="slide.slideSettings.slide.bgColor" 
-                :label="$tc('blurElysium.general.backgroundColor')"
-                :alpha="true"
-                :colorLabels="true"
-                :zIndex="100" />
-
-        </blur-card-section>
-
-        <blur-card-section
-            :title="$tc('blurElysiumSlides.forms.slideGradient.label')"
-            title-icon="blurph-circle-half-bold"
-            last>
-
-            <sw-container
-                columns="repeat(2, minmax(0, 1fr))"
-                gap="30px">
-
-                <sw-colorpicker
-                    colorOutput="auto"
-                    v-model:value="slide.slideSettings.slide.bgGradient.startColor" 
-                    :label="$tc('blurElysiumSlides.forms.slideGradient.startColor')"
-                    :alpha="true"
-                    :colorLabels="true"
-                    :zIndex="100" />
-
-                <sw-colorpicker
-                    colorOutput="auto"
-                    v-model:value="slide.slideSettings.slide.bgGradient.endColor" 
-                    :label="$tc('blurElysiumSlides.forms.slideGradient.endColor')"
-                    :alpha="true"
-                    :colorLabels="true"
-                    :zIndex="100"/>
-
-                <sw-select-field 
-                    v-model:value="slide.slideSettings.slide.bgGradient.gradientType"
-                    :label="$tc('blurElysiumSlides.forms.slideGradient.gradientType')">
-                    <option value="linear-gradient">{{$tc('blurElysiumSlides.forms.slideGradient.gradientTypeLinear')}}</option>
-                </sw-select-field>
-
-                <sw-number-field
-                    type="int"
-                    :step="1"
-                    :min="-360"
-                    :max="360"
-                    :label="$tc('blurElysiumSlides.forms.slideGradient.gradientDeg')"
-                    v-model:value="slide.slideSettings.slide.bgGradient.gradientDeg" 
-                />
-
-            </sw-container>
-
-        </blur-card-section>
-
-    </sw-container>
-
-</sw-card>
+</blur-section>

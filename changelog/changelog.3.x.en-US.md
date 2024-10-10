@@ -1,3 +1,11 @@
+# 3.5.0
+
+## Changelog
+- **Change to a Mobile First approach for device-dependent settings.** These settings are now optional and inherit the value from the smaller device view (Mobile First approach). For example, if a setting is only configured in the mobile view, it will be applied to tablet and desktop views as well. This applies to the settings of the slides and the Shopping Experience element slider and banner.
+- **Adjustment and optimization of the admin UI.** The admin UI for the Elysium components (slides, slider, and banner settings) has been revised.  
+The icon in device-dependent inputs can now be clicked to switch between views.  
+The input fields in all settings have been made more compact and clearer to enable more effective editing.
+
 # 3.4.1
 
 ## Changelog

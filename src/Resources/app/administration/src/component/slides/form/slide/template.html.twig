@@ -1,0 +1,182 @@
+<blur-section>
+
+    <blur-column>
+        <blur-section
+            gap
+            padding
+            :title="$tc('blurElysiumSlides.forms.slideBackground.label')"
+            title-icon="blurph-paint-bucket-bold"
+            :style="viewStyle({
+                mobile: { borderBottom: '1px solid #ddd' },
+            })">
+
+            <blur-colorpicker
+                :style="deviceStyle({
+                    mobile: { gridColumnEnd: 'span 12' },
+                    tablet: { gridColumnEnd: 'span 6' },
+                })" 
+                :label="$tc('blurElysium.general.backgroundColor')"
+                v-model:value="slide.slideSettings.slide.bgColor" />
+
+        </blur-section>
+    </blur-column>
+
+    <blur-column> 
+        <blur-section
+            gap
+            padding
+            :title="$tc('blurElysiumSlides.forms.slideGradient.label')"
+            title-icon="blurph-circle-half-bold"            
+            :style="viewStyle({
+                mobile: { borderBottom: '1px solid #ddd' },
+            })">
+
+            <blur-colorpicker
+                :style="deviceStyle({
+                    mobile: { gridColumnEnd: 'span 12' },
+                    tablet: { gridColumnEnd: 'span 6' },
+                    desktop: { gridColumnEnd: 'span 3' },
+                })" 
+                :label="$tc('blurElysiumSlides.forms.slideGradient.startColor')"
+                v-model:value="slide.slideSettings.slide.bgGradient.startColor" />
+
+            <blur-colorpicker
+                :style="deviceStyle({
+                    mobile: { gridColumnEnd: 'span 12' },
+                    tablet: { gridColumnEnd: 'span 6' },
+                    desktop: { gridColumnEnd: 'span 3' },
+                })" 
+                :label="$tc('blurElysiumSlides.forms.slideGradient.endColor')"
+                v-model:value="slide.slideSettings.slide.bgGradient.endColor" />
+
+            <blur-select-input 
+                :style="deviceStyle({
+                    mobile: { gridColumnEnd: 'span 12' },
+                    tablet: { gridColumnEnd: 'span 6' },
+                    desktop: { gridColumnEnd: 'span 3' },
+                })"
+                :options="[
+                    { value: 'linear-gradient', label: $tc('blurElysiumSlides.forms.slideGradient.gradientTypeLinear') }
+                ]"
+                :hideClearableButton="true"
+                :placeholder="$tc('blurElysiumSlides.forms.slideGradient.gradientTypeLinear')"
+                :label="$tc('blurElysiumSlides.forms.slideGradient.gradientType')"
+                v-model:value="slide.slideSettings.slide.bgGradient.gradientType" />
+
+
+            <blur-number-input
+                type="int"
+                :style="deviceStyle({
+                    mobile: { gridColumnEnd: 'span 12' },
+                    tablet: { gridColumnEnd: 'span 6' },
+                    desktop: { gridColumnEnd: 'span 3' },
+                })"
+                :step="1"
+                :min="-360"
+                :max="360"
+                :label="$tc('blurElysiumSlides.forms.slideGradient.gradientDeg')"
+                v-model:value="slide.slideSettings.slide.bgGradient.gradientDeg" 
+            />
+
+        </blur-section>
+    </blur-column>
+
+    <blur-column>
+        <blur-section
+            gap
+            padding
+            :style="viewStyle({
+                mobile: { borderBottom: '1px solid #ddd' },
+            })"
+            :title="$tc('blurElysium.general.spacing')"
+            title-icon="blurph-ruler-bold">
+
+            <blur-number-input 
+                :label="$tc('blurElysium.general.paddingX')"
+                :device="deviceView"
+                :placeholder="devicePlaceholder('slide.paddingX', 15)"
+                :style="deviceStyle({
+                    mobile: { gridColumnEnd: 'span 12' },
+                    tablet: { gridColumnEnd: 'span 6' },
+                    desktop: { gridColumnEnd: 'span 3' },
+                })"
+                :show-device="true"
+                @on-device="deviceSwitch"
+                v-model:value="slideViewportSettings.slide.paddingX" /> 
+
+            <blur-number-input 
+                :label="$tc('blurElysium.general.paddingY')"
+                :device="deviceView"
+                :placeholder="devicePlaceholder('slide.paddingY', 15)"
+                :style="deviceStyle({
+                    mobile: { gridColumnEnd: 'span 12' },
+                    tablet: { gridColumnEnd: 'span 6' },
+                    desktop: { gridColumnEnd: 'span 3' },
+                })"
+                :show-device="true"
+                @on-device="deviceSwitch"
+                v-model:value="slideViewportSettings.slide.paddingY" /> 
+
+            <blur-number-input 
+                :label="$tc('blurElysium.general.borderRadius')"
+                :device="deviceView"
+                :placeholder="devicePlaceholder('slide.borderRadius', 15)"
+                :style="deviceStyle({
+                    mobile: { gridColumnEnd: 'span 12' },
+                    tablet: { gridColumnEnd: 'span 6' },
+                    desktop: { gridColumnEnd: 'span 3' },
+                })"
+                :show-device="true"
+                @on-device="deviceSwitch"
+                v-model:value="slideViewportSettings.slide.borderRadius" /> 
+
+        </blur-section>
+    </blur-column>
+
+    <blur-column>
+        <blur-section
+            gap
+            padding
+            :title="$tc('blurElysium.general.alignment')"
+            :description="$tc('blurElysiumSlides.forms.displaySlide.alignmentDescription')"
+            title-icon="blurph-arrows-out-line-horizontal-bold">
+
+            <blur-select-input 
+                :style="deviceStyle({
+                    mobile: { gridColumnEnd: 'span 12' },
+                    tablet: { gridColumnEnd: 'span 6' },
+                    desktop: { gridColumnEnd: 'span 3' },
+                })"
+                :label="$tc('blurElysium.general.alignX.label')" 
+                :placeholder="devicePlaceholder('slide.justifyContent', 'center', 'blurElysium.general.alignX')"
+                :device="deviceView"
+                :show-device="true"
+                :options="[
+                    { value: 'flex-start', label: $tc('blurElysium.general.alignX.flexStart') },
+                    { value: 'center', label: $tc('blurElysium.general.alignX.center') },
+                    { value: 'flex-end', label: $tc('blurElysium.general.alignX.flexEnd') }
+                ]"
+                @on-device="deviceSwitch"
+                v-model:value="slideViewportSettings.slide.justifyContent" />
+
+            <blur-select-input 
+                :style="deviceStyle({
+                    mobile: { gridColumnEnd: 'span 12' },
+                    tablet: { gridColumnEnd: 'span 6' },
+                    desktop: { gridColumnEnd: 'span 3' },
+                })"
+                :label="$tc('blurElysium.general.alignY.label')" 
+                :placeholder="devicePlaceholder('slide.alignItems', 'center', 'blurElysium.general.alignY')"
+                :device="deviceView"
+                :show-device="true"
+                :options="[
+                    { value: 'flex-start', label: $tc('blurElysium.general.top') },
+                    { value: 'center', label: $tc('blurElysium.general.center') },
+                    { value: 'flex-end', label: $tc('blurElysium.general.bottom') }
+                ]"
+                @on-device="deviceSwitch"
+                v-model:value="slideViewportSettings.slide.alignItems" />
+
+        </blur-section>
+    </blur-column>
+</blur-section>

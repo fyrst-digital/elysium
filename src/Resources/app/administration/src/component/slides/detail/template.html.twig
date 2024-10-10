@@ -78,14 +78,6 @@
         <blur-elysium-slides-detail-view 
             v-if="slide">
 
-            <template #start>
-
-                <blur-device-switch 
-                    :default-viewport="deviceView"
-                    @change-viewport="viewportChanged" />
-
-            </template>
-
             <template #content>
             
                 <sw-tabs

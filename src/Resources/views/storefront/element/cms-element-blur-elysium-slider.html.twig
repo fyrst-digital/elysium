@@ -1,27 +1,28 @@
+{% set sliderAutoplay = element.translated.config.settings.value.autoplay %}
+{% set sliderNavigation = element.translated.config.navigation.value %}
+{% set sliderArrows = element.translated.config.arrows.value %}
+{% set slideContainerWrapper = false %}
+
+{% set sliderOptions = {
+    splideOptions: {
+        arrows: sliderArrows.active,
+        pagination: sliderNavigation.active,
+        mediaQuery: 'min',
+        gap: '0px',
+        autoplay: sliderAutoplay.active,
+        interval: sliderAutoplay.interval,
+        pauseOnHover: sliderAutoplay.pauseOnHover,
+        speed: element.translated.config.settings.value.speed,
+        rewind: element.translated.config.settings.value.rewind,
+        breakpoints: {}
+    }
+} %}
+
+{% set cmsSliderClasses = [
+    'cms-element-elysium-slider'
+] %}
+
 {% block cms_element_blur_elysium_slider_root %}
-    {% set sliderAutoplay = element.translated.config.settings.value.autoplay %}
-    {% set sliderNavigation = element.translated.config.navigation.value %}
-    {% set sliderArrows = element.translated.config.arrows.value %}
-    {% set slideContainerWrapper = false %}
-
-    {% set sliderOptions = {
-        splideOptions: {
-            arrows: sliderArrows.active,
-            pagination: sliderNavigation.active,
-            mediaQuery: 'min',
-            gap: '0px',
-            autoplay: sliderAutoplay.active,
-            interval: sliderAutoplay.interval,
-            pauseOnHover: sliderAutoplay.pauseOnHover,
-            speed: element.translated.config.settings.value.speed,
-            rewind: element.translated.config.settings.value.rewind,
-            breakpoints: {}
-        }
-    } %}
-
-    {% set cmsSliderClasses = [
-        'cms-element-elysium-slider'
-    ] %}
 
     {% if element.config.settings.value.containerWidth is same as('content') %}
         {% set slideContainerWrapper = true %}
@@ -59,7 +60,7 @@
     {% endblock %}
 
     {% block cms_element_blur_elysium_slider %}
-        {# your could override sliderSettings variables on this block #}
+        {# you can override sliderSettings variables on this block #}
 
         <div id="elysiumSlider-{{ element.id }}" 
             data-blur-elysium-slider="{{sliderOptions|json_encode|replace({'%replace%': ''}) }}"

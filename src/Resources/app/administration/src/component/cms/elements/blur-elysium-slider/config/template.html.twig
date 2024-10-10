@@ -1,42 +1,9 @@
-<sw-tabs 
-    position-identifier="positionIdentifiers.placeholder"
-    default-item="content">
+<mt-card
+    position-identifier="blurElysium.cmsSlider.config"
+    title="Elysium Slider"
+    :class="['content-no-padding']">
 
-    <template #default="{ active }">
-
-        <sw-tabs-item
-            name="content"
-            :active-tab="active">
-            {{ $tc('blurElysiumSlider.config.contentLabel') }}
-        </sw-tabs-item> 
-
-        <sw-tabs-item
-            name="settings"
-            :active-tab="active">
-            {{ $tc('blurElysiumSlider.config.settingsLabel') }}
-        </sw-tabs-item> 
-
-        <sw-tabs-item
-            name="sizing"
-            :active-tab="active">
-            {{ $tc('blurElysiumSlider.config.sizingLabel') }}
-        </sw-tabs-item> 
-
-        <sw-tabs-item
-            name="navigation"
-            :active-tab="active">
-            {{ $tc('blurElysiumSlider.config.navigationLabel') }}
-        </sw-tabs-item> 
-
-        <sw-tabs-item
-            name="arrows"
-            :active-tab="active">
-            {{ $tc('blurElysiumSlider.config.arrowsLabel') }}
-        </sw-tabs-item> 
-
-    </template>
-
-    <template #content="{ active }">
+    <template #headerRight>
 
         <blur-device-switch 
             layout="row"
@@ -46,51 +13,67 @@
             :style="{
                 padding: '0',
                 width: '100%',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                '--container-gap': '12px',
+                '--icon-padding': '6px',
+                '--icon-bg-color': '#ffffff',
+                '--icon-hover-bg-color': 'var(--color-gray-100)',
             }" />
-
-        <sw-card
-            v-if="active === 'content'"
-            position-identifier="positionIdentifiers.placeholder"
-            :content-padding="false">
-
-            <blur-card-section>
-
-                <sw-text-field 
-                    v-model:value="element.config.content.value.title" 
-                    :label="$tc('blurElysiumSlider.config.content.sliderTitle')" />
-
-            </blur-card-section>
-
-            <blur-card-section
-                :title="$tc('blurElysiumSlider.config.content.slideCollectionTitle')">
-
-                <blur-elysium-slide-selection 
-                    :selected-slides="selectedSlides"/>          
-
-            </blur-card-section>
-        </sw-card>
-
-        <blur-elysium-slider-config-settings
-            v-if="active === 'settings'" 
-            :config="element.config" 
-            :currentViewport="activeViewport" />
-
-        <blur-elysium-slider-config-sizing
-            v-if="active === 'sizing'" 
-            :config="element.config" 
-            :currentViewport="activeViewport" />
-
-        <blur-elysium-slider-config-navigation
-            v-if="active === 'navigation'" 
-            :config="element.config" 
-            :currentViewport="activeViewport" />
-
-        <blur-elysium-slider-config-arrows
-            v-if="active === 'arrows'" 
-            :config="element.config" 
-            :currentViewport="activeViewport" />
-
     </template>
 
-</sw-tabs>
+    <template #tabs>
+        <mt-tabs
+            :defaultItem="activeTab"
+            :items="tabs"
+            @new-item-active="activeTab = $event"
+        />
+    </template>
+
+    <template v-if="activeTab === 'content'">
+        <blur-section
+            gap
+            padding
+            :title="$tc('blurElysiumSlider.config.settings.general')">
+
+            <blur-column>
+                <blur-text-input 
+                    :label="$tc('blurElysiumSlider.config.content.sliderTitle')" 
+                    :model-value="element.config.content.value.title"
+                    @update-value="value => element.config.content.value.title = value"/>  
+            </blur-column> 
+
+        </blur-section>
+
+        <blur-section
+            gap
+            padding
+            :title="$tc('blurElysiumSlides.slideSelection.listLabel')">
+
+            <blur-column>
+                <blur-elysium-slide-selection 
+                    :selected-slides="selectedSlides"/>
+            </blur-column>
+
+        </blur-section>
+    </template>
+
+    <blur-elysium-slider-config-settings
+        v-if="activeTab === 'settings'" 
+        :config="element.config" 
+        :currentViewport="activeViewport" />
+
+    <blur-elysium-slider-config-sizing
+        v-if="activeTab === 'sizing'" 
+        :config="element.config" 
+        :currentViewport="activeViewport" />
+
+    <blur-elysium-slider-config-navigation
+        v-if="activeTab === 'navigation'" 
+        :config="element.config" 
+        :currentViewport="activeViewport" />
+
+    <blur-elysium-slider-config-arrows
+        v-if="activeTab === 'arrows'" 
+        :config="element.config" 
+        :currentViewport="activeViewport" />
+</mt-card>

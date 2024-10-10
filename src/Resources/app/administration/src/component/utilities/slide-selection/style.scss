@@ -1,6 +1,13 @@
 .blur-elysium-slide-selection-search {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     position: relative;
+}
+.blur-elysium-slide-selection-search-field {
+
+        .sw-block-field__block {
+            box-shadow: 0 1px 2px 0 rgba(51, 68, 91, 0.1);
+            border-radius: 8px;
+        }
 }
 .blur-elysium-slide-selection-search-label {
     margin-bottom: 8px;
@@ -9,7 +16,7 @@
 .blur-elysium-slide-selection-results-label {
     font-size: 18px;
     font-weight: 500;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .blur-elysium-slide-selection-search-item {
     display: flex;

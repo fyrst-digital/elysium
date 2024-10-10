@@ -7,7 +7,8 @@ export default Component.wrapComponentConfig({
     template,
 
     mixins: [
-        Mixin.getByName('placeholder')
+        Mixin.getByName('placeholder'),
+        Mixin.getByName('blur-device-utilities')
     ],
 
     computed: {

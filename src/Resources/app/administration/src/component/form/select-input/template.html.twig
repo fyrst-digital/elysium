@@ -1,0 +1,27 @@
+<mt-select 
+    :class="classes"
+    :placeholder="placeholder"
+    :modelValue="value"
+    @update:modelValue="update"
+    @change="update">
+    <template v-if="showDevice === true" #prefix>
+        <span 
+            :style="{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+            }">
+
+            <blur-icon 
+                v-tooltip="{
+                    message: $t('blurElysium.messages.deviceSettingNote', { device: $tc(`blurElysium.device.${device}`) })
+                }"
+                :size="14"
+                :name="`blurph-device-${device}`" 
+                :style="{
+                    cursor: 'pointer'
+                }"
+                @click="onDeviceNote" />
+        </span>
+    </template>
+</mt-select>

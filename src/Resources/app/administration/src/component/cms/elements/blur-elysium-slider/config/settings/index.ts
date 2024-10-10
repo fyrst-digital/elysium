@@ -1,18 +1,30 @@
 import template from './template.html.twig'
 
-const { Component } = Shopware
+const { Component, Mixin } = Shopware
+
+/** 
+ * @todo #120 - https://gitlab.com/BlurCreative/Shopware/Plugins/BlurElysiumSlider/-/issues/120
+ * Problem: In every slider config component we pass always the same config object as prop.
+ * Solution: Create a state via pinia with the config object and subscribe it in the child component.
+ */
 
 export default Component.wrapComponentConfig({
     template,
 
+    mixins: [
+        Mixin.getByName('blur-device-utilities')
+    ],
+
     props: {
-        currentViewport: {
-            type: String,
-            default: 'desktop'
-        },
         config: {
             type: Object,
             required: true,
+        }
+    },
+
+    data () {
+        return {
+            viewportsSettings: this.config.viewports.value,
         }
     },
 
@@ -21,7 +33,7 @@ export default Component.wrapComponentConfig({
             return this.config.settings.value
         },
         settingsViewportConfig () {
-            return this.config.viewports.value[this.currentViewport].settings
+            return this.config.viewports.value[this.deviceView].settings
         }
     }
 })

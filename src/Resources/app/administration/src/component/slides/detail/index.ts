@@ -180,8 +180,7 @@ export default Component.wrapComponentConfig({
             'setSlide',
             'setSlideProperty',
             'setCustomFieldSet',
-            'setMediaSidebar',
-            'setDeviceView'
+            'setMediaSidebar'
         ]),
 
         createSlide () {
@@ -227,10 +226,6 @@ export default Component.wrapComponentConfig({
             }).catch((exception) => {
                 console.warn(exception)
             })
-        },
-
-        viewportChanged (value: string) {
-            this.setDeviceView(value)
         },
 
         overviewPush () {
