@@ -1,16 +1,12 @@
-<sw-card
-    position-identifier="positionIdentifier.placeholder"
-    :content-padding="0">
+<mt-card
+    position-identifier="blurElysium.slide.form.customFields"
+    :title="$tc('blurElysiumSlides.forms.customFields.label')" 
+    :class="['content-no-padding']">
 
-    <template #title>
-        <blur-card-title 
-            :title="$tc('blurElysiumSlides.forms.customFields.label')" 
-            icon="blurph-check-square-offset-bold" />
-    </template>
+    <blur-section 
+        padding>
 
-    <blur-card-section>
-
-        <template
+        <blur-column
             v-if="customFieldSet && slide._isNew !== true">
 
             <sw-custom-field-set-renderer
@@ -18,35 +14,25 @@
                 :entity="slide"
                 :sets="customFieldSet" />
 
-            <sw-alert 
+            <mt-banner 
                 v-else 
-                variant="warning" 
-                appearance="default" 
-                :showIcon="true" 
-                :closable="false"
-                :style="{
-                    marginBottom: '0'
-                }">
+                variant="attention"
+                :closable="false">
                 {{ $tc('blurElysiumSlides.forms.customFields.emptyFieldSet') }}
-            </sw-alert>
+            </mt-banner>
 
-        </template>
+        </blur-column>
 
-        <template
+        <blur-column
             v-else>
 
-            <sw-alert 
+            <mt-banner 
                 variant="info" 
-                appearance="default" 
-                :showIcon="true" 
-                :closable="false"
-                :style="{
-                    marginBottom: '0'
-                }">
+                :closable="false">
                 {{ $tc('blurElysiumSlides.forms.customFields.newSlide') }}
-            </sw-alert>
+            </mt-banner>
 
-        </template>
+        </blur-column>
 
-    </blur-card-section>
-</sw-card>
+    </blur-section>
+</mt-card>

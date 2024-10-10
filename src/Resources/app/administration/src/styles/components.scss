@@ -1,0 +1,216 @@
+/** mt-card modification utility */
+.mt-card {
+
+    &.content-no-padding {
+        
+        .mt-card__content {
+            padding: 0;
+        }
+    }
+}
+
+/** Common input styles */
+.blur-text-input,
+.blur-number-input,
+.blur-select-input,
+.blur-colorpicker {
+
+    input {
+        background-color: transparent !important;
+    }
+    
+    .mt-block-field__block {
+        box-shadow: 0 1px 2px 0 rgba(51, 68, 91, 0.1);
+        border-radius: 8px;
+    }
+
+    .mt-field__addition {
+        min-width: auto;
+        background-color: transparent;
+        border-color: transparent !important;
+        padding: 6px 12px !important;
+        line-height: 1;
+    }
+
+    &.is--disabled {
+        opacity: .5;
+
+        .mt-block-field__block {
+            background-color: var(--color-background-primary-disabled);
+        }
+    }
+}
+
+/** Text input styling **/
+.blur-text-input {
+
+    input {
+        line-height: 1.5 !important;
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        &::placeholder {
+            color: var(--color-gray-600);
+            font-weight: var(--font-weight-regular);
+        }
+    }
+}
+
+/** Number input styling */
+.blur-number-input {
+
+    .mt-field__controls {
+        width: auto;
+
+        .mt-icon {
+            color: var(--color-gray-800);
+        }
+    }
+
+    input {
+        line-height: 1.5 !important;
+        text-align: center;
+        font-weight: var(--font-weight-medium);
+
+        &::placeholder {
+            color: var(--color-gray-600);
+            font-weight: var(--font-weight-regular);
+        }
+    }
+
+    &.mt-field--small {
+        .mt-field__controls {
+            padding: 0;
+        }
+        .mt-field__addition {
+            padding: 6px 14px !important;
+        }
+        input {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+    }
+}
+
+/** Entity select styling */
+.blur-entity-select-input {
+
+    .sw-block-field__block {
+        box-shadow: 0 1px 2px 0 rgba(51, 68, 91, 0.1);
+        border-radius: 8px;
+    }
+
+    .sw-entity-single-select__selection-input {
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+        line-height: 1.5;
+    }
+}
+
+/** Select input styling */
+.blur-select-input {
+    --field-block-columns: minmax(0, 1fr);
+
+    &.has-device-indicator {
+        --field-block-columns: auto minmax(0, 1fr);
+    }
+
+    .mt-label {
+        font-size: 14px;
+        user-select: none;
+        font-weight: 500;
+        height: auto;
+        line-height: 1.5;
+        padding: 8px 0;
+        margin: 0px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+        max-width: calc(100% - 40px);
+        min-width: auto;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    .mt-label__caption,
+    .mt-select-selection-list__item {
+        display: contents;
+    }
+
+    .mt-block-field__block {
+        display: grid;
+        grid-template-columns: var(--field-block-columns);
+        align-items: center;
+    }
+
+    .mt-select__selection {
+        padding: 0;        
+    }
+
+    .mt-field__addition.is--prefix:empty ~ .mt-select__selection {
+        padding-left: 16px;
+    }
+
+    .mt-select-selection-list {
+        align-items: center;
+        gap: 8px;
+        flex-wrap: nowrap;
+        cursor: pointer;
+
+        > li {
+            display: contents;
+            pointer-events: none;
+        }
+    }
+
+    .mt-select-selection-list__input {
+        flex: 1 0%;
+        line-height: 1.5;
+        font-size: 14px;
+        padding: 8px 0;
+        min-width: auto;
+    }
+}
+
+/** Colorpicker styling */
+.blur-colorpicker {
+
+    .mt-colorpicker__input {
+        padding: 8px;
+        line-height: 1.5;
+    }
+
+    .mt-colorpicker__previewWrapper {
+        border-radius: 99rem;
+    }
+}
+
+/** Switch input styling */
+.blur-switch-input {
+
+    &.has-padding {
+        --switch-padding: 8px;
+    }
+
+    .mt-field--switch {
+
+        .mt-field__label label {
+            line-height: 1.5;
+            padding: 0 !important;
+        }
+
+        .mt-field--switch__input {
+            padding: 0;
+            height: auto;
+
+            .mt-field__switch-state {
+                position: relative;
+            }
+        }
+
+        .mt-field--switch__content {
+            gap: 8px;
+            padding: var(--switch-padding, 0px) 0;
+        }
+    }
+}

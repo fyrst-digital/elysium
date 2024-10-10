@@ -7,19 +7,15 @@ export default Component.wrapComponentConfig({
     template,
 
     mixins: [
-        Mixin.getByName('placeholder')
+        Mixin.getByName('placeholder'),
+        Mixin.getByName('blur-device-utilities')
     ],
 
     computed: {
 
         ...mapState('blurElysiumSlide', [
-            'slide',
-            'deviceView'
+            'slide'
         ]),
-
-        slideViewportSettings () {
-            return this.slide.slideSettings.viewports[this.deviceView]
-        },
 
         validateProduct () {
             if (this.slide.slideSettings.slide.linking.type === 'product' && (this.slide.productId === undefined || this.slide.productId === null || this.slide.productId === '')) {

@@ -1,13 +1,13 @@
+{% set titleClasses = [
+    'blur-elysium-slider__title',
+    'h2',
+    'mb-4'
+] %}
+
 {% block component_blur_elysium_slider_header %}
     <header class="blur-elysium-slider__header">
 
         {% block component_blur_elysium_slider_title %}
-            {% set titleClasses = [
-                'blur-elysium-slider__title',
-                'h2',
-                'mb-4'
-            ] %}
-
             {% if element.translated.config.content.value.title is not empty %}
                 <div class="{{titleClasses|join(' ')}}">
                     {{ element.translated.config.content.value.title }}

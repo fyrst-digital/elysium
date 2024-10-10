@@ -1,4 +1,35 @@
-<div>
-    <blur-elysium-slides-form-general />
-    <blur-elysium-slides-form-linking />
-</div>
+<mt-card
+    position-identifier="blurElysium.slide.section.base"
+    :title="cardTitle"
+    :class="['content-no-padding']">
+
+    <template #headerRight>
+
+        <blur-device-switch 
+            layout="row"
+            show-label="false"
+            :default-viewport="deviceView"
+            :style="{
+                padding: '0',
+                width: '100%',
+                justifyContent: 'center',
+                '--container-gap': '12px',
+                '--icon-padding': '6px',
+                '--icon-bg-color': '#ffffff',
+                '--icon-hover-bg-color': 'var(--color-gray-100)',
+            }" />
+    </template>
+
+    <template #tabs>
+        <mt-tabs
+            :defaultItem="activeTab"
+            :items="tabs"
+            @new-item-active="activeTab = $event"
+        />
+    </template>
+
+    <blur-elysium-slides-form-general
+        v-if="activeTab === 'content'" />
+    <blur-elysium-slides-form-linking
+        v-if="activeTab === 'linking'" />
+</mt-card>

@@ -1,4 +1,7 @@
 .cms-element-elysium-slider {
+    --slide-aspect-ratio: 4 / 3;
+    --slide-padding-offset-y: 24px;
+    --slide-padding-offset-x: 24px;
     position: relative;
 
     &.slide-overlay {

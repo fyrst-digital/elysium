@@ -1,70 +1,90 @@
-<sw-card
-    position-identifier="positionIdentifiers.placeholder"
-    :content-padding="false">
+<blur-section 
+    gap
+    padding
+    :title="$tc('blurElysiumSlider.config.sizing.aspectRatio.label')"
+    :description="$tc('blurElysiumSlider.config.sizing.aspectRatio.description')">
 
-    <blur-card-section
-        :title="$tc('blurElysiumSlider.config.sizing.aspectRatio.label')"
-        :description="$tc('blurElysiumSlider.config.sizing.aspectRatio.description')">
+    <blur-number-input 
+        v-model:value="sizingViewportConfig.aspectRatio.width"
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            desktop: { gridColumnEnd: 'span 4' },
+        })"
+        :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
+        :placeholder="viewportsPlaceholder('sizing.aspectRatio.width', 4)"
+        unit="Ratio"
+        :show-device="true"
+        :device="deviceView"
+        @on-device="deviceSwitch" />
 
-        <sw-container 
-            columns="2fr 1fr" 
-            gap="30px">
+    <blur-number-input 
+        v-model:value="sizingViewportConfig.aspectRatio.height"
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            desktop: { gridColumnEnd: 'span 4' },
+        })"
+        :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
+        :placeholder="viewportsPlaceholder('sizing.aspectRatio.height', 3)"
+        unit="Ratio"
+        :show-device="true"
+        :device="deviceView"
+        @on-device="deviceSwitch" />
 
+    <blur-number-input 
+        v-model:value="sizingViewportConfig.maxHeight"
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            desktop: { gridColumnEnd: 'span 4' },
+        })"
+        :allow-empty="true"
+        :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
+        :placeholder="viewportsPlaceholder('sizing.maxHeight', 'noLimit', 'blurElysium.general')"
+        :device="deviceView"
+        :show-device="true"
+        @on-device="deviceSwitch" />
 
-            <sw-container 
-                columns="1fr 1fr"
-                gap="0">
+</blur-section>
 
-                <blur-device-number-field 
-                    v-model:value="sizingViewportConfig.aspectRatio.width"
-                    :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
-                    :unit="false"
-                    :device="currentViewport"/>
+<blur-section 
+    gap
+    padding
+    :title="$tc('blurElysiumSlider.config.sizing.spacing.label')">
 
-                <blur-device-number-field 
-                    v-model:value="sizingViewportConfig.aspectRatio.height"
-                    :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
-                    :unit="false"
-                    :device="currentViewport"/>
+    <blur-number-input 
+        v-model:value="sizingViewportConfig.slidesGap"
+        :label="$tc('blurElysiumSlider.config.sizing.spacing.slidesGap.label')"
+        :placeholder="viewportsPlaceholder('sizing.slidesGap', 0)"
+        :allow-empty="true"
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            desktop: { gridColumnEnd: 'span 4' },
+        })"
+        :device="deviceView"
+        :show-device="true"
+        @on-device="deviceSwitch" />
 
-            </sw-container>
+    <blur-number-input 
+        v-model:value="sizingViewportConfig.paddingY"
+        :label="$tc('blurElysium.general.paddingY')"
+        :placeholder="viewportsPlaceholder('sizing.paddingY', 24)"
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            desktop: { gridColumnEnd: 'span 4' },
+        })"
+        :device="deviceView"
+        :show-device="true"
+        @on-device="deviceSwitch" />
 
-            <blur-device-number-field 
-                v-model:value="sizingViewportConfig.maxHeight"
-                :allow-empty="true"
-                :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
-                :placeholder="$tc('blurElysiumSlider.config.sizing.maxHeight.placeholder')"
-                :device="currentViewport"/>
+    <blur-number-input 
+        v-model:value="sizingViewportConfig.paddingX"
+        :label="$tc('blurElysium.general.paddingX')"
+        :placeholder="viewportsPlaceholder('sizing.paddingY', 24)"
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            desktop: { gridColumnEnd: 'span 4' },
+        })"
+        :device="deviceView"
+        :show-device="true"
+        @on-device="deviceSwitch" />
 
-        </sw-container>
-
-    </blur-card-section>
-
-    <blur-card-section
-        :title="$tc('blurElysiumSlider.config.sizing.spacing.label')">
-
-        <sw-container 
-            columns="repeat(2, 1fr)" 
-            gap="30px">
-
-            <blur-device-number-field 
-                v-model:value="sizingViewportConfig.slidesGap"
-                :label="$tc('blurElysiumSlider.config.sizing.spacing.slidesGap.label')"
-                :allow-empty="true"
-                :device="currentViewport"/>
-
-            <blur-device-number-field 
-                v-model:value="sizingViewportConfig.paddingY"
-                :label="$tc('blurElysium.general.paddingY')"
-                :device="currentViewport"/>
-
-            <blur-device-number-field 
-                v-model:value="sizingViewportConfig.paddingX"
-                :label="$tc('blurElysium.general.paddingX')"
-                :device="currentViewport"/>
-
-        </sw-container>
-
-    </blur-card-section>
-
-</sw-card>
+</blur-section>

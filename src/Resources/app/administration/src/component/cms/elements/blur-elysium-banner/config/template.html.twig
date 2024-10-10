@@ -1,50 +1,98 @@
-<sw-card>
+<mt-card
+    position-identifier="blurElysium.cmsBanner.config"
+    title="Elysium Banner"
+    :class="['content-no-padding']">
 
-    <blur-device-switch 
-        layout="row"
-        show-label="false"
-        :default-viewport="activeViewport"
-        @change-viewport="changeViewport" 
-        :style="{
-            padding: '0',
-            width: '100%',
-            justifyContent: 'center'
-        }" />
+    <template #headerRight>
 
-    <sw-entity-single-select 
-        :label="$tc('blurElysiumBanner.config.selectSlide')"
-        entity="blur_elysium_slides" 
-        v-model:value="selectedSlide" />
+        <blur-device-switch 
+            layout="row"
+            show-label="false"
+            :default-viewport="activeViewport"
+            :style="{
+                padding: '0',
+                width: '100%',
+                justifyContent: 'center',
+                '--container-gap': '12px',
+                '--icon-padding': '6px',
+                '--icon-bg-color': '#ffffff',
+                '--icon-hover-bg-color': 'var(--color-gray-100)',
+            }" />
+    </template>
 
-    <sw-switch-field 
-        :label="$tc('blurElysiumBanner.config.autoSizing')"
-        v-model:value="viewportConfig.aspectRatio.auto" />
+    <blur-section
+        gap
+        padding>
 
-    <sw-container
-        columns="1fr 1fr"
-        gap="0 1rem">
+        <blur-column>
+            <sw-entity-single-select 
+                :label="$tc('blurElysiumBanner.config.selectSlide')"
+                entity="blur_elysium_slides" 
+                v-model:value="selectedSlide" />
+        </blur-column>
 
-        <blur-device-number-field 
-            v-model:value="viewportConfig.aspectRatio.width"
-            :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
-            :unit="false"
-            :device="activeViewport"
-            :disabled="viewportConfig.aspectRatio.auto === true"/>
+    </blur-section>
 
-        <blur-device-number-field 
-            v-model:value="viewportConfig.aspectRatio.height"
-            :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
-            :unit="false"
-            :device="activeViewport"
-            :disabled="viewportConfig.aspectRatio.auto === true"/>
+    <blur-section
+        gap
+        padding
+        :title="'Sizing'">
 
-        <blur-device-number-field 
-            v-model:value="viewportConfig.maxHeight"
-            :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
-            :unit="$tc('blurElysium.general.unitPx')"
-            :device="activeViewport" />
+        <blur-column>
+            <mt-switch 
+                class="blur-switch-input"
+                :label="$tc('blurElysiumBanner.config.autoSizing')"
+                :checked="viewportConfig.aspectRatio.auto" 
+                @change="viewportConfig.aspectRatio.auto = $event"/>
+        </blur-column>
 
-    </sw-container>
+        <blur-column
+            :cols-tablet="6"
+            :cols-desktop="3">
 
-</sw-card>
+            <blur-number-input 
+                v-model:value="viewportConfig.aspectRatio.width"
+                :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
+                :placeholder="viewportsPlaceholder('aspectRatio.width', 4)"
+                unit="Ratio"
+                :allow-empty="true"
+                :disabled="viewportConfig.aspectRatio.auto === true"
+                :device="deviceView"
+                :show-device="true"
+                @on-device="deviceSwitch" />
+        </blur-column>
+
+        <blur-column
+            :cols-tablet="6"
+            :cols-desktop="3">
+
+            <blur-number-input 
+                v-model:value="viewportConfig.aspectRatio.height"
+                :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
+                :placeholder="viewportsPlaceholder('aspectRatio.height', 3)"
+                unit="Ratio"
+                :allow-empty="true"
+                :disabled="viewportConfig.aspectRatio.auto === true"
+                :device="deviceView"
+                :show-device="true"
+                @on-device="deviceSwitch" />
+        </blur-column>
+
+        <blur-column
+            :cols-tablet="6"
+            :cols-desktop="3">
+
+            <blur-number-input 
+                v-model:value="viewportConfig.maxHeight"
+                :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
+                :placeholder="viewportsPlaceholder('maxHeight', 'noLimit', 'blurElysium.general')"
+                :allow-empty="true"
+                :device="deviceView"
+                :show-device="true"
+                @on-device="deviceSwitch" />
+        </blur-column>
+
+    </blur-section>
+
+</mt-card>
 

@@ -8,7 +8,9 @@ export default Component.wrapComponentConfig({
 
     mixins: [
         Mixin.getByName('notification'),
-        Mixin.getByName('blur-media')
+        Mixin.getByName('blur-media'),
+        Mixin.getByName('blur-device-utilities'),
+        Mixin.getByName('blur-style-utilities'),
     ],
 
     inject: [
@@ -63,4 +65,9 @@ export default Component.wrapComponentConfig({
             }
         },
     },
+
+    created () {
+        this.viewportsSettings = this.slideViewportsSettings
+        console.log(this)
+    }
 })

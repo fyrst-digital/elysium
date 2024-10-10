@@ -1,8 +1,8 @@
-{% block cms_element_blur_elysium_banner_root %}
+{% set bannerClasses = [
+    'blur-elysium-banner'
+] %}
 
-    {% set bannerClasses = [
-        'blur-elysium-banner'
-    ] %}
+{% block cms_element_blur_elysium_banner_root %}
 
     {% block cms_element_blur_elysium_banner %}
         <div class="{{ bannerClasses|join(' ') }}"

@@ -1,89 +1,106 @@
-<sw-card
-    position-identifier="positionIdentifier.placeholder"
-    :content-padding="0"
->
+<blur-section 
+    gap
+    padding>
 
-    <template #title>
-        <blur-card-title 
-            :title="$tc('blurElysiumSlides.forms.slideLinking.label')" 
-            icon="blurph-link-simple-bold" />
-    </template>
+    <blur-select-input 
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            tablet: { gridColumnEnd: 'span 6' },
+        })"
+        :options="[
+            { value: 'custom', label: $tc('blurElysiumSlides.forms.slideLinking.typeCustom') },
+            { value: 'product', label: $tc('blurElysiumSlides.forms.slideLinking.typeProduct') },
+        ]"
+        :hideClearableButton="true"
+        :label="$tc('blurElysiumSlides.forms.slideLinking.typeLabel')"
+        v-model:value="slide.slideSettings.slide.linking.type" />
 
-    <blur-card-section>
+    <blur-text-input
+        v-if="slide.slideSettings.slide?.linking?.type === 'custom'"
+        v-model:value="slide.url"
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            tablet: { gridColumnEnd: 'span 6' },
+        })"
+        :label="$tc('blurElysiumSlides.forms.slideLinking.customUrl')"
+        :placeholder="$tc('blurElysiumSlides.forms.slideLinking.customUrlPlaceholder')"
+        :helpText="$tc('blurElysiumSlides.forms.slideLinking.customUrlHelpText')"
+    />
 
-        <sw-container 
-            columns="repeat(2, 1fr)"
-            gap="30px" 
-            align="center">
+    <sw-entity-single-select 
+        v-else-if="slide.slideSettings.slide?.linking?.type === 'product'"
+        entity="product" 
+        class="blur-entity-select-input"
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            tablet: { gridColumnEnd: 'span 6' },
+        })"
+        :label="$tc('blurElysiumSlides.forms.slideLinking.selectProduct')"
+        :error="validateProduct"
+        v-model:value="slide.productId" />
 
-            <sw-select-field 
-                :label="$tc('blurElysiumSlides.forms.slideLinking.typeLabel')"
-                v-model:value="slide.slideSettings.slide.linking.type"
-            >
-                <option value="custom">{{ $tc('blurElysiumSlides.forms.slideLinking.typeCustom') }}</option>
-                <option value="product">{{ $tc('blurElysiumSlides.forms.slideLinking.typeProduct') }}</option>
-            </sw-select-field>
+    <div
+        v-if="slide.slideSettings.slide?.linking?.type === 'product'"
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+        })">
+        <mt-switch 
+            @change="slide.slideSettings.slide.linking.showProductFocusImage = $event"
+            :checked="slide.slideSettings.slide.linking.showProductFocusImage"
+            :label="$tc('blurElysiumSlides.forms.slideLinking.showProductFocusImage')" />
+    </div>
 
-            <sw-text-field
-                v-if="slide.slideSettings.slide?.linking?.type === 'custom'"
-                v-model:value="slide.url"
-                :label="$tc('blurElysiumSlides.forms.slideLinking.customUrl')"
-                :placeholder="$tc('blurElysiumSlides.forms.slideLinking.customUrlPlaceholder')"
-                :helpText="$tc('blurElysiumSlides.forms.slideLinking.customUrlHelpText')"
-            />
+    <blur-text-input
+        v-model:value="slide.buttonLabel" 
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            tablet: { gridColumnEnd: 'span 6' },
+        })"
+        :label="$tc('blurElysiumSlides.forms.slideButtonLabel.label')"
+        :placeholder="$tc('blurElysiumSlides.forms.slideButtonLabel.placeholder')"
+        :helpText="$tc('blurElysiumSlides.forms.slideButtonLabel.helpText')"
+        :disabled="slide.slideSettings.slide.linking.overlay === true"
+    />
 
-            <sw-entity-single-select 
-                v-else-if="slide.slideSettings.slide?.linking?.type === 'product'"
-                entity="product" 
-                :label="$tc('blurElysiumSlides.forms.slideLinking.selectProduct')"
-                :error="validateProduct"
-                v-model:value="slide.productId" />
+    <blur-select-input 
+        :style="deviceStyle({
+            mobile: { gridColumnEnd: 'span 12' },
+            tablet: { gridColumnEnd: 'span 6' },
+        })"
+        :label="$tc('blurElysiumSlides.forms.slideButtonAppearance.label')"
+        :helpText="$tc('blurElysiumSlides.forms.slideButtonAppearance.helpText')"
+        :disabled="slide.slideSettings.slide.linking.overlay === true"
+        :hideClearableButton="true"
+        :options="[
+            { value: 'primary', label: $tc('blurElysium.general.colorStates.primary') },
+            { value: 'secondary', label: $tc('blurElysium.general.colorStates.secondary') },
+            { value: 'success', label: $tc('blurElysium.general.colorStates.success') },
+            { value: 'danger', label: $tc('blurElysium.general.colorStates.danger') },
+            { value: 'warning', label: $tc('blurElysium.general.colorStates.warning') },
+            { value: 'info', label: $tc('blurElysium.general.colorStates.info') },
+            { value: 'light', label: $tc('blurElysium.general.colorStates.light') },
+            { value: 'dark', label: $tc('blurElysium.general.colorStates.dark') },
+        ]" 
+        v-model:value="slide.slideSettings.slide.linking.buttonAppearance" />
 
-            <mt-switch 
-                v-if="slide.slideSettings.slide?.linking?.type === 'product'"
-                @change="slide.slideSettings.slide.linking.showProductFocusImage = $event"
-                :checked="slide.slideSettings.slide.linking.showProductFocusImage"
-                :label="$tc('blurElysiumSlides.forms.slideLinking.showProductFocusImage')" 
-                :style="{
-                    gridColumnEnd: 'span 2'
-                }"/>
+    <div :style="deviceStyle({
+        mobile: { gridColumnEnd: 'span 12' },
+        tablet: { gridColumnEnd: 'span 6' },
+    })">
+        <mt-switch 
+            @change="slide.slideSettings.slide.linking.openExternal = $event"
+            :checked="slide.slideSettings.slide.linking.openExternal"
+            :label="$tc('blurElysiumSlides.forms.slideLinkingOpenExternal')" />
+    </div>
 
-            <sw-text-field
-                v-model:value="slide.buttonLabel" 
-                :label="$tc('blurElysiumSlides.forms.slideButtonLabel.label')"
-                :placeholder="$tc('blurElysiumSlides.forms.slideButtonLabel.placeholder')"
-                :helpText="$tc('blurElysiumSlides.forms.slideButtonLabel.helpText')"
-                :disabled="slide.slideSettings.slide.linking.overlay === true"
-            />
-
-            <sw-select-field 
-                :label="$tc('blurElysiumSlides.forms.slideButtonAppearance.label')"
-                :helpText="$tc('blurElysiumSlides.forms.slideButtonAppearance.helpText')"
-                :disabled="slide.slideSettings.slide.linking.overlay === true"
-                v-model:value="slide.slideSettings.slide.linking.buttonAppearance">
-                <option value="primary">{{ $tc('blurElysium.general.colorStates.primary') }}</option>
-                <option value="secondary">{{ $tc('blurElysium.general.colorStates.secondary') }}</option>
-                <option value="success">{{ $tc('blurElysium.general.colorStates.success') }}</option>
-                <option value="danger">{{ $tc('blurElysium.general.colorStates.danger') }}</option>
-                <option value="warning">{{ $tc('blurElysium.general.colorStates.warning') }}</option>
-                <option value="info">{{ $tc('blurElysium.general.colorStates.info') }}</option>
-                <option value="light">{{ $tc('blurElysium.general.colorStates.light') }}</option>
-                <option value="dark">{{ $tc('blurElysium.general.colorStates.dark') }}</option>
-            </sw-select-field>
-
-            <mt-switch 
-                @change="slide.slideSettings.slide.linking.openExternal = $event"
-                :checked="slide.slideSettings.slide.linking.openExternal"
-                :label="$tc('blurElysiumSlides.forms.slideLinkingOpenExternal')" />
-
-            <mt-switch 
-                @change="slide.slideSettings.slide.linking.overlay = $event"
-                :checked="slide.slideSettings.slide.linking.overlay"
-                :helpText="$tc('blurElysiumSlides.forms.slideLinkingOverlay.helpText')"
-                :label="$tc('blurElysiumSlides.forms.slideLinkingOverlay.label')" />
-
-        </sw-container>
-
-    </blur-card-section>
-
-</sw-card>
+    <div :style="deviceStyle({
+        mobile: { gridColumnEnd: 'span 12' },
+        tablet: { gridColumnEnd: 'span 6' },
+    })">
+        <mt-switch 
+            @change="slide.slideSettings.slide.linking.overlay = $event"
+            :checked="slide.slideSettings.slide.linking.overlay"
+            :helpText="$tc('blurElysiumSlides.forms.slideLinkingOverlay.helpText')"
+            :label="$tc('blurElysiumSlides.forms.slideLinkingOverlay.label')" />
+    </div>
+</blur-section>

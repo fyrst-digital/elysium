@@ -32,6 +32,7 @@
 
         <sw-simple-search-field
             v-model:value="searchTerm"
+            class="blur-elysium-slide-selection-search-field"
             :delay="300" 
             variant="form"
             @focus="focusSearch"
@@ -78,10 +79,6 @@
     <div v-if="selectedSlides.length > 0"
         class="blur-elysium-slide-selection-results">
 
-        <div class="blur-elysium-slide-selection-results-label">
-            {{ $tc('blurElysiumSlides.slideSelection.listLabel') }}
-        </div>
-
         <div class="blur-elysium-slide-selection-results-list"
             ref="selectionList"
             @drop="onDrop($event)"
@@ -106,8 +103,11 @@
 
     </div>
 
-    <sw-alert v-else>
+    <mt-banner 
+        v-else
+        variant="info">
+
         <span v-html="$tc('blurElysiumSlides.slideSelection.listNoSelection')" />
-    </sw-alert>
+    </mt-banner>
 
 </div>

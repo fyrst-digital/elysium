@@ -7,8 +7,15 @@ export default Component.wrapComponentConfig({
     template,
 
     mixins: [
-        Mixin.getByName('placeholder')
+        Mixin.getByName('placeholder'),
+        Mixin.getByName('blur-device-utilities')
     ],
+
+    data () {
+        return {
+            viewportsSettings: null,
+        }
+    },
 
     computed: {
 
@@ -36,15 +43,9 @@ export default Component.wrapComponentConfig({
             'setSlide',
             'setDeviceView'
         ]),
-
-        switchDevice (device: string) {
-            if (device === "desktop") {
-                this.setDeviceView("mobile");
-            } else if (device === "mobile") {
-                this.setDeviceView("tablet");
-            } else if (device === "tablet") {
-                this.setDeviceView("desktop");
-            }
-        }
     },
+
+    created () {
+        this.viewportsSettings = this.slide.slideSettings.viewports
+    }
 })

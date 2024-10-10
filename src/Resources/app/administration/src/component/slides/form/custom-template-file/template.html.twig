@@ -1,32 +1,28 @@
-<sw-card
-    position-identifier="positionIdentifier.placeholder"
-    :content-padding="0">
+<mt-card
+    position-identifier="blurElysium.slide.form.customTemplateFile"
+    :title="$tc('blurElysiumSlides.forms.customTemplateFile.label')" 
+    :subtitle="$tc('blurElysiumSlides.forms.customTemplateFile.description')"
+    :class="['content-no-padding']">
 
-    <template #title>
-        <blur-card-title 
-            :title="$tc('blurElysiumSlides.forms.customTemplateFile.label')" 
-            icon="blurph-file-code-bold" />
-    </template>
+    <blur-section 
+        padding 
+        gap>
 
-    <blur-card-section
-        :description="$tc('blurElysiumSlides.forms.customTemplateFile.description')">
+        <blur-column>
 
-        <sw-container
-            columns="repeat(1, minmax(0, 1fr))"
-            gap="20px">
-
-            <sw-text-field 
+            <blur-text-input 
+                :label="$tc('blurElysiumSlides.forms.customTemplateFile.fileName')" 
                 :placeholder="$tc('blurElysiumSlides.forms.customTemplateFile.placeholder')" 
-                v-model:value="slide.slideSettings.customTemplateFile" />
+                :model-value="slide.slideSettings.customTemplateFile"
+                @update-value="value => slide.slideSettings.customTemplateFile = value" />
 
-            <div :style="{
+            <div 
+                :style="{ 
                     fontSize: '14px',
-                    lineHeight: '1.5'
+                    lineHeight: '1.5' 
                 }"
                 v-if="slide.slideSettings.customTemplateFile"
                 v-html="$t('blurElysiumSlides.forms.customTemplateFile.pathInfo', { file: slide.slideSettings.customTemplateFile })" />
-    
-        </sw-container>
-
-    </blur-card-section>
-</sw-card>
+        </blur-column>
+    </blur-section>
+</mt-card>

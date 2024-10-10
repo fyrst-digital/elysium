@@ -3,37 +3,39 @@ import { SlideSettings, ViewportConfig } from 'blurElysium/types/slide';
 const { Utils } = Shopware
 
 const viewportConfig: ViewportConfig = {
+    slide: {
+        paddingX: null,
+        paddingY: null,
+        borderRadius: null,
+        alignItems: null,
+        justifyContent: null
+    },
     container: {
-        paddingX: 15,
-        paddingY: 15,
-        borderRadius: 0,
-        maxWidth: 0,
-        maxWidthDisabled: true,
-        gap: 20,
-        justifyContent: 'normal',
-        alignItems: 'center',
+        paddingX: null,
+        paddingY: null,
+        borderRadius: null,
+        maxWidth: null,
+        gap: null,
+        justifyContent: null,
+        alignItems: null,
         columnWrap: true,
         order: 'default'
     },
     content: {
-        paddingX: 0,
-        paddingY: 0,
-        maxWidth: 0,
-        maxWidthDisabled: true,
+        paddingX: null,
+        paddingY: null,
+        maxWidth: null,
         textAlign: 'left'
     },
     image: {
         justifyContent: 'center',
-        maxWidth: 0,
-        maxWidthDisabled: true,
+        maxWidth: null,
         imageFullWidth: false
     },
-    slide: {
-        paddingX: 15,
-        paddingY: 15,
-        borderRadius: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
+    coverMedia: {
+        objectPosX: null,
+        objectPosY: null,
+        objectFit: null        
     },
     coverImage: {
         objectPosX: 'center',
@@ -54,13 +56,13 @@ const viewportConfig: ViewportConfig = {
 }
 
 function defineViewportConfig(overrides?: Partial<ViewportConfig>): ViewportConfig {
-    return structuredClone(Utils.object.deepMergeObject(viewportConfig, overrides))
+    return Utils.object.deepMergeObject(structuredClone(viewportConfig), overrides)
 }
 
 export default <SlideSettings>{
     slide: {
         headline: {
-            color: null,
+            color: '',
             element: 'div'
         },
         description: {
@@ -73,7 +75,7 @@ export default <SlideSettings>{
             overlay: false,
             showProductFocusImage: true
         },
-        bgColor: null,
+        bgColor: '',
         bgGradient: {
             startColor: '',
             endColor: '',
@@ -83,14 +85,35 @@ export default <SlideSettings>{
         cssClass: null
     },
     container: {
-        bgColor: null,
+        bgColor: '',
         bgEffect: {
             blur: '8px'
         }
     },
     viewports: {
-        mobile: defineViewportConfig(),
+        mobile: defineViewportConfig({
+            slide: {
+                paddingY: 15,
+                paddingX: 15,
+                borderRadius: 0,
+            },
+            container: {
+                paddingX: 15,
+                paddingY: 15,
+                gap: 20,
+                justifyContent: 'normal',
+                alignItems: 'center',
+            },
+            coverMedia: {
+                objectPosX: 'center',
+                objectPosY: 'center',
+                objectFit: 'cover'
+            }
+        }),
         tablet: defineViewportConfig({
+            container: {
+                columnWrap: false,
+            },
             headline: {
                 fontSize: 32
             },
@@ -99,6 +122,9 @@ export default <SlideSettings>{
             }
         }),
         desktop: defineViewportConfig({
+            container: {
+                columnWrap: false,
+            },
             headline: {
                 fontSize: 40
             },

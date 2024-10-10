@@ -57,23 +57,34 @@
                 "light": "light",
                 "dark": "Dark"
             },
-            "small": "Small",
-            "medium": "Medium",
-            "large": "Large",
+            "auto": "Auto",
+            "sm": "Small",
+            "md": "Medium",
+            "lg": "Large",
+            "noLimit": "No limit",
             "textAlign": "Text align",
-            "top": "Top",
-            "center": "Center",
-            "bottom": "Bottom",
             "left": "Left",
+            "center": "Center",
             "right": "Right",
             "spacing": "Spacing",
             "gap": "Gap spacing",
             "paddingX": "Spacing: vertical",
             "paddingY": "Spacing: horizontal",
             "borderRadius": "Border radius",
+            "switchDevice": "Switch to {device}",
             "alignment": "Alignment",
-            "alignX": "Alignment: horizontal",
-            "alignY": "Alignment: vertical",
+            "alignX": {
+                "label": "Alignment: horizontal",
+                "center": "Center",
+                "flexStart": "Left",
+                "flexEnd": "Right"
+            },
+            "alignY": {
+                "label": "Alignment: vertical",
+                "center": "Center",
+                "flexStart": "Top",
+                "flexEnd": "Bottom"
+            },
             "jusitifyContent": "Justify content",
             "jusitifyNormal": "Normal",
             "jusitifyStart": "Start",
@@ -219,6 +230,7 @@
             },
             "displaySlide": {
                 "label": "Slide",
+                "description": "These settings affect the slide itself.",
                 "alignmentDescription": "These settings determine the orientation of the inner container"
             },
             "displayContainer": {
@@ -227,7 +239,8 @@
                 "alignmentDescription": "These settings affect the alignment of the inner container elements. If the elements displayed one below the other, these settings are reversed."
             },
             "displayContent": {
-                "label": "Content element"
+                "label": "Content",
+                "description": "These settings affect the content container. The content container encloses the contents like headline, description and button"
             },
             "displayImage": {
                 "label": "Image element"
@@ -252,7 +265,8 @@
                 "label": "Custom template file",
                 "description": "Here you can define your own Twig template file. If you enter a Twig template file, you will need to add it to your theme or extension by yourself.",
                 "placeholder": "my-slide-template",
-                "pathInfo": "The path to this file is:<br/><code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code"
+                "pathInfo": "The path to this file is:<br/><code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code",
+                "fileName": "File name"
             },
             "customFields": {
                 "label": "Custom fields",

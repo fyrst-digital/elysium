@@ -58,7 +58,7 @@
                             {% if options.slide.justifyContent %}  
                                 --slide-justify-content: {{ options.slide.justifyContent }};
                             {% endif %}
-                            {% if options.slide.borderRadius is defined %}
+                            {% if options.slide.borderRadius %}
                                 --slide-border-radius: {{ options.slide.borderRadius ~ 'px' }};
                             {% endif %}
 
@@ -80,25 +80,19 @@
                             {% if options.container.borderRadius %}
                                 --container-border-radius: {{ options.container.borderRadius ~ 'px' }};
                             {% endif %}
-                            {% if options.container.maxWidthDisabled is not same as(true) %}
+                            {% if options.container.maxWidth %}
                                 --container-max-width: {{ options.container.maxWidth ~ 'px' }};
                             {% endif %}
                             {% if options.container.alignItems %} 
                                 --container-align-items: {{ options.container.alignItems }};
                             {% endif %}
-                            {% if options.container.justifyContent is defined %} 
+                            {% if options.container.justifyContent %} 
                                 --container-justify-content: {{ options.container.justifyContent }};
                             {% endif %}
 
                             {# Slide image vars #}
-                            {% if options.image.maxWidth is defined and options.image.maxWidthDisabled is not same as(true) %}
-                                --image-flex-basis: {{ options.image.maxWidth ~ 'px' }};
+                            {% if options.image.maxWidth %}
                                 --image-max-w: {{ options.image.maxWidth ~ 'px' }};
-                                --image-flex-grow: 0;
-                            {% else %}
-                                --image-flex-grow: 1;
-                                --image-flex-basis: 0%;
-                                --image-max-w: none;
                             {% endif %}
                             {% if options.container.order is same as('reverse') %}
                                 --image-order: 1;
@@ -115,8 +109,9 @@
                             {% endif %}
 
                             {# Slide content vars #}
-                            {% if options.content.maxWidth is defined and options.content.maxWidthDisabled is not same as(true) %}
+                            {% if options.content.maxWidth %}
                                 --content-flex-basis: {{ options.content.maxWidth ~ 'px' }};
+                                --content-max-w: {{ options.content.maxWidth ~ 'px' }};
                                 --content-flex-grow: 0;
                             {% endif %}
                             {% if options.container.order is same as('reverse') %}
@@ -133,19 +128,14 @@
                             {% if options.content.paddingY %}
                                 --content-padding-y: {{ options.content.paddingY ~ 'px' }};
                             {% endif %}
-                            {% if options.content.maxWidth is defined and options.content.maxWidthDisabled is not same as(true) %}
-                                --content-max-w: {{ options.content.maxWidth ~ 'px' }};
-                            {% else %}
-                                --content-max-w: none;
-                            {% endif %}
 
                             {# Slide headline vars #}
-                            {% if options.headline.fontSize is defined and options.headline.fontSize is not empty %}
+                            {% if options.headline.fontSize %}
                                 --headline-font-size: {{ options.headline.fontSize ~ 'px' }};
                             {% endif %}
 
                             {# Slide description vars #}
-                            {% if options.description.fontSize is not empty %}
+                            {% if options.description.fontSize %}
                                 --description-font-size: {{ options.description.fontSize ~ 'px' }};
                             {% endif %}
 

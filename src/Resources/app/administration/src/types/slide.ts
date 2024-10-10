@@ -47,45 +47,42 @@ export interface ContainerConfig {
 }
 
 export interface ViewportContainerConfig {
-    paddingX?: number
-    paddingY?: number
+    paddingX?: number | null
+    paddingY?: number | null
     borderRadius?: number
-    maxWidth?: number
-    maxWidthDisabled?: boolean
-    gap?: number
-    justifyContent?: JustifyContent
-    alignItems?: AlignItems
+    maxWidth?: number | null
+    gap?: number | null
+    justifyContent?: JustifyContent | null
+    alignItems?: AlignItems | null
     columnWrap?: boolean
     order?: SlideLayoutOrder
 }
 
 export interface ViewportContentConfig {
-    paddingX?: number
-    paddingY?: number
-    maxWidth?: number
-    maxWidthDisabled?: boolean
-    textAlign?: TextAlign
+    paddingX?: number | null
+    paddingY?: number | null
+    maxWidth?: number | null
+    textAlign?: TextAlign | null
 }
 
 export interface ViewportImageConfig {
     justifyContent?: JustifyContent
-    maxWidth?: number
-    maxWidthDisabled?: boolean
+    maxWidth?: number | null
     imageFullWidth?: false
 }
 
 export interface ViewportSlideConfig {
-    paddingX?: number
-    paddingY?: number
-    borderRadius?: number
-    alignItems?: AlignItems
-    justifyContent?: JustifyContent
+    paddingX?: number | null
+    paddingY?: number | null
+    borderRadius?: number | null
+    alignItems?: AlignItems | null
+    justifyContent?: JustifyContent | null
 }
 
 export interface ViewportCoverMediaConfig {
-    objectPosX?: ObjectPositionX
-    objectPosY?: ObjectPositionY
-    objectFit?: ObjectFit
+    objectPosX?: ObjectPositionX | null
+    objectPosY?: ObjectPositionY | null
+    objectFit?: ObjectFit | null
 }
 
 export interface ViewportCoverImageConfig extends ViewportCoverMediaConfig {}
@@ -105,6 +102,7 @@ export interface ViewportConfig {
     content: ViewportContentConfig
     image: ViewportImageConfig
     slide: ViewportSlideConfig
+    coverMedia: ViewportCoverMediaConfig
     coverImage: ViewportCoverImageConfig
     coverVideo: ViewportCoverVideoConfig
     headline: ViewportHeadlineConfig
