@@ -15,12 +15,14 @@
                         .blur-elysium-banner[data-cms-element-id="{{ element.id }}"] 
                         .blur-elysium-slide
                         {
-                            {% if options.aspectRatio.auto is not same as(true) %}
-                                --slide-aspect-ratio: {{options.aspectRatio.width}} / {{options.aspectRatio.height}};
-                            {% else %}
+                            {% if options.aspectRatio.auto is same as(true) %}
                                 --slide-aspect-ratio: auto;
+                            {% elseif options.aspectRatio.width and options.aspectRatio.height %}
+                                --slide-aspect-ratio: {{options.aspectRatio.width}} / {{options.aspectRatio.height}};
                             {% endif %}
-                            {% if options.maxHeight is not empty %}
+                            {% if options.maxHeight is same as(0) %}
+                                --slide-max-height: auto;
+                            {% elseif options.maxHeight is not empty %}
                                 --slide-max-height: {{options.maxHeight ~ 'px'}};
                             {% endif %}
                         }
