@@ -96,7 +96,7 @@
                             {% endif %}
                             {% if options.container.order is same as('reverse') %}
                                 --image-order: 1;
-                            {% else %}
+                            {% elseif options.container.order is same as('default') %}
                                 --image-order: 2;
                             {% endif %}
                             {% if options.image.imageFullWidth is same as(true) %}
@@ -116,7 +116,7 @@
                             {% endif %}
                             {% if options.container.order is same as('reverse') %}
                                 --content-order: 2;
-                            {% else %}
+                            {% elseif options.container.order is same as('default') %}
                                 --content-order: 1;
                             {% endif %}
                             {% if options.content.textAlign %}
