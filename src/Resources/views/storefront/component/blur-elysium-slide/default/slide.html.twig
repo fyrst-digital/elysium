@@ -3,7 +3,7 @@
 {% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/cover-video.html.twig' %}
 {% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/link-overlay.html.twig' %}
 
-{% set slideClasses = [
+{% set defaultSlideClasses = [
     'blur-elysium-slide',
     'd-flex'
 ] %}
@@ -20,6 +20,12 @@
     '<strong>',
     '<span>'
 ] %}
+
+{% if slideClasses is defined %} 
+    {% set slideClasses = defaultSlideClasses|merge(slideClasses) %}
+{% else %}
+    {% set slideClasses = defaultSlideClasses %}
+{% endif %}
 
 {% set headlineContent = slideData.translated.title|striptags( headlineTagsWhitelist|join ) %}
 {% set descriptionContent = slideData.translated.description %}
@@ -39,7 +45,7 @@
 
             {% block blur_elysium_slide_prepend %}{% endblock %}
             
-            {% block cms_element_blur_elysium_banner_style %}
+            {% block cms_element_blur_elysium_slide_style %}
                 {% sw_include '@Storefront/storefront/component/blur-elysium-slide/includes/style.html.twig' %}
             {% endblock %}
 

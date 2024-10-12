@@ -6,6 +6,7 @@
 Das Icon in geräteabhängigen Eingaben kann nun angeklickt werden, um zwischen den Ansichten zu wechseln.  
 Die Eingabemasken in allen Einstellungen wurden kompakter und übersichtlicher gestaltet, um eine effektivere Bearbeitung zu ermöglichen.
 - Eine Lazy Loading Option wurde dem Banner-Element hinzugefügt.
+- Unterschiedliche Slide-Höhen werden nun automatisch im Erlebniswelten Slider angeglichen.
 
 # 3.4.1
 
