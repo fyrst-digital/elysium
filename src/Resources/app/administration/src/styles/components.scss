@@ -15,21 +15,41 @@
 .blur-select-input,
 .blur-colorpicker {
 
-    input {
-        background-color: transparent !important;
-    }
-    
     .mt-block-field__block {
-        box-shadow: 0 1px 2px 0 rgba(51, 68, 91, 0.1);
-        border-radius: 8px;
+        padding: var(--blur-input-block-padding-y, 0px) var(--blur-input-block-padding-x, 8px) !important;
+        border-radius: var(--blur-input-block-radius, 8px) !important;
+        box-shadow: var(--blur-input-block-shadow, 1px 1px 3px rgba(51, 68, 91, 0.1)) !important;
+    }
+
+    input {
+        padding: var(--blur-input-field-padding-y, 6px) var(--blur-input-field-padding-x, 8px) !important;
+        line-height: var(--blur-input-lh, 2) !important;
+        background-color: transparent !important;
+        text-overflow: ellipsis;
     }
 
     .mt-field__addition {
+        padding: var(--blur-input-inner-padding-y, 6px) var(--blur-input-inner-padding-x, 4px) !important;
         min-width: auto;
         background-color: transparent;
-        border-color: transparent !important;
-        padding: 6px 12px !important;
-        line-height: 1;
+        border: 0 none !important;
+        line-height: 1 !important;
+
+        &.is--prefix {
+            
+            &:empty {
+
+                ~ input,
+                ~ .mt-select__selection
+                {
+                    --blur-input-field-padding-x: 12px;
+                }
+            }
+        }
+    }
+
+    .mt-field__controls {
+        padding: var(--blur-input-inner-padding-y, 6px) var(--blur-input-inner-padding-x, 4px) !important;
     }
 
     &.is--disabled {
@@ -45,9 +65,8 @@
 .blur-text-input {
 
     input {
-        line-height: 1.5 !important;
-        padding-top: 8px;
-        padding-bottom: 8px;
+        // padding-top: 8px;
+        // padding-bottom: 8px;
 
         &::placeholder {
             color: var(--color-gray-600);
@@ -68,7 +87,7 @@
     }
 
     input {
-        line-height: 1.5 !important;
+        // line-height: 1.5 !important;
         text-align: center;
         font-weight: var(--font-weight-medium);
 
@@ -80,14 +99,14 @@
 
     &.mt-field--small {
         .mt-field__controls {
-            padding: 0;
+            // padding: 0;
         }
         .mt-field__addition {
-            padding: 6px 14px !important;
+            // padding: 6px 14px !important;
         }
         input {
-            padding-top: 8px;
-            padding-bottom: 8px;
+            // padding-top: 8px;
+            // padding-bottom: 8px;
         }
     }
 }
@@ -116,12 +135,12 @@
     }
 
     .mt-label {
+        padding: var(--blur-input-field-padding-y, 6px) var(--blur-input-field-padding-x, 8px) !important;
         font-size: 14px;
         user-select: none;
         font-weight: 500;
         height: auto;
-        line-height: 1.5;
-        padding: 8px 0;
+        line-height: 2;
         margin: 0px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -145,10 +164,6 @@
 
     .mt-select__selection {
         padding: 0;        
-    }
-
-    .mt-field__addition.is--prefix:empty ~ .mt-select__selection {
-        padding-left: 16px;
     }
 
     .mt-select-selection-list {
@@ -176,7 +191,7 @@
 .blur-colorpicker {
 
     .mt-colorpicker__input {
-        padding: 8px;
+        // padding: 8px;
         line-height: 1.5;
     }
 
