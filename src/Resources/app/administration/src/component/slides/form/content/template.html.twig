@@ -12,10 +12,6 @@
                 :cols-tablet="6">
 
                 <blur-number-input 
-                    :style="deviceStyle({
-                        mobile: { gridColumnEnd: 'span 12' },
-                        tablet: { gridColumnEnd: 'span 6' },
-                    })" 
                     :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
                     :device="deviceView"
                     :placeholder="devicePlaceholder('content.maxWidth', $t('blurElysium.general.noLimit'))"
