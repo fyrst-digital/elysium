@@ -140,13 +140,8 @@
                             {% endif %}
 
                             {# Slide cover vars #}
-                            {% if options.coverImage %}
-                                {% for key, value in options.coverImage %}
-                                    {{ '--cover-' ~ camel_to_kebab_case(key) }}: {{ value }};
-                                {% endfor %}
-                            {% endif %}
-                            {% if options.coverVideo %}
-                                {% for key, value in options.coverVideo %}
+                            {% if options.coverMedia %}
+                                {% for key, value in options.coverMedia|filter(v => v is not empty) %}
                                     {{ '--cover-' ~ camel_to_kebab_case(key) }}: {{ value }};
                                 {% endfor %}
                             {% endif %}
