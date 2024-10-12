@@ -16,6 +16,7 @@ export default Component.wrapComponentConfig({
     mixins: [
         Mixin.getByName('placeholder'),
         Mixin.getByName('notification'),
+        Mixin.getByName('blur-style-utilities'),
     ],
 
     props: {

@@ -1,6 +1,11 @@
 <blur-section 
     gap
-    padding>
+    padding
+    :style="viewStyle({
+        mobile: {
+            'border-bottom': '1px solid var(--color-border-primary-default)'
+        },
+    })">
 
     <blur-column 
         :cols="12"
@@ -34,41 +39,17 @@
     gap
     padding
     :title="$tc('blurElysiumSlides.forms.slideHeadline.label')"
-    title-icon="blurph-text-h-one-bold">
+    title-icon="blurph-text-h-one-bold"
+    :style="viewStyle({
+        mobile: {
+            'border-bottom': '1px solid var(--color-border-primary-default)'
+        },
+    })">
 
     <blur-column 
         :cols="12"
-        :cols-tablet="6">
-
-        <blur-text-input 
-            :style="deviceStyle({
-                mobile: { gridColumnEnd: 'span 12' },
-                desktop: { gridColumnEnd: 'span 6' },
-            })"
-            :label="$tc('blurElysium.general.content')"
-            :placeholder="placeholder(slide, 'title', $tc('blurElysiumSlides.forms.slideHeadline.placeholder'))"
-            :model-value="slide.title"
-            @update-value="value => slide.title = value" />
-    </blur-column>
-
-    <blur-column 
-        :cols="12"
-        :cols-tablet="6"
-        :cols-desktop="2">
-
-        <blur-number-input 
-            :label="$tc('blurElysium.general.fontSize')"
-            :placeholder="viewportsPlaceholder('headline.fontSize', 20)"
-            :device="deviceView"
-            :show-device="true"
-            @on-device="deviceSwitch"
-            v-model:value="slideViewportSettings.headline.fontSize" /> 
-    </blur-column>
-
-    <blur-column 
-        :cols="12"
-        :cols-tablet="6"
-        :cols-desktop="2">
+        :cols-tablet="4"
+        :cols-desktop="3">
 
         <blur-select-input 
             :options="[
@@ -87,8 +68,34 @@
 
     <blur-column 
         :cols="12"
-        :cols-tablet="6"
-        :cols-desktop="2">
+        :cols-tablet="8"
+        :cols-desktop="9">
+
+        <blur-text-input
+            :label="$tc('blurElysium.general.content')"
+            :placeholder="placeholder(slide, 'title', $tc('blurElysiumSlides.forms.slideHeadline.placeholder'))"
+            :model-value="slide.title"
+            @update-value="value => slide.title = value" />
+    </blur-column>
+
+    <blur-column 
+        :cols="12"
+        :cols-tablet="4"
+        :cols-desktop="3">
+
+        <blur-number-input 
+            :label="$tc('blurElysium.general.fontSize')"
+            :placeholder="viewportsPlaceholder('headline.fontSize', 20)"
+            :device="deviceView"
+            :show-device="true"
+            @on-device="deviceSwitch"
+            v-model:value="slideViewportSettings.headline.fontSize" /> 
+    </blur-column>
+
+    <blur-column 
+        :cols="12"
+        :cols-tablet="4"
+        :cols-desktop="3">
 
         <blur-colorpicker
             :label="$tc('blurElysium.general.textColor')"
@@ -114,17 +121,24 @@
     <blur-column
         :cols-desktop="4">
 
-        <blur-colorpicker
-            :label="$tc('blurElysium.general.textColor')"
-            v-model:value="slide.slideSettings.slide.description.color" />
+        <blur-section gap>
 
-        <blur-number-input 
-            :label="$tc('blurElysium.general.fontSize')"
-            :device="deviceView"
-            :placeholder="devicePlaceholder('description.fontSize', 14)"
-            :show-device="true"
-            @on-device="deviceSwitch"
-            v-model:value="slideViewportSettings.description.fontSize" /> 
+            <blur-column>
+                <blur-colorpicker
+                    :label="$tc('blurElysium.general.textColor')"
+                    v-model:value="slide.slideSettings.slide.description.color" />
+            </blur-column>
+
+            <blur-column>
+                <blur-number-input 
+                    :label="$tc('blurElysium.general.fontSize')"
+                    :device="deviceView"
+                    :placeholder="devicePlaceholder('description.fontSize', 14)"
+                    :show-device="true"
+                    @on-device="deviceSwitch"
+                    v-model:value="slideViewportSettings.description.fontSize" />
+            </blur-column>
+        </blur-section>
 
     </blur-column>
 

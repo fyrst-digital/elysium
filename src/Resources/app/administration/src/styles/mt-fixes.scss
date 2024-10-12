@@ -1,0 +1,11 @@
+/** 
+* Because styling of mt components is from hell, this is nessessary 
+* Its global so every component will benefit from this
+* you're welcome shopware
+*/
+.mt-card {
+    
+    .mt-card__titles {
+        flex: 1 0%;
+    }
+}

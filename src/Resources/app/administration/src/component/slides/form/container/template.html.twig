@@ -5,7 +5,7 @@
             gap
             padding
             :style="viewStyle({
-                mobile: { borderBottom: '1px solid #ddd' },
+                mobile: { borderBottom: '1px solid var(--color-border-primary-default)' },
             })">
 
             <blur-column>
@@ -18,7 +18,8 @@
             </blur-column>
 
             <blur-column
-                :cols-tablet="6">
+                :cols-tablet="6"
+                :cols-desktop="4">
 
                 <blur-select-input 
                     :label="$tc('blurElysiumSlides.forms.slideContentOrder.label')"
@@ -35,7 +36,8 @@
             </blur-column>
 
             <blur-column
-                :cols-tablet="6">
+                :cols-tablet="6"
+                :cols-desktop="4">
 
                 <blur-number-input 
                     :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
@@ -47,7 +49,8 @@
             </blur-column>
 
             <blur-column
-                :cols-tablet="6">
+                :cols-tablet="6"
+                :cols-desktop="4">
 
                 <blur-colorpicker
                     :label="$tc('blurElysium.general.backgroundColor')"
@@ -63,7 +66,7 @@
             gap
             padding
             :style="viewStyle({
-                mobile: { borderBottom: '1px solid #ddd' },
+                mobile: { borderBottom: '1px solid var(--color-border-primary-default)' },
             })"
             :title="$tc('blurElysium.general.spacing')"
             title-icon="blurph-ruler-bold">

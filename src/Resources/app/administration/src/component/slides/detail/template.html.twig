@@ -75,49 +75,48 @@
 
     <template #content>
 
-        <blur-elysium-slides-detail-view 
-            v-if="slide">
+        <div v-if="slide"
+            :style="viewStyle({ 
+                mobile: { 'padding': '16px' } 
+            })">
 
-            <template #content>
-            
-                <sw-tabs
-                    position-identifier="positionIdentifiers.placeholder">
+            <sw-tabs
+                position-identifier="positionIdentifiers.placeholder">
 
-                    <sw-tabs-item
-                        :route="contentRoute"
-                        :title="$tc('blurElysiumSlides.settings.baseLabel')"
-                        :hasError="tabContentHasError">
-                        {{ $tc('blurElysiumSlides.settings.baseLabel') }}
-                    </sw-tabs-item>
+                <sw-tabs-item
+                    :route="contentRoute"
+                    :title="$tc('blurElysiumSlides.settings.baseLabel')"
+                    :hasError="tabContentHasError">
+                    {{ $tc('blurElysiumSlides.settings.baseLabel') }}
+                </sw-tabs-item>
 
-                    <sw-tabs-item
-                        :route="mediaRoute"
-                        :title="$tc('blurElysiumSlides.settings.mediaLabel')">
-                        {{ $tc('blurElysiumSlides.settings.mediaLabel') }}
-                    </sw-tabs-item>
+                <sw-tabs-item
+                    :route="mediaRoute"
+                    :title="$tc('blurElysiumSlides.settings.mediaLabel')">
+                    {{ $tc('blurElysiumSlides.settings.mediaLabel') }}
+                </sw-tabs-item>
 
-                    <sw-tabs-item
-                        :route="displayRoute"
-                        :title="$tc('blurElysiumSlides.settings.displayLabel')">
-                        {{ $tc('blurElysiumSlides.settings.displayLabel') }}
-                    </sw-tabs-item>
+                <sw-tabs-item
+                    :route="displayRoute"
+                    :title="$tc('blurElysiumSlides.settings.displayLabel')">
+                    {{ $tc('blurElysiumSlides.settings.displayLabel') }}
+                </sw-tabs-item>
 
-                    <sw-tabs-item
-                        :route="advancedRoute"
-                        :title="$tc('blurElysiumSlides.settings.advancedLabel')"
-                        :hasWarning="tabAdvancedHasWarning"
-                        :warningTooltip="tabAdvancedWarningMessage">
-                        {{ $tc('blurElysiumSlides.settings.advancedLabel') }}
-                    </sw-tabs-item>
+                <sw-tabs-item
+                    :route="advancedRoute"
+                    :title="$tc('blurElysiumSlides.settings.advancedLabel')"
+                    :hasWarning="tabAdvancedHasWarning"
+                    :warningTooltip="tabAdvancedWarningMessage">
+                    {{ $tc('blurElysiumSlides.settings.advancedLabel') }}
+                </sw-tabs-item>
 
-                    <template #content>
-                        <router-view />
-                    </template>
-                </sw-tabs>
+                <template #content>
+                    <router-view />
+                </template>
+            </sw-tabs>        
+        </div>
 
-            </template>
-            
-        </blur-elysium-slides-detail-view>
+
 
         <sw-confirm-modal 
             v-if="showDeleteModal === true" 
