@@ -51,7 +51,8 @@
     </blur-column>
 
     <blur-column
-        :cols-tablet="6">
+        :cols-tablet="6"
+        :cols-desktop="4">
 
         <blur-text-input
             v-model:value="slide.buttonLabel" 
@@ -65,7 +66,8 @@
     </blur-column>
 
     <blur-column
-        :cols-tablet="6">
+        :cols-tablet="6"
+        :cols-desktop="4">
 
         <blur-select-input 
             :label="$tc('blurElysiumSlides.forms.slideButtonAppearance.label')"
@@ -74,6 +76,19 @@
             :hideClearableButton="true"
             :options="buttonColors" 
             v-model:value="slide.slideSettings.slide.linking.buttonAppearance" />
+    </blur-column>
+
+    <blur-column
+        :cols-tablet="6"
+        :cols-desktop="4">
+
+        <blur-select-input 
+            :label="$tc('blurElysiumSlides.forms.slideButtonSize.label')"
+            :helpText="$tc('blurElysiumSlides.forms.slideButtonSize.helpText')"
+            :disabled="slide.slideSettings.slide.linking.overlay === true"
+            :hideClearableButton="true"
+            :options="buttonSizes" 
+            v-model:value="slide.slideSettings.slide.linking.buttonSize" />
     </blur-column>
 
     <blur-column

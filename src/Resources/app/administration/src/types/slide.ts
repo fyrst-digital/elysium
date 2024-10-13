@@ -6,8 +6,13 @@ import {
     ObjectPositionX, 
     ObjectPositionY, 
     BgGradient, 
-    BgEffect, 
+    BgEffect
 } from 'blurElysium/types/styles'
+
+import { 
+    ButtonColor,
+    ButtonSize
+} from 'blurElysium/types/button'
 
 export type SlideLayoutOrder = 'default' | 'reverse'
 
@@ -22,7 +27,8 @@ export type SlideDescription = {
 
 export type SlideLinking = {
     type: 'custom' | 'product' | 'category',
-    buttonAppearance: 'primary' | 'secondary' | 'info' | 'success' | 'danger' | 'warning',
+    buttonAppearance: ButtonColor,
+    buttonSize: ButtonSize,
     openExternal: boolean
     overlay: boolean
     showProductFocusImage: boolean

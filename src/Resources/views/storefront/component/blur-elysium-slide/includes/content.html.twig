@@ -19,14 +19,10 @@
 
     {% set mainBtnClasses = [
         'blur-elysium-slide-main-btn',
-        'btn'
+        'btn',
+        slideData.slideSettings.slide.linking.buttonAppearance ? 'btn-' ~ slideData.slideSettings.slide.linking.buttonAppearance : null,
+        slideData.slideSettings.slide.linking.buttonSize ? 'btn-' ~ slideData.slideSettings.slide.linking.buttonSize : null
     ] %}
-
-    {% if slideData.slideSettings.slide.linking.buttonAppearance %}
-        {% set mainBtnClasses = mainBtnClasses|merge([
-            'btn-' ~ slideData.slideSettings.slide.linking.buttonAppearance
-        ]) %}
-    {% endif %}
 
     {% block blur_elysium_slide_content_element %}
         <div class="blur-elysium-slide-content">

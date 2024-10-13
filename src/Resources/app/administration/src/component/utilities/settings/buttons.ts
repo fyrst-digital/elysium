@@ -1,9 +1,16 @@
-interface ButtonColor {
-    value: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'link' | 'outline-primary' | 'outline-secondary' | 'outline-success' | 'outline-danger' | 'outline-warning' | 'outline-info' | 'outline-light' | 'outline-dark';
-    label: string;
+import { ButtonColor, ButtonSize } from 'blurElysium/types/button'
+
+interface ButtonColorOption {
+    value: ButtonColor
+    label: string
 }
 
-export const buttonColors: ButtonColor[] = [
+interface ButtonSizeOption {
+    value: ButtonSize
+    label: string
+}
+
+export const buttonColors: ButtonColorOption[] = [
     { value: 'primary', label: 'blurElysium.general.colorStates.primary' },
     { value: 'secondary', label: 'blurElysium.general.colorStates.secondary' },
     { value: 'success', label: 'blurElysium.general.colorStates.success' },
@@ -23,13 +30,8 @@ export const buttonColors: ButtonColor[] = [
     { value: 'outline-dark', label: 'blurElysium.general.colorStates.outlineDark' },
 ]
 
-interface ButtonSize {
-    value: 'sm' | 'default' | 'lg';
-    label: string;
-}
-
-export const buttonSizes: ButtonSize[] = [
+export const buttonSizes: ButtonSizeOption[] = [
     { value: 'sm', label: 'blurElysium.general.sm' },
-    { value: 'default', label: 'blurElysium.general.default' },
+    { value: 'md', label: 'blurElysium.general.md' },
     { value: 'lg', label: 'blurElysium.general.lg' },
 ]

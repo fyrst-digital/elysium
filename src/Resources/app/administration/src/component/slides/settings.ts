@@ -71,6 +71,7 @@ export default <SlideSettings>{
         linking: {
             type: 'custom',
             buttonAppearance: 'primary',
+            buttonSize: 'md',
             openExternal: false,
             overlay: false,
             showProductFocusImage: true
