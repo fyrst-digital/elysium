@@ -68,16 +68,7 @@
             :helpText="$tc('blurElysiumSlides.forms.slideButtonAppearance.helpText')"
             :disabled="slide.slideSettings.slide.linking.overlay === true"
             :hideClearableButton="true"
-            :options="[
-                { value: 'primary', label: $tc('blurElysium.general.colorStates.primary') },
-                { value: 'secondary', label: $tc('blurElysium.general.colorStates.secondary') },
-                { value: 'success', label: $tc('blurElysium.general.colorStates.success') },
-                { value: 'danger', label: $tc('blurElysium.general.colorStates.danger') },
-                { value: 'warning', label: $tc('blurElysium.general.colorStates.warning') },
-                { value: 'info', label: $tc('blurElysium.general.colorStates.info') },
-                { value: 'light', label: $tc('blurElysium.general.colorStates.light') },
-                { value: 'dark', label: $tc('blurElysium.general.colorStates.dark') },
-            ]" 
+            :options="buttonColors" 
             v-model:value="slide.slideSettings.slide.linking.buttonAppearance" />
     </blur-column>
 

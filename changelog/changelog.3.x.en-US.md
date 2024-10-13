@@ -7,6 +7,7 @@ The icon in device-dependent inputs can now be clicked to switch between views.
 The input fields in all settings have been made more compact and clearer to enable more effective editing.
 - A lazy loading option has been added to the banner element.
 - Equalize different slide heights in Slider element.
+- Add outline button variants to slide linking settings
 
 # 3.4.1
 
