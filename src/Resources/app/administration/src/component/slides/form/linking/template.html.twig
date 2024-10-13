@@ -24,6 +24,8 @@
             :label="$tc('blurElysiumSlides.forms.slideLinking.customUrl')"
             :placeholder="$tc('blurElysiumSlides.forms.slideLinking.customUrlPlaceholder')"
             :helpText="$tc('blurElysiumSlides.forms.slideLinking.customUrlHelpText')"
+            :model-value="slide.url"
+            @update-value="value => slide.url = value"
         />
     </blur-column>
 
@@ -57,6 +59,8 @@
             :placeholder="$tc('blurElysiumSlides.forms.slideButtonLabel.placeholder')"
             :helpText="$tc('blurElysiumSlides.forms.slideButtonLabel.helpText')"
             :disabled="slide.slideSettings.slide.linking.overlay === true"
+            :model-value="slide.buttonLabel"
+            @update-value="value => slide.buttonLabel = value"
         />
     </blur-column>
 
