@@ -15,32 +15,22 @@
         pauseOnHover: sliderAutoplay.pauseOnHover,
         speed: element.translated.config.settings.value.speed,
         rewind: element.translated.config.settings.value.rewind,
-        breakpoints: {}
+        breakpoints: {
+            (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): {
+                perPage: element.config.viewports.value.mobile.settings.slidesPerPage ?? 1,
+                gap: element.config.viewports.value.mobile.sizing.slidesGap ?? 0
+            },
+            (theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)): {
+                perPage: element.config.viewports.value.tablet.settings.slidesPerPage ?? 1,
+                gap: element.config.viewports.value.tablet.sizing.slidesGap ?? 0
+            },
+            (theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)): {
+                perPage: element.config.viewports.value.desktop.settings.slidesPerPage ?? 1,
+                gap: element.config.viewports.value.desktop.sizing.slidesGap ?? 0
+            }
+        }
     }
 } %}
-
-{# @todo #124: Change `merge` to shopwares `replace_recursive` filter #}
-{# set breakpoint specific splide slider options #}
-{% set breakpointSliderOptions = {
-    (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): {
-        perPage: element.config.viewports.value.mobile.settings.slidesPerPage ?? 1,
-        gap: element.config.viewports.value.mobile.sizing.slidesGap ?? 0
-    },
-    (theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)): {
-        perPage: element.config.viewports.value.tablet.settings.slidesPerPage ?? 1,
-        gap: element.config.viewports.value.tablet.sizing.slidesGap ?? 0
-    },
-    (theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)): {
-        perPage: element.config.viewports.value.desktop.settings.slidesPerPage ?? 1,
-        gap: element.config.viewports.value.desktop.sizing.slidesGap ?? 0
-    }
-} %}
-
-{% set sliderOptions = sliderOptions|merge({
-    splideOptions: sliderOptions.splideOptions|merge({
-        breakpoints: breakpointSliderOptions
-    })
-}) %}
 
 {% set sliderClasses = [
     'cms-element-elysium-slider'
