@@ -1,7 +1,4 @@
 .cms-element-elysium-slider {
-    --slide-aspect-ratio: 4 / 3;
-    --slide-padding-offset-y: 24px;
-    --slide-padding-offset-x: 24px;
     position: relative;
 
     &.slide-overlay {
@@ -24,7 +21,7 @@
     &:not(.is-initialized) {
 
         .blur-esldr__arrow-btn {
-            display: none;
+            @extend .d-none;
         }
         
         .cms-element-elysium-slide__wrapper {
@@ -34,10 +31,16 @@
 
     &.is-loading {
 
+        .splide__list {
+            display: grid;
+            grid-template-columns: repeat(var(--elysium-slider-columns, 1), minmax(0, 1fr));
+            gap: var(--elysium-slider-gap, 0px);
+        }
+
         .cms-element-elysium-slide__wrapper {
 
             &:not(:first-child) {
-                display: none;
+                @extend .d-none;
             }
         }        
     }

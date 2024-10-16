@@ -53,6 +53,8 @@
                 #elysiumSlider-{{ element.id }}
                 .blur-elysium-slider
                 {
+                    --elysium-slider-columns: {{ options.settings.slidesPerPage ?? 1 }};
+                    --elysium-slider-gap: {{ options.sizing.slidesGap ?? 0 ~ 'px' }};
                     {% if options.arrows.iconSize is not empty %}
                         --arrow-icon-size: {{ options.arrows.iconSize ~ 'px' }};
                     {% endif %}
