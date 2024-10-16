@@ -33,7 +33,7 @@
 
             <blur-column
                 :cols-tablet="6"
-                :cols-tablet="3">
+                :cols-desktop="3">
 
                 <blur-colorpicker
                     :label="$tc('blurElysiumSlides.forms.slideGradient.startColor')"
@@ -42,7 +42,7 @@
 
             <blur-column
                 :cols-tablet="6"
-                :cols-tablet="3">
+                :cols-desktop="3">
 
                 <blur-colorpicker
                     :label="$tc('blurElysiumSlides.forms.slideGradient.endColor')"
@@ -51,7 +51,7 @@
 
             <blur-column
                 :cols-tablet="6"
-                :cols-tablet="3">
+                :cols-desktop="3">
 
                 <blur-select-input 
                     :options="[
@@ -65,7 +65,7 @@
 
             <blur-column
                 :cols-tablet="6"
-                :cols-tablet="3">
+                :cols-desktop="3">
 
                 <blur-number-input
                     type="int"
@@ -92,7 +92,7 @@
 
             <blur-column
                 :cols-tablet="6"
-                :cols-tablet="3">
+                :cols-desktop="3">
 
                 <blur-number-input 
                     :label="$tc('blurElysium.general.paddingX')"
@@ -105,7 +105,7 @@
 
             <blur-column
                 :cols-tablet="6"
-                :cols-tablet="3">
+                :cols-desktop="3">
 
                 <blur-number-input 
                     :label="$tc('blurElysium.general.paddingY')"
@@ -118,12 +118,12 @@
 
             <blur-column
                 :cols-tablet="6"
-                :cols-tablet="3">
+                :cols-desktop="3">
 
                 <blur-number-input 
                     :label="$tc('blurElysium.general.borderRadius')"
                     :device="deviceView"
-                    :placeholder="devicePlaceholder('slide.borderRadius', 15)"
+                    :placeholder="devicePlaceholder('slide.borderRadius', 0)"
                     :show-device="true"
                     @on-device="deviceSwitch"
                     v-model:value="slideViewportSettings.slide.borderRadius" /> 
@@ -142,7 +142,7 @@
 
             <blur-column
                 :cols-tablet="6"
-                :cols-tablet="3">
+                :cols-desktop="3">
 
                 <blur-select-input 
                     :label="$tc('blurElysium.general.alignX.label')" 
@@ -160,7 +160,7 @@
 
             <blur-column
                 :cols-tablet="6"
-                :cols-tablet="3">
+                :cols-desktop="3">
 
                 <blur-select-input 
                     :label="$tc('blurElysium.general.alignY.label')" 

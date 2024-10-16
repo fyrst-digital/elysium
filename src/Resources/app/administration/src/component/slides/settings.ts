@@ -19,16 +19,16 @@ const viewportConfig: ViewportConfig = {
         justifyContent: null,
         alignItems: null,
         columnWrap: true,
-        order: 'default'
+        order: null
     },
     content: {
         paddingX: null,
         paddingY: null,
         maxWidth: null,
-        textAlign: 'left'
+        textAlign: null
     },
     image: {
-        justifyContent: 'center',
+        justifyContent: null,
         maxWidth: null,
         imageFullWidth: false
     },
@@ -36,16 +36,6 @@ const viewportConfig: ViewportConfig = {
         objectPosX: null,
         objectPosY: null,
         objectFit: null        
-    },
-    coverImage: {
-        objectPosX: 'center',
-        objectPosY: 'center',
-        objectFit: 'cover'
-    },
-    coverVideo: {
-        objectPosX: 'center',
-        objectPosY: 'center',
-        objectFit: 'cover'
     },
     headline: {
         fontSize: 20
@@ -92,25 +82,7 @@ export default <SlideSettings>{
         }
     },
     viewports: {
-        mobile: defineViewportConfig({
-            slide: {
-                paddingY: 15,
-                paddingX: 15,
-                borderRadius: 0,
-            },
-            container: {
-                paddingX: 15,
-                paddingY: 15,
-                gap: 20,
-                justifyContent: 'normal',
-                alignItems: 'center',
-            },
-            coverMedia: {
-                objectPosX: 'center',
-                objectPosY: 'center',
-                objectFit: 'cover'
-            }
-        }),
+        mobile: defineViewportConfig(),
         tablet: defineViewportConfig({
             container: {
                 columnWrap: false,

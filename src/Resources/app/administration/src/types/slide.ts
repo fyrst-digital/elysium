@@ -61,7 +61,7 @@ export interface ViewportContainerConfig {
     justifyContent?: JustifyContent | null
     alignItems?: AlignItems | null
     columnWrap?: boolean
-    order?: SlideLayoutOrder
+    order?: SlideLayoutOrder | null
 }
 
 export interface ViewportContentConfig {
@@ -72,7 +72,7 @@ export interface ViewportContentConfig {
 }
 
 export interface ViewportImageConfig {
-    justifyContent?: JustifyContent
+    justifyContent?: JustifyContent | null
     maxWidth?: number | null
     imageFullWidth?: false
 }
@@ -109,8 +109,6 @@ export interface ViewportConfig {
     image: ViewportImageConfig
     slide: ViewportSlideConfig
     coverMedia: ViewportCoverMediaConfig
-    coverImage: ViewportCoverImageConfig
-    coverVideo: ViewportCoverVideoConfig
     headline: ViewportHeadlineConfig
     description: ViewportDescriptionConfig
 }
