@@ -20,6 +20,27 @@
 
 .blur-elysium-slider {
     position: relative;
+
+    &:not(.is-initialized) {
+
+        .blur-esldr__arrow-btn {
+            display: none;
+        }
+        
+        .cms-element-elysium-slide__wrapper {
+            flex: 1 100%;
+        }
+    }
+
+    &.is-loading {
+
+        .cms-element-elysium-slide__wrapper {
+
+            &:not(:first-child) {
+                display: none;
+            }
+        }        
+    }
 }
 
 .blur-elysium-slide__wrapper {

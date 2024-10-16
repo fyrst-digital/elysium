@@ -34,17 +34,11 @@ export default class BlurElysiumSlider extends Plugin {
             this.options = deepmerge(this.options, inlineOptions)
         }
 
+        // At this point, remove is-loading class
+        splideSelector.classList.remove('is-loading')
         // init slider with class property without mounting it
-        this.setSlider(new Splide(splideSelector, this.options.splideOptions))
+        this.slider = new Splide(splideSelector, this.options.splideOptions)
         // mount the slider
-        this.getSlider().mount()
-    }
-
-    setSlider (slider) {
-        this.slider = slider
-    }
-
-    getSlider () {
-        return this.slider
+        this.slider.mount()
     }
 }

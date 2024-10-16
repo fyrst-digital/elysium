@@ -80,10 +80,11 @@
             {% else %}
 
                 {% block cms_element_blur_elysium_slider_container %}
-                    <section class="blur-elysium-slider splide"
+                    <section class="blur-elysium-slider splide is-loading"
                         {% if sliderTitle is not empty %}
                             aria-label="{{sliderTitle}}"
                         {% endif %}
+                        style="visibility: visible;"
                         data-blur-elysium-slider-container>
 
                         {% block cms_element_blur_elysium_slide_wrapper %}
