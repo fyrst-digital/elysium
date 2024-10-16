@@ -2,34 +2,30 @@
 
 {% apply spaceless %}
     <style>
-        {% if (sliderArrows.colors.default or sliderArrows.colors.active) or 
-            (sliderArrows.bgColors.default or sliderArrows.bgColors.active) is not empty %}
-
-            #elysiumSlider-{{ element.id }} 
-            .blur-elysium-slider {
-                {% if sliderArrows.colors.default %}
-                    --arrow-icon-color: {{sliderArrows.colors.default}};
-                {% endif %}
-                {% if sliderArrows.bgColors.default %}
-                    --arrow-bg-color: {{sliderArrows.bgColors.default}};
-                {% endif %}
-                {% if sliderArrows.colors.active %}
-                    --arrow-icon-color-active: {{sliderArrows.colors.active}};
-                {% endif %}
-                {% if sliderArrows.bgColors.active %}
-                    --arrow-bg-color-active: {{sliderArrows.bgColors.active}};
-                {% endif %}
-                {% if sliderNavigation.align is same as('start') or sliderNavigation.align is same as('end') %}
-                    --nav-justify-content: {{ 'flex-' ~ sliderNavigation.align }};
-                {% endif %}
-                {% if sliderNavigation.colors.default %}
-                    --nav-bullet-color: {{sliderNavigation.colors.default}};
-                {% endif %}
-                {% if sliderNavigation.colors.active %}
-                    --nav-bullet-color-active: {{sliderNavigation.colors.active}};
-                {% endif %}
-            }
-        {% endif %}
+        #elysiumSlider-{{ element.id }} 
+        .blur-elysium-slider {
+            {% if sliderArrows.colors.default %}
+                --arrow-icon-color: {{sliderArrows.colors.default}};
+            {% endif %}
+            {% if sliderArrows.bgColors.default %}
+                --arrow-bg-color: {{sliderArrows.bgColors.default}};
+            {% endif %}
+            {% if sliderArrows.colors.active %}
+                --arrow-icon-color-active: {{sliderArrows.colors.active}};
+            {% endif %}
+            {% if sliderArrows.bgColors.active %}
+                --arrow-bg-color-active: {{sliderArrows.bgColors.active}};
+            {% endif %}
+            {% if sliderNavigation.align is same as('start') or sliderNavigation.align is same as('end') %}
+                --nav-justify-content: {{ 'flex-' ~ sliderNavigation.align }};
+            {% endif %}
+            {% if sliderNavigation.colors.default %}
+                --nav-bullet-color: {{sliderNavigation.colors.default}};
+            {% endif %}
+            {% if sliderNavigation.colors.active %}
+                --nav-bullet-color-active: {{sliderNavigation.colors.active}};
+            {% endif %}
+        }
 
         {# viewport options for cms element #}
         {% for device, options in viewports %}
