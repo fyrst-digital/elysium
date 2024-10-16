@@ -54,8 +54,17 @@
                 "danger": "Danger",
                 "warning": "Warning",
                 "info": "Info",
-                "light": "light",
-                "dark": "Dark"
+                "light": "Light",
+                "dark": "Dark",
+                "link": "Link",
+                "outlinePrimary": "Outline Primary",
+                "outlineSecondary": "Outline Secondary",
+                "outlineSuccess": "Outline Success",
+                "outlineDanger": "Outline Danger",
+                "outlineWarning": "Outline Warning",
+                "outlineInfo": "Outline Info",
+                "outlineLight": "Outline Light",
+                "outlineDark": "Outline Dark"
             },
             "auto": "Auto",
             "sm": "Small",
@@ -66,6 +75,8 @@
             "left": "Left",
             "center": "Center",
             "right": "Right",
+            "top": "Top",
+            "bottom": "Bottom",
             "spacing": "Spacing",
             "gap": "Gap spacing",
             "paddingX": "Spacing: vertical",
@@ -97,12 +108,18 @@
             "alignStart": "Start",
             "alignCenter": "Center",
             "alignEnd": "End",
+            "flexStart": "Start",
+            "flexEnd": "End",
+            "normal": "Normal",
+            "spaceBetween": "Between",
+            "spaceAround": "Around",
+            "stretch": "Stretch",
             "objectPosY": "Object position: vertical",
             "objectPosX": "Object position: horizontal",
             "objectFit": "Object fit",
-            "fitCover": "Cover",
-            "fitContain": "Contain",
-            "fitAuto": "Auto"
+            "cover": "Cover",
+            "contain": "Contain",
+            "ratio": "Ratio"
         },
         "action": {
             "createSlide": "Create Slide",
@@ -207,6 +224,9 @@
             "slideButtonAppearance": {
                 "label": "Button color",
                 "helpText": "Sets the button appearance. The colors are based on the used theme"
+            },
+            "slideButtonSize": {
+                "label": "Button size"
             },
             "slideLinkingOpenExternal": "Open in new Tab",
             "slideLinkingOverlay": {
@@ -397,7 +417,8 @@
         "label": "Elysium Banner",
         "config": {
             "selectSlide": "Choose a Slide",
-            "autoSizing": "Auto sizing"
+            "autoSizing": "Auto sizing",
+            "lazyLoading": "Lazy loading"
         },
         "messages": {
             "cmsDescription": "Select a Slide in the element settings and define further banner settings like the size."

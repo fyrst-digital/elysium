@@ -128,9 +128,9 @@
                         :device="deviceView"
                         :show-device="true"
                         :options="[
-                            { value: 'cover', label: $tc('blurElysium.general.fitCover') },
-                            { value: 'contain', label: $tc('blurElysium.general.fitContain') },
-                            { value: 'auto', label: $tc('blurElysium.general.fitAuto') }
+                            { value: 'cover', label: $tc('blurElysium.general.cover') },
+                            { value: 'contain', label: $tc('blurElysium.general.contain') },
+                            { value: 'auto', label: $tc('blurElysium.general.auto') }
                         ]"
                         @on-device="deviceSwitch"
                         v-model:value="slideViewportSettings.coverMedia.objectFit" />

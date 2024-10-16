@@ -34,7 +34,7 @@
             "removeItem": "Entfernen",
             "addItem": "Hinzufügen",
             "general": "Allgemein",
-            "appearance": "Erscheinung",
+            "appearance": "Aussehen",
             "content": "Inhalt",
             "copySuffix": "kopie",
             "backgroundColor": "Hintergrundfarbe",
@@ -55,7 +55,16 @@
                 "warning": "Warnung",
                 "info": "Info",
                 "light": "Hell",
-                "dark": "Dunkel"
+                "dark": "Dunkel",
+                "link": "Link",
+                "outlinePrimary": "Primär-Rahmen",
+                "outlineSecondary": "Sekundär-Rahmen",
+                "outlineSuccess": "Erfolg-Rahmen",
+                "outlineDanger": "Fehler-Rahmen",
+                "outlineWarning": "Warnung-Rahmen",
+                "outlineInfo": "Info-Rahmen",
+                "outlineLight": "Hell-Rahmen",
+                "outlineDark": "Dunkel-Rahmen"
             },
             "auto": "Auto",
             "sm": "Klein",
@@ -69,6 +78,12 @@
             "paddingY": "Abstand: Horizontal",
             "borderRadius": "Kantenrundung",
             "alignment": "Ausrichtung",
+            "left": "Links",
+            "center": "Zentriert",
+            "right": "Rechts",
+            "top": "Oben",
+            "bottom": "Unten",
+            "switchDevice": "Wechsel zu {device}",
             "alignX": {
                 "label": "Ausrichtung: Horizontal",
                 "center": "Zentriert",
@@ -96,9 +111,13 @@
             "objectPosY": "Objekt Position: Vertikal",
             "objectPosX": "Objekt Position: Horizontal",
             "objectFit": "Objekt Anpassung",
-            "fitCover": "Füllen (Auf gesamten Bereich)",
-            "fitContain": "Beibehalten",
-            "fitAuto": "Automatisch"
+            "normal": "Normal",
+            "spaceBetween": "Zwischen",
+            "spaceAround": "Um",
+            "stretch": "Strecken",
+            "cover": "Füllen",
+            "contain": "Beibehalten",
+            "ratio": "Verhältnis"
         },
         "action": {
             "createSlide": "Slide erstellen",
@@ -202,6 +221,9 @@
             "slideButtonAppearance": {
                 "label": "Buttonerscheinung",
                 "helpText": "Definiert die Buttonerscheinung. Die Farben basieren auf dem verwendeten Theme"
+            },
+            "slideButtonSize": {
+                "label": "Buttongröße"
             },
             "slideLinkingOpenExternal": "In neuem Fenster öffnen",
             "slideLinkingOverlay": {

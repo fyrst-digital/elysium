@@ -9,6 +9,7 @@ The input fields in all settings have been made more compact and clearer to enab
 - Equalize different slide heights in Slider element.
 - Add outline button variants to slide linking settings
 - Add button size option to slide linking settings
+- Improve Slider loading behavior to reduce Cumulative Layout Shift an Slide popup effect
 
 # 3.4.1
 

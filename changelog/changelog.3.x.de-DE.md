@@ -9,6 +9,7 @@ Die Eingabemasken in allen Einstellungen wurden kompakter und übersichtlicher g
 - Unterschiedliche Slide-Höhen werden nun automatisch im Erlebniswelten Slider angeglichen.
 - Outline Button-Varianten wurden den Slide-Verlinkungseinstellungen hinzugefügt.
 - Button-Größen wurden den Slide-Verlinkungseinstellungen hinzugefügt.
+- Verbesserung des Ladeverhaltens des Sliders zur Reduzierung des kumulativen Layoutverschiebung (CLS) und des Popup-Effekts von Slides
 
 # 3.4.1
 
