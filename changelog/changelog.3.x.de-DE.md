@@ -1,3 +1,8 @@
+# 3.5.1
+
+## Changelog
+- Manuelles Erstellen der neuesten JS-Dateien für das Composer-Paket
+
 # 3.5.0
 
 ## Changelog

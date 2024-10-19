@@ -1,3 +1,8 @@
+# 3.5.1
+
+## Changelog
+- Manually build the latest JS files for the composer package
+
 # 3.5.0
 
 ## Changelog
