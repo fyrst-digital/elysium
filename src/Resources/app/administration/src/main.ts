@@ -1,6 +1,7 @@
 import enGB from 'blurElysium/snippet/en-GB.json'
 import deDE from 'blurElysium/snippet/de-DE.json'
 import slideStore from 'blurElysium/component/slides/store'
+import 'blurElysium/styles/mt-fixes.scss'
 import 'blurElysium/styles/components.scss'
 import 'blurElysium/mixin/device-utilities.mixin'
 import 'blurElysium/mixin/style-utilities.mixin'

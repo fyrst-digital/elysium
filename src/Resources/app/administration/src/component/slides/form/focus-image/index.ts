@@ -68,6 +68,5 @@ export default Component.wrapComponentConfig({
 
     created () {
         this.viewportsSettings = this.slideViewportsSettings
-        console.log(this)
     }
 })

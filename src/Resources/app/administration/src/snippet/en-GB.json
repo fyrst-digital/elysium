@@ -172,6 +172,7 @@
         },
         "forms": {
             "generalTitle": "General",
+            "contentLabel": "Content",
             "useMediaAsSlideCover": "Use as Slide cover",
             "useMediaAsFocusImage": "Use as Focus image",
             "slideName": {

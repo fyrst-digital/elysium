@@ -169,6 +169,7 @@
         },
         "forms": {
             "generalTitle": "Allgemein",
+            "contentLabel": "Inhalt",
             "useMediaAsSlideCover": "Als Slide Cover verwenden",
             "useMediaAsFocusImage": "Als Fokusbild verwenden",
             "slideName": {
@@ -247,6 +248,7 @@
             },
             "displaySlide": {
                 "label": "Slide",
+                "description": "Diese Einstellungen betreffen den Slide selbst.",
                 "alignmentDescription": "Diese Einstellungen bestimmen die Ausrichtung des inneren Containers"
             },
             "displayContainer": {
@@ -255,7 +257,8 @@
                 "alignmentDescription": "Diese Einstellungen beeinflussen die Ausrichtung der inneren Containerelemente. Wenn die Elemente untereinander angezeigt werden, werden diese Einstellungen umgekehrt"
             },
             "displayContent": {
-                "label": "Inhaltselement"
+                "label": "Inhaltselement",
+                "description": "Diese Einstellungen betreffen die Inhaltselemente. Inhaltselemente umfassen Inhalte wie Überschrift, Beschreibung und Buttons"
             },
             "displayImage": {
                 "label": "Bildelement"

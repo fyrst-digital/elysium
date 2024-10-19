@@ -39,11 +39,11 @@ export default Component.wrapComponentConfig({
         tabs () {
             return [
                 {
-                    label: 'Image',
+                    label: this.$tc('blurElysiumSlides.forms.slideCoverImage.label'),
                     name: 'coverImage',
                 },
                 {
-                    label: 'Video',
+                    label: this.$tc('blurElysiumSlides.forms.slideCoverVideo.label'),
                     name: 'coverVideo',
                 },
             ]

@@ -19,13 +19,11 @@ export default Component.wrapComponentConfig({
         tabs () {
             return [
                 {
-                    label: 'Content',
-                    description: this.$tc('blurElysiumSlides.forms.displaySlide.description'),
+                    label: this.$tc('blurElysiumSlides.forms.contentLabel'),
                     name: 'content',
                 },
                 {
-                    label: 'Linking',
-                    description: this.$tc('blurElysiumSlides.forms.displayContainer.description'),
+                    label: this.$tc('blurElysiumSlides.forms.slideLinking.label'),
                     name: 'linking',
                 }
             ]
@@ -36,11 +34,7 @@ export default Component.wrapComponentConfig({
         },
 
         cardTitle () {
-            return `General`
-        },
-
-        cardDescription () {
-            return `Description`
+            return this.$tc('blurElysiumSlides.forms.generalTitle')
         }
     }
 })

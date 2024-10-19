@@ -3,6 +3,7 @@
 ## Changelog
 - Mit dem Wert `0` kann die maximale Begrenzung (Breite / Höhe) in geräteabhängigen Einstellungen zurückgesetzt werden.
 - Manuelles Erstellen der neuesten JS-Dateien für das Composer-Paackage
+- Übersetzungen in der Administration wurden korrigiert
 
 # 3.5.0
 
