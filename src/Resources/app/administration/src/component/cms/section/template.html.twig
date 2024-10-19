@@ -1,0 +1,43 @@
+<div :style="gridStyle">
+
+    <blur-elysium-cms-section-add-block 
+        :key="0"
+        v-droppable="{ dragGroup: 'cms-stage', data: getDropData(0), onDrop: block => dropBlock(block, 0) }" />
+
+    <template
+        v-for="(block, index) in section.blocks"
+        :key="block.id">
+        
+        <sw-cms-block
+            :class="['sw-cms-stage-block', 'fyrst-grid-section-block']"
+            :block="block"
+            :disabled="disabled"
+            :active="cmsPageState.selectedBlock !== null && cmsPageState.selectedBlock.id === block.id"
+            :has-errors="hasBlockErrors(block)"
+            {# :style="setBlockStyles(block)" #}
+            @block-overlay-click="onBlockSelection(block)"
+        >
+
+            <component
+                :is="`sw-cms-block-${block.type}`"
+                :block="block">
+                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+
+                <template
+                    v-for="el in block.slots"
+                    :key="el.id"
+                    #[el.slot]
+                >
+                    <sw-cms-slot
+                        :element="el"
+                        :active="cmsPageState.selectedBlock !== null && cmsPageState.selectedBlock.id === block.id"
+                    />
+                </template>
+
+            </component>
+
+        </sw-cms-block>
+
+    </template>
+
+</div>
