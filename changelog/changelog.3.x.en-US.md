@@ -1,6 +1,7 @@
 # 3.5.1
 
 ## Changelog
+- With the value `0`, the maximum limit (width/height) in device-dependent settings can be reset.
 - Manually build the latest JS files for the composer package
 
 # 3.5.0

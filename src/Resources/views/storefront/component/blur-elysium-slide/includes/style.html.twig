@@ -80,7 +80,9 @@
                             {% if options.container.borderRadius %}
                                 --container-border-radius: {{ options.container.borderRadius ~ 'px' }};
                             {% endif %}
-                            {% if options.container.maxWidth %}
+                            {% if options.container.maxWidth is same as(0) %}
+                                --container-max-width: auto;
+                            {% elseif options.container.maxWidth %}
                                 --container-max-width: {{ options.container.maxWidth ~ 'px' }};
                             {% endif %}
                             {% if options.container.alignItems %} 
@@ -91,7 +93,9 @@
                             {% endif %}
 
                             {# Slide image vars #}
-                            {% if options.image.maxWidth %}
+                            {% if options.image.maxWidth is same as(0) %}
+                                --image-max-w: auto;
+                            {% elseif options.image.maxWidth %}
                                 --image-max-w: {{ options.image.maxWidth ~ 'px' }};
                             {% endif %}
                             {% if options.container.order is same as('reverse') %}
@@ -109,7 +113,11 @@
                             {% endif %}
 
                             {# Slide content vars #}
-                            {% if options.content.maxWidth %}
+                            {% if options.content.maxWidth is same as(0) %}
+                                --content-flex-basis: 0%;
+                                --content-max-w: auto;
+                                --content-flex-grow: 1;
+                            {% elseif options.content.maxWidth %}
                                 --content-flex-basis: {{ options.content.maxWidth ~ 'px' }};
                                 --content-max-w: {{ options.content.maxWidth ~ 'px' }};
                                 --content-flex-grow: 0;

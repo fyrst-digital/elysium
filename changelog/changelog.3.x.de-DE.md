@@ -1,7 +1,8 @@
 # 3.5.1
 
 ## Changelog
-- Manuelles Erstellen der neuesten JS-Dateien für das Composer-Paket
+- Mit dem Wert `0` kann die maximale Begrenzung (Breite / Höhe) in geräteabhängigen Einstellungen zurückgesetzt werden.
+- Manuelles Erstellen der neuesten JS-Dateien für das Composer-Paackage
 
 # 3.5.0
 

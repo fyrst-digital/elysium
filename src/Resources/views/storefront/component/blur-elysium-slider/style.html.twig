@@ -40,7 +40,9 @@
                     {% endif %}
                     {% if options.sizing.maxHeightScreen is same as(true) %}
                         --slide-max-height: 100vh;
-                    {% elseif options.sizing.maxHeight is not empty %}
+                    {% elseif options.sizing.maxHeight is same as(0) %}
+                        --slide-max-height: auto;
+                    {% elseif options.sizing.maxHeight %}
                         --slide-max-height: {{ options.sizing.maxHeight ~ 'px' }};
                     {% endif %}
                     {% if options.sizing.paddingY %}
