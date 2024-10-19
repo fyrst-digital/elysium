@@ -437,5 +437,8 @@
             "columnStretchLabel": "Equal column height"
         },
         "blockTwoColLabel": "Elysium Block — 2 Columns"
+    },
+    "blurElysiumSection": {
+        "label": "Elysium Section"
     }
 }

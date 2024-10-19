@@ -1,0 +1,27 @@
+<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+{% block sw_cms_stage_section_selection__fullwidth %}
+    {% parent %}
+
+    {% block blur_elysium_cms_section_selection_item %}
+        <div
+            class="sw-cms-stage-section-selection__blur-elysium-section"
+            role="button"
+            tabindex="0"
+            @click="selectSection(blurElysiumSectionName)"
+            @keydown.enter="selectSection(blurElysiumSectionName)"
+        >
+            <div class="sw-cms-stage-section-selection__default-preview">
+                <div 
+                    :class="[
+                        'sw-cms-stage-section-selection__default-preview-inner',
+                        'blur-elysium-section-preview-canvas'
+                    ]">
+                    <blur-elysium-icon 
+                        color="#999999" />
+                </div>
+            </div>
+            
+            {{ $tc('blurElysiumSection.label') }}
+        </div>        
+    {% endblock %}
+{% endblock %}

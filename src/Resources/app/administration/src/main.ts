@@ -17,7 +17,9 @@ import 'blurElysium/component/cms/blocks/blur-elysium-block-two-col'
 // extensions
 import 'blurElysium/extension/sw-cms-sidebar'
 
-const { Component, Locale, State, Application } = Shopware
+const { Component, Locale, State, Application, Feature } = Shopware
+
+console.log('BlurElysiumSlider: main.ts', Feature.isActive('BLUR_ELYSIUM_CMS_SECTION'))
 
 State.registerModule('blurElysiumSlide', slideStore);
 
@@ -77,6 +79,12 @@ Component.register('blur-elysium-slides-form-custom-fields', () => import('blurE
 Component.register('blur-elysium-slide-selection', () => import('blurElysium/component/utilities/slide-selection'))
 Component.register('blur-elysium-slide-selection-item', () => import('blurElysium/component/utilities/slide-selection/item'))
 Component.register('blur-elysium-cms-slide-skeleton', () => import('blurElysium/component/utilities/cms-slide-skeleton'))
+
+if (Feature.isActive('BLUR_ELYSIUM_CMS_SECTION') === true) {
+    /** register or override cms-section specific components */
+    Component.override('sw-cms-section', () => import('blurElysium/extension/sw-cms-section'))
+    Component.override('sw-cms-stage-section-selection', () => import('blurElysium/extension/sw-cms-stage-section-selection'))
+}
 
 /**
  * Add search tag

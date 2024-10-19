@@ -1,0 +1,9 @@
+<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+{% block sw_cms_section_content %}
+    <template v-if="section.type === 'blur-elysium-section'">
+        @todo:ELYSIUM_SECTION_COMPONENT
+    </template>
+    <template v-else>
+        {% parent %}
+    </template>
+{% endblock %}
