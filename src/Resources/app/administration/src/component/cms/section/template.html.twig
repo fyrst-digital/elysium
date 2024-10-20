@@ -1,22 +1,30 @@
-<div :style="gridStyle">
+<blur-elysium-cms-section-add-block 
+    :key="0"
+    v-droppable="{ dragGroup: 'cms-stage', data: getDropData(0), onDrop: block => dropBlock(block, 0) }" />
 
-    <blur-elysium-cms-section-add-block 
-        :key="0"
-        v-droppable="{ dragGroup: 'cms-stage', data: getDropData(0), onDrop: block => dropBlock(block, 0) }" />
+<div :style="gridStyle"
+    ref="elysiumectionGrid"
+    @dragover.prevent 
+    @drop="drop">
 
     <template
         v-for="(block, index) in section.blocks"
         :key="block.id">
         
         <sw-cms-block
-            :class="['sw-cms-stage-block', 'fyrst-grid-section-block']"
+            ref="elysiumStageBlock"
+            :class="['sw-cms-stage-block', 'blur-elysium-section-block']"
             :block="block"
             :disabled="disabled"
             :active="cmsPageState.selectedBlock !== null && cmsPageState.selectedBlock.id === block.id"
             :has-errors="hasBlockErrors(block)"
-            {# :style="setBlockStyles(block)" #}
+            :style="setBlockStyles(block)"
             @block-overlay-click="onBlockSelection(block)"
         >
+            <div class="blur-elysium-section-block-resizer" 
+                draggable="true" 
+                @dragstart="$event => dragStart($event, block, index)"
+                 />
 
             <component
                 :is="`sw-cms-block-${block.type}`"

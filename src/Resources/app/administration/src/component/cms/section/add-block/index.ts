@@ -8,7 +8,7 @@ export default Component.wrapComponentConfig({
     computed: {
         styles () {
             const styles: Partial<CSSStyleDeclaration> = {
-                gridColumnEnd: 'span 2',
+                gridColumnEnd: 'span 12',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
