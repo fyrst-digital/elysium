@@ -5,7 +5,7 @@
 <div :style="gridStyle"
     ref="elysiumectionGrid"
     @dragover.prevent 
-    @drop="drop">
+    @drop="onGridDrop">
 
     <template
         v-for="(block, index) in section.blocks"
@@ -23,8 +23,8 @@
         >
             <div class="blur-elysium-section-block-resizer" 
                 draggable="true" 
-                @dragstart="$event => dragStart($event, block, index)"
-                 />
+                @dragstart="$event => startBlockResizeX($event, block, index)"
+                @drag="dragBlockResizingX" />
 
             <component
                 :is="`sw-cms-block-${block.type}`"

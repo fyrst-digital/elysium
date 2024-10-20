@@ -1,7 +1,5 @@
 import template from './template.html.twig'
 import './style.scss'
-import { onMounted } from 'vue'
-import { watch } from 'vue'
 
 const { Component, State, Mixin } = Shopware
 
@@ -41,7 +39,9 @@ export default Component.wrapComponentConfig({
 
     data () {
         return {
-            draggedBlock: null
+            draggedBlock: null,
+            draggedBlockStartPosX: 0,
+            draggedBlockWidth: 0,
         }
     },
 
@@ -131,21 +131,28 @@ export default Component.wrapComponentConfig({
             this.$emit('page-config-open', 'itemConfig');
         },
 
-        drop (event) {
-            const blockWidth = parseFloat(event.dataTransfer.getData('blockWidth'))
-            const startX = parseFloat(event.dataTransfer.getData('startX'))
-            const endX = event.x
-            const movedPx = endX - startX
-            const gridCol = Math.round((blockWidth + movedPx) / (this.$refs.elysiumectionGrid.offsetWidth / 12))
-
-            this.draggedBlock.customFields.elysiumBlockSettings[this.currentDevice].colEnd = gridCol
-            console.log('drop', gridCol)
+        onGridDrop (event) {
+            this.draggedBlock.customFields.elysiumBlockSettings[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
         },
 
-        dragStart (event, block, index) {
+        startBlockResizeX (event, block, index) {
             this.draggedBlock = block
-            event.dataTransfer.setData('startX', event.x)
-            event.dataTransfer.setData('blockWidth', event.target.offsetParent.offsetWidth)        }
+            this.draggedBlockStartPosX = event.x
+            this.draggedBlockWidth = event.target.offsetParent.offsetWidth
+        },
+
+        dragBlockResizingX (event) {
+            this.draggedBlock.customFields.elysiumBlockSettings[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
+        },
+
+        calculateDraggedBlockColWidth (currentX) {
+            const blockWidth = this.draggedBlockWidth
+            const startX = this.draggedBlockStartPosX
+            const endX = currentX
+            const movedPx = endX - startX
+
+            return Math.round((blockWidth + movedPx) / (this.$refs.elysiumectionGrid.offsetWidth / 12))
+        }
     },
 
     created () {
