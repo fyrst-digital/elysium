@@ -69,7 +69,6 @@ export default Component.wrapComponentConfig({
 
     methods: {
         getDropData (index, sectionPosition = 'main') {
-            console.log('getDropData', index, sectionPosition)
             return { dropIndex: index, section: this.section, sectionPosition };
         },
         
@@ -139,10 +138,21 @@ export default Component.wrapComponentConfig({
             this.draggedBlock = block
             this.draggedBlockStartPosX = event.x
             this.draggedBlockWidth = event.target.offsetParent.offsetWidth
+            let img = new Image()
+            img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+            event.dataTransfer.setDragImage(img, 0, 0)
+        },
+
+        endBlockResizeX (event) {
+            if (this.calculateDraggedBlockColWidth(event.x) >= 12) {
+                this.draggedBlock.customFields.elysiumBlockSettings[this.currentDevice].colEnd = 12
+            }
         },
 
         dragBlockResizingX (event) {
-            this.draggedBlock.customFields.elysiumBlockSettings[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
+            if ((this.calculateDraggedBlockColWidth(event.x) > 0) && (this.calculateDraggedBlockColWidth(event.x) <= 12)) {
+                this.draggedBlock.customFields.elysiumBlockSettings[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
+            }
         },
 
         calculateDraggedBlockColWidth (currentX) {

@@ -24,6 +24,7 @@
             <div class="blur-elysium-section-block-resizer" 
                 draggable="true" 
                 @dragstart="$event => startBlockResizeX($event, block, index)"
+                @dragend="endBlockResizeX"
                 @drag="dragBlockResizingX" />
 
             <component
