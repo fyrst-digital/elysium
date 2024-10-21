@@ -7,12 +7,21 @@
 {% block cms_blur_elysium_section %}
     <div class="{{ blurElysiumSectionClasses|join(' ') }}"
         style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr))">
+
         {% for block in section.blocks %}
 
             {% block cms_blur_elysium_section_blocks %}
+
+                {% set blurElysiumBlockStyles = [
+                    'background-color: var(--elysium-section-block-bg-color, ' ~ block.backgroundColor ?? 'transparent' ~ ')',
+                    'grid-column-start: var(--elysium-section-block-col-start, auto)',
+                    'grid-column-end: var(--elysium-section-block-col-end, span 12)',
+                    'padding: var(--elysium-section-block-pt, ' ~ block.marginTop ?? '0px' ~ ') var(--elysium-section-block-pe, ' ~ block.marginRight ?? '0px' ~ ') var(--elysium-section-block-pb, ' ~ block.marginBottom ?? '0px' ~ ') var(--elysium-section-block-ps, ' ~ block.marginLeft ?? '0px' ~ ')'
+                ] %}
+
                 <div class="cms-block-container blur-elysium-section-block"
                     data-cms-block-id="{{block.id}}"
-                    style="background-color: var(--elysium-section-block-bg-color, {{block.backgroundColor ?? 'transparent'}});grid-column-start: var(--elysium-section-block-col-start, auto);grid-column-end: var(--elysium-section-block-col-end, span 12)">
+                    style="{{blurElysiumBlockStyles|join(';')}}">
 
                     {%- if block.customFields.elysiumBlockSettings %}
                         <style>
