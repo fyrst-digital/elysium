@@ -1,5 +1,6 @@
 import template from './template.html.twig'
 import './style.scss'
+import { watch } from 'vue'
 
 const { Component, State, Mixin } = Shopware
 
@@ -45,6 +46,28 @@ export default Component.wrapComponentConfig({
             draggedBlock: null,
             draggedBlockStartPosX: 0,
             draggedBlockWidth: 0,
+        }
+    },
+
+    watch: {
+    
+        'section.blocks.length': {
+            handler() {
+                /**
+                 * @todo This solution is not optimal, because it iterates over all blocks and can lead to performance issues with a lot of blocks
+                 * Better solution would be to add the setting to the block when it is dropped. 
+                 * For now, this is the easiest and lightweight compromise.
+                 */
+                this.section.blocks.map((block, index) => {
+                    if (block.customFields === null) {
+                        block.customFields = {
+                            elysiumBlockSettings: structuredClone(elysiumBlockSettings)
+                        }
+                    } else if (!block.customFields.hasOwnProperty('elysiumBlockSettings')) {
+                        block.customFields.elysiumBlockSettings = structuredClone(elysiumBlockSettings)
+                    }
+                })
+            },
         }
     },
 
