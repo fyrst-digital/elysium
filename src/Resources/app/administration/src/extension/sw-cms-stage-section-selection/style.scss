@@ -1,7 +1,8 @@
 .sw-cms-stage-section-selection {
     height: auto !important;
     display: flex !important;
-    flex-wrap: wrap;
+    align-items: flex-start !important;
+    flex-wrap: wrap !important;
     margin-bottom: 40px;
 }
 .blur-elysium-section-preview-canvas {

@@ -19,6 +19,7 @@
             :active="cmsPageState.selectedBlock !== null && cmsPageState.selectedBlock.id === block.id"
             :has-errors="hasBlockErrors(block)"
             :style="setBlockStyles(block)"
+            v-droppable="{ dragGroup: 'cms-stage', data: getDropData(index + 1), onDrop: block => dropBlock(block, index + 1) }"
             @block-overlay-click="onBlockSelection(block)"
         >
             <div class="blur-elysium-section-block-resizer" 

@@ -9,18 +9,21 @@ const elysiumBlockSettings = {
         colEnd: 12,
         rowStart: 'auto',
         rowEnd: 'auto',
+        order: null
     },
-    'tablet-landscape': {
+    'tablet': {
         colStart: 'auto',
         colEnd: 6,
         rowStart: 'auto',
-        rowEnd: 'auto'
+        rowEnd: 'auto',
+        order: null
     },
     'desktop': {
         colStart: 'auto',
         colEnd: 3,
         rowStart: 'auto',
-        rowEnd: 'auto'
+        rowEnd: 'auto',
+        order: null
     },
 }
 
@@ -52,6 +55,11 @@ export default Component.wrapComponentConfig({
         },
 
         currentDevice () {
+
+            if (this.cmsPageState.currentCmsDeviceView === 'tablet-landscape') {
+                return 'tablet'
+            }
+
             return this.cmsPageState.currentCmsDeviceView
         },
 

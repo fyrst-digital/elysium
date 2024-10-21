@@ -2,6 +2,7 @@
     position: relative;
     grid-column: var(--blur-elysium-section-block-col-start, auto) / span var(--blur-elysium-section-block-col-end, 12);
     grid-row: var(--blur-elysium-section-block-row-start, 1) / span var(--blur-elysium-section-block-row-end, auto);
+    order: var(--blur-elysium-section-block-order, unset);
 
     &:hover,
     &:focus,
@@ -20,7 +21,7 @@
     z-index: 10;
     width: 4px;
     background-color: var(--block-resizer-bg, var(--color-interaction-primary-default));
-    border-radius: 44px;
+    border-radius: 0 44px 44px 0;
     opacity: 0;
     transition: all 200ms;
     cursor: e-resize;
