@@ -86,6 +86,7 @@ if (Feature.isActive('BLUR_ELYSIUM_CMS_SECTION') === true) {
     Component.override('sw-cms-stage-section-selection', () => import('blurElysium/extension/sw-cms-stage-section-selection'))
     Component.register('blur-elysium-cms-section', () => import('blurElysium/component/cms/section'))
     Component.register('blur-elysium-cms-section-add-block', () => import('blurElysium/component/cms/section/add-block'))
+    Component.register('blur-elysium-cms-section-settings', () => import('blurElysium/component/cms/section/settings'))
 }
 
 /**

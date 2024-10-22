@@ -1,6 +1,5 @@
 import template from './template.html.twig'
 import './style.scss'
-import { watch } from 'vue'
 
 const { Component, State, Mixin } = Shopware
 

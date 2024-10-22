@@ -1,0 +1,16 @@
+<blur-section padding gap>
+
+    <blur-column>
+        <blur-number-input 
+            :label="'Section gap'"
+            :device="currentDevice"
+            :placeholder="viewportsPlaceholder('gridGap', 20)"
+            :show-device="true"
+            @on-device="deviceSwitch"
+            v-model:value="currentViewportSettings.gridGap" /> 
+    </blur-column>
+
+</blur-section>
+    <pre>
+    {{currentViewportSettings}}
+    </pre>

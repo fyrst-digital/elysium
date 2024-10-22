@@ -30,3 +30,21 @@
         </sw-sidebar-collapse>
     </template>
 {% endblock %}
+
+<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+{% block sw_cms_sidebar_layout_assignment %}
+    {% parent %}
+
+    {% block sw_cms_sidebar_blur_section_settings %}
+        <sw-sidebar-item
+            class="sw-cms-sidebar__elysium-section-settings"
+            icon="regular-dashboard"
+            :title="elysiumSectionSettingsTitle"
+            :disabled="page.locked || !elysiumSectionSettingsActive">
+
+            <blur-elysium-cms-section-settings 
+                v-if="selectedSection !== null && selectedSection?.customFields?.hasOwnProperty('elysiumSectionSettings')"
+                :settings="selectedSection.customFields.elysiumSectionSettings" />
+        </sw-sidebar-item>
+    {% endblock %}
+{% endblock %}
