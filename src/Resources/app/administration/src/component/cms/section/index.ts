@@ -5,27 +5,29 @@ import { watch } from 'vue'
 const { Component, State, Mixin } = Shopware
 
 const elysiumBlockSettings = {
-    'mobile': {
-        colStart: 'auto',
-        colEnd: 12,
-        rowStart: 'auto',
-        rowEnd: 'auto',
-        order: null
-    },
-    'tablet': {
-        colStart: 'auto',
-        colEnd: 6,
-        rowStart: 'auto',
-        rowEnd: 'auto',
-        order: null
-    },
-    'desktop': {
-        colStart: 'auto',
-        colEnd: 3,
-        rowStart: 'auto',
-        rowEnd: 'auto',
-        order: null
-    },
+    viewports: {
+        mobile: {
+            colStart: 'auto',
+            colEnd: 12,
+            rowStart: 'auto',
+            rowEnd: 'auto',
+            order: null
+        },
+        tablet: {
+            colStart: 'auto',
+            colEnd: 6,
+            rowStart: 'auto',
+            rowEnd: 'auto',
+            order: null
+        },
+        desktop: {
+            colStart: 'auto',
+            colEnd: 3,
+            rowStart: 'auto',
+            rowEnd: 'auto',
+            order: null
+        },
+    }
 }
 
 export default Component.wrapComponentConfig({
@@ -126,11 +128,11 @@ export default Component.wrapComponentConfig({
         setBlockStyles (block) {
             const styles: Partial<CSSStyleDeclaration> = {}
 
-            if (block.customFields && block.customFields.elysiumBlockSettings) {
-                styles['--blur-elysium-section-block-col-start'] = block.customFields.elysiumBlockSettings[this.currentDevice].colStart
-                styles['--blur-elysium-section-block-col-end'] = block.customFields.elysiumBlockSettings[this.currentDevice].colEnd
-                styles['--blur-elysium-section-block-row-start'] = block.customFields.elysiumBlockSettings[this.currentDevice].rowStart
-                styles['--blur-elysium-section-block-row-end'] = block.customFields.elysiumBlockSettings[this.currentDevice].rowEnd
+            if (block.customFields && block.customFields.elysiumBlockSettings?.viewports) {
+                styles['--blur-elysium-section-block-col-start'] = this.getViewportSetting(block, 'colStart')
+                styles['--blur-elysium-section-block-col-end'] = this.getViewportSetting(block, 'colEnd')
+                styles['--blur-elysium-section-block-row-start'] = this.getViewportSetting(block, 'rowStart')
+                styles['--blur-elysium-section-block-row-end'] = this.getViewportSetting(block, 'rowEnd')
             }
 
             return styles;
@@ -169,7 +171,7 @@ export default Component.wrapComponentConfig({
         },
 
         onGridDrop (event) {
-            this.draggedBlock.customFields.elysiumBlockSettings[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
+            this.draggedBlock.customFields.elysiumBlockSettings.viewports[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
         },
 
         startBlockResizeX (event, block, index) {
@@ -183,13 +185,13 @@ export default Component.wrapComponentConfig({
 
         endBlockResizeX (event) {
             if (this.calculateDraggedBlockColWidth(event.x) >= 12) {
-                this.draggedBlock.customFields.elysiumBlockSettings[this.currentDevice].colEnd = 12
+                this.draggedBlock.customFields.elysiumBlockSettings.viewports[this.currentDevice].colEnd = 12
             }
         },
 
         dragBlockResizingX (event) {
             if ((this.calculateDraggedBlockColWidth(event.x) > 0) && (this.calculateDraggedBlockColWidth(event.x) <= 12)) {
-                this.draggedBlock.customFields.elysiumBlockSettings[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
+                this.draggedBlock.customFields.elysiumBlockSettings.viewports[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
             }
         },
 
@@ -202,12 +204,16 @@ export default Component.wrapComponentConfig({
             return Math.round((blockWidth + movedPx) / (this.$refs.elysiumectionGrid.offsetWidth / 12))
         },
 
+        getViewportSetting (block, property) {
+            return block.customFields.elysiumBlockSettings.viewports[this.currentDevice][property]
+        },
+
         onAddBlock () {
             this.$emit('on-add-block')
         }
     },
 
-    mounted () {
-        console.log(this.$refs)
+    created () {
+        console.log(this.section)
     }
 })

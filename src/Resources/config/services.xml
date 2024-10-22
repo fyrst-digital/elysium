@@ -39,6 +39,10 @@
             <tag name="kernel.event_listener" event="Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent" method="invalidateCmsPageIds" priority="2001" />
         </service>
 
+        <service id="Blur\BlurElysiumSlider\Subscriber\EntityWriteSubscriber">
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
         <service id="Blur\BlurElysiumSlider\Subscriber\UnusedMediaSubscriber">
             <tag name="kernel.event_subscriber"/>
         </service>

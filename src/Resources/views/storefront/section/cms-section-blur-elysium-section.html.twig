@@ -23,9 +23,9 @@
                     data-cms-block-id="{{block.id}}"
                     style="{{blurElysiumBlockStyles|join(';')}}">
 
-                    {%- if block.customFields.elysiumBlockSettings %}
+                    {%- if block.customFields.elysiumBlockSettings.viewports %}
                         <style>
-                            {% for device, options in block.customFields.elysiumBlockSettings %}
+                            {% for device, options in block.customFields.elysiumBlockSettings.viewports %}
                                 @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
                                     .blur-elysium-section-block[data-cms-block-id="{{block.id}}"] {
                                         --elysium-section-block-col-end: span {{ options.colEnd }};
