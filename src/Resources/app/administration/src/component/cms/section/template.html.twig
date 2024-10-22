@@ -1,53 +1,65 @@
-<blur-elysium-cms-section-add-block 
-    :key="0"
-    v-droppable="{ dragGroup: 'cms-stage', data: getDropData(0), onDrop: block => dropBlock(block, 0) }" />
+<div class="blur-elysium-cms-section-wrapper">
 
-<div :style="gridStyle"
-    ref="elysiumectionGrid"
-    @dragover.prevent 
-    @drop="onGridDrop">
+    <blur-elysium-cms-section-add-block 
+        v-if="section.blocks.length === 0"
+        :key="0"
+        @click="onAddBlock"
+        v-droppable="{ dragGroup: 'cms-stage', data: getDropData(0), onDrop: block => dropBlock(block, 0) }" />
 
-    <template
-        v-for="(block, index) in section.blocks"
-        :key="block.id">
-        
-        <sw-cms-block
-            ref="elysiumStageBlock"
-            :class="['sw-cms-stage-block', 'blur-elysium-section-block']"
-            :block="block"
-            :disabled="disabled"
-            :active="cmsPageState.selectedBlock !== null && cmsPageState.selectedBlock.id === block.id"
-            :has-errors="hasBlockErrors(block)"
-            :style="setBlockStyles(block)"
-            v-droppable="{ dragGroup: 'cms-stage', data: getDropData(index + 1), onDrop: block => dropBlock(block, index + 1) }"
-            @block-overlay-click="onBlockSelection(block)"
-        >
-            <div class="blur-elysium-section-block-resizer" 
-                draggable="true" 
-                @dragstart="$event => startBlockResizeX($event, block, index)"
-                @dragend="endBlockResizeX"
-                @drag="dragBlockResizingX" />
+    <div :style="gridStyle"
+        ref="elysiumectionGrid"
+        @dragover.prevent 
+        @drop="onGridDrop">
 
-            <component
-                :is="`sw-cms-block-${block.type}`"
-                :block="block">
-                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        <template
+            v-for="(block, index) in section.blocks"
+            :key="block.id">
+            
+            <sw-cms-block
+                ref="elysiumStageBlock"
+                :class="['sw-cms-stage-block', 'blur-elysium-section-block']"
+                :block="block"
+                :disabled="disabled"
+                :active="cmsPageState.selectedBlock !== null && cmsPageState.selectedBlock.id === block.id"
+                :has-errors="hasBlockErrors(block)"
+                :style="setBlockStyles(block)"
+                v-droppable="{ dragGroup: 'cms-stage', data: getDropData(index + 1), onDrop: block => dropBlock(block, index + 1) }"
+                @block-overlay-click="onBlockSelection(block)">
+            
 
-                <template
-                    v-for="el in block.slots"
-                    :key="el.id"
-                    #[el.slot]
-                >
-                    <sw-cms-slot
-                        :element="el"
-                        :active="cmsPageState.selectedBlock !== null && cmsPageState.selectedBlock.id === block.id"
-                    />
-                </template>
+                <div class="blur-elysium-section-block-dropper">
+                    <mt-icon name="regular-plus-circle" />
+                    Zum hinzufügen hier platzieren
+                </div>
 
-            </component>
+                <div class="blur-elysium-section-block-resizer" 
+                    draggable="true" 
+                    @click="test"
+                    @dragstart="$event => startBlockResizeX($event, block, index)"
+                    @dragend="endBlockResizeX"
+                    @drag="dragBlockResizingX" />
 
-        </sw-cms-block>
+                <component
+                    :is="`sw-cms-block-${block.type}`"
+                    :block="block">
+                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 
-    </template>
+                    <template
+                        v-for="el in block.slots"
+                        :key="el.id"
+                        #[el.slot]
+                    >
+                        <sw-cms-slot
+                            :element="el"
+                            :active="cmsPageState.selectedBlock !== null && cmsPageState.selectedBlock.id === block.id"
+                        />
+                    </template>
 
+                </component>
+
+            </sw-cms-block>
+
+        </template>
+
+    </div>
 </div>

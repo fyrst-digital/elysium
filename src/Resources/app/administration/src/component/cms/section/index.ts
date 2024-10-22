@@ -68,6 +68,13 @@ export default Component.wrapComponentConfig({
                     }
                 })
             },
+        },
+
+        $refs: {
+            handler() {
+                console.log('refs', this.$refs)
+            },
+            deep: true,
         }
     },
 
@@ -193,10 +200,14 @@ export default Component.wrapComponentConfig({
             const movedPx = endX - startX
 
             return Math.round((blockWidth + movedPx) / (this.$refs.elysiumectionGrid.offsetWidth / 12))
+        },
+
+        onAddBlock () {
+            this.$emit('on-add-block')
         }
     },
 
-    created () {
-        console.log(this)
+    mounted () {
+        console.log(this.$refs)
     }
 })

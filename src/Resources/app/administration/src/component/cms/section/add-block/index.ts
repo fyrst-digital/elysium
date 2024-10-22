@@ -1,4 +1,5 @@
 import template from './template.html.twig'
+import './style.scss'
 
 const { Component } = Shopware
 
@@ -8,16 +9,20 @@ export default Component.wrapComponentConfig({
     computed: {
         styles () {
             const styles: Partial<CSSStyleDeclaration> = {
-                gridColumnEnd: 'span 12',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: '2px dashed #ccc',
-                borderRadius: '4px',
-                backgroundColor: '#f9f9f9',
+                // display: 'flex',
+                // flexDirection: 'column',
+                // alignItems: 'center',
+                // justifyContent: 'center',
+                // padding: '20px',
+                // gap: '10px',
+                // border: '2px dashed rgba(0, 0, 0, 0.2)',
+                // borderRadius: '4px',
+                // backgroundColor: '#ffffff',
+                // color: 'var(--color-text-primary-disabled)',
+                // cursor: 'pointer',
             }
 
             return styles
         }
-    }
+    }, 
 })
