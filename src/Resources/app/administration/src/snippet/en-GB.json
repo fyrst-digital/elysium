@@ -104,7 +104,12 @@
             "jusitifyStretch": "Stretch",
             "jusitifyBetween": "Between",
             "jusitifyAroud": "Around",
-            "alignItems": "Align items",
+            "alignItems": {
+                "stretch": "Stretch",
+                "flexStart": "Start",
+                "center": "Center",
+                "flexEnd": "End"
+            },
             "alignStart": "Start",
             "alignCenter": "Center",
             "alignEnd": "End",
@@ -119,7 +124,8 @@
             "objectFit": "Object fit",
             "cover": "Cover",
             "contain": "Contain",
-            "ratio": "Ratio"
+            "ratio": "Ratio",
+            "blockAlignment": "Block alignment"
         },
         "action": {
             "createSlide": "Create Slide",
@@ -439,6 +445,9 @@
         "blockTwoColLabel": "Elysium Block — 2 Columns"
     },
     "blurElysiumSection": {
-        "label": "Elysium Section"
+        "label": "Elysium Section",
+        "sidebar": {
+            "sectionSettingsTitle": "Elysium Section settings"
+        }
     }
 }

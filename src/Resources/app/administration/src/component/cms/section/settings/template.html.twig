@@ -1,43 +1,8 @@
 <blur-section padding gap>
-
-    <blur-column>
-        <blur-number-input 
-            :label="'Gap'"
-            :device="currentDevice"
-            :placeholder="viewportsPlaceholder('gridGap', 20)"
-            :show-device="true"
-            @on-device="deviceSwitch"
-            v-model:value="currentViewportSettings.gridGap" /> 
-    </blur-column>
-
-    <blur-column
-        :cols-tablet="6">
-
-        <blur-number-input 
-            :label="'Padding Y'"
-            :device="currentDevice"
-            :placeholder="viewportsPlaceholder('paddingY', 0)"
-            :show-device="true"
-            @on-device="deviceSwitch"
-            v-model:value="currentViewportSettings.paddingY" /> 
-    </blur-column>
-
-    <blur-column
-        :cols-tablet="6">
-
-        <blur-number-input 
-            :label="'Padding X'"
-            :device="currentDevice"
-            :placeholder="viewportsPlaceholder('paddingX', 0)"
-            :show-device="true"
-            @on-device="deviceSwitch"
-            v-model:value="currentViewportSettings.paddingX" /> 
-    </blur-column>
-
     <blur-column>
 
         <blur-select-input 
-            :label="'Align Blocks'" 
+            :label="$tc('blurElysium.general.blockAlignment')" 
             :placeholder="viewportsPlaceholder('alignItems', 'stretch', 'blurElysium.general.alignItems')"
             :options="[
                 { value: 'stretch', label: $tc('blurElysium.general.alignItems.stretch') },
@@ -45,10 +10,46 @@
                 { value: 'center', label: $tc('blurElysium.general.alignItems.center') },
                 { value: 'flex-end', label: $tc('blurElysium.general.flexEnd') },
             ]"
-            :device="deviceView"
+            :device="currentDevice"
             :show-device="true"
-            @on-device="deviceSwitch"
+            @on-device="cmsDeviceSwitch"
             v-model:value="currentViewportSettings.alignItems" />
     </blur-column>
+
+    <blur-column>
+
+        <blur-number-input 
+            :label="$tc('blurElysium.general.gap')"
+            :placeholder="viewportsPlaceholder('gridGap', 20)"
+            :show-device="true"
+            :device="currentDevice"
+            @on-device="cmsDeviceSwitch"
+            v-model:value="currentViewportSettings.gridGap" /> 
+    </blur-column>
+
+    <blur-column
+        :cols-tablet="6">
+
+        <blur-number-input 
+            :label="$tc('blurElysium.general.paddingY')"
+            :placeholder="viewportsPlaceholder('paddingY', 0)"
+            :show-device="true"
+            :device="currentDevice"
+            @on-device="cmsDeviceSwitch"
+            v-model:value="currentViewportSettings.paddingY" /> 
+    </blur-column>
+
+    <blur-column
+        :cols-tablet="6">
+
+        <blur-number-input 
+            :label="$tc('blurElysium.general.paddingX')"
+            :placeholder="viewportsPlaceholder('paddingX', 0)"
+            :show-device="true"
+            :device="currentDevice"
+            @on-device="cmsDeviceSwitch"
+            v-model:value="currentViewportSettings.paddingX" /> 
+    </blur-column>
+
 
 </blur-section>

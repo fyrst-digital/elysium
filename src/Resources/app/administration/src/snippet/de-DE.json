@@ -104,7 +104,12 @@
             "jusitifyStretch": "Strecken",
             "jusitifyBetween": "Zwischenraum aufteilen: Abstand zur Begrenzung",
             "jusitifyAroud": "Zwischenraum aufteilen: An Begrenzung heften",
-            "alignItems": "Elementausrichtung",
+            "alignItems": {
+                "stretch": "Strecken",
+                "flexStart": "Beginn",
+                "center": "Center",
+                "flexEnd": "Ende"
+            },
             "alignStart": "Beginn",
             "alignCenter": "Zentriert",
             "alignEnd": "Ende",
@@ -117,7 +122,8 @@
             "stretch": "Strecken",
             "cover": "Füllen",
             "contain": "Beibehalten",
-            "ratio": "Verhältnis"
+            "ratio": "Verhältnis",
+            "blockAlignment": "Block Ausrichtung"
         },
         "action": {
             "createSlide": "Slide erstellen",
@@ -432,5 +438,11 @@
             "columnStretchLabel": "Spaltenhöhe angleichen"
         },
         "blockTwoColLabel": "Elysium Block — 2 Spalten"
+    },
+    "blurElysiumSection": {
+        "label": "Elysium Sektion",
+        "sidebar": {
+            "sectionSettingsTitle": "Elysium Sektion Einstellungen"
+        }
     }
 }

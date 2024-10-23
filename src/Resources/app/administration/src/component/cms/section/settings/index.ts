@@ -30,8 +30,21 @@ export default Component.wrapComponentConfig({
         }
     },
 
+    methods: {
+        cmsDeviceSwitch (device: string) {
+            console.log('device', this.currentDevice)
+
+            if (this.currentDevice === "desktop") {
+                this.cmsPageState.setCurrentCmsDeviceView("mobile");
+            } else if (this.currentDevice === "mobile") {
+                this.cmsPageState.setCurrentCmsDeviceView("tablet-landscape");
+            } else if (this.currentDevice === "tablet") {
+                this.cmsPageState.setCurrentCmsDeviceView("desktop");
+            }
+        },
+    },
+
     created () {
         this.viewportsSettings = this.settings.viewports
-        console.log('settings', this.currentViewportSettings)
     }
 })
