@@ -95,11 +95,14 @@ export default Component.wrapComponentConfig({
         },
 
         gridStyle() {
+            console.log('gridStyle', this.getViewportSetting(this.section.customFields?.elysiumSectionSettings, 'gridGap'))
             const gridStyle: Partial<CSSStyleDeclaration> = {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
-                gap: '24px',
-                alignItems: 'stretch',
+                gap: `${this.getViewportSetting(this.section.customFields?.elysiumSectionSettings, 'gridGap')}px`,
+                paddingBlock: `${this.getViewportSetting(this.section.customFields?.elysiumSectionSettings, 'paddingY')}px`,
+                paddingInline: `${this.getViewportSetting(this.section.customFields?.elysiumSectionSettings, 'paddingX')}px`,
+                alignItems: this.getViewportSetting(this.section.customFields?.elysiumSectionSettings, 'alignItems'),
             }
 
             return gridStyle
@@ -128,10 +131,10 @@ export default Component.wrapComponentConfig({
             const styles: Partial<CSSStyleDeclaration> = {}
 
             if (block.customFields && block.customFields.elysiumBlockSettings?.viewports) {
-                styles['--blur-elysium-section-block-col-start'] = this.getViewportSetting(block, 'colStart')
-                styles['--blur-elysium-section-block-col-end'] = this.getViewportSetting(block, 'colEnd')
-                styles['--blur-elysium-section-block-row-start'] = this.getViewportSetting(block, 'rowStart')
-                styles['--blur-elysium-section-block-row-end'] = this.getViewportSetting(block, 'rowEnd')
+                styles['--blur-elysium-section-block-col-start'] = this.getViewportSetting(block.customFields.elysiumBlockSettings, 'colStart')
+                styles['--blur-elysium-section-block-col-end'] = this.getViewportSetting(block.customFields.elysiumBlockSettings, 'colEnd')
+                styles['--blur-elysium-section-block-row-start'] = this.getViewportSetting(block.customFields.elysiumBlockSettings, 'rowStart')
+                styles['--blur-elysium-section-block-row-end'] = this.getViewportSetting(block.customFields.elysiumBlockSettings, 'rowEnd')
             }
 
             return styles;
@@ -203,8 +206,9 @@ export default Component.wrapComponentConfig({
             return Math.round((blockWidth + movedPx) / (this.$refs.elysiumectionGrid.offsetWidth / 12))
         },
 
-        getViewportSetting (block, property) {
-            return block.customFields.elysiumBlockSettings.viewports[this.currentDevice][property]
+        getViewportSetting (settings, property) {
+            // return block.customFields.elysiumBlockSettings.viewports[this.currentDevice][property]
+            return settings?.viewports[this.currentDevice][property] ?? null
         },
 
         onAddBlock () {
