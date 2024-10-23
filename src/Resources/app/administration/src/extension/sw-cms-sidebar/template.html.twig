@@ -45,6 +45,10 @@
             <blur-elysium-cms-section-settings 
                 v-if="selectedSection !== null && selectedSection?.customFields?.hasOwnProperty('elysiumSectionSettings')"
                 :settings="selectedSection.customFields.elysiumSectionSettings" />
+
+            <blur-elysium-cms-section-block-settings 
+                v-if="selectedBlock !== null && selectedBlock?.customFields?.hasOwnProperty('elysiumBlockSettings')"
+                :settings="selectedBlock.customFields.elysiumBlockSettings" />
         </sw-sidebar-item>
     {% endblock %}
 {% endblock %}

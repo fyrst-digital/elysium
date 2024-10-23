@@ -442,7 +442,8 @@
     "blurElysiumSection": {
         "label": "Elysium Sektion",
         "sidebar": {
-            "sectionSettingsTitle": "Elysium Sektion Einstellungen"
+            "sectionSettingsTitle": "Elysium Sektion Einstellungen",
+            "blockSettingsTitle": "Elysium Block Einstellungen"
         }
     }
 }
