@@ -23,13 +23,14 @@
     justify-content: center;
     padding: 20px;
     text-align: center;
-    font-size: 20px;
-    font-weight: 600;
-    background-color: #f9fafb;
+    color: var(--color-interaction-primary-default);
+    background-color: rgba(217, 233, 255, 0.75);
+    backdrop-filter: blur(8px);
     opacity: 0;
     visibility: hidden;
     transition: all 200ms;
     z-index: 10;
+    gap: 10px;
 
     .blur-elysium-section-block.is--valid-drop & {
         opacity: 1;

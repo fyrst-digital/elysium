@@ -21,7 +21,7 @@ const elysiumBlockSettings = {
         },
         desktop: {
             colStart: 'auto',
-            colEnd: 3,
+            colEnd: 6,
             rowStart: 'auto',
             rowEnd: 'auto',
             order: null

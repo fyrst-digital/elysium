@@ -443,6 +443,14 @@
         "label": "Elysium Sektion",
         "sidebar": {
             "sectionSettingsTitle": "Elysium Sektion Einstellungen",
+            "sectionSettings": {
+                "breakpoints": {
+                    "title": "Breakpoints",
+                    "description": "Lege für diese Sektion abweichende Breakpoints fest. Die Größen orientieren sich an den Theme Einstellungen",
+                    "tabletHelptext": "Definiert ab welcher Bildschirmgröße die Tablet Ansicht greifen soll",
+                    "desktopHelptext": "Definiert ab welcher Bildschirmgröße die Desktop Ansicht greifen soll"
+                }
+            },
             "blockSettingsTitle": "Elysium Block Einstellungen"
         }
     }

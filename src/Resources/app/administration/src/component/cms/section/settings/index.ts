@@ -27,6 +27,17 @@ export default Component.wrapComponentConfig({
 
         currentViewportSettings () {
             return this.settings.viewports[this.currentDevice]
+        },
+
+        optionsBreakpoints () {
+            return [
+                // { value: 'xs', label: 'xs' },
+                { value: 'sm', label: 'sm' },
+                { value: 'md', label: 'md' },
+                { value: 'lg', label: 'lg' },
+                { value: 'xl', label: 'xl' },
+                { value: 'xxl', label: 'xxl' },
+            ]
         }
     },
 
@@ -45,6 +56,7 @@ export default Component.wrapComponentConfig({
     },
 
     created () {
+        console.log('settings', this.settings)
         this.viewportsSettings = this.settings.viewports
     }
 })

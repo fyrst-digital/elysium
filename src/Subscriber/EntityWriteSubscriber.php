@@ -17,6 +17,11 @@ class EntityWriteSubscriber implements EventSubscriberInterface
     {
         return [
             'elysiumSectionSettings' => [
+                'breakpoints' => [
+                    'mobile' => null,
+                    'tablet' => null,
+                    'desktop' => null
+                ],
                 'viewports' => [
                     'mobile' => [
                         'gridCols' => 12,
@@ -58,6 +63,10 @@ class EntityWriteSubscriber implements EventSubscriberInterface
 
         foreach ($cmsSections as $id => $section) {
             if ($section instanceof InsertCommand && $section->getPayload()['type'] === self::SECTION_NAME) {
+                /**
+                 * @todo #137 check if elysiumSectionSettings already exists in custom_fielda and merge it with defaults
+                 * Do that in EntityWriteEvent event? Doesn't make sense. Do the merging in EntityLoadedEvent event?
+                 */
                 $section->addPayload('custom_fields', json_encode(self::sectionDefauls()));
             }
         }
