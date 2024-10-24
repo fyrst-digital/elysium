@@ -12,15 +12,11 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
              * The dependened methods or properties will be removed from this mixin
              */
             currentBreakpoint: 'mobile',
-            viewportsSettings: null
+            viewportsSettings: null,
         }
     },
 
     computed: {
-
-        ...mapState('blurElysiumSlide', [
-            'deviceView'
-        ]),
 
         ...mapState('adminMenu', [
             'isExpanded'
@@ -31,25 +27,25 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
          * The dependened methods or properties will be removed from this mixin
          */
         slideViewportSettings () {
-            return this.slide.slideSettings.viewports[this.deviceView]
+            return this.viewportsSettings[this.currentDevice]
         },
 
         /**
          * @deprecated to initalize the viewport settings set your object to viewportsSettings in your component
          */
         slideViewportsSettings () {
-            return this.slide.slideSettings.viewports
+            return this.viewportsSettings
         },
 
         /**
          * @deprecated since the change from devicePlaceholder to viewportsPlaceholder this computed property is not used anymore
          */
         currentDeviceIndex () {
-            return Object.entries(this.slideViewportsSettings).findIndex(element => element[0] === this.deviceView)
+            return Object.entries(this.slideViewportsSettings).findIndex(element => element[0] === this.currentDevice)
         },
 
         currentViewportIndex () {
-            return Object.entries(this.viewportsSettings).findIndex(element => element[0] === this.deviceView)
+            return Object.entries(this.viewportsSettings).findIndex(element => element[0] === this.currentDevice)
         },
     },
 
@@ -117,8 +113,6 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
         },
 
         viewportsPlaceholder(property: string, fallback: string|number, snippetPrefix: string|null = null) {
-
-            console.log(this.orderedViewportsSettings(), this.viewportsSettings)
             
             const kebabToCamelCase = (string: string) => {
                 return string.split('-').map((word, index) => {
@@ -131,6 +125,7 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
             Object.values(this.viewportsSettings).forEach((settings, index) => {
                 const settingValue: string|number|undefined|null = <string|number|undefined|null>property.split('.').reduce((r, k) => r?.[k], settings)
                 if (!(settingValue === null || settingValue === undefined) && this.currentViewportIndex >= index) {
+                    console.log('object element', property, settingValue)
                     placeholder = settingValue
                 }
             })
@@ -142,28 +137,6 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
             }
 
             return placeholder
-        },
-
-        orderedViewportsSettings() {
-            const viewportsSettingsStructure = new Map<string, any>([
-                ['mobile', {}],
-                ['tablet', {}],
-                ['desktop', {}],
-            ]);
-
-            for (const [key, value] of viewportsSettingsStructure.entries()) {
-                viewportsSettingsStructure.set(key, this.viewportsSettings.hasOwnProperty(key) 
-                    ? this.viewportsSettings[key] 
-                    : null);
-            }
-
-            // for (const key of Object.keys(viewportsSettingsStructure)) {
-            //     viewportsSettingsStructure[key] = this.viewportsSettings.hasOwnProperty(key) 
-            //         ? this.viewportsSettings[key] : null
-            // }
-
-
-            return viewportsSettingsStructure
         },
 
         /**

@@ -42,8 +42,8 @@
                 <component
                     :is="`sw-cms-block-${block.type}`"
                     :block="block">
-                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 
+                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                     <template
                         v-for="el in block.slots"
                         :key="el.id"
