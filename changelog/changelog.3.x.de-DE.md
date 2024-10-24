@@ -1,3 +1,8 @@
+# 3.5.2
+
+## Changelog
+- Änderung der Registrierung des elysium-slider JS von asynchron zu statisch, damit der Slider ab Shopware 6.6.7 wieder wie erwartet funktioniert
+
 # 3.5.1
 
 ## Changelog
