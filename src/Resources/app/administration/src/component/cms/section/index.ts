@@ -40,6 +40,7 @@ export default Component.wrapComponentConfig({
 
     mixins: [
         Mixin.getByName('cms-state'),
+        Mixin.getByName('blur-device-utilities'),
     ],
 
     data () {
@@ -70,13 +71,6 @@ export default Component.wrapComponentConfig({
                 })
             },
         },
-
-        $refs: {
-            handler() {
-                console.log('refs', this.$refs)
-            },
-            deep: true,
-        }
     },
 
     computed: {
@@ -95,14 +89,13 @@ export default Component.wrapComponentConfig({
         },
 
         gridStyle() {
-            console.log('gridStyle', this.getViewportSetting(this.section.customFields?.elysiumSectionSettings, 'gridGap'))
             const gridStyle: Partial<CSSStyleDeclaration> = {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',
-                gap: `${this.getViewportSetting(this.section.customFields?.elysiumSectionSettings, 'gridGap')}px`,
-                paddingBlock: `${this.getViewportSetting(this.section.customFields?.elysiumSectionSettings, 'paddingY')}px`,
-                paddingInline: `${this.getViewportSetting(this.section.customFields?.elysiumSectionSettings, 'paddingX')}px`,
-                alignItems: this.getViewportSetting(this.section.customFields?.elysiumSectionSettings, 'alignItems'),
+                gap: `${this.viewportsPlaceholder('gridGap', 20)}px`,
+                paddingBlock: `${this.viewportsPlaceholder('paddingY', 0)}px`,
+                paddingInline: `${this.viewportsPlaceholder('paddingY', 0)}px`,
+                alignItems: this.viewportsPlaceholder('alignItems', 'stretch')
             }
 
             return gridStyle
@@ -123,8 +116,6 @@ export default Component.wrapComponentConfig({
                     elysiumBlockSettings: structuredClone(elysiumBlockSettings)
                 }
             }
-
-            console.log('dropBlock', index, this.section.blocks[index], block)
         },
 
         setBlockStyles (block) {
@@ -217,6 +208,7 @@ export default Component.wrapComponentConfig({
     },
 
     created () {
-        console.log(this.section)
+        console.log('section', this.section.customFields?.elysiumSectionSettings.viewports)
+        this.viewportsSettings = this.section.customFields?.elysiumSectionSettings?.viewports
     }
 })

@@ -118,6 +118,8 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
 
         viewportsPlaceholder(property: string, fallback: string|number, snippetPrefix: string|null = null) {
 
+            console.log(this.orderedViewportsSettings(), this.viewportsSettings)
+            
             const kebabToCamelCase = (string: string) => {
                 return string.split('-').map((word, index) => {
                     return index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1);
@@ -140,6 +142,28 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
             }
 
             return placeholder
+        },
+
+        orderedViewportsSettings() {
+            const viewportsSettingsStructure = new Map<string, any>([
+                ['mobile', {}],
+                ['tablet', {}],
+                ['desktop', {}],
+            ]);
+
+            for (const [key, value] of viewportsSettingsStructure.entries()) {
+                viewportsSettingsStructure.set(key, this.viewportsSettings.hasOwnProperty(key) 
+                    ? this.viewportsSettings[key] 
+                    : null);
+            }
+
+            // for (const key of Object.keys(viewportsSettingsStructure)) {
+            //     viewportsSettingsStructure[key] = this.viewportsSettings.hasOwnProperty(key) 
+            //         ? this.viewportsSettings[key] : null
+            // }
+
+
+            return viewportsSettingsStructure
         },
 
         /**

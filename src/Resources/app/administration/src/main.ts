@@ -19,8 +19,6 @@ import 'blurElysium/extension/sw-cms-sidebar'
 
 const { Component, Locale, State, Application, Feature } = Shopware
 
-console.log('BlurElysiumSlider: main.ts', Feature.isActive('BLUR_ELYSIUM_CMS_SECTION'))
-
 State.registerModule('blurElysiumSlide', slideStore);
 
 /**
