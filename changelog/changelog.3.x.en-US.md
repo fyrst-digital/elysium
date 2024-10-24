@@ -1,3 +1,8 @@
+# 3.5.3
+
+## Changelog
+- A CSS rule that could negatively impact the Slider behavior has been removed
+
 # 3.5.2
 
 ## Changelog
