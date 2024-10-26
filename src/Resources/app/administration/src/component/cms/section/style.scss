@@ -1,3 +1,9 @@
+.blur-elysium-section-grid {
+    &.is--valid-drop {
+        background-color: var(--color-shopware-brand-50);
+    }
+}
+
 .blur-elysium-section-block {
     position: relative;
     grid-column: var(--blur-elysium-section-block-col-start, auto) / span var(--blur-elysium-section-block-col-end, 12);

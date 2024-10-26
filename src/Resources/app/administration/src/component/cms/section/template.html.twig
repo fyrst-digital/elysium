@@ -6,7 +6,9 @@
         @click="onAddBlock"
         v-droppable="{ dragGroup: 'cms-stage', data: getDropData(0), onDrop: block => dropBlock(block, 0) }" />
 
-    <div :style="gridStyle"
+    <div 
+        class="blur-elysium-section-grid"
+        :style="gridStyle"
         v-if="section.blocks.length > 0"
         ref="elysiumectionGrid"
         @dragover.prevent 

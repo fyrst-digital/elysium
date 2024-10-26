@@ -110,6 +110,7 @@ export default Component.wrapComponentConfig({
     methods: {
 
         getDropData (index, sectionPosition = 'main') {
+            console.log('getDropData', index, sectionPosition)
             return { dropIndex: index, section: this.section, sectionPosition };
         },
         
