@@ -125,7 +125,6 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
             Object.values(viewportsSettings).forEach((settings, index) => {
                 const settingValue: string|number|undefined|null = <string|number|undefined|null>property.split('.').reduce((r, k) => r?.[k], settings)
                 if (!(settingValue === null || settingValue === undefined) && this.currentViewportIndex >= index) {
-                    console.log('object element', property, settingValue)
                     placeholder = settingValue
                 }
             })

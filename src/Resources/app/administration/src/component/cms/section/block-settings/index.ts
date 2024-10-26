@@ -42,6 +42,14 @@ export default Component.wrapComponentConfig({
         },
     },
 
+    watch: {
+        settings: {
+            handler () {
+                this.viewportsSettings = this.settings.viewports
+            }
+        }
+    },
+
     created () {
         this.viewportsSettings = this.settings.viewports
     }
