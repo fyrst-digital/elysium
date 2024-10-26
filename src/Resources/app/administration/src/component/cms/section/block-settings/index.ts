@@ -32,8 +32,6 @@ export default Component.wrapComponentConfig({
 
     methods: {
         cmsDeviceSwitch (device: string) {
-            console.log('device', this.currentDevice)
-
             if (this.currentDevice === "desktop") {
                 this.cmsPageState.setCurrentCmsDeviceView("mobile");
             } else if (this.currentDevice === "mobile") {

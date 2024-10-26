@@ -112,7 +112,7 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
             }
         },
 
-        viewportsPlaceholder(property: string, fallback: string|number, snippetPrefix: string|null = null) {
+        viewportsPlaceholder(property: string, fallback: string|number, snippetPrefix: string|null = null, viewportsSettings: object = this.viewportsSettings) {
             
             const kebabToCamelCase = (string: string) => {
                 return string.split('-').map((word, index) => {
@@ -122,7 +122,7 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
 
             let placeholder: string|number = fallback
 
-            Object.values(this.viewportsSettings).forEach((settings, index) => {
+            Object.values(viewportsSettings).forEach((settings, index) => {
                 const settingValue: string|number|undefined|null = <string|number|undefined|null>property.split('.').reduce((r, k) => r?.[k], settings)
                 if (!(settingValue === null || settingValue === undefined) && this.currentViewportIndex >= index) {
                     console.log('object element', property, settingValue)

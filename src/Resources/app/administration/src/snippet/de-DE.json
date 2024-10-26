@@ -451,7 +451,10 @@
                     "desktopHelptext": "Definiert ab welcher Bildschirmgröße die Desktop Ansicht greifen soll"
                 }
             },
-            "blockSettingsTitle": "Elysium Block Einstellungen"
+            "blockSettingsTitle": "Elysium Block Einstellungen",
+            "blockSettings": {
+                "order": "Reihenfolge"
+            }
         }
     }
 }

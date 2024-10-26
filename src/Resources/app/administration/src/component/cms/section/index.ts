@@ -3,27 +3,30 @@ import './style.scss'
 
 const { Component, State, Mixin } = Shopware
 
+/**
+ * @todo #139 create proper and typed settings object
+ */
 const elysiumBlockSettings = {
     viewports: {
         mobile: {
-            colStart: 'auto',
+            colStart: null,
             colEnd: 12,
-            rowStart: 'auto',
-            rowEnd: 'auto',
+            rowStart: null,
+            rowEnd: null,
             order: null
         },
         tablet: {
-            colStart: 'auto',
+            colStart: null,
             colEnd: 6,
-            rowStart: 'auto',
-            rowEnd: 'auto',
+            rowStart: null,
+            rowEnd: null,
             order: null
         },
         desktop: {
-            colStart: 'auto',
+            colStart: null,
             colEnd: 6,
-            rowStart: 'auto',
-            rowEnd: 'auto',
+            rowStart: null,
+            rowEnd: null,
             order: null
         },
     }
@@ -123,12 +126,14 @@ export default Component.wrapComponentConfig({
 
         setBlockStyles (block) {
             const styles: Partial<CSSStyleDeclaration> = {}
+            const viewportsSettings = block.customFields?.elysiumBlockSettings?.viewports
 
-            if (block.customFields && block.customFields.elysiumBlockSettings?.viewports) {
-                styles['--blur-elysium-section-block-col-start'] = this.getViewportSetting(block.customFields.elysiumBlockSettings, 'colStart')
-                styles['--blur-elysium-section-block-col-end'] = this.getViewportSetting(block.customFields.elysiumBlockSettings, 'colEnd')
-                styles['--blur-elysium-section-block-row-start'] = this.getViewportSetting(block.customFields.elysiumBlockSettings, 'rowStart')
-                styles['--blur-elysium-section-block-row-end'] = this.getViewportSetting(block.customFields.elysiumBlockSettings, 'rowEnd')
+            if (viewportsSettings) {
+                styles['--blur-elysium-section-block-col-start'] = this.viewportsPlaceholder('colStart', 'auto', null, viewportsSettings)
+                styles['--blur-elysium-section-block-col-end'] = this.viewportsPlaceholder('colEnd', 12, null, viewportsSettings)
+                styles['--blur-elysium-section-block-row-start'] = this.viewportsPlaceholder('rowStart', 'auto', null, viewportsSettings)
+                styles['--blur-elysium-section-block-row-end'] = this.viewportsPlaceholder('rowEnd', 'auto', null, viewportsSettings)
+                styles['--blur-elysium-section-block-order'] = this.viewportsPlaceholder('order', 999, null, viewportsSettings)
             }
 
             return styles;
@@ -198,11 +203,6 @@ export default Component.wrapComponentConfig({
             const movedPx = endX - startX
 
             return Math.round((blockWidth + movedPx) / (this.$refs.elysiumectionGrid.offsetWidth / 12))
-        },
-
-        getViewportSetting (settings, property) {
-            // return block.customFields.elysiumBlockSettings.viewports[this.currentDevice][property]
-            return settings?.viewports[this.currentDevice][property] ?? null
         },
 
         onAddBlock () {

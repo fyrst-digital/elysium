@@ -1,6 +1,37 @@
 <blur-section padding gap>
-    <blur-column>
 
-        Settings
+    <blur-column
+        :cols-tablet="6">
+
+        <blur-number-input 
+            :label="$tc('blurElysiumSection.sidebar.blockSettings.order')"
+            :placeholder="viewportsPlaceholder('order', 'auto')"
+            :show-device="true"
+            :min="1"
+            :step="1"
+            :max="100"
+            :device="currentDevice"
+            @on-device="cmsDeviceSwitch"
+            v-model:value="currentViewportSettings.order" /> 
+
+    </blur-column>
+
+    <blur-column
+        :cols-tablet="6">
+
+        <blur-number-input 
+            :label="$tc('blurElysiumSection.sidebar.blockSettings.rows')"
+            :placeholder="viewportsPlaceholder('rowEnd', 'auto')"
+            :show-device="true"
+            :min="1"
+            :step="1"
+            :max="100"
+            :device="currentDevice"
+            @on-device="cmsDeviceSwitch"
+            v-model:value="currentViewportSettings.rowEnd" /> 
     </blur-column>
 </blur-section>
+
+<pre>
+{{settings}}
+</pre>

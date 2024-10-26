@@ -43,8 +43,6 @@ export default Component.wrapComponentConfig({
 
     methods: {
         cmsDeviceSwitch (device: string) {
-            console.log('device', this.currentDevice)
-
             if (this.currentDevice === "desktop") {
                 this.cmsPageState.setCurrentCmsDeviceView("mobile");
             } else if (this.currentDevice === "mobile") {
@@ -56,7 +54,6 @@ export default Component.wrapComponentConfig({
     },
 
     created () {
-        console.log('settings', this.settings)
         this.viewportsSettings = this.settings.viewports
     }
 })

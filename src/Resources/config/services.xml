@@ -43,6 +43,10 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
+        <service id="Blur\BlurElysiumSlider\Subscriber\CmsSubscriber">
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
         <service id="Blur\BlurElysiumSlider\Subscriber\UnusedMediaSubscriber">
             <tag name="kernel.event_subscriber"/>
         </service>

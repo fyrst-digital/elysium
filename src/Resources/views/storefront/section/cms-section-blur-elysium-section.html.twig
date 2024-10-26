@@ -1,11 +1,4 @@
 {% set blurElysiumSectionClasses = ['blur-elysium-section-grid'] %}
-{% set blurElysiumSectionStyles = [
-    'display: var(--elysium-section-display, grid)',
-    'grid-template-columns: repeat(var(--elysium-section-columns, 12), minmax(0, 1fr))',
-    'gap: var(--elysium-section-gap, 0px)',
-    'padding: var(--elysium-section-py, 0px) var(--elysium-section-px, 0px)',
-    'align-items: var(--elysium-section-align-items, stretch)',
-] %}
 {% set blurElysiumSectionBreakpoints = {
     mobile: 'xs',
     tablet: section.customFields.elysiumSectionSettings.breakpoints.tablet ?? 'md',
@@ -41,18 +34,14 @@
         {% block cms_blur_elysium_section %}
             <div 
                 data-cms-section-id="{{ section.id }}"
-                class="{{ blurElysiumSectionClasses|join(' ') }}"
-                style="{{ blurElysiumSectionStyles|join(';') }}">
+                class="{{ blurElysiumSectionClasses|join(' ') }}">
 
                 {% for block in section.blocks %}
 
                     {% block cms_blur_elysium_section_blocks %}
 
                         {% set blurElysiumBlockStyles = [
-                            'background-color: var(--elysium-section-block-bg-color, ' ~ block.backgroundColor ?? 'transparent' ~ ')',
-                            'grid-column-start: var(--elysium-section-block-col-start, auto)',
-                            'grid-column-end: var(--elysium-section-block-col-end, span 12)',
-                            'padding: var(--elysium-section-block-pt, ' ~ block.marginTop ?? '0px' ~ ') var(--elysium-section-block-pe, ' ~ block.marginRight ?? '0px' ~ ') var(--elysium-section-block-pb, ' ~ block.marginBottom ?? '0px' ~ ') var(--elysium-section-block-ps, ' ~ block.marginLeft ?? '0px' ~ ')'
+                            '--elysium-section-block-bg-color: ' ~ block.backgroundColor ?? 'transparent',
                         ] %}
 
                         <div 
@@ -60,17 +49,27 @@
                             data-cms-block-id="{{block.id}}"
                             style="{{blurElysiumBlockStyles|join(';')}}">
 
-                            {%- if block.customFields.elysiumBlockSettings.viewports %}
-                                <style>
-                                    {% for device, options in block.customFields.elysiumBlockSettings.viewports %}
-                                        @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumSectionBreakpoints[device])~'px' }}) {
-                                            .blur-elysium-section-block[data-cms-block-id="{{block.id}}"] {
-                                                --elysium-section-block-col-end: span {{ options.colEnd }};
+                            {% if block.customFields.elysiumBlockSettings.viewports %}
+                                {% apply spaceless %} 
+                                    <style>
+                                        {% for device, options in block.customFields.elysiumBlockSettings.viewports %}
+                                            @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumSectionBreakpoints[device])~'px' }}) {
+                                                .blur-elysium-section-block[data-cms-block-id="{{block.id}}"] {
+                                                    {% if options.colEnd %}
+                                                        --elysium-section-block-col-end: span {{ options.colEnd }};
+                                                    {% endif %}
+                                                    {% if options.rowEnd %}
+                                                        --elysium-section-block-row-end: span {{ options.rowEnd }};
+                                                    {% endif %}
+                                                    {% if options.order %}
+                                                        --elysium-section-block-order: {{ options.order }};
+                                                    {% endif %}
+                                                }
                                             }
-                                        }
-                                    {% endfor %}
-                                </style>
-                            {% endif -%}
+                                        {% endfor %}
+                                    </style>
+                                {% endapply %}
+                            {% endif %}
 
                             {% sw_include '@Storefront/storefront/block/cms-block-' ~ block.type ~ '.html.twig' ignore missing %}
                         </div>
