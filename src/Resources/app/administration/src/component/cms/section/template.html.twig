@@ -1,4 +1,7 @@
-<div class="blur-elysium-cms-section-wrapper">
+<div class="blur-elysium-cms-section-wrapper"
+    @dragover.prevent
+    ref="elysiumSectionWrapper"
+    v-droppable="{ dragGroup: 'cms-stage' }">
 
     <blur-elysium-cms-section-add-block 
         v-if="section.blocks.length === 0"

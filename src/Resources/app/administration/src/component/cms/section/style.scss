@@ -63,6 +63,7 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
 }
 
 .sw-cms-section.is--blur-elysium-section {
@@ -79,3 +80,20 @@
     }
 }
 
+.blur-elysium-section-dropper {
+    display: inline-flex;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background-color: #fff;
+    padding: 8px 16px;
+    border-radius: 99px;
+    border: 1px solid #d1d9e0;
+    opacity: 0;
+
+    .blur-elysium-cms-section-wrapper.is--valid-drop & {
+        opacity: 1;
+    }
+}

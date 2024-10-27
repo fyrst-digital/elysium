@@ -210,7 +210,7 @@ export default Component.wrapComponentConfig({
 
         onAddBlock () {
             this.$emit('on-add-block')
-        }
+        },
     },
 
     created () {
