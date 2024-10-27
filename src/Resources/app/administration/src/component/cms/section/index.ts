@@ -202,8 +202,10 @@ export default Component.wrapComponentConfig({
             const startX = this.draggedBlockStartPosX
             const endX = currentX
             const movedPx = endX - startX
+            const computedStyles = window.getComputedStyle(this.$refs.elysiumSectionGrid)
+            const gridWidth = this.$refs.elysiumSectionGrid.offsetWidth - (parseFloat(computedStyles.getPropertyValue('padding-inline')) * 2)
 
-            return Math.round((blockWidth + movedPx) / (this.$refs.elysiumectionGrid.offsetWidth / 12))
+            return Math.round((blockWidth + movedPx) / (gridWidth / 12))
         },
 
         onAddBlock () {
