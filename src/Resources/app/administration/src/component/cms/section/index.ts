@@ -110,7 +110,6 @@ export default Component.wrapComponentConfig({
     methods: {
 
         getDropData (index, sectionPosition = 'main') {
-            console.log('getDropData', index, sectionPosition)
             return { dropIndex: index, section: this.section, sectionPosition };
         },
         
@@ -157,7 +156,7 @@ export default Component.wrapComponentConfig({
             return errorElements.some(errorType => errorType.blockIds.includes(block.id));
         },
 
-        hasSlotConfigErrors(block) {
+        hasSlotConfigErrors (block) {
             const errorElements = this.pageSlotConfigError?.parameters?.elements;
 
             if (!errorElements) {
@@ -167,9 +166,9 @@ export default Component.wrapComponentConfig({
             return errorElements.some(missingConfig => missingConfig.blockId === block.id);
         },
 
-        onBlockSelection(block) {
+        onBlockSelection (block) {
             Shopware.Store.get('cmsPageState').setBlock(block);
-            this.$emit('page-config-open', 'itemConfig');
+            this.$emit('on-select-block', block);
         },
 
         onGridDrop (event) {
@@ -214,7 +213,6 @@ export default Component.wrapComponentConfig({
     },
 
     created () {
-        console.log('section', this.section.customFields?.elysiumSectionSettings.viewports)
         this.viewportsSettings = this.section.customFields?.elysiumSectionSettings?.viewports
     }
 })

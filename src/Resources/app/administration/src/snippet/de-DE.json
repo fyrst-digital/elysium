@@ -453,7 +453,8 @@
             },
             "blockSettingsTitle": "Elysium Block Einstellungen",
             "blockSettings": {
-                "order": "Reihenfolge"
+                "order": "Reihenfolge",
+                "rows": "Zeilen"
             }
         }
     }

@@ -3,5 +3,11 @@ import template from './template.html.twig'
 const { Component } = Shopware
 
 export default Component.wrapComponentConfig({
-    template
+    template,
+
+    methods: {
+        onBlockSelection (block) {
+            this.$emit('page-config-open', 'itemConfig');
+        }
+    }
 })

@@ -456,7 +456,11 @@
                     "desktopHelptext": "Defines the screen size at which the desktop view should take effect"
                 }
             },
-            "blockSettingsTitle": "Elysium Block settings"
+            "blockSettingsTitle": "Elysium Block settings",
+            "blockSettings": {
+                "order": "Order",
+                "rows": "Rows"
+            }
         }
     }
 }

@@ -3,6 +3,7 @@
     <template v-if="section.type === 'blur-elysium-section'">
         <blur-elysium-cms-section 
             @on-add-block="openBlockBar"
+            @on-select-block="onBlockSelection"
             :section="section" />
     </template>
     <template v-else>
