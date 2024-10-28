@@ -70,7 +70,7 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
     methods: {
 
         ...mapMutations('blurElysiumSlide', [
-            'setDeviceView'
+            'setCurrentDevice'
         ]),
 
         /**
@@ -104,11 +104,11 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
 
         deviceSwitch (device: string) {
             if (device === "desktop") {
-                this.setDeviceView("mobile");
+                this.setCurrentDevice("mobile");
             } else if (device === "mobile") {
-                this.setDeviceView("tablet");
+                this.setCurrentDevice("tablet");
             } else if (device === "tablet") {
-                this.setDeviceView("desktop");
+                this.setCurrentDevice("desktop");
             }
         },
 

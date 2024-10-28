@@ -15,6 +15,7 @@ export default Component.wrapComponentConfig({
 
         ...mapState('blurElysiumSlide', [
             'slide',
+            'currentDevice',
             'customFieldSet'
         ]),
 

@@ -140,6 +140,7 @@
     },
     "blurElysiumSlides": {
         "label": "Elysium Slides",
+        "slideBuilderLabel": "Slide Builder",
         "description": "Hier kannst du Slides für Elysium Erlebniswelten Elemente erstellen.",
         "emptySlidesTitle": "Keine Elysium Slides gefunden",
         "messages": {

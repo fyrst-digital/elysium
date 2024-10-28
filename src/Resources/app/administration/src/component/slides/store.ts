@@ -23,7 +23,7 @@ export default {
         setMediaSidebar (state, value) {
             state.mediaSidebar = value
         },
-        setCurrentDevice(state, currentDevice) {
+        setCurrentDevice (state, currentDevice) {
             state.currentDevice = currentDevice;
         },
     }

@@ -9,7 +9,7 @@
         <blur-device-switch 
             layout="row"
             show-label="false"
-            :default-viewport="deviceView"
+            :default-viewport="currentDevice"
             :style="{
                 padding: '0',
                 width: '100%',
@@ -63,7 +63,7 @@
                         :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
                         :placeholder="viewportsPlaceholder('image.maxWidth', $t('blurElysium.general.noLimit'))"
                         :show-device="true"
-                        :device="deviceView"
+                        :device="currentDevice"
                         @on-device="deviceSwitch"
                         v-model:value="slideViewportSettings.image.maxWidth" /> 
                 </blur-column>
@@ -77,7 +77,7 @@
                             { value: 'center', label: $tc('blurElysium.general.jusitifyCenter') },
                             { value: 'flex-end', label: $tc('blurElysium.general.jusitifyEnd') }
                         ]"
-                        :device="deviceView"
+                        :device="currentDevice"
                         :show-device="true"
                         @on-device="deviceSwitch"
                         v-model:value="slideViewportSettings.image.justifyContent" />

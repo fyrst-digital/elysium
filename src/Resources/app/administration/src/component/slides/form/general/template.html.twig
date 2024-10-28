@@ -86,7 +86,7 @@
         <blur-number-input 
             :label="$tc('blurElysium.general.fontSize')"
             :placeholder="viewportsPlaceholder('headline.fontSize', 20)"
-            :device="deviceView"
+            :device="currentDevice"
             :show-device="true"
             @on-device="deviceSwitch"
             v-model:value="slideViewportSettings.headline.fontSize" /> 
@@ -132,7 +132,7 @@
             <blur-column>
                 <blur-number-input 
                     :label="$tc('blurElysium.general.fontSize')"
-                    :device="deviceView"
+                    :device="currentDevice"
                     :placeholder="devicePlaceholder('description.fontSize', 14)"
                     :show-device="true"
                     @on-device="deviceSwitch"
