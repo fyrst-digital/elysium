@@ -52,3 +52,19 @@
         </sw-sidebar-item>
     {% endblock %}
 {% endblock %}
+
+<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+{% block sw_cms_sidebar_block_overview_preview %}
+    <mt-banner 
+        v-if="currentBlockCategory === 'blur-elysium-blocks'"
+        variant="info"
+        :hideIcon="true"
+        class="mt-banner-small"
+        :style="{
+            margin: '16px 24px',
+            textAlign: 'center',
+        }"
+    ><span v-html="$tc('blurElysiumSection.sidebar.elysiumSectionNotification')" /></mt-banner>
+
+    {% parent %}
+{% endblock %}

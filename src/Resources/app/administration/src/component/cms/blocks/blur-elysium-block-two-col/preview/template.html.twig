@@ -1,6 +1,26 @@
-<div class="cms-block-blur-elysium-banner-preview">
+<div class="cms-block-blur-elysium-banner-preview"
+    :style="{
+        position: 'relative',
+    }"
+    @drag.prevent>
+
+    <div 
+        :style="{
+            position: 'absolute',
+            inset: '0',
+            zIndex: '5',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '20px',
+            textAlign: 'center',
+            fontWeight: '600'
+        }" 
+        v-html="$tc('blurElysiumSection.sidebar.blockRemovalNotification')" />
+
     <img :src="assetFilter('/blurelysiumslider/static/img/cms-elysium-block-two-col.svg')"
         :style="{
-            width: '100%'
+            width: '100%',
+            opacity: '0.5',
         }">
 </div>

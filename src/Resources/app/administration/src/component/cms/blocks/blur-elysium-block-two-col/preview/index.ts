@@ -9,5 +9,9 @@ export default Component.wrapComponentConfig({
         assetFilter() {
             return Filter.getByName('asset');
         },
+    },
+
+    created () {
+        console.log('BlurElysiumBlockTwoColPreview component has been created', this);
     }
 })

@@ -456,7 +456,9 @@
             "blockSettings": {
                 "order": "Reihenfolge",
                 "rows": "Zeilen"
-            }
+            },
+            "blockRemovalNotification": "Will be removed in Version 4.0.0<br/>Use the Elysium Section instead to layout your blocks",
+            "elysiumSectionNotification": "Use the new <b>Elysium Section</b> to place and layout your blocks. You can find it right in the Section selection."
         }
     }
 }
