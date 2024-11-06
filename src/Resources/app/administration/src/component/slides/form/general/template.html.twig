@@ -86,10 +86,11 @@
         <blur-number-input 
             :label="$tc('blurElysium.general.fontSize')"
             :placeholder="viewportsPlaceholder('headline.fontSize', 20)"
+            :model-value="slideViewportSettings.headline.fontSize"
             :device="currentDevice"
             :show-device="true"
-            @on-device="deviceSwitch"
-            v-model:value="slideViewportSettings.headline.fontSize" /> 
+            @on-device="deviceSwitch" 
+            @update-value="value => slideViewportSettings.headline.fontSize = value"/>
     </blur-column>
 
     <blur-column 
