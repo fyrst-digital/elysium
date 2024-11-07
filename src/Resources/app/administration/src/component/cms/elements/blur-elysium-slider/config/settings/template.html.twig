@@ -39,9 +39,9 @@
             :placeholder="viewportsPlaceholder('settings.slidesPerPage', 1)"
             :min="1"
             :show-device="true"
-            :device="deviceView"
+            :device="currentDevice"
             :unit="false"
-            @on-device="deviceSwitch"
+            @on-device="cmsDeviceSwitch"
             :model-value="settingsViewportConfig.slidesPerPage"
             @update-value="value => settingsViewportConfig.slidesPerPage = value" />
     {% endblock %}

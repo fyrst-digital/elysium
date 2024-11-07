@@ -13,8 +13,8 @@
         :placeholder="viewportsPlaceholder('sizing.aspectRatio.width', 4)"
         unit="Ratio"
         :show-device="true"
-        :device="deviceView"
-        @on-device="deviceSwitch"
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
         :model-value="sizingViewportConfig.aspectRatio.width"
         @update-value="value => sizingViewportConfig.aspectRatio.width = value" />
 
@@ -27,8 +27,8 @@
         :placeholder="viewportsPlaceholder('sizing.aspectRatio.height', 3)"
         unit="Ratio"
         :show-device="true"
-        :device="deviceView"
-        @on-device="deviceSwitch"
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
         :model-value="sizingViewportConfig.aspectRatio.height"
         @update-value="value => sizingViewportConfig.aspectRatio.height = value" />
 
@@ -40,9 +40,8 @@
         :allow-empty="true"
         :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
         :placeholder="viewportsPlaceholder('sizing.maxHeight', 'noLimit', 'blurElysium.general')"
-        :device="deviceView"
-        :show-device="true"
-        @on-device="deviceSwitch"
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
         :model-value="sizingViewportConfig.maxHeight"
         @update-value="value => sizingViewportConfig.maxHeight = value" />
 
@@ -61,9 +60,9 @@
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
-        :device="deviceView"
         :show-device="true"
-        @on-device="deviceSwitch"
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
         :model-value="sizingViewportConfig.slidesGap"
         @update-value="value => sizingViewportConfig.slidesGap = value" />
 
@@ -74,9 +73,9 @@
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
-        :device="deviceView"
         :show-device="true"
-        @on-device="deviceSwitch"
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
         :model-value="sizingViewportConfig.paddingY"
         @update-value="value => sizingViewportConfig.paddingY = value" />
 
@@ -87,9 +86,9 @@
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
-        :device="deviceView"
         :show-device="true"
-        @on-device="deviceSwitch"
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
         :model-value="sizingViewportConfig.paddingX"
         @update-value="value => sizingViewportConfig.paddingX = value" />
 

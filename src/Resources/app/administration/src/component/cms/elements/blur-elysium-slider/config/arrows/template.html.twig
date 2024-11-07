@@ -39,8 +39,8 @@
         :placeholder="viewportsPlaceholder('arrows.iconSize', 24)"
         :label="$tc('blurElysiumSlider.config.arrows.size.label')"
         :show-device="true"
-        :device="deviceView"
-        @on-device="deviceSwitch" />
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch" />
 
     <blur-colorpicker
         :style="deviceStyle({

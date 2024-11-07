@@ -1,23 +1,35 @@
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware
+const { Component, Mixin, State } = Shopware
 
 export default Component.wrapComponentConfig({
     template,
 
     mixins: [
+        Mixin.getByName('cms-state'),
         Mixin.getByName('cms-element'),
         Mixin.getByName('blur-device-utilities')
     ],
 
     data() {
         return {
-            activeViewport: 'desktop',
             activeTab: 'content'
         }
     },
 
     computed: {
+        cmsPageState () {
+            return State.get('cmsPageState')
+        },
+
+        currentDevice () {
+
+            if (this.cmsPageState.currentCmsDeviceView === 'tablet-landscape') {
+                return 'tablet'
+            }
+
+            return this.cmsPageState.currentCmsDeviceView
+        },
 
         tabs () {
             return [
@@ -63,7 +75,7 @@ export default Component.wrapComponentConfig({
     methods: {
 
         changeViewport (viewport: string) {
-            this.activeViewport = viewport
+            this.cmsPageState.setCurrentCmsDeviceView(viewport === 'tablet' ? 'tablet-landscape' : viewport)
         },
 
         /**

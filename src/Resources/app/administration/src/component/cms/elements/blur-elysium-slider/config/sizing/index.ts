@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware
+const { Component, Mixin, State } = Shopware
 
 /** 
  * @todo #120 - https://gitlab.com/BlurCreative/Shopware/Plugins/BlurElysiumSlider/-/issues/120
@@ -12,6 +12,7 @@ export default Component.wrapComponentConfig({
     template,
 
     mixins: [
+        Mixin.getByName('cms-state'),
         Mixin.getByName('blur-device-utilities')
     ],
 
@@ -29,11 +30,41 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
+        cmsPageState () {
+            return State.get('cmsPageState')
+        },
+
+        currentDevice () {
+
+            if (this.cmsPageState.currentCmsDeviceView === 'tablet-landscape') {
+                return 'tablet'
+            }
+
+            return this.cmsPageState.currentCmsDeviceView
+        },
+
         sizingConfig () {
             return this.config.sizing.value
         },
+
         sizingViewportConfig () {
-            return this.config.viewports.value[this.deviceView].sizing
+            return this.config.viewports.value[this.currentDevice].sizing
         }
+    },
+
+    methods: {
+        cmsDeviceSwitch (device: string) {
+            if (this.currentDevice === "desktop") {
+                this.cmsPageState.setCurrentCmsDeviceView("mobile");
+            } else if (this.currentDevice === "mobile") {
+                this.cmsPageState.setCurrentCmsDeviceView("tablet-landscape");
+            } else if (this.currentDevice === "tablet") {
+                this.cmsPageState.setCurrentCmsDeviceView("desktop");
+            }
+        },
+    },
+
+    created () {
+        this.viewportsSettings = this.config.viewports.value
     }
 })

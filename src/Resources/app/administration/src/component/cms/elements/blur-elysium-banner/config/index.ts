@@ -1,16 +1,29 @@
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware
+const { Component, Mixin, State } = Shopware
 
 export default Component.wrapComponentConfig({
     template,
 
     mixins: [
+        Mixin.getByName('cms-state'),
         Mixin.getByName('cms-element'),
         Mixin.getByName('blur-device-utilities')
     ],
 
     computed: {
+        cmsPageState () {
+            return State.get('cmsPageState')
+        },
+
+        currentDevice () {
+
+            if (this.cmsPageState.currentCmsDeviceView === 'tablet-landscape') {
+                return 'tablet'
+            }
+
+            return this.cmsPageState.currentCmsDeviceView
+        },
 
         /**
          * @todo since we just looking for at least one slide exist we can not filter orphans at this point
@@ -32,8 +45,24 @@ export default Component.wrapComponentConfig({
         },
 
         viewportConfig () {
-            return this.config.viewports.value[this.deviceView]
+            return this.config.viewports.value[this.currentDevice]
         }
+    },
+
+    methods: {
+        changeViewport (viewport: string) {
+            this.cmsPageState.setCurrentCmsDeviceView(viewport === 'tablet' ? 'tablet-landscape' : viewport)
+        },
+
+        cmsDeviceSwitch (device: string) {
+            if (this.currentDevice === "desktop") {
+                this.cmsPageState.setCurrentCmsDeviceView("mobile");
+            } else if (this.currentDevice === "mobile") {
+                this.cmsPageState.setCurrentCmsDeviceView("tablet-landscape");
+            } else if (this.currentDevice === "tablet") {
+                this.cmsPageState.setCurrentCmsDeviceView("desktop");
+            }
+        },
     },
 
     created() {
