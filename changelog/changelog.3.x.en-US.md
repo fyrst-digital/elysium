@@ -1,3 +1,9 @@
+# 3.5.4
+
+## Changelog
+- The values in number input fields are now correctly applied. The corresponding components have been adjusted and should function as expected starting with Shopware 6.6.4
+- Adjustment of translations
+
 # 3.5.3
 
 ## Changelog

@@ -1,3 +1,9 @@
+# 3.5.4
+
+## Changelog
+- Die Werte in Zahlen-Eingabefeldern werden nun korrekt übernommen. Die entsprechenden Komponenten wurden angepasst und sollten auch ab Shopware 6.6.4 wie erwartet funktionieren
+- Anpassung von Übersetzungen
+
 # 3.5.3
 
 ## Changelog
