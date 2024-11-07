@@ -65,7 +65,8 @@
                         :show-device="true"
                         :device="currentDevice"
                         @on-device="deviceSwitch"
-                        v-model:value="slideViewportSettings.image.maxWidth" /> 
+                        :model-value="slideViewportSettings.image.maxWidth"
+                        @update-value="value => slideViewportSettings.image.maxWidth = value" /> 
                 </blur-column>
 
                 <blur-column>

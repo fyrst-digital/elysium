@@ -42,13 +42,13 @@
             :device="deviceView"
             :unit="false"
             @on-device="deviceSwitch"
-            v-model:value="settingsViewportConfig.slidesPerPage" />
+            :model-value="settingsViewportConfig.slidesPerPage"
+            @update-value="value => settingsViewportConfig.slidesPerPage = value" />
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_speed %}
         <blur-number-input 
             numberType="int" 
-            v-model:value="settingsConfig.speed"
             :style="deviceStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 3' },
@@ -59,7 +59,9 @@
             :max="null" 
             :digits="null"
             :allowEmpty="false"
-            unit="ms" />                                   
+            unit="ms"
+            :model-value="settingsConfig.speed"
+            @update-value="value => settingsConfig.speed = value" />                                   
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_container_width %}
@@ -113,7 +115,6 @@
     {% block blur_cms_config_elysium_slider_autoplay_timeout %}
         <blur-number-input 
             numberType="int" 
-            v-model:value="settingsConfig.autoplay.interval"
             :style="deviceStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 3' },
@@ -125,7 +126,9 @@
             :max="null" 
             :digits="null"
             :allowEmpty="false"
-            unit="ms" />
+            unit="ms"
+            :model-value="settingsConfig.autoplay.interval"
+            @update-value="value => settingsConfig.autoplay.interval = value" />
     {% endblock %}
 
 </blur-section>

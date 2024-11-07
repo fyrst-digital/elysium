@@ -30,7 +30,8 @@
             :show-device="true"
             :device="currentDevice"
             @on-device="cmsDeviceSwitch"
-            v-model:value="currentViewportSettings.gridGap" /> 
+            :model-value="currentViewportSettings.gridGap"
+            @update-value="value => currentViewportSettings.gridGap = value" /> 
     </blur-column>
 
     <blur-column
@@ -42,7 +43,8 @@
             :show-device="true"
             :device="currentDevice"
             @on-device="cmsDeviceSwitch"
-            v-model:value="currentViewportSettings.paddingY" /> 
+            :model-value="currentViewportSettings.paddingY"
+            @update-value="value => currentViewportSettings.paddingY = value" /> 
     </blur-column>
 
     <blur-column
@@ -54,7 +56,8 @@
             :show-device="true"
             :device="currentDevice"
             @on-device="cmsDeviceSwitch"
-            v-model:value="currentViewportSettings.paddingX" /> 
+            :model-value="currentViewportSettings.paddingX"
+            @update-value="value => currentViewportSettings.paddingX = value" /> 
     </blur-column>
 
 </blur-section>

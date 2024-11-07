@@ -64,7 +64,8 @@
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
-        v-model:value="navigationViewportConfig.gap"
+        :model-value="navigationViewportConfig.gap"
+        @update-value="value => navigationViewportConfig.gap = value"
         :label="$tc('blurElysiumSlider.config.navigation.navPadding.label')"
         :placeholder="viewportsPlaceholder('navigation.gap', 16)"
         :show-device="true"

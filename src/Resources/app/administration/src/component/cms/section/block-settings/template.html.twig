@@ -13,7 +13,8 @@
             :unit="false"
             :device="currentDevice"
             @on-device="cmsDeviceSwitch"
-            v-model:value="currentViewportSettings.order" /> 
+            :model-value="currentViewportSettings.order"
+            @update-value="value => currentViewportSettings.order = value" /> 
 
     </blur-column>
 
@@ -30,6 +31,7 @@
             :unit="false"
             :device="currentDevice"
             @on-device="cmsDeviceSwitch"
-            v-model:value="currentViewportSettings.rowEnd" /> 
+            :model-value="currentViewportSettings.rowEnd"
+            @update-value="value => currentViewportSettings.rowEnd = value" /> 
     </blur-column>
 </blur-section>

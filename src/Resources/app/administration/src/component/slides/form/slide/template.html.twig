@@ -73,8 +73,8 @@
                     :min="-360"
                     :max="360"
                     :label="$tc('blurElysiumSlides.forms.slideGradient.gradientDeg')"
-                    v-model:value="slide.slideSettings.slide.bgGradient.gradientDeg" 
-                />
+                    :model-value="slide.slideSettings.slide.bgGradient.gradientDeg"
+                    @update-value="value => slide.slideSettings.slide.bgGradient.gradientDeg = value" />
             </blur-column>
 
         </blur-section>
@@ -100,7 +100,8 @@
                     :placeholder="devicePlaceholder('slide.paddingX', 15)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.slide.paddingX" />
+                    :model-value="slideViewportSettings.slide.paddingX"
+                    @update-value="value => slideViewportSettings.slide.paddingX = value" />
             </blur-column>
 
             <blur-column
@@ -113,7 +114,8 @@
                     :placeholder="devicePlaceholder('slide.paddingY', 15)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.slide.paddingY" />
+                    :model-value="slideViewportSettings.slide.paddingY"
+                    @update-value="value => slideViewportSettings.slide.paddingY = value" />
             </blur-column>
 
             <blur-column
@@ -126,7 +128,8 @@
                     :placeholder="devicePlaceholder('slide.borderRadius', 0)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.slide.borderRadius" /> 
+                    :model-value="slideViewportSettings.slide.borderRadius"
+                    @update-value="value => slideViewportSettings.slide.borderRadius = value" /> 
             </blur-column>
 
         </blur-section>
