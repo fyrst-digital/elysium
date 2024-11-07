@@ -23,7 +23,7 @@ export default Component.wrapComponentConfig({
         ...mapState('blurElysiumSlide', [
             'slide',
             'mediaSidebar',
-            'deviceView'
+            'currentDevice'
         ]),
 
         focusImageMedia() {
@@ -67,6 +67,6 @@ export default Component.wrapComponentConfig({
     },
 
     created () {
-        this.viewportsSettings = this.slideViewportsSettings
+        this.viewportsSettings = this.slide.slideSettings.viewports
     }
 })

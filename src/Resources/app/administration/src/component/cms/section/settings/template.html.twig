@@ -1,0 +1,91 @@
+<blur-section padding gap
+    :style="{
+        borderBottom: '1px solid #d1d9e0',
+    }">
+
+    <blur-column
+        :cols-tablet="6">
+
+        <blur-select-input 
+            :label="$tc('blurElysium.general.blockAlignment')" 
+            :placeholder="viewportsPlaceholder('alignItems', 'stretch', 'blurElysium.general.alignItems')"
+            :options="[
+                { value: 'stretch', label: $tc('blurElysium.general.alignItems.stretch') },
+                { value: 'flex-start', label: $tc('blurElysium.general.alignItems.flexStart') },
+                { value: 'center', label: $tc('blurElysium.general.alignItems.center') },
+                { value: 'flex-end', label: $tc('blurElysium.general.flexEnd') },
+            ]"
+            :device="currentDevice"
+            :show-device="true"
+            @on-device="cmsDeviceSwitch"
+            v-model:value="currentViewportSettings.alignItems" />
+    </blur-column>
+
+    <blur-column
+        :cols-tablet="6">
+
+        <blur-number-input 
+            :label="$tc('blurElysium.general.gap')"
+            :placeholder="viewportsPlaceholder('gridGap', 20)"
+            :show-device="true"
+            :device="currentDevice"
+            @on-device="cmsDeviceSwitch"
+            :model-value="currentViewportSettings.gridGap"
+            @update-value="value => currentViewportSettings.gridGap = value" /> 
+    </blur-column>
+
+    <blur-column
+        :cols-tablet="6">
+
+        <blur-number-input 
+            :label="$tc('blurElysium.general.paddingY')"
+            :placeholder="viewportsPlaceholder('paddingY', 0)"
+            :show-device="true"
+            :device="currentDevice"
+            @on-device="cmsDeviceSwitch"
+            :model-value="currentViewportSettings.paddingY"
+            @update-value="value => currentViewportSettings.paddingY = value" /> 
+    </blur-column>
+
+    <blur-column
+        :cols-tablet="6">
+
+        <blur-number-input 
+            :label="$tc('blurElysium.general.paddingX')"
+            :placeholder="viewportsPlaceholder('paddingX', 0)"
+            :show-device="true"
+            :device="currentDevice"
+            @on-device="cmsDeviceSwitch"
+            :model-value="currentViewportSettings.paddingX"
+            @update-value="value => currentViewportSettings.paddingX = value" /> 
+    </blur-column>
+
+</blur-section>
+
+<blur-section padding gap
+    :title="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.title')"
+    :description="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.description')">
+
+    <blur-column
+        :cols-tablet="6">
+
+        <blur-select-input 
+            :helpText="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.tabletHelptext')"
+            :label="'Tablet'"
+            :placeholder="'md'"
+            :options="optionsBreakpoints"
+            v-model:value="settings.breakpoints.tablet" /> 
+    </blur-column>
+
+    <blur-column
+        :cols-tablet="6">
+
+        <blur-select-input 
+            :helpText="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.desktopHelptext')"
+            :label="'Desktop'"
+            :placeholder="'xl'"
+            :options="optionsBreakpoints"
+            v-model:value="settings.breakpoints.desktop" /> 
+    </blur-column>
+
+</blur-section>

@@ -104,7 +104,13 @@
             "jusitifyStretch": "Stretch",
             "jusitifyBetween": "Between",
             "jusitifyAroud": "Around",
-            "alignItems": "Align items",
+            "alignItemsLabel": "Align items",
+            "alignItems": {
+                "stretch": "Stretch",
+                "flexStart": "Start",
+                "center": "Center",
+                "flexEnd": "End"
+            },
             "alignStart": "Start",
             "alignCenter": "Center",
             "alignEnd": "End",
@@ -119,7 +125,8 @@
             "objectFit": "Object fit",
             "cover": "Cover",
             "contain": "Contain",
-            "ratio": "Ratio"
+            "ratio": "Ratio",
+            "blockAlignment": "Block alignment"
         },
         "action": {
             "createSlide": "Create Slide",
@@ -137,6 +144,8 @@
     },
     "blurElysiumSlides": {
         "label": "Elysium Slides",
+        "slideBuilderLabel": "Slide Builder",
+        "slideOverviewLabel": "Slide Overview",
         "description": "Here you can create Slides for Elysium Shopping Experiences elements.",
         "emptySlidesTitle": "No Elysium Slides found",
         "messages": {
@@ -437,5 +446,26 @@
             "columnStretchLabel": "Equal column height"
         },
         "blockTwoColLabel": "Elysium Block — 2 Columns"
+    },
+    "blurElysiumSection": {
+        "label": "Elysium Section",
+        "sidebar": {
+            "sectionSettingsTitle": "Elysium Section settings",
+            "sectionSettings": {
+                "breakpoints": {
+                    "title": "Breakpoints",
+                    "description": "Set different breakpoints for this section. The sizes are based on the theme settings",
+                    "tabletHelptext": "Defines the screen size at which the tablet view should take effect",
+                    "desktopHelptext": "Defines the screen size at which the desktop view should take effect"
+                }
+            },
+            "blockSettingsTitle": "Elysium Block settings",
+            "blockSettings": {
+                "order": "Order",
+                "rows": "Rows"
+            },
+            "blockRemovalNotification": "Will be removed in Version 4.0.0<br/>Use the Elysium Section instead to layout your blocks",
+            "elysiumSectionNotification": "Use the new <b>Elysium Section</b> to place and layout your blocks. You can find it right in the Section selection."
+        }
     }
 }

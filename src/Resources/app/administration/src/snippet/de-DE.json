@@ -96,7 +96,7 @@
                 "flexStart": "Oben",
                 "flexEnd": "Unten"
             },
-            "jusitifyContent": "Elementangleichung",
+            "jusitifyContent": "Elemente angleichen",
             "jusitifyNormal": "Normal",
             "jusitifyStart": "Beginn",
             "jusitifyCenter": "Zentriert",
@@ -104,7 +104,13 @@
             "jusitifyStretch": "Strecken",
             "jusitifyBetween": "Zwischenraum aufteilen: Abstand zur Begrenzung",
             "jusitifyAroud": "Zwischenraum aufteilen: An Begrenzung heften",
-            "alignItems": "Elementausrichtung",
+            "alignItemsLabel": "Elemente ausrichten",
+            "alignItems": {
+                "stretch": "Strecken",
+                "flexStart": "Beginn",
+                "center": "Center",
+                "flexEnd": "Ende"
+            },
             "alignStart": "Beginn",
             "alignCenter": "Zentriert",
             "alignEnd": "Ende",
@@ -117,7 +123,8 @@
             "stretch": "Strecken",
             "cover": "Füllen",
             "contain": "Beibehalten",
-            "ratio": "Verhältnis"
+            "ratio": "Verhältnis",
+            "blockAlignment": "Block Ausrichtung"
         },
         "action": {
             "createSlide": "Slide erstellen",
@@ -134,6 +141,8 @@
     },
     "blurElysiumSlides": {
         "label": "Elysium Slides",
+        "slideBuilderLabel": "Slide Builder",
+        "slideOverviewLabel": "Slide Übersicht",
         "description": "Hier kannst du Slides für Elysium Erlebniswelten Elemente erstellen.",
         "emptySlidesTitle": "Keine Elysium Slides gefunden",
         "messages": {
@@ -432,5 +441,26 @@
             "columnStretchLabel": "Spaltenhöhe angleichen"
         },
         "blockTwoColLabel": "Elysium Block — 2 Spalten"
+    },
+    "blurElysiumSection": {
+        "label": "Elysium Sektion",
+        "sidebar": {
+            "sectionSettingsTitle": "Elysium Sektion Einstellungen",
+            "sectionSettings": {
+                "breakpoints": {
+                    "title": "Breakpoints",
+                    "description": "Lege für diese Sektion abweichende Breakpoints fest. Die Größen orientieren sich an den Theme Einstellungen",
+                    "tabletHelptext": "Definiert ab welcher Bildschirmgröße die Tablet Ansicht greifen soll",
+                    "desktopHelptext": "Definiert ab welcher Bildschirmgröße die Desktop Ansicht greifen soll"
+                }
+            },
+            "blockSettingsTitle": "Elysium Block Einstellungen",
+            "blockSettings": {
+                "order": "Reihenfolge",
+                "rows": "Zeilen"
+            },
+            "blockRemovalNotification": "Dieser Block wird in Version 4.0.0 entfernt<br/>Verwende stattdessen die Elysium Sektion, um Blöcke anzuordnen",
+            "elysiumSectionNotification": "Verwende die neue <b>Elysium Sektion</b>, um Blöcke zu platzieren und zu layouten. Du findest sie direkt in der Sektion Auswahl."
+        }
     }
 }

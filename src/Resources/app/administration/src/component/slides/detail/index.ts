@@ -71,7 +71,7 @@ export default Component.wrapComponentConfig({
 
         ...mapState('blurElysiumSlide', [
             'slide',
-            'deviceView'
+            'currentDevice'
         ]),
 
         contentRoute () {
@@ -343,11 +343,11 @@ export default Component.wrapComponentConfig({
 
             if (this.mediaType(media.mimeType) === 'image') {
                 this.setSlideProperty({
-                    key: `${mappedViewportFields[this.deviceView]}Id`,
+                    key: `${mappedViewportFields[this.currentDevice]}Id`,
                     value: media.id
                 })
                 this.setSlideProperty({
-                    key: mappedViewportFields[this.deviceView],
+                    key: mappedViewportFields[this.currentDevice],
                     value: media
                 })
             } else {

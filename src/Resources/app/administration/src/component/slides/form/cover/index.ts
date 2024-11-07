@@ -29,11 +29,11 @@ export default Component.wrapComponentConfig({
         ...mapState('blurElysiumSlide', [
             'slide',
             'mediaSidebar',
-            'deviceView'
+            'currentDevice'
         ]),
 
         slideViewportSettings () {
-            return this.slide.slideSettings.viewports[this.deviceView]
+            return this.slide.slideSettings.viewports[this.currentDevice]
         },
 
         tabs () {
@@ -56,17 +56,17 @@ export default Component.wrapComponentConfig({
                 desktop: 'blur-elysium-slide-cover'
             }
 
-            return uploadTag[this.deviceView]
+            return uploadTag[this.currentDevice]
         },
 
         coverImageMedia () {
-            if (this.deviceView === 'mobile' && this.slide.slideCoverMobile) {
+            if (this.currentDevice === 'mobile' && this.slide.slideCoverMobile) {
                 return this.slide.slideCoverMobile
             }
-            if (this.deviceView === 'tablet' && this.slide.slideCoverTablet) {
+            if (this.currentDevice === 'tablet' && this.slide.slideCoverTablet) {
                 return this.slide.slideCoverTablet
             }
-            if (this.deviceView === 'desktop' && this.slide.slideCover) {
+            if (this.currentDevice === 'desktop' && this.slide.slideCover) {
                 return this.slide.slideCover
             }
                 
@@ -74,13 +74,13 @@ export default Component.wrapComponentConfig({
         },
 
         coverImageProperty () {
-            if (this.deviceView === 'mobile') {
+            if (this.currentDevice === 'mobile') {
                 return 'slideCoverMobile'
             }
-            if (this.deviceView === 'tablet') {
+            if (this.currentDevice === 'tablet') {
                 return 'slideCoverTablet'
             }
-            if (this.deviceView === 'desktop') {
+            if (this.currentDevice === 'desktop') {
                 return 'slideCover'
             }
             
@@ -137,6 +137,7 @@ export default Component.wrapComponentConfig({
         },
     },
 
-    mounted () {
+    created () {
+        this.viewportsSettings = this.slide.slideSettings.viewports
     }
 })

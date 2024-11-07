@@ -22,7 +22,7 @@ export default Component.wrapComponentConfig({
 
         ...mapState('blurElysiumSlide', [
             'slide',
-            'deviceView'
+            'currentDevice'
         ]),
 
         ...mapGetters('error', [
@@ -34,7 +34,7 @@ export default Component.wrapComponentConfig({
         },
 
         slideViewportSettings () {
-            return this.slide.slideSettings.viewports[this.deviceView]
+            return this.slide.slideSettings.viewports[this.currentDevice]
         },
     },
 
@@ -42,7 +42,7 @@ export default Component.wrapComponentConfig({
 
         ...mapMutations('blurElysiumSlide', [
             'setSlide',
-            'setDeviceView'
+            'setCurrentDevice'
         ]),
     },
 

@@ -55,8 +55,8 @@
         :placeholder="viewportsPlaceholder('navigation.size', 'md', 'blurElysium.general')"
         :options="sizes"
         :show-device="true"
-        :device="deviceView"
-        @on-device="deviceSwitch"
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
         v-model:value="navigationViewportConfig.size" />
 
     <blur-number-input 
@@ -64,12 +64,13 @@
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
-        v-model:value="navigationViewportConfig.gap"
+        :model-value="navigationViewportConfig.gap"
+        @update-value="value => navigationViewportConfig.gap = value"
         :label="$tc('blurElysiumSlider.config.navigation.navPadding.label')"
         :placeholder="viewportsPlaceholder('navigation.gap', 16)"
         :show-device="true"
-        :device="deviceView"
-        @on-device="deviceSwitch" />
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch" />
 
     <blur-colorpicker
         :style="deviceStyle({

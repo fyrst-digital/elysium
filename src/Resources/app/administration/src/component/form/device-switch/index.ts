@@ -49,21 +49,21 @@ export default Component.wrapComponentConfig({
     computed: {
 
         ...mapState('blurElysiumSlide', [
-            'deviceView'
+            'currentDevice'
         ]),
 
         activeViewport () {
-            return this.deviceView !== null ? this.deviceView : this.defaultViewport
+            return this.currentDevice !== null ? this.currentDevice : this.defaultViewport
         },
     },
 
     methods: {
         ...mapMutations('blurElysiumSlide', [
-            'setDeviceView'
+            'setCurrentDevice'
         ]),
 
         changeViewport (viewport: string) {
-            this.setDeviceView(viewport)
+            this.setCurrentDevice(viewport)
             this.$emit('change-viewport', viewport)
         }
     }

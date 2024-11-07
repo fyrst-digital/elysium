@@ -2,6 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "downlevelIteration": true,
     "types": [
       "@types/webpack-env"
     ],

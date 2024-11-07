@@ -8,7 +8,7 @@
         <blur-device-switch 
             layout="row"
             show-label="false"
-            :default-viewport="deviceView"
+            :default-viewport="currentDevice"
             :style="{
                 padding: '0',
                 width: '100%',
@@ -93,8 +93,8 @@
                 <blur-column>
                     <blur-select-input 
                         :label="$tc('blurElysium.general.objectPosY')" 
-                        :placeholder="devicePlaceholder('coverMedia.objectPosY', 'center', 'blurElysium.general')"
-                        :device="deviceView"
+                        :placeholder="viewportsPlaceholder('coverMedia.objectPosY', 'center', 'blurElysium.general')"
+                        :device="currentDevice"
                         :show-device="true"
                         :options="[
                             { value: 'top', label: $tc('blurElysium.general.top') },
@@ -108,8 +108,8 @@
                 <blur-column>
                     <blur-select-input
                         :label="$tc('blurElysium.general.objectPosX')" 
-                        :placeholder="devicePlaceholder('coverMedia.objectPosX', 'center', 'blurElysium.general')"
-                        :device="deviceView"
+                        :placeholder="viewportsPlaceholder('coverMedia.objectPosX', 'center', 'blurElysium.general')"
+                        :device="currentDevice"
                         :show-device="true"
                         :options="[
                             { value: 'left', label: $tc('blurElysium.general.left') },
@@ -123,8 +123,8 @@
                 <blur-column>
                     <blur-select-input 
                         :label="$tc('blurElysium.general.objectFit')" 
-                        :placeholder="devicePlaceholder('coverMedia.objectFit', 'cover', 'blurElysium.general')"
-                        :device="deviceView"
+                        :placeholder="viewportsPlaceholder('coverMedia.objectFit', 'cover', 'blurElysium.general')"
+                        :device="currentDevice"
                         :show-device="true"
                         :options="[
                             { value: 'cover', label: $tc('blurElysium.general.cover') },

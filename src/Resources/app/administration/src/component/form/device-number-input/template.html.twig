@@ -8,10 +8,13 @@
     :modelValue="value"
     :allowEmpty="true"
     @update:modelValue="update"
-    @input="update">
+    @input="update"
+    @change="update">
+
     <template v-if="unit !== false" #suffix>
         {{unit}}
     </template>
+
     <template #prefix>
         <span 
             :style="{

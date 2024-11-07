@@ -12,15 +12,11 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
              * The dependened methods or properties will be removed from this mixin
              */
             currentBreakpoint: 'mobile',
-            viewportsSettings: null
+            viewportsSettings: null,
         }
     },
 
     computed: {
-
-        ...mapState('blurElysiumSlide', [
-            'deviceView'
-        ]),
 
         ...mapState('adminMenu', [
             'isExpanded'
@@ -31,25 +27,25 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
          * The dependened methods or properties will be removed from this mixin
          */
         slideViewportSettings () {
-            return this.slide.slideSettings.viewports[this.deviceView]
+            return this.viewportsSettings[this.currentDevice]
         },
 
         /**
          * @deprecated to initalize the viewport settings set your object to viewportsSettings in your component
          */
         slideViewportsSettings () {
-            return this.slide.slideSettings.viewports
+            return this.viewportsSettings
         },
 
         /**
          * @deprecated since the change from devicePlaceholder to viewportsPlaceholder this computed property is not used anymore
          */
         currentDeviceIndex () {
-            return Object.entries(this.slideViewportsSettings).findIndex(element => element[0] === this.deviceView)
+            return Object.entries(this.slideViewportsSettings).findIndex(element => element[0] === this.currentDevice)
         },
 
         currentViewportIndex () {
-            return Object.entries(this.viewportsSettings).findIndex(element => element[0] === this.deviceView)
+            return Object.entries(this.viewportsSettings).findIndex(element => element[0] === this.currentDevice)
         },
     },
 
@@ -74,7 +70,7 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
     methods: {
 
         ...mapMutations('blurElysiumSlide', [
-            'setDeviceView'
+            'setCurrentDevice'
         ]),
 
         /**
@@ -108,16 +104,16 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
 
         deviceSwitch (device: string) {
             if (device === "desktop") {
-                this.setDeviceView("mobile");
+                this.setCurrentDevice("mobile");
             } else if (device === "mobile") {
-                this.setDeviceView("tablet");
+                this.setCurrentDevice("tablet");
             } else if (device === "tablet") {
-                this.setDeviceView("desktop");
+                this.setCurrentDevice("desktop");
             }
         },
 
-        viewportsPlaceholder(property: string, fallback: string|number, snippetPrefix: string|null = null) {
-
+        viewportsPlaceholder(property: string, fallback: string|number, snippetPrefix: string|null = null, viewportsSettings: object = this.viewportsSettings) {
+            
             const kebabToCamelCase = (string: string) => {
                 return string.split('-').map((word, index) => {
                     return index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1);
@@ -126,7 +122,7 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
 
             let placeholder: string|number = fallback
 
-            Object.values(this.viewportsSettings).forEach((settings, index) => {
+            Object.values(viewportsSettings).forEach((settings, index) => {
                 const settingValue: string|number|undefined|null = <string|number|undefined|null>property.split('.').reduce((r, k) => r?.[k], settings)
                 if (!(settingValue === null || settingValue === undefined) && this.currentViewportIndex >= index) {
                     placeholder = settingValue

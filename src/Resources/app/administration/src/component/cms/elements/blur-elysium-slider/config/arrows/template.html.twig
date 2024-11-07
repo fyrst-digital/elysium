@@ -34,12 +34,13 @@
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
         })"
-        v-model:value="arrowsViewportConfig.iconSize"
+        :model-value="arrowsViewportConfig.iconSize"
+        @update-value="value => arrowsViewportConfig.iconSize = value"
         :placeholder="viewportsPlaceholder('arrows.iconSize', 24)"
         :label="$tc('blurElysiumSlider.config.arrows.size.label')"
         :show-device="true"
-        :device="deviceView"
-        @on-device="deviceSwitch" />
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch" />
 
     <blur-colorpicker
         :style="deviceStyle({

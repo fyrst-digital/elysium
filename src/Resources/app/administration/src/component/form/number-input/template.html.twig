@@ -7,11 +7,13 @@
     :placeholder="placeholder"
     :modelValue="value"
     :allowEmpty="true"
-    @update:modelValue="update"
-    @input="update">
+    @change="updateValue"
+    @input-change="updateValue">
+
     <template v-if="unit !== false" #suffix>
         {{unit}}
     </template>
+
     <template v-if="showDevice === true" #prefix>
         <span 
             :style="{

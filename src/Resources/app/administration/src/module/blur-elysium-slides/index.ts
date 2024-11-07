@@ -145,7 +145,7 @@ Module.register('blur-elysium-slides', {
     navigation: [
         {
             id: 'blur-elysium-slides',
-            label: 'blurElysiumSlides.label',
+            label: 'blurElysiumSlides.slideBuilderLabel',
             path: 'blur.elysium.slides.overview',
             parent: 'sw-content',
             position: 100,

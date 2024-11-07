@@ -6,7 +6,7 @@ export default {
             slide: null,
             customFieldSet: null,
             mediaSidebar: null,
-            deviceView: 'desktop'
+            currentDevice: 'desktop'
         };
     },
 
@@ -23,8 +23,8 @@ export default {
         setMediaSidebar (state, value) {
             state.mediaSidebar = value
         },
-        setDeviceView(state, deviceView) {
-            state.deviceView = deviceView;
+        setCurrentDevice (state, currentDevice) {
+            state.currentDevice = currentDevice;
         },
     }
 };

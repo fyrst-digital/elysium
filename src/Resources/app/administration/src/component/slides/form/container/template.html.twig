@@ -25,7 +25,7 @@
                     :label="$tc('blurElysiumSlides.forms.slideContentOrder.label')"
                     :helpText="$tc('blurElysiumSlides.forms.slideContentOrder.helpText')"
                     :placeholder="devicePlaceholder('container.order', 'default', 'blurElysiumSlides.forms.slideContentOrder')"
-                    :device="deviceView"
+                    :device="currentDevice"
                     :show-device="true"
                     :options="[
                         {value: 'default', label: $tc('blurElysiumSlides.forms.slideContentOrder.default') },
@@ -41,11 +41,12 @@
 
                 <blur-number-input 
                     :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
-                    :device="deviceView"
+                    :device="currentDevice"
                     :placeholder="devicePlaceholder('container.maxWidth', $t('blurElysium.general.noLimit'))"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.container.maxWidth" /> 
+                    :model-value="slideViewportSettings.container.maxWidth"
+                    @update-value="value => slideViewportSettings.container.maxWidth = value" /> 
             </blur-column>
 
             <blur-column
@@ -77,11 +78,12 @@
 
                 <blur-number-input  
                     :label="$tc('blurElysium.general.paddingX')"
-                    :device="deviceView"
+                    :device="currentDevice"
                     :placeholder="devicePlaceholder('container.paddingX', 15)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.container.paddingX" /> 
+                    :model-value="slideViewportSettings.container.paddingX"
+                    @update-value="value => slideViewportSettings.container.paddingX = value" /> 
             </blur-column>
 
             <blur-column
@@ -90,11 +92,12 @@
 
                 <blur-number-input       
                     :label="$tc('blurElysium.general.paddingY')"
-                    :device="deviceView"
+                    :device="currentDevice"
                     :placeholder="devicePlaceholder('container.paddingY', 15)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.container.paddingY" /> 
+                    :model-value="slideViewportSettings.container.paddingY"
+                    @update-value="value => slideViewportSettings.container.paddingY = value" /> 
             </blur-column>
 
             <blur-column
@@ -103,11 +106,12 @@
 
                 <blur-number-input 
                     :label="$tc('blurElysium.general.gap')"
-                    :device="deviceView"
+                    :device="currentDevice"
                     :placeholder="devicePlaceholder('container.gap', 20)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.container.gap" /> 
+                    :model-value="slideViewportSettings.container.gap"
+                    @update-value="value => slideViewportSettings.container.gap = value" /> 
             </blur-column>
 
             <blur-column
@@ -116,11 +120,12 @@
 
                 <blur-number-input 
                     :label="$tc('blurElysium.general.borderRadius')"
-                    :device="deviceView"
+                    :device="currentDevice"
                     :placeholder="devicePlaceholder('container.borderRadius', 0)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.container.borderRadius" /> 
+                    :model-value="slideViewportSettings.container.borderRadius"
+                    @update-value="value => slideViewportSettings.container.borderRadius = value" /> 
             </blur-column>
 
         </blur-section>
@@ -141,7 +146,7 @@
                 <blur-select-input 
                     :label="$tc('blurElysium.general.jusitifyContent')" 
                     :placeholder="devicePlaceholder('container.justifyContent', 'normal', 'blurElysium.general')"
-                    :device="deviceView"
+                    :device="currentDevice"
                     :show-device="true"
                     :options="[
                         { value: 'normal', label: $tc('blurElysium.general.jusitifyNormal') },
@@ -161,9 +166,9 @@
                 :cols-desktop="3">
 
                 <blur-select-input 
-                    :label="$tc('blurElysium.general.alignItems')" 
+                    :label="$tc('blurElysium.general.alignItemsLabel')" 
                     :placeholder="devicePlaceholder('container.alignItems', 'center', 'blurElysium.general')"
-                    :device="deviceView"
+                    :device="currentDevice"
                     :show-device="true"
                     :options="[
                         { value: 'flex-start', label: $tc('blurElysium.general.alignStart') },

@@ -8,7 +8,8 @@
         <blur-device-switch 
             layout="row"
             show-label="false"
-            :default-viewport="activeViewport"
+            :default-viewport="currentDevice"
+            @change-viewport="changeViewport"
             :style="{
                 padding: '0',
                 width: '100%',
@@ -59,15 +60,16 @@
             :cols-desktop="3">
 
             <blur-number-input 
-                v-model:value="viewportConfig.aspectRatio.width"
                 :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
                 :placeholder="viewportsPlaceholder('aspectRatio.width', 4)"
                 unit="Ratio"
                 :allow-empty="true"
                 :disabled="viewportConfig.aspectRatio.auto === true"
-                :device="deviceView"
                 :show-device="true"
-                @on-device="deviceSwitch" />
+                :device="currentDevice"
+                @on-device="cmsDeviceSwitch"
+                :model-value="viewportConfig.aspectRatio.width"
+                @update-value="value => viewportConfig.aspectRatio.width = value" />
         </blur-column>
 
         <blur-column
@@ -75,15 +77,16 @@
             :cols-desktop="3">
 
             <blur-number-input 
-                v-model:value="viewportConfig.aspectRatio.height"
                 :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
                 :placeholder="viewportsPlaceholder('aspectRatio.height', 3)"
                 unit="Ratio"
                 :allow-empty="true"
                 :disabled="viewportConfig.aspectRatio.auto === true"
-                :device="deviceView"
                 :show-device="true"
-                @on-device="deviceSwitch" />
+                :model-value="viewportConfig.aspectRatio.height"
+                :device="currentDevice"
+                @on-device="cmsDeviceSwitch"
+                @update-value="value => viewportConfig.aspectRatio.height = value" />
         </blur-column>
 
         <blur-column
@@ -91,13 +94,14 @@
             :cols-desktop="3">
 
             <blur-number-input 
-                v-model:value="viewportConfig.maxHeight"
                 :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
                 :placeholder="viewportsPlaceholder('maxHeight', 'noLimit', 'blurElysium.general')"
                 :allow-empty="true"
-                :device="deviceView"
                 :show-device="true"
-                @on-device="deviceSwitch" />
+                :model-value="viewportConfig.maxHeight"
+                :device="currentDevice"
+                @on-device="cmsDeviceSwitch"
+                @update-value="value => viewportConfig.maxHeight = value" />
         </blur-column>
 
     </blur-section>

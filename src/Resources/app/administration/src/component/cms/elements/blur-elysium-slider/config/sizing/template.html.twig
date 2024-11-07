@@ -5,7 +5,6 @@
     :description="$tc('blurElysiumSlider.config.sizing.aspectRatio.description')">
 
     <blur-number-input 
-        v-model:value="sizingViewportConfig.aspectRatio.width"
         :style="deviceStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
@@ -14,11 +13,12 @@
         :placeholder="viewportsPlaceholder('sizing.aspectRatio.width', 4)"
         unit="Ratio"
         :show-device="true"
-        :device="deviceView"
-        @on-device="deviceSwitch" />
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
+        :model-value="sizingViewportConfig.aspectRatio.width"
+        @update-value="value => sizingViewportConfig.aspectRatio.width = value" />
 
     <blur-number-input 
-        v-model:value="sizingViewportConfig.aspectRatio.height"
         :style="deviceStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
@@ -27,11 +27,12 @@
         :placeholder="viewportsPlaceholder('sizing.aspectRatio.height', 3)"
         unit="Ratio"
         :show-device="true"
-        :device="deviceView"
-        @on-device="deviceSwitch" />
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
+        :model-value="sizingViewportConfig.aspectRatio.height"
+        @update-value="value => sizingViewportConfig.aspectRatio.height = value" />
 
     <blur-number-input 
-        v-model:value="sizingViewportConfig.maxHeight"
         :style="deviceStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
@@ -39,9 +40,10 @@
         :allow-empty="true"
         :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
         :placeholder="viewportsPlaceholder('sizing.maxHeight', 'noLimit', 'blurElysium.general')"
-        :device="deviceView"
-        :show-device="true"
-        @on-device="deviceSwitch" />
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
+        :model-value="sizingViewportConfig.maxHeight"
+        @update-value="value => sizingViewportConfig.maxHeight = value" />
 
 </blur-section>
 
@@ -51,7 +53,6 @@
     :title="$tc('blurElysiumSlider.config.sizing.spacing.label')">
 
     <blur-number-input 
-        v-model:value="sizingViewportConfig.slidesGap"
         :label="$tc('blurElysiumSlider.config.sizing.spacing.slidesGap.label')"
         :placeholder="viewportsPlaceholder('sizing.slidesGap', 0)"
         :allow-empty="true"
@@ -59,32 +60,36 @@
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
-        :device="deviceView"
         :show-device="true"
-        @on-device="deviceSwitch" />
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
+        :model-value="sizingViewportConfig.slidesGap"
+        @update-value="value => sizingViewportConfig.slidesGap = value" />
 
     <blur-number-input 
-        v-model:value="sizingViewportConfig.paddingY"
         :label="$tc('blurElysium.general.paddingY')"
         :placeholder="viewportsPlaceholder('sizing.paddingY', 24)"
         :style="deviceStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
-        :device="deviceView"
         :show-device="true"
-        @on-device="deviceSwitch" />
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
+        :model-value="sizingViewportConfig.paddingY"
+        @update-value="value => sizingViewportConfig.paddingY = value" />
 
     <blur-number-input 
-        v-model:value="sizingViewportConfig.paddingX"
         :label="$tc('blurElysium.general.paddingX')"
         :placeholder="viewportsPlaceholder('sizing.paddingY', 24)"
         :style="deviceStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
-        :device="deviceView"
         :show-device="true"
-        @on-device="deviceSwitch" />
+        :device="currentDevice"
+        @on-device="cmsDeviceSwitch"
+        :model-value="sizingViewportConfig.paddingX"
+        @update-value="value => sizingViewportConfig.paddingX = value" />
 
 </blur-section>

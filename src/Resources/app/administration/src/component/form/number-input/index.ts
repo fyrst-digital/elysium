@@ -20,11 +20,12 @@ export default Component.wrapComponentConfig({
             type: [String, Boolean, Number]
         }
     },
-    emits: ['update:value', 'onDevice'],
+
+    emits: ['update-value'],
 
     methods: {
-        update (value) {
-            this.$emit('update:value', value)
+        updateValue (value) {
+            this.$emit('update-value', value)
         },
 
         onDeviceNote () {

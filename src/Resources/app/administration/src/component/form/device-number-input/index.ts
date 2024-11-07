@@ -16,6 +16,7 @@ export default Component.wrapComponentConfig({
             type: [String, Boolean, Number]
         }
     },
+
     emits: ['update:value', 'onDevice'],
 
     methods: {
@@ -26,5 +27,5 @@ export default Component.wrapComponentConfig({
         onDeviceNote () {
             this.$emit('onDevice', this.device)
         }
-    }
+    },
 })
