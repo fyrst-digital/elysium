@@ -144,6 +144,7 @@
     "blurElysiumSlides": {
         "label": "Elysium Slides",
         "slideBuilderLabel": "Slide Builder",
+        "slideOverviewLabel": "Slide Overview",
         "description": "Here you can create Slides for Elysium Shopping Experiences elements.",
         "emptySlidesTitle": "No Elysium Slides found",
         "messages": {
