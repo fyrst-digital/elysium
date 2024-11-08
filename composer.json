@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "shopware/core": "^6.6.4"
+        "shopware/core": "^6.6.4 <6.6.8"
     },
     "extra": {
         "shopware-plugin-class": "Blur\\BlurElysiumSlider\\BlurElysiumSlider",
