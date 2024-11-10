@@ -1,4 +1,4 @@
-const { Mixin, Component } = Shopware;
+const { Mixin, Component, Store } = Shopware;
 const { mapState, mapMutations } = Component.getComponentHelper()
 
 // give the mixin a name and feed it into the register function as the second argument
@@ -18,9 +18,6 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
 
     computed: {
 
-        ...mapState('adminMenu', [
-            'isExpanded'
-        ]),
 
         /**
          * @deprecated The `deviceStyle` methoded will be moved to its own mixin and is renamned to `viewStyle`
@@ -47,16 +44,6 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
         currentViewportIndex () {
             return Object.entries(this.viewportsSettings).findIndex(element => element[0] === this.currentDevice)
         },
-    },
-
-    watch: {
-        /**
-         * @deprecated The `deviceStyle` methoded will be moved to its own mixin and is renamned to `viewStyle`
-         * The dependened methods or properties will be removed from this mixin
-         */
-        isExpanded() {
-            this.setCurrentBreakpoint()
-        }
     },
 
     mounted () {

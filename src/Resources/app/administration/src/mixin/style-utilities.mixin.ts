@@ -1,4 +1,4 @@
-const { Mixin, Component } = Shopware;
+const { Mixin, Component, Store } = Shopware;
 const { mapState, mapMutations } = Component.getComponentHelper()
 
 // give the mixin a name and feed it into the register function as the second argument
@@ -12,13 +12,13 @@ export default Mixin.register('blur-style-utilities', Component.wrapComponentCon
 
     computed: {
 
-        ...mapState('adminMenu', [
-            'isExpanded'
-        ]),
+        adminMenu() {
+            return Store.get('adminMenu');
+        },
     },
 
     watch: {
-        isExpanded() {
+        'adminMenu.isExpanded'() {
             this.setCurrentView()
         }
     },
