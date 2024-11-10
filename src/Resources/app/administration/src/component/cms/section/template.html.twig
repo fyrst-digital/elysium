@@ -26,7 +26,7 @@
                 :class="['sw-cms-stage-block', 'blur-elysium-section-block']"
                 :block="block"
                 :disabled="disabled"
-                :active="cmsPageState.selectedBlock !== null && cmsPageState.selectedBlock.id === block.id"
+                :active="cmsPage.selectedBlock !== null && cmsPage.selectedBlock.id === block.id"
                 :has-errors="hasBlockErrors(block)"
                 :style="setBlockStyles(block)"
                 v-droppable="{ dragGroup: 'cms-stage', data: getDropData(index + 1), onDrop: block => dropBlock(block, index + 1) }"
@@ -56,7 +56,7 @@
                     >
                         <sw-cms-slot
                             :element="el"
-                            :active="cmsPageState.selectedBlock !== null && cmsPageState.selectedBlock.id === block.id"
+                            :active="cmsPage.selectedBlock !== null && cmsPage.selectedBlock.id === block.id"
                         />
                     </template>
 

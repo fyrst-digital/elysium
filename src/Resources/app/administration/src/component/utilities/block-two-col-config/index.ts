@@ -19,14 +19,14 @@ export default Component.wrapComponentConfig({
     },
 
     watch: {
-        'cmsPageState.currentCmsDeviceView' (value) {
+        'cmsPage.currentCmsDeviceView' (value) {
             this.activeViewport = value.split('-')[0]
         }
     },
 
     computed: {
-        cmsPageState() {
-            return Store.get('cmsPageState');
+        cmsPage() {
+            return Store.get('cmsPage');
         },
 
         viewports () {
@@ -44,11 +44,11 @@ export default Component.wrapComponentConfig({
                 viewportState = 'tablet-landscape'
             }
 
-            this.cmsPageState.setCurrentCmsDeviceView(viewportState)
+            this.cmsPage.setCurrentCmsDeviceView(viewportState)
         }
     },
 
     created () {
-        this.activeViewport = this.cmsPageState.currentCmsDeviceView
+        this.activeViewport = this.cmsPage.currentCmsDeviceView
     }
 })

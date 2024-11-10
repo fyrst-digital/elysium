@@ -7,12 +7,12 @@ export default Component.wrapComponentConfig({
     template,
 
     computed: {
-        cmsPageState() {
-            return Store.get('cmsPageState');
+        cmsPage() {
+            return Store.get('cmsPage');
         },
 
         activeViewport () {
-            return this.cmsPageState.currentCmsDeviceView.split('-')[0]
+            return this.cmsPage.currentCmsDeviceView.split('-')[0]
         },
 
         blockSettings () {

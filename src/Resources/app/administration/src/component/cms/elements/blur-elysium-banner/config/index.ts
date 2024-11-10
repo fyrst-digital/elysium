@@ -12,17 +12,17 @@ export default Component.wrapComponentConfig({
     ],
 
     computed: {
-        cmsPageState () {
-            return State.get('cmsPageState')
+        cmsPage () {
+            return State.get('cmsPage')
         },
 
         currentDevice () {
 
-            if (this.cmsPageState.currentCmsDeviceView === 'tablet-landscape') {
+            if (this.cmsPage.currentCmsDeviceView === 'tablet-landscape') {
                 return 'tablet'
             }
 
-            return this.cmsPageState.currentCmsDeviceView
+            return this.cmsPage.currentCmsDeviceView
         },
 
         /**
@@ -51,16 +51,16 @@ export default Component.wrapComponentConfig({
 
     methods: {
         changeViewport (viewport: string) {
-            this.cmsPageState.setCurrentCmsDeviceView(viewport === 'tablet' ? 'tablet-landscape' : viewport)
+            this.cmsPage.setCurrentCmsDeviceView(viewport === 'tablet' ? 'tablet-landscape' : viewport)
         },
 
         cmsDeviceSwitch (device: string) {
             if (this.currentDevice === "desktop") {
-                this.cmsPageState.setCurrentCmsDeviceView("mobile");
+                this.cmsPage.setCurrentCmsDeviceView("mobile");
             } else if (this.currentDevice === "mobile") {
-                this.cmsPageState.setCurrentCmsDeviceView("tablet-landscape");
+                this.cmsPage.setCurrentCmsDeviceView("tablet-landscape");
             } else if (this.currentDevice === "tablet") {
-                this.cmsPageState.setCurrentCmsDeviceView("desktop");
+                this.cmsPage.setCurrentCmsDeviceView("desktop");
             }
         },
     },

@@ -18,17 +18,17 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
-        cmsPageState () {
-            return State.get('cmsPageState')
+        cmsPage () {
+            return State.get('cmsPage')
         },
 
         currentDevice () {
 
-            if (this.cmsPageState.currentCmsDeviceView === 'tablet-landscape') {
+            if (this.cmsPage.currentCmsDeviceView === 'tablet-landscape') {
                 return 'tablet'
             }
 
-            return this.cmsPageState.currentCmsDeviceView
+            return this.cmsPage.currentCmsDeviceView
         },
 
         tabs () {
@@ -75,7 +75,7 @@ export default Component.wrapComponentConfig({
     methods: {
 
         changeViewport (viewport: string) {
-            this.cmsPageState.setCurrentCmsDeviceView(viewport === 'tablet' ? 'tablet-landscape' : viewport)
+            this.cmsPage.setCurrentCmsDeviceView(viewport === 'tablet' ? 'tablet-landscape' : viewport)
         },
 
         /**

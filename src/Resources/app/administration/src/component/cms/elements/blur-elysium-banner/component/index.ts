@@ -30,8 +30,8 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
-        cmsPageState() {
-            return Store.get('cmsPageState');
+        cmsPage() {
+            return Store.get('cmsPage');
         },
 
         slidesRepository () {
@@ -45,7 +45,7 @@ export default Component.wrapComponentConfig({
         },
 
         activeViewport () {
-            return this.cmsPageState.currentCmsDeviceView.split('-')[0]
+            return this.cmsPage.currentCmsDeviceView.split('-')[0]
         },
 
         config () {

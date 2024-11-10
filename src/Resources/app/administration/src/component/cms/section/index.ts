@@ -78,17 +78,17 @@ export default Component.wrapComponentConfig({
 
     computed: {
 
-        cmsPageState () {
-            return State.get('cmsPageState')
+        cmsPage () {
+            return State.get('cmsPage')
         },
 
         currentDevice () {
 
-            if (this.cmsPageState.currentCmsDeviceView === 'tablet-landscape') {
+            if (this.cmsPage.currentCmsDeviceView === 'tablet-landscape') {
                 return 'tablet'
             }
 
-            return this.cmsPageState.currentCmsDeviceView
+            return this.cmsPage.currentCmsDeviceView
         },
 
         gridStyle() {
@@ -167,7 +167,7 @@ export default Component.wrapComponentConfig({
         },
 
         onBlockSelection (block) {
-            Shopware.Store.get('cmsPageState').setBlock(block);
+            Shopware.Store.get('cmsPage').setBlock(block);
             this.$emit('on-select-block', block);
         },
 
