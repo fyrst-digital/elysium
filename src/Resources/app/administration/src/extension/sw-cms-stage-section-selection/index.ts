@@ -1,6 +1,5 @@
 import template from './template.html.twig'
 import './style.scss'
-import { computed } from 'vue'
 
 const { Component } = Shopware
 

@@ -17,7 +17,7 @@ import 'blurElysium/component/cms/blocks/blur-elysium-block-two-col'
 // extensions
 import 'blurElysium/extension/sw-cms-sidebar'
 
-const { Component, Locale, State, Application, Feature } = Shopware
+const { Component, Locale, State, Application } = Shopware
 
 State.registerModule('blurElysiumSlide', slideStore);
 

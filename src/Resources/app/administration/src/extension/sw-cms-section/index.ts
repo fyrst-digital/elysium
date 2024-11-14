@@ -6,7 +6,7 @@ export default Component.wrapComponentConfig({
     template,
 
     methods: {
-        onBlockSelection (block) {
+        onBlockSelection () {
             this.$emit('page-config-open', 'itemConfig');
         }
     }

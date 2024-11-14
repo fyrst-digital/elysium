@@ -1,6 +1,5 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: true
     inferPrivatePropertyTypeFromConstructor: true
     paths:
         - custom/static-plugins/BlurElysiumSlider/src

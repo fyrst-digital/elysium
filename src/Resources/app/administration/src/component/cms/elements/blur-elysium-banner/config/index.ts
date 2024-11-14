@@ -54,7 +54,7 @@ export default Component.wrapComponentConfig({
             this.cmsPage.setCurrentCmsDeviceView(viewport === 'tablet' ? 'tablet-landscape' : viewport)
         },
 
-        cmsDeviceSwitch (device: string) {
+        cmsDeviceSwitch () {
             if (this.currentDevice === "desktop") {
                 this.cmsPage.setCurrentCmsDeviceView("mobile");
             } else if (this.currentDevice === "mobile") {

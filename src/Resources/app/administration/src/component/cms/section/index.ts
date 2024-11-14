@@ -35,7 +35,7 @@ export default Component.wrapComponentConfig({
                  * Better solution would be to add the setting to the block when it is dropped. 
                  * For now, this is the easiest and lightweight compromise.
                  */
-                this.section.blocks.map((block, index) => {
+                this.section.blocks.map((block) => {
                     if (block.customFields === null) {
                         block.customFields = {
                             elysiumBlockSettings: structuredClone(blockSettings)
@@ -147,11 +147,11 @@ export default Component.wrapComponentConfig({
             this.draggedBlock.customFields.elysiumBlockSettings.viewports[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
         },
 
-        startBlockResizeX (event, block, index) {
+        startBlockResizeX (event, block) {
             this.draggedBlock = block
             this.draggedBlockStartPosX = event.x
             this.draggedBlockWidth = event.target.offsetParent.offsetWidth
-            let img = new Image()
+            const img = new Image()
             img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
             event.dataTransfer.setDragImage(img, 0, 0)
         },

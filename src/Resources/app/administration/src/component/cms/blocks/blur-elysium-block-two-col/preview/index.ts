@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Filter, Feature } = Shopware
+const { Component, Filter } = Shopware
 
 export default Component.wrapComponentConfig({
     template,
