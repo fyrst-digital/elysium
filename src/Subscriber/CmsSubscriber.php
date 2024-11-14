@@ -28,7 +28,7 @@ class CmsSubscriber implements EventSubscriberInterface
         $salesChannelContext = $event->getSalesChannelContext();
         $cmsPage = $event->getResult()->first();
         /** @var CmsSectionCollection */
-        $cmsSections = $cmsPage->getSections();
+        $cmsSections = $cmsPage?->getSections();
         $filteredCmsSections = $cmsSections->filter(function ($section) {
             return $section->getType() === 'blur-elysium-section';
         });

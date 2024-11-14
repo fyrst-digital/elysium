@@ -11,11 +11,17 @@ use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityLoadedContainerEven
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\InsertCommand;
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionEntity;
+use Shopware\Core\Framework\Event\NestedEventCollection;
 
 class EntitySubscriber implements EventSubscriberInterface
 {
     const SECTION_NAME = 'blur-elysium-section';
 
+    /**
+     * Provides default section configuration settings for the Elysium Section.
+     *
+     * @return array<string, mixed[]>
+     */
     static public function sectionDefauls(): array
     {
         return [
@@ -74,19 +80,22 @@ class EntitySubscriber implements EventSubscriberInterface
 
     public function loaded(EntityLoadedContainerEvent $event): void
     {
+        /** @var NestedEventCollection */
         $events = $event->getEvents();
 
-        foreach ($events as $entity) {
-            /** @var EntityLoadedEvent $entity */
+        if ($events->count() > 0) {
+            foreach ($events as $entity) {
+                /** @var EntityLoadedEvent $entity */
 
-            if ($entity->getDefinition() instanceof CmsSectionDefinition) {
+                if ($entity->getDefinition() instanceof CmsSectionDefinition) {
 
-                foreach ($entity->getEntities() as $cmsSection) {
-                    /** @var CmsSectionEntity $cmsSection */
+                    foreach ($entity->getEntities() as $cmsSection) {
+                        /** @var CmsSectionEntity $cmsSection */
 
-                    if ($cmsSection->getType() === self::SECTION_NAME) {
-                        $mergedSectionSettings = \array_replace_recursive(self::sectionDefauls()['elysiumSectionSettings'], $cmsSection->getCustomFieldsValue('elysiumSectionSettings') ?? []);
-                        $cmsSection->setCustomFields(['elysiumSectionSettings' => $mergedSectionSettings]);
+                        if ($cmsSection->getType() === self::SECTION_NAME) {
+                            $mergedSectionSettings = \array_replace_recursive(self::sectionDefauls()['elysiumSectionSettings'], $cmsSection->getCustomFieldsValue('elysiumSectionSettings') ?? []);
+                            $cmsSection->setCustomFields(['elysiumSectionSettings' => $mergedSectionSettings]);
+                        }
                     }
                 }
             }

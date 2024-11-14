@@ -310,7 +310,7 @@ class Updater
          */
         $intValue = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
 
-        if ($intValue !== false && \preg_match('/rem/', $value) === 1) {
+        if ($intValue && \preg_match('/rem/', $value) === 1) {
             return $intValue * 16;
         }
 
