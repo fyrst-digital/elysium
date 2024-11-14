@@ -1,36 +1,8 @@
 import template from './template.html.twig'
+import { blockSettings } from './config'
 import './style.scss'
 
 const { Component, State, Mixin } = Shopware
-
-/**
- * @todo #139 create proper and typed settings object
- */
-const elysiumBlockSettings = {
-    viewports: {
-        mobile: {
-            colStart: null,
-            colEnd: 12,
-            rowStart: null,
-            rowEnd: null,
-            order: null
-        },
-        tablet: {
-            colStart: null,
-            colEnd: 6,
-            rowStart: null,
-            rowEnd: null,
-            order: null
-        },
-        desktop: {
-            colStart: null,
-            colEnd: 6,
-            rowStart: null,
-            rowEnd: null,
-            order: null
-        },
-    }
-}
 
 export default Component.wrapComponentConfig({
     template,
@@ -66,10 +38,10 @@ export default Component.wrapComponentConfig({
                 this.section.blocks.map((block, index) => {
                     if (block.customFields === null) {
                         block.customFields = {
-                            elysiumBlockSettings: structuredClone(elysiumBlockSettings)
+                            elysiumBlockSettings: structuredClone(blockSettings)
                         }
                     } else if (!block.customFields.hasOwnProperty('elysiumBlockSettings')) {
-                        block.customFields.elysiumBlockSettings = structuredClone(elysiumBlockSettings)
+                        block.customFields.elysiumBlockSettings = structuredClone(blockSettings)
                     }
                 })
             },
@@ -116,10 +88,10 @@ export default Component.wrapComponentConfig({
         dropBlock (block, index) {
 
             if (this.section.blocks[index].hasOwnProperty('customFields')) {
-                this.section.blocks[index].customFields.elysiumBlockSettings = structuredClone(elysiumBlockSettings)    
+                this.section.blocks[index].customFields.elysiumBlockSettings = structuredClone(blockSettings)    
             } else {
                 this.section.blocks[index].customFields = {
-                    elysiumBlockSettings: structuredClone(elysiumBlockSettings)
+                    elysiumBlockSettings: structuredClone(blockSettings)
                 }
             }
         },

@@ -7,9 +7,6 @@ Component.override('sw-cms-sidebar', {
     template,
 
     computed: {
-        isSectionFeatureActive () {
-            return Feature.isActive('BLUR_ELYSIUM_CMS_SECTION') ?? false
-        },
 
         elysiumSectionSettingsTitle() {
             if (this.selectedBlock !== null) {
