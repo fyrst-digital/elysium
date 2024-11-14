@@ -5,7 +5,7 @@
     :description="$tc('blurElysiumSlider.config.sizing.aspectRatio.description')">
 
     <blur-number-input 
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
@@ -19,7 +19,7 @@
         @update-value="value => sizingViewportConfig.aspectRatio.width = value" />
 
     <blur-number-input 
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
@@ -33,7 +33,7 @@
         @update-value="value => sizingViewportConfig.aspectRatio.height = value" />
 
     <blur-number-input 
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
@@ -56,7 +56,7 @@
         :label="$tc('blurElysiumSlider.config.sizing.spacing.slidesGap.label')"
         :placeholder="viewportsPlaceholder('sizing.slidesGap', 0)"
         :allow-empty="true"
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
@@ -69,7 +69,7 @@
     <blur-number-input 
         :label="$tc('blurElysium.general.paddingY')"
         :placeholder="viewportsPlaceholder('sizing.paddingY', 24)"
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
@@ -82,7 +82,7 @@
     <blur-number-input 
         :label="$tc('blurElysium.general.paddingX')"
         :placeholder="viewportsPlaceholder('sizing.paddingY', 24)"
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"

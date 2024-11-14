@@ -2,7 +2,7 @@
     gap
     padding>
 
-    <div :style="deviceStyle({
+    <div :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
         })">
         <mt-switch 
@@ -20,7 +20,7 @@
     padding>
 
     <blur-select-input 
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
         })"
@@ -30,7 +30,7 @@
         v-model:value="arrowsConfig.icon.default" />
 
     <blur-number-input 
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
         })"
@@ -43,7 +43,7 @@
         @on-device="cmsDeviceSwitch" />
 
     <blur-colorpicker
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
             desktop: { gridColumnEnd: 'span 3' },
@@ -57,7 +57,7 @@
         :zIndex="1010" />
 
     <blur-colorpicker
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
             desktop: { gridColumnEnd: 'span 3' },
@@ -71,7 +71,7 @@
         :zIndex="1010" />
                     
     <blur-colorpicker
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
             desktop: { gridColumnEnd: 'span 3' },
@@ -85,7 +85,7 @@
         :zIndex="1010" />
 
     <blur-colorpicker
-        :style="deviceStyle({
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
             desktop: { gridColumnEnd: 'span 3' },

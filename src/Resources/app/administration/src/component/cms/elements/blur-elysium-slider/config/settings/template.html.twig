@@ -4,7 +4,7 @@
     :title="$tc('blurElysiumSlider.config.settings.general')">
 
     {% block blur_cms_config_elysium_slider_rewind %}
-        <div :style="deviceStyle({
+        <div :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 3' },
             })">
@@ -17,7 +17,7 @@
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_overlay %}
-        <div :style="deviceStyle({
+        <div :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 9' },
             })">
@@ -31,7 +31,7 @@
 
     {% block blur_cms_config_elysium_slider_slides_per_page %}
         <blur-number-input 
-            :style="deviceStyle({
+            :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 3' },
             })"
@@ -49,7 +49,7 @@
     {% block blur_cms_config_elysium_slider_speed %}
         <blur-number-input 
             numberType="int" 
-            :style="deviceStyle({
+            :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 3' },
             })"
@@ -67,7 +67,7 @@
     {% block blur_cms_config_elysium_slider_container_width %}
         <blur-select-input
             v-model:value="settingsConfig.containerWidth"
-            :style="deviceStyle({
+            :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 6' },
             })"
@@ -87,7 +87,7 @@
     :title="$tc('blurElysiumSlider.config.settings.autoplay.label')">
 
     {% block blur_cms_config_elysium_slider_autoplay_active %}
-        <div :style="deviceStyle({
+        <div :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 3' },
             })">
@@ -100,7 +100,7 @@
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_autoplay_pause_on_hover %}
-        <div :style="deviceStyle({
+        <div :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 9' },
             })">
@@ -115,7 +115,7 @@
     {% block blur_cms_config_elysium_slider_autoplay_timeout %}
         <blur-number-input 
             numberType="int" 
-            :style="deviceStyle({
+            :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 3' },
             })"

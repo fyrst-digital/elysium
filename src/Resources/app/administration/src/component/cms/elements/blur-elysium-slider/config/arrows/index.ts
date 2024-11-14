@@ -13,7 +13,8 @@ export default Component.wrapComponentConfig({
 
     mixins: [
         Mixin.getByName('cms-state'),
-        Mixin.getByName('blur-device-utilities')
+        Mixin.getByName('blur-device-utilities'),
+        Mixin.getByName('blur-style-utilities')
     ],
 
     props: {
