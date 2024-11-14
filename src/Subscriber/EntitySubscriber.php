@@ -6,10 +6,13 @@ namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWriteEvent;
+use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityLoadedEvent;
+use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityLoadedContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\InsertCommand;
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
+use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionEntity;
 
-class EntityWriteSubscriber implements EventSubscriberInterface
+class EntitySubscriber implements EventSubscriberInterface
 {
     const SECTION_NAME = 'blur-elysium-section';
 
@@ -42,7 +45,7 @@ class EntityWriteSubscriber implements EventSubscriberInterface
                         'gridGap' => 40,
                         'alignItems' => 'stretch',
                         'paddingY' => 40,
-                        'paddingX' => 0
+                        'paddingX' => 0,
                     ],
                 ],
             ]
@@ -54,20 +57,38 @@ class EntityWriteSubscriber implements EventSubscriberInterface
     {
         return [
             EntityWriteEvent::class => 'beforeWrite',
+            EntityLoadedContainerEvent::class => 'loaded',
         ];
     }
 
-    public function beforeWrite(EntityWriteEvent $event)
+    public function beforeWrite(EntityWriteEvent $event): void
     {
         $cmsSections = $event->getCommandsForEntity(CmsSectionDefinition::ENTITY_NAME);
 
         foreach ($cmsSections as $id => $section) {
             if ($section instanceof InsertCommand && $section->getPayload()['type'] === self::SECTION_NAME) {
-                /**
-                 * @todo #137 check if elysiumSectionSettings already exists in custom_fielda and merge it with defaults
-                 * Do that in EntityWriteEvent event? Doesn't make sense. Do the merging in EntityLoadedEvent event?
-                 */
                 $section->addPayload('custom_fields', json_encode(self::sectionDefauls()));
+            }
+        }
+    }
+
+    public function loaded(EntityLoadedContainerEvent $event): void
+    {
+        $events = $event->getEvents();
+
+        foreach ($events as $entity) {
+            /** @var EntityLoadedEvent $entity */
+
+            if ($entity->getDefinition() instanceof CmsSectionDefinition) {
+
+                foreach ($entity->getEntities() as $cmsSection) {
+                    /** @var CmsSectionEntity $cmsSection */
+
+                    if ($cmsSection->getType() === self::SECTION_NAME) {
+                        $mergedSectionSettings = \array_replace_recursive(self::sectionDefauls()['elysiumSectionSettings'], $cmsSection->getCustomFieldsValue('elysiumSectionSettings') ?? []);
+                        $cmsSection->setCustomFields(['elysiumSectionSettings' => $mergedSectionSettings]);
+                    }
+                }
             }
         }
     }
