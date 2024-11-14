@@ -1,3 +1,9 @@
+# 3.6.0
+
+## Changelog
+- Elysium Sektion wurde hinzugefügt. Diese ist in der Erlebniswelten Sektions-Auswahl verfügbar und erweitert die Erlebniswelt um dynamisch Skalierbare Blöcke, zusammenfügen von Block-Zeilen, Änderung der optischen Block-Reihenfolge und mehr. Alle Einstellungen können seperat für die Smartphone, Tablet und Desktop Ansicht festgelegt werden
+- Codebasis wurde aufgeräumt und optimiert
+
 # 3.5.4
 
 ## Changelog

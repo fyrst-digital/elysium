@@ -1,3 +1,9 @@
+# 3.6.0
+
+## Changelog
+- Elysium section has been added. It is available in the Shopping Experiences section selection and extends the Shopping Experience with dynamically scalable blocks, merging block rows, changing the visual block order, and more. All settings can be configured separately for smartphone, tablet, and desktop views.
+- Codebase has been cleaned up and optimized.
+
 # 3.5.4
 
 ## Changelog
