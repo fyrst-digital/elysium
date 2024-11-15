@@ -1,3 +1,8 @@
+# 3.6.1
+
+## Changelog
+- Blöcke in Standard Sektionen können nun wieder wie gewohnt ausgewählt werden
+
 # 3.6.0
 
 ## Changelog

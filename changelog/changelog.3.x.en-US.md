@@ -1,3 +1,8 @@
+# 3.6.1
+
+## Changelog
+- Blocks in standard sections can now be selected as usual again
+
 # 3.6.0
 
 ## Changelog
