@@ -102,7 +102,7 @@
                             { value: 'bottom', label: $tc('blurElysium.general.bottom') }
                         ]"
                         @on-device="deviceSwitch"
-                        v-model:value="slideViewportSettings.coverMedia.objectPosY" />
+                        v-model:value="viewportSettings.coverMedia.objectPosY" />
                 </blur-column>
 
                 <blur-column>
@@ -117,7 +117,7 @@
                             { value: 'right', label: $tc('blurElysium.general.right') }
                         ]"
                         @on-device="deviceSwitch"
-                        v-model:value="slideViewportSettings.coverMedia.objectPosX" />
+                        v-model:value="viewportSettings.coverMedia.objectPosX" />
                 </blur-column>
 
                 <blur-column>
@@ -132,7 +132,7 @@
                             { value: 'auto', label: $tc('blurElysium.general.auto') }
                         ]"
                         @on-device="deviceSwitch"
-                        v-model:value="slideViewportSettings.coverMedia.objectFit" />
+                        v-model:value="viewportSettings.coverMedia.objectFit" />
                 </blur-column>
 
             </blur-section>

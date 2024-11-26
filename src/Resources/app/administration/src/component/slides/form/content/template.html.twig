@@ -14,11 +14,11 @@
                 <blur-number-input 
                     :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
                     :device="currentDevice"
-                    :placeholder="devicePlaceholder('content.maxWidth', $t('blurElysium.general.noLimit'))"
+                    :placeholder="viewportsPlaceholder('content.maxWidth', $t('blurElysium.general.noLimit'))"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    :model-value="slideViewportSettings.content.maxWidth"
-                    @update-value="value => slideViewportSettings.content.maxWidth = value" /> 
+                    :model-value="viewportSettings.content.maxWidth"
+                    @update-value="value => viewportSettings.content.maxWidth = value" /> 
             </blur-column>
         </blur-section>
     </blur-column>
@@ -43,11 +43,11 @@
                 <blur-number-input 
                     :label="$tc('blurElysium.general.paddingX')"
                     :device="currentDevice"
-                    :placeholder="devicePlaceholder('content.paddingX', 15)"
+                    :placeholder="viewportsPlaceholder('content.paddingX', 15)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    :model-value="slideViewportSettings.content.paddingX"
-                    @update-value="value => slideViewportSettings.content.paddingX = value" />
+                    :model-value="viewportSettings.content.paddingX"
+                    @update-value="value => viewportSettings.content.paddingX = value" />
             </blur-column>
 
             <blur-column
@@ -57,11 +57,11 @@
                 <blur-number-input 
                     :label="$tc('blurElysium.general.paddingY')"
                     :device="currentDevice"
-                    :placeholder="devicePlaceholder('content.paddingY', 0)"
+                    :placeholder="viewportsPlaceholder('content.paddingY', 0)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    :model-value="slideViewportSettings.content.paddingY"
-                    @update-value="value => slideViewportSettings.content.paddingY = value" /> 
+                    :model-value="viewportSettings.content.paddingY"
+                    @update-value="value => viewportSettings.content.paddingY = value" /> 
             </blur-column>
         </blur-section>
     </blur-column>
@@ -81,7 +81,7 @@
 
                 <blur-select-input 
                     :label="$tc('blurElysium.general.textAlign')" 
-                    :placeholder="devicePlaceholder('content.textAlign', 'left', 'blurElysium.general')"
+                    :placeholder="viewportsPlaceholder('content.textAlign', 'left', 'blurElysium.general')"
                     :device="currentDevice"
                     :show-device="true"
                     :options="[
@@ -90,7 +90,7 @@
                         { value: 'right', label: $tc('blurElysium.general.right') }
                     ]"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.content.textAlign" />
+                    v-model:value="viewportSettings.content.textAlign" />
             </blur-column>
         </blur-section>
     </blur-column>

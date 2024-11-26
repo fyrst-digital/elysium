@@ -19,9 +19,9 @@ export default Component.wrapComponentConfig({
             'currentDevice'
         ]),
 
-        slideViewportSettings () {
-            return this.slide.slideSettings.viewports[this.currentDevice]
-        },
+        viewportSettings () {
+            return this.viewportsSettings[this.currentDevice]
+        }
     },
 
     methods: {

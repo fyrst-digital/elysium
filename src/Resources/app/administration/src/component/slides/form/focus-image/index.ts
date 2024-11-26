@@ -26,6 +26,10 @@ export default Component.wrapComponentConfig({
             'currentDevice'
         ]),
 
+        viewportSettings () {
+            return this.viewportsSettings[this.currentDevice]
+        },
+
         focusImageMedia() {
             if (this.slide.presentationMedia) {
                 return this.slide.presentationMedia

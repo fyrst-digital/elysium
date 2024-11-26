@@ -98,11 +98,11 @@
                 <blur-number-input 
                     :label="$tc('blurElysium.general.paddingX')"
                     :device="currentDevice"
-                    :placeholder="devicePlaceholder('slide.paddingX', 15)"
+                    :placeholder="viewportsPlaceholder('slide.paddingX', 15)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    :model-value="slideViewportSettings.slide.paddingX"
-                    @update-value="value => slideViewportSettings.slide.paddingX = value" />
+                    :model-value="viewportSettings.slide.paddingX"
+                    @update-value="value => viewportSettings.slide.paddingX = value" />
             </blur-column>
 
             <blur-column
@@ -112,11 +112,11 @@
                 <blur-number-input 
                     :label="$tc('blurElysium.general.paddingY')"
                     :device="currentDevice"
-                    :placeholder="devicePlaceholder('slide.paddingY', 15)"
+                    :placeholder="viewportsPlaceholder('slide.paddingY', 15)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    :model-value="slideViewportSettings.slide.paddingY"
-                    @update-value="value => slideViewportSettings.slide.paddingY = value" />
+                    :model-value="viewportSettings.slide.paddingY"
+                    @update-value="value => viewportSettings.slide.paddingY = value" />
             </blur-column>
 
             <blur-column
@@ -126,11 +126,11 @@
                 <blur-number-input 
                     :label="$tc('blurElysium.general.borderRadius')"
                     :device="currentDevice"
-                    :placeholder="devicePlaceholder('slide.borderRadius', 0)"
+                    :placeholder="viewportsPlaceholder('slide.borderRadius', 0)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    :model-value="slideViewportSettings.slide.borderRadius"
-                    @update-value="value => slideViewportSettings.slide.borderRadius = value" /> 
+                    :model-value="viewportSettings.slide.borderRadius"
+                    @update-value="value => viewportSettings.slide.borderRadius = value" /> 
             </blur-column>
 
         </blur-section>
@@ -150,7 +150,7 @@
 
                 <blur-select-input 
                     :label="$tc('blurElysium.general.alignX.label')" 
-                    :placeholder="devicePlaceholder('slide.justifyContent', 'center', 'blurElysium.general.alignX')"
+                    :placeholder="viewportsPlaceholder('slide.justifyContent', 'center', 'blurElysium.general.alignX')"
                     :device="currentDevice"
                     :show-device="true"
                     :options="[
@@ -159,7 +159,7 @@
                         { value: 'flex-end', label: $tc('blurElysium.general.alignX.flexEnd') }
                     ]"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.slide.justifyContent" />
+                    v-model:value="viewportSettings.slide.justifyContent" />
             </blur-column>
 
             <blur-column
@@ -168,7 +168,7 @@
 
                 <blur-select-input 
                     :label="$tc('blurElysium.general.alignY.label')" 
-                    :placeholder="devicePlaceholder('slide.alignItems', 'center', 'blurElysium.general.alignY')"
+                    :placeholder="viewportsPlaceholder('slide.alignItems', 'center', 'blurElysium.general.alignY')"
                     :device="currentDevice"
                     :show-device="true"
                     :options="[
@@ -177,7 +177,7 @@
                         { value: 'flex-end', label: $tc('blurElysium.general.bottom') }
                     ]"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.slide.alignItems" />
+                    v-model:value="viewportSettings.slide.alignItems" />
             </blur-column>
 
         </blur-section>

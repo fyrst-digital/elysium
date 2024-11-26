@@ -33,9 +33,9 @@ export default Component.wrapComponentConfig({
             return this.getApiError(this.slide, 'name');
         },
 
-        slideViewportSettings () {
-            return this.slide.slideSettings.viewports[this.currentDevice]
-        },
+        viewportSettings () {
+            return this.viewportsSettings[this.currentDevice]
+        }
     },
 
     methods: {

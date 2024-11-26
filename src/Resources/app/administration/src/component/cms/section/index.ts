@@ -64,8 +64,6 @@ export default Component.wrapComponentConfig({
         },
 
         gridStyle() {
-            console.log('gridStyle', this.viewportsPlaceholder('gridGap', 20))
-
             const gridStyle: Partial<CSSStyleDeclaration> = {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(12, minmax(0, 1fr))',

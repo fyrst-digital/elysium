@@ -53,8 +53,8 @@
                 <blur-column>
                     <mt-switch 
                         class="blur-switch-input"
-                        @change="slideViewportSettings.image.imageFullWidth = $event"
-                        :checked="slideViewportSettings.image.imageFullWidth"
+                        @change="viewportSettings.image.imageFullWidth = $event"
+                        :checked="viewportSettings.image.imageFullWidth"
                         :label="$tc('blurElysiumSlides.forms.focusImage.fullWidth')" />
                 </blur-column>
 
@@ -65,8 +65,8 @@
                         :show-device="true"
                         :device="currentDevice"
                         @on-device="deviceSwitch"
-                        :model-value="slideViewportSettings.image.maxWidth"
-                        @update-value="value => slideViewportSettings.image.maxWidth = value" /> 
+                        :model-value="viewportSettings.image.maxWidth"
+                        @update-value="value => viewportSettings.image.maxWidth = value" /> 
                 </blur-column>
 
                 <blur-column>
@@ -81,7 +81,7 @@
                         :device="currentDevice"
                         :show-device="true"
                         @on-device="deviceSwitch"
-                        v-model:value="slideViewportSettings.image.justifyContent" />
+                        v-model:value="viewportSettings.image.justifyContent" />
                 </blur-column>
             </blur-section>
         </blur-column>
