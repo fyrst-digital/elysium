@@ -1,3 +1,8 @@
+# 3.6.2
+
+## Changelog
+- Es wurden Fehler in der Slide Bearbeitung behoben. Alle Slide Einstellungen sind wieder sichtbar
+
 # 3.6.1
 
 ## Changelog

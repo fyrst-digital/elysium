@@ -1,3 +1,8 @@
+# 3.6.2
+
+## Changelog
+- Errors in the slide editing have been fixed. All slide settings are visible again
+
 # 3.6.1
 
 ## Changelog
