@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\DataResolver;
 
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
 use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
@@ -15,6 +16,8 @@ use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
 use Shopware\Core\Content\Cms\DataResolver\FieldConfig;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesCriteriaEvent;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesResultEvent;
 use Blur\BlurElysiumSlider\Struct\ElysiumSliderStruct;
 
 class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
@@ -23,7 +26,8 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
      * @param EntityRepository<ElysiumSlidesCollection> $elysiumSlidesRepository
      */
     public function __construct(
-        private readonly EntityRepository $elysiumSlidesRepository
+        private readonly EntityRepository $elysiumSlidesRepository,
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {}
 
     public function getType(): string
@@ -43,8 +47,8 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
         CmsSlotEntity $slot,
         ResolverContext $resolverContext,
         ElementDataCollection $result
-
     ): void {
+        $context = $resolverContext->getSalesChannelContext();
         /** @var ElysiumSliderStruct $elysiumSliderStruct */
         $elysiumSliderStruct = new ElysiumSliderStruct();
         /** @var FieldConfigCollection $fieldConfigCollection */
@@ -64,13 +68,19 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
             $criteria->addAssociation('product.media');
             $criteria->addAssociation('product.cover');
 
-            $slideCollection = $this->elysiumSlidesRepository->search(
-                $criteria,
-                $resolverContext->getSalesChannelContext()->getContext()
+            $this->eventDispatcher->dispatch(
+                new ElysiumSlidesCriteriaEvent($criteria, $context)
+            );
+
+            $slideCollection = $this->eventDispatcher->dispatch(
+                new ElysiumSlidesResultEvent($this->elysiumSlidesRepository->search(
+                    $criteria,
+                    $context->getContext()
+                ), $context)
             );
 
             /** @var ElysiumSlidesEntity[] $elysiumSlides */
-            $elysiumSlides = $slideCollection->getElements();
+            $elysiumSlides = $slideCollection->getResult()->getElements();
             $elysiumSliderStruct->setSlideCollection($elysiumSlides);
             $slot->setData($elysiumSliderStruct);
         }

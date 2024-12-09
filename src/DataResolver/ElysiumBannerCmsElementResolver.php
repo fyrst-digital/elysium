@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\DataResolver;
 
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
 use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
@@ -23,7 +24,8 @@ class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
      * @param EntityRepository<ElysiumSlidesCollection> $elysiumSlidesRepository
      */
     public function __construct(
-        private readonly EntityRepository $elysiumSlidesRepository
+        private readonly EntityRepository $elysiumSlidesRepository,
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {}
 
     public function getType(): string
@@ -43,8 +45,8 @@ class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
         CmsSlotEntity $slot,
         ResolverContext $resolverContext,
         ElementDataCollection $result
-
     ): void {
+        $context = $resolverContext->getSalesChannelContext();
         $elysiumBannerStruct = new ElysiumBannerStruct();
         /** @var FieldConfigCollection $fieldConfigCollection */
         $fieldConfigCollection = $slot->getFieldConfig();
@@ -69,8 +71,8 @@ class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
             $elysiumSlide = $elysiumSlideResult->first();
 
             $elysiumBannerStruct->setElysiumSlide($elysiumSlide);
-        }
 
-        $slot->setData($elysiumBannerStruct);
+            $slot->setData($elysiumBannerStruct);
+        }
     }
 }
