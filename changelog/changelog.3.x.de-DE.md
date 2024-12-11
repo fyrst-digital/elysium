@@ -1,3 +1,8 @@
+# 3.5.5
+
+## Changelog
+- Das `ElysiumSlidesResultEvent` Event wurde hinzugefügt, welches beim laden von Elysium Slidern ausgelöst wird. Dadurch können Entwickler die Anzeige von Slides modifizieren.
+
 # 3.5.4
 
 ## Changelog

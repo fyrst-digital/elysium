@@ -8,6 +8,7 @@
         <!-- Elysium Slider Data Resolver -->
         <service id="Blur\BlurElysiumSlider\DataResolver\ElysiumSliderCmsElementResolver">
             <argument type="service" id="blur_elysium_slides.repository"/>
+            <argument type="service" id="event_dispatcher" />
             <tag name="shopware.cms.data_resolver" />
         </service>
 
