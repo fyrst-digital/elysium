@@ -3,10 +3,13 @@
     "description": "A flexible, reusable and feature rich Slider for Shopware 6",
     "keywords": [
         "Shopware",
+        "Plugin",
         "CMS",
+        "Slide",
+        "Banner",
         "Slider"
     ],
-    "version": "3.6.2",
+    "version": "3.6.3",
     "type": "shopware-platform-plugin",
     "minimum-stability": "stable",
     "license": "MIT",

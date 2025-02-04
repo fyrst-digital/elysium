@@ -1,3 +1,9 @@
+# 3.6.3
+
+## Changelog
+- Lazy loading der Sektionen styles wurde entfernt und durch statisches styling per SCSS ersetzt. Es sollte nun nicht mehr zu Darstellungsfehler in Sektionen kommen
+- Ein Darstellungsfehler im Admin UI wurde behoben. Es wurden Kontextmenüs im Slide Builder Beschreibungs-Editor abgeschnitten. Es sollten nun alle Menüs erreichbar sein.
+
 # 3.6.2
 
 ## Changelog

@@ -1,3 +1,9 @@
+# 3.6.3
+
+## Changelog
+- Lazy loading of section styles has been removed and replaced with static styling via SCSS. There should no longer be any display errors in sections.
+- A display error in the Admin UI has been fixed. Context menus in the Slide Builder description editor were previously cut off; all menus should now be fully accessible.
+
 # 3.6.2
 
 ## Changelog
