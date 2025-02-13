@@ -8,7 +8,7 @@
         <blur-device-switch 
             layout="row"
             show-label="false"
-            :default-viewport="currentDevice"
+            :default-viewport="device"
             :style="{
                 padding: '0',
                 width: '100%',
@@ -94,7 +94,7 @@
                     <blur-select-input 
                         :label="$tc('blurElysium.general.objectPosY')" 
                         :placeholder="viewportsPlaceholder('coverMedia.objectPosY', 'center', 'blurElysium.general')"
-                        :device="currentDevice"
+                        :device="device"
                         :show-device="true"
                         :options="[
                             { value: 'top', label: $tc('blurElysium.general.top') },
@@ -102,14 +102,14 @@
                             { value: 'bottom', label: $tc('blurElysium.general.bottom') }
                         ]"
                         @on-device="deviceSwitch"
-                        v-model:value="viewportSettings.coverMedia.objectPosY" />
+                        v-model:value="slideViewportSettings.coverMedia.objectPosY" />
                 </blur-column>
 
                 <blur-column>
                     <blur-select-input
                         :label="$tc('blurElysium.general.objectPosX')" 
                         :placeholder="viewportsPlaceholder('coverMedia.objectPosX', 'center', 'blurElysium.general')"
-                        :device="currentDevice"
+                        :device="device"
                         :show-device="true"
                         :options="[
                             { value: 'left', label: $tc('blurElysium.general.left') },
@@ -117,14 +117,14 @@
                             { value: 'right', label: $tc('blurElysium.general.right') }
                         ]"
                         @on-device="deviceSwitch"
-                        v-model:value="viewportSettings.coverMedia.objectPosX" />
+                        v-model:value="slideViewportSettings.coverMedia.objectPosX" />
                 </blur-column>
 
                 <blur-column>
                     <blur-select-input 
                         :label="$tc('blurElysium.general.objectFit')" 
                         :placeholder="viewportsPlaceholder('coverMedia.objectFit', 'cover', 'blurElysium.general')"
-                        :device="currentDevice"
+                        :device="device"
                         :show-device="true"
                         :options="[
                             { value: 'cover', label: $tc('blurElysium.general.cover') },
@@ -132,7 +132,7 @@
                             { value: 'auto', label: $tc('blurElysium.general.auto') }
                         ]"
                         @on-device="deviceSwitch"
-                        v-model:value="viewportSettings.coverMedia.objectFit" />
+                        v-model:value="slideViewportSettings.coverMedia.objectFit" />
                 </blur-column>
 
             </blur-section>

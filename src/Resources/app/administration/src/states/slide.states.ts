@@ -8,7 +8,6 @@ interface SlideState {
 }
 
 export default {
-
     id: 'elysiumSlide',
 
     state: (): SlideState => ({
@@ -16,17 +15,25 @@ export default {
         customFieldSet: null,
     }),
 
+    getters: {
+        slideViewportSettings(state: SlideState): any {
+            return state.slide?.slideSettings?.viewports ?? null;
+        },
+    },
+
     actions: {
-        setSlide(slide: any) {
+        setSlide(slide: any): void {
             this.slide = slide;
         },
 
-        setSlideProp(payload: { key: string, value: any }) {
-            this.slide[payload.key] = payload.value;
+        setSlideProp({ key, value }: { key: string; value: any }): void {
+            if (this.slide) {
+                this.slide[key] = value;
+            }
         },
 
-        clearSlide() {
+        clearSlide(): void {
             this.slide = null;
         },
     },
-}
+};

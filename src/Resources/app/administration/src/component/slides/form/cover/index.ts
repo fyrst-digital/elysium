@@ -1,6 +1,7 @@
+import slide from '../slide'
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware 
+const { Component, Mixin, Store } = Shopware 
 const { mapMutations, mapState } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
@@ -26,14 +27,22 @@ export default Component.wrapComponentConfig({
 
     computed: {
 
+        slide () {
+            return Store.get('elysiumSlide').slide
+        },
+
+        device () {
+            return Store.get('elysiumUI').device
+        },
+
         ...mapState('blurElysiumSlide', [
-            'slide',
+            // 'slide',
             'mediaSidebar',
             'currentDevice'
         ]),
 
-        viewportSettings () {
-            return this.viewportsSettings[this.currentDevice]
+        slideViewportSettings () {
+            return this.slide.slideSettings.viewports[this.device]
         },
 
         tabs () {
