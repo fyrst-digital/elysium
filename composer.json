@@ -1,5 +1,5 @@
 {
-    "name": "blurcreative/elysium-slider",
+    "name": "fyrst/elysium",
     "description": "A flexible, reusable and feature rich Slider for Shopware 6",
     "keywords": [
         "Shopware",
@@ -9,27 +9,32 @@
         "Banner",
         "Slider"
     ],
-    "version": "3.6.3",
+    "version": "4.0.0",
     "type": "shopware-platform-plugin",
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
         {
-            "name": "Robert Bisovski"
+            "name": "Robert Bisovski",
+            "email": "robert@fyrst.digital",
+            "homepage": "https://fyrst.digital"
         }
     ],
     "require": {
-        "shopware/core": "^6.6.8"
+        "shopware/core": "^6.6.8 || ^6.7.0"
+    },
+    "replace": {
+        "blurcreative/elysium-slider": "*"
     },
     "extra": {
         "shopware-plugin-class": "Blur\\BlurElysiumSlider\\BlurElysiumSlider",
         "label": {
-            "de-DE": "Elysium Slider und Banner",
-            "en-GB": "Elysium Slider and Banner"
+            "de-DE": "Elysium — Erlebniswelten Sektion, Slider, Banner und Slide Builder",
+            "en-GB": "Elysium — Shopping experience Section, Slider, Banner and Slide Builder"
         },
         "description": {
-            "de-DE": "Ein flexibler, wiederverwendbarer und umfangreicher Slider für die Shopware 6 Erlebniswelten",
-            "en-GB": "A flexible, reusable and feature rich Slider for Shopware 6"
+            "de-DE": "Erstelle mit dem Slide Builder ansprechende Slides und arrangiere sie in Banner oder Slider Elementen. Nutze dabei die Elysium Sektion für die Gestaltung von Erlebniswelten-Layouts",
+            "en-GB": "Create engaging slides with the Slide Builder and arrange them in banner or slider elements. Use the Elysium section for designing Shopping experience layouts."
         }
     },
     "autoload": {
