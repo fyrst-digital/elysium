@@ -1,7 +1,7 @@
 import defaultSlideSettings from 'blurElysium/component/slides/settings'
 import template from './template.html.twig'
 
-const { Component, State, Context, Mixin, Data, Utils } = Shopware
+const { Component, State, Context, Mixin, Data, Utils, Store } = Shopware
 const { Criteria } = Data
 const { mapMutations, mapState } = Component.getComponentHelper()
 
@@ -68,6 +68,14 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
+
+        slideState () {
+            return Store.get('elysiumSlide')
+        },
+
+        device () {
+            return Store.get('elysiumUI').device
+        },
 
         ...mapState('blurElysiumSlide', [
             'slide',
@@ -188,7 +196,15 @@ export default Component.wrapComponentConfig({
             State.commit('context/resetLanguageToDefault')
             const slide = this.slidesRepository.create(Context.api)
             Object.assign(slide, { slideSettings: this.defaultSlideSettings })
+            this.slideState.slide = slide
+
+            /**
+             * @deprecated - this.setSlide will be removed
+             * Vuex store gets replaced by Pinia (Shopware.Store)
+             * Will be removed in 4.0.0 release
+             */
             this.setSlide(slide)
+
             this.isLoading = false
         },
 
@@ -242,12 +258,26 @@ export default Component.wrapComponentConfig({
                 return
             }
 
-            if (this.slide.slideSettings.slide.linking.type === 'product' && (this.slide.productId === undefined || this.slide.productId === null || this.slide.productId === '')) {
+            console.log('detail page', this.slideState.slide)
+
+            if (
+                this.slideState.slide.slideSettings.slide.linking.type === 'product' &&
+                [undefined, null, ''].includes(this.slideState.slide.productId)
+            ) {
                 this.createNotificationError({
                     message: this.$t('blurElysiumSlides.messages.productLinkingMissingEntity')
                 })
                 return
             }
+
+            return
+
+            // if (this.slide.slideSettings.slide.linking.type === 'product' && (this.slide.productId === undefined || this.slide.productId === null || this.slide.productId === '')) {
+            //     this.createNotificationError({
+            //         message: this.$t('blurElysiumSlides.messages.productLinkingMissingEntity')
+            //     })
+            //     return
+            // }
 
             this.isLoading = true
 
