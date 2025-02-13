@@ -8,7 +8,7 @@
         v-for="viewport in viewports"
         :class="[
             'blur-device-switch-item',
-            viewport.name === activeViewport ? 'active' : null
+            viewport.name === device ? 'active' : null
         ]"
         @click="changeViewport(viewport.name)">
 

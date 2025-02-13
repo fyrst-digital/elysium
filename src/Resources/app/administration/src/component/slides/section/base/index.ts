@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware 
+const { Component, Mixin, Store } = Shopware 
 const { mapState } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
@@ -17,6 +17,10 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
+        device () {
+            return Store.get('elysiumUI').device
+        },
+
         ...mapState('blurElysiumSlide', [
             'currentDevice'
         ]),

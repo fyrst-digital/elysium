@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware 
+const { Component, Mixin, Store } = Shopware 
 const { mapMutations, mapState, mapGetters } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
@@ -14,14 +14,23 @@ export default Component.wrapComponentConfig({
 
     data () {
         return {
+            /** @deprecated may be deprected - replaced by slideViewportSettings */
             viewportsSettings: null,
         }
     },
 
     computed: {
 
+        slide () {
+            return Store.get('elysiumSlide').slide
+        },
+
+        device () {
+            return Store.get('elysiumUI').device
+        },
+
         ...mapState('blurElysiumSlide', [
-            'slide',
+            // 'slide',
             'currentDevice'
         ]),
 
@@ -33,9 +42,14 @@ export default Component.wrapComponentConfig({
             return this.getApiError(this.slide, 'name');
         },
 
+        /** @deprecated may be deprected - replaced by slideViewportSettings */
         viewportSettings () {
             return this.viewportsSettings[this.currentDevice]
-        }
+        },
+
+        slideViewportSettings () {
+            return this.slide.slideSettings.viewports[this.device]
+        },
     },
 
     methods: {
@@ -47,6 +61,7 @@ export default Component.wrapComponentConfig({
     },
 
     created () {
+        /** @deprecated may be deprected - replaced by slideViewportSettings */
         this.viewportsSettings = this.slide.slideSettings.viewports
     }
 })

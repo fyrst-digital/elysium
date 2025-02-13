@@ -1,4 +1,4 @@
-const { Mixin, Component } = Shopware;
+const { Mixin, Component, Store } = Shopware;
 const { mapMutations } = Component.getComponentHelper()
 
 // give the mixin a name and feed it into the register function as the second argument
@@ -12,8 +12,9 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
     },
 
     computed: {
+
         currentViewportIndex () {
-            return Object.entries(this.viewportsSettings).findIndex(element => element[0] === this.currentDevice)
+            return Object.entries(this.viewportsSettings).findIndex(element => element[0] === this.device)
         },
     },
 
@@ -25,11 +26,11 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
 
         deviceSwitch (device: string) {
             if (device === "desktop") {
-                this.setCurrentDevice("mobile");
+                this.device = "mobile"
             } else if (device === "mobile") {
-                this.setCurrentDevice("tablet");
+                this.device = "tablet"
             } else if (device === "tablet") {
-                this.setCurrentDevice("desktop");
+                this.device = "desktop"
             }
         },
 
