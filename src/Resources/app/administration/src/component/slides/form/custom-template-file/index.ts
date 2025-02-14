@@ -1,28 +1,22 @@
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware 
-const { mapMutations, mapState } = Component.getComponentHelper()
+const { Component, Mixin, Store } = Shopware 
 
 export default Component.wrapComponentConfig({
     template,
 
     mixins: [
         Mixin.getByName('placeholder'),
-        Mixin.getByName('blur-device-utilities')
     ],
 
     computed: {
 
-        ...mapState('blurElysiumSlide', [
-            'slide',
-            'currentDevice'
-        ]),
-    },
+        elysiumSlide () {
+            return Store.get('elysiumSlide')
+        },
 
-    methods: {
-
-        ...mapMutations('blurElysiumSlide', [
-            'setSlide'
-        ]),
+        slide () {
+            return this.elysiumSlide.slide
+        },
     },
 })

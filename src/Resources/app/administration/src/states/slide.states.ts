@@ -26,6 +26,10 @@ export default {
             this.slide = slide;
         },
 
+        setCustomFieldSet(customFieldSet: any): void {
+            this.customFieldSet = customFieldSet;
+        },
+
         setSlideProp({ key, value }: { key: string; value: any }): void {
             if (this.slide) {
                 this.slide[key] = value;

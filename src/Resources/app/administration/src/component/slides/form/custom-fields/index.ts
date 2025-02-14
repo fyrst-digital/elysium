@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware 
+const { Component, Mixin, Store } = Shopware 
 const { mapState } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
@@ -13,18 +13,20 @@ export default Component.wrapComponentConfig({
 
     computed: {
 
-        ...mapState('blurElysiumSlide', [
-            'slide',
-            'currentDevice',
-            'customFieldSet'
-        ]),
+        elysiumSlide () {
+            return Store.get('elysiumSlide')
+        },
+
+        slide () {
+            return this.elysiumSlide.slide
+        },
+
+        customFieldSet () {
+            return this.elysiumSlide.customFieldSet
+        },
 
         hasCustomFields () {
-            if (this.customFieldSet.total > 0) {
-                return true
-            }
-
-            return false
+            return this.customFieldSet.total > 0 ? true : false
         },
     }
 })
