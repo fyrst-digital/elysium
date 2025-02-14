@@ -12,7 +12,6 @@ import 'blurElysium/styles/mt-fixes.scss'
 import 'blurElysium/styles/components.scss'
 import 'blurElysium/mixin/device-utilities.mixin'
 import 'blurElysium/mixin/style-utilities.mixin'
-import 'blurElysium/mixin/media.mixin'
 import 'blurElysium/module/blur-elysium-slides'
 // cms elements
 import 'blurElysium/component/cms/elements/blur-elysium-slider'
@@ -23,7 +22,6 @@ import 'blurElysium/component/cms/blocks/blur-elysium-banner'
 import 'blurElysium/component/cms/blocks/blur-elysium-block-two-col'
 // extensions
 import 'blurElysium/extension/sw-cms-sidebar'
-import slide from 'blurElysium/component/slides/form/slide'
 
 const { Component, Locale, State, Application, Store } = Shopware
 
@@ -73,7 +71,6 @@ Component.register('blur-device-select-input', () => import('blurElysium/compone
 /** Elysium components */
 Component.register('blur-elysium-block-two-col-config', () => import('blurElysium/component/utilities/block-two-col-config'))
 Component.register('blur-elysium-icon', () => import('blurElysium/component/utilities/icon'))
-Component.register('blur-elysium-media-upload', () => import('blurElysium/component/media-upload'))
 Component.register('blur-elysium-settings', () => import('blurElysium/component/settings'))
 Component.register('blur-elysium-slides-detail-view', () => import('blurElysium/component/utilities/detail-view'))
 Component.register('blur-elysium-slides-overview', () => import('blurElysium/component/slides/overview'))
