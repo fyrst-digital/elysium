@@ -69,6 +69,10 @@ export default Component.wrapComponentConfig({
 
     computed: {
 
+        elysiumUI () {
+            return Store.get('elysiumUI')
+        },
+
         slideState () {
             return Store.get('elysiumSlide')
         },
@@ -189,8 +193,12 @@ export default Component.wrapComponentConfig({
             'setSlide',
             'setSlideProperty',
             'setCustomFieldSet',
-            'setMediaSidebar'
+            // 'setMediaSidebar'
         ]),
+
+        setMediaSidebar (element) {
+            this.elysiumUI.setMediaSidebar(element)
+        },
 
         createSlide () {
             State.commit('context/resetLanguageToDefault')

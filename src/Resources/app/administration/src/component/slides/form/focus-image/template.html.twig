@@ -9,7 +9,7 @@
         <blur-device-switch 
             layout="row"
             show-label="false"
-            :default-viewport="currentDevice"
+            :default-viewport="device"
             :style="{
                 padding: '0',
                 width: '100%',
@@ -31,15 +31,24 @@
                 desktop: { borderRight: '1px solid var(--color-border-primary-default)' }
             })">
 
-            <blur-elysium-media-upload 
-                allowed-file="image/*"
-                :uploadTag="'blur-elysium-slide-focus-image'" 
-                :media="focusImageMedia" 
+            <sw-upload-listener
+                upload-tag="blur-elysium-slide-focus-image"
+                auto-upload
+                @media-upload-finish="setFocusImage"
+            />
+            <sw-media-upload-v2
+                variant="regular"
+                label="Medium"
                 :disabled="!(permissionCreate || permissionEdit)"
-                @media-remove="payload => resetMedia( 'presentationMedia' )"
-                @upload-finished="payload => setMedia( 'presentationMedia', payload.targetId )"
-                @media-dropped="payload => setMedia( 'presentationMedia', payload.id, 'image')"
-                @media-sidebar-open="mediaSidebar.openContent()" />
+                file-accept="image/*"
+                upload-tag="blur-elysium-slide-focus-image"
+                :source="focusImage"
+                :allow-multi-select="false"
+                :default-folder="'blur_elysium_slides'"
+                @media-drop="setFocusImage"
+                @media-upload-remove-image="removeFocusImage"
+                @media-upload-sidebar-open="mediaSidebar.openContent()"
+            />
         </blur-column>
 
         <blur-column
@@ -53,8 +62,8 @@
                 <blur-column>
                     <mt-switch 
                         class="blur-switch-input"
-                        @change="viewportSettings.image.imageFullWidth = $event"
-                        :checked="viewportSettings.image.imageFullWidth"
+                        @change="slideViewportSettings.image.imageFullWidth = $event"
+                        :checked="slideViewportSettings.image.imageFullWidth"
                         :label="$tc('blurElysiumSlides.forms.focusImage.fullWidth')" />
                 </blur-column>
 
@@ -63,10 +72,10 @@
                         :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
                         :placeholder="viewportsPlaceholder('image.maxWidth', $t('blurElysium.general.noLimit'))"
                         :show-device="true"
-                        :device="currentDevice"
+                        :device="device"
                         @on-device="deviceSwitch"
-                        :model-value="viewportSettings.image.maxWidth"
-                        @update-value="value => viewportSettings.image.maxWidth = value" /> 
+                        :model-value="slideViewportSettings.image.maxWidth"
+                        @update-value="value => slideViewportSettings.image.maxWidth = value" /> 
                 </blur-column>
 
                 <blur-column>
@@ -78,10 +87,10 @@
                             { value: 'center', label: $tc('blurElysium.general.jusitifyCenter') },
                             { value: 'flex-end', label: $tc('blurElysium.general.jusitifyEnd') }
                         ]"
-                        :device="currentDevice"
+                        :device="device"
                         :show-device="true"
                         @on-device="deviceSwitch"
-                        v-model:value="viewportSettings.image.justifyContent" />
+                        v-model:value="slideViewportSettings.image.justifyContent" />
                 </blur-column>
             </blur-section>
         </blur-column>

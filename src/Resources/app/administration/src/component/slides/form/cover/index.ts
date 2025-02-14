@@ -32,22 +32,25 @@ export default Component.wrapComponentConfig({
 
     computed: {
 
+        elysiumUI () {
+            return Store.get('elysiumUI')
+        },
+
         slide () {
             return Store.get('elysiumSlide').slide
         },
 
         device () {
-            return Store.get('elysiumUI').device
+            return this.elysiumUI.device
+        },
+
+        mediaSidebar () {
+            return this.elysiumUI.mediaSidebar
         },
 
         mediaRepository () {
             return this.repositoryFactory.create('media')
         },
-
-        ...mapState('blurElysiumSlide', [
-            // 'slide',
-            'mediaSidebar',
-        ]),
 
         slideViewportSettings () {
             return this.slide.slideSettings.viewports[this.device]
@@ -157,14 +160,4 @@ export default Component.wrapComponentConfig({
     created () {
         this.viewportsSettings = this.slide.slideSettings.viewports
     },
-
-    mounted () {
-        if (this.$refs.coverVideoUploadElement && this.$refs.coverVideoUploadElement.onClickUpload) {
-            const originalClickUpload = this.$refs.coverVideoUploadElement.onClickUpload.bind(this.$refs.coverVideoUploadElement);
-            this.$refs.coverVideoUploadElement.onClickUpload = (...args: any[]) => {
-                // Your custom logic before
-                console.log('onClickUpload was called');
-            };
-        }
-    }
 })
