@@ -13,7 +13,7 @@ export default {
 
     state: (): UIState => ({
         device: 'desktop',
-        mediaSidebar: null,
+        mediaSidebar: null
     }),
 
     actions: {

@@ -64,9 +64,8 @@
                             :source="slideCover"
                             :allow-multi-select="false"
                             :default-folder="'blur_elysium_slides'"
-                            @media-drop="setSlideCover"
                             @media-upload-remove-image="removeSlideCover"
-                            @media-upload-sidebar-open="mediaSidebar.openContent()"
+                            @media-upload-sidebar-open="openMediaModal"
                         />
                     </blur-column>
 
@@ -97,9 +96,8 @@
                                 :source="slideCoverVideo"
                                 :allow-multi-select="false"
                                 :default-folder="'blur_elysium_slides'"
-                                @media-drop="payload => setSlideCover(payload, true)"
                                 @media-upload-remove-image="removeSlideCover(true)"
-                                @media-upload-sidebar-open="mediaSidebar.openContent()"
+                                @media-upload-sidebar-open="openMediaModal('slideCoverVideo')"
                             />
                     </blur-column>
 
@@ -164,5 +162,13 @@
         </blur-column>
 
     </blur-section>
+
+    <sw-media-modal-v2
+        v-if="mediaModal.open"
+        :allow-multi-select="false"
+        entity-context="blur_elysium_slides"
+        @media-modal-selection-change="onAddMediaModal"
+        @modal-close="closeMediaModal" 
+    />
 
 </mt-card>

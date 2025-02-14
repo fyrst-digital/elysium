@@ -27,6 +27,10 @@ export default Component.wrapComponentConfig({
                 desktop: 'slideCover'
             },
             mediaLoading: false,
+            mediaModal: {
+                open: false,
+                type: null
+            }
         }
     },
 
@@ -155,6 +159,28 @@ export default Component.wrapComponentConfig({
             this.slide[`${mediaProp}Id`] = null;
             this.slide[mediaProp] = null;
         },
+
+        openMediaModal (type: string = 'slideCover') {
+            this.mediaModal.open = true
+            this.mediaModal.type = type
+        },
+
+        closeMediaModal () {
+            this.mediaModal.open = false
+            this.mediaModal.type = null
+        },
+
+        onAddMediaModal (payload) {
+            
+            if (payload.length > 0) {
+                if (this.mediaModal.type === 'slideCover') {
+                    this.setSlideCover(payload[0])
+                } else if (this.mediaModal.type === 'slideCoverVideo') {
+                    this.setSlideCover(payload[0], true)
+                    
+                }
+            }
+        }
     },
 
     created () {
