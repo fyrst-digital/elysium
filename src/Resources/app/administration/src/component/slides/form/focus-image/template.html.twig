@@ -45,9 +45,8 @@
                 :source="focusImage"
                 :allow-multi-select="false"
                 :default-folder="'blur_elysium_slides'"
-                @media-drop="setFocusImage"
                 @media-upload-remove-image="removeFocusImage"
-                @media-upload-sidebar-open="mediaSidebar.openContent()"
+                @media-upload-sidebar-open="mediaModal.open = true"
             />
         </blur-column>
 
@@ -95,4 +94,12 @@
             </blur-section>
         </blur-column>
     </blur-section>
+
+    <sw-media-modal-v2
+        v-if="mediaModal.open"
+        :allow-multi-select="false"
+        entity-context="blur_elysium_slides"
+        @media-modal-selection-change="onAddMediaModal"
+        @modal-close="mediaModal.open = false" 
+    />
 </mt-card>

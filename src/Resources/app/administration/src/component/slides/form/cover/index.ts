@@ -177,7 +177,6 @@ export default Component.wrapComponentConfig({
                     this.setSlideCover(payload[0])
                 } else if (this.mediaModal.type === 'slideCoverVideo') {
                     this.setSlideCover(payload[0], true)
-                    
                 }
             }
         }

@@ -20,6 +20,10 @@ export default Component.wrapComponentConfig({
     data () {
         return {
             mediaLoading: false,
+            mediaModal: {
+                open: false,
+                type: null
+            }
         }
     },
 
@@ -115,6 +119,10 @@ export default Component.wrapComponentConfig({
             this.slide.presentationMediaId = null;
             this.slide.presentationMedia = null;
         },
+
+        onAddMediaModal (payload) {
+            this.setFocusImage(payload[0])
+        }
     },
 
     created () {
