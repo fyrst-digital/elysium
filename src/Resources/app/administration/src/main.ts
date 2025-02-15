@@ -17,7 +17,7 @@ import 'blurElysium/component/cms/blocks/blur-elysium-block-two-col'
 // extensions
 import 'blurElysium/extension/sw-cms-sidebar'
 
-const { Component, Locale, State, Application, Store } = Shopware
+const { Component, Locale, Application, Store } = Shopware
 
 /**
  * Register pinia stores
