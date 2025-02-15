@@ -8,7 +8,7 @@
         <blur-device-switch 
             layout="row"
             show-label="false"
-            :default-viewport="currentDevice"
+            :default-viewport="device"
             :style="{
                 padding: '0',
                 width: '100%',
@@ -35,25 +35,38 @@
             :cols-tablet="6"
             :cols-desktop="8"
             :style="viewStyle({
+                mobile:  { position: 'relative' },
                 desktop: { borderRight: '1px solid var(--color-border-primary-default)' }
             })">
+
+
+            <mt-loader v-if="mediaLoading" />
 
             <template v-if="activeTab === 'coverImage'">
 
                 <blur-section
                     gap-y
                     :description="$tc('blurElysiumSlides.forms.slideCoverImage.description')">
-
+    
                     <blur-column>
-                        <blur-elysium-media-upload 
-                            allowed-file="image/*"
-                            :uploadTag="coverImageUploadTag" 
-                            :media="coverImageMedia" 
+
+                        <sw-upload-listener
+                            :upload-tag="slideCoverUploadTag"
+                            auto-upload
+                            @media-upload-finish="setSlideCover"
+                        />
+                        <sw-media-upload-v2
+                            variant="regular"
+                            label="Medium"
                             :disabled="!(permissionCreate || permissionEdit)"
-                            @media-remove="payload => resetMedia( coverImageProperty )"
-                            @upload-finished="payload => setMedia( coverImageProperty, payload.targetId )"
-                            @media-dropped="payload => setMedia( coverImageProperty, payload.id, 'image')"
-                            @media-sidebar-open="mediaSidebar.openContent()" />
+                            file-accept="image/*"
+                            :upload-tag="slideCoverUploadTag"
+                            :source="slideCover"
+                            :allow-multi-select="false"
+                            :default-folder="'blur_elysium_slides'"
+                            @media-upload-remove-image="removeSlideCover"
+                            @media-upload-sidebar-open="openMediaModal"
+                        />
                     </blur-column>
 
                 </blur-section>
@@ -63,19 +76,29 @@
 
                 <blur-section
                     gap-y
-                    :description="$tc('blurElysiumSlides.forms.slideCoverVideo.description')">
+                    :description="$tc('blurElysiumSlides.forms.slideCoverVideo.description')"
+                    >
 
-                    <blur-column>
-                        <blur-elysium-media-upload 
-                            allowed-file="image/*"
-                            :uploadTag="'blur-elysium-slide-cover-video'" 
-                            :media="coverVideoMedia" 
-                            :disabled="!(permissionCreate || permissionEdit)"
-                            :style="{ gridColumnEnd: 'span 12' }"
-                            @media-remove="payload => resetMedia( 'slideCoverVideo' )"
-                            @upload-finished="payload => setMedia( 'slideCoverVideo', payload.targetId )"
-                            @media-dropped="payload => setMedia( 'slideCoverVideo', payload.id, 'image')"
-                            @media-sidebar-open="mediaSidebar.openContent()" />
+                    <blur-column>  
+
+                            <sw-upload-listener
+                                upload-tag="blur-elysium-slide-cover-video"
+                                auto-upload
+                                @media-upload-finish="payload => setSlideCover(payload, true)"
+                            />
+                            <sw-media-upload-v2
+                                ref="coverVideoUploadElement"
+                                variant="regular"
+                                label="Medium"
+                                :disabled="!(permissionCreate || permissionEdit)"
+                                file-accept="video/*"
+                                upload-tag="blur-elysium-slide-cover-video"
+                                :source="slideCoverVideo"
+                                :allow-multi-select="false"
+                                :default-folder="'blur_elysium_slides'"
+                                @media-upload-remove-image="removeSlideCover(true)"
+                                @media-upload-sidebar-open="openMediaModal('slideCoverVideo')"
+                            />
                     </blur-column>
 
                 </blur-section>
@@ -94,7 +117,7 @@
                     <blur-select-input 
                         :label="$tc('blurElysium.general.objectPosY')" 
                         :placeholder="viewportsPlaceholder('coverMedia.objectPosY', 'center', 'blurElysium.general')"
-                        :device="currentDevice"
+                        :device="device"
                         :show-device="true"
                         :options="[
                             { value: 'top', label: $tc('blurElysium.general.top') },
@@ -102,14 +125,14 @@
                             { value: 'bottom', label: $tc('blurElysium.general.bottom') }
                         ]"
                         @on-device="deviceSwitch"
-                        v-model:value="viewportSettings.coverMedia.objectPosY" />
+                        v-model:value="slideViewportSettings.coverMedia.objectPosY" />
                 </blur-column>
 
                 <blur-column>
                     <blur-select-input
                         :label="$tc('blurElysium.general.objectPosX')" 
                         :placeholder="viewportsPlaceholder('coverMedia.objectPosX', 'center', 'blurElysium.general')"
-                        :device="currentDevice"
+                        :device="device"
                         :show-device="true"
                         :options="[
                             { value: 'left', label: $tc('blurElysium.general.left') },
@@ -117,14 +140,14 @@
                             { value: 'right', label: $tc('blurElysium.general.right') }
                         ]"
                         @on-device="deviceSwitch"
-                        v-model:value="viewportSettings.coverMedia.objectPosX" />
+                        v-model:value="slideViewportSettings.coverMedia.objectPosX" />
                 </blur-column>
 
                 <blur-column>
                     <blur-select-input 
                         :label="$tc('blurElysium.general.objectFit')" 
                         :placeholder="viewportsPlaceholder('coverMedia.objectFit', 'cover', 'blurElysium.general')"
-                        :device="currentDevice"
+                        :device="device"
                         :show-device="true"
                         :options="[
                             { value: 'cover', label: $tc('blurElysium.general.cover') },
@@ -132,12 +155,20 @@
                             { value: 'auto', label: $tc('blurElysium.general.auto') }
                         ]"
                         @on-device="deviceSwitch"
-                        v-model:value="viewportSettings.coverMedia.objectFit" />
+                        v-model:value="slideViewportSettings.coverMedia.objectFit" />
                 </blur-column>
 
             </blur-section>
         </blur-column>
 
     </blur-section>
+
+    <sw-media-modal-v2
+        v-if="mediaModal.open"
+        :allow-multi-select="false"
+        entity-context="blur_elysium_slides"
+        @media-modal-selection-change="onAddMediaModal"
+        @modal-close="closeMediaModal" 
+    />
 
 </mt-card>

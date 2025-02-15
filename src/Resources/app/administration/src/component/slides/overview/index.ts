@@ -2,7 +2,7 @@ import { module } from 'blurElysium/meta';
 import template from './template.html.twig'
 import EntityCollection from 'shopware/core/data/entity-collection.data';
 
-const { Component, Mixin, Data, State, Filter, Context } = Shopware
+const { Component, Mixin, Data, State, Filter, Context, Store } = Shopware
 const { Criteria } = Data
 
 type SortDirection = 'ASC' | 'DESC' 

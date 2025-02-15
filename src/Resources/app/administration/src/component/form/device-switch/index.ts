@@ -1,8 +1,7 @@
 import template from './template.html.twig'
 import './style.scss'
 
-const { Component } = Shopware 
-const { mapState, mapMutations } = Component.getComponentHelper()
+const { Component, Store } = Shopware 
 
 export default Component.wrapComponentConfig({
     template,
@@ -48,22 +47,16 @@ export default Component.wrapComponentConfig({
 
     computed: {
 
-        ...mapState('blurElysiumSlide', [
-            'currentDevice'
-        ]),
-
-        activeViewport () {
-            return this.currentDevice !== null ? this.currentDevice : this.defaultViewport
+        device () {
+            return Store.get('elysiumUI').device
         },
+
     },
 
     methods: {
-        ...mapMutations('blurElysiumSlide', [
-            'setCurrentDevice'
-        ]),
 
         changeViewport (viewport: string) {
-            this.setCurrentDevice(viewport)
+            Store.get('elysiumUI').setDevice(viewport)
             this.$emit('change-viewport', viewport)
         }
     }

@@ -86,11 +86,11 @@
         <blur-number-input 
             :label="$tc('blurElysium.general.fontSize')"
             :placeholder="viewportsPlaceholder('headline.fontSize', 20)"
-            :device="currentDevice"
+            :device="device"
             :show-device="true"
-            :model-value="viewportSettings.headline.fontSize"
+            :model-value="slideViewportSettings.headline.fontSize"
             @on-device="deviceSwitch" 
-            @update-value="value => viewportSettings.headline.fontSize = value" />
+            @update-value="value => slideViewportSettings.headline.fontSize = value" />
     </blur-column>
 
     <blur-column 
@@ -133,12 +133,12 @@
             <blur-column>
                 <blur-number-input 
                     :label="$tc('blurElysium.general.fontSize')"
-                    :device="currentDevice"
+                    :device="device"
                     :placeholder="viewportsPlaceholder('description.fontSize', 14)"
                     :show-device="true"
                     @on-device="deviceSwitch"
-                    :model-value="viewportSettings.description.fontSize"
-                    @update-value="value => viewportSettings.description.fontSize = value" />
+                    :model-value="slideViewportSettings.description.fontSize"
+                    @update-value="value => slideViewportSettings.description.fontSize = value" />
             </blur-column>
         </blur-section>
 

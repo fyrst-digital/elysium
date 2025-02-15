@@ -1,14 +1,13 @@
+import slide from '../slide'
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware 
-const { mapMutations, mapState } = Component.getComponentHelper()
+const { Component, Mixin, Store, Context } = Shopware 
 
 export default Component.wrapComponentConfig({
     template,
 
     mixins: [
         Mixin.getByName('notification'),
-        Mixin.getByName('blur-media'),
         Mixin.getByName('blur-device-utilities'),
         Mixin.getByName('blur-style-utilities')
     ],
@@ -20,20 +19,44 @@ export default Component.wrapComponentConfig({
 
     data () {
         return {
-            activeTab: 'coverImage'
+            activeTab: 'coverImage',
+            slideCoverMapping: {
+                mobile: 'slideCoverMobile',
+                tablet: 'slideCoverTablet',
+                desktop: 'slideCover'
+            },
+            mediaLoading: false,
+            mediaModal: {
+                open: false,
+                type: null
+            }
         }
     },
 
     computed: {
 
-        ...mapState('blurElysiumSlide', [
-            'slide',
-            'mediaSidebar',
-            'currentDevice'
-        ]),
+        elysiumUI () {
+            return Store.get('elysiumUI')
+        },
 
-        viewportSettings () {
-            return this.viewportsSettings[this.currentDevice]
+        slide () {
+            return Store.get('elysiumSlide').slide
+        },
+
+        device () {
+            return this.elysiumUI.device
+        },
+
+        mediaSidebar () {
+            return this.elysiumUI.mediaSidebar
+        },
+
+        mediaRepository () {
+            return this.repositoryFactory.create('media')
+        },
+
+        slideViewportSettings () {
+            return this.slide.slideSettings.viewports[this.device]
         },
 
         tabs () {
@@ -49,50 +72,30 @@ export default Component.wrapComponentConfig({
             ]
         },
 
-        coverImageUploadTag () {
+        slideCoverUploadTag () {
             const uploadTag = {
                 mobile: 'blur-elysium-slide-cover-mobile',
                 tablet: 'blur-elysium-slide-cover-tablet',
                 desktop: 'blur-elysium-slide-cover'
             }
 
-            return uploadTag[this.currentDevice]
+            return uploadTag[this.device]
         },
 
-        coverImageMedia () {
-            if (this.currentDevice === 'mobile' && this.slide.slideCoverMobile) {
-                return this.slide.slideCoverMobile
-            }
-            if (this.currentDevice === 'tablet' && this.slide.slideCoverTablet) {
-                return this.slide.slideCoverTablet
-            }
-            if (this.currentDevice === 'desktop' && this.slide.slideCover) {
-                return this.slide.slideCover
-            }
-                
-            return null
+        slideCover () {
+            return this.slide[this.slideCoverMapping[this.device]] ?? null
         },
 
-        coverImageProperty () {
-            if (this.currentDevice === 'mobile') {
-                return 'slideCoverMobile'
-            }
-            if (this.currentDevice === 'tablet') {
-                return 'slideCoverTablet'
-            }
-            if (this.currentDevice === 'desktop') {
-                return 'slideCover'
-            }
-            
-            return null
+        slideCoverProp () {
+            return this.slideCoverMapping[this.device]
         },
 
-        coverVideoMedia () {
-            if (this.slide.slideCoverVideo) {
-                return this.slide.slideCoverVideo
-            }
+        slideCoverVideo () {
+            return this.slide.slideCoverVideo ?? null
+        },
 
-            return null
+        coverVideoUploadElement () {
+            return this.$refs.coverVideoUpload ?? null
         },
 
         permissionView() {
@@ -114,30 +117,71 @@ export default Component.wrapComponentConfig({
 
     methods: {
 
-        ...mapMutations('blurElysiumSlide', [
-            'setSlideProperty'
-        ]),
-    },
+        setSlideCover (media: any, isVideo: boolean = false) {
+            this.mediaLoading = true
 
-    watch: {
-        'slide.slideCoverMobileId'(value: string | null) {
-            if (value !== null) {
-                this.fetchMedia(value, 'slideCoverMobile')
+            let mediaId = media.id || media.targetId || null
+            let mediaProp = isVideo ===  true ? 'slideCoverVideo' : this.slideCoverProp
+
+            if (mediaId === null) {
+                // throw error message because mediaId is null
+                console.error('mediaId is null. Slide cover media can not be set.')
+                this.mediaLoading = false
+            } else {
+                // mediaId is provided handle media assignment
+                this.slide[`${mediaProp}Id`] = mediaId
+
+                if (media.path) {
+
+                    // The media already exists in the system no need to fetch it. Use the already existing media object
+                    this.slide[mediaProp] = media;
+                    this.mediaLoading = false
+                } else {
+
+                    // The media does not exist in the system. Fetch the media object from media repository
+                    this.mediaRepository.get(
+                        mediaId,
+                        Context.api
+                    ).then((media) => {
+                        this.slide[mediaProp] = media;
+                        this.mediaLoading = false
+                    }).catch((exception) => {
+                        console.error(exception)
+                        this.mediaLoading = false
+                    })
+                }
             }
         },
-        'slide.slideCoverTabletId'(value: string | null) {
-            if (value !== null) {
-                this.fetchMedia(value, 'slideCoverTablet')
-            }
+
+        removeSlideCover (isVideo: boolean = false) {
+            let mediaProp = isVideo ===  true ? 'slideCoverVideo' : this.slideCoverProp
+            this.slide[`${mediaProp}Id`] = null;
+            this.slide[mediaProp] = null;
         },
-        'slide.slideCoverId'(value: string | null) {
-            if (value !== null) {
-                this.fetchMedia(value, 'slideCover')
-            }
+
+        openMediaModal (type: string = 'slideCover') {
+            this.mediaModal.open = true
+            this.mediaModal.type = type
         },
+
+        closeMediaModal () {
+            this.mediaModal.open = false
+            this.mediaModal.type = null
+        },
+
+        onAddMediaModal (payload) {
+            
+            if (payload.length > 0) {
+                if (this.mediaModal.type === 'slideCover') {
+                    this.setSlideCover(payload[0])
+                } else if (this.mediaModal.type === 'slideCoverVideo') {
+                    this.setSlideCover(payload[0], true)
+                }
+            }
+        }
     },
 
     created () {
         this.viewportsSettings = this.slide.slideSettings.viewports
-    }
+    },
 })

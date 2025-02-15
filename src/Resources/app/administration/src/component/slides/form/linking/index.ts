@@ -1,26 +1,26 @@
 import template from './template.html.twig'
 import { buttonColors, buttonSizes } from 'blurElysium/component/utilities/settings/buttons'
 
-const { Component, Mixin } = Shopware 
-const { mapMutations, mapState } = Component.getComponentHelper()
+const { Component, Mixin, Store } = Shopware 
 
 export default Component.wrapComponentConfig({
     template,
 
     mixins: [
-        Mixin.getByName('placeholder'),
-        Mixin.getByName('blur-device-utilities')
+        Mixin.getByName('placeholder')
     ],
 
     computed: {
 
-        ...mapState('blurElysiumSlide', [
-            'slide',
-            'currentDevice'
-        ]),
+        slide () {
+            return Store.get('elysiumSlide').slide
+        },
 
         validateProduct () {
-            if (this.slide.slideSettings.slide.linking.type === 'product' && (this.slide.productId === undefined || this.slide.productId === null || this.slide.productId === '')) {
+            if (
+                this.slide.slideSettings.slide.linking.type === 'product' &&
+                [undefined, null, ''].includes(this.slide.productId)
+            ) {
                 return {
                     detail: this.$t('blurElysiumSlides.messages.productLinkingMissingEntity'),
                 }
@@ -46,12 +46,5 @@ export default Component.wrapComponentConfig({
                 }
             })
         }
-    },
-
-    methods: {
-
-        ...mapMutations('blurElysiumSlide', [
-            'setSlide'
-        ])
     },
 })

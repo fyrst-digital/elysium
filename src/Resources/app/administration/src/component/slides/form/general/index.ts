@@ -1,7 +1,7 @@
 import template from './template.html.twig'
 
-const { Component, Mixin } = Shopware 
-const { mapMutations, mapState, mapGetters } = Component.getComponentHelper()
+const { Component, Mixin, Store } = Shopware 
+const { mapGetters } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
     template,
@@ -12,18 +12,15 @@ export default Component.wrapComponentConfig({
         Mixin.getByName('blur-style-utilities')
     ],
 
-    data () {
-        return {
-            viewportsSettings: null,
-        }
-    },
-
     computed: {
 
-        ...mapState('blurElysiumSlide', [
-            'slide',
-            'currentDevice'
-        ]),
+        slide () {
+            return Store.get('elysiumSlide').slide
+        },
+
+        device () {
+            return Store.get('elysiumUI').device
+        },
 
         ...mapGetters('error', [
             'getApiError'
@@ -33,17 +30,9 @@ export default Component.wrapComponentConfig({
             return this.getApiError(this.slide, 'name');
         },
 
-        viewportSettings () {
-            return this.viewportsSettings[this.currentDevice]
-        }
-    },
-
-    methods: {
-
-        ...mapMutations('blurElysiumSlide', [
-            'setSlide',
-            'setCurrentDevice'
-        ]),
+        slideViewportSettings () {
+            return this.slide.slideSettings.viewports[this.device]
+        },
     },
 
     created () {

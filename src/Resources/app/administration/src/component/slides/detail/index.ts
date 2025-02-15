@@ -1,9 +1,8 @@
 import defaultSlideSettings from 'blurElysium/component/slides/settings'
 import template from './template.html.twig'
 
-const { Component, State, Context, Mixin, Data, Utils } = Shopware
+const { Component, State, Context, Mixin, Data, Utils, Store } = Shopware
 const { Criteria } = Data
-const { mapMutations, mapState } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
     template,
@@ -69,10 +68,21 @@ export default Component.wrapComponentConfig({
 
     computed: {
 
-        ...mapState('blurElysiumSlide', [
-            'slide',
-            'currentDevice'
-        ]),
+        elysiumUI () {
+            return Store.get('elysiumUI')
+        },
+
+        elysiumSlide () {
+            return Store.get('elysiumSlide')
+        },
+
+        device () {
+            return Store.get('elysiumUI').device
+        },
+
+        slide () {
+            return this.elysiumSlide.slide
+        },
 
         contentRoute () {
             if (this.newSlide === false) {
@@ -112,19 +122,6 @@ export default Component.wrapComponentConfig({
 
         customFieldSetRepository () {
             return this.repositoryFactory.create('custom_field_set')
-        },
-
-        customFieldSetCriteria () {
-            const criteria = new Criteria()
-
-            criteria.addFilter(
-                Criteria.equals('relations.entityName', 'blur_elysium_slides')
-            )
-
-            criteria.getAssociation('customFields')
-                    .addSorting(Criteria.sort('config.customFieldPosition'))
-
-            return criteria
         },
 
         cancelActionMessage (): string {
@@ -177,18 +174,15 @@ export default Component.wrapComponentConfig({
 
     methods: {
 
-        ...mapMutations('blurElysiumSlide', [
-            'setSlide',
-            'setSlideProperty',
-            'setCustomFieldSet',
-            'setMediaSidebar'
-        ]),
+        setMediaSidebar (element) {
+            this.elysiumUI.setMediaSidebar(element)
+        },
 
         createSlide () {
             State.commit('context/resetLanguageToDefault')
             const slide = this.slidesRepository.create(Context.api)
             Object.assign(slide, { slideSettings: this.defaultSlideSettings })
-            this.setSlide(slide)
+            this.slide = slide
             this.isLoading = false
         },
 
@@ -212,18 +206,28 @@ export default Component.wrapComponentConfig({
             ).then((slide) => {
                 const mergedSlideSettings = Utils.object.deepMergeObject(this.defaultSlideSettings, slide.slideSettings)
                 slide.slideSettings = mergedSlideSettings
-                this.setSlide(slide)
+                this.elysiumSlide.setSlide(slide)
+                this.loadCustomFieldSets()
             }).catch((exception) => {
                 console.warn(exception)
-            })
-
-            this.isLoading = false
+            }).finally(() => {
+                this.isLoading = false
+            });
         },
 
         loadCustomFieldSets () {
-            this.customFieldSetRepository.search(this.customFieldSetCriteria, Context.api)
+            const criteria = new Criteria()
+
+            criteria.addFilter(
+                Criteria.equals('relations.entityName', 'blur_elysium_slides')
+            )
+
+            criteria.getAssociation('customFields')
+                    .addSorting(Criteria.sort('config.customFieldPosition'))
+
+            this.customFieldSetRepository.search(criteria, Context.api)
             .then((result) => {
-                this.setCustomFieldSet(result)
+                this.elysiumSlide.setCustomFieldSet(result)
             }).catch((exception) => {
                 console.warn(exception)
             })
@@ -238,35 +242,38 @@ export default Component.wrapComponentConfig({
         },
 
         async saveSlide () {
-            if (!((this.newSlide && this.permissionCreate) || this.permissionEdit)) {
-                return
-            }
 
-            if (this.slide.slideSettings.slide.linking.type === 'product' && (this.slide.productId === undefined || this.slide.productId === null || this.slide.productId === '')) {
-                this.createNotificationError({
-                    message: this.$t('blurElysiumSlides.messages.productLinkingMissingEntity')
-                })
+            if (!((this.newSlide && this.permissionCreate) || this.permissionEdit)) {
                 return
             }
 
             this.isLoading = true
 
+            if (
+                this.slide.slideSettings.slide.linking.type === 'product' &&
+                [undefined, null, ''].includes(this.slide.productId)
+            ) {
+                this.createNotificationError({
+                    message: this.$t('blurElysiumSlides.messages.productLinkingMissingEntity')
+                })
+                this.isLoading = false
+                return
+            }
+
             this.slidesRepository.save(this.slide)
             .then((result) => {
 
                 this.createNotificationSuccess({
-                    message: this.$t('blurElysiumSlides.messages.slideSavedSuccess', { slide: this.slide.name })
+                    message: this.$t('blurElysiumSlides.messages.slideSavedSuccess', { slide: this.slide.name })    
                 })
 
                 if (this.newSlide === true) {
                     // push to detail route
                     this.detailPush(JSON.parse(result.config.data).id)
-                } else {
-                    // just load slide
-                    this.loadSlide()
                 }
+                
+                this.loadSlide();
 
-                this.isLoading = false
             }).catch((reason) => {
 
                 if (this.slide.name === undefined || this.slide.name === null || this.slide.name === '') {
@@ -319,6 +326,7 @@ export default Component.wrapComponentConfig({
                 })
                 return
             }
+            
             const cloneOptions = {
                 overwrites: {
                     name: `${this.slide.name}-${this.$tc('blurElysium.general.copySuffix')}`
@@ -333,61 +341,6 @@ export default Component.wrapComponentConfig({
                 console.warn(error)
             })
         },
-
-        setSlideCoverImage (media) {
-            const mappedViewportFields = {
-                mobile: 'slideCoverMobile',
-                tablet: 'slideCoverTablet',
-                desktop: 'slideCover'
-            }
-
-            if (this.mediaType(media.mimeType) === 'image') {
-                this.setSlideProperty({
-                    key: `${mappedViewportFields[this.currentDevice]}Id`,
-                    value: media.id
-                })
-                this.setSlideProperty({
-                    key: mappedViewportFields[this.currentDevice],
-                    value: media
-                })
-            } else {
-                console.warn('media must be an image')
-            }
-        },
-
-        setSlideCoverVideo (media) {
-            if (this.mediaType(media.mimeType) === 'video') {
-                this.setSlideProperty({
-                    key: 'slideCoverVideoId',
-                    value: media.id
-                })
-                this.setSlideProperty({
-                    key: 'slideCoverVideo',
-                    value: media
-                })
-            } else {
-                console.warn('media must be an image')
-            }
-        },
-
-        setFocusImage (media) {
-            if (this.mediaType(media.mimeType) === 'image') {
-                this.setSlideProperty({
-                    key: 'presentationMediaId',
-                    value: media.id
-                })
-                this.setSlideProperty({
-                    key: 'presentationMedia',
-                    value: media
-                })
-            } else {
-                console.warn('media must be an image')
-            }
-        },
-
-        mediaType (mimeType: string) {
-            return mimeType.split('/')[0]
-        }
     },
 
     created () {
@@ -395,7 +348,6 @@ export default Component.wrapComponentConfig({
             this.createSlide()
         } else {
             this.loadSlide()
-            this.loadCustomFieldSets()
         }
     }
 })
