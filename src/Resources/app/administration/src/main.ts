@@ -2,12 +2,6 @@ import enGB from 'blurElysium/snippet/en-GB.json'
 import deDE from 'blurElysium/snippet/de-DE.json'
 import slideStore from 'blurElysium/states/slide.states'
 import uiStore from 'blurElysium/states/ui.states'
-/**
- * @deprecated - slideState will be removed
- * Vuex store registration. Gets replaced by Pinia (Shopware.Store)
- * Will be removed in 4.0.0 release
- */
-import slideState from 'blurElysium/component/slides/store'
 import 'blurElysium/styles/mt-fixes.scss'
 import 'blurElysium/styles/components.scss'
 import 'blurElysium/mixin/device-utilities.mixin'
@@ -25,19 +19,14 @@ import 'blurElysium/extension/sw-cms-sidebar'
 
 const { Component, Locale, State, Application, Store } = Shopware
 
-
+/**
+ * Register pinia stores
+ */
 Store.register(slideStore)
 Store.register(uiStore)
 
 /**
- * @deprecated - State.registerModule will be removed
- * Vuex store registration. Gets replaced by Pinia (Shopware.Store)
- * Will be removed in 4.0.0 release
- */
-State.registerModule('blurElysiumSlide', slideState);
-
-/**
- * Global snippet registration
+ * Register global snnippets
  */
 Locale.extend('en-GB', enGB)
 Locale.extend('de-DE', deDE)

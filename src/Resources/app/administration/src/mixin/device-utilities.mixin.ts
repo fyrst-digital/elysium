@@ -20,10 +20,6 @@ export default Mixin.register('blur-device-utilities', Component.wrapComponentCo
 
     methods: {
 
-        // ...mapMutations('blurElysiumSlide', [
-        //     'setCurrentDevice'
-        // ]),
-
         deviceSwitch (device: string) {
             if (device === "desktop") {
                 this.device = "mobile"
