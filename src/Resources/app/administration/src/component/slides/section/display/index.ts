@@ -1,7 +1,6 @@
 import template from './template.html.twig'
 
 const { Component, Mixin, Store } = Shopware 
-const { mapState } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
     template,

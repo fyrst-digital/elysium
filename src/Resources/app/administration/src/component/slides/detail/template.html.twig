@@ -127,39 +127,4 @@
 
     </template>
 
-    <template #sidebar>
-
-        <sw-sidebar 
-            :propagate-width="true">
-
-            <sw-sidebar-media-item 
-                :ref="(el) => { setMediaSidebar(el) }">
-
-                <template #context-menu-items="media">
-                    
-                    <sw-context-menu-item 
-                        v-if="mediaType(media.mediaItem.mimeType) === 'image'"
-                        @click="setSlideCoverImage(media.mediaItem)">
-                        {{ $tc('blurElysiumSlides.forms.useMediaAsSlideCover') }}
-                    </sw-context-menu-item>
-
-                    <sw-context-menu-item 
-                        v-if="mediaType(media.mediaItem.mimeType) === 'video'"
-                        @click="setSlideCoverVideo(media.mediaItem)">
-                        {{ $tc('blurElysiumSlides.forms.useMediaAsSlideCover') }}
-                    </sw-context-menu-item>
-
-                    <sw-context-menu-item 
-                        v-if="mediaType(media.mediaItem.mimeType) === 'image'"
-                        @click="setFocusImage(media.mediaItem)">
-                        {{ $tc('blurElysiumSlides.forms.useMediaAsFocusImage') }}
-                    </sw-context-menu-item>
-
-                </template>
-
-            </sw-sidebar-media-item>
-
-        </sw-sidebar>
-    </template>
-
 </sw-page>

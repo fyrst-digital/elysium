@@ -1,7 +1,7 @@
 import template from './template.html.twig'
 
 const { Component, Mixin, Store } = Shopware 
-const { mapMutations, mapState, mapGetters } = Component.getComponentHelper()
+const { mapGetters } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
     template,
@@ -11,13 +11,6 @@ export default Component.wrapComponentConfig({
         Mixin.getByName('blur-device-utilities'),
         Mixin.getByName('blur-style-utilities')
     ],
-
-    data () {
-        return {
-            /** @deprecated may be deprected - replaced by slideViewportSettings */
-            viewportsSettings: null,
-        }
-    },
 
     computed: {
 
@@ -29,11 +22,6 @@ export default Component.wrapComponentConfig({
             return Store.get('elysiumUI').device
         },
 
-        ...mapState('blurElysiumSlide', [
-            // 'slide',
-            'currentDevice'
-        ]),
-
         ...mapGetters('error', [
             'getApiError'
         ]),
@@ -42,26 +30,12 @@ export default Component.wrapComponentConfig({
             return this.getApiError(this.slide, 'name');
         },
 
-        /** @deprecated may be deprected - replaced by slideViewportSettings */
-        viewportSettings () {
-            return this.viewportsSettings[this.currentDevice]
-        },
-
         slideViewportSettings () {
             return this.slide.slideSettings.viewports[this.device]
         },
     },
 
-    methods: {
-
-        ...mapMutations('blurElysiumSlide', [
-            'setSlide',
-            'setCurrentDevice'
-        ]),
-    },
-
     created () {
-        /** @deprecated may be deprected - replaced by slideViewportSettings */
         this.viewportsSettings = this.slide.slideSettings.viewports
     }
 })

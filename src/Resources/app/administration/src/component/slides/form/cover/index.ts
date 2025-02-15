@@ -2,7 +2,6 @@ import slide from '../slide'
 import template from './template.html.twig'
 
 const { Component, Mixin, Store, Context } = Shopware 
-const { mapMutations, mapState } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
     template,
