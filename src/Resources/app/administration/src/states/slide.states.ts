@@ -39,5 +39,9 @@ export default {
         clearSlide(): void {
             this.slide = null;
         },
+
+        clearCustomFieldSet(): void {
+            this.customFieldSet = null;
+        },
     },
 };

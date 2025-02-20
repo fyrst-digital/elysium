@@ -8,8 +8,8 @@
         <blur-device-switch 
             layout="row"
             show-label="false"
-            :default-viewport="currentDevice"
-            @change-viewport="changeViewport"
+            :device="device"
+            @change-device="changeDevice"
             :style="{
                 padding: '0',
                 width: '100%',
@@ -66,7 +66,7 @@
                 :allow-empty="true"
                 :disabled="viewportConfig.aspectRatio.auto === true"
                 :show-device="true"
-                :device="currentDevice"
+                :device="device"
                 @on-device="cmsDeviceSwitch"
                 :model-value="viewportConfig.aspectRatio.width"
                 @update-value="value => viewportConfig.aspectRatio.width = value" />
@@ -84,7 +84,7 @@
                 :disabled="viewportConfig.aspectRatio.auto === true"
                 :show-device="true"
                 :model-value="viewportConfig.aspectRatio.height"
-                :device="currentDevice"
+                :device="device"
                 @on-device="cmsDeviceSwitch"
                 @update-value="value => viewportConfig.aspectRatio.height = value" />
         </blur-column>
@@ -99,7 +99,7 @@
                 :allow-empty="true"
                 :show-device="true"
                 :model-value="viewportConfig.maxHeight"
-                :device="currentDevice"
+                :device="device"
                 @on-device="cmsDeviceSwitch"
                 @update-value="value => viewportConfig.maxHeight = value" />
         </blur-column>

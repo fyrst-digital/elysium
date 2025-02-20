@@ -16,8 +16,13 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
+
+        elysiumUI () {
+            return Store.get('elysiumUI')
+        },
+
         device () {
-            return Store.get('elysiumUI').device
+            return this.elysiumUI.device
         },
 
         tabs () {

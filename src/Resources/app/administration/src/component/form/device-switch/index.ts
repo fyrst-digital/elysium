@@ -17,7 +17,7 @@ export default Component.wrapComponentConfig({
             default: 'column' // 'column' | 'row'
         },
 
-        defaultViewport: {
+        device: {
             type: String,
             default: 'desktop'
         }
@@ -45,19 +45,10 @@ export default Component.wrapComponentConfig({
         }
     },
 
-    computed: {
-
-        device () {
-            return Store.get('elysiumUI').device
-        },
-
-    },
-
     methods: {
 
         changeViewport (viewport: string) {
-            Store.get('elysiumUI').setDevice(viewport)
-            this.$emit('change-viewport', viewport)
+            this.$emit('change-device', viewport)
         }
     }
 })

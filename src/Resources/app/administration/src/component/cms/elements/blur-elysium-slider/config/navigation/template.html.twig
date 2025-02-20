@@ -55,7 +55,7 @@
         :placeholder="viewportsPlaceholder('navigation.size', 'md', 'blurElysium.general')"
         :options="sizes"
         :show-device="true"
-        :device="currentDevice"
+        :device="device"
         @on-device="cmsDeviceSwitch"
         v-model:value="navigationViewportConfig.size" />
 
@@ -69,7 +69,7 @@
         :label="$tc('blurElysiumSlider.config.navigation.navPadding.label')"
         :placeholder="viewportsPlaceholder('navigation.gap', 16)"
         :show-device="true"
-        :device="currentDevice"
+        :device="device"
         @on-device="cmsDeviceSwitch" />
 
     <blur-colorpicker

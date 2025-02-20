@@ -349,5 +349,11 @@ export default Component.wrapComponentConfig({
         } else {
             this.loadSlide()
         }
+    },
+
+    unmounted () {
+        this.elysiumSlide.clearSlide()
+        this.elysiumSlide.clearCustomFieldSet()
+        this.elysiumUI.resetDevice()
     }
 })

@@ -9,7 +9,6 @@
         <blur-device-switch 
             layout="row"
             show-label="false"
-            :default-viewport="device"
             :style="{
                 padding: '0',
                 width: '100%',
@@ -18,7 +17,10 @@
                 '--icon-padding': '6px',
                 '--icon-bg-color': '#ffffff',
                 '--icon-hover-bg-color': 'var(--color-gray-100)',
-            }" />
+            }" 
+            :device="device"
+            @change-device="device => elysiumUI.setDevice(device)"
+            />
     </template>
 
     <template #tabs>

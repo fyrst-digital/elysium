@@ -8,6 +8,8 @@
         <blur-device-switch 
             layout="row"
             show-label="false"
+            :device="device"
+            @change-device="changeDevice"
             :default-viewport="currentDevice"
             @change-viewport="changeViewport" 
             :style="{

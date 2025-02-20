@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, Mixin, State } = Shopware
+const { Component, Mixin, Store } = Shopware
 
 /** 
  * @todo #120 - https://gitlab.com/BlurCreative/Shopware/Plugins/BlurElysiumSlider/-/issues/120
@@ -26,10 +26,10 @@ export default Component.wrapComponentConfig({
 
     computed: {
         cmsPage () {
-            return State.get('cmsPage')
+            return Store.get('cmsPage')
         },
 
-        currentDevice () {
+        device () {
 
             if (this.cmsPage.currentCmsDeviceView === 'tablet-landscape') {
                 return 'tablet'
@@ -43,18 +43,18 @@ export default Component.wrapComponentConfig({
         },
 
         settingsViewportConfig () {
-            return this.config.viewports.value[this.currentDevice].settings
+            return this.config.viewports.value[this.device].settings
         },
 
     },
     
     methods: {
         cmsDeviceSwitch () {
-            if (this.currentDevice === "desktop") {
+            if (this.device === "desktop") {
                 this.cmsPage.setCurrentCmsDeviceView("mobile");
-            } else if (this.currentDevice === "mobile") {
+            } else if (this.device === "mobile") {
                 this.cmsPage.setCurrentCmsDeviceView("tablet-landscape");
-            } else if (this.currentDevice === "tablet") {
+            } else if (this.device === "tablet") {
                 this.cmsPage.setCurrentCmsDeviceView("desktop");
             }
         },
