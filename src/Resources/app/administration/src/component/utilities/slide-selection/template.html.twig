@@ -66,7 +66,7 @@
                                 :text="item.translated.title ? item.translated.title.replace(/<\/?[^>]+>/ig, ' ') : $tc('blurElysium.general.noHeadline')" />
                         </div>
                         <div>
-                            {{ selectedSlides.includes(item.id) ? $tc('blurElysium.general.removeItem') : $tc('blurElysium.general.addItem') }}
+                            {{ selectedSlidesIds.includes(item.id) ? $tc('blurElysium.general.removeItem') : $tc('blurElysium.general.addItem') }}
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
         </sw-select-result-list>
     </div>
 
-    <div v-if="selectedSlides.length > 0"
+    <div v-if="isLoading === false && selectedSlidesCollection.length > 0"
         class="blur-elysium-slide-selection-results">
 
         <div class="blur-elysium-slide-selection-results-list"
@@ -87,7 +87,7 @@
             @dragenter.prevent>
 
             <blur-elysium-slide-selection-item 
-                v-for="slide in selectedSlides" 
+                v-for="slide in selectedSlidesCollection" 
                 :key="slide"
                 :selected-slide="slide"
                 draggable

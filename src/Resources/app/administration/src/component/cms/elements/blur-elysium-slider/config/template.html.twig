@@ -10,8 +10,6 @@
             show-label="false"
             :device="device"
             @change-device="changeDevice"
-            :default-viewport="currentDevice"
-            @change-viewport="changeViewport" 
             :style="{
                 padding: '0',
                 width: '100%',
@@ -53,7 +51,7 @@
 
             <blur-column>
                 <blur-elysium-slide-selection 
-                    :selected-slides="selectedSlides"/>
+                    :selected-slides-ids="this.element.config.elysiumSlideCollection.value" />
             </blur-column>
 
         </blur-section>
