@@ -7,6 +7,8 @@ import 'blurElysium/styles/components.scss'
 import 'blurElysium/mixin/device-utilities.mixin'
 import 'blurElysium/mixin/style-utilities.mixin'
 import 'blurElysium/module/blur-elysium-slides'
+// static loaded components
+import SlideSelectionItem from 'blurElysium/component/utilities/slide-selection/item'
 // cms elements
 import 'blurElysium/component/cms/elements/blur-elysium-slider'
 import 'blurElysium/component/cms/elements/blur-elysium-banner'
@@ -80,7 +82,7 @@ Component.register('blur-elysium-slides-form-custom-template-file', () => import
 Component.register('blur-elysium-slides-form-custom-fields', () => import('blurElysium/component/slides/form/custom-fields'))
 Component.register('blur-elysium-slide-search', () => import('blurElysium/component/utilities/slide-search'))
 Component.register('blur-elysium-slide-selection', () => import('blurElysium/component/utilities/slide-selection'))
-Component.register('blur-elysium-slide-selection-item', () => import('blurElysium/component/utilities/slide-selection/item'))
+Component.register('blur-elysium-slide-selection-item', SlideSelectionItem)
 Component.register('blur-elysium-cms-slide-skeleton', () => import('blurElysium/component/utilities/cms-slide-skeleton'))
 /** register or override cms-section specific components */
 Component.override('sw-cms-section', () => import('blurElysium/extension/sw-cms-section'))

@@ -1,5 +1,6 @@
 import template from './template.html.twig'
 import './style.scss'
+import { watch } from 'vue'
 
 const { Component, Data, Context } = Shopware 
 const { Criteria } = Data 
@@ -26,6 +27,21 @@ export default Component.wrapComponentConfig({
             draggedSlideId: null,
             draggedSlideElement: null,
             placeholderElement: document.createElement('div')
+        }
+    },
+
+    watch: {
+        selectedSlides: {
+            handler () {
+                /**
+                 * because this.selectedSlidesIds is an immutable prop we have to clear the array first
+                 * then we can add the ids from selectedSlides collection via push to the selected slides element config
+                 * @todo it's a little bit clunky but it works for now. maybe find a better solution in the future
+                */
+                this.selectedSlidesIds.length = 0
+                this.selectedSlidesIds.push(...this.selectedSlides.map((slide) => slide.id))
+            },
+            deep: false
         }
     },
 
@@ -78,23 +94,15 @@ export default Component.wrapComponentConfig({
             switch (this.selectedSlidesIds.includes(slide.id)) {
                 case true:
                     /** @action remove slide **/
-                    this.selectedSlidesIds.splice(index, 1)
                     this.selectedSlides.remove(slide.id)
                     break
                 default:
                     /** @action add slide **/
-                    this.selectedSlidesIds.push(slide.id)
                     this.selectedSlides.add(slide)
                     break
             }
 
             console.log('selectSlideNew', slide, this.selectedSlides)
-        },
-
-        slideLoaded (slide, slideId: string) {
-            if (slide === null) {
-                this.onRemoveSlide(slideId)
-            }
         },
 
         onDrop () {
@@ -130,36 +138,21 @@ export default Component.wrapComponentConfig({
         },
 
         slidePositionUp (slide) {
-            const currentIndexPos = this.selectedSlidesIds.indexOf(slide)
-            const upIndexPos = currentIndexPos - 1
-
-            if (upIndexPos >= 0) {
-                // remove slide from current position
-                this.selectedSlidesIds.splice(currentIndexPos, 1)
-                // add slide on up position
-                this.selectedSlidesIds.splice(upIndexPos, 0, slide)
-            }
+            const currentIndex = this.selectedSlides.indexOf(slide)
+            if (currentIndex > 0) this.selectedSlides.moveItem(currentIndex, currentIndex - 1)
         },
 
         slidePositionDown (slide) {
-            const currentIndexPos = this.selectedSlidesIds.indexOf(slide)
-            const downIndexPos = currentIndexPos + 1
-            const maxIndex = this.selectedSlidesIds.length - 1
-
-            if (currentIndexPos < maxIndex) {
-                // remove slide from current position
-                this.selectedSlidesIds.splice(currentIndexPos, 1)
-                // add slide on down position
-                this.selectedSlidesIds.splice(downIndexPos, 0, slide)
-            }
+            const currentIndex = this.selectedSlides.indexOf(slide)
+            if (currentIndex < this.selectedSlides.length - 1) this.selectedSlides.moveItem(currentIndex, currentIndex + 1)
         },
 
-        onRemoveSlide (slide) {
-            this.selectedSlidesIds.splice(this.selectedSlidesIds.indexOf(slide), 1)
+        slideRemove (slide) {
+            this.selectedSlides.remove(slide.id)
         },
 
-        onEditSlide (slide) {
-            const route = this.$router.resolve({ name: 'blur.elysium.slides.detail', params: { id: slide } })
+        slideEdit (slide) {
+            const route = this.$router.resolve({ name: 'blur.elysium.slides.detail', params: { id: slide.id } })
             window.open(route.href, '_blank')
         },
 

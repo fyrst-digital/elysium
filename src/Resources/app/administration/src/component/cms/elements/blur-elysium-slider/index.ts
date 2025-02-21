@@ -1,38 +1,45 @@
 import defaultSliderSettings from 'blurElysium/component/cms/elements/blur-elysium-slider/settings'
+import SliderConfig from 'blurElysium/component/cms/elements/blur-elysium-slider/config'
+import SliderConfigSettings from 'blurElysium/component/cms/elements/blur-elysium-slider/config/settings'
 
-Shopware.Component.register(
+const { Component, Service } = Shopware
+
+console.log('defaultSliderSettings', Component)
+
+Component.register(
     'cms-el-blur-elysium-slider', 
     () => import('blurElysium/component/cms/elements/blur-elysium-slider/component')
 )
 
-Shopware.Component.register(
-    'cms-el-blur-elysium-slider-config', 
-    () => import('blurElysium/component/cms/elements/blur-elysium-slider/config')
+Component.register(
+    'blur-elysium-slider-config-settings', 
+    SliderConfigSettings
 )
 
-Shopware.Component.register(
+Component.register(
+    'cms-el-blur-elysium-slider-config', 
+    SliderConfig
+)
+
+Component.register(
     'cms-el-blur-elysium-slider-preview', 
     () => import('blurElysium/component/cms/elements/blur-elysium-slider/preview')
 )
 
-Shopware.Component.register(
-    'blur-elysium-slider-config-settings', 
-    () => import('blurElysium/component/cms/elements/blur-elysium-slider/config/settings')
-)
-Shopware.Component.register(
+Component.register(
     'blur-elysium-slider-config-sizing', 
     () => import('blurElysium/component/cms/elements/blur-elysium-slider/config/sizing')
 )
-Shopware.Component.register(
+Component.register(
     'blur-elysium-slider-config-navigation', 
     () => import('blurElysium/component/cms/elements/blur-elysium-slider/config/navigation')
 )
-Shopware.Component.register(
+Component.register(
     'blur-elysium-slider-config-arrows', 
     () => import('blurElysium/component/cms/elements/blur-elysium-slider/config/arrows')
 )
 
-Shopware.Service('cmsService').registerCmsElement({
+Service('cmsService').registerCmsElement({
     name: 'blur-elysium-slider',
     label: 'blurElysiumSlider.label',
     component: 'cms-el-blur-elysium-slider',

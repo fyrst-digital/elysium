@@ -7,85 +7,55 @@ const { Criteria } = Data
 export default Component.wrapComponentConfig({
     template,
 
-    inject: [
-        'repositoryFactory'
-    ],
-
     props: {
-        selectedSlide: {
-            type: String,
+        slide: {
+            type: Object,
             required: true,
         },
 
     },
 
-    data() {
-        return {
-            slideItem: {},
-            isLoading: true
-        }
-    },
-
     computed: {
-        slidesRepository () {
-            return this.repositoryFactory.create('blur_elysium_slides')
-        },
-        slideCriteria () {
-            const criteria = new Criteria()
-
-            return criteria
-        },
         slideName () {
-            return this.slideItem?.translated?.name ?? 'Loading...'
+            return this.slide?.translated?.name ?? 'Loading...'
         },
         slideTitle () {
-            return this.slideItem?.translated?.title ?? this.$tc('blurElysium.general.noHeadline')
+            return this.slide?.translated?.title ?? this.$tc('blurElysium.general.noHeadline')
         }
     },
 
     methods: {
-        loadSlide () {
-            this.slidesRepository.get(this.selectedSlide, Context.api, this.slideCriteria).then((result) => {
-                this.$emit('slide-loaded', result, this.selectedSlide)
-                this.slideItem = result
-                this.isLoading = false
-            })
-        },
 
         positionUp () {
-            this.$emit('position-up', this.selectedSlide)
+            this.$emit('position-up', this.slide)
         },
 
         positionDown () {
-            this.$emit('position-down', this.selectedSlide)
+            this.$emit('position-down', this.slide)
         },
 
         editSlide () {
-            this.$emit('edit-slide', this.selectedSlide)
+            this.$emit('edit-slide', this.slide)
         },
 
         removeSlide () {
-            this.$emit('remove-slide', this.selectedSlide)
+            this.$emit('remove-slide', this.slide)
         },
 
         startDrag (event) {
-            this.$emit('start-drag', this.selectedSlide, event, this.$refs.selectItem)
+            this.$emit('start-drag', this.slide, event, this.$refs.selectItem)
         },
 
         enterDrag (event) {
-            this.$emit('enter-drag', this.selectedSlide, event, this.$refs.selectItem)
+            this.$emit('enter-drag', this.slide, event, this.$refs.selectItem)
         },
 
         endDrag (event) {
-            this.$emit('end-drag', this.selectedSlide, event, this.$refs.selectItem)
+            this.$emit('end-drag', this.slide, event, this.$refs.selectItem)
         },
 
         leaveDrag (event) {
-            this.$emit('leave-drag', this.selectedSlide, event, this.$refs.selectItem)
+            this.$emit('leave-drag', this.slide, event, this.$refs.selectItem)
         }
-    },
-
-    created() {
-        this.loadSlide()
     },
 })
