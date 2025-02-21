@@ -1,3 +1,4 @@
+import { provide } from 'vue'
 import template from './template.html.twig'
 
 const { Component, Mixin, Store } = Shopware
@@ -10,6 +11,12 @@ export default Component.wrapComponentConfig({
         Mixin.getByName('cms-element'),
     ],
 
+    provide() {
+        return {
+            selectedSlidesIds: this.element.config.elysiumSlideCollection.value
+        }
+    },
+    
     data() {
         return {
             activeTab: 'content'

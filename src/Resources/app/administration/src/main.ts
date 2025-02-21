@@ -57,6 +57,7 @@ Component.register('blur-colorpicker', () => import('blurElysium/component/form/
  */
 Component.register('blur-device-number-input', () => import('blurElysium/component/form/device-number-input'))
 Component.register('blur-device-select-input', () => import('blurElysium/component/form/device-select-input'))
+
 /** Elysium components */
 Component.register('blur-elysium-block-two-col-config', () => import('blurElysium/component/utilities/block-two-col-config'))
 Component.register('blur-elysium-icon', () => import('blurElysium/component/utilities/icon'))
@@ -77,6 +78,7 @@ Component.register('blur-elysium-slides-form-container', () => import('blurElysi
 Component.register('blur-elysium-slides-form-content', () => import('blurElysium/component/slides/form/content'))
 Component.register('blur-elysium-slides-form-custom-template-file', () => import('blurElysium/component/slides/form/custom-template-file'))
 Component.register('blur-elysium-slides-form-custom-fields', () => import('blurElysium/component/slides/form/custom-fields'))
+Component.register('blur-elysium-slide-search', () => import('blurElysium/component/utilities/slide-search'))
 Component.register('blur-elysium-slide-selection', () => import('blurElysium/component/utilities/slide-selection'))
 Component.register('blur-elysium-slide-selection-item', () => import('blurElysium/component/utilities/slide-selection/item'))
 Component.register('blur-elysium-cms-slide-skeleton', () => import('blurElysium/component/utilities/cms-slide-skeleton'))

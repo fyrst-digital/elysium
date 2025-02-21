@@ -1,0 +1,63 @@
+<div 
+    :style="{ 
+        position: 'relative',
+    }">
+
+    <sw-simple-search-field
+        class="blur-elysium-slide-selection-search-field"
+        v-model:value="searchTerm"
+        :delay="300" 
+        placeholder="Slides durchsuchen"
+        variant="form" 
+        @focus="focusSearch"
+        @blur="blurSearch" />
+
+    <sw-select-result-list 
+        v-if="searchFocus === true"
+        ref="resultList"
+        :options="slidesCollection"
+        :empty-message="$tc('blurElysiumSlides.slideSearch.noResult')"
+        @item-select="selectSlide">
+
+        <template #before-item-list="{item, index}">
+            <div v-if="slidesLoading"
+                :style="{ 
+                position: 'relative',
+                    minHeight: '64px',
+                }">
+                <mt-loader 
+                    size="24px" />
+            </div>
+        </template>
+
+        <template #result-item="{item, index}">
+
+            <div
+                is="sw-select-result"
+                :selected="slideIsSelected( item )"
+                v-bind="{ item, index }"
+                class="blur-es-selection__search-result-list-item"
+                @item-select="selectSlide">
+
+                <div class="blur-elysium-slide-selection-search-item">
+                    <div>
+                        <sw-highlight-text 
+                            :class="['blur-elysium-slide-selection-search-name']"
+                            :searchTerm="searchTerm"
+                            :text="item.translated.name" />
+                        <sw-highlight-text 
+                            :class="['blur-elysium-slide-selection-search-title']"
+                            :searchTerm="searchTerm"
+                            :text="item.translated.title ? item.translated.title.replace(/<\/?[^>]+>/ig, ' ') : $tc('blurElysium.general.noHeadline')" />
+                    </div>
+
+                    <div>
+                        {{ selectedSlidesIds.includes(item.id) ? $tc('blurElysium.general.removeItem') : $tc('blurElysium.general.addItem') }}
+                    </div>
+                </div>
+            </div>
+
+        </template>
+
+    </sw-select-result-list>
+</div>

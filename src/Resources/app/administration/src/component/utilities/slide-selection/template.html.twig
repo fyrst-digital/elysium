@@ -1,6 +1,14 @@
-<div class="blur-elysium-slide-selection">
+<div v-if="isLoading"
+    :style="{
+        position: 'relative',
+        minHeight: '100px',
+    }">
+    <mt-loader size="24px" />
+</div>
+<div v-else 
+    class="blur-elysium-slide-selection">
 
-    <div v-if="slidesCollection.total === 0"
+    {# <div v-if="slidesCollection.total === 0"
         class="blur-elysium-slide-selection-empty">
         <p style="margin-bottom:1rem;line-height:1.5;">
             {{ $tc( 'blurElysiumSlides.slideSelection.noSlides' ) }}
@@ -22,61 +30,23 @@
                     :size="14" />
             </sw-button>
         </div>
-    </div>
+    </div> #}
 
-    <div class="blur-elysium-slide-selection-search">
+    <blur-elysium-slide-search 
+        :selected-slides-ids="selectedSlidesIds"
+        @slide-selected="selectSlide" />
 
-        <div class="blur-elysium-slide-selection-search-label">
-            {{$tc('blurElysiumSlides.slideSelection.searchLabel')}}
+    <div v-if="isLoading === false && selectedSlides.length > 0">
+
+        <div v-for="slide in selectedSlides" 
+            :key="slide.id">
+
+            {{slide.id}}
+    
         </div>
-
-        <sw-simple-search-field
-            v-model:value="searchTerm"
-            class="blur-elysium-slide-selection-search-field"
-            :delay="300" 
-            variant="form"
-            @focus="focusSearch"
-            @blur="blurSearch" />
-
-        <sw-select-result-list 
-            v-if="searchFocus === true"
-            ref="resultList"
-            :options="slidesCollection"
-            :empty-message="$tc('blurElysiumSlides.slideSearch.noResult')"
-            @item-select="selectSlide">
-
-            <template #result-item="{item, index}">
-
-                <div
-                    is="sw-select-result"
-                    :selected="slideIsSelected( item )"
-                    v-bind="{ item, index }"
-                    class="blur-es-selection__search-result-list-item"
-                    @item-select.prevent="selectSlide">
-
-                    <div class="blur-elysium-slide-selection-search-item">
-                        <div>
-                            <sw-highlight-text 
-                                :class="['blur-elysium-slide-selection-search-name']"
-                                :searchTerm="searchTerm"
-                                :text="item.translated.name" />
-                            <sw-highlight-text 
-                                :class="['blur-elysium-slide-selection-search-title']"
-                                :searchTerm="searchTerm"
-                                :text="item.translated.title ? item.translated.title.replace(/<\/?[^>]+>/ig, ' ') : $tc('blurElysium.general.noHeadline')" />
-                        </div>
-                        <div>
-                            {{ selectedSlidesIds.includes(item.id) ? $tc('blurElysium.general.removeItem') : $tc('blurElysium.general.addItem') }}
-                        </div>
-                    </div>
-                </div>
-
-            </template>
-
-        </sw-select-result-list>
     </div>
 
-    <div v-if="isLoading === false && selectedSlidesCollection.length > 0"
+    {# <div v-if="isLoading === false && selectedSlides.length > 0"
         class="blur-elysium-slide-selection-results">
 
         <div class="blur-elysium-slide-selection-results-list"
@@ -87,7 +57,7 @@
             @dragenter.prevent>
 
             <blur-elysium-slide-selection-item 
-                v-for="slide in selectedSlidesCollection" 
+                v-for="slide in selectedSlides" 
                 :key="slide"
                 :selected-slide="slide"
                 draggable
@@ -108,6 +78,6 @@
         variant="info">
 
         <span v-html="$tc('blurElysiumSlides.slideSelection.listNoSelection')" />
-    </mt-banner>
+    </mt-banner> #}
 
 </div>

@@ -21,10 +21,7 @@ export default Component.wrapComponentConfig({
     data () {
         return {
             isLoading: true,
-            searchTerm: '',
-            searchFocus: false,
-            selectedSlidesCollection: {},
-            slidesCollection: {},
+            selectedSlides: {},
             currentDragIndex: 0,
             draggedSlideId: null,
             draggedSlideElement: null,
@@ -32,34 +29,9 @@ export default Component.wrapComponentConfig({
         }
     },
 
-    watch: {
-        searchFocus(value: boolean) {
-
-            console.log('searchFocus', value)
-
-            if (value === true) {
-                this.loadSlides()
-            }
-        },
-
-        searchTerm () {
-            console.log('searchTerm', this.searchTerm)
-            this.loadSlides()
-        }
-    },
-
     computed: {
         slidesRepository () {
             return this.repositoryFactory.create('blur_elysium_slides')
-        },
-
-        slidesCriteria () {
-            const criteria = new Criteria()
-
-            criteria.setTerm(this.searchTerm)
-            criteria.setLimit(20)
-
-            return criteria
         },
     },
 
@@ -69,67 +41,54 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        inputSearch () {
-            this.loadSlides()
-        },
-
-        focusSearch () {
-            this.searchFocus = true
-        },
-
-        blurSearch (event) {
-            if (event.relatedTarget !== null) {
-                this.searchFocus = false
-            }
-        },
 
         initSlides () {
-            console.log('initSlides', this.selectedSlidesIds)
             const criteria = new Criteria()
             criteria.setIds(this.selectedSlidesIds)
 
             this.slidesRepository.search(criteria, Context.api).then((result) => {
-                console.log('initSlides', result.filter((slide) => this.selectedSlidesIds.includes(slide.id)))
-                this.selectedSlidesCollection = result.filter((slide) => this.selectedSlidesIds.includes(slide.id))
+
+                /**
+                 * filter the selected slides to remove orphaned selections
+                 * @todo check if the filter funtion is really needed. Because the selectedSlidesIds are already set in the criteria `criteria.setIds(this.selectedSlidesIds)`
+                 */
+                const filteredSlides = result.filter((slide) => this.selectedSlidesIds.includes(slide.id))
+                this.selectedSlides = filteredSlides
+
+                /**
+                 * if the filtered slides are empty, then clear all selected slides Ids
+                 * @todo if the filtered slides not empty, check them against the selectedSlidesIds
+                 */
+                if (filteredSlides.length <= 0) {
+                    this.selectedSlidesIds.length = 0
+                }
+
                 this.isLoading = false
+            }).catch((error) => {
+                console.error('Error loading slides', error)
             })
-            // this.loadSlides()
         },
 
-        loadSlides () {
-            this.slidesRepository.search(this.slidesCriteria, Context.api).then((result) => {
-                this.slidesCollection = result
-                this.isLoading = false
-            })
-        },
-
-        selectSlide (value) {
+        selectSlide (slide) {
             // call if slide is selected
             // add slide to this.selectedSlidesIds if is not in collection
             // remove slide from this.selectedSlidesIds if is in collection
-            const index = this.selectedSlidesIds.indexOf(value.id)
+            const index = this.selectedSlidesIds.indexOf(slide.id)
 
-            switch (this.selectedSlidesIds.includes(value.id)) {
-                case false:
-                    this.selectedSlidesIds.push(value.id)
-                    break
+            switch (this.selectedSlidesIds.includes(slide.id)) {
                 case true:
+                    /** @action remove slide **/
                     this.selectedSlidesIds.splice(index, 1)
+                    this.selectedSlides.remove(slide.id)
                     break
                 default:
-                    this.selectedSlidesIds.push(value.id)
+                    /** @action add slide **/
+                    this.selectedSlidesIds.push(slide.id)
+                    this.selectedSlides.add(slide)
                     break
             }
 
-            // loose search focus
-            this.searchFocus = false
-        },
-
-        slideIsSelected (slide) {
-            if (this.selectedSlidesIds.includes(slide.id)) {
-                return true
-            }
-            return false
+            console.log('selectSlideNew', slide, this.selectedSlides)
         },
 
         slideLoaded (slide, slideId: string) {
@@ -217,5 +176,6 @@ export default Component.wrapComponentConfig({
 
     created() {
         this.initSlides()
+        console.log('selectedSlidesIds', this.selectedSlidesIds)
     },
 })
