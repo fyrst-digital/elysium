@@ -24,7 +24,7 @@ export default Component.wrapComponentConfig({
             isLoading: true,
             selectedSlides: {},
             currentDragIndex: 0,
-            draggedSlideId: null,
+            draggedSlide: null,
             draggedSlideElement: null,
             placeholderElement: document.createElement('div')
         }
@@ -101,14 +101,11 @@ export default Component.wrapComponentConfig({
                     this.selectedSlides.add(slide)
                     break
             }
-
-            console.log('selectSlideNew', slide, this.selectedSlides)
         },
 
         onDrop () {
-            this.selectedSlidesIds.splice(this.selectedSlidesIds.indexOf(this.draggedSlideId), 1)
+            this.selectedSlides.moveItem(this.selectedSlides.indexOf(this.draggedSlide), this.currentDragIndex)
             this.draggedSlideElement.classList.remove('is-dragged')
-            this.selectedSlidesIds.splice(this.currentDragIndex, 0, this.draggedSlideId)
             this.placeholderElement.remove()
         },
 
@@ -117,24 +114,24 @@ export default Component.wrapComponentConfig({
             this.placeholderElement.remove()
         },
 
-        startDrag (slideId, event, element) {
-            this.draggedSlideId = slideId
+        startDrag (slide, event, element) {
+            this.draggedSlide = slide
             this.draggedSlideElement = element
             this.placeholderElement.style.height = `${element.offsetHeight}px`
         },
 
-        onDrag (slideId, event, element) {
-            if (this.draggedSlideId === slideId) {
+        onDrag (slide, event, element) {
+            if (this.draggedSlide === slide) {
                 this.draggedSlideElement.classList.add('is-dragged')
             }
 
-            if (this.currentDragIndex !== this.selectedSlidesIds.indexOf(slideId)) {
+            if (this.currentDragIndex !== this.selectedSlides.indexOf(slide)) {
                 element.before(this.placeholderElement)
             } else {
                 element.after(this.placeholderElement)
             }
-
-            this.currentDragIndex = this.selectedSlidesIds.indexOf(slideId)
+            
+            this.currentDragIndex = this.selectedSlides.indexOf(slide)
         },
 
         slidePositionUp (slide) {
@@ -169,6 +166,5 @@ export default Component.wrapComponentConfig({
 
     created() {
         this.initSlides()
-        console.log('selectedSlidesIds', this.selectedSlidesIds)
     },
 })

@@ -4,8 +4,6 @@ import SliderConfigSettings from 'blurElysium/component/cms/elements/blur-elysiu
 
 const { Component, Service } = Shopware
 
-console.log('defaultSliderSettings', Component)
-
 Component.register(
     'cms-el-blur-elysium-slider', 
     () => import('blurElysium/component/cms/elements/blur-elysium-slider/component')
