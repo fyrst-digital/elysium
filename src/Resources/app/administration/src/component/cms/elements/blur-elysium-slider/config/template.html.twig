@@ -59,21 +59,17 @@
 
     <blur-elysium-slider-config-settings
         v-if="activeTab === 'settings'" 
-        :config="element.config" 
-        :currentViewport="activeViewport" />
+        :config="element.config" />
 
     <blur-elysium-slider-config-sizing
         v-if="activeTab === 'sizing'" 
-        :config="element.config" 
-        :currentViewport="activeViewport" />
+        :config="element.config" />
 
     <blur-elysium-slider-config-navigation
         v-if="activeTab === 'navigation'" 
-        :config="element.config" 
-        :currentViewport="activeViewport" />
+        :config="element.config" />
 
     <blur-elysium-slider-config-arrows
         v-if="activeTab === 'arrows'" 
-        :config="element.config" 
-        :currentViewport="activeViewport" />
+        :config="element.config" />
 </mt-card>
