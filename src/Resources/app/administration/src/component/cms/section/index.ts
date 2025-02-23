@@ -2,7 +2,7 @@ import template from './template.html.twig'
 import { blockSettings } from './config'
 import './style.scss'
 
-const { Component, State, Mixin } = Shopware
+const { Component, Store, Mixin } = Shopware
 
 export default Component.wrapComponentConfig({
     template,
@@ -51,10 +51,10 @@ export default Component.wrapComponentConfig({
     computed: {
 
         cmsPage () {
-            return State.get('cmsPage')
+            return Store.get('cmsPage')
         },
 
-        currentDevice () {
+        device () {
 
             if (this.cmsPage.currentCmsDeviceView === 'tablet-landscape') {
                 return 'tablet'
@@ -137,12 +137,12 @@ export default Component.wrapComponentConfig({
         },
 
         onBlockSelection (block) {
-            Shopware.Store.get('cmsPage').setBlock(block);
+            this.cmsPage.setBlock(block);
             this.$emit('on-select-block', block);
         },
 
         onGridDrop (event) {
-            this.draggedBlock.customFields.elysiumBlockSettings.viewports[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
+            this.draggedBlock.customFields.elysiumBlockSettings.viewports[this.device].colEnd = this.calculateDraggedBlockColWidth(event.x)
         },
 
         startBlockResizeX (event, block) {
@@ -154,15 +154,15 @@ export default Component.wrapComponentConfig({
             event.dataTransfer.setDragImage(img, 0, 0)
         },
 
-        endBlockResizeX (event) {
-            if (this.calculateDraggedBlockColWidth(event.x) >= 12) {
-                this.draggedBlock.customFields.elysiumBlockSettings.viewports[this.currentDevice].colEnd = 12
+        dragBlockResizingX (event) {
+            if ((this.calculateDraggedBlockColWidth(event.x) > 0) && (this.calculateDraggedBlockColWidth(event.x) <= 12)) {
+                this.draggedBlock.customFields.elysiumBlockSettings.viewports[this.device].colEnd = this.calculateDraggedBlockColWidth(event.x)
             }
         },
 
-        dragBlockResizingX (event) {
-            if ((this.calculateDraggedBlockColWidth(event.x) > 0) && (this.calculateDraggedBlockColWidth(event.x) <= 12)) {
-                this.draggedBlock.customFields.elysiumBlockSettings.viewports[this.currentDevice].colEnd = this.calculateDraggedBlockColWidth(event.x)
+        endBlockResizeX (event) {
+            if (this.calculateDraggedBlockColWidth(event.x) >= 12) {
+                this.draggedBlock.customFields.elysiumBlockSettings.viewports[this.device].colEnd = 12
             }
         },
 
