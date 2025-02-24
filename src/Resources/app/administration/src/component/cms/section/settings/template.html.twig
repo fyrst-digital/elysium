@@ -15,7 +15,7 @@
                 { value: 'center', label: $tc('blurElysium.general.alignItems.center') },
                 { value: 'flex-end', label: $tc('blurElysium.general.flexEnd') },
             ]"
-            :device="currentDevice"
+            :device="device"
             :show-device="true"
             @on-device="cmsDeviceSwitch"
             v-model:value="currentViewportSettings.alignItems" />
@@ -28,7 +28,7 @@
             :label="$tc('blurElysium.general.gap')"
             :placeholder="viewportsPlaceholder('gridGap', 20)"
             :show-device="true"
-            :device="currentDevice"
+            :device="device"
             @on-device="cmsDeviceSwitch"
             :model-value="currentViewportSettings.gridGap"
             @update-value="value => currentViewportSettings.gridGap = value" /> 
@@ -41,7 +41,7 @@
             :label="$tc('blurElysium.general.paddingY')"
             :placeholder="viewportsPlaceholder('paddingY', 0)"
             :show-device="true"
-            :device="currentDevice"
+            :device="device"
             @on-device="cmsDeviceSwitch"
             :model-value="currentViewportSettings.paddingY"
             @update-value="value => currentViewportSettings.paddingY = value" /> 
@@ -54,7 +54,7 @@
             :label="$tc('blurElysium.general.paddingX')"
             :placeholder="viewportsPlaceholder('paddingX', 0)"
             :show-device="true"
-            :device="currentDevice"
+            :device="device"
             @on-device="cmsDeviceSwitch"
             :model-value="currentViewportSettings.paddingX"
             @update-value="value => currentViewportSettings.paddingX = value" /> 

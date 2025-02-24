@@ -11,7 +11,7 @@
             :step="1"
             :max="100"
             :unit="false"
-            :device="currentDevice"
+            :device="device"
             @on-device="cmsDeviceSwitch"
             :model-value="currentViewportSettings.order"
             @update-value="value => currentViewportSettings.order = value" /> 
@@ -29,7 +29,7 @@
             :step="1"
             :max="100"
             :unit="false"
-            :device="currentDevice"
+            :device="device"
             @on-device="cmsDeviceSwitch"
             :model-value="currentViewportSettings.rowEnd"
             @update-value="value => currentViewportSettings.rowEnd = value" /> 
