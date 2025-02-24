@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component, State, Mixin } = Shopware
+const { Component, Store, Mixin } = Shopware
 
 export default Component.wrapComponentConfig({
     template,
@@ -13,10 +13,10 @@ export default Component.wrapComponentConfig({
 
     computed: {
         cmsPage () {
-            return State.get('cmsPage')
+            return Store.get('cmsPage')
         },
 
-        currentDevice () {
+        device () {
 
             if (this.cmsPage.currentCmsDeviceView === 'tablet-landscape') {
                 return 'tablet'
@@ -26,17 +26,17 @@ export default Component.wrapComponentConfig({
         },
 
         currentViewportSettings () {
-            return this.settings.viewports[this.currentDevice]
+            return this.settings.viewports[this.device]
         }
     },
 
     methods: {
         cmsDeviceSwitch () {
-            if (this.currentDevice === "desktop") {
+            if (this.device === "desktop") {
                 this.cmsPage.setCurrentCmsDeviceView("mobile");
-            } else if (this.currentDevice === "mobile") {
+            } else if (this.device === "mobile") {
                 this.cmsPage.setCurrentCmsDeviceView("tablet-landscape");
-            } else if (this.currentDevice === "tablet") {
+            } else if (this.device === "tablet") {
                 this.cmsPage.setCurrentCmsDeviceView("desktop");
             }
         },
