@@ -80,7 +80,7 @@ jobs:
           name: shopware-build
 
       - name: Test
-        run: ls -la
+        run: ls -la && pwd
 
       # - name: Run PHPStan
       #   run: docker exec shopware vendor/bin/phpstan
