@@ -29,7 +29,8 @@ jobs:
         run: docker run -d --name shopware -v ${{ github.workspace }}:/app shopware/development:8.2-node-20.10-composer-2
 
       - name: Create database
-        run: docker exec database mysql -uroot -papp -e 'CREATE DATABASE `app`'
+        run: docker ps -a
+        # run: docker exec database mysql -uroot -papp -e 'CREATE DATABASE `app`'
 
       - name: Set up Shopware project
         run: |
