@@ -46,6 +46,7 @@ jobs:
           docker exec app composer require blurcreative/elysium-slider
           docker exec app bin/console plugin:refresh
           docker exec app bin/console plugin:install --activate BlurElysiumSlider
+          docker exec app bin/console cache:clear
 
 
   # phpstan:
@@ -68,7 +69,6 @@ jobs:
   bundle:
     needs: setup-environment
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     steps:
       - name: Bundle plugin
         run: |
