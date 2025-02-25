@@ -72,12 +72,12 @@ jobs:
     steps:
       - name: Bundle plugin
         run: |
-          docker exec shopware bin/build-administration.sh
-          docker exec shopware bin/build-storefront.sh
-          docker exec shopware cd /app/custom/static-plugins/BlurElysiumSlider
-          docker exec shopware rm -rf .git .gitignore .github .devops
-          docker exec shopware cp -r /app/custom/static-plugins/BlurElysiumSlider /app
-          docker exec shopware ls -la /app
+          docker exec app bin/build-administration.sh
+          docker exec app bin/build-storefront.sh
+          docker exec app cd /app/custom/static-plugins/BlurElysiumSlider
+          docker exec app rm -rf .git .gitignore .github .devops
+          docker exec app cp -r /app/custom/static-plugins/BlurElysiumSlider /app
+          docker exec app ls -la /app
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
