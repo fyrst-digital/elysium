@@ -31,9 +31,10 @@ jobs:
       - name: Debug container
         env: 
           TEST: test
+          CONTAINER: $GITHUB_JOB_SERVICES_DATABASE_ID
         run: |
           echo "Container ID: $GITHUB_JOB_SERVICES_DATABASE_ID"
-          echo "ENV: $TEST"
+          echo "ENV: $TEST, CONTAINER: $CONTAINER"
 
 
       # - name: Create database
