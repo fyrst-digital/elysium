@@ -32,6 +32,14 @@
         "description": {
             "de-DE": "Erstelle mit dem Slide Builder ansprechende Slides und arrangiere sie in Banner oder Slider Elementen. Nutze dabei die Elysium Sektion für die Gestaltung von Erlebniswelten-Layouts",
             "en-GB": "Create engaging slides with the Slide Builder and arrange them in banner or slider elements. Use the Elysium section for designing Shopping experience layouts."
+        },
+        "manufacturerLink": {
+            "de-DE": "https://blurcreative.de",
+            "en-GB": "https://blurcreative.de"
+        },
+        "supportLink": {
+            "de-DE": "https://elysium.blurcreative.de/de",
+            "en-GB": "https://elysium.blurcreative.de"
         }
     },
     "autoload": {
