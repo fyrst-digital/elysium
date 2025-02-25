@@ -129,6 +129,7 @@
             "blockAlignment": "Block alignment"
         },
         "action": {
+            "cancel": "Cancel",
             "createSlide": "Create Slide",
             "toOverview": "To overview"
         },

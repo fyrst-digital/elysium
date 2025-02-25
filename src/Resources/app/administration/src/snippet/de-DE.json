@@ -129,6 +129,7 @@
             "blockAlignment": "Block Ausrichtung"
         },
         "action": {
+            "cancel": "Abbrechen",
             "createSlide": "Slide erstellen",
             "toOverview": "Zur Übersicht"
         },
