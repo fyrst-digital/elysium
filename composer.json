@@ -1,5 +1,5 @@
 {
-    "name": "fyrst/elysium",
+    "name": "blurcreative/elysium-slider",
     "description": "A flexible, reusable and feature rich Slider for Shopware 6",
     "keywords": [
         "Shopware",
@@ -9,7 +9,7 @@
         "Banner",
         "Slider"
     ],
-    "version": "4.0.0",
+    "version": "3.7.0",
     "type": "shopware-platform-plugin",
     "minimum-stability": "stable",
     "license": "MIT",
@@ -22,9 +22,6 @@
     ],
     "require": {
         "shopware/core": "^6.6.8 || ^6.7.0"
-    },
-    "replace": {
-        "blurcreative/elysium-slider": "*"
     },
     "extra": {
         "shopware-plugin-class": "Blur\\BlurElysiumSlider\\BlurElysiumSlider",

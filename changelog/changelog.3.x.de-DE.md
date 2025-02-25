@@ -1,3 +1,11 @@
+# 3.7.0
+
+## Changelog
+- Ein Fehler in der Slide Auswahl des Slider Elements wurde behoben. Die Slides können nun wieder hingefügt und entfernt werden
+- Code Anpassungen und Optimierungen
+  - Wechsel von vuex zu Pinia wurde vollständig umgesetzt
+  - Optimierung der Komponenten Slide-Auswahl und Gerätewechsel 
+
 # 3.6.3
 
 ## Changelog

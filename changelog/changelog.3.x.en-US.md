@@ -1,3 +1,11 @@
+# 3.7.0
+
+## Changelog
+- A bug in the slide selection of the slider cms element has been fixed. Slides can now be added and removed again
+- Code adjustments and optimizations
+    - The switch from vuex to Pinia has been fully implemented
+    - Optimization of the slide selection and device switch components
+
 # 3.6.3
 
 ## Changelog
