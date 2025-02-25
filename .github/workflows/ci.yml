@@ -26,6 +26,7 @@ jobs:
         image: shopware/development:8.2-node-20.10-composer-2
         volumes:
           - ${{ github.workspace }}:/BlurElysiumSlider
+          - /app:/app
         options:
           --name app
     steps:
@@ -37,6 +38,7 @@ jobs:
 
       - name: Set up Shopware build
         run: |
+          ls -la
           docker exec app composer create-project shopware/production:v6.6.10.1 /app
           docker exec app composer require --dev phpstan/phpstan
           docker exec app cp /BlurElysiumSlider/.devops/phpstan.neon /app
