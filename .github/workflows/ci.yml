@@ -29,24 +29,21 @@ jobs:
       - name: Set up Docker
         run: docker run -d --name shopware -v ${{ github.workspace }}:/app shopware/development:8.2-node-20.10-composer-2
 
-      - name: Debug container
-        env: 
-          TEST: test
-          CONTAINER: $GITHUB_JOB_SERVICES_DATABASE_ID
-        run: |
-          echo "Container ID: $GITHUB_JOB_SERVICES_database_ID"
-          echo "ENV: $TEST, CONTAINER: $CONTAINER"
-          docker ps -a
+      # - name: Debug container
+      #   env: 
+      #     TEST: test
+      #     CONTAINER: $GITHUB_JOB_SERVICES_DATABASE_ID
+      #   run: |
+      #     echo "Container ID: $GITHUB_JOB_SERVICES_database_ID"
+      #     echo "ENV: $TEST, CONTAINER: $CONTAINER"
+      #     docker ps -a
 
-
-      # - name: Create database
-      #   run: docker exec ${GITHUB_JOB_SERVICES_DATABASE_ID} mysql -uroot -papp -e "CREATE DATABASE app"
-      #   # run: docker ps -a && echo ${GITHUB_JOB_SERVICES_DATABASE_ID}
-      #   # run: docker exec database mysql -uroot -papp -e 'CREATE DATABASE `app`'
+      - name: Create database
+        run: docker exec database mysql -uroot -papp -e "CREATE DATABASE app"
 
       - name: Set up Shopware project
         run: |
-          docker exec shopware composer create-project shopware/production:v6.6.8.0 /app
+          docker exec shopware composer create-project shopware/production:v6.6.10.1 /app
           docker exec shopware composer require --dev phpstan/phpstan
           docker exec shopware cp /app/.devops/phpstan.neon /app
           docker exec shopware cp /app/.devops/.env.local /app
