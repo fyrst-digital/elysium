@@ -9,19 +9,19 @@ on:
       - master
 
 jobs:
-  setup-environment:
+  setup-build:
     runs-on: ubuntu-latest
     services:
-      database:
-        image: mariadb:10.11
-        env:
-          MYSQL_ROOT_PASSWORD: app
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-          --name database
+      # database:
+      #   image: mariadb:10.11
+      #   env:
+      #     MYSQL_ROOT_PASSWORD: app
+      #   options: >-
+      #     --health-cmd="mysqladmin ping"
+      #     --health-interval=10s
+      #     --health-timeout=5s
+      #     --health-retries=3
+      #     --name database
       app:
         image: shopware/development:8.2-node-20.10-composer-2
         volumes:
@@ -32,29 +32,56 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create database
-        run: docker exec database mysql -uroot -papp -e "CREATE DATABASE app"
+      # - name: Create database
+      #   run: docker exec database mysql -uroot -papp -e "CREATE DATABASE app"
 
-      - name: Set up Shopware 
+      - name: Set up Shopware build
         run: |
           docker exec app composer create-project shopware/production:v6.6.10.1 /app
           docker exec app composer require --dev phpstan/phpstan
           docker exec app cp /BlurElysiumSlider/.devops/phpstan.neon /app
           docker exec app cp /BlurElysiumSlider/.devops/.env.local /app
-          docker exec app bin/console system:install --basic-setup -q -n
           docker exec app cp -r /BlurElysiumSlider /app/custom/static-plugins/.
           docker exec app composer require blurcreative/elysium-slider
-          docker exec app bin/console plugin:refresh
-          docker exec app bin/console plugin:install --activate BlurElysiumSlider
-          docker exec app bin/console cache:clear
+
+      - name: Upload Shopware build
+        uses: actions/upload-artifact@v3
+        with:
+          name: shopware-build
+          path: /app
 
 
-  # phpstan:
-  #   needs: setup-environment
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Run PHPStan
-  #       run: docker exec shopware vendor/bin/phpstan
+        # run: |
+        #   docker exec app composer create-project shopware/production:v6.6.10.1 /app
+        #   docker exec app composer require --dev phpstan/phpstan
+        #   docker exec app cp /BlurElysiumSlider/.devops/phpstan.neon /app
+        #   docker exec app cp /BlurElysiumSlider/.devops/.env.local /app
+        #   docker exec app bin/console system:install --basic-setup -q -n
+        #   docker exec app cp -r /BlurElysiumSlider /app/custom/static-plugins/.
+        #   docker exec app composer require blurcreative/elysium-slider
+        #   docker exec app bin/console plugin:refresh
+        #   docker exec app bin/console plugin:install --activate BlurElysiumSlider
+        #   docker exec app bin/console cache:clear
+
+  phpstan:
+    needs: setup-build
+    runs-on: ubuntu-latest
+    services:
+      app:
+        image: shopware/development:8.2-node-20.10-composer-2
+        options:
+          --name app
+    steps:
+      - name: Download Shopware build
+        uses: actions/download-artifact@v3
+        with:
+          name: shopware-build
+
+      - name: Test
+        run: ls -la
+
+      # - name: Run PHPStan
+      #   run: docker exec shopware vendor/bin/phpstan
 
   # eslint:
   #   needs: setup-environment
