@@ -82,6 +82,12 @@ jobs:
           name: shopware-build
           path: ~/app
 
+      - name: Debug app dir
+        run: |
+          cd ~/app
+          ls -la
+          pwd
+
       - name: Run PHPStan
         run: |
           docker exec app ls -la
