@@ -38,12 +38,12 @@ jobs:
 
       - name: Set up Shopware build
         run: |
-          ls -la
           docker exec app composer create-project shopware/production:v6.6.10.1 /app
           docker exec app composer require --dev phpstan/phpstan
           docker exec app cp /BlurElysiumSlider/.devops/phpstan.neon /app
           docker exec app cp /BlurElysiumSlider/.devops/.env.local /app
           docker exec app cp -r /BlurElysiumSlider /app/custom/static-plugins/.
+          docker exec app cd /app/custom/static-plugins/BlurElysiumSlider && rm -rf .git .gitignore .github .devops
           docker exec app composer require blurcreative/elysium-slider
 
       - name: Upload Shopware build
@@ -71,6 +71,8 @@ jobs:
     services:
       app:
         image: shopware/development:8.2-node-20.10-composer-2
+        volumes:
+          - ~/app:/app
         options:
           --name app
     steps:
@@ -82,10 +84,10 @@ jobs:
 
       - name: Test
         run: |
-          cd ~/app && pwd
+          cd ~/app && ls -la
 
-      # - name: Run PHPStan
-      #   run: docker exec shopware vendor/bin/phpstan
+      - name: Run PHPStan
+        run: docker exec app cd /app && vendor/bin/phpstan
 
   # eslint:
   #   needs: setup-environment
@@ -100,7 +102,18 @@ jobs:
   bundle:
     needs: setup-build
     runs-on: ubuntu-latest
+    services:
+      app:
+        image: shopware/development:8.2-node-20.10-composer-2
+        options:
+          --name app
     steps:
+      - name: Download Shopware build
+        uses: actions/download-artifact@v4
+        with:
+          name: shopware-build
+          path: ~/app
+
       - name: Bundle plugin
         run: docker ps -a
         # run: |
