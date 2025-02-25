@@ -21,6 +21,7 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
+          --name database
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -35,6 +36,7 @@ jobs:
         run: |
           echo "Container ID: $GITHUB_JOB_SERVICES_database_ID"
           echo "ENV: $TEST, CONTAINER: $CONTAINER"
+          echo docker ps -a
 
 
       # - name: Create database
