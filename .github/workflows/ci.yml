@@ -38,7 +38,11 @@ jobs:
       - name: Set up Shopware 
         run: |
           docker exec app composer create-project shopware/production:v6.6.10.1 /app
-          docker exec app pwd
+          docker exec app composer require --dev phpstan/phpstan
+          docker exec app cp /BlurElysiumSlider/.devops/phpstan.neon /app
+          docker exec app cp /BlurElysiumSlider/.devops/.env.local /app
+          docker exec app bin/console system:install --basic-setup -q -n
+          docker exec app cp -r /BlurElysiumSlider /app/custom/static-plugins/.
 
       # - name: Set up Shopware project
       #   run: |
