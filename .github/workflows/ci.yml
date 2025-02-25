@@ -71,8 +71,6 @@ jobs:
     services:
       app:
         image: shopware/development:8.2-node-20.10-composer-2
-        volumes:
-          - /home/runner/app:/app
         options:
           --name app
     steps:
