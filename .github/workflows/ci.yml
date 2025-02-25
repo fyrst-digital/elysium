@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  setup-environment:
+    runs-on: ubuntu-latest
+    services:
+      database:
+        image: mariadb:10.11
+        env:
+          MYSQL_ROOT_PASSWORD: app
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        run: docker run -d --name shopware -v ${{ github.workspace }}:/app shopware/development:8.2-node-20.10-composer-2
+
+      - name: Create database
+        run: docker exec shopware mysql -uroot -papp -hdatabase -e 'CREATE database `app`'
+
+      - name: Set up Shopware project
+        run: |
+          docker exec shopware composer create-project shopware/production:v6.6.8.0 /app
+          docker exec shopware composer require --dev phpstan/phpstan
+          docker exec shopware cp /app/.devops/phpstan.neon /app
+          docker exec shopware cp /app/.devops/.env.local /app
+          docker exec shopware bin/console system:install --basic-setup -q -n
+          docker exec shopware cp -r /app/custom/static-plugins/. /app/custom/static-plugins/
+          docker exec shopware composer require blurcreative/elysium-slider
+
+  phpstan:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run PHPStan
+        run: docker exec shopware vendor/bin/phpstan
+
+  eslint:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run ESLint
+        run: |
+          docker exec shopware cd /app/custom/static-plugins/BlurElysiumSlider
+          docker exec shopware npm install
+          docker exec shopware npm run lint:administration
+
+  bundle:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Bundle plugin
+        run: |
+          docker exec shopware bin/build-administration.sh
+          docker exec shopware bin/build-storefront.sh
+          docker exec shopware cd /app/custom/static-plugins/BlurElysiumSlider
+          docker exec shopware rm -rf .git .gitignore .gitlab-ci .gitlab-ci.yml .devops
+          docker exec shopware cp -r /app/custom/static-plugins/BlurElysiumSlider /app
+          docker exec shopware ls -la /app
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: BlurElysiumSlider
+          path: /app/BlurElysiumSlider
+
+  changelog:
+    needs: setup-environment
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Generate changelog
+        run: |
+          docker exec shopware npm install
+          docker exec shopware npm run md:changelog
+          docker exec shopware ls -la /app && docker exec shopware pwd
+
+      - name: Upload changelog
+        uses: actions/upload-artifact@v2
+        with:
+          name: changelog
+          path: /app/changelog/.mdout/*
