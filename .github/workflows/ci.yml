@@ -43,6 +43,8 @@ jobs:
           docker exec app cp /BlurElysiumSlider/.devops/.env.local /app
           docker exec app bin/console system:install --basic-setup -q -n
           docker exec app cp -r /BlurElysiumSlider /app/custom/static-plugins/.
+          docker exec app composer require blurcreative/elysium-slider
+          docker exec app bin/console plugin:refresh
 
       # - name: Set up Shopware project
       #   run: |
