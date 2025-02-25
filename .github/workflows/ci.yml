@@ -37,9 +37,8 @@ jobs:
 
       - name: Set up Shopware 
         run: |
-          docker ps -a
-          docker network ls
-          docker exec app ls -la /app
+          docker exec app composer create-project shopware/production:v6.6.10.1 /app
+          docker exec app pwd
 
       # - name: Set up Shopware project
       #   run: |
