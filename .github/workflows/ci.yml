@@ -32,9 +32,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker
-        run: docker run -d --name shopware -v ${{ github.workspace }}:/BlurElysiumSlider shopware/development:8.2-node-20.10-composer-2
-
       - name: Create database
         run: docker exec database mysql -uroot -papp -e "CREATE DATABASE app"
 
