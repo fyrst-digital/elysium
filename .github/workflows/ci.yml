@@ -82,14 +82,8 @@ jobs:
           name: shopware-build
           path: ~/app
 
-      - name: Test
-        run: |
-          cd ~/app && ls -la
-
       - name: Run PHPStan
-        run: |
-          docker exec app ls -la
-          docker exec app pwd
+        run: docker exec app vendor/bin/phpstan
 
   # eslint:
   #   needs: setup-environment
