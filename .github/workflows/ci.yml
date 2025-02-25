@@ -33,7 +33,7 @@ jobs:
           TEST: test
           CONTAINER: $GITHUB_JOB_SERVICES_DATABASE_ID
         run: |
-          echo "Container ID: $GITHUB_JOB_SERVICES_DATABASE_ID"
+          echo "Container ID: $GITHUB_JOB_SERVICES_database_ID"
           echo "ENV: $TEST, CONTAINER: $CONTAINER"
 
 
