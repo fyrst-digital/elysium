@@ -81,7 +81,8 @@ jobs:
           path: ~/app
 
       - name: Test
-        run: ls -la && pwd
+        run: |
+          cd ~/app && pwd
 
       # - name: Run PHPStan
       #   run: docker exec shopware vendor/bin/phpstan
