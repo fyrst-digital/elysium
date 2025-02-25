@@ -136,8 +136,7 @@
             "deviceSettingNote": "This setting is device aware. Current device: {device}"
         },
         "device": {
-            "mobile": "Phone",
-            "phone": "Phone",
+            "phone": "Smartphone",
             "tablet": "Tablet",
             "desktop": "Desktop"
         }
