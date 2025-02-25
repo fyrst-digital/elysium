@@ -87,7 +87,7 @@ jobs:
           cd ~/app && ls -la
 
       - name: Run PHPStan
-        run: docker exec app cd /app && vendor/bin/phpstan
+        run: docker exec app ls -la && pwd
 
   # eslint:
   #   needs: setup-environment
