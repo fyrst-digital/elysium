@@ -44,19 +44,8 @@ jobs:
           docker exec app bin/console system:install --basic-setup -q -n
           docker exec app cp -r /BlurElysiumSlider /app/custom/static-plugins/.
           docker exec app composer require blurcreative/elysium-slider
-          docker exec app bin/console plugin:refresh
+          docker exec app bin/console plugin:install --activate BlurElysiumSlider
 
-      # - name: Set up Shopware project
-      #   run: |
-      #     docker exec shopware ls -la /app
-      #     docker exec shopware composer create-project shopware/production:v6.6.10.1 /app
-      #     docker exec shopware composer require --dev phpstan/phpstan
-      #     docker exec shopware cp /BlurElysiumSlider/.devops/phpstan.neon /app
-      #     docker exec shopware cp /BlurElysiumSlider/.devops/.env.local /app
-      #     docker exec shopware bin/console system:install --basic-setup -q -n
-      #     docker exec shopware cp -r /BlurElysiumSlider /app/custom/static-plugins/.
-      #     docker exec shopware ls -la /app/custom/static-plugins/
-      #     docker exec shopware composer require blurcreative/elysium-slider
 
   # phpstan:
   #   needs: setup-environment
