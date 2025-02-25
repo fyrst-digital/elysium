@@ -82,6 +82,7 @@ jobs:
 
       - name: Debug app dir
         run: |
+          docker cp -r ~/app app:/app
           cd ~/app
           ls -la
           pwd
