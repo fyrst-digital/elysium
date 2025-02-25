@@ -44,6 +44,7 @@ jobs:
           docker exec app bin/console system:install --basic-setup -q -n
           docker exec app cp -r /BlurElysiumSlider /app/custom/static-plugins/.
           docker exec app composer require blurcreative/elysium-slider
+          docker exec app bin/console plugin:refresh
           docker exec app bin/console plugin:install --activate BlurElysiumSlider
 
 
