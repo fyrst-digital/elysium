@@ -45,7 +45,7 @@ jobs:
           docker exec app composer require blurcreative/elysium-slider
 
       - name: Upload Shopware build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: shopware-build
           path: /app
@@ -73,7 +73,7 @@ jobs:
           --name app
     steps:
       - name: Download Shopware build
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: shopware-build
 
