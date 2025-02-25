@@ -36,7 +36,7 @@ jobs:
         run: |
           echo "Container ID: $GITHUB_JOB_SERVICES_database_ID"
           echo "ENV: $TEST, CONTAINER: $CONTAINER"
-          echo docker ps -a
+          docker ps -a
 
 
       # - name: Create database
