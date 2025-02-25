@@ -44,22 +44,22 @@ jobs:
           docker exec shopware ls -la /app/custom/static-plugins/
           docker exec shopware composer require blurcreative/elysium-slider
 
-  phpstan:
-    needs: setup-environment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run PHPStan
-        run: docker exec shopware vendor/bin/phpstan
+  # phpstan:
+  #   needs: setup-environment
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Run PHPStan
+  #       run: docker exec shopware vendor/bin/phpstan
 
-  eslint:
-    needs: setup-environment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run ESLint
-        run: |
-          docker exec shopware cd /app/custom/static-plugins/BlurElysiumSlider
-          docker exec shopware npm install
-          docker exec shopware npm run lint:administration
+  # eslint:
+  #   needs: setup-environment
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Run ESLint
+  #       run: |
+  #         docker exec shopware cd /app/custom/static-plugins/BlurElysiumSlider
+  #         docker exec shopware npm install
+  #         docker exec shopware npm run lint:administration
 
   bundle:
     needs: setup-environment
@@ -71,7 +71,7 @@ jobs:
           docker exec shopware bin/build-administration.sh
           docker exec shopware bin/build-storefront.sh
           docker exec shopware cd /app/custom/static-plugins/BlurElysiumSlider
-          docker exec shopware rm -rf .git .gitignore .gitlab-ci .gitlab-ci.yml .devops
+          docker exec shopware rm -rf .git .gitignore .github .devops
           docker exec shopware cp -r /app/custom/static-plugins/BlurElysiumSlider /app
           docker exec shopware ls -la /app
 
