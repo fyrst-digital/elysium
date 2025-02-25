@@ -83,6 +83,7 @@ jobs:
       - name: Debug app dir
         run: |
           docker cp ~/app app:/app
+          docker exec app --user root chown -r application:application /app
           cd ~/app
           ls -la
           pwd
