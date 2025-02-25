@@ -82,7 +82,7 @@ jobs:
 
       - name: Debug app dir
         run: |
-          docker cp ~/app app:/
+          docker cp ~/app app:/app
           cd ~/app
           ls -la
           pwd
@@ -91,7 +91,7 @@ jobs:
         run: |
           docker exec app ls -la
           docker exec app pwd
-          docker exec app vendor/bin/phpstan
+          docker exec app app/vendor/bin/phpstan
 
   # eslint:
   #   needs: setup-environment
