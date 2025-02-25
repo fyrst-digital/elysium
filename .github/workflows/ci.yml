@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install shopware-cli
+        uses: shopware/shopware-cli-action@v1
+
+      - name: Validate plugin
+        run: |
+          echo "${{ github.workspace }}"
+          shopware-cli extension validate ${{ github.workspace }}
