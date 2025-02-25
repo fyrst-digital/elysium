@@ -21,7 +21,7 @@ jobs:
       - name: Validate plugin
         run: |
           echo "${{ github.workspace }}"
-          ls -la
+          shopware-cli extension validate ${{ github.workspace }}
   # setup-build:
   #   runs-on: ubuntu-latest
   #   services:
