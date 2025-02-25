@@ -78,6 +78,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: shopware-build
+          path: /app
 
       - name: Test
         run: ls -la && pwd
