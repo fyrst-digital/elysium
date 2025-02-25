@@ -22,6 +22,12 @@ jobs:
           --health-timeout=5s
           --health-retries=3
           --name database
+      app:
+        image: shopware/development:8.2-node-20.10-composer-2
+        volumes:
+          - ${{ github.workspace }}:/BlurElysiumSlider
+        options:
+          --name app
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,17 +38,22 @@ jobs:
       - name: Create database
         run: docker exec database mysql -uroot -papp -e "CREATE DATABASE app"
 
-      - name: Set up Shopware project
+      - name: Set up Shopware 
         run: |
-          docker exec shopware ls -la /app
-          docker exec shopware composer create-project shopware/production:v6.6.10.1 /app
-          docker exec shopware composer require --dev phpstan/phpstan
-          docker exec shopware cp /BlurElysiumSlider/.devops/phpstan.neon /app
-          docker exec shopware cp /BlurElysiumSlider/.devops/.env.local /app
-          docker exec shopware bin/console system:install --basic-setup -q -n
-          docker exec shopware cp -r /BlurElysiumSlider /app/custom/static-plugins/.
-          docker exec shopware ls -la /app/custom/static-plugins/
-          docker exec shopware composer require blurcreative/elysium-slider
+          docker ps -a
+          docker exec app ls -la /app
+
+      # - name: Set up Shopware project
+      #   run: |
+      #     docker exec shopware ls -la /app
+      #     docker exec shopware composer create-project shopware/production:v6.6.10.1 /app
+      #     docker exec shopware composer require --dev phpstan/phpstan
+      #     docker exec shopware cp /BlurElysiumSlider/.devops/phpstan.neon /app
+      #     docker exec shopware cp /BlurElysiumSlider/.devops/.env.local /app
+      #     docker exec shopware bin/console system:install --basic-setup -q -n
+      #     docker exec shopware cp -r /BlurElysiumSlider /app/custom/static-plugins/.
+      #     docker exec shopware ls -la /app/custom/static-plugins/
+      #     docker exec shopware composer require blurcreative/elysium-slider
 
   # phpstan:
   #   needs: setup-environment
