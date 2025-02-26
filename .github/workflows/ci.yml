@@ -31,7 +31,7 @@ jobs:
       node:
         image: node:lts-alpine
         volumes:
-          - ${{ github.workspace }}/changelog
+          - ${{ github.workspace }}:/changelog
         options:
           --name node
 
