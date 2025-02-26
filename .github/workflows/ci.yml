@@ -22,3 +22,24 @@ jobs:
         run: |
           echo "${{ github.workspace }}"
           shopware-cli extension validate ${{ github.workspace }}
+
+  build-extension:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install shopware-cli
+        uses: shopware/shopware-cli-action@v1
+
+      - name: Build extension
+        run: | 
+          shopware-cli extension build ${{ github.workspace }}
+          rm -rf .devops
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BlurElysiumSlider
+          path: ${{ github.workspace }}
