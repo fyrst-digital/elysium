@@ -30,17 +30,15 @@ jobs:
     services: 
       node:
         image: node:lts-alpine
-        # volumes:
-        #   - ${{ github.workspace }}:/changelog
-        options:
-          --name node
+        volumes:
+          - ${{ github.workspace }}/changelog
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Test
         run: |
-          docker ps -a
-          docker exec node ls -la
-          docker exec node pwd
+          node -v
           ls -la
           pwd
 
