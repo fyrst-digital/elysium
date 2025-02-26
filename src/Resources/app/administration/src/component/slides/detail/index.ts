@@ -182,7 +182,7 @@ export default Component.wrapComponentConfig({
             State.commit('context/resetLanguageToDefault')
             const slide = this.slidesRepository.create(Context.api)
             Object.assign(slide, { slideSettings: this.defaultSlideSettings })
-            this.slide = slide
+            this.elysiumSlide.setSlide(slide)
             this.isLoading = false
         },
 
