@@ -50,8 +50,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-extension
     env:
-      SHOPWARE_CLI_ACCOUNT_EMAIL: TEST
-      SHOPWARE_CLI_ACCOUNT_PASSWORD: TEST
+      SHOPWARE_CLI_ACCOUNT_EMAIL: ${{ secrets.SHOPWARE_CLI_ACCOUNT_EMAIL }}
+      SHOPWARE_CLI_ACCOUNT_PASSWORD: ${{ secrets.SHOPWARE_CLI_ACCOUNT_PASSWORD }}
     steps:
       - name: Get extension artifact
         uses: actions/download-artifact@v4
