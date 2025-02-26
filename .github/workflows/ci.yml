@@ -37,11 +37,9 @@ jobs:
         run: | 
           shopware-cli extension build ${{ github.workspace }}
           rm -rf .devops
-          mkdir temp_dir
-          mv * temp_dir/
+          shopt -s extglob
           mkdir BlurElysiumSlider
-          mv temp_dir/* BlurElysiumSlider/
-          rm -r temp_dir
+          mv !(BlurElysiumSlider) BlurElysiumSlider/
 
       - name: Upload as artifact
         uses: actions/upload-artifact@v4
