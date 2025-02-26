@@ -35,10 +35,10 @@ jobs:
 
       - name: Build zip
         run: | 
-          shopware-cli extension zip --disable-git --release ${{ github.workspace }}
-          ls -la ${{ github.workspace }}
+          shopware-cli extension zip --disable-git ${{ github.workspace }}
 
       - name: Upload zip
         uses: actions/upload-artifact@v4
         with:
+          name: BlurElysiumSlider
           path: BlurElysiumSlider.zip
