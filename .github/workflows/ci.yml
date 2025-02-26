@@ -66,10 +66,9 @@ jobs:
 
       - name: Create zip
         run: |
-          zip -r BlurElysiumSlider.zip BlurElysiumSlider
-          ls -la && pwd
-          unzip -l BlurElysiumSlider.zip
+          zip -rq BlurElysiumSlider.zip BlurElysiumSlider
 
-      - name: Auth Shopware Store
+      - name: Deploy extension to store
         run: |
+          ls -la
           shopware-cli account login
