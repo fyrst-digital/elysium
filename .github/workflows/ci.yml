@@ -25,6 +25,15 @@ jobs:
           echo "${{ github.workspace }}"
           shopware-cli extension validate ${{ github.workspace }}
 
+  build-changelog:
+    runs-on: ubuntu-latest
+    container: node:lts-alpine
+    steps:
+      - name: Test
+        run: |
+          node -v
+          ls -la
+
   build-extension:
     runs-on: ubuntu-latest
     needs: validate
