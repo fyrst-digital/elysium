@@ -34,9 +34,11 @@ jobs:
           - ${{ github.workspace }}/changelog
         options:
           --name node
+
     steps:
       - name: Test
         run: |
+          docker ps -a
           docker exec node ls -la
           docker exec node pwd
           ls -la
