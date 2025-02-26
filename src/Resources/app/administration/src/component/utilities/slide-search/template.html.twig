@@ -9,15 +9,15 @@
         :delay="300" 
         placeholder="Slides durchsuchen"
         variant="form" 
-        @focus="focusSearch"
-        @blur="blurSearch" />
+        @focus="focusSearch" />
 
     <sw-select-result-list 
         v-if="searchFocus === true"
         ref="resultList"
         :options="slidesCollection"
         :empty-message="$tc('blurElysiumSlides.slideSearch.noResult')"
-        @item-select="selectSlide">
+        @item-select="selectSlide"
+        @outside-click="blurSearch">
 
         <template #before-item-list="{item, index}">
             <div v-if="slidesLoading"

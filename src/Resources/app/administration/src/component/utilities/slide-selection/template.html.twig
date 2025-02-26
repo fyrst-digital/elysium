@@ -54,11 +54,11 @@
         </div>
     </div>
 
-    {# <mt-banner 
-        v-else
+    <mt-banner 
+        v-if="selectedSlidesIds.length === 0"
         variant="info">
 
         <span v-html="$tc('blurElysiumSlides.slideSelection.listNoSelection')" />
-    </mt-banner> #}
+    </mt-banner>
 
 </div>

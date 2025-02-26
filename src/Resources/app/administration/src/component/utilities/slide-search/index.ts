@@ -62,10 +62,8 @@ export default Component.wrapComponentConfig({
             this.searchFocus = true
         },
 
-        blurSearch (event) {
-            if (event.relatedTarget === null || !event.relatedTarget.closest('.sw-select-result-list-popover-wrapper')) {
-                this.searchFocus = false
-            }
+        blurSearch () {
+            this.searchFocus = false
         },
 
         loadSlides () {
