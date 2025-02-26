@@ -1,0 +1,11 @@
+{
+  "main.js": {
+    "file": "js/blur-elysium-slider.js",
+    "name": "blur-elysium-slider",
+    "src": "main.js",
+    "isEntry": true,
+    "css": [
+      "css/blur-elysium-slider.css"
+    ]
+  }
+}

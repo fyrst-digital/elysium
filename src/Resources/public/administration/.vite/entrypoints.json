@@ -1,0 +1,25 @@
+{
+  "base": "/bundles/blurelysiumslider/administration/",
+  "entryPoints": {
+    "blur-elysium-slider": {
+      "css": [
+        "/bundles/blurelysiumslider/administration/css/blur-elysium-slider.css"
+      ],
+      "dynamic": [],
+      "js": [
+        "/bundles/blurelysiumslider/administration/js/blur-elysium-slider.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.0.4",
+    7,
+    0,
+    4
+  ],
+  "viteServer": null
+}
