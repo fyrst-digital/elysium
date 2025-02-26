@@ -27,20 +27,19 @@ jobs:
 
   build-changelog:
     runs-on: ubuntu-latest
-    services: 
-      node:
-        image: node:lts-alpine
-        volumes:
-          - ${{ github.workspace }}/changelog
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Test
         run: |
           node -v
           ls -la
           pwd
+          npm install
+          npm run md:changelog
+          ls -la
 
   build-extension:
     runs-on: ubuntu-latest
