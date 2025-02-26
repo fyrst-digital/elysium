@@ -27,14 +27,18 @@ jobs:
 
   build-changelog:
     runs-on: ubuntu-latest
-    container: 
-      image: node:lts-alpine
-      volumes:
-        - ${{ github.workspace }}/changelog
+    services: 
+      node:
+        image: node:lts-alpine
+        volumes:
+          - ${{ github.workspace }}/changelog
+        options:
+          --name node
     steps:
       - name: Test
         run: |
-          node -v
+          docker exec node ls -la
+          docker exec node pwd
           ls -la
           pwd
 
