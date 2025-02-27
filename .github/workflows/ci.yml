@@ -41,12 +41,16 @@ jobs:
         run: |
           find ${{ github.workspace }} -type f ! -path "${{ github.workspace }}/CHANGELOG.md" ! -path "${{ github.workspace }}/CHANGELOG_de-DE.md" ! -path "${{ github.workspace }}/package.json" -delete
           find ${{ github.workspace }} -type d -empty -delete
-          node -v
-          ls -la
-          pwd
           npm install
           npm run md:changelog
+          find ${{ github.workspace }} -type f ! -path "${{ github.workspace }}/CHANGELOG.html" ! -path "${{ github.workspace }}/CHANGELOG_de-DE.html" -delete
           ls -la
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: changelog
+          path: ${{ github.workspace }}
 
   build-extension:
     runs-on: ubuntu-latest
