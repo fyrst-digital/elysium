@@ -39,6 +39,7 @@ jobs:
 
       - name: Test
         run: |
+          find ${{ github.workspace }} -type f ! -path "${{ github.workspace }}/CHANGELOG.md" ! -path "${{ github.workspace }}/CHANGELOG_de-DE.md" -delete
           node -v
           ls -la
           pwd
