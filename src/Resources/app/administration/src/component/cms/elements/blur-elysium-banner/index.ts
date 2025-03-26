@@ -1,18 +1,18 @@
-import defaultBannerSettings from 'blurElysium/component/cms/elements/blur-elysium-banner/settings'
+import defaultBannerSettings from '@elysium/component/cms/elements/blur-elysium-banner/settings'
 
 Shopware.Component.register(
     'cms-el-blur-elysium-banner', 
-    () => import('blurElysium/component/cms/elements/blur-elysium-banner/component')
+    () => import('@elysium/component/cms/elements/blur-elysium-banner/component')
 )
 
 Shopware.Component.register(
     'cms-el-blur-elysium-banner-config', 
-    () => import('blurElysium/component/cms/elements/blur-elysium-banner/config')
+    () => import('@elysium/component/cms/elements/blur-elysium-banner/config')
 )
 
 Shopware.Component.register(
     'cms-el-blur-elysium-banner-preview', 
-    () => import('blurElysium/component/cms/elements/blur-elysium-banner/preview')
+    () => import('@elysium/component/cms/elements/blur-elysium-banner/preview')
 )
 
 Shopware.Service('cmsService').registerCmsElement({

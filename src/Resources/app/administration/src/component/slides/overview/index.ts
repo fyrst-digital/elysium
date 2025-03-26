@@ -1,4 +1,4 @@
-import { module } from 'blurElysium/meta';
+import { module } from '@elysium/meta';
 import template from './template.html.twig'
 import EntityCollection from 'shopware/core/data/entity-collection.data';
 

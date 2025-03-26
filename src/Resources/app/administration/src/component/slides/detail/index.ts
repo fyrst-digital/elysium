@@ -1,4 +1,4 @@
-import defaultSlideSettings from 'blurElysium/component/slides/settings'
+import defaultSlideSettings from '@elysium/component/slides/settings'
 import template from './template.html.twig'
 
 const { Component, State, Context, Mixin, Data, Utils, Store } = Shopware

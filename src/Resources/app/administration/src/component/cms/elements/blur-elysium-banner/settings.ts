@@ -1,4 +1,4 @@
-import { BannerSettings, ViewportSettings } from 'blurElysium/types/banner';
+import { BannerSettings, ViewportSettings } from '@elysium/types/banner';
 
 const { Utils } = Shopware
 

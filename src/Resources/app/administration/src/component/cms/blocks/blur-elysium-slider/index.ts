@@ -2,12 +2,12 @@ const { Component, Service } = Shopware
 
 Component.register(
     'sw-cms-block-blur-elysium-slider', 
-    () => import('blurElysium/component/cms/blocks/blur-elysium-slider/component')
+    () => import('@elysium/component/cms/blocks/blur-elysium-slider/component')
 )
 
 Component.register(
     'sw-cms-block-blur-elysium-slider-preview', 
-    () => import('blurElysium/component/cms/blocks/blur-elysium-slider/preview')
+    () => import('@elysium/component/cms/blocks/blur-elysium-slider/preview')
 )
 
 // eslint-disable-next-line no-undef

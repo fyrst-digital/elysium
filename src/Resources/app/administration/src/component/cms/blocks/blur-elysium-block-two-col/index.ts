@@ -1,11 +1,11 @@
 Shopware.Component.register(
     'sw-cms-block-blur-elysium-block-two-col', 
-    () => import('blurElysium/component/cms/blocks/blur-elysium-block-two-col/component')
+    () => import('@elysium/component/cms/blocks/blur-elysium-block-two-col/component')
 )
 
 Shopware.Component.register(
     'sw-cms-block-blur-elysium-block-two-col-preview', 
-    () => import('blurElysium/component/cms/blocks/blur-elysium-block-two-col/preview')
+    () => import('@elysium/component/cms/blocks/blur-elysium-block-two-col/preview')
 )
 
 // eslint-disable-next-line no-undef

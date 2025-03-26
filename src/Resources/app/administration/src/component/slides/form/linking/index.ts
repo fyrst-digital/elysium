@@ -1,5 +1,5 @@
 import template from './template.html.twig'
-import { buttonColors, buttonSizes } from 'blurElysium/component/utilities/settings/buttons'
+import { buttonColors, buttonSizes } from '@elysium/component/utilities/settings/buttons'
 
 const { Component, Mixin, Store } = Shopware 
 

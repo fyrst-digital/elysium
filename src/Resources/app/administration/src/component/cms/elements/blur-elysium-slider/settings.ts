@@ -1,4 +1,4 @@
-import { SliderSettings, ViewportSettings } from 'blurElysium/types/slider';
+import { SliderSettings, ViewportSettings } from '@elysium/types/slider';
 
 const { Utils } = Shopware
 

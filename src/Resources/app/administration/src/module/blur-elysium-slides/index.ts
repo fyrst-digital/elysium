@@ -1,4 +1,4 @@
-import { module } from 'blurElysium/meta'
+import { module } from '@elysium/meta'
 
 const { Module, Service } = Shopware
 

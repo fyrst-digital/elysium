@@ -98,7 +98,7 @@ export default Component.wrapComponentConfig({
 
     methods: {
         loadIconSvgData (variant: string, iconName: string, iconFullName: string) {
-            return import(`blurElysium/icons/${variant}/${iconName}.svg`).then((iconSvgData) => {
+            return import(`@elysium/icons/${variant}/${iconName}.svg`).then((iconSvgData) => {
                 if (iconSvgData.default) {
                     this.iconSvgData = iconSvgData.default;
                 } else {

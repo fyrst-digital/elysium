@@ -1,6 +1,6 @@
-//declare module "blurElysium/*"
-//declare module "blurElysium/component/slides/settings"
-//declare module "blurElysium/types"
+//declare module "@elysium/*"
+//declare module "@elysium/component/slides/settings"
+//declare module "@elysium/types"
 declare module "*.html.twig" 
 interface MixinContainer {
     'blur-media'

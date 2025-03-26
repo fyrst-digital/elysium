@@ -7,12 +7,12 @@ import {
     ObjectPositionY, 
     BgGradient, 
     BgEffect
-} from 'blurElysium/types/styles'
+} from '@elysium/types/styles'
 
 import { 
     ButtonColor,
     ButtonSize
-} from 'blurElysium/types/button'
+} from '@elysium/types/button'
 
 export type SlideLayoutOrder = 'default' | 'reverse'
 

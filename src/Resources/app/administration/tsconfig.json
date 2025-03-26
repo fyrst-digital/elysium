@@ -12,8 +12,12 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "blurElysium/*": ["src/*"],
-      "shopware/*": ["../../../../../../../vendor/shopware/administration/Resources/app/administration/src/*"],
+      "@elysium/*": [
+        "*"
+      ],
+      "shopware/*": [
+        "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/*"
+      ],
     },
     "lib": [
       "ES2020",
@@ -25,8 +29,10 @@
     // "strict": true
   },
   "include": [
-    "./src/**/*", 
+    "./src/**/*",
     "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/**/*",
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

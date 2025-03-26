@@ -1,12 +1,12 @@
-import defaultSliderSettings from 'blurElysium/component/cms/elements/blur-elysium-slider/settings'
-import SliderConfig from 'blurElysium/component/cms/elements/blur-elysium-slider/config'
-import SliderConfigSettings from 'blurElysium/component/cms/elements/blur-elysium-slider/config/settings'
+import defaultSliderSettings from '@elysium/component/cms/elements/blur-elysium-slider/settings'
+import SliderConfig from '@elysium/component/cms/elements/blur-elysium-slider/config'
+import SliderConfigSettings from '@elysium/component/cms/elements/blur-elysium-slider/config/settings'
 
 const { Component, Service } = Shopware
 
 Component.register(
     'cms-el-blur-elysium-slider', 
-    () => import('blurElysium/component/cms/elements/blur-elysium-slider/component')
+    () => import('@elysium/component/cms/elements/blur-elysium-slider/component')
 )
 
 Component.register(
@@ -21,20 +21,20 @@ Component.register(
 
 Component.register(
     'cms-el-blur-elysium-slider-preview', 
-    () => import('blurElysium/component/cms/elements/blur-elysium-slider/preview')
+    () => import('@elysium/component/cms/elements/blur-elysium-slider/preview')
 )
 
 Component.register(
     'blur-elysium-slider-config-sizing', 
-    () => import('blurElysium/component/cms/elements/blur-elysium-slider/config/sizing')
+    () => import('@elysium/component/cms/elements/blur-elysium-slider/config/sizing')
 )
 Component.register(
     'blur-elysium-slider-config-navigation', 
-    () => import('blurElysium/component/cms/elements/blur-elysium-slider/config/navigation')
+    () => import('@elysium/component/cms/elements/blur-elysium-slider/config/navigation')
 )
 Component.register(
     'blur-elysium-slider-config-arrows', 
-    () => import('blurElysium/component/cms/elements/blur-elysium-slider/config/arrows')
+    () => import('@elysium/component/cms/elements/blur-elysium-slider/config/arrows')
 )
 
 Service('cmsService').registerCmsElement({

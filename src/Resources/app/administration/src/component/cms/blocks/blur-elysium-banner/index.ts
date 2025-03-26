@@ -1,11 +1,11 @@
 Shopware.Component.register(
     'sw-cms-block-blur-elysium-banner', 
-    () => import('blurElysium/component/cms/blocks/blur-elysium-banner/component')
+    () => import('@elysium/component/cms/blocks/blur-elysium-banner/component')
 )
 
 Shopware.Component.register(
     'sw-cms-block-blur-elysium-banner-preview', 
-    () => import('blurElysium/component/cms/blocks/blur-elysium-banner/preview')
+    () => import('@elysium/component/cms/blocks/blur-elysium-banner/preview')
 )
 
 // eslint-disable-next-line no-undef

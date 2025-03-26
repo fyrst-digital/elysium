@@ -1,4 +1,4 @@
-import { ButtonColor, ButtonSize } from 'blurElysium/types/button'
+import { ButtonColor, ButtonSize } from '@elysium/types/button'
 
 interface ButtonColorOption {
     value: ButtonColor
