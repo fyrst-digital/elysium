@@ -1,7 +1,7 @@
 import defaultSlideSettings from '@elysium/component/slides/settings'
 import template from './template.html.twig'
 
-const { Component, State, Context, Mixin, Data, Utils, Store } = Shopware
+const { Component, Context, Mixin, Data, Utils, Store } = Shopware
 const { Criteria } = Data
 
 export default Component.wrapComponentConfig({
@@ -67,6 +67,10 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
+
+        context () {
+            return Store.get('context')
+        },
 
         elysiumUI () {
             return Store.get('elysiumUI')
@@ -179,7 +183,7 @@ export default Component.wrapComponentConfig({
         },
 
         createSlide () {
-            State.commit('context/resetLanguageToDefault')
+            this.context.resetLanguageToDefault()
             const slide = this.slidesRepository.create(Context.api)
             Object.assign(slide, { slideSettings: this.defaultSlideSettings })
             this.elysiumSlide.setSlide(slide)
@@ -308,7 +312,7 @@ export default Component.wrapComponentConfig({
         },
 
         onChangeLanguage (languageId: string) {
-            State.commit('context/setApiLanguageId', languageId)
+            this.context.setApiLanguageId(languageId)
 
             if (this.slideId) {
                 this.loadSlide()

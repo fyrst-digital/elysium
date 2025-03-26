@@ -1,7 +1,6 @@
 import template from './template.html.twig'
 
 const { Component, Mixin, Store } = Shopware 
-const { mapGetters } = Component.getComponentHelper()
 
 export default Component.wrapComponentConfig({
     template,
@@ -22,12 +21,12 @@ export default Component.wrapComponentConfig({
             return Store.get('elysiumUI').device
         },
 
-        ...mapGetters('error', [
-            'getApiError'
-        ]),
+        error () {
+            return Store.get('error')
+        },
 
         nameError () {
-            return this.getApiError(this.slide, 'name');
+            return this.error.getApiError(this.slide, 'name');
         },
 
         slideViewportSettings () {
