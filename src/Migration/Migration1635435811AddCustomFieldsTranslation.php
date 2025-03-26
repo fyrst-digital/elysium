@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Migration;
 
@@ -14,13 +16,19 @@ class Migration1635435811AddCustomFieldsTranslation extends MigrationStep
 
     public function update(Connection $connection): void
     {
-        $sql = <<<SQL
-            ALTER TABLE `blur_elysium_slides_translation`
-            ADD COLUMN `custom_fields` json DEFAULT NULL
-SQL;
+        try {
+            $sql = <<<SQL
+                ALTER TABLE `blur_elysium_slides_translation`
+                ADD COLUMN `custom_fields` json DEFAULT NULL
+    SQL;
 
-        // add custom field column
-        $connection->executeStatement( $sql );
+            // add custom field column
+            $connection->executeStatement($sql);
+        } catch (\Exception $e) {
+            if (!preg_match('/duplicate column|column exists/i', $e->getMessage())) {
+                throw $e;
+            }
+        }
     }
 
     public function updateDestructive(Connection $connection): void
@@ -28,4 +36,3 @@ SQL;
         // implement update destructive
     }
 }
-?>

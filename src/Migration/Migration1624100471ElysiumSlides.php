@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Migration;
 
@@ -12,7 +14,7 @@ class Migration1624100471ElysiumSlides extends MigrationStep
         return 1624100471;
     }
 
-    public function update( Connection $connection ): void
+    public function update(Connection $connection): void
     {
         $sql = <<<SQL
         CREATE TABLE IF NOT EXISTS `blur_elysium_slides` (
@@ -29,18 +31,17 @@ class Migration1624100471ElysiumSlides extends MigrationStep
             DEFAULT CHARSET = utf8mb4
             COLLATE = utf8mb4_unicode_ci
 SQL;
-        
-        $connection->executeStatement( $sql );
+
+        $connection->executeStatement($sql);
     }
 
-    public function updateDestructive( Connection $connection ): void
+    public function updateDestructive(Connection $connection): void
     {
         // implement update destructive
         $sql = <<<SQL
             DROP TABLE `blur_elysium_slides_translation`, `blur_elysium_slides`
 SQL;
 
-        $connection->executeStatement( $sql );
+        $connection->executeStatement($sql);
     }
 }
-?>

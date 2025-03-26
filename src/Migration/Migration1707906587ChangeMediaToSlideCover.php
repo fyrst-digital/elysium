@@ -23,14 +23,19 @@ class Migration1707906587ChangeMediaToSlideCover extends MigrationStep
          * RENAME COLUMN `media_id` TO `slide_cover_id`,
          * RENAME COLUMN `media_portrait_id` TO `slide_cover_mobile_id`
          */
-        $sql = <<<SQL
-        ALTER TABLE `blur_elysium_slides`
-        CHANGE `media_id` `slide_cover_id` BINARY(16) NULL,
-        CHANGE `media_portrait_id` `slide_cover_mobile_id` BINARY(16) NULL;
-SQL;
 
-        // add custom field column
-        $connection->executeStatement($sql);
+        try {
+            $sql = <<<SQL
+            ALTER TABLE `blur_elysium_slides`
+            CHANGE `media_id` `slide_cover_id` BINARY(16) NULL,
+            CHANGE `media_portrait_id` `slide_cover_mobile_id` BINARY(16) NULL;
+    SQL;
+            $connection->executeStatement($sql);
+        } catch (\Exception $e) {
+            if (!preg_match('/duplicate column|column exists|unknown column/i', $e->getMessage())) {
+                throw $e;
+            }
+        }
     }
 
     public function updateDestructive(Connection $connection): void
