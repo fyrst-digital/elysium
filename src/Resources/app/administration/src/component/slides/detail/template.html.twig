@@ -18,14 +18,16 @@
 
     <template #smart-bar-actions>
 
-        <sw-button
+        <mt-button
             :disabled="(newSlide !== true && !hasChanges)"
             v-tooltip="{
                 message: cancelActionMessage
             }"
+            variant="secondary"
+            size="default"
             @click="cancelAction">
             {{ $tc('blurElysium.action.cancel') }}
-        </sw-button>
+        </mt-button>
 
         <sw-button-group
             :split-button="true">
@@ -50,7 +52,7 @@
                     >
                         <blur-icon
                             name="blurph-caret-down-bold"
-                            size="24"
+                            size="16"
                         />
                     </sw-button>
                 </template>

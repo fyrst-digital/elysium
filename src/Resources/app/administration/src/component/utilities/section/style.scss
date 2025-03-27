@@ -1,5 +1,5 @@
 .blur-section {
-    --container-padding-y: 0px; 
+    --container-padding-y: 0px;
     --container-padding-x: 0px;
     --container-gap: var(--container-gap-y, 0px) var(--container-gap-x, 0px);
     --container-border-color: var(--color-gray-200);
@@ -9,32 +9,34 @@
     padding: var(--container-padding-y) var(--container-padding-x);
 
     &.has-padding {
-        --container-padding-y: 24px; 
+        --container-padding-y: 24px;
         --container-padding-x: 24px;
     }
 
     &.has-gap {
-        --container-gap-y: 24px; 
-        --container-gap-x: 24px; 
+        --container-gap-y: 24px;
+        --container-gap-x: 24px;
         --blur-section-gap-y: 24px;
         --blur-section-gap-x: 24px;
     }
 
     &.has-gap-y {
-        --container-gap-y: 16px; 
+        --container-gap-y: 16px;
         --blur-section-gap-y: 24px;
     }
-    
+
     &.has-gap-x {
-        --container-gap-x: 24px; 
+        --container-gap-x: 24px;
         --blur-section-gap-x: 24px;
     }
 
     .mt-field,
-    .sw-field, 
-    .sw-field--switch, 
+    .sw-field,
+    .sw-field--switch,
     .mt-field--switch,
     .sw-text-editor,
+    .blur-switch-input,
+    .mt-switch,
     h4 {
         margin: 0;
     }
