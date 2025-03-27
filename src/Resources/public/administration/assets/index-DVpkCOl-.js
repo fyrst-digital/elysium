@@ -1,0 +1,2 @@
+const t=`<mt-colorpicker class="blur-colorpicker" :placeholder="'transparent'" :modelValue="validatedValue" @update:modelValue="update" />`,{Component:a}=Shopware,l=a.wrapComponentConfig({template:t,props:{value:{type:String},device:String,unit:{type:[String,Boolean],default:"Px"},placeholder:{type:[String,Boolean,Number]}},emits:["update:value","onDevice"],computed:{validatedValue(){return this.value===null?"":this.value}},methods:{update(e){this.$emit("update:value",e)}}});export{l as default};
+//# sourceMappingURL=index-DVpkCOl-.js.map

@@ -1,11 +1,437 @@
 {
-  "main.js": {
-    "file": "js/blur-elysium-slider.js",
-    "name": "blur-elysium-slider",
-    "src": "main.js",
-    "isEntry": true,
+  "component/cms/blocks/blur-elysium-banner/component/index.ts": {
+    "file": "assets/index-D7-yiHxw.js",
+    "name": "index",
+    "src": "component/cms/blocks/blur-elysium-banner/component/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/blocks/blur-elysium-banner/preview/index.ts": {
+    "file": "assets/index-BMk21XJU.js",
+    "name": "index",
+    "src": "component/cms/blocks/blur-elysium-banner/preview/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/blocks/blur-elysium-block-two-col/component/index.ts": {
+    "file": "assets/index-TpCmZ1P2.js",
+    "name": "index",
+    "src": "component/cms/blocks/blur-elysium-block-two-col/component/index.ts",
+    "isDynamicEntry": true,
     "css": [
-      "css/blur-elysium-slider.css"
+      "assets/index-OfWYncQ7.css"
+    ]
+  },
+  "component/cms/blocks/blur-elysium-block-two-col/preview/index.ts": {
+    "file": "assets/index-BQul9sPc.js",
+    "name": "index",
+    "src": "component/cms/blocks/blur-elysium-block-two-col/preview/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/blocks/blur-elysium-slider/component/index.ts": {
+    "file": "assets/index-Bdk3GPkG.js",
+    "name": "index",
+    "src": "component/cms/blocks/blur-elysium-slider/component/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/blocks/blur-elysium-slider/preview/index.ts": {
+    "file": "assets/index-DGXL_FR-.js",
+    "name": "index",
+    "src": "component/cms/blocks/blur-elysium-slider/preview/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/elements/blur-elysium-banner/component/index.ts": {
+    "file": "assets/index-Hi4Qq8Hc.js",
+    "name": "index",
+    "src": "component/cms/elements/blur-elysium-banner/component/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/elements/blur-elysium-banner/config/index.ts": {
+    "file": "assets/index-BRX334_2.js",
+    "name": "index",
+    "src": "component/cms/elements/blur-elysium-banner/config/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/elements/blur-elysium-banner/preview/index.ts": {
+    "file": "assets/index-BGAlKpds.js",
+    "name": "index",
+    "src": "component/cms/elements/blur-elysium-banner/preview/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/elements/blur-elysium-slider/component/index.ts": {
+    "file": "assets/index-vr1E64cj.js",
+    "name": "index",
+    "src": "component/cms/elements/blur-elysium-slider/component/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/elements/blur-elysium-slider/config/arrows/index.ts": {
+    "file": "assets/index-CWUvJp9T.js",
+    "name": "index",
+    "src": "component/cms/elements/blur-elysium-slider/config/arrows/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/elements/blur-elysium-slider/config/navigation/index.ts": {
+    "file": "assets/index-DZA3CT34.js",
+    "name": "index",
+    "src": "component/cms/elements/blur-elysium-slider/config/navigation/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/elements/blur-elysium-slider/config/sizing/index.ts": {
+    "file": "assets/index-i9-Tfo4E.js",
+    "name": "index",
+    "src": "component/cms/elements/blur-elysium-slider/config/sizing/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/elements/blur-elysium-slider/preview/index.ts": {
+    "file": "assets/index-C6H0bkd3.js",
+    "name": "index",
+    "src": "component/cms/elements/blur-elysium-slider/preview/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/section/add-block/index.ts": {
+    "file": "assets/index-BUfEjuTz.js",
+    "name": "index",
+    "src": "component/cms/section/add-block/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-C6qeIuck.css"
+    ]
+  },
+  "component/cms/section/block-settings/index.ts": {
+    "file": "assets/index-G6jVZbka.js",
+    "name": "index",
+    "src": "component/cms/section/block-settings/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/section/index.ts": {
+    "file": "assets/index-VZblct4Q.js",
+    "name": "index",
+    "src": "component/cms/section/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-DnDy8Di4.css"
+    ]
+  },
+  "component/cms/section/settings/index.ts": {
+    "file": "assets/index-DmMx2AM6.js",
+    "name": "index",
+    "src": "component/cms/section/settings/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/form/colorpicker/index.ts": {
+    "file": "assets/index-DVpkCOl-.js",
+    "name": "index",
+    "src": "component/form/colorpicker/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/form/device-number-input/index.ts": {
+    "file": "assets/index-MnbfeHjV.js",
+    "name": "index",
+    "src": "component/form/device-number-input/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/form/device-select-input/index.ts": {
+    "file": "assets/index-CCMyxJ5o.js",
+    "name": "index",
+    "src": "component/form/device-select-input/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/form/device-switch/index.ts": {
+    "file": "assets/index-BGjWQznX.js",
+    "name": "index",
+    "src": "component/form/device-switch/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-B7I4Skof.css"
+    ]
+  },
+  "component/form/number-input/index.ts": {
+    "file": "assets/index-BDXksAKt.js",
+    "name": "index",
+    "src": "component/form/number-input/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/form/select-input/index.ts": {
+    "file": "assets/index-baZw_LP2.js",
+    "name": "index",
+    "src": "component/form/select-input/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/form/text-input/index.ts": {
+    "file": "assets/index-CA7whu-q.js",
+    "name": "index",
+    "src": "component/form/text-input/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/icon/index.ts": {
+    "file": "assets/index-D-xc01Ow.js",
+    "name": "index",
+    "src": "component/icon/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/settings/index.ts": {
+    "file": "assets/index-bIVlb8-t.js",
+    "name": "index",
+    "src": "component/settings/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/detail/index.ts": {
+    "file": "assets/index-BUCYU87I.js",
+    "name": "index",
+    "src": "component/slides/detail/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/form/container/index.ts": {
+    "file": "assets/index-BxPxW29O.js",
+    "name": "index",
+    "src": "component/slides/form/container/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/form/content/index.ts": {
+    "file": "assets/index-BSVOFcie.js",
+    "name": "index",
+    "src": "component/slides/form/content/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/form/cover/index.ts": {
+    "file": "assets/index-2WycJoQK.js",
+    "name": "index",
+    "src": "component/slides/form/cover/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/form/custom-fields/index.ts": {
+    "file": "assets/index-CiTt3xtT.js",
+    "name": "index",
+    "src": "component/slides/form/custom-fields/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/form/custom-template-file/index.ts": {
+    "file": "assets/index-JxsHEPhL.js",
+    "name": "index",
+    "src": "component/slides/form/custom-template-file/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/form/focus-image/index.ts": {
+    "file": "assets/index-Bl_dWtTn.js",
+    "name": "index",
+    "src": "component/slides/form/focus-image/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/form/general/index.ts": {
+    "file": "assets/index-aa6PtKsU.js",
+    "name": "index",
+    "src": "component/slides/form/general/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/form/linking/index.ts": {
+    "file": "assets/index-CRbSJox-.js",
+    "name": "index",
+    "src": "component/slides/form/linking/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/form/slide/index.ts": {
+    "file": "assets/index-Dpb4jUEu.js",
+    "name": "index",
+    "src": "component/slides/form/slide/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/overview/index.ts": {
+    "file": "assets/index-d-WGnEoF.js",
+    "name": "index",
+    "src": "component/slides/overview/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "main.ts"
+    ]
+  },
+  "component/slides/section/advanced/index.ts": {
+    "file": "assets/index-B-Z-XYmY.js",
+    "name": "index",
+    "src": "component/slides/section/advanced/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/section/base/index.ts": {
+    "file": "assets/index-BGdSt3MD.js",
+    "name": "index",
+    "src": "component/slides/section/base/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/section/display/index.ts": {
+    "file": "assets/index-BdxFdZjE.js",
+    "name": "index",
+    "src": "component/slides/section/display/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slides/section/media/index.ts": {
+    "file": "assets/index-DMYyY1E3.js",
+    "name": "index",
+    "src": "component/slides/section/media/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/utilities/block-two-col-config/index.ts": {
+    "file": "assets/index-v6Emio2O.js",
+    "name": "index",
+    "src": "component/utilities/block-two-col-config/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/utilities/card-title/index.ts": {
+    "file": "assets/index-D8vH7C6C.js",
+    "name": "index",
+    "src": "component/utilities/card-title/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-Be4699pq.css"
+    ]
+  },
+  "component/utilities/cms-slide-skeleton/index.ts": {
+    "file": "assets/index-EG5x8ImA.js",
+    "name": "index",
+    "src": "component/utilities/cms-slide-skeleton/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-DLYJxLtR.css"
+    ]
+  },
+  "component/utilities/column/index.ts": {
+    "file": "assets/index-B63bXtqk.js",
+    "name": "index",
+    "src": "component/utilities/column/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/utilities/detail-view/index.ts": {
+    "file": "assets/index-DIV5wDRv.js",
+    "name": "index",
+    "src": "component/utilities/detail-view/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-CV-VfyXU.css"
+    ]
+  },
+  "component/utilities/icon/index.ts": {
+    "file": "assets/index-Kofg-NZG.js",
+    "name": "index",
+    "src": "component/utilities/icon/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/utilities/section/index.ts": {
+    "file": "assets/index-C3u5wTvN.js",
+    "name": "index",
+    "src": "component/utilities/section/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-l4PhX9Cv.css"
+    ]
+  },
+  "component/utilities/slide-search/index.ts": {
+    "file": "assets/index-BBC-IOZb.js",
+    "name": "index",
+    "src": "component/utilities/slide-search/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/utilities/slide-selection/index.ts": {
+    "file": "assets/index-p_d6XG9_.js",
+    "name": "index",
+    "src": "component/utilities/slide-selection/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-Cqa9Aoa6.css"
+    ]
+  },
+  "extension/sw-cms-section/index.ts": {
+    "file": "assets/index-BcDzvO4x.js",
+    "name": "index",
+    "src": "extension/sw-cms-section/index.ts",
+    "isDynamicEntry": true
+  },
+  "extension/sw-cms-stage-section-selection/index.ts": {
+    "file": "assets/index-B2Nrq3pD.js",
+    "name": "index",
+    "src": "extension/sw-cms-stage-section-selection/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-DPo20VZ0.css"
+    ]
+  },
+  "extension/sw-media-quickinfo-usage/index.ts": {
+    "file": "assets/index-B5IAypzO.js",
+    "name": "index",
+    "src": "extension/sw-media-quickinfo-usage/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "main.ts"
+    ],
+    "css": [
+      "assets/index-CZG3ZiBT.css"
+    ]
+  },
+  "extension/sw-search-bar-item/index.ts": {
+    "file": "assets/index-9g80yi2f.js",
+    "name": "index",
+    "src": "extension/sw-search-bar-item/index.ts",
+    "isDynamicEntry": true
+  },
+  "main.ts": {
+    "file": "assets/blur-elysium-slider-BF-Gafze.js",
+    "name": "blur-elysium-slider",
+    "src": "main.ts",
+    "isEntry": true,
+    "dynamicImports": [
+      "component/cms/elements/blur-elysium-slider/component/index.ts",
+      "component/cms/elements/blur-elysium-slider/preview/index.ts",
+      "component/cms/elements/blur-elysium-slider/config/sizing/index.ts",
+      "component/cms/elements/blur-elysium-slider/config/navigation/index.ts",
+      "component/cms/elements/blur-elysium-slider/config/arrows/index.ts",
+      "component/cms/elements/blur-elysium-banner/component/index.ts",
+      "component/cms/elements/blur-elysium-banner/config/index.ts",
+      "component/cms/elements/blur-elysium-banner/preview/index.ts",
+      "component/cms/blocks/blur-elysium-slider/component/index.ts",
+      "component/cms/blocks/blur-elysium-slider/preview/index.ts",
+      "component/cms/blocks/blur-elysium-banner/component/index.ts",
+      "component/cms/blocks/blur-elysium-banner/preview/index.ts",
+      "component/cms/blocks/blur-elysium-block-two-col/component/index.ts",
+      "component/cms/blocks/blur-elysium-block-two-col/preview/index.ts",
+      "extension/sw-search-bar-item/index.ts",
+      "extension/sw-media-quickinfo-usage/index.ts",
+      "component/icon/index.ts",
+      "component/utilities/section/index.ts",
+      "component/utilities/column/index.ts",
+      "component/utilities/card-title/index.ts",
+      "component/form/device-switch/index.ts",
+      "component/form/text-input/index.ts",
+      "component/form/number-input/index.ts",
+      "component/form/select-input/index.ts",
+      "component/form/colorpicker/index.ts",
+      "component/form/device-number-input/index.ts",
+      "component/form/device-select-input/index.ts",
+      "component/utilities/block-two-col-config/index.ts",
+      "component/utilities/icon/index.ts",
+      "component/settings/index.ts",
+      "component/utilities/detail-view/index.ts",
+      "component/slides/overview/index.ts",
+      "component/slides/detail/index.ts",
+      "component/slides/section/base/index.ts",
+      "component/slides/section/media/index.ts",
+      "component/slides/section/display/index.ts",
+      "component/slides/section/advanced/index.ts",
+      "component/slides/form/general/index.ts",
+      "component/slides/form/linking/index.ts",
+      "component/slides/form/cover/index.ts",
+      "component/slides/form/focus-image/index.ts",
+      "component/slides/form/slide/index.ts",
+      "component/slides/form/container/index.ts",
+      "component/slides/form/content/index.ts",
+      "component/slides/form/custom-template-file/index.ts",
+      "component/slides/form/custom-fields/index.ts",
+      "component/utilities/slide-search/index.ts",
+      "component/utilities/slide-selection/index.ts",
+      "component/utilities/cms-slide-skeleton/index.ts",
+      "extension/sw-cms-section/index.ts",
+      "extension/sw-cms-stage-section-selection/index.ts",
+      "component/cms/section/index.ts",
+      "component/cms/section/add-block/index.ts",
+      "component/cms/section/settings/index.ts",
+      "component/cms/section/block-settings/index.ts"
+    ],
+    "css": [
+      "assets/blur-elysium-slider-CHIo5DGq.css"
     ]
   }
 }
