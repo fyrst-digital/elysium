@@ -2,7 +2,7 @@
 .mt-card {
 
     &.content-no-padding {
-        
+
         .mt-card__content {
             padding: 0;
         }
@@ -36,12 +36,11 @@
         line-height: 1 !important;
 
         &.is--prefix {
-            
+
             &:empty {
 
-                ~ input,
-                ~ .mt-select__selection
-                {
+                ~input,
+                ~.mt-select__selection {
                     --blur-input-field-padding-x: 12px;
                 }
             }
@@ -101,9 +100,11 @@
         .mt-field__controls {
             // padding: 0;
         }
+
         .mt-field__addition {
             // padding: 6px 14px !important;
         }
+
         input {
             // padding-top: 8px;
             // padding-bottom: 8px;
@@ -163,7 +164,7 @@
     }
 
     .mt-select__selection {
-        padding: 0;        
+        padding: 0;
     }
 
     .mt-select-selection-list {
@@ -172,18 +173,22 @@
         flex-wrap: nowrap;
         cursor: pointer;
 
-        > li {
+        >li {
             display: contents;
             pointer-events: none;
         }
     }
 
     .mt-select-selection-list__input {
+        --blur-input-field-padding-y: 6px;
+        --blur-input-field-padding-x: 8px;
         flex: 1 0%;
-        line-height: 1.5;
         font-size: 14px;
-        padding: 8px 0;
         min-width: auto;
+    }
+
+    .mt-select-selection-list__input {
+        min-height: auto !important;
     }
 
     .mt-select__selection-indicators {

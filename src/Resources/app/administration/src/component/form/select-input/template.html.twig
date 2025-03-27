@@ -2,8 +2,7 @@
     :class="classes"
     :placeholder="placeholder"
     :modelValue="value"
-    @update:modelValue="update"
-    @change="update">
+    @update:modelValue="updateValue">
     <template v-if="showDevice === true" #prefix>
         <span 
             :style="{

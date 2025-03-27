@@ -41,7 +41,7 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        update (value) {
+        updateValue (value) {
             /**
              * @description 
              * This validation is necessary because the 
