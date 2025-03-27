@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "downlevelIteration": true,
+    "module": "es2022",
     "types": [
       "@types/webpack-env"
     ],

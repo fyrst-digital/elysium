@@ -97,16 +97,15 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        loadIconSvgData (variant: string, iconName: string, iconFullName: string) {
-            return import(`@elysium/icons/${variant}/${iconName}.svg`).then((iconSvgData) => {
-                if (iconSvgData.default) {
-                    this.iconSvgData = iconSvgData.default;
-                } else {
-                    // note this only happens if the import exists but does not export a default
-                    console.error(`The SVG file for the icon name ${iconFullName} could not be found and loaded.`);
-                    this.iconSvgData = '';
-                }
-            });
+        async loadIconSvgData (variant: string, iconName: string, iconFullName: string) {
+            const iconUrl = new URL(`../../icons/${variant}/${iconName}.svg`, import.meta.url)
+            const response = await fetch(iconUrl.toString())
+
+            if (response.ok) {
+                this.iconSvgData = await response.text()
+            } else {
+                console.error(`Icon ${iconFullName} not found`)
+            }
         }
     }
 });
