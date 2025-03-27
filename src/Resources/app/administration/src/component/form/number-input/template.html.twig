@@ -7,8 +7,7 @@
     :placeholder="placeholder"
     :modelValue="value"
     :allowEmpty="true"
-    @change="updateValue"
-    @input-change="updateValue">
+    @update:modelValue="updateValue">
 
     <template v-if="unit !== false" #suffix>
         {{unit}}

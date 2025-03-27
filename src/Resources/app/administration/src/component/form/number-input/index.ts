@@ -21,10 +21,9 @@ export default Component.wrapComponentConfig({
         }
     },
 
-    emits: ['update-value'],
-
     methods: {
         updateValue (value) {
+            console.log('updateValue', value)
             this.$emit('update-value', value)
         },
 
