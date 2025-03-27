@@ -24,6 +24,7 @@ class Migration1659972444AddSlidePortraitMedia extends MigrationStep
             ADD CONSTRAINT `fk.blur_elysium_slides.media_portrait_id` FOREIGN KEY (`media_portrait_id`)
             REFERENCES `media` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 SQL;
+            $connection->executeStatement($sql);
         } catch (\Exception $e) {
             if (!preg_match('/duplicate column|column exists|Duplicate key/i', $e->getMessage())) {
                 throw $e;
