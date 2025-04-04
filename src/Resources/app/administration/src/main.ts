@@ -15,7 +15,6 @@ import '@elysium/component/cms/elements/blur-elysium-banner'
 // cms blocks
 import '@elysium/component/cms/blocks/blur-elysium-slider'
 import '@elysium/component/cms/blocks/blur-elysium-banner'
-import '@elysium/component/cms/blocks/blur-elysium-block-two-col'
 // extensions
 import '@elysium/extension/sw-cms-sidebar'
 

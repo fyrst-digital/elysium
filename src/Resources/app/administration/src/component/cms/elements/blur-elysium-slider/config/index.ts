@@ -1,4 +1,3 @@
-import { provide } from 'vue'
 import template from './template.html.twig'
 
 const { Component, Mixin, Store } = Shopware

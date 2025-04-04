@@ -467,5 +467,16 @@
             "blockRemovalNotification": "Dieser Block wird in Version 4.0.0 entfernt<br/>Verwende stattdessen die Elysium Sektion, um Blöcke anzuordnen",
             "elysiumSectionNotification": "Verwende die neue <b>Elysium Sektion</b>, um Blöcke zu platzieren und zu layouten. Du findest sie direkt in der Sektion Auswahl."
         }
+    },
+    "apps": {
+        "sw-cms": {
+            "detail": {
+                "label": {
+                    "blockCategory": {
+                        "blur-elysium-blocks": "Elysium Blöcke"
+                    }
+                }
+            }
+        }
     }
 }
