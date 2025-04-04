@@ -9,7 +9,7 @@
         "Banner",
         "Slider"
     ],
-    "version": "3.7.0",
+    "version": "3.7.1",
     "type": "shopware-platform-plugin",
     "minimum-stability": "stable",
     "license": "MIT",

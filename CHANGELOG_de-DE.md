@@ -1,3 +1,6 @@
+# 3.7.1
+- Ein Fehler im Admin wurde behoben, bei dem der Inhaltselement-Tab in den Slide Einstellungen nicht geöffnet werden konnte
+
 # 3.7.0
 
 ## Changelog

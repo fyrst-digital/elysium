@@ -1,3 +1,6 @@
+# 3.7.1
+- A bug in the admin was fixed where the content element tab in the slide settings could not be opened
+
 # 3.7.0
 
 ## Changelog

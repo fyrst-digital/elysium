@@ -28,6 +28,10 @@ export default Component.wrapComponentConfig({
         device () {
             return this.elysiumUI.device
         },
+
+        slideViewportSettings () {
+            return this.slide.slideSettings.viewports[this.device]
+        },
     },
 
     created () {
