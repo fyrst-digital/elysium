@@ -3,12 +3,12 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - '3.7'
     tags:
       - '*'
   pull_request:
     branches:
-      - master
+      - '3.7'
 
 jobs:
   validate:
@@ -31,11 +31,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          sparse-checkout: |
-            CHANGELOG.md
-            CHANGELOG_de-DE.md
-          sparse-checkout-cone-mode: false
 
       - name: Test
         run: |
