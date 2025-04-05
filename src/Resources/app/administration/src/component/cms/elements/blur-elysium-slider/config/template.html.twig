@@ -51,7 +51,11 @@
 
             <blur-column>
                 <blur-elysium-slide-selection 
-                    :selected-slides-ids="this.element.config.elysiumSlideCollection.value" />
+                    :selected-slides="selectedSlides"
+                    @remove-slide="removeSlide"
+                    @add-slide="addSlide"
+                    @position-up="moveUpSlide"
+                    @position-down="moveDownSlide" />
             </blur-column>
 
         </blur-section>

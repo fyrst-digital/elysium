@@ -1,6 +1,5 @@
 import template from './template.html.twig'
 import './style.scss'
-import { watch } from 'vue'
 
 const { Component, Data, Context } = Shopware 
 const { Criteria } = Data 
@@ -13,35 +12,19 @@ export default Component.wrapComponentConfig({
     ],
 
     props: {
-        selectedSlidesIds: {
+        selectedSlides: {
             type: Array,
             required: true,
-        }
+        },
     },
 
     data () {
         return {
             isLoading: true,
-            selectedSlides: {},
             currentDragIndex: 0,
             draggedSlide: null,
             draggedSlideElement: null,
             placeholderElement: document.createElement('div')
-        }
-    },
-
-    watch: {
-        selectedSlides: {
-            handler () {
-                /**
-                 * because this.selectedSlidesIds is an immutable prop we have to clear the array first
-                 * then we can add the ids from selectedSlides collection via push to the selected slides element config
-                 * @todo it's a little bit clunky but it works for now. maybe find a better solution in the future
-                */
-                this.selectedSlidesIds.length = 0
-                this.selectedSlidesIds.push(...this.selectedSlides.map((slide) => slide.id))
-            },
-            deep: false
         }
     },
 
@@ -58,49 +41,12 @@ export default Component.wrapComponentConfig({
 
     methods: {
 
-        initSlides () {
-            const criteria = new Criteria()
-            criteria.setIds(this.selectedSlidesIds)
-
-            this.slidesRepository.search(criteria, Context.api).then((result) => {
-
-                /**
-                 * filter the selected slides to remove orphaned selections
-                 * @todo check if the filter funtion is really needed. Because the selectedSlidesIds are already set in the criteria `criteria.setIds(this.selectedSlidesIds)`
-                 */
-                const filteredSlides = result.filter((slide) => this.selectedSlidesIds.includes(slide.id))
-                this.selectedSlides = filteredSlides
-
-                /**
-                 * if the filtered slides are empty, then clear all selected slides Ids
-                 * @todo if the filtered slides not empty, check them against the selectedSlidesIds
-                 */
-                if (filteredSlides.length <= 0) {
-                    this.selectedSlidesIds.length = 0
-                }
-
-                this.isLoading = false
-            }).catch((error) => {
-                console.error('Error loading slides', error)
-            })
+        addSlide (slide) {
+            this.$emit('add-slide', slide)
         },
 
-        selectSlide (slide) {
-            // call if slide is selected
-            // add slide to this.selectedSlidesIds if is not in collection
-            // remove slide from this.selectedSlidesIds if is in collection
-            const index = this.selectedSlidesIds.indexOf(slide.id)
-
-            switch (this.selectedSlidesIds.includes(slide.id)) {
-                case true:
-                    /** @action remove slide **/
-                    this.selectedSlides.remove(slide.id)
-                    break
-                default:
-                    /** @action add slide **/
-                    this.selectedSlides.add(slide)
-                    break
-            }
+        removeSlide (slide) {
+            this.$emit('remove-slide', slide)
         },
 
         onDrop () {
@@ -115,6 +61,7 @@ export default Component.wrapComponentConfig({
         },
 
         startDrag (slide, event, element) {
+            console.log('start drag', slide, event, element)
             this.draggedSlide = slide
             this.draggedSlideElement = element
             this.placeholderElement.style.height = `${element.offsetHeight}px`
@@ -134,18 +81,16 @@ export default Component.wrapComponentConfig({
             this.currentDragIndex = this.selectedSlides.indexOf(slide)
         },
 
-        slidePositionUp (slide) {
-            const currentIndex = this.selectedSlides.indexOf(slide)
-            if (currentIndex > 0) this.selectedSlides.moveItem(currentIndex, currentIndex - 1)
+        slidePositionUp (slide: Entity<'blur_elysium_slides'>) {
+            this.$emit('position-up', slide)
         },
 
-        slidePositionDown (slide) {
-            const currentIndex = this.selectedSlides.indexOf(slide)
-            if (currentIndex < this.selectedSlides.length - 1) this.selectedSlides.moveItem(currentIndex, currentIndex + 1)
+        slidePositionDown (slide: Entity<'blur_elysium_slides'>) {
+            this.$emit('position-down', slide)
         },
 
-        slideRemove (slide) {
-            this.selectedSlides.remove(slide.id)
+        slideRemove (slide: Entity<'blur_elysium_slides'>) {
+            this.$emit('remove-slide', slide)
         },
 
         slideEdit (slide) {
@@ -162,9 +107,5 @@ export default Component.wrapComponentConfig({
             const route = this.$router.resolve({ name: 'blur.elysium.slides.overview' })
             window.open(route.href, '_blank')
         },
-    },
-
-    created() {
-        this.initSlides()
     },
 })

@@ -32,8 +32,7 @@
 
         <template #result-item="{item, index}">
 
-            <div
-                is="sw-select-result"
+            <sw-select-result
                 :selected="slideIsSelected( item )"
                 v-bind="{ item, index }"
                 class="blur-es-selection__search-result-list-item"
@@ -52,10 +51,10 @@
                     </div>
 
                     <div>
-                        {{ selectedSlidesIds.includes(item.id) ? $tc('blurElysium.general.removeItem') : $tc('blurElysium.general.addItem') }}
+                        {{slideIsSelected(item) ? $tc('blurElysium.general.removeItem') : $tc('blurElysium.general.addItem') }}
                     </div>
                 </div>
-            </div>
+            </sw-select-result>
 
         </template>
 

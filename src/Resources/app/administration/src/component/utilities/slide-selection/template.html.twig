@@ -6,8 +6,9 @@
     }">
 
     <blur-elysium-slide-search 
-        :selected-slides-ids="selectedSlidesIds"
-        @slide-selected="selectSlide" />
+        :selected-slides="selectedSlides"
+        @add-slide="addSlide" 
+        @remove-slide="removeSlide"/>
 
     <div v-if="selectedSlides.length > 0"
         class="blur-elysium-slide-selection-results">
@@ -23,39 +24,19 @@
                 v-for="slide in selectedSlides" 
                 :key="slide.id"
                 :slide="slide"
-                draggable
-                @slide-loaded="slideLoaded"
                 @start-drag="startDrag"
                 @enter-drag="onDrag"
                 @position-up="slidePositionUp"
                 @position-down="slidePositionDown"
                 @edit-slide="slideEdit"
-                @remove-slide="slideRemove"/>
+                @remove-slide="slideRemove"/
+                >
 
-        </div>
-    </div>
-
-    <div v-if="isLoading && selectedSlidesIds.length > 0"
-        :style="{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '30px',
-        }">
-        
-        <div v-for="placholder in selectedSlidesIds.length"
-            :key="placholder"
-            :style="{
-                minHeight: '114px',
-                position: 'relative',
-                borderRadius: '10px',
-                overflow: 'hidden',
-            }">
-            <mt-loader size="24px"/>
         </div>
     </div>
 
     <mt-banner 
-        v-if="selectedSlidesIds.length === 0"
+        v-if="selectedSlides.length === 0"
         variant="info">
 
         <span v-html="$tc('blurElysiumSlides.slideSelection.listNoSelection')" />

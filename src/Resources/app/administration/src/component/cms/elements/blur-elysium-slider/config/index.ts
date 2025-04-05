@@ -1,6 +1,7 @@
 import template from './template.html.twig'
 
-const { Component, Mixin, Store } = Shopware
+const { Component, Mixin, Store, Data, Context } = Shopware
+const { Criteria } = Data 
 
 export default Component.wrapComponentConfig({
     template,
@@ -10,11 +11,15 @@ export default Component.wrapComponentConfig({
         Mixin.getByName('cms-element'),
     ],
 
-    provide() {
-        return {
-            selectedSlidesIds: this.element.config.elysiumSlideCollection.value
-        }
-    },
+    inject: [
+        'repositoryFactory'
+    ],
+
+    // provide() {
+    //     return {
+    //         selectedSlidesIds: this.element.config.elysiumSlideCollection.value
+    //     }
+    // },
     
     data() {
         return {
@@ -26,6 +31,18 @@ export default Component.wrapComponentConfig({
         cmsPage () {
             return Store.get('cmsPage')
         },
+        
+        elysiumCms () {
+            return Store.get('elysiumCMS')
+        },
+
+        selectedSlides () {
+            return Store.get('elysiumCMS').selectedSlides
+        },
+
+        selectedSlidesIds() {
+            return this.selectedSlides.map(slide => slide.id)
+        },
 
         device () {
 
@@ -34,6 +51,10 @@ export default Component.wrapComponentConfig({
             }
 
             return this.cmsPage.currentCmsDeviceView
+        },
+
+        slidesRepository () {
+            return this.repositoryFactory.create('blur_elysium_slides')
         },
 
         tabs () {
@@ -67,9 +88,60 @@ export default Component.wrapComponentConfig({
         changeDevice (device: string) {
             this.cmsPage.setCurrentCmsDeviceView(device === 'tablet' ? 'tablet-landscape' : device)
         },
+
+        loadSelectedSlides (selectedSlidesIds: string[]) {
+            const criteria = new Criteria()
+            criteria.setIds(selectedSlidesIds)
+
+            this.slidesRepository.search(criteria, Context.api).then((result) => {
+
+                /**
+                 * filter the selected slides to remove orphaned selections
+                 * @todo check if the filter funtion is really needed. Because the selectedSlidesIds are already set in the criteria `criteria.setIds(this.selectedSlidesIds)`
+                 */
+                const filteredSlides = result.filter((slide) => selectedSlidesIds.includes(slide.id))
+                this.selectedSlides = filteredSlides
+                this.elysiumCms.setSelectedSlides(filteredSlides)
+            }).catch((error) => {
+                console.error('Error loading slides', error)
+            })
+        },
+
+        addSlide (slide: any) {
+            this.elysiumCms.addSelectedSlide(slide)
+        },
+
+        removeSlide (slide: any) {
+            this.elysiumCms.removeSelectedSlide(slide)
+        },
+
+        moveUpSlide (slide: any) {
+            const currentIndex = this.selectedSlides.indexOf(slide)
+            if (currentIndex > 0) this.elysiumCms.moveSelectedSlide(slide, currentIndex, currentIndex - 1)
+        },
+
+        moveDownSlide (slide: any) {
+            const currentIndex = this.selectedSlides.indexOf(slide)
+            if (currentIndex < this.selectedSlides.length - 1) this.elysiumCms.moveSelectedSlide(slide, currentIndex, currentIndex + 1)
+        },
+    },
+
+    watch: {
+        selectedSlidesIds: {
+            handler(slidesIds: string[]) {
+                this.element.config.elysiumSlideCollection.value = slidesIds
+            },
+        }
     },
 
     created() {
         this.initElementConfig('blur-elysium-slider')
+        if (this.element.config.elysiumSlideCollection.value.length > 0) {
+            this.loadSelectedSlides(this.element.config.elysiumSlideCollection.value)
+        }
     },
+
+    unmounted() {
+        this.elysiumCms.clearSelectedSlides()
+    }
 })

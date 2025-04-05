@@ -2,6 +2,7 @@ import enGB from '@elysium/snippet/en-GB.json'
 import deDE from '@elysium/snippet/de-DE.json'
 import slideStore from '@elysium/states/slide.states'
 import uiStore from '@elysium/states/ui.states'
+import cmsStore from '@elysium/states/cms.states'
 import '@elysium/styles/mt-fixes.scss'
 import '@elysium/styles/components.scss'
 import '@elysium/mixin/device-utilities.mixin'
@@ -25,6 +26,7 @@ const { Component, Locale, Application, Store } = Shopware
  */
 Store.register(slideStore)
 Store.register(uiStore)
+Store.register(cmsStore)
 
 /**
  * Register global snnippets

@@ -11,7 +11,7 @@ export default Component.wrapComponentConfig({
     ],
 
     props: {
-        selectedSlidesIds: {
+        selectedSlides: {
             type: Array,
             required: true,
         }
@@ -77,14 +77,15 @@ export default Component.wrapComponentConfig({
 
         selectSlide (slide) {
             this.searchFocus = false
-            this.$emit('slide-selected', slide)
+            if (this.slideIsSelected(slide)) {
+                this.$emit('remove-slide', slide)
+            } else {
+                this.$emit('add-slide', slide)
+            }
         },
 
         slideIsSelected (slide) {
-            if (this.selectedSlidesIds.includes(slide.id)) {
-                return true
-            }
-            return false
+            return this.selectedSlides.some(selectedSlide => selectedSlide.id === slide.id)
         },
     }
 })

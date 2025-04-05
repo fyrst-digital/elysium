@@ -28,7 +28,6 @@
       "ES2023",
       "DOM",
     ],
-    // "strict": true
   },
   "include": [
     "./src/**/*",
