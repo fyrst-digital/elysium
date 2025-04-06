@@ -5,6 +5,8 @@
         gap: '24px',
     }">
 
+    {{draggedSlideIndex}}
+
     <blur-elysium-slide-search 
         :selected-slides="selectedSlides"
         @add-slide="addSlide" 
@@ -15,22 +17,20 @@
 
         <div class="blur-elysium-slide-selection-results-list"
             ref="selectionList"
-            @drop="onDrop($event)"
-            @dragend="dragEnd($event)"
-            @dragover.prevent
-            @dragenter.prevent>
+            >
 
             <blur-elysium-slide-selection-item 
-                v-for="slide in selectedSlides" 
-                :key="slide.id"
+                v-for="(slide, index) in selectedSlides" 
+                :key="index"
                 :slide="slide"
-                @start-drag="startDrag"
-                @enter-drag="onDrag"
+                :index="index"
+                @drag-slide-start="dragSlideStart"
+                @drag-slide-drop="dragSlideDrop"
                 @position-up="slidePositionUp"
                 @position-down="slidePositionDown"
                 @edit-slide="slideEdit"
-                @remove-slide="slideRemove"/
-                >
+                @remove-slide="slideRemove"
+                />
 
         </div>
     </div>

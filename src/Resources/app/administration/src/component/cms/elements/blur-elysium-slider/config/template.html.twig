@@ -52,6 +52,7 @@
             <blur-column>
                 <blur-elysium-slide-selection 
                     :selected-slides="selectedSlides"
+                    @drag-slide-drop="dragSlideDrop"
                     @remove-slide="removeSlide"
                     @add-slide="addSlide"
                     @position-up="moveUpSlide"

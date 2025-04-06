@@ -12,7 +12,10 @@ export default Component.wrapComponentConfig({
             type: Object,
             required: true,
         },
-
+        index: {
+            type: Number,
+            required: true,
+        },
     },
 
     computed: {
@@ -21,7 +24,7 @@ export default Component.wrapComponentConfig({
         },
         slideTitle () {
             return this.slide?.translated?.title ?? this.$tc('blurElysium.general.noHeadline')
-        }
+        },
     },
 
     methods: {
@@ -42,20 +45,24 @@ export default Component.wrapComponentConfig({
             this.$emit('remove-slide', this.slide)
         },
 
-        startDrag (event) {
-            this.$emit('start-drag', this.slide, event, this.$refs.selectItem)
+        dragStart (dragConfig: any) {
+            this.$emit('drag-slide-start', this.slide, dragConfig)
         },
 
-        enterDrag (event) {
-            this.$emit('enter-drag', this.slide, event, this.$refs.selectItem)
+        dragEnter (dragData: any, dropData: any, validDrag: boolean) {
         },
 
-        endDrag (event) {
-            this.$emit('end-drag', this.slide, event, this.$refs.selectItem)
+        dragLeave (dragData: any, dropData: any, validDrag: boolean) {
         },
 
-        leaveDrag (event) {
-            this.$emit('leave-drag', this.slide, event, this.$refs.selectItem)
-        }
+        validateDrop (dragData: any, dropData: any) {
+            let isValid = false
+            if(typeof dropData?.index === 'number' && dragData.draggedItemIndex !== dropData?.index) isValid = true
+            return isValid
+        },
+
+        dropSlide (dragData: any, dropData: any) {
+            this.$emit('drag-slide-drop', dragData, dropData)
+        },
     },
 })

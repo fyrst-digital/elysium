@@ -107,22 +107,26 @@ export default Component.wrapComponentConfig({
             })
         },
 
-        addSlide (slide: any) {
+        addSlide (slide: Entity<'blur_elysium_slides'>) {
             this.elysiumCms.addSelectedSlide(slide)
         },
 
-        removeSlide (slide: any) {
+        removeSlide (slide: Entity<'blur_elysium_slides'>) {
             this.elysiumCms.removeSelectedSlide(slide)
         },
 
-        moveUpSlide (slide: any) {
+        moveUpSlide (slide: Entity<'blur_elysium_slides'>) {
             const currentIndex = this.selectedSlides.indexOf(slide)
             if (currentIndex > 0) this.elysiumCms.moveSelectedSlide(slide, currentIndex, currentIndex - 1)
         },
 
-        moveDownSlide (slide: any) {
+        moveDownSlide (slide: Entity<'blur_elysium_slides'>) {
             const currentIndex = this.selectedSlides.indexOf(slide)
             if (currentIndex < this.selectedSlides.length - 1) this.elysiumCms.moveSelectedSlide(slide, currentIndex, currentIndex + 1)
+        },
+
+        dragSlideDrop (slide: Entity<'blur_elysium_slides'>, fromIndex: number, toIndex: number) {
+            this.elysiumCms.moveSelectedSlide(slide, fromIndex, toIndex)
         },
     },
 

@@ -1,15 +1,10 @@
 import template from './template.html.twig'
 import './style.scss'
 
-const { Component, Data, Context } = Shopware 
-const { Criteria } = Data 
+const { Component } = Shopware
 
 export default Component.wrapComponentConfig({
     template,
-
-    inject: [
-        'repositoryFactory'
-    ],
 
     props: {
         selectedSlides: {
@@ -20,65 +15,25 @@ export default Component.wrapComponentConfig({
 
     data () {
         return {
-            isLoading: true,
-            currentDragIndex: 0,
-            draggedSlide: null,
-            draggedSlideElement: null,
-            placeholderElement: document.createElement('div')
+            slide: null,
+            draggedItemIndex: null,
         }
     },
 
     computed: {
-        slidesRepository () {
-            return this.repositoryFactory.create('blur_elysium_slides')
+        selectedSlidesIds () {
+            return this.selectedSlides.map((slide) => slide.id)
         },
-    },
-
-    mounted () {
-        this.placeholderElement.style.borderRadius = '12px'
-        this.placeholderElement.style.backgroundColor = '#eeeeee'
     },
 
     methods: {
 
-        addSlide (slide) {
+        addSlide (slide: Entity<'blur_elysium_slides'>) {
             this.$emit('add-slide', slide)
         },
 
-        removeSlide (slide) {
+        removeSlide (slide: Entity<'blur_elysium_slides'>) {
             this.$emit('remove-slide', slide)
-        },
-
-        onDrop () {
-            this.selectedSlides.moveItem(this.selectedSlides.indexOf(this.draggedSlide), this.currentDragIndex)
-            this.draggedSlideElement.classList.remove('is-dragged')
-            this.placeholderElement.remove()
-        },
-
-        dragEnd (event) {
-            event.target.classList.remove('is-dragged')
-            this.placeholderElement.remove()
-        },
-
-        startDrag (slide, event, element) {
-            console.log('start drag', slide, event, element)
-            this.draggedSlide = slide
-            this.draggedSlideElement = element
-            this.placeholderElement.style.height = `${element.offsetHeight}px`
-        },
-
-        onDrag (slide, event, element) {
-            if (this.draggedSlide === slide) {
-                this.draggedSlideElement.classList.add('is-dragged')
-            }
-
-            if (this.currentDragIndex !== this.selectedSlides.indexOf(slide)) {
-                element.before(this.placeholderElement)
-            } else {
-                element.after(this.placeholderElement)
-            }
-            
-            this.currentDragIndex = this.selectedSlides.indexOf(slide)
         },
 
         slidePositionUp (slide: Entity<'blur_elysium_slides'>) {
@@ -93,19 +48,24 @@ export default Component.wrapComponentConfig({
             this.$emit('remove-slide', slide)
         },
 
-        slideEdit (slide) {
+        slideEdit (slide: Entity<'blur_elysium_slides'>) {
             const route = this.$router.resolve({ name: 'blur.elysium.slides.detail', params: { id: slide.id } })
             window.open(route.href, '_blank')
         },
 
-        onCreateSlide () {
-            const route = this.$router.resolve({ name: 'blur.elysium.slides.create' })
-            window.open(route.href, '_blank')
+        dragSlideStart (slide: Entity<'blur_elysium_slides'>, dragConfig: any, draggedSlide: any) {
+            this.slide = slide
+            this.draggedItemIndex = dragConfig.data?.draggedItemIndex
+            this.$emit('drag-slide-start', slide, dragConfig.data?.draggedItemIndex)
         },
 
-        onSlideOverview () {
-            const route = this.$router.resolve({ name: 'blur.elysium.slides.overview' })
-            window.open(route.href, '_blank')
+        dragSlideDrop (dragData: any, dropData: any) {
+            if (dropData === null) {
+                return
+            }
+            this.$emit('drag-slide-drop', this.slide, this.draggedItemIndex, dropData.index)
         },
     },
+
+
 })
