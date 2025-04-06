@@ -11,21 +11,6 @@
     "src": "component/cms/blocks/blur-elysium-banner/preview/index.ts",
     "isDynamicEntry": true
   },
-  "component/cms/blocks/blur-elysium-block-two-col/component/index.ts": {
-    "file": "assets/index-TpCmZ1P2.js",
-    "name": "index",
-    "src": "component/cms/blocks/blur-elysium-block-two-col/component/index.ts",
-    "isDynamicEntry": true,
-    "css": [
-      "assets/index-OfWYncQ7.css"
-    ]
-  },
-  "component/cms/blocks/blur-elysium-block-two-col/preview/index.ts": {
-    "file": "assets/index-BQul9sPc.js",
-    "name": "index",
-    "src": "component/cms/blocks/blur-elysium-block-two-col/preview/index.ts",
-    "isDynamicEntry": true
-  },
   "component/cms/blocks/blur-elysium-slider/component/index.ts": {
     "file": "assets/index-Bdk3GPkG.js",
     "name": "index",
@@ -234,7 +219,7 @@
     "isDynamicEntry": true
   },
   "component/slides/overview/index.ts": {
-    "file": "assets/index-d-WGnEoF.js",
+    "file": "assets/index-CFwM329y.js",
     "name": "index",
     "src": "component/slides/overview/index.ts",
     "isDynamicEntry": true,
@@ -321,13 +306,13 @@
     ]
   },
   "component/utilities/slide-search/index.ts": {
-    "file": "assets/index-BBC-IOZb.js",
+    "file": "assets/index-BXZcOX7g.js",
     "name": "index",
     "src": "component/utilities/slide-search/index.ts",
     "isDynamicEntry": true
   },
   "component/utilities/slide-selection/index.ts": {
-    "file": "assets/index-p_d6XG9_.js",
+    "file": "assets/index-BHeFX_RW.js",
     "name": "index",
     "src": "component/utilities/slide-selection/index.ts",
     "isDynamicEntry": true,
@@ -351,7 +336,7 @@
     ]
   },
   "extension/sw-media-quickinfo-usage/index.ts": {
-    "file": "assets/index-B5IAypzO.js",
+    "file": "assets/index-N71l14gF.js",
     "name": "index",
     "src": "extension/sw-media-quickinfo-usage/index.ts",
     "isDynamicEntry": true,
@@ -369,7 +354,7 @@
     "isDynamicEntry": true
   },
   "main.ts": {
-    "file": "assets/blur-elysium-slider-BF-Gafze.js",
+    "file": "assets/blur-elysium-slider-CXAFUG8p.js",
     "name": "blur-elysium-slider",
     "src": "main.ts",
     "isEntry": true,
@@ -386,8 +371,6 @@
       "component/cms/blocks/blur-elysium-slider/preview/index.ts",
       "component/cms/blocks/blur-elysium-banner/component/index.ts",
       "component/cms/blocks/blur-elysium-banner/preview/index.ts",
-      "component/cms/blocks/blur-elysium-block-two-col/component/index.ts",
-      "component/cms/blocks/blur-elysium-block-two-col/preview/index.ts",
       "extension/sw-search-bar-item/index.ts",
       "extension/sw-media-quickinfo-usage/index.ts",
       "component/icon/index.ts",
@@ -431,7 +414,7 @@
       "component/cms/section/block-settings/index.ts"
     ],
     "css": [
-      "assets/blur-elysium-slider-CHIo5DGq.css"
+      "assets/blur-elysium-slider-CZ78iiWQ.css"
     ]
   }
 }

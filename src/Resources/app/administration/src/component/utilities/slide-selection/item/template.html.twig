@@ -1,10 +1,31 @@
 <div class="blur-elysium-slide-selection-item"
     ref="selectItem"
-    draggable
-    @dragstart="startDrag($event)"
-    @dragenter="enterDrag($event)"
-    @dragend="endDrag($event)"
-    @dragleave="leaveDrag($event)">
+    v-draggable="{
+        {# dataGroup: 'slide-selection',  #}
+        data: {
+            draggedItemIndex: index,
+        },
+        delay: 200,
+        onDragStart: dragStart,
+        onDragEnter: dragEnter,
+        {# validateDrag: validateDrag, #}
+        {# validateDrop: validateDrop, #}
+        {# onDragLeave: dragLeave,  #}
+        validateDrop: validateDrop,
+        onDrop: dropSlide,
+    }"
+    v-droppable="{ 
+        data: {
+            index: index,
+        },
+        validateDrop: validateDrop,
+        {# onDrop: dropSlide, #}
+    }"
+    >
+
+    <div v-if="draggedSlide">
+        {{draggedSlide}}
+    </div>
     
     <div class="blur-elysium-slide-selection-item-headerbar">
 
