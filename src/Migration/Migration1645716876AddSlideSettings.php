@@ -32,9 +32,4 @@ class Migration1645716876AddSlideSettings extends MigrationStep
             }
         }
     }
-
-    public function updateDestructive(Connection $connection): void
-    {
-        // implement update destructive
-    }
 }

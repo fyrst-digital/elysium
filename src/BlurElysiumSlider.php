@@ -36,14 +36,10 @@ class BlurElysiumSlider extends Plugin
         /** @var ContainerInterface $container */
         $container = $this->container;
 
-        $uninstallContext->setAutoMigrate(false); /// disable auto migration execution
-        $migrationCollection = $uninstallContext->getMigrationCollection(); /// get migration collection
-
         if ($uninstallContext->keepUserData() === false) {
-            /// call updateDestructive and remove entity from database
-            $migrationCollection->migrateDestructiveInPlace(1624100471);
-
-            /// remove media folder and according default folder
+            /**
+             * Remove media folder, according default folder and database tables
+             */
             $lifecycle = new Lifecycle($container);
             $lifecycle->uninstall($uninstallContext->getContext());
         }

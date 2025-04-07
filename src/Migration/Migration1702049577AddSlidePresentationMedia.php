@@ -30,9 +30,4 @@ class Migration1702049577AddSlidePresentationMedia extends MigrationStep
             }
         }
     }
-
-    public function updateDestructive(Connection $connection): void
-    {
-        // implement update destructive
-    }
 }

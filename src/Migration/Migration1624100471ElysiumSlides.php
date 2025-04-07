@@ -34,14 +34,4 @@ SQL;
 
         $connection->executeStatement($sql);
     }
-
-    public function updateDestructive(Connection $connection): void
-    {
-        // implement update destructive
-        $sql = <<<SQL
-            DROP TABLE `blur_elysium_slides_translation`, `blur_elysium_slides`
-SQL;
-
-        $connection->executeStatement($sql);
-    }
 }

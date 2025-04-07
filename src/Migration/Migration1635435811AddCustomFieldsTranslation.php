@@ -30,9 +30,4 @@ class Migration1635435811AddCustomFieldsTranslation extends MigrationStep
             }
         }
     }
-
-    public function updateDestructive(Connection $connection): void
-    {
-        // implement update destructive
-    }
 }

@@ -87,6 +87,7 @@ class Lifecycle
 
     public function uninstall(Context $context): void
     {
+        $this->removeDatabaseTables();
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));
         $criteria->addAssociation('media_folder');
@@ -131,6 +132,17 @@ class Lifecycle
         if (!empty($this->getMediaFolderConfigurationId())) {
             # delete media folder configuration entry
             $mediaFolderConfigurationRepositroy->delete([['id' => $this->getMediaFolderConfigurationId()]], $context);
+        }
+    }
+
+    function removeDatabaseTables(): void
+    {
+        $connection = $this->container->get(Connection::class);
+
+        try {
+            $connection->executeStatement('DROP TABLE IF EXISTS `blur_elysium_slides_translation`, `blur_elysium_slides`');
+        } catch (\Exception $e) {
+            throw new \RuntimeException('Failed to drop tables: ' . $e->getMessage());
         }
     }
 

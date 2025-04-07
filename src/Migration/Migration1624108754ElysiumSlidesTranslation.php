@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Migration;
 
@@ -36,13 +38,7 @@ class Migration1624108754ElysiumSlidesTranslation extends MigrationStep
             DEFAULT CHARSET = utf8mb4
             COLLATE = utf8mb4_unicode_ci
 SQL;
-        
+
         $connection->executeStatement($sql);
     }
-
-    public function updateDestructive(Connection $connection): void
-    {
-        // implement update destructive
-    }
 }
-?>

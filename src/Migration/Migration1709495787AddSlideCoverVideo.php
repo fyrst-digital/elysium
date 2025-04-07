@@ -30,9 +30,4 @@ class Migration1709495787AddSlideCoverVideo extends MigrationStep
             }
         }
     }
-
-    public function updateDestructive(Connection $connection): void
-    {
-        // implement update destructive
-    }
 }

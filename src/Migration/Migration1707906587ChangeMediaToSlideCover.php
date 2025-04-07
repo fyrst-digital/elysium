@@ -37,9 +37,4 @@ class Migration1707906587ChangeMediaToSlideCover extends MigrationStep
             }
         }
     }
-
-    public function updateDestructive(Connection $connection): void
-    {
-        // implement update destructive
-    }
 }
