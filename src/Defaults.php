@@ -6,6 +6,10 @@ namespace Blur\BlurElysiumSlider;
 
 final class Defaults
 {
+    public const MIGRATION_COLUMN_EXISTS = '/duplicate column|column exists|duplicate key/i';
+
+    public const MIGRATION_COLUMN_NOT_EXISTS = '/unknown column|SQLSTATE[42S22]/i';
+
     /** @var string */
     public const MEDIA_FOLDER_NAME = 'Slide Builder';
 

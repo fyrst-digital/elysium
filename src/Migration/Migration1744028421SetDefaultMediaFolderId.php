@@ -25,7 +25,7 @@ class Migration1744028421SetDefaultMediaFolderId extends MigrationStep
             JOIN media_default_folder mdf ON mf.default_folder_id = mdf.id
             SET mf.id = UNHEX(:mediaFolderId)
             WHERE mdf.entity = 'blur_elysium_slides';
-    ", [
+        ", [
             'mediaFolderId' => Defaults::MEDIA_FOLDER_ID
         ]);
     }

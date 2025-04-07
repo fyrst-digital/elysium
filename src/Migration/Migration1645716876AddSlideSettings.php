@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Migration;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception\NonUniqueFieldNameException;
 use Shopware\Core\Framework\Migration\MigrationStep;
 
 class Migration1645716876AddSlideSettings extends MigrationStep
@@ -16,18 +17,13 @@ class Migration1645716876AddSlideSettings extends MigrationStep
 
     public function update(Connection $connection): void
     {
-
         try {
-            // implement update
-            $sql = <<<SQL
+            $connection->executeStatement("
                 ALTER TABLE `blur_elysium_slides`
                 ADD COLUMN `slide_settings` JSON NULL
-    SQL;
-
-            // add custom field column
-            $connection->executeStatement($sql);
-        } catch (\Exception $e) {
-            if (!preg_match('/duplicate column|column exists/i', $e->getMessage())) {
+            ");
+        } catch (\Throwable $e) {
+            if (!($e instanceof NonUniqueFieldNameException)) {
                 throw $e;
             }
         }
