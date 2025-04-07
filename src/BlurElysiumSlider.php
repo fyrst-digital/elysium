@@ -19,7 +19,7 @@ class BlurElysiumSlider extends Plugin
         $container = $this->container;
 
         $lifecycle = new Lifecycle($container);
-        $lifecycle->install($installContext->getContext());
+        $lifecycle->postInstall($installContext);
     }
 
     public function postUpdate(UpdateContext $updateContext): void
@@ -37,9 +37,6 @@ class BlurElysiumSlider extends Plugin
         $container = $this->container;
 
         if ($uninstallContext->keepUserData() === false) {
-            /**
-             * Remove media folder, according default folder and database tables
-             */
             $lifecycle = new Lifecycle($container);
             $lifecycle->uninstall($uninstallContext->getContext());
         }

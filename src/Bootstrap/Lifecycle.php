@@ -9,29 +9,19 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
-use Shopware\Core\Content\Media\Aggregate\MediaDefaultFolder\MediaDefaultFolderEntity;
-use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderEntity;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Administration\Notification\NotificationService;
 use Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210\Updater as Version210Updater;
-use Shopware\Core\Content\Media\Aggregate\MediaDefaultFolder\MediaDefaultFolderCollection;
 use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderCollection;
-use Shopware\Core\Content\Media\Aggregate\MediaFolderConfiguration\MediaFolderConfigurationCollection;
-use Shopware\Core\Content\Media\MediaCollection;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
+use Shopware\Core\Migration\Traits\EnsureThumbnailSizesTrait;
+
+use Blur\BlurElysiumSlider\Defaults;
 
 class Lifecycle
 {
-    /** @var string */
-    private const MEDIA_FOLDER_NAME = 'Elysium Slides';
-
-    private string $mediaFolderId;
-
-    private string $mediaDefaultFolderId;
-
-    private ?string $mediaFolderConfigurationId;
+    use EnsureThumbnailSizesTrait;
 
     /**
      * @var NotificationService $notificationService
@@ -45,16 +35,10 @@ class Lifecycle
         $this->notificationService = $container->get(NotificationService::class);
     }
 
-    public function install(Context $context): void
+    public function postInstall(InstallContext $installContext): void
     {
-        # create IDs
-        $this->setMediaFolderId(Uuid::randomHex());
-        $this->setMediaDefaultFolderId(Uuid::randomHex());
-
-        # create media default folder entry
-        $this->createMediaDefaultFolder($context);
-
-        # create media folder entry 
+        /** @var Context $context */
+        $context = $installContext->getContext();
         $this->createMediaFolder($context);
     }
 
@@ -88,57 +72,32 @@ class Lifecycle
     public function uninstall(Context $context): void
     {
         $this->removeDatabaseTables();
-        $criteria = new Criteria();
-        $criteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));
-        $criteria->addAssociation('media_folder');
-        $criteria->setLimit(1);
-
-        /** @var EntityRepository<MediaFolderCollection> $mediaFolderRepositroy */
-        $mediaFolderRepositroy = $this->container->get('media_folder.repository');
-
-        /** @var EntityRepository<MediaDefaultFolderCollection> $mediaDefaultFolderRepositroy */
-        $mediaDefaultFolderRepositroy = $this->container->get('media_default_folder.repository');
-
-        /** @var EntityRepository<MediaFolderConfigurationCollection> $mediaFolderConfigurationRepositroy */
-        $mediaFolderConfigurationRepositroy = $this->container->get('media_folder_configuration.repository');
-
-        /** @var MediaDefaultFolderEntity $mediaFolderElysiumSlides */
-        $mediaFolderElysiumSlides = $mediaDefaultFolderRepositroy->search($criteria, $context)->first();
-
-        if ($mediaFolderElysiumSlides->getId()) {
-            $this->setMediaDefaultFolderId($mediaFolderElysiumSlides->getId());
-        }
-
-        # existence check
-        if ($mediaFolderElysiumSlides->getFolder() !== null) {
-            /** @var MediaFolderEntity $elysiumSlidesFolder */
-            $elysiumSlidesFolder = $mediaFolderElysiumSlides->getFolder();
-            $this->setMediaFolderId(
-                $elysiumSlidesFolder->getId()
-            );
-            $this->setMediaFolderConfigurationId(
-                $elysiumSlidesFolder->getConfigurationId()
-            );
-        }
-
-        if (!empty($this->getMediaFolderId())) {
-            $mediaFolderRepositroy->delete([['id' => $this->getMediaFolderId()]], $context);
-        }
-
-        if (!empty($this->getMediaDefaultFolderId())) {
-            $mediaDefaultFolderRepositroy->delete([['id' => $this->getMediaDefaultFolderId()]], $context);
-        }
-
-        if (!empty($this->getMediaFolderConfigurationId())) {
-            # delete media folder configuration entry
-            $mediaFolderConfigurationRepositroy->delete([['id' => $this->getMediaFolderConfigurationId()]], $context);
-        }
     }
 
-    function removeDatabaseTables(): void
+    private function removeDatabaseTables(): void
     {
         $connection = $this->container->get(Connection::class);
 
+        /** 
+         * Delete media folder with dependencies
+         */
+        try {
+            $connection->executeStatement("
+                DELETE mf, mdf, mfc 
+                FROM media_folder mf
+                JOIN media_default_folder mdf ON mf.default_folder_id = mdf.id
+                JOIN media_folder_configuration mfc ON mf.media_folder_configuration_id = mfc.id
+                WHERE mf.id = UNHEX(:mediaFolderId) 
+            ", [
+                'mediaFolderId' => Defaults::MEDIA_FOLDER_ID
+            ]);
+        } catch (\Exception $e) {
+            throw new \RuntimeException('Failed to remove tables and data: ' . $e->getMessage());
+        }
+
+        /**
+         * Delete elysium slides tables
+         */
         try {
             $connection->executeStatement('DROP TABLE IF EXISTS `blur_elysium_slides_translation`, `blur_elysium_slides`');
         } catch (\Exception $e) {
@@ -146,129 +105,61 @@ class Lifecycle
         }
     }
 
-    private function createMediaDefaultFolder(
-        Context $context
-    ): void {
-
-        $criteria = new Criteria();
-        $criteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));
-        $criteria->addAssociation('folder');
-        $criteria->setLimit(1);
-
-        /** @var EntityRepository<MediaDefaultFolderCollection> $mediaDefaultFolderRepositroy */
-        $mediaDefaultFolderRepositroy = $this->container->get('media_default_folder.repository');
-
-        /** @var EntitySearchResult<MediaDefaultFolderCollection> $mediaDefaultFolderResult */
-        $mediaDefaultFolderResult = $mediaDefaultFolderRepositroy->search($criteria, $context);
-
-        if ($mediaDefaultFolderResult->getTotal() <= 0) {
-            # create new media default for blur_elysium_slides
-            $mediaDefaultFolderRepositroy->create([
-                [
-                    'id' => $this->getMediaDefaultFolderId(),
-                    'associationFields' => [
-                        'slideCover',
-                        'slideCoverMobile',
-                        'slideCoverTablet',
-                        'slideCoverVideo',
-                        'presentationMedia',
-                    ],
-                    'entity' => 'blur_elysium_slides'
-                ]
-            ], $context);
-        } else {
-            # if there is already a default folder for blur_elysium_slides
-            # check possible associations to an existing media folder linked to it
-            # if there is an existing media folder association set this as mediaFolderId for security check purpose
-            /** @var MediaDefaultFolderEntity $mediaDefaultFolders */
-            $mediaDefaultFolders = $mediaDefaultFolderResult->first();
-            /** @var MediaFolderEntity $elysiumMediaFolder */
-            $elysiumMediaFolder = $mediaDefaultFolders->getFolder();
-            $this->setMediaFolderId($elysiumMediaFolder->getId());
-        }
-    }
-
     private function createMediaFolder(
         Context $context
     ): void {
-        $criteria = new Criteria();
-        $criteria->addFilter(new EqualsFilter('id', $this->getMediaFolderId()));
+
         /** @var EntityRepository<MediaFolderCollection> $mediaFolderRepositroy */
         $mediaFolderRepositroy = $this->container->get('media_folder.repository');
 
-        if ($mediaFolderRepositroy->search($criteria, $context)->getTotal() <= 0) {
-            $mediaFolderRepositroy->create([
+        $searchCriteria = new Criteria([Defaults::MEDIA_FOLDER_ID]);
+        $searchCriteria->addAssociation('configuration');
+        $searchCriteria->addAssociation('defaultFolder');
+        $searchCriteria->setLimit(1);
+
+        /** @var EntitySearchResult $searchMediaFolder */
+        $searchMediaFolder = $mediaFolderRepositroy->search($searchCriteria, $context);
+        /** @var Array<'id', string>|null $thumbnailSizeIds */
+        $thumbnailSizeIds = $this->getMediaThumbnailSizesIds();
+
+        /**
+         * If there is no existing slides media folder
+         * create it with default media thumbnails
+         */
+        if ($searchMediaFolder->getTotal() <= 0) {
+            $mediaFolderRepositroy->create(
                 [
-                    'id' => $this->getMediaFolderId(),
-                    'name' => self::MEDIA_FOLDER_NAME,
-                    'useParentConfiguration' => false,
-                    'configuration' => [
-                        /**
-                     * @TODO
-                     * discard the idea of setting custom thumbnails because of buggy behavior of shopware
-                     * review the possibility of custom thumbnails later on
-                     */
-                        //'mediaThumbnailSizes' => self::MEDIA_THUMBNAIL_SIZES
-                    ],
-                    'defaultFolderId' => $this->getMediaDefaultFolderId()
-                ]
-            ], $context);
+                    [
+                        'id' => Defaults::MEDIA_FOLDER_ID,
+                        'name' => Defaults::MEDIA_FOLDER_NAME,
+                        'useParentConfiguration' => false,
+                        'defaultFolder' => [
+                            'entity' => 'blur_elysium_slides',
+                        ],
+                        'configuration' => [
+                            'createThumbnails' => true,
+                            'keepAspectRatio' => true,
+                            'mediaThumbnailSizes' => $thumbnailSizeIds,
+                        ]
+                    ]
+                ],
+                $context
+            );
         }
     }
 
-    /**
-     * Get the value of mediaFolderId
-     * @return string
-     */
-    private function getMediaFolderId(): string
+    function getMediaThumbnailSizesIds(): ?array
     {
-        return $this->mediaFolderId;
-    }
+        $thumbnailSizeIds = null;
 
-    /**
-     * Set the value of mediaFolderId
-     *
-     * @return void
-     */
-    private function setMediaFolderId(string $mediaFolderId): void
-    {
-        $this->mediaFolderId = $mediaFolderId;
-    }
+        $thumbnailSizeIds = $this->ensureThumbnailSizes(Defaults::MEDIA_THUMBNAIL_SIZES, $this->container->get(Connection::class));
 
-    /**
-     * Get the value of mediaDefaultFolderId
-     */
-    private function getMediaDefaultFolderId(): string
-    {
-        return $this->mediaDefaultFolderId;
-    }
+        if (count($thumbnailSizeIds) > 0) {
+            $thumbnailSizeIds = array_map(function ($thumbnailSize) {
+                return ['id' => bin2hex($thumbnailSize)];
+            }, $thumbnailSizeIds);
+        }
 
-    /**
-     * Set the value of mediaDefaultFolderId
-     *
-     * @return void
-     */
-    private function setMediaDefaultFolderId(string $mediaDefaultFolderId): void
-    {
-        $this->mediaDefaultFolderId = $mediaDefaultFolderId;
-    }
-
-    /**
-     * Get the value of mediaFolderConfigurationId
-     */
-    private function getMediaFolderConfigurationId(): ?string
-    {
-        return $this->mediaFolderConfigurationId;
-    }
-
-    /**
-     * Set the value of mediaFolderConfigurationId
-     *
-     * @param string|null $mediaFolderConfigurationId
-     * @return void
-     */
-    private function setMediaFolderConfigurationId(?string $mediaFolderConfigurationId): void
-    {
-        $this->mediaFolderConfigurationId = $mediaFolderConfigurationId;
+        return $thumbnailSizeIds;
     }
 }
