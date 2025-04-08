@@ -1,0 +1,4 @@
+- Slides bieten viele Inhalts- und Darstellungseinstellungen.
+- Responsive SEO-Banner. Für verbessertes SEO können Inhalte wie Überschrift, Beschreibung oder eine Verlinkung festgelegt werden. Für die Überschrift kann das H-Element sowie einfache HTML-Tags vergeben werden.
+- Bild-Banner für Smartphone-, Tablet- und Desktop-Ansicht optimierbar.
+- Slides können in Slider- oder Banner-Elementen einer Erlebniswelt platziert und organisiert werden.

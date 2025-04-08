@@ -1,0 +1,61 @@
+store:
+  availabilities:
+      - German
+      - International
+  default_locale: en_GB
+  localizations:
+      - de_DE
+      - en_GB
+  # categories:
+  #     - Administration
+	type: extension
+	icon: store/extension-icon.png
+	automatic_bugfix_version_compatibility: true
+  tags:
+    de:
+      - Erlebniswelten
+      - Erlebniswelten Sektion
+      - Slider
+      - Banner
+      - Slide Builder
+    en:
+      - Shopping expierence
+      - Shopping experience section
+      - Slider
+      - Banner
+      - Slide Builder
+  # videos:
+  #     de: []
+  #     en: []
+  # installation_manual:
+  #     de: file:store/de_manual.md
+  #     en: file:store/en_manual.md
+  description:
+    de: file:store/de/description.md
+    en: file:store/en/description.md
+  highlights:
+    de: file:store/de/highlights.md
+    en: file:store/en/highlights.md
+  features:
+    de: file:store/de/features.md
+    en: file:store/en/features.md
+  # faq:
+  #     de: []
+  #     en: []
+  images:
+    - file: src/Resources/store/img-0.png
+      activate:
+        de: true
+        en: true
+      preview:
+        de: true
+        en: true
+      priority: 0
+    - file: src/Resources/store/img-1.png
+      activate:
+        de: true
+        en: true
+      preview:
+        de: false
+        en: false
+      priority: 0
