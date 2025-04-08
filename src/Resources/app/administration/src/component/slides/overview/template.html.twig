@@ -35,12 +35,13 @@
 
     <template #smart-bar-actions>
 
-        <sw-button
+        <mt-button
             variant="primary"
+            size="default"
             :disabled="!permissionCreate"
-            :router-link="permissionCreate === true ? { name: 'blur.elysium.slides.create' } : null">
+            @click="$router.push({ name: 'blur.elysium.slides.create' })">
             {{ $tc('blurElysium.action.createSlide') }}
-        </sw-button>
+        </mt-button>
     </template>
 
     <template #content>
@@ -90,17 +91,19 @@
 
                 <template #icon>
                     <img
-                        :src="assetFilter('/administration/static/img/empty-states/media-empty-state.svg')"
+                        :src="assetFilter('/administration/administration/static/img/empty-states/media-empty-state.svg')"
                         :alt="$tc('blurElysiumSlides.emptySlidesTitle')"
                     >
                 </template>
 
                 <template #actions>
 
-                    <sw-button
-                        :router-link="{ name: 'blur.elysium.slides.create' }">
+                    <mt-button
+                        variant="secondary"
+                        size="default"
+                        @click="$router.push({ name: 'blur.elysium.slides.create' })">
                         {{ $tc('blurElysium.action.createSlide') }}
-                    </sw-button>
+                    </mt-button>
                 </template>
             </sw-empty-state>
         </template>
