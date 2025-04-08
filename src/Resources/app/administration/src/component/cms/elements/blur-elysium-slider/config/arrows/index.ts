@@ -78,7 +78,7 @@ export default Component.wrapComponentConfig({
         },
 
         arrowsViewportConfig () {
-            return this.config.viewports.value[this.device].arrows
+            return this.config.viewports.value[this.device] ? this.config.viewports.value[this.device].arrows : null
         }
     },
 

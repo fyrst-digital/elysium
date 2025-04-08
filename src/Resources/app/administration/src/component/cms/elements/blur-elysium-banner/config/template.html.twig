@@ -21,6 +21,13 @@
             }" />
     </template>
 
+    <mt-banner
+        v-if="viewportConfig === null"
+        :style="{ margin: '20px' }"
+        :variant="'attention'">
+        <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')" />
+    </mt-banner>
+
     <blur-section
         gap
         padding>
@@ -43,6 +50,7 @@
     </blur-section>
 
     <blur-section
+        v-if="viewportConfig"
         gap
         padding
         :title="'Sizing'">

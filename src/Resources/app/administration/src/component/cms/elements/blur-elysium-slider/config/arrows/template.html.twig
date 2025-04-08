@@ -1,3 +1,10 @@
+<mt-banner
+    v-if="arrowsViewportConfig === null"
+    :style="{ margin: '20px' }"
+    :variant="'attention'">
+    <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')" />
+</mt-banner>
+
 <blur-section 
     gap
     padding>
@@ -30,6 +37,7 @@
         v-model:value="arrowsConfig.icon.default" />
 
     <blur-number-input 
+        v-if="arrowsViewportConfig"
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },

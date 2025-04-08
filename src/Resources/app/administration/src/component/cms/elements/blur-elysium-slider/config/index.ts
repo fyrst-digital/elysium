@@ -15,12 +15,6 @@ export default Component.wrapComponentConfig({
         'repositoryFactory'
     ],
 
-    // provide() {
-    //     return {
-    //         selectedSlidesIds: this.element.config.elysiumSlideCollection.value
-    //     }
-    // },
-    
     data() {
         return {
             activeTab: 'content'

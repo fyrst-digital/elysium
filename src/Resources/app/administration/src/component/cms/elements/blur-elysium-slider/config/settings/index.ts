@@ -43,7 +43,7 @@ export default Component.wrapComponentConfig({
         },
 
         settingsViewportConfig () {
-            return this.config.viewports.value[this.device].settings
+            return this.config.viewports.value[this.device] ? this.config.viewports.value[this.device].settings : null
         },
 
     },

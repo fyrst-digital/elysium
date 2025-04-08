@@ -96,7 +96,7 @@ export default Component.wrapComponentConfig({
         },
 
         navigationViewportConfig () {
-            return this.config.viewports.value[this.device].navigation
+            return this.config.viewports.value[this.device] ? this.config.viewports.value[this.device].navigation : null
         }
     },
 

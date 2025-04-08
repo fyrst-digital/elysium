@@ -126,7 +126,8 @@
             "cover": "Cover",
             "contain": "Contain",
             "ratio": "Ratio",
-            "blockAlignment": "Block alignment"
+            "blockAlignment": "Block alignment",
+            "noViewportConfigAvailable": "Device-specific settings are not available in the form view. Switch to a device view to edit these settings."
         },
         "action": {
             "cancel": "Cancel",

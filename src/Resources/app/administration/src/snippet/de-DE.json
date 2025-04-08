@@ -126,7 +126,8 @@
             "cover": "Füllen",
             "contain": "Beibehalten",
             "ratio": "Verhältnis",
-            "blockAlignment": "Block Ausrichtung"
+            "blockAlignment": "Block Ausrichtung",
+            "noViewportConfigAvailable": "In der Formularansicht stehen keine geräteabhängige Einstellungen zur Verfügung. Wechsle in eine Geräteansicht um diese Einstellungen zu bearbeiten."
         },
         "action": {
             "cancel": "Abbrechen",

@@ -1,3 +1,10 @@
+<mt-banner
+    v-if="navigationViewportConfig === null"
+    :style="{ margin: '20px' }"
+    :variant="'attention'">
+    <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')" />
+</mt-banner>
+
 <blur-section 
     gap
     padding>
@@ -47,6 +54,7 @@
         v-model:value="navigationConfig.shape" />
 
     <blur-select-input 
+        v-if="navigationViewportConfig"
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 6' },
@@ -60,6 +68,7 @@
         v-model:value="navigationViewportConfig.size" />
 
     <blur-number-input 
+        v-if="navigationViewportConfig"
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },

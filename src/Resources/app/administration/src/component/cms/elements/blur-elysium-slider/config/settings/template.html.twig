@@ -1,3 +1,10 @@
+<mt-banner
+    v-if="settingsViewportConfig === null"
+    :style="{ margin: '20px' }"
+    :variant="'attention'">
+    <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')" />
+</mt-banner>
+
 <blur-section 
     gap
     padding
@@ -31,6 +38,7 @@
 
     {% block blur_cms_config_elysium_slider_slides_per_page %}
         <blur-number-input 
+            v-if="settingsViewportConfig"
             :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
                 desktop: { gridColumnEnd: 'span 3' },
