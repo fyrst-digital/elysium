@@ -1,4 +1,4 @@
-- Erlebniswelten Sektion.
-- Slide Builder.
-- Slider und Banner Elemente.
-- Konsistente Geräteeinstellungen.
+- Erlebniswelten Sektion — 
+- Slide Builder — Mithilfe des Slide Builders lassen sich einfach, voll responsive Slides, erstellen. Diese Slides werden in Banner- und Slider-Elementen einer Erlebniswelt organisiert. 
+- Slider und Banner Elemente — 
+- Konsistente Geräteeinstellungen — 

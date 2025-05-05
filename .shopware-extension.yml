@@ -43,7 +43,7 @@ store:
   #     de: []
   #     en: []
   images:
-    - file: src/Resources/store/img-0.png
+    - file: store/images/img-0.png
       activate:
         de: true
         en: true
@@ -51,7 +51,7 @@ store:
         de: true
         en: true
       priority: 0
-    - file: src/Resources/store/img-1.png
+    - file: store/images/img-1.png
       activate:
         de: true
         en: true
