@@ -1,13 +1,13 @@
 store:
   availabilities:
-      - German
-      - International
+    - German
+    - International
   default_locale: en_GB
   localizations:
-      - de_DE
-      - en_GB
-  # categories:
-  #     - Administration
+    - de_DE
+    - en_GB
+  categories:
+    - Shopping Experiences    
 	type: extension
 	icon: store/extension-icon.png
 	automatic_bugfix_version_compatibility: true
@@ -24,9 +24,6 @@ store:
       - Slider
       - Banner
       - Slide Builder
-  videos:
-      de: []
-      en: []
   installation_manual:
     de: file:store/de/manual.md
     en: file:store/en/manual.md
@@ -39,9 +36,11 @@ store:
   features:
     de: file:store/de/features.md
     en: file:store/en/features.md
-  # faq:
-  #     de: []
-  #     en: []
+  faq:
+      de: 
+        - question: Wie wird die kostenfreie Version der Elysium Erweiterung unterstützt
+          answer: Diese kostenfreie Version der Elysium Erweiterung erhält nicht priorisierte Fehlerbehebungen und Kompatibilität Updates. Nur die aktuellste Major Version der Erweiterung, welche jeweils mit der aktuellsten Shopware Version kompatibel ist, erhält Updates. Außerdem wird kein Support garantiert und es wird keine Funktionserweiterungen geben.
+      en: []
   images:
     - file: store/images/img-0.png
       activate:
