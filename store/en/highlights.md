@@ -1,0 +1,7 @@
+- Shopping Experience Section — With the Elysium Sections, you bring maximum flexibility and freedom to your Shopping Experience. Unlike conventional, rigid layout blocks, Elysium Sections allow you completely free and responsive design. By simply dragging with the mouse, you can adjust the width of individual blocks, merge rows, and determine the visual order. All within the Shopping Experience editor.
+
+- Slide Builder — With the Slide Builder, fully responsive and reusable slides can be created. Slides are linked in banner and slider elements of an Shopping Experience. The Slide Builder allows you to create both simple "image only" banners and complex SEO banners. Attractive slides can be designed even without knowledge of graphic programs or programming.
+
+- Slider and Banner Elements — In the hopping Experience block selection, you will find the elements Elysium Slider and Banner under the category Elysium Blocks. These elements allow you to link slides from the Slide Builder and offer additional configuration options. In both elements, you can define the size of the slides. The Slider element also provides specific slider settings.
+
+- Mobile-first Device Settings — Elysium offers device-dependent settings that can be adjusted for smartphone, tablet, and desktop views. The mobile-first approach is consistently followed. Settings are inherited from the smartphone view to all other views. As a result, device-dependent settings do not need to be maintained separately for each view, with only a few exceptions.

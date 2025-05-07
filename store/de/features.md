@@ -1,4 +1,13 @@
-- Slides bieten viele Inhalts- und Darstellungseinstellungen.
-- Responsive SEO-Banner. Für verbessertes SEO können Inhalte wie Überschrift, Beschreibung oder eine Verlinkung festgelegt werden. Für die Überschrift kann das H-Element sowie einfache HTML-Tags vergeben werden.
-- Bild-Banner für Smartphone-, Tablet- und Desktop-Ansicht optimierbar.
-- Slides können in Slider- oder Banner-Elementen einer Erlebniswelt platziert und organisiert werden.
+- 🌐 Flexible, responsive Layouts mit der Elysium-Sektion für Erlebniswelten  
+- 🎛️ Slides mit umfangreichen Inhalts- und Darstellungsoptionen  
+- 🔍 SEO-Banner mit responsivem Layout: Überschrift, Beschreibung und Link individuell festlegbar – inkl. H-Element und HTML-Tags  
+- 🎥 Slide-Cover mit Videos, Bildern, Farben oder Farbverläufen möglich  
+- 🖼️ Bild-Banner gerätespezifisch anpassbar für Smartphone, Tablet und Desktop  
+- 🔗 Individuelle Slide-Verlinkung per Button oder vollflächig – mit relativen, absoluten URLs oder Sprungmarken  
+- 🛍️ Produkte mit Slides verknüpfen: Inhalte wie Bild, Name, Beschreibung und Link automatisch übernehmen oder manuell überschreiben  
+- 🧩 Eigene Slide-Templates per Twig-Datei erstellen – wiederverwendbar und anpassbar 
+- ➕ Slides über Zusatzfeld-Sets erweiterbar um eigene Inhalte wie Bilder oder Texte 
+- 🧱 Slides flexibel platzierbar in Slider- oder Banner-Elementen einer Erlebniswelt  
+- ⚙️ Slider-Element anpassbar: Autoplay, Navigation, Abstände und sichtbare Slides je Gerät frei definierbar  
+- 📐 Optimale Darstellung durch gerätespezifisch anpassbares Seitenverhältnis statt fixer Größen  
+- 🚀 Lighthouse-optimiert: Picture-Tag, Lazy Loading, Thumbnails und feste Seitenverhältnisse für Top-Performance und weniger Layout-Shifts  
