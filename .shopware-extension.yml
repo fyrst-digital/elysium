@@ -24,12 +24,12 @@ store:
       - Slider
       - Banner
       - Slide Builder
-  # videos:
-  #     de: []
-  #     en: []
-  # installation_manual:
-  #     de: file:store/de_manual.md
-  #     en: file:store/en_manual.md
+  videos:
+      de: []
+      en: []
+  installation_manual:
+    de: file:store/de/manual.md
+    en: file:store/en/manual.md
   description:
     de: file:store/de/description.md
     en: file:store/en/description.md

@@ -1,0 +1,3 @@
+Nachdem du die Erweiterung installiert und aktiviert hast, findest du in der Administration unter Inhalte einen neuen Menüpunkt mit der Bezeichnung Slide Builder. An dieser Stelle können Slides verwaltet werden. Um diese in den Einkaufswelten zu verknüpfen, findest du in der Block-Auswahl unter "Elysium Blöcke" ein Slider und Banner Element.  
+
+[Eine vollständige Anleitung findest du hier.](https://elysium.blurcreative.de/de/)
