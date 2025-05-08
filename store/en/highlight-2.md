@@ -1,0 +1,1 @@
+Slide Builder — With the Slide Builder, fully responsive and reusable slides can be created. Slides are linked in banner and slider elements of an Shopping Experience. The Slide Builder allows you to create both simple "image only" banners and complex SEO banners. Attractive slides can be designed even without knowledge of graphic programs or programming.

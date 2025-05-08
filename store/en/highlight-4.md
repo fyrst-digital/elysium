@@ -1,0 +1,1 @@
+Mobile-first Device Settings — Elysium offers device-dependent settings that can be adjusted for smartphone, tablet, and desktop views. The mobile-first approach is consistently followed. Settings are inherited from the smartphone view to all other views. As a result, device-dependent settings do not need to be maintained separately for each view, with only a few exceptions.
