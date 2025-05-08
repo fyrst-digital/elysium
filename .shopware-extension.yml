@@ -29,10 +29,12 @@ store:
     en: file:store/en/manual.md
   description:
     de: file:store/de/description.md
-    en: file:store/en/description.md
-  highlights:
-    de: file:store/de/highlights.md
-    en: file:store/en/highlights.md
+    en: file:store/en/descriptionmd
+  highlights:.
+    de: 
+      - file:store/de/highlight-1.md
+    en: 
+      - file:store/en/highlight-1.md
   features:
     de: file:store/de/features.md
     en: file:store/en/features.md
