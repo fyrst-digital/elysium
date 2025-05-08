@@ -24,6 +24,7 @@ jobs:
       - name: Validate plugin
         run: |
           echo "${{ github.workspace }}"
+          rm -rf .devops .eslintrc.js .eslintignore
           shopware-cli extension validate ${{ github.workspace }}
 
   build-changelog:
