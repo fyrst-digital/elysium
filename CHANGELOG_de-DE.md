@@ -1,3 +1,18 @@
+# 4.0.0
+
+## Release notes
+Kompatibilitäts-Update zu Shopware 6.7
+
+## Changelog
+- Vollständiger Wechsel von vuex zu pinia und zu meteor Komponenten im Admin 
+- Vite Konfigurations-Anpassung
+- Code clean-up, Fehlerbehebungen unnd Optimierungen
+
+# 3.7.1
+
+## Changelog
+- Ein Fehler im Admin wurde behoben, bei dem der Inhaltselement-Tab in den Slide Einstellungen nicht geöffnet werden konnte
+
 # 3.7.0
 
 ## Changelog
