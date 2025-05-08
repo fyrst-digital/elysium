@@ -9,6 +9,7 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   validate:
@@ -94,3 +95,20 @@ jobs:
       - name: Deploy extension to store
         run: |
           shopware-cli account producer extension upload BlurElysiumSlider.zip
+
+  update-store-page:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    env:
+      SHOPWARE_CLI_ACCOUNT_EMAIL: ${{ secrets.SHOPWARE_CLI_ACCOUNT_EMAIL }}
+      SHOPWARE_CLI_ACCOUNT_PASSWORD: ${{ secrets.SHOPWARE_CLI_ACCOUNT_PASSWORD }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install shopware-cli
+        uses: shopware/shopware-cli-action@v1
+
+      - name: Update store page
+        run: |
+          shopware-cli account producer extension info push ${{ github.workspace }}

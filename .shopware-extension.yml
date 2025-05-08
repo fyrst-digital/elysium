@@ -37,24 +37,7 @@ store:
     de: file:store/de/features.md
     en: file:store/en/features.md
   faq:
-      de: 
-        - question: Wie wird die kostenfreie Version der Elysium Erweiterung unterstützt
-          answer: Diese kostenfreie Version der Elysium Erweiterung erhält nicht priorisierte Fehlerbehebungen und Kompatibilität Updates. Nur die aktuellste Major Version der Erweiterung, welche jeweils mit der aktuellsten Shopware Version kompatibel ist, erhält Updates. Außerdem wird kein Support garantiert und es wird keine Funktionserweiterungen geben.
-      en: []
-  images:
-    - file: store/images/img-0.png
-      activate:
-        de: true
-        en: true
-      preview:
-        de: true
-        en: true
-      priority: 0
-    - file: store/images/img-1.png
-      activate:
-        de: true
-        en: true
-      preview:
-        de: false
-        en: false
-      priority: 0
+    de: 
+      - question: Wie wird die kostenfreie Version der Elysium Erweiterung unterstützt
+        answer: Diese kostenfreie Version der Elysium Erweiterung erhält nicht priorisierte Fehlerbehebungen und Kompatibilität Updates. Nur die aktuellste Major Version der Erweiterung, welche jeweils mit der aktuellsten Shopware Version kompatibel ist, erhält Updates. Außerdem wird kein Support garantiert und es wird keine Funktionserweiterungen geben.
+    en: []
