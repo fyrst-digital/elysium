@@ -29,7 +29,7 @@ store:
     en: file:store/en/manual.md
   description:
     de: file:store/de/description.md
-    en: file:store/en/descriptionmd
+    en: file:store/en/description.md
   highlights:
     de: 
       - file:store/de/highlight-1.md
