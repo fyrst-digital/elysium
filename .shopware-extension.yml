@@ -1,0 +1,43 @@
+store:
+  availabilities:
+    - German
+    - International
+  default_locale: en_GB
+  localizations:
+    - de_DE
+    - en_GB
+  categories:
+    - Shopping Experiences    
+	type: extension
+	icon: store/extension-icon.png
+	automatic_bugfix_version_compatibility: true
+  tags:
+    de:
+      - Erlebniswelten
+      - Erlebniswelten Sektion
+      - Slider
+      - Banner
+      - Slide Builder
+    en:
+      - Shopping expierence
+      - Shopping experience section
+      - Slider
+      - Banner
+      - Slide Builder
+  installation_manual:
+    de: file:store/de/manual.md
+    en: file:store/en/manual.md
+  description:
+    de: file:store/de/description.md
+    en: file:store/en/description.md
+  highlights:
+    de: file:store/de/highlights.md
+    en: file:store/en/highlights.md
+  features:
+    de: file:store/de/features.md
+    en: file:store/en/features.md
+  faq:
+    de: 
+      - question: Wie wird die kostenfreie Version der Elysium Erweiterung unterstützt
+        answer: Diese kostenfreie Version der Elysium Erweiterung erhält nicht priorisierte Fehlerbehebungen und Kompatibilität Updates. Nur die aktuellste Major Version der Erweiterung, welche jeweils mit der aktuellsten Shopware Version kompatibel ist, erhält Updates. Außerdem wird kein Support garantiert und es wird keine Funktionserweiterungen geben.
+    en: []

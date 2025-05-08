@@ -1,0 +1,13 @@
+- 🌐 Flexible, responsive layouts with the Elysium section for Shopping Experience  
+- 🎛️ Slides with extensive content and display options  
+- 🔍 SEO banner with responsive layout: headline, description, and link individually configurable – including H-element and HTML tags  
+- 🎥 Slide cover with videos, images, colors, or gradients possible  
+- 🖼️ Image banner adaptable for smartphone, tablet, and desktop  
+- 🔗 Individual slide linking via button or full-surface – with relative, absolute URLs, or anchor links  
+- 🛍️ Link products with slides: automatically adopt content like image, name, description, and link or manually override  
+- 🧩 Create custom slide templates via Twig file – reusable and customizable  
+- ➕ Extend slides with additional field sets for custom content like images or text  
+- 🧱 Slides flexibly placeable in slider or banner elements of a Shopping Experience  
+- ⚙️ Slider element customizable: autoplay, navigation, spacing, and visible slides per device freely definable  
+- 📐 Optimal display through device-specific adjustable aspect ratio instead of fixed sizes  
+- 🚀 Lighthouse-optimized: picture tag, lazy loading, thumbnails, and fixed aspect ratios for top performance and fewer layout shifts
