@@ -30,7 +30,7 @@ store:
   description:
     de: file:store/de/description.md
     en: file:store/en/descriptionmd
-  highlights:.
+  highlights:
     de: 
       - file:store/de/highlight-1.md
     en: 
