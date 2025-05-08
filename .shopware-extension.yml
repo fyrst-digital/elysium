@@ -8,9 +8,9 @@ store:
     - en_GB
   categories:
     - Shopping Experiences    
-	type: extension
-	icon: store/extension-icon.png
-	automatic_bugfix_version_compatibility: true
+  type: extension
+  icon: store/extension-icon.png
+  automatic_bugfix_version_compatibility: true
   tags:
     de:
       - Erlebniswelten
