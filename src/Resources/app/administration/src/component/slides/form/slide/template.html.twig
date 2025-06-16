@@ -1,5 +1,4 @@
 <blur-section>
-
     <blur-column>
         <blur-section
             gap
@@ -8,65 +7,62 @@
             title-icon="blurph-paint-bucket-bold"
             :style="viewStyle({
                 mobile: { borderBottom: '1px solid var(--color-border-primary-default)' },
-            })">
-
-            <blur-column
-                :cols-tablet="6">
-
+            })"
+        >
+            <blur-column :cols-tablet="6">
                 <blur-colorpicker
                     :label="$tc('blurElysium.general.backgroundColor')"
-                    v-model:value="slide.slideSettings.slide.bgColor" />
+                    v-model:value="slide.slideSettings.slide.bgColor"
+                />
             </blur-column>
-
         </blur-section>
     </blur-column>
-
-    <blur-column> 
+    <blur-column>
         <blur-section
             gap
             padding
             :title="$tc('blurElysiumSlides.forms.slideGradient.label')"
-            title-icon="blurph-circle-half-bold"            
+            title-icon="blurph-circle-half-bold"
             :style="viewStyle({
                 mobile: { borderBottom: '1px solid #ddd' },
-            })">
-
+            })"
+        >
             <blur-column
                 :cols-tablet="6"
-                :cols-desktop="3">
-
+                :cols-desktop="3"
+            >
                 <blur-colorpicker
                     :label="$tc('blurElysiumSlides.forms.slideGradient.startColor')"
-                    v-model:value="slide.slideSettings.slide.bgGradient.startColor" />
+                    v-model:value="slide.slideSettings.slide.bgGradient.startColor"
+                />
             </blur-column>
-
             <blur-column
                 :cols-tablet="6"
-                :cols-desktop="3">
-
+                :cols-desktop="3"
+            >
                 <blur-colorpicker
                     :label="$tc('blurElysiumSlides.forms.slideGradient.endColor')"
-                    v-model:value="slide.slideSettings.slide.bgGradient.endColor" />
+                    v-model:value="slide.slideSettings.slide.bgGradient.endColor"
+                />
             </blur-column>
-
             <blur-column
                 :cols-tablet="6"
-                :cols-desktop="3">
-
-                <blur-select-input 
+                :cols-desktop="3"
+            >
+                <blur-select-input
                     :options="[
                         { value: 'linear-gradient', label: $tc('blurElysiumSlides.forms.slideGradient.gradientTypeLinear') }
                     ]"
                     :hideClearableButton="true"
                     :placeholder="$tc('blurElysiumSlides.forms.slideGradient.gradientTypeLinear')"
                     :label="$tc('blurElysiumSlides.forms.slideGradient.gradientType')"
-                    v-model:value="slide.slideSettings.slide.bgGradient.gradientType" />
+                    v-model:value="slide.slideSettings.slide.bgGradient.gradientType"
+                />
             </blur-column>
-
             <blur-column
                 :cols-tablet="6"
-                :cols-desktop="3">
-
+                :cols-desktop="3"
+            >
                 <blur-number-input
                     type="int"
                     placeholder="45"
@@ -75,12 +71,11 @@
                     :max="360"
                     :label="$tc('blurElysiumSlides.forms.slideGradient.gradientDeg')"
                     :model-value="slide.slideSettings.slide.bgGradient.gradientDeg"
-                    @update-value="value => slide.slideSettings.slide.bgGradient.gradientDeg = value" />
+                    @update-value="value => slide.slideSettings.slide.bgGradient.gradientDeg = value"
+                />
             </blur-column>
-
         </blur-section>
     </blur-column>
-
     <blur-column>
         <blur-section
             gap
@@ -89,67 +84,66 @@
                 mobile: { borderBottom: '1px solid var(--color-border-primary-default)' },
             })"
             :title="$tc('blurElysium.general.spacing')"
-            title-icon="blurph-ruler-bold">
-
+            title-icon="blurph-ruler-bold"
+        >
             <blur-column
                 :cols-tablet="6"
-                :cols-desktop="3">
-
-                <blur-number-input 
+                :cols-desktop="3"
+            >
+                <blur-number-input
                     :label="$tc('blurElysium.general.paddingX')"
                     :device="device"
                     :placeholder="viewportsPlaceholder('slide.paddingX', 15)"
                     :show-device="true"
                     @on-device="deviceSwitch"
                     :model-value="slideViewportSettings.slide.paddingX"
-                    @update-value="value => slideViewportSettings.slide.paddingX = value" />
+                    @update-value="value => slideViewportSettings.slide.paddingX = value"
+                />
             </blur-column>
-
             <blur-column
                 :cols-tablet="6"
-                :cols-desktop="3">
-
-                <blur-number-input 
+                :cols-desktop="3"
+            >
+                <blur-number-input
                     :label="$tc('blurElysium.general.paddingY')"
                     :device="device"
                     :placeholder="viewportsPlaceholder('slide.paddingY', 15)"
                     :show-device="true"
                     @on-device="deviceSwitch"
                     :model-value="slideViewportSettings.slide.paddingY"
-                    @update-value="value => slideViewportSettings.slide.paddingY = value" />
+                    @update-value="value => slideViewportSettings.slide.paddingY = value"
+                />
             </blur-column>
-
             <blur-column
                 :cols-tablet="6"
-                :cols-desktop="3">
-
-                <blur-number-input 
+                :cols-desktop="3"
+            >
+                <blur-number-input
                     :label="$tc('blurElysium.general.borderRadius')"
                     :device="device"
                     :placeholder="viewportsPlaceholder('slide.borderRadius', 0)"
                     :show-device="true"
                     @on-device="deviceSwitch"
                     :model-value="slideViewportSettings.slide.borderRadius"
-                    @update-value="value => slideViewportSettings.slide.borderRadius = value" /> 
+                    @update-value="value => slideViewportSettings.slide.borderRadius = value"
+                />
             </blur-column>
-
         </blur-section>
     </blur-column>
-
     <blur-column>
         <blur-section
             gap
             padding
             :title="$tc('blurElysium.general.alignment')"
             :description="$tc('blurElysiumSlides.forms.displaySlide.alignmentDescription')"
-            title-icon="blurph-arrows-out-line-horizontal-bold">
-
+            title-icon="blurph-arrows-out-line-horizontal-bold"
+        >
             <blur-column
                 :cols-tablet="6"
-                :cols-desktop="3">
-
-                <blur-select-input 
-                    :label="$tc('blurElysium.general.alignX.label')" 
+                :cols-desktop="3"
+            >
+                <blur-select-input
+                    :label="$tc('blurElysium.general.alignX.label')"
                     :placeholder="viewportsPlaceholder('slide.justifyContent', 'center', 'blurElysium.general.alignX')"
                     :device="device"
                     :show-device="true"
@@ -159,15 +153,15 @@
                         { value: 'flex-end', label: $tc('blurElysium.general.alignX.flexEnd') }
                     ]"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.slide.justifyContent" />
+                    v-model:value="slideViewportSettings.slide.justifyContent"
+                />
             </blur-column>
-
             <blur-column
                 :cols-tablet="6"
-                :cols-desktop="3">
-
-                <blur-select-input 
-                    :label="$tc('blurElysium.general.alignY.label')" 
+                :cols-desktop="3"
+            >
+                <blur-select-input
+                    :label="$tc('blurElysium.general.alignY.label')"
                     :placeholder="viewportsPlaceholder('slide.alignItems', 'center', 'blurElysium.general.alignY')"
                     :device="device"
                     :show-device="true"
@@ -177,9 +171,9 @@
                         { value: 'flex-end', label: $tc('blurElysium.general.bottom') }
                     ]"
                     @on-device="deviceSwitch"
-                    v-model:value="slideViewportSettings.slide.alignItems" />
+                    v-model:value="slideViewportSettings.slide.alignItems"
+                />
             </blur-column>
-
         </blur-section>
     </blur-column>
 </blur-section>

@@ -1,6 +1,6 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
-const { Component } = Shopware 
+const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
@@ -20,12 +20,12 @@ export default Component.wrapComponentConfig({
     emits: ['update-value'],
 
     methods: {
-        update (value) {
-            this.$emit('update-value', value)
+        update(value) {
+            this.$emit('update-value', value);
         },
 
         // onDeviceNote () {
         //     this.$emit('onDevice', this.device)
         // }
-    }
-})
+    },
+});

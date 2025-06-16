@@ -1,46 +1,51 @@
 import { SliderSettings, ViewportSettings } from '@elysium/types/slider';
 
-const { Utils } = Shopware
+const { Utils } = Shopware;
 
 const viewportSettings: ViewportSettings = {
     settings: {
-        slidesPerPage: null
+        slidesPerPage: null,
     },
     navigation: {
         size: null,
-        gap: null
+        gap: null,
     },
     arrows: {
-        iconSize: null
+        iconSize: null,
     },
     sizing: {
         aspectRatio: {
             width: null,
             height: null,
-            auto: null
+            auto: null,
         },
         maxHeight: null,
         maxHeightScreen: null,
         paddingY: null,
         paddingX: null,
-        slidesGap: null
-    }
-}
+        slidesGap: null,
+    },
+};
 
-function defineViewportConfig(overrides?: Partial<ViewportSettings>): ViewportSettings {
-    return Utils.object.deepMergeObject(structuredClone(viewportSettings), overrides)
+function defineViewportConfig(
+    overrides?: Partial<ViewportSettings>
+): ViewportSettings {
+    return Utils.object.deepMergeObject(
+        structuredClone(viewportSettings),
+        overrides
+    );
 }
 
 export default <SliderSettings>{
     elysiumSlideCollection: {
         source: 'static',
-        value: []
+        value: [],
     },
     content: {
         source: 'static',
         value: {
             title: '',
-        }
+        },
     },
     settings: {
         source: 'static',
@@ -53,9 +58,9 @@ export default <SliderSettings>{
             autoplay: {
                 active: true,
                 interval: 5000,
-                pauseOnHover: true
-            }
-        }
+                pauseOnHover: true,
+            },
+        },
     },
     navigation: {
         source: 'static',
@@ -66,9 +71,9 @@ export default <SliderSettings>{
             shape: 'circle',
             colors: {
                 default: '',
-                active: ''
-            }
-        }
+                active: '',
+            },
+        },
     },
     arrows: {
         source: 'static',
@@ -77,18 +82,18 @@ export default <SliderSettings>{
             icon: {
                 default: 'arrow-head',
                 customPrev: '',
-                customNext: ''
+                customNext: '',
             },
             colors: {
                 default: '',
-                active: ''
+                active: '',
             },
             bgColors: {
                 default: '',
-                active: ''
+                active: '',
             },
-            position: 'in_slider'
-        }
+            position: 'in_slider',
+        },
     },
     viewports: {
         source: 'static',
@@ -96,10 +101,10 @@ export default <SliderSettings>{
             mobile: defineViewportConfig({
                 navigation: {
                     size: 'sm',
-                    gap: 16
+                    gap: 16,
                 },
                 arrows: {
-                    iconSize: 16
+                    iconSize: 16,
                 },
                 sizing: {
                     aspectRatio: {
@@ -108,14 +113,14 @@ export default <SliderSettings>{
                     },
                     paddingY: 40,
                     paddingX: 40,
-                }
+                },
             }),
             tablet: defineViewportConfig({
                 navigation: {
-                    gap: 20
+                    gap: 20,
                 },
                 arrows: {
-                    iconSize: 20
+                    iconSize: 20,
                 },
                 sizing: {
                     aspectRatio: {
@@ -123,15 +128,15 @@ export default <SliderSettings>{
                         height: 3,
                     },
                     paddingY: 64,
-                    paddingX: 64
-                }
+                    paddingX: 64,
+                },
             }),
             desktop: defineViewportConfig({
                 navigation: {
-                    gap: 24
+                    gap: 24,
                 },
                 arrows: {
-                    iconSize: 24
+                    iconSize: 24,
                 },
                 sizing: {
                     aspectRatio: {
@@ -139,9 +144,9 @@ export default <SliderSettings>{
                         height: 9,
                     },
                     paddingY: 64,
-                    paddingX: 80
-                }
-            })
-        }
-    }
-}
+                    paddingX: 80,
+                },
+            }),
+        },
+    },
+};

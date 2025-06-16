@@ -1,13 +1,13 @@
-import template from './template.html.twig'
-import './style.scss'
+import template from './template.html.twig';
+import './style.scss';
 
-const { Component } = Shopware
+const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
 
     computed: {
-        styles () {
+        styles() {
             const styles: Partial<CSSStyleDeclaration> = {
                 // display: 'flex',
                 // flexDirection: 'column',
@@ -20,9 +20,9 @@ export default Component.wrapComponentConfig({
                 // backgroundColor: '#ffffff',
                 // color: 'var(--color-text-primary-disabled)',
                 // cursor: 'pointer',
-            }
+            };
 
-            return styles
-        }
-    }, 
-})
+            return styles;
+        },
+    },
+});

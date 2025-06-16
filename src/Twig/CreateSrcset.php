@@ -24,6 +24,7 @@ class CreateSrcset extends AbstractExtension
             $thumbUrl = $thumbnail->getUrl();
             $srcset[] = "{$thumbUrl} {$thumbWidth}w";
         }
+
         return implode(',', $srcset);
     }
 }

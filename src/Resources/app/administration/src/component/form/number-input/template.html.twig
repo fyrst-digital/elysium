@@ -1,36 +1,43 @@
-<mt-number-field 
+<mt-number-field
     type="int"
     size="small"
     class="blur-number-input"
     :step="1"
-    :min="0" 
+    :min="0"
     :placeholder="placeholder"
     :modelValue="value"
     :allowEmpty="true"
-    @update:modelValue="updateValue">
-
-    <template v-if="unit !== false" #suffix>
+    @update:modelValue="updateValue"
+>
+    <template
+        v-if="unit !== false"
+        #suffix
+    >
         {{unit}}
     </template>
 
-    <template v-if="showDevice === true" #prefix>
-        <span 
+    <template
+        v-if="showDevice === true"
+        #prefix
+    >
+        <span
             :style="{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
-            }">
-
-            <blur-icon 
+            }"
+        >
+            <blur-icon
                 v-tooltip="{
                     message: $t('blurElysium.messages.deviceSettingNote', { device: $tc(`blurElysium.device.${device}`) })
                 }"
                 :size="14"
-                :name="`blurph-device-${device}`" 
+                :name="`blurph-device-${device}`"
                 :style="{
                     cursor: 'pointer'
                 }"
-                @click="onDeviceNote" />
+                @click="onDeviceNote"
+            />
         </span>
     </template>
 </mt-number-field>

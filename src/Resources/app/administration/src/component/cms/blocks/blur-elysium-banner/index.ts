@@ -1,12 +1,12 @@
 Shopware.Component.register(
-    'sw-cms-block-blur-elysium-banner', 
+    'sw-cms-block-blur-elysium-banner',
     () => import('@elysium/component/cms/blocks/blur-elysium-banner/component')
-)
+);
 
 Shopware.Component.register(
-    'sw-cms-block-blur-elysium-banner-preview', 
+    'sw-cms-block-blur-elysium-banner-preview',
     () => import('@elysium/component/cms/blocks/blur-elysium-banner/preview')
-)
+);
 
 // eslint-disable-next-line no-undef
 Shopware.Service('cmsService').registerCmsBlock({
@@ -20,9 +20,9 @@ Shopware.Service('cmsService').registerCmsBlock({
         marginTop: '',
         marginLeft: '',
         marginRight: '',
-        sizingMode: 'boxed'
+        sizingMode: 'boxed',
     },
     slots: {
-        main: 'blur-elysium-banner'
-    }
-})
+        main: 'blur-elysium-banner',
+    },
+});

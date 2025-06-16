@@ -1,19 +1,18 @@
-import template from './template.html.twig'
-import "./style.scss"
+import template from './template.html.twig';
+import './style.scss';
 
-const { Component } = Shopware
+const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
 
     props: {
-
         title: {
-            type: String
+            type: String,
         },
 
         icon: {
-            type: String
-        }
-    }
-})
+            type: String,
+        },
+    },
+});

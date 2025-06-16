@@ -1,11 +1,10 @@
 <mt-card
     position-identifier="blurElysium.cmsBanner.config"
     title="Elysium Banner"
-    :class="['content-no-padding']">
-
+    :class="['content-no-padding']"
+>
     <template #headerRight>
-
-        <blur-device-switch 
+        <blur-device-switch
             layout="row"
             show-label="false"
             :device="device"
@@ -18,56 +17,55 @@
                 '--icon-padding': '6px',
                 '--icon-bg-color': '#ffffff',
                 '--icon-hover-bg-color': 'var(--color-gray-100)',
-            }" />
+            }"
+        />
     </template>
-
     <mt-banner
         v-if="viewportConfig === null"
         :style="{ margin: '20px' }"
-        :variant="'attention'">
-        <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')" />
+        :variant="'attention'"
+    >
+        <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
     </mt-banner>
-
     <blur-section
         gap
-        padding>
-
+        padding
+    >
         <blur-column>
-            <sw-entity-single-select 
+            <sw-entity-single-select
                 :label="$tc('blurElysiumBanner.config.selectSlide')"
-                entity="blur_elysium_slides" 
-                v-model:value="selectedSlide" />
+                entity="blur_elysium_slides"
+                v-model:value="selectedSlide"
+            />
         </blur-column>
-
         <blur-column>
-            <mt-switch 
+            <mt-switch
                 class="blur-switch-input"
                 :label="$tc('blurElysiumBanner.config.lazyLoading')"
-                :checked="config.lazyLoading.value" 
-                @change="config.lazyLoading.value = $event"/>
+                :checked="config.lazyLoading.value"
+                @change="config.lazyLoading.value = $event"
+            />
         </blur-column>
-
     </blur-section>
-
     <blur-section
         v-if="viewportConfig"
         gap
         padding
-        :title="'Sizing'">
-
+        :title="'Sizing'"
+    >
         <blur-column>
-            <mt-switch 
+            <mt-switch
                 class="blur-switch-input"
                 :label="$tc('blurElysiumBanner.config.autoSizing')"
-                :checked="viewportConfig.aspectRatio.auto" 
-                @change="viewportConfig.aspectRatio.auto = $event"/>
+                :checked="viewportConfig.aspectRatio.auto"
+                @change="viewportConfig.aspectRatio.auto = $event"
+            />
         </blur-column>
-
         <blur-column
             :cols-tablet="6"
-            :cols-desktop="3">
-
-            <blur-number-input 
+            :cols-desktop="3"
+        >
+            <blur-number-input
                 :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
                 :placeholder="viewportsPlaceholder('aspectRatio.width', 4)"
                 unit="Ratio"
@@ -77,14 +75,14 @@
                 :device="device"
                 @on-device="cmsDeviceSwitch"
                 :model-value="viewportConfig.aspectRatio.width"
-                @update-value="value => viewportConfig.aspectRatio.width = value" />
+                @update-value="value => viewportConfig.aspectRatio.width = value"
+            />
         </blur-column>
-
         <blur-column
             :cols-tablet="6"
-            :cols-desktop="3">
-
-            <blur-number-input 
+            :cols-desktop="3"
+        >
+            <blur-number-input
                 :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
                 :placeholder="viewportsPlaceholder('aspectRatio.height', 3)"
                 unit="Ratio"
@@ -94,14 +92,14 @@
                 :model-value="viewportConfig.aspectRatio.height"
                 :device="device"
                 @on-device="cmsDeviceSwitch"
-                @update-value="value => viewportConfig.aspectRatio.height = value" />
+                @update-value="value => viewportConfig.aspectRatio.height = value"
+            />
         </blur-column>
-
         <blur-column
             :cols-tablet="6"
-            :cols-desktop="3">
-
-            <blur-number-input 
+            :cols-desktop="3"
+        >
+            <blur-number-input
                 :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
                 :placeholder="viewportsPlaceholder('maxHeight', 'noLimit', 'blurElysium.general')"
                 :allow-empty="true"
@@ -109,10 +107,8 @@
                 :model-value="viewportConfig.maxHeight"
                 :device="device"
                 @on-device="cmsDeviceSwitch"
-                @update-value="value => viewportConfig.maxHeight = value" />
+                @update-value="value => viewportConfig.maxHeight = value"
+            />
         </blur-column>
-
     </blur-section>
-
 </mt-card>
-

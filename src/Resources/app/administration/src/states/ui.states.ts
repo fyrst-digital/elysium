@@ -8,19 +8,18 @@ interface UIState {
 }
 
 export default {
-
     id: 'elysiumUI',
 
     state: (): UIState => ({
         device: 'desktop',
-        mediaSidebar: null
+        mediaSidebar: null,
     }),
 
     actions: {
         setDevice(device: string) {
             this.device = device;
         },
-        
+
         resetDevice() {
             this.device = 'desktop';
         },
@@ -29,4 +28,4 @@ export default {
             this.mediaSidebar = element;
         },
     },
-}
+};

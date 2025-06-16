@@ -18,10 +18,10 @@ class Migration1645716876AddSlideSettings extends MigrationStep
     public function update(Connection $connection): void
     {
         try {
-            $connection->executeStatement("
+            $connection->executeStatement('
                 ALTER TABLE `blur_elysium_slides`
                 ADD COLUMN `slide_settings` JSON NULL
-            ");
+            ');
         } catch (\Throwable $e) {
             if (!($e instanceof NonUniqueFieldNameException)) {
                 throw $e;

@@ -1,32 +1,33 @@
 <mt-banner
     v-if="arrowsViewportConfig === null"
     :style="{ margin: '20px' }"
-    :variant="'attention'">
-    <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')" />
+    :variant="'attention'"
+>
+    <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
 </mt-banner>
-
-<blur-section 
+<blur-section
     gap
-    padding>
-
-    <div :style="viewStyle({
+    padding
+>
+    <div
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
-        })">
-        <mt-switch 
+        })"
+    >
+        <mt-switch
             class="blur-switch-input"
-            :checked="arrowsConfig.active" 
-            :label="$tc('blurElysiumSlider.config.arrows.active')" 
-            @change="arrowsConfig.active = $event"/>
+            :checked="arrowsConfig.active"
+            :label="$tc('blurElysiumSlider.config.arrows.active')"
+            @change="arrowsConfig.active = $event"
+        />
     </div>
-
 </blur-section>
-
-<blur-section 
+<blur-section
     :title="$tc('blurElysium.general.appearance')"
     gap
-    padding>
-
-    <blur-select-input 
+    padding
+>
+    <blur-select-input
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
@@ -34,9 +35,9 @@
         :label="$tc('blurElysiumSlider.config.arrows.icons.label')"
         :placeholder="$tc('blurElysiumSlider.config.arrows.icons.chevron')"
         :options="icons"
-        v-model:value="arrowsConfig.icon.default" />
-
-    <blur-number-input 
+        v-model:value="arrowsConfig.icon.default"
+    />
+    <blur-number-input
         v-if="arrowsViewportConfig"
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
@@ -48,8 +49,8 @@
         :label="$tc('blurElysiumSlider.config.arrows.size.label')"
         :show-device="true"
         :device="device"
-        @on-device="cmsDeviceSwitch" />
-
+        @on-device="cmsDeviceSwitch"
+    />
     <blur-colorpicker
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
@@ -62,8 +63,8 @@
         :alpha="true"
         :disabled="false"
         :colorLabels="true"
-        :zIndex="1010" />
-
+        :zIndex="1010"
+    />
     <blur-colorpicker
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
@@ -76,8 +77,8 @@
         :alpha="true"
         :disabled="false"
         :colorLabels="true"
-        :zIndex="1010" />
-                    
+        :zIndex="1010"
+    />
     <blur-colorpicker
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
@@ -90,8 +91,8 @@
         :alpha="true"
         :disabled="false"
         :colorLabels="true"
-        :zIndex="1010" />
-
+        :zIndex="1010"
+    />
     <blur-colorpicker
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
@@ -104,6 +105,6 @@
         :alpha="true"
         :disabled="false"
         :colorLabels="true"
-        :zIndex="1010" />
-
+        :zIndex="1010"
+    />
 </blur-section>

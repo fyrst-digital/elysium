@@ -4,28 +4,25 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
 
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 use Shopware\Core\Content\Media\MediaDefinition;
+use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Inherited;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\JsonField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
-use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToOneAssociationField;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class ElysiumSlidesDefinition extends EntityDefinition
 {
-
     public const ENTITY_NAME = 'blur_elysium_slides';
 
     public function getEntityName(): string
@@ -38,7 +35,7 @@ class ElysiumSlidesDefinition extends EntityDefinition
         return ElysiumSlidesEntity::class;
     }
 
-    function getCollectionClass(): string
+    public function getCollectionClass(): string
     {
         return ElysiumSlidesCollection::class;
     }
@@ -46,7 +43,6 @@ class ElysiumSlidesDefinition extends EntityDefinition
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
-
             (new IdField('id', 'id'))->addFlags(
                 new Required(),
                 new PrimaryKey()
@@ -55,23 +51,23 @@ class ElysiumSlidesDefinition extends EntityDefinition
             (new FkField('product_id', 'productId', ProductDefinition::class))->addFlags(new ApiAware()),
             (new OneToOneAssociationField('product', 'product_id', 'id', ProductDefinition::class))->addFlags(new ApiAware()),
             // media associations
-            /// slide cover
+            // / slide cover
             (new FkField('slide_cover_id', 'slideCoverId', MediaDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('slideCover', 'slide_cover_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            /// slide cover mobile
+            // / slide cover mobile
             (new FkField('slide_cover_mobile_id', 'slideCoverMobileId', MediaDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('slideCoverMobile', 'slide_cover_mobile_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            /// slide cover tablet
+            // / slide cover tablet
             (new FkField('slide_cover_tablet_id', 'slideCoverTabletId', MediaDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('slideCoverTablet', 'slide_cover_tablet_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            /// slide cover video
+            // / slide cover video
             (new FkField('slide_cover_video_id', 'slideCoverVideoId', MediaDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('slideCoverVideo', 'slide_cover_video_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            /// media presentation
+            // / media presentation
             (new FkField('presentation_media_id', 'presentationMediaId', MediaDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('presentationMedia', 'presentation_media_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
             // slide settings
-            (new JsonField('slide_settings', 'slideSettings',))->addFlags(new ApiAware()),
+            (new JsonField('slide_settings', 'slideSettings'))->addFlags(new ApiAware()),
             // translation
             (new TranslatedField('name'))->addFlags(new ApiAware(), new Required(), new Inherited()),
             (new TranslatedField('title'))->addFlags(new ApiAware(), new Inherited()),
@@ -82,7 +78,7 @@ class ElysiumSlidesDefinition extends EntityDefinition
             (new TranslationsAssociationField(
                 ElysiumSlidesTranslationDefinition::class,
                 'blur_elysium_slides_id'
-            ))->addFlags(new ApiAware(), new Inherited(), new Required())
+            ))->addFlags(new ApiAware(), new Inherited(), new Required()),
         ]);
     }
 }

@@ -1,32 +1,35 @@
-<div :class="[
+<div
+    :class="[
         'blur-section',
         padding === true ? 'has-padding' : null,
         gap === true ? 'has-gap' : null,
         gapY === true ? 'has-gap-y' : null,
         gapX === true ? 'has-gap-x' : null
-    ]">
-
-    <div :class="['blur-section-header']"
-        v-if="title || description">
-
-        <div :class="['blur-section-title']"
-            v-if="title">
-
+    ]"
+>
+    <div
+        :class="['blur-section-header']"
+        v-if="title || description"
+    >
+        <div
+            :class="['blur-section-title']"
+            v-if="title"
+        >
             <blur-icon
                 v-if="titleIcon"
                 :name="titleIcon"
-                :size="16" 
-                color="#189eff" />
-
-            <span v-html="title" />
+                :size="16"
+                color="#189eff"
+            />
+            <span v-html="title"/>
         </div>
-
-        <div :class="['blur-section-description']"
+        <div
+            :class="['blur-section-description']"
             v-if="description"
-            v-html="description" />
+            v-html="description"
+        />
     </div>
-
     <div :class="['blur-section-content']">
-        <slot />
+        <slot/>
     </div>
 </div>

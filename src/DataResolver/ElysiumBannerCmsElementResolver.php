@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\DataResolver;
 
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
-use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
-use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
-use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
-use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\Struct\ElysiumBannerStruct;
+use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
+use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
+use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
+use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
+use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
+use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
 {
@@ -26,7 +26,8 @@ class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository,
         private readonly EventDispatcherInterface $eventDispatcher,
-    ) {}
+    ) {
+    }
 
     public function getType(): string
     {
@@ -36,7 +37,6 @@ class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
     public function collect(
         CmsSlotEntity $slot,
         ResolverContext $resolverContext
-
     ): ?CriteriaCollection {
         return null;
     }

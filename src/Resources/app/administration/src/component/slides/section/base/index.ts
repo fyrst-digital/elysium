@@ -1,49 +1,48 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
-const { Component, Mixin, Store } = Shopware 
+const { Component, Mixin, Store } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
 
-    mixins: [
-        Mixin.getByName('blur-device-utilities')
-    ],
+    mixins: [Mixin.getByName('blur-device-utilities')],
 
-    data () {
+    data() {
         return {
-            activeTab: 'content'
-        }
+            activeTab: 'content',
+        };
     },
 
     computed: {
-
-        elysiumUI () {
-            return Store.get('elysiumUI')
+        elysiumUI() {
+            return Store.get('elysiumUI');
         },
 
-        device () {
-            return this.elysiumUI.device
+        device() {
+            return this.elysiumUI.device;
         },
 
-        tabs () {
+        tabs() {
             return [
                 {
                     label: this.$tc('blurElysiumSlides.forms.contentLabel'),
                     name: 'content',
                 },
                 {
-                    label: this.$tc('blurElysiumSlides.forms.slideLinking.label'),
+                    label: this.$tc(
+                        'blurElysiumSlides.forms.slideLinking.label'
+                    ),
                     name: 'linking',
-                }
-            ]
+                },
+            ];
         },
 
-        activeTabMeta () {
-            return this.tabs.find(tab => tab.name === this.activeTab)
+        activeTabMeta() {
+            return this.tabs.find((tab) => tab.name === this.activeTab);
         },
 
-        cardTitle () {
-            return this.$tc('blurElysiumSlides.forms.generalTitle')
-        }
-    }
-})
+        cardTitle() {
+            return this.$tc('blurElysiumSlides.forms.generalTitle');
+        },
+    },
+});

@@ -16,10 +16,6 @@ class CamelToKebabCase extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $str
-     * @return string
-     */
     public function camelToKebabCase(string $str = ''): string
     {
         if (empty($str)) {
@@ -28,7 +24,7 @@ class CamelToKebabCase extends AbstractExtension
 
         $str = preg_replace('!([a-z0-9])([A-Z])!', '$1-$2', $str);
 
-        if (is_string($str)) {
+        if (\is_string($str)) {
             $str = strtolower($str);
         } else {
             return '';

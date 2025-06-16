@@ -1,5 +1,5 @@
 {% block sw_media_quickinfo_usage_loader %}
-    {% parent %}
+    {% parent() %}
 
     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
     {% block blur_media_quickinfo_usage_list %}
@@ -33,7 +33,6 @@
                         />
                     </div>
                     {% endblock %}
-
                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                     {% block blur_media_quickinfo_usage_item_label %}
                     <div class="sw-media-quickinfo-usage__label">
@@ -45,34 +44,30 @@
             {% endblock %}
 
             {% block blur_media_quickinfo_usage_item_slide %}
-                <router-link
-                    v-for="slide in elysiumSlidesUsageCollection"
-                    :key="slide.id"
-                    :to="{ name: 'blur.elysium.slides.detail', params: { id: slide.id } }"
-                    :target="routerLinkTarget"
-                    :class="['blur-media-quickinfo-usage__link']"
-                >
-                    <li
-                        class="sw-media-quickinfo-usage__item"
-                    >
-                        <div class="sw-media-quickinfo-usage__label">
-                            <blur-elysium-icon
-                                :size="16"
-                                :color="elysiumIconColor"
-                            />
-                        </div>
-
-                        <div class="sw-media-quickinfo-usage__label">
+            <router-link
+                v-for="slide in elysiumSlidesUsageCollection"
+                :key="slide.id"
+                :to="{ name: 'blur.elysium.slides.detail', params: { id: slide.id } }"
+                :target="routerLinkTarget"
+                :class="['blur-media-quickinfo-usage__link']"
+            >
+                <li class="sw-media-quickinfo-usage__item">
+                    <div class="sw-media-quickinfo-usage__label">
+                        <blur-elysium-icon
+                            :size="16"
+                            :color="elysiumIconColor"
+                        />
+                    </div>
+                    <div class="sw-media-quickinfo-usage__label">
                             {{slide.translated.name}}
                         </div>
-                    </li>
-                </router-link>
+                </li>
+            </router-link>
             {% endblock %}
         </ul>
     {% endblock %}
 
-    <!--
-    <div v-else-if="elysiumSlidesUsageCollection && elysiumSlidesUsageCollection.total > 0">
+    <!-- <div v-else-if="elysiumSlidesUsageCollection && elysiumSlidesUsageCollection.total > 0">
         <router-link
             v-for="slide in elysiumSlidesUsageCollection"
             :key="slide.id"
@@ -81,7 +76,5 @@
         >
             <div>{{slide.translated.name}}</div>
         </router-link>
-    </div>
-    -->
-
+    </div> -->
 {% endblock %}

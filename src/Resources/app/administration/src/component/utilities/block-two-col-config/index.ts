@@ -1,27 +1,27 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
 // eslint-disable-next-line no-undef
-const { Component, Store } = Shopware
+const { Component, Store } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
 
     props: {
         settings: {
-            type: Object
-        }
+            type: Object,
+        },
     },
 
-    data () {
+    data() {
         return {
-            activeViewport: 'desktop'
-        }
+            activeViewport: 'desktop',
+        };
     },
 
     watch: {
-        'cmsPage.currentCmsDeviceView' (value) {
-            this.activeViewport = value.split('-')[0]
-        }
+        'cmsPage.currentCmsDeviceView'(value) {
+            this.activeViewport = value.split('-')[0];
+        },
     },
 
     computed: {
@@ -29,26 +29,26 @@ export default Component.wrapComponentConfig({
             return Store.get('cmsPage');
         },
 
-        viewports () {
-            return Object.keys(this.settings.viewports)
-        }
+        viewports() {
+            return Object.keys(this.settings.viewports);
+        },
     },
 
     methods: {
-        changeViewport (viewport) {
-            let viewportState = viewport
+        changeViewport(viewport) {
+            let viewportState = viewport;
 
-            this.activeViewport = viewport
+            this.activeViewport = viewport;
 
             if (viewportState === 'tablet') {
-                viewportState = 'tablet-landscape'
+                viewportState = 'tablet-landscape';
             }
 
-            this.cmsPage.setCurrentCmsDeviceView(viewportState)
-        }
+            this.cmsPage.setCurrentCmsDeviceView(viewportState);
+        },
     },
 
-    created () {
-        this.activeViewport = this.cmsPage.currentCmsDeviceView
-    }
-})
+    created() {
+        this.activeViewport = this.cmsPage.currentCmsDeviceView;
+    },
+});

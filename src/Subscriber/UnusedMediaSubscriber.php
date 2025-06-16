@@ -19,5 +19,7 @@ class UnusedMediaSubscriber implements EventSubscriberInterface
     /**
      * @todo Find unused Elysium Slide Media (CLI usage only)
      */
-    public function removeUsedMedia(UnusedMediaSearchEvent $event): void {}
+    public function removeUsedMedia(UnusedMediaSearchEvent $event): void
+    {
+    }
 }

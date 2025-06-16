@@ -4,11 +4,10 @@
     :class="['content-no-padding']"
     :style="{
         overflow: 'visible',
-    }">
-
+    }"
+>
     <template #headerRight>
-
-        <blur-device-switch 
+        <blur-device-switch
             layout="row"
             show-label="false"
             :style="{
@@ -19,10 +18,10 @@
                 '--icon-padding': '6px',
                 '--icon-bg-color': '#ffffff',
                 '--icon-hover-bg-color': 'var(--color-gray-100)',
-            }" 
+            }"
             :device="device"
             @change-device="device => elysiumUI.setDevice(device)"
-            />
+        />
     </template>
 
     <template #tabs>
@@ -32,9 +31,6 @@
             @new-item-active="activeTab = $event"
         />
     </template>
-
-    <blur-elysium-slides-form-general
-        v-if="activeTab === 'content'" />
-    <blur-elysium-slides-form-linking
-        v-if="activeTab === 'linking'" />
+    <blur-elysium-slides-form-general v-if="activeTab === 'content'"/>
+    <blur-elysium-slides-form-linking v-if="activeTab === 'linking'"/>
 </mt-card>

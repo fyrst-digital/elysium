@@ -7,17 +7,18 @@
 .blur-esldr__nav-bullet {
     aspect-ratio: var(--nav-bullet-aspect-ratio, 1 / 1);
     width: var(--nav-bullet-size, 16px);
-    background-color: var(--nav-bullet-color, rgba(0,0,0,0.25));
+    background-color: var(--nav-bullet-color, rgba(0, 0, 0, 0.25));
     padding: 0;
     margin: 0;
     border-radius: 10rem;
-    border: var(--nav-bullet-border-width, 0px) solid var(--nav-bullet-border-color, transparent);
+    border: var(--nav-bullet-border-width, 0px) solid
+        var(--nav-bullet-border-color, transparent);
     cursor: pointer;
-    transition: all .3s;
+    transition: all 0.3s;
 
     &.is-active,
     &:hover {
-        background-color: var(--nav-bullet-color-active, rgba(0,0,0,0.5));
+        background-color: var(--nav-bullet-color-active, rgba(0, 0, 0, 0.5));
     }
 
     .blur-esldr__nav.bullet-shape__bar & {

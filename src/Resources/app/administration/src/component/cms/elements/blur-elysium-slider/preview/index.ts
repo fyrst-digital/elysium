@@ -1,6 +1,6 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
-const { Component, Filter } = Shopware
+const { Component, Filter } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
@@ -9,5 +9,5 @@ export default Component.wrapComponentConfig({
         assetFilter() {
             return Filter.getByName('asset');
         },
-    }
-})
+    },
+});

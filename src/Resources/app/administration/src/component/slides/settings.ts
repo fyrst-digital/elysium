@@ -1,6 +1,12 @@
 import { SlideSettings, ViewportConfig } from '@elysium/types/slide';
 
-const { Utils } = Shopware
+/**
+ * @todo
+ * - add typed `TranslationSettings`
+ * - change current default to named export
+ */
+
+const { Utils } = Shopware;
 
 const viewportConfig: ViewportConfig = {
     slide: {
@@ -8,7 +14,7 @@ const viewportConfig: ViewportConfig = {
         paddingY: null,
         borderRadius: null,
         alignItems: null,
-        justifyContent: null
+        justifyContent: null,
     },
     container: {
         paddingX: null,
@@ -19,44 +25,49 @@ const viewportConfig: ViewportConfig = {
         justifyContent: null,
         alignItems: null,
         columnWrap: true,
-        order: null
+        order: null,
     },
     content: {
         paddingX: null,
         paddingY: null,
         maxWidth: null,
-        textAlign: null
+        textAlign: null,
     },
     image: {
         justifyContent: null,
         maxWidth: null,
-        imageFullWidth: false
+        imageFullWidth: false,
     },
     coverMedia: {
         objectPosX: null,
         objectPosY: null,
-        objectFit: null        
+        objectFit: null,
     },
     headline: {
-        fontSize: 20
+        fontSize: 20,
     },
     description: {
-        fontSize: 14
-    }
-}
+        fontSize: 14,
+    },
+};
 
-function defineViewportConfig(overrides?: Partial<ViewportConfig>): ViewportConfig {
-    return Utils.object.deepMergeObject(structuredClone(viewportConfig), overrides)
+function defineViewportConfig(
+    overrides?: Partial<ViewportConfig>
+): ViewportConfig {
+    return Utils.object.deepMergeObject(
+        structuredClone(viewportConfig),
+        overrides
+    );
 }
 
 export default <SlideSettings>{
     slide: {
         headline: {
             color: '',
-            element: 'div'
+            element: 'div',
         },
         description: {
-            color: null
+            color: null,
         },
         linking: {
             type: 'custom',
@@ -64,22 +75,22 @@ export default <SlideSettings>{
             buttonSize: 'md',
             openExternal: false,
             overlay: false,
-            showProductFocusImage: true
+            showProductFocusImage: true,
         },
         bgColor: '',
         bgGradient: {
             startColor: '',
             endColor: '',
             gradientType: 'linear-gradient',
-            gradientDeg: 45
+            gradientDeg: 45,
         },
-        cssClass: null
+        cssClass: null,
     },
     container: {
         bgColor: '',
         bgEffect: {
-            blur: '8px'
-        }
+            blur: '8px',
+        },
     },
     viewports: {
         mobile: defineViewportConfig(),
@@ -88,24 +99,24 @@ export default <SlideSettings>{
                 columnWrap: false,
             },
             headline: {
-                fontSize: 32
+                fontSize: 32,
             },
             description: {
-                fontSize: 16
-            }
+                fontSize: 16,
+            },
         }),
         desktop: defineViewportConfig({
             container: {
                 columnWrap: false,
             },
             headline: {
-                fontSize: 40
+                fontSize: 40,
             },
             description: {
-                fontSize: 20
-            }
-        })
+                fontSize: 20,
+            },
+        }),
     },
     slideTemplate: 'default',
-    customTemplateFile: null
-}
+    customTemplateFile: null,
+};

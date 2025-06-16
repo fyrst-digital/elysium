@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events;
 
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\Framework\Event\NestedEvent;
 use Shopware\Core\Framework\Event\ShopwareSalesChannelEvent;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 
 class ElysiumSlidesResultEvent extends NestedEvent implements ShopwareSalesChannelEvent
 {

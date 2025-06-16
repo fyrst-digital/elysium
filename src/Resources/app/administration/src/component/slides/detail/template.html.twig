@@ -1,5 +1,4 @@
 <sw-page>
-
     <template #smart-bar-header>
         <h2>
             {{ metaTitle }}
@@ -7,7 +6,6 @@
     </template>
 
     <template #language-switch>
-
         <sw-language-switch
             :save-changes-function="saveOnLanguageChange"
             :abort-change-function="abortOnLanguageChange"
@@ -17,7 +15,6 @@
     </template>
 
     <template #smart-bar-actions>
-
         <mt-button
             :disabled="(newSlide !== true && !hasChanges)"
             v-tooltip="{
@@ -25,13 +22,11 @@
             }"
             variant="secondary"
             size="default"
-            @click="cancelAction">
+            @click="cancelAction"
+        >
             {{ $tc('blurElysium.action.cancel') }}
         </mt-button>
-
-        <sw-button-group
-            :split-button="true">
-
+        <sw-button-group :split-button="true">
             <sw-button-process
                 :is-loading="isLoading"
                 :disabled="!(permissionCreate || permissionEdit)"
@@ -40,10 +35,7 @@
             >
                 {{ $tc('sw-customer.detail.buttonSave') }}
             </sw-button-process>
-
-            <sw-context-button
-                v-if="newSlide !== true">
-
+            <sw-context-button v-if="newSlide !== true">
                 <template #button>
                     <sw-button
                         square
@@ -56,77 +48,71 @@
                         />
                     </sw-button>
                 </template>
-
                 <sw-context-menu-item
                     :disabled="!permissionCreate"
-                    @click="onCopySlide">
+                    @click="onCopySlide"
+                >
                     {{ $tc('blurElysiumSlides.actions.copySlide') }}
                 </sw-context-menu-item>
-
                 <sw-context-menu-item
                     variant="danger"
                     :disabled="!permissionDelete"
-                    @click="permissionDelete === true ? showDeleteModal = true : null">
+                    @click="permissionDelete === true ? showDeleteModal = true : null"
+                >
                     {{ $tc('blurElysiumSlides.actions.deleteSlide') }}
                 </sw-context-menu-item>
-
             </sw-context-button>
-
         </sw-button-group>
     </template>
 
     <template #content>
-
-        <div v-if="slide"
+        <div
+            v-if="slide"
             :style="viewStyle({ 
                 mobile: { 'padding': '16px' } 
-            })">
-
-            <sw-tabs
-                position-identifier="positionIdentifiers.placeholder">
-
+            })"
+        >
+            <sw-tabs position-identifier="positionIdentifiers.placeholder">
                 <sw-tabs-item
                     :route="contentRoute"
                     :title="$tc('blurElysiumSlides.settings.baseLabel')"
-                    :hasError="tabContentHasError">
+                    :hasError="tabContentHasError"
+                >
                     {{ $tc('blurElysiumSlides.settings.baseLabel') }}
                 </sw-tabs-item>
-
                 <sw-tabs-item
                     :route="mediaRoute"
-                    :title="$tc('blurElysiumSlides.settings.mediaLabel')">
+                    :title="$tc('blurElysiumSlides.settings.mediaLabel')"
+                >
                     {{ $tc('blurElysiumSlides.settings.mediaLabel') }}
                 </sw-tabs-item>
-
                 <sw-tabs-item
                     :route="displayRoute"
-                    :title="$tc('blurElysium.general.appearance')">
+                    :title="$tc('blurElysium.general.appearance')"
+                >
                     {{ $tc('blurElysium.general.appearance') }}
                 </sw-tabs-item>
-
                 <sw-tabs-item
                     :route="advancedRoute"
                     :title="$tc('blurElysiumSlides.settings.advancedLabel')"
                     :hasWarning="tabAdvancedHasWarning"
-                    :warningTooltip="tabAdvancedWarningMessage">
+                    :warningTooltip="tabAdvancedWarningMessage"
+                >
                     {{ $tc('blurElysiumSlides.settings.advancedLabel') }}
                 </sw-tabs-item>
-
                 <template #content>
-                    <router-view />
+                    <router-view/>
                 </template>
-            </sw-tabs>        
+            </sw-tabs>
         </div>
-
-        <sw-confirm-modal 
-            v-if="showDeleteModal === true" 
+        <sw-confirm-modal
+            v-if="showDeleteModal === true"
             type="delete"
             :title="$tc('blurElysiumSlides.actions.deleteSlide')"
             :text="$tc('blurElysiumSlides.messages.slideDeleteConfirm')"
             @confirm="deleteSlide"
             @cancel="showDeleteModal = false"
-            @close="showDeleteModal = false" />
-
+            @close="showDeleteModal = false"
+        />
     </template>
-
 </sw-page>

@@ -1,28 +1,33 @@
 import { BannerSettings, ViewportSettings } from '@elysium/types/banner';
 
-const { Utils } = Shopware
+const { Utils } = Shopware;
 
 const viewportSettings: ViewportSettings = {
     aspectRatio: {
         width: 1,
         height: 1,
-        auto: false
+        auto: false,
     },
-    maxHeight: null
-}
+    maxHeight: null,
+};
 
-function defineViewportConfig(overrides?: Partial<ViewportSettings>): ViewportSettings {
-    return Utils.object.deepMergeObject(structuredClone(viewportSettings), overrides)
+function defineViewportConfig(
+    overrides?: Partial<ViewportSettings>
+): ViewportSettings {
+    return Utils.object.deepMergeObject(
+        structuredClone(viewportSettings),
+        overrides
+    );
 }
 
 export default <BannerSettings>{
-    elysiumSlide: { 
-        source: 'static', 
-        value: ''
-    },
-    lazyLoading: { 
+    elysiumSlide: {
         source: 'static',
-        value: true
+        value: '',
+    },
+    lazyLoading: {
+        source: 'static',
+        value: true,
     },
     viewports: {
         source: 'static',
@@ -31,26 +36,26 @@ export default <BannerSettings>{
                 aspectRatio: {
                     width: 1,
                     height: 1,
-                    auto: false
+                    auto: false,
                 },
-                maxHeight: null
+                maxHeight: null,
             }),
             tablet: defineViewportConfig({
                 aspectRatio: {
                     width: 4,
                     height: 3,
-                    auto: false
+                    auto: false,
                 },
-                maxHeight: null
+                maxHeight: null,
             }),
             desktop: defineViewportConfig({
                 aspectRatio: {
                     width: 16,
                     height: 9,
-                    auto: false
+                    auto: false,
                 },
-                maxHeight: null
-            })
-        }
-    }
-}
+                maxHeight: null,
+            }),
+        },
+    },
+};

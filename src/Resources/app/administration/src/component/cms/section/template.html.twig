@@ -1,26 +1,27 @@
-<div class="blur-elysium-cms-section-wrapper"
+<div
+    class="blur-elysium-cms-section-wrapper"
     @dragover.prevent
     ref="elysiumSectionWrapper"
-    v-droppable="{ dragGroup: 'cms-stage' }">
-
-    <blur-elysium-cms-section-add-block 
+    v-droppable="{ dragGroup: 'cms-stage' }"
+>
+    <blur-elysium-cms-section-add-block
         v-if="section.blocks.length === 0"
         :key="0"
         @click="onAddBlock"
-        v-droppable="{ dragGroup: 'cms-stage', data: getDropData(0), onDrop: block => dropBlock(block, 0) }" />
-
-    <div 
+        v-droppable="{ dragGroup: 'cms-stage', data: getDropData(0), onDrop: block => dropBlock(block, 0) }"
+    />
+    <div
         class="blur-elysium-section-grid"
         :style="gridStyle"
         v-if="section.blocks.length > 0"
         ref="elysiumSectionGrid"
-        @dragover.prevent 
-        @drop="onGridDrop">
-
+        @dragover.prevent
+        @drop="onGridDrop"
+    >
         <template
             v-for="(block, index) in section.blocks"
-            :key="block.id">
-            
+            :key="block.id"
+        >
             <sw-cms-block
                 ref="elysiumStageBlock"
                 :class="['sw-cms-stage-block', 'blur-elysium-section-block']"
@@ -30,24 +31,24 @@
                 :has-errors="hasBlockErrors(block)"
                 :style="setBlockStyles(block)"
                 v-droppable="{ dragGroup: 'cms-stage', data: getDropData(index + 1), onDrop: block => dropBlock(block, index + 1) }"
-                @block-overlay-click="onBlockSelection(block)">
-            
+                @block-overlay-click="onBlockSelection(block)"
+            >
                 <div class="blur-elysium-section-block-dropper">
-                    <mt-icon name="regular-plus-circle" />
+                    <mt-icon name="regular-plus-circle"/>
                     Zum anfügen hier platzieren
                 </div>
-
-                <div class="blur-elysium-section-block-resizer" 
-                    draggable="true" 
+                <div
+                    class="blur-elysium-section-block-resizer"
+                    draggable="true"
                     @click="test"
                     @dragstart="$event => startBlockResizeX($event, block, index)"
                     @dragend="endBlockResizeX"
-                    @drag="dragBlockResizingX" />
-
+                    @drag="dragBlockResizingX"
+                />
                 <component
                     :is="`sw-cms-block-${block.type}`"
-                    :block="block">
-
+                    :block="block"
+                >
                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                     <template
                         v-for="el in block.slots"
@@ -59,12 +60,8 @@
                             :active="cmsPage.selectedBlock !== null && cmsPage.selectedBlock.id === block.id"
                         />
                     </template>
-
                 </component>
-
             </sw-cms-block>
-
         </template>
-
     </div>
 </div>

@@ -1,38 +1,30 @@
 <mt-card
     position-identifier="blurElysium.slide.form.customFields"
-    :title="$tc('blurElysiumSlides.forms.customFields.label')" 
-    :class="['content-no-padding']">
-
-    <blur-section 
-        padding>
-
-        <blur-column
-            v-if="customFieldSet && slide._isNew !== true">
-
+    :title="$tc('blurElysiumSlides.forms.customFields.label')"
+    :class="['content-no-padding']"
+>
+    <blur-section padding>
+        <blur-column v-if="customFieldSet && slide._isNew !== true">
             <sw-custom-field-set-renderer
                 v-if="hasCustomFields"
                 :entity="slide"
-                :sets="customFieldSet" />
-
-            <mt-banner 
-                v-else 
+                :sets="customFieldSet"
+            />
+            <mt-banner
+                v-else
                 variant="attention"
-                :closable="false">
+                :closable="false"
+            >
                 {{ $tc('blurElysiumSlides.forms.customFields.emptyFieldSet') }}
             </mt-banner>
-
         </blur-column>
-
-        <blur-column
-            v-else>
-
-            <mt-banner 
-                variant="info" 
-                :closable="false">
+        <blur-column v-else>
+            <mt-banner
+                variant="info"
+                :closable="false"
+            >
                 {{ $tc('blurElysiumSlides.forms.customFields.newSlide') }}
             </mt-banner>
-
         </blur-column>
-
     </blur-section>
 </mt-card>

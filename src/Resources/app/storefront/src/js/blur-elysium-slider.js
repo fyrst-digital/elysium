@@ -1,9 +1,9 @@
-import deepmerge from 'deepmerge'
-import Plugin from 'src/plugin-system/plugin.class'
-import Splide from './../../node_modules/@splidejs/splide/dist/js/splide.min.js'
+import deepmerge from 'deepmerge';
+import Plugin from 'src/plugin-system/plugin.class';
+import Splide from './../../node_modules/@splidejs/splide/dist/js/splide.min.js';
 
 export default class BlurElysiumSlider extends Plugin {
-    slider
+    slider;
 
     /**
      * default slider options
@@ -14,31 +14,31 @@ export default class BlurElysiumSlider extends Plugin {
         splideSelector: null,
         splideOptions: {
             classes: {
-                page: 'splide__pagination__page blur-esldr__nav-bullet'
+                page: 'splide__pagination__page blur-esldr__nav-bullet',
             },
             pagination: true,
-            omitEnd: true
-        }
-    }
+            omitEnd: true,
+        },
+    };
 
-    init () {
-        let splideSelector = this.el
-        let inlineOptions = null
+    init() {
+        let splideSelector = this.el;
+        let inlineOptions = null;
 
         if (this.options.splideSelector !== null) {
-            splideSelector = this.el.querySelector(this.options.splideSelector)
+            splideSelector = this.el.querySelector(this.options.splideSelector);
         }
 
         if (typeof this.el.dataset.blurElysiumSlider === 'string') {
-            inlineOptions = JSON.parse(this.el.dataset.blurElysiumSlider)
-            this.options = deepmerge(this.options, inlineOptions)
+            inlineOptions = JSON.parse(this.el.dataset.blurElysiumSlider);
+            this.options = deepmerge(this.options, inlineOptions);
         }
 
         // At this point, remove is-loading class
-        splideSelector.classList.remove('is-loading')
+        splideSelector.classList.remove('is-loading');
         // init slider with class property without mounting it
-        this.slider = new Splide(splideSelector, this.options.splideOptions)
+        this.slider = new Splide(splideSelector, this.options.splideOptions);
         // mount the slider
-        this.slider.mount()
+        this.slider.mount();
     }
 }

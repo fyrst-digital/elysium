@@ -1,6 +1,6 @@
-import { module } from '@elysium/meta'
+import { module } from '@elysium/meta';
 
-const { Module, Service } = Shopware
+const { Module, Service } = Shopware;
 
 Module.register('blur-elysium-slides', {
     type: 'plugin',
@@ -30,8 +30,8 @@ Module.register('blur-elysium-slides', {
             path: 'overview',
             component: 'blur-elysium-slides-overview',
             meta: {
-                privilege: 'blur_elysium_slides.viewer'
-            }
+                privilege: 'blur_elysium_slides.viewer',
+            },
         },
 
         /** Create slide route */
@@ -43,41 +43,41 @@ Module.register('blur-elysium-slides', {
             },
             meta: {
                 parentPath: 'blur.elysium.slides.overview',
-                privilege: 'blur_elysium_slides.creator'
+                privilege: 'blur_elysium_slides.creator',
             },
             redirect: {
-                name: 'blur.elysium.slides.create.content'
+                name: 'blur.elysium.slides.create.content',
             },
             children: {
                 content: {
                     component: 'blur-elysium-slides-section-base',
                     path: 'content',
                     meta: {
-                        parentPath: 'blur.elysium.slides.overview'
-                    }
+                        parentPath: 'blur.elysium.slides.overview',
+                    },
                 },
                 media: {
                     component: 'blur-elysium-slides-section-media',
                     path: 'media',
                     meta: {
-                        parentPath: 'blur.elysium.slides.overview'
-                    }
+                        parentPath: 'blur.elysium.slides.overview',
+                    },
                 },
                 display: {
                     component: 'blur-elysium-slides-section-display',
                     path: 'display',
                     meta: {
-                        parentPath: 'blur.elysium.slides.overview'
-                    }
+                        parentPath: 'blur.elysium.slides.overview',
+                    },
                 },
                 advanced: {
                     component: 'blur-elysium-slides-section-advanced',
                     path: 'advanced',
                     meta: {
-                        parentPath: 'blur.elysium.slides.overview'
-                    }
+                        parentPath: 'blur.elysium.slides.overview',
+                    },
                 },
-            }
+            },
         },
 
         /** Detail slide route */
@@ -85,49 +85,49 @@ Module.register('blur-elysium-slides', {
             path: 'detail/:id',
             component: 'blur-elysium-slides-detail',
             props: {
-                default (route) {
+                default(route) {
                     return {
-                        slideId: route.params.id
-                    }
-                }
+                        slideId: route.params.id,
+                    };
+                },
             },
             meta: {
                 parentPath: 'blur.elysium.slides.overview',
-                privilege: 'blur_elysium_slides.viewer'
+                privilege: 'blur_elysium_slides.viewer',
             },
             redirect: {
-                name: 'blur.elysium.slides.detail.content'
+                name: 'blur.elysium.slides.detail.content',
             },
             children: {
                 content: {
                     component: 'blur-elysium-slides-section-base',
                     path: 'content',
                     meta: {
-                        parentPath: 'blur.elysium.slides.overview'
-                    }
+                        parentPath: 'blur.elysium.slides.overview',
+                    },
                 },
                 media: {
                     component: 'blur-elysium-slides-section-media',
                     path: 'media',
                     meta: {
-                        parentPath: 'blur.elysium.slides.overview'
-                    }
+                        parentPath: 'blur.elysium.slides.overview',
+                    },
                 },
                 display: {
                     component: 'blur-elysium-slides-section-display',
                     path: 'display',
                     meta: {
-                        parentPath: 'blur.elysium.slides.overview'
-                    }
+                        parentPath: 'blur.elysium.slides.overview',
+                    },
                 },
                 advanced: {
                     component: 'blur-elysium-slides-section-advanced',
                     path: 'advanced',
                     meta: {
-                        parentPath: 'blur.elysium.slides.overview'
-                    }
+                        parentPath: 'blur.elysium.slides.overview',
+                    },
                 },
-            }
+            },
         },
 
         settings: {
@@ -136,9 +136,9 @@ Module.register('blur-elysium-slides', {
             meta: {
                 icon: 'regular-cog',
                 parentPath: 'sw.settings.index.plugins',
-                privilege: 'blur_elysium_slides.viewer'
-            }
-        }
+                privilege: 'blur_elysium_slides.viewer',
+            },
+        },
     },
 
     /** Module navigation in shopware menu */
@@ -149,57 +149,48 @@ Module.register('blur-elysium-slides', {
             path: 'blur.elysium.slides.overview',
             parent: 'sw-content',
             position: 100,
-            privilege: 'blur_elysium_slides.viewer'
-        }
+            privilege: 'blur_elysium_slides.viewer',
+        },
     ],
 
     /** Module navigation in shopware settings */
-    settingsItem: [{
-        group: 'plugins',
-        to: 'blur.elysium.slides.settings',
-        iconComponent: 'blur-elysium-icon',
-        label: 'blurElysium.settingsLabel',
-        privilege: 'blur_elysium_slides.viewer'
-    }]
+    settingsItem: [
+        {
+            group: 'plugins',
+            to: 'blur.elysium.slides.settings',
+            iconComponent: 'blur-elysium-icon',
+            label: 'blurElysium.settingsLabel',
+            privilege: 'blur_elysium_slides.viewer',
+        },
+    ],
 });
 
-Service('privileges')
-    .addPrivilegeMappingEntry({
-        category: 'permissions',
-        parent: 'content',
-        key: 'blur_elysium_slides',
-        roles: {
-            viewer: {
-                privileges: [
-                    'blur_elysium_slides:read'
-                ],
-                dependencies: []
-            },
-            editor: {
-                privileges: [
-                    'blur_elysium_slides:update'
-                ],
-                dependencies: [
-                    'blur_elysium_slides.viewer'
-                ]
-            },
-            creator: {
-                privileges: [
-                    'blur_elysium_slides:create'
-                ],
-                dependencies: [
-                    'blur_elysium_slides.viewer',
-                    'blur_elysium_slides.editor'
-                ]
-            },
-            deleter: {
-                privileges: [
-                    'blur_elysium_slides:delete'
-                ],
-                dependencies: [
-                    'blur_elysium_slides.viewer',
-                    'blur_elysium_slides.editor'
-                ]
-            }
-        }
-    });
+Service('privileges').addPrivilegeMappingEntry({
+    category: 'permissions',
+    parent: 'content',
+    key: 'blur_elysium_slides',
+    roles: {
+        viewer: {
+            privileges: ['blur_elysium_slides:read'],
+            dependencies: [],
+        },
+        editor: {
+            privileges: ['blur_elysium_slides:update'],
+            dependencies: ['blur_elysium_slides.viewer'],
+        },
+        creator: {
+            privileges: ['blur_elysium_slides:create'],
+            dependencies: [
+                'blur_elysium_slides.viewer',
+                'blur_elysium_slides.editor',
+            ],
+        },
+        deleter: {
+            privileges: ['blur_elysium_slides:delete'],
+            dependencies: [
+                'blur_elysium_slides.viewer',
+                'blur_elysium_slides.editor',
+            ],
+        },
+    },
+});

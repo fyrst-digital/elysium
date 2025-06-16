@@ -1,6 +1,6 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
-const { Component } = Shopware 
+const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
@@ -8,11 +8,11 @@ export default Component.wrapComponentConfig({
     props: {
         color: {
             type: String,
-            default: 'currentColor'
+            default: 'currentColor',
         },
         size: {
             type: Number,
-            default: 24
-        }
+            default: 24,
+        },
     },
-})
+});

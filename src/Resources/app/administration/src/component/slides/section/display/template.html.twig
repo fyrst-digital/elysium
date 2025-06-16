@@ -2,11 +2,10 @@
     position-identifier="blurElysium.slide.section.display"
     :title="cardTitle"
     :subtitle="cardDescription"
-    :class="['content-no-padding']">
-
+    :class="['content-no-padding']"
+>
     <template #headerRight>
-
-        <blur-device-switch 
+        <blur-device-switch
             layout="row"
             show-label="false"
             :style="{
@@ -17,10 +16,10 @@
                 '--icon-padding': '6px',
                 '--icon-bg-color': '#ffffff',
                 '--icon-hover-bg-color': 'var(--color-gray-100)',
-            }" 
+            }"
             :device="device"
             @change-device="device => elysiumUI.setDevice(device)"
-            />
+        />
     </template>
 
     <template #tabs>
@@ -30,11 +29,7 @@
             @new-item-active="activeTab = $event"
         />
     </template>
-
-    <blur-elysium-slides-form-slide
-        v-if="activeTab === 'slide'" />
-    <blur-elysium-slides-form-container
-        v-if="activeTab === 'container'" />
-    <blur-elysium-slides-form-content
-        v-if="activeTab === 'content'" />
+    <blur-elysium-slides-form-slide v-if="activeTab === 'slide'"/>
+    <blur-elysium-slides-form-container v-if="activeTab === 'container'"/>
+    <blur-elysium-slides-form-content v-if="activeTab === 'content'"/>
 </mt-card>

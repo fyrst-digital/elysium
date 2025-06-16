@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Struct;
 
-use Shopware\Core\Framework\Struct\Struct;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Shopware\Core\Framework\Struct\Struct;
 
 class ElysiumBannerStruct extends Struct
 {
@@ -12,18 +12,11 @@ class ElysiumBannerStruct extends Struct
      */
     protected $elysiumSlide;
 
-    /**
-     * @return ElysiumSlidesEntity|null
-     */
     public function getElysiumSlide(): ?ElysiumSlidesEntity
     {
         return $this->elysiumSlide;
     }
 
-    /**
-     * @param ElysiumSlidesEntity|null $elysiumSlide
-     * @return void
-     */
     public function setElysiumSlide(?ElysiumSlidesEntity $elysiumSlide): void
     {
         $this->elysiumSlide = $elysiumSlide;

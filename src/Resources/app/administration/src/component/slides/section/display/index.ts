@@ -1,60 +1,69 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
-const { Component, Mixin, Store } = Shopware 
+const { Component, Mixin, Store } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
 
-    mixins: [
-        Mixin.getByName('blur-device-utilities')
-    ],
+    mixins: [Mixin.getByName('blur-device-utilities')],
 
-    data () {
+    data() {
         return {
-            activeTab: 'slide'
-        }
+            activeTab: 'slide',
+        };
     },
 
     computed: {
-
-        elysiumUI () {
-            return Store.get('elysiumUI')
+        elysiumUI() {
+            return Store.get('elysiumUI');
         },
 
-        device () {
-            return this.elysiumUI.device
+        device() {
+            return this.elysiumUI.device;
         },
 
-        tabs () {
+        tabs() {
             return [
                 {
-                    label: this.$tc('blurElysiumSlides.forms.displaySlide.label'),
-                    description: this.$tc('blurElysiumSlides.forms.displaySlide.description'),
+                    label: this.$tc(
+                        'blurElysiumSlides.forms.displaySlide.label'
+                    ),
+                    description: this.$tc(
+                        'blurElysiumSlides.forms.displaySlide.description'
+                    ),
                     name: 'slide',
                 },
                 {
-                    label: this.$tc('blurElysiumSlides.forms.displayContainer.label'),
-                    description: this.$tc('blurElysiumSlides.forms.displayContainer.description'),
+                    label: this.$tc(
+                        'blurElysiumSlides.forms.displayContainer.label'
+                    ),
+                    description: this.$tc(
+                        'blurElysiumSlides.forms.displayContainer.description'
+                    ),
                     name: 'container',
                 },
                 {
-                    label: this.$tc('blurElysiumSlides.forms.displayContent.label'),
-                    description: this.$tc('blurElysiumSlides.forms.displayContent.description'),
+                    label: this.$tc(
+                        'blurElysiumSlides.forms.displayContent.label'
+                    ),
+                    description: this.$tc(
+                        'blurElysiumSlides.forms.displayContent.description'
+                    ),
                     name: 'content',
                 },
-            ]
+            ];
         },
 
-        activeTabMeta () {
-            return this.tabs.find(tab => tab.name === this.activeTab)
+        activeTabMeta() {
+            return this.tabs.find((tab) => tab.name === this.activeTab);
         },
 
-        cardTitle () {
-            return `${this.$tc('blurElysium.general.appearance')}: ${this.activeTabMeta.label}`
+        cardTitle() {
+            return `${this.$tc('blurElysium.general.appearance')}: ${this.activeTabMeta.label}`;
         },
 
-        cardDescription () {
-            return this.activeTabMeta.description
-        }
-    }
-})
+        cardDescription() {
+            return this.activeTabMeta.description;
+        },
+    },
+});

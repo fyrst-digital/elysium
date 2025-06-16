@@ -1,29 +1,27 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
-const { Component } = Shopware
+const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
 
-    inject: [
-        'acl'
-    ],
+    inject: ['acl'],
 
     computed: {
-        parentRoute () {
-            return this.$route.meta.parentPath ?? null
+        parentRoute() {
+            return this.$route.meta.parentPath ?? null;
         },
 
         permissionEdit() {
-            return this.acl.can('blur_elysium_slides.editor')
-        }
+            return this.acl.can('blur_elysium_slides.editor');
+        },
     },
 
     methods: {
-        async onSave () {
+        async onSave() {
             if (this.permissionEdit) {
-                this.$refs.systemConfig.saveAll()
+                this.$refs.systemConfig.saveAll();
             }
-        }
+        },
     },
-})
+});

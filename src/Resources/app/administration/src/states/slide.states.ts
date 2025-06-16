@@ -12,7 +12,7 @@ export default {
 
     state: (): SlideState => ({
         slide: null,
-        customFieldSet: null
+        customFieldSet: null,
     }),
 
     getters: {

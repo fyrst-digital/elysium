@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Subscriber;
 
-use Shopware\Core\Framework\Adapter\Cache\CacheInvalidator;
-use Doctrine\DBAL\Connection;
-use Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
+use Doctrine\DBAL\Connection;
+use Shopware\Core\Framework\Adapter\Cache\CacheInvalidator;
+use Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 
 class CacheInvalidationSubscriber
 {
-
     public function __construct(
         private readonly CacheInvalidator $cacheInvalidator,
         private readonly Connection $connection,

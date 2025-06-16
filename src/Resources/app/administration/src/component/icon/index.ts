@@ -1,14 +1,11 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
-const { Component } = Shopware
+const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
-
     template,
 
-    inject: [
-        'feature',
-    ],
+    inject: ['feature'],
 
     props: {
         name: {
@@ -79,7 +76,7 @@ export default Component.wrapComponentConfig({
     },
 
     beforeMount() {
-        this.iconSvgData = `<svg id="meteor-icon-kit__${this.name}"></svg>`
+        this.iconSvgData = `<svg id="meteor-icon-kit__${this.name}"></svg>`;
     },
 
     watch: {
@@ -97,15 +94,22 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        async loadIconSvgData (variant: string, iconName: string, iconFullName: string) {
-            const iconUrl = new URL(`../../icons/${variant}/${iconName}.svg`, import.meta.url)
-            const response = await fetch(iconUrl.toString())
+        async loadIconSvgData(
+            variant: string,
+            iconName: string,
+            iconFullName: string
+        ) {
+            const iconUrl = new URL(
+                `../../icons/${variant}/${iconName}.svg`,
+                import.meta.url
+            );
+            const response = await fetch(iconUrl.toString());
 
             if (response.ok) {
-                this.iconSvgData = await response.text()
+                this.iconSvgData = await response.text();
             } else {
-                console.error(`Icon ${iconFullName} not found`)
+                console.error(`Icon ${iconFullName} not found`);
             }
-        }
-    }
+        },
+    },
 });

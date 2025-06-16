@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation;
 
-use Shopware\Core\Framework\DataAbstractionLayer\EntityTranslationDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\AllowHtml;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\CustomFields;
-use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityTranslationDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\CustomFields;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\AllowHtml;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
+use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class ElysiumSlidesTranslationDefinition extends EntityTranslationDefinition
 {
@@ -36,7 +36,7 @@ class ElysiumSlidesTranslationDefinition extends EntityTranslationDefinition
             (new LongTextField('description', 'description'))->addFlags(new ApiAware(), new AllowHtml()),
             (new StringField('button_label', 'buttonLabel'))->addFlags(new ApiAware()),
             (new LongTextField('url', 'url'))->addFlags(new ApiAware()),
-            (new CustomFields())->addFlags(new ApiAware())
+            (new CustomFields())->addFlags(new ApiAware()),
         ]);
     }
 }

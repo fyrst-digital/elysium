@@ -1,23 +1,23 @@
 {% block sw_search_bar_item_cms_page %}
-    {% parent %}
+    {% parent() %}
 
-    <router-link 
+    <router-link
         v-else-if="type === 'blur_elysium_slides'"
         v-bind:to="{ name: 'blur.elysium.slides.detail', params: { id: item.id } }"
         ref="routerLink"
-        class="sw-search-bar-item__link">
-
-            <span class="sw-search-bar-item__label">
-            
-                <sw-highlight-text 
-                    v-bind:searchTerm="searchTerm"
-                    v-bind:text="item.name">
+        class="sw-search-bar-item__link"
+    >
+        <span class="sw-search-bar-item__label">
+            <sw-highlight-text
+                v-bind:searchTerm="searchTerm"
+                v-bind:text="item.name"
+            >
                 </sw-highlight-text>
-
-                <sw-highlight-text 
-                    v-bind:searchTerm="searchTerm"
-                    v-bind:text="item.title">
+            <sw-highlight-text
+                v-bind:searchTerm="searchTerm"
+                v-bind:text="item.title"
+            >
                 </sw-highlight-text>
-            </span>
+        </span>
     </router-link>
 {% endblock %}

@@ -1,60 +1,57 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
-const { Component, Mixin } = Shopware
+const { Component, Mixin } = Shopware;
 
 interface StyleViewports {
-    mobile: Partial<CSSStyleDeclaration>
-    tablet?: Partial<CSSStyleDeclaration>
-    desktop?: Partial<CSSStyleDeclaration>
+    mobile: Partial<CSSStyleDeclaration>;
+    tablet?: Partial<CSSStyleDeclaration>;
+    desktop?: Partial<CSSStyleDeclaration>;
 }
 
 export default Component.wrapComponentConfig({
     template,
 
-    mixins: [
-        Mixin.getByName('blur-style-utilities')
-    ],
+    mixins: [Mixin.getByName('blur-style-utilities')],
 
     props: {
-
         padding: {
             type: Boolean,
-            default: false
+            default: false,
         },
 
-        cols: {  
+        cols: {
             type: Number,
-            default: 12
+            default: 12,
         },
 
-        colsTablet: {  
+        colsTablet: {
             type: Number,
         },
 
-        colsDesktop: {  
+        colsDesktop: {
             type: Number,
         },
     },
 
     computed: {
-        style () {
+        style() {
             const styles: StyleViewports = {
-                mobile: { gridColumnEnd: `span ${this.cols}`},
-            }
+                mobile: { gridColumnEnd: `span ${this.cols}` },
+            };
 
             if (this.padding) {
-                styles.mobile.padding = '24px'
+                styles.mobile.padding = '24px';
             }
 
             if (this.colsTablet) {
-                styles.tablet = { gridColumnEnd: `span ${this.colsTablet}`}
+                styles.tablet = { gridColumnEnd: `span ${this.colsTablet}` };
             }
 
             if (this.colsDesktop) {
-                styles.desktop = { gridColumnEnd: `span ${this.colsDesktop}`}
+                styles.desktop = { gridColumnEnd: `span ${this.colsDesktop}` };
             }
 
-            return this.viewStyle(styles)
-        }
-    }
-})
+            return this.viewStyle(styles);
+        },
+    },
+});

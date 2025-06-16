@@ -1,39 +1,27 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "downlevelIteration": true,
-    "module": "es2022",
-    "types": [
-      "@types/webpack-env"
-    ],
-    "rootDirs": [
-      "./",
-      "../../../../../../../vendor/shopware/administration/Resources/app/administration/src"
-    ],
-    "baseUrl": "./",
-    "paths": {
-      "@elysium/*": [
-        "./src/*"
-      ],
-      "shopware/*": [
-        "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/*"
-      ],
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "downlevelIteration": true,
+        "module": "es2022",
+        "types": ["@types/webpack-env"],
+        "rootDirs": [
+            "./",
+            "../../../../../../../vendor/shopware/administration/Resources/app/administration/src"
+        ],
+        "baseUrl": "./",
+        "paths": {
+            "@elysium/*": ["./src/*"],
+            "shopware/*": [
+                "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/*"
+            ]
+        },
+        "lib": ["ES2020", "ES2021", "ES2022", "ES2023", "DOM"]
     },
-    "lib": [
-      "ES2020",
-      "ES2021",
-      "ES2022",
-      "ES2023",
-      "DOM",
+    "include": [
+        "./src/**/*",
+        "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/**/*"
     ],
-  },
-  "include": [
-    "./src/**/*",
-    "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/**/*",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "exclude": ["node_modules"]
 }

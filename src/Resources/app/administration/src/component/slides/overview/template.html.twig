@@ -1,25 +1,22 @@
 <sw-page>
-
     <template #search-bar>
-
         <sw-search-bar
             initial-search-type="blur_elysium_slides"
             :initial-search="searchTerm"
-            @search="onSearch"/>
-
+            @search="onSearch"
+        />
     </template>
 
     <template #smart-bar-header>
-
         <div :style="styles.moduleHeading">
-            <blur-elysium-slides-icon 
-                :color="module.color" />
-
+            <blur-elysium-slides-icon :color="module.color"/>
             <h2>
                 {{ $t('blurElysiumSlides.slideOverviewLabel') }}
-                <span :style="{
+                <span
+                    :style="{
                         fontWeight: 'normal'
-                    }">
+                    }"
+                >
                     ({{ total }})
                 </span>
             </h2>
@@ -27,25 +24,21 @@
     </template>
 
     <template #language-switch>
-
-        <sw-language-switch 
-            @on-change="onChangeLanguage" />
-
+        <sw-language-switch @on-change="onChangeLanguage"/>
     </template>
 
     <template #smart-bar-actions>
-
         <mt-button
             variant="primary"
             size="default"
             :disabled="!permissionCreate"
-            @click="$router.push({ name: 'blur.elysium.slides.create' })">
+            @click="$router.push({ name: 'blur.elysium.slides.create' })"
+        >
             {{ $tc('blurElysium.action.createSlide') }}
         </mt-button>
     </template>
 
     <template #content>
-
         <sw-entity-listing
             v-if="total > 0"
             :items="slidesCollection"
@@ -57,17 +50,15 @@
             :allow-delete="permissionDelete"
             @column-sort="columnSort"
             @delete-item-finish="finishDeleteItems"
-            @items-delete-finish="finishDeleteItems">
-
+            @items-delete-finish="finishDeleteItems"
+        >
             <template #more-actions="{ item }">
-
                 <sw-context-menu-item
                     :disabled="!permissionCreate"
                     @click="copySlide(item)"
                 >
                     {{ $tc('blurElysiumSlides.actions.copySlide') }}
                 </sw-context-menu-item>
-
                 <sw-context-menu-item
                     :disabled="!permissionView"
                     :router-link="permissionView === true ? { name: 'blur.elysium.slides.detail', params: { id: item.id }} : null"
@@ -75,11 +66,8 @@
                     {{ $tc('blurElysiumSlides.actions.editSlide') }}
                 </sw-context-menu-item>
             </template>
-
         </sw-entity-listing>
-
         <template v-if="isLoading === false && total === 0">
-            
             <sw-empty-state
                 :title="$tc('blurElysiumSlides.emptySlidesTitle')"
                 :subline="$tc('blurElysiumSlides.emptySlidesSubline')"
@@ -87,26 +75,25 @@
                 :style="{
                     minHeight: '50vh',
                     padding: '40px 20px'
-                }">
-
+                }"
+            >
                 <template #icon>
                     <img
                         :src="assetFilter('/administration/administration/static/img/empty-states/media-empty-state.svg')"
                         :alt="$tc('blurElysiumSlides.emptySlidesTitle')"
-                    >
+                    />
                 </template>
 
                 <template #actions>
-
                     <mt-button
                         variant="secondary"
                         size="default"
-                        @click="$router.push({ name: 'blur.elysium.slides.create' })">
+                        @click="$router.push({ name: 'blur.elysium.slides.create' })"
+                    >
                         {{ $tc('blurElysium.action.createSlide') }}
                     </mt-button>
                 </template>
             </sw-empty-state>
         </template>
     </template>
-
 </sw-page>

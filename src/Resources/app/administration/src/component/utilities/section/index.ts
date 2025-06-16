@@ -1,43 +1,42 @@
-import template from './template.html.twig'
-import "./style.scss"
+import template from './template.html.twig';
+import './style.scss';
 
-const { Component } = Shopware
+const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
 
     props: {
-
         title: {
-            type: String
+            type: String,
         },
 
         titleIcon: {
-            type: String
+            type: String,
         },
 
         description: {
-            type: String
+            type: String,
         },
 
-        padding: {  
+        padding: {
             type: Boolean,
-            default: false
+            default: false,
         },
 
-        gap: {  
+        gap: {
             type: Boolean,
-            default: false
+            default: false,
         },
 
-        gapY: {  
+        gapY: {
             type: Boolean,
-            default: false
+            default: false,
         },
 
-        gapX: {  
+        gapX: {
             type: Boolean,
-            default: false
+            default: false,
         },
-    }
-})
+    },
+});

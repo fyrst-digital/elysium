@@ -45,8 +45,8 @@
     position: relative;
     z-index: 5;
     cursor: pointer;
-    transition: all .2s;
-    
+    transition: all 0.2s;
+
     &.active {
         color: var(--item-active-color);
 
@@ -70,7 +70,7 @@
     color: var(--icon-color);
     border-radius: var(--border-radius-pill);
     background-color: var(--icon-bg-color);
-    transition: all .2s;
+    transition: all 0.2s;
 }
 
 .blur-device-switch-label {

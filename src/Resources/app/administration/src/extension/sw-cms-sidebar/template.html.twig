@@ -1,56 +1,47 @@
 {% block sw_cms_sidebar_block_layout_settings_content %}
-    {% parent %}
+    {% parent() %}
 
     <template v-if="selectedBlock.type === 'blur-elysium-block-two-col'">
-        <sw-sidebar-collapse 
-            :expand-on-loading="false">
-
+        <sw-sidebar-collapse :expand-on-loading="false">
             <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
             <template #header>
-                <span v-html="$tc('blurElysiumBlock.settingLabel')" />
+                <span v-html="$tc('blurElysiumBlock.settingLabel')"/>
             </template>
-
             <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
             <template #content>
-                
-                <blur-elysium-block-two-col-config 
-                    :settings="selectedBlock.customFields" />
-
+                <blur-elysium-block-two-col-config :settings="selectedBlock.customFields"/>
             </template>
         </sw-sidebar-collapse>
     </template>
-{% endblock %}
-
-<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+{% endblock %}<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_cms_sidebar_layout_assignment %}
-    {% parent %}
+    {% parent() %}
 
     {% block sw_cms_sidebar_blur_section_settings %}
         <sw-sidebar-item
             class="sw-cms-sidebar__elysium-section-settings"
             icon="regular-dashboard"
             :title="elysiumSectionSettingsTitle"
-            :disabled="page.locked || !elysiumSectionSettingsActive">
-
-            <blur-elysium-cms-section-settings 
+            :disabled="page.locked || !elysiumSectionSettingsActive"
+        >
+            <blur-elysium-cms-section-settings
                 v-if="selectedSection !== null && selectedSection?.customFields?.hasOwnProperty('elysiumSectionSettings')"
-                :settings="selectedSection.customFields.elysiumSectionSettings" />
-
-            <blur-elysium-cms-section-block-settings 
+                :settings="selectedSection.customFields.elysiumSectionSettings"
+            />
+            <blur-elysium-cms-section-block-settings
                 v-if="selectedBlock !== null && selectedBlock?.customFields?.hasOwnProperty('elysiumBlockSettings')"
-                :settings="selectedBlock.customFields.elysiumBlockSettings" />
+                :settings="selectedBlock.customFields.elysiumBlockSettings"
+            />
         </sw-sidebar-item>
     {% endblock %}
-{% endblock %}
-
-<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+{% endblock %}<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_cms_sidebar_block_overview_preview %}
     <div
         :style="{
             display: currentBlockCategory === 'blur-elysium-blocks' ? 'block' : 'contents',
-        }">
-
-        <mt-banner 
+        }"
+    >
+        <mt-banner
             v-if="currentBlockCategory === 'blur-elysium-blocks'"
             variant="info"
             :hideIcon="true"
@@ -59,9 +50,11 @@
                 margin: '16px 24px',
                 textAlign: 'center',
             }"
-        ><span v-html="$tc('blurElysiumSection.sidebar.elysiumSectionNotification')" /></mt-banner>
-
+        >
+            <span
+                v-html="$tc('blurElysiumSection.sidebar.elysiumSectionNotification')"
+            />
+        </mt-banner>
         {% parent %}
-
     </div>
 {% endblock %}

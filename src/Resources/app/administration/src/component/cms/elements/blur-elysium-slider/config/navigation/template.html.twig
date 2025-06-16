@@ -1,59 +1,60 @@
 <mt-banner
     v-if="navigationViewportConfig === null"
     :style="{ margin: '20px' }"
-    :variant="'attention'">
-    <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')" />
+    :variant="'attention'"
+>
+    <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
 </mt-banner>
-
-<blur-section 
+<blur-section
     gap
-    padding>
-
-    <div :style="viewStyle({
+    padding
+>
+    <div
+        :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
-        })">
-        <mt-switch 
+        })"
+    >
+        <mt-switch
             class="blur-switch-input"
-            :checked="navigationConfig.active" 
-            :label="$tc('blurElysiumSlider.config.navigation.active')" 
-            @change="navigationConfig.active = $event"/>
+            :checked="navigationConfig.active"
+            :label="$tc('blurElysiumSlider.config.navigation.active')"
+            @change="navigationConfig.active = $event"
+        />
     </div>
-    
-    <blur-select-input 
+    <blur-select-input
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 6' },
         })"
         :label="$tc('blurElysiumSlider.config.navigation.position.label')"
         :options="positions"
-        v-model:value="navigationConfig.position" />
-
-    <blur-select-input 
+        v-model:value="navigationConfig.position"
+    />
+    <blur-select-input
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 6' },
         })"
         :label="$tc('blurElysiumSlider.config.navigation.align.label')"
         :options="aligns"
-        v-model:value="navigationConfig.align" />
-
+        v-model:value="navigationConfig.align"
+    />
 </blur-section>
-
-<blur-section 
+<blur-section
     :title="$tc('blurElysium.general.appearance')"
     gap
-    padding>
-
-    <blur-select-input 
+    padding
+>
+    <blur-select-input
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 6' },
         })"
         :label="$tc('blurElysiumSlider.config.navigation.shape.label')"
         :options="shapes"
-        v-model:value="navigationConfig.shape" />
-
-    <blur-select-input 
+        v-model:value="navigationConfig.shape"
+    />
+    <blur-select-input
         v-if="navigationViewportConfig"
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
@@ -65,9 +66,9 @@
         :show-device="true"
         :device="device"
         @on-device="cmsDeviceSwitch"
-        v-model:value="navigationViewportConfig.size" />
-
-    <blur-number-input 
+        v-model:value="navigationViewportConfig.size"
+    />
+    <blur-number-input
         v-if="navigationViewportConfig"
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
@@ -79,8 +80,8 @@
         :placeholder="viewportsPlaceholder('navigation.gap', 16)"
         :show-device="true"
         :device="device"
-        @on-device="cmsDeviceSwitch" />
-
+        @on-device="cmsDeviceSwitch"
+    />
     <blur-colorpicker
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
@@ -92,8 +93,8 @@
         :alpha="true"
         :disabled="false"
         :colorLabels="true"
-        :zIndex="1010" />
-
+        :zIndex="1010"
+    />
     <blur-colorpicker
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
@@ -105,6 +106,6 @@
         :alpha="true"
         :disabled="false"
         :colorLabels="true"
-        :zIndex="1010" />
-
+        :zIndex="1010"
+    />
 </blur-section>

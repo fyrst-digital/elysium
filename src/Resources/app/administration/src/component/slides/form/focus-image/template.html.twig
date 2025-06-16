@@ -1,12 +1,11 @@
 <mt-card
     position-identifier="blurElysium.slide.form.focusImage"
-    :title="$tc('blurElysiumSlides.forms.slideFocusImage.label')" 
+    :title="$tc('blurElysiumSlides.forms.slideFocusImage.label')"
     :subtitle="$tc('blurElysiumSlides.forms.slideFocusImage.description')"
-    :class="['content-no-padding']">
-
+    :class="['content-no-padding']"
+>
     <template #headerRight>
-
-        <blur-device-switch 
+        <blur-device-switch
             layout="row"
             show-label="false"
             :default-viewport="device"
@@ -18,22 +17,20 @@
                 '--icon-padding': '6px',
                 '--icon-bg-color': '#ffffff',
                 '--icon-hover-bg-color': 'var(--color-gray-100)',
-            }" 
+            }"
             :device="device"
             @change-device="device => elysiumUI.setDevice(device)"
-            />
+        />
     </template>
-
     <blur-section>
-
         <blur-column
             padding
             :cols="12"
             :cols-desktop="8"
             :style="viewStyle({
                 desktop: { borderRight: '1px solid var(--color-border-primary-default)' }
-            })">
-
+            })"
+        >
             <sw-upload-listener
                 upload-tag="blur-elysium-slide-focus-image"
                 auto-upload
@@ -52,37 +49,34 @@
                 @media-upload-sidebar-open="mediaModal.open = true"
             />
         </blur-column>
-
         <blur-column
             padding
             :cols="12"
-            :cols-desktop="4">
-
-            <blur-section
-                gap-y>
-
+            :cols-desktop="4"
+        >
+            <blur-section gap-y>
                 <blur-column>
-                    <mt-switch 
+                    <mt-switch
                         class="blur-switch-input"
                         @change="slideViewportSettings.image.imageFullWidth = $event"
                         :checked="slideViewportSettings.image.imageFullWidth"
-                        :label="$tc('blurElysiumSlides.forms.focusImage.fullWidth')" />
+                        :label="$tc('blurElysiumSlides.forms.focusImage.fullWidth')"
+                    />
                 </blur-column>
-
                 <blur-column>
-                    <blur-number-input 
+                    <blur-number-input
                         :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
                         :placeholder="viewportsPlaceholder('image.maxWidth', $t('blurElysium.general.noLimit'))"
                         :show-device="true"
                         :device="device"
                         @on-device="deviceSwitch"
                         :model-value="slideViewportSettings.image.maxWidth"
-                        @update-value="value => slideViewportSettings.image.maxWidth = value" /> 
+                        @update-value="value => slideViewportSettings.image.maxWidth = value"
+                    />
                 </blur-column>
-
                 <blur-column>
-                    <blur-select-input 
-                        :label="$tc('blurElysium.general.jusitifyContent')" 
+                    <blur-select-input
+                        :label="$tc('blurElysium.general.jusitifyContent')"
                         :placeholder="viewportsPlaceholder('image.justifyContent', 'center', 'blurElysium.general')"
                         :options="[
                             { value: 'flex-start', label: $tc('blurElysium.general.jusitifyStart') },
@@ -92,17 +86,17 @@
                         :device="device"
                         :show-device="true"
                         @on-device="deviceSwitch"
-                        v-model:value="slideViewportSettings.image.justifyContent" />
+                        v-model:value="slideViewportSettings.image.justifyContent"
+                    />
                 </blur-column>
             </blur-section>
         </blur-column>
     </blur-section>
-
     <sw-media-modal-v2
         v-if="mediaModal.open"
         :allow-multi-select="false"
         entity-context="blur_elysium_slides"
         @media-modal-selection-change="onAddMediaModal"
-        @modal-close="mediaModal.open = false" 
+        @modal-close="mediaModal.open = false"
     />
 </mt-card>

@@ -4,33 +4,30 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210;
 
-use Doctrine\DBAL\Connection;
-use Shopware\Core\Framework\Context;
-use Shopware\Administration\Notification\NotificationService;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210\SlideSettings;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
+use Doctrine\DBAL\Connection;
+use Shopware\Administration\Notification\NotificationService;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotCollection;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
+use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 
 class Updater
 {
     /**
-     * @param Connection $connection
-     * @param Context $context
      * @param EntityRepository<ElysiumSlidesCollection> $slidesRepository
      * @param EntityRepository<CmsSlotCollection> $cmsSlotRepository
-     * @param NotificationService $notificationService
      */
-    function __construct(
+    public function __construct(
         private readonly Connection $connection,
         private readonly Context $context,
         private readonly EntityRepository $slidesRepository,
         private readonly EntityRepository $cmsSlotRepository,
         private readonly NotificationService $notificationService
-    ) {}
+    ) {
+    }
 
     public function run(): void
     {
@@ -39,26 +36,39 @@ class Updater
         $this->cmsSlotRemoveDeprecatedConfig();
     }
 
+    public function convertStringToIntUnit(string $value): ?int
+    {
+        /**
+         * Function is aware of rem unit. If rem is provided in $value string, null will be returned
+         */
+        $intValue = (int) filter_var($value, \FILTER_SANITIZE_NUMBER_INT);
+
+        if ($intValue && \preg_match('/rem/', $value) === 1) {
+            return $intValue * 16;
+        }
+
+        return $intValue;
+    }
+
     private function cmsSlotRemoveDeprecatedConfig(): void
     {
-
         $this->connection->executeStatement(
-            "UPDATE `cms_slot_translation` 
+            'UPDATE `cms_slot_translation`
             LEFT JOIN `cms_slot` ON `cms_slot_translation`.`cms_slot_id` = `cms_slot`.`id`
             SET `config` = JSON_REMOVE(
-            `config`, 
-            '$.sizing',
-            '$.aspectRatio',
-            '$.slideSpeed',
-            '$.sliderOverlay',
-            '$.sliderAutoplay',
-            '$.sliderDotColor',
-            '$.sliderArrowColor',
-            '$.sliderNavigation',
-            '$.sliderDotActiveColor',
-            '$.sliderAutoplayTimeout'
+            `config`,
+            \'$.sizing\',
+            \'$.aspectRatio\',
+            \'$.slideSpeed\',
+            \'$.sliderOverlay\',
+            \'$.sliderAutoplay\',
+            \'$.sliderDotColor\',
+            \'$.sliderArrowColor\',
+            \'$.sliderNavigation\',
+            \'$.sliderDotActiveColor\',
+            \'$.sliderAutoplayTimeout\'
             )
-            WHERE `cms_slot`.`type` = :element",
+            WHERE `cms_slot`.`type` = :element',
             [
                 'element' => 'blur-elysium-slider',
             ]
@@ -73,7 +83,6 @@ class Updater
         $updateSlideSettings = [];
 
         if ($result->getTotal() > 0) {
-
             foreach ($result->getElements() as $id => $slide) {
                 $slideSettings = $slide->get('slideSettings');
                 $convertedSlideSettings = [];
@@ -83,56 +92,56 @@ class Updater
                 /**
                  * convert slide settings
                  */
-                # slide headline 
+                // slide headline
                 $convertedSlideSettings['slideSettings']['slide']['headline']['element'] = isset($slideSettings['headlineElement']) && !empty($slideSettings['headlineElement']) ? $slideSettings['headlineElement'] : 'div';
                 $convertedSlideSettings['slideSettings']['slide']['headline']['color'] = isset($slideSettings['headlineTextcolor']) && !empty($slideSettings['headlineTextcolor']) ? $slideSettings['headlineTextcolor'] : null;
-                # slide general
+                // slide general
                 $convertedSlideSettings['slideSettings']['slide']['bgColor'] = isset($slideSettings['slideBgColor']) && !empty($slideSettings['slideBgColor']) ? $slideSettings['slideBgColor'] : null;
                 $convertedSlideSettings['slideSettings']['slide']['cssClass'] = isset($slideSettings['slideCssClass']) && !empty($slideSettings['slideCssClass']) ? $slideSettings['slideCssClass'] : null;
-                # slide linking
+                // slide linking
                 $convertedSlideSettings['slideSettings']['slide']['linking']['overlay'] = isset($slideSettings['urlOverlay']) && !empty($slideSettings['urlOverlay']) ? $slideSettings['urlOverlay'] : false;
                 $convertedSlideSettings['slideSettings']['slide']['linking']['openExternal'] = isset($slideSettings['urlTarget']) && $slideSettings['urlTarget'] === 'external' ? true : false;
                 $convertedSlideSettings['slideSettings']['slide']['linking']['buttonAppearance'] = isset($slideSettings['buttonAppearance']) && !empty($slideSettings['buttonAppearance']) ? $slideSettings['buttonAppearance'] : 'primary';
-                # container
+                // container
                 $convertedSlideSettings['slideSettings']['container']['bgColor'] = isset($slideSettings['containerBgColor']) && !empty($slideSettings['containerBgColor']) ? $slideSettings['containerBgColor'] : null;
-                # slide template
+                // slide template
                 $convertedSlideSettings['slideSettings']['customTemplateFile'] = isset($slideSettings['customTemplateFile']) && !empty($slideSettings['customTemplateFile']) ? $slideSettings['customTemplateFile'] : null;
 
-                # container padding
+                // container padding
                 if (isset($slideSettings['containerPadding']) && !empty($slideSettings['containerPadding'])) {
                     $containerPaddingInt = $this->convertStringToIntUnit($slideSettings['containerPadding']);
 
                     if (!empty($containerPaddingInt)) {
-                        # viewport mobile
+                        // viewport mobile
                         $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['paddingX'] = $containerPaddingInt;
                         $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['paddingY'] = $containerPaddingInt;
-                        # viewport tablet
+                        // viewport tablet
                         $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['paddingX'] = $containerPaddingInt;
                         $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['paddingY'] = $containerPaddingInt;
-                        # viewport desktop
+                        // viewport desktop
                         $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['paddingX'] = $containerPaddingInt;
                         $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['paddingY'] = $containerPaddingInt;
                     }
                 }
 
-                # container max width
+                // container max width
                 if (isset($slideSettings['containerMaxWidth']) && !empty($slideSettings['containerMaxWidth'])) {
                     $containerMaxWidthInt = $this->convertStringToIntUnit($slideSettings['containerMaxWidth']);
 
                     if (!empty($containerMaxWidthInt)) {
-                        # viewport mobile
+                        // viewport mobile
                         $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['maxWidth'] = $containerMaxWidthInt;
                         $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['maxWidthDisabled'] = false;
-                        # viewport tablet
+                        // viewport tablet
                         $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['maxWidth'] = $containerMaxWidthInt;
                         $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['maxWidthDisabled'] = false;
-                        # viewport desktop
+                        // viewport desktop
                         $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['maxWidth'] = $containerMaxWidthInt;
                         $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['maxWidthDisabled'] = false;
                     }
                 }
 
-                # container vertical align
+                // container vertical align
                 if (isset($slideSettings['containerVerticalAlign']) && !empty($slideSettings['containerVerticalAlign'])) {
                     $containerAlignItems = null;
 
@@ -151,7 +160,7 @@ class Updater
                     }
                 }
 
-                # container horizontal align
+                // container horizontal align
                 if (isset($slideSettings['containerHorizontalAlign']) && !empty($slideSettings['containerHorizontalAlign'])) {
                     $containerJustifyContent = null;
 
@@ -170,7 +179,7 @@ class Updater
                     }
                 }
 
-                # content vertical align
+                // content vertical align
                 if (isset($slideSettings['contentVerticalAlign']) && !empty($slideSettings['contentVerticalAlign'])) {
                     $contentTextAlign = null;
 
@@ -201,7 +210,7 @@ class Updater
                 $this->notificationService->createNotification(
                     [
                         'status' => 'error',
-                        'message' => 'Something went wrong during the Elysium Slide settings conversion'
+                        'message' => 'Something went wrong during the Elysium Slide settings conversion',
                     ],
                     $this->context
                 );
@@ -217,7 +226,6 @@ class Updater
         $updatedCmsElementsConfig = [];
 
         if ($result->getTotal() > 0) {
-
             foreach ($result->getElements() as $id => $cmsElement) {
                 /** @var CmsSlotEntity $cmsElement */
                 $cmsElementConfig = $cmsElement->getConfig();
@@ -231,23 +239,23 @@ class Updater
                         'aspectRatio' => isset($cmsElementConfig['aspectRatio']['value']) ? $this->getPropertyFromViewportArray('xs', $cmsElementConfig['aspectRatio']['value']) : null,
                         'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('xs', $cmsElementConfig['sizing']['value'], ['paddingY' => 40, 'paddingX' => 40]) : null,
                         'arrows' => [
-                            'iconSize' => 16
-                        ]
+                            'iconSize' => 16,
+                        ],
                     ],
                     'tablet' => [
                         'aspectRatio' => isset($cmsElementConfig['aspectRatio']['value']) ? $this->getPropertyFromViewportArray('md', $cmsElementConfig['aspectRatio']['value']) : null,
                         'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('md', $cmsElementConfig['sizing']['value'], ['paddingY' => 40, 'paddingX' => 40]) : null,
                         'arrows' => [
-                            'iconSize' => 20
-                        ]
+                            'iconSize' => 20,
+                        ],
                     ],
                     'desktop' => [
                         'aspectRatio' => isset($cmsElementConfig['aspectRatio']['value']) ? $this->getPropertyFromViewportArray('xxl', $cmsElementConfig['aspectRatio']['value']) : null,
                         'sizing' => isset($cmsElementConfig['sizing']['value']) ? $this->getPropertyFromViewportArray('xxl', $cmsElementConfig['sizing']['value'], ['paddingY' => 40, 'paddingX' => 40]) : null,
                         'arrows' => [
-                            'iconSize' => 24
-                        ]
-                    ]
+                            'iconSize' => 24,
+                        ],
+                    ],
                 ];
 
                 foreach ($viewportConfig as $viewport => $config) {
@@ -257,7 +265,7 @@ class Updater
                     $convertedCmsElementConfig['config']['viewports']['value'][$viewport]['arrows']['iconSize'] = $config['arrows']['iconSize'];
                 }
 
-                # slide speed
+                // slide speed
                 $convertedCmsElementConfig['config']['settings']['value']['speed'] = isset($cmsElementConfig['slideSpeed']['value']) ? $cmsElementConfig['slideSpeed']['value'] : null;
 
                 $updatedCmsElementsConfig[] = $convertedCmsElementConfig;
@@ -272,7 +280,7 @@ class Updater
                 $this->notificationService->createNotification(
                     [
                         'status' => 'error',
-                        'message' => 'Something went wrong during the Elysium Slider config conversion'
+                        'message' => 'Something went wrong during the Elysium Slider config conversion',
                     ],
                     $this->context
                 );
@@ -284,7 +292,6 @@ class Updater
     /**
      * @param mixed[]|null $config
      * @param mixed[]|null $enrich
-     * @return mixed
      */
     private function getPropertyFromViewportArray(string $viewport, ?array $config, ?array $enrich = null, ?string $property = null): mixed
     {
@@ -301,19 +308,5 @@ class Updater
         }
 
         return $result;
-    }
-
-    function convertStringToIntUnit(string $value): ?int
-    {
-        /**
-         * Function is aware of rem unit. If rem is provided in $value string, null will be returned
-         */
-        $intValue = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
-
-        if ($intValue && \preg_match('/rem/', $value) === 1) {
-            return $intValue * 16;
-        }
-
-        return $intValue;
     }
 }

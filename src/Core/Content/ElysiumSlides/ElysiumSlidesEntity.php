@@ -4,75 +4,39 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
 
-use Shopware\Core\Framework\DataAbstractionLayer\Entity;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
-use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Content\Media\MediaEntity;
+use Shopware\Core\Content\Product\ProductEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 
 class ElysiumSlidesEntity extends Entity
 {
     use EntityCustomFieldsTrait;
     use EntityIdTrait;
 
-    /**
-     * @var string|null
-     */
     protected ?string $productId;
 
-    /**
-     * @var ?ProductEntity
-     */
     protected ?ProductEntity $product;
 
-    /**
-     * @var string|null
-     */
     protected ?string $slideCoverId;
 
-    /** 
-     * @var ?MediaEntity
-     */
     protected ?MediaEntity $slideCover;
 
-    /**
-     * @var string|null
-     */
     protected ?string $slideCoverMobileId;
 
-    /**
-     * @var ?MediaEntity
-     */
     protected ?MediaEntity $slideCoverMobile;
 
-    /**
-     * @var string|null
-     */
     protected ?string $slideCoverTabletId;
 
-    /**
-     * @var ?MediaEntity
-     */
     protected ?MediaEntity $slideCoverTablet;
 
-    /**
-     * @var ?string
-     */
     protected ?string $slideCoverVideoId;
 
-    /**
-     * @var ?MediaEntity
-     */
     protected ?MediaEntity $slideCoverVideo;
 
-    /**
-     * @var ?string
-     */
     protected ?string $presentationMediaId;
 
-    /**
-     * @var ?MediaEntity
-     */
     protected ?MediaEntity $presentationMedia;
 
     /**
@@ -80,34 +44,18 @@ class ElysiumSlidesEntity extends Entity
      */
     protected ?array $slideSettings;
 
-    /**
-     * @var ?string
-     */
     protected ?string $name;
 
-    /**
-     * @var ?string
-     */
     protected ?string $title;
 
-    /**
-     * @var ?string
-     */
     protected ?string $description;
 
-    /**
-     * @var ?string
-     */
     protected ?string $buttonLabel;
 
-    /**
-     * @var ?string
-     */
     protected ?string $url;
 
     /**
      * Get the value of productId
-     * @return string|null
      */
     public function getProductId(): ?string
     {
@@ -116,7 +64,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of productId
-     * @return void
      */
     public function setProductId(?string $productId): void
     {
@@ -125,7 +72,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of product
-     * @return ProductEntity|null
      */
     public function getProduct(): ?ProductEntity
     {
@@ -134,7 +80,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of product
-     * @return void
      */
     public function setProduct(?ProductEntity $product): void
     {
@@ -143,7 +88,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of slideCoverId
-     * @return string|null
      */
     public function getSlideCoverId(): ?string
     {
@@ -152,7 +96,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of slideCoverId
-     * @return void
      */
     public function setSlideCoverId(?string $slideCoverId): void
     {
@@ -161,7 +104,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of slideCover
-     * @return ?MediaEntity
      */
     public function getSlideCover(): ?MediaEntity
     {
@@ -170,8 +112,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of slideCover
-     * @param  ?MediaEntity  $slideCover
-     * @return  void
      */
     public function setSlideCover(?MediaEntity $slideCover): void
     {
@@ -180,7 +120,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of slideCoverMobileId
-     * @return  string|null
      */
     public function getSlideCoverMobileId(): ?string
     {
@@ -189,8 +128,8 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of slideCoverMobileId
-     * @param  string|null  $slideCoverMobileId
-     * @return  void
+     *
+     * @param string|null $slideCoverMobileId
      */
     public function setSlideCoverMobileId($slideCoverMobileId): void
     {
@@ -199,8 +138,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of slideCoverMobile
-     *
-     * @return  ?MediaEntity
      */
     public function getSlideCoverMobile(): ?MediaEntity
     {
@@ -209,8 +146,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of slideCoverMobile
-     * @param   ?MediaEntity  $slideCoverMobile  
-     * @return  void
      */
     public function setSlideCoverMobile(?MediaEntity $slideCoverMobile): void
     {
@@ -219,7 +154,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of slideCoverTabletId
-     * @return  string|null
      */
     public function getSlideCoverTabletId(): ?string
     {
@@ -228,8 +162,8 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of slideCoverTabletId
-     * @param   string|null  $slideCoverTabletId  
-     * @return  void
+     *
+     * @param string|null $slideCoverTabletId
      */
     public function setSlideCoverTabletId($slideCoverTabletId): void
     {
@@ -238,7 +172,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of slideCoverTablet
-     * @return  ?MediaEntity
      */
     public function getSlideCoverTablet(): ?MediaEntity
     {
@@ -247,8 +180,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of slideCoverTablet
-     * @param   ?MediaEntity  $slideCoverTablet  
-     * @return  void
      */
     public function setSlideCoverTablet(?MediaEntity $slideCoverTablet): void
     {
@@ -257,7 +188,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of slideCoverVideoId
-     * @return  ?string
      */
     public function getSlideCoverVideoId(): ?string
     {
@@ -266,8 +196,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of slideCoverVideoId
-     * @param   ?string  $slideCoverVideoId  
-     * @return  void
      */
     public function setSlideCoverVideoId(?string $slideCoverVideoId): void
     {
@@ -276,7 +204,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of slideCoverVideo
-     * @return  ?MediaEntity
      */
     public function getSlideCoverVideo(): ?MediaEntity
     {
@@ -285,8 +212,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of slideCoverVideo
-     * @param   ?MediaEntity  $slideCoverVideo  
-     * @return  void
      */
     public function setSlideCoverVideo(?MediaEntity $slideCoverVideo): void
     {
@@ -295,7 +220,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of presentationMediaId
-     * @return  ?string
      */
     public function getPresentationMediaId(): ?string
     {
@@ -304,8 +228,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of presentationMediaId
-     * @param   ?string  $presentationMediaId  
-     * @return  void
      */
     public function setPresentationMediaId(?string $presentationMediaId): void
     {
@@ -314,7 +236,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of presentationMedia
-     * @return  ?MediaEntity
      */
     public function getPresentationMedia(): ?MediaEntity
     {
@@ -323,8 +244,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of presentationMedia
-     * @param   ?MediaEntity  $presentationMedia  
-     * @return  void
      */
     public function setPresentationMedia(?MediaEntity $presentationMedia): void
     {
@@ -333,7 +252,8 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of slideSettings
-     * @return  mixed[]|null
+     *
+     * @return mixed[]|null
      */
     public function getSlideSettings(): ?array
     {
@@ -342,8 +262,8 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of slideSettings
-     * @param   mixed[]|null  $slideSettings  
-     * @return  void
+     *
+     * @param mixed[]|null $slideSettings
      */
     public function setSlideSettings(?array $slideSettings): void
     {
@@ -352,7 +272,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of name
-     * @return  ?string
      */
     public function getName(): ?string
     {
@@ -361,8 +280,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of name
-     * @param   ?string  $name  
-     * @return  void
      */
     public function setName(?string $name): void
     {
@@ -371,7 +288,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of title
-     * @return  ?string
      */
     public function getTitle(): ?string
     {
@@ -380,8 +296,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of title
-     * @param   ?string  $title  
-     * @return  void
      */
     public function setTitle(?string $title): void
     {
@@ -390,7 +304,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of description
-     * @return  ?string
      */
     public function getDescription(): ?string
     {
@@ -399,8 +312,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of description
-     * @param   ?string  $description  
-     * @return  void
      */
     public function setDescription(?string $description): void
     {
@@ -409,7 +320,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of buttonLabel
-     * @return  ?string
      */
     public function getButtonLabel(): ?string
     {
@@ -418,8 +328,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of buttonLabel
-     * @param   ?string  $buttonLabel  
-     * @return  void
      */
     public function setButtonLabel(?string $buttonLabel): void
     {
@@ -428,7 +336,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Get the value of url
-     * @return  ?string
      */
     public function getUrl(): ?string
     {
@@ -437,8 +344,6 @@ class ElysiumSlidesEntity extends Entity
 
     /**
      * Set the value of url
-     * @param   ?string  $url  
-     * @return  void
      */
     public function setUrl(?string $url): void
     {

@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\DataResolver;
 
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
-use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
-use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
-use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
-use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
-use Shopware\Core\Content\Cms\DataResolver\FieldConfig;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesCriteriaEvent;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesResultEvent;
 use Blur\BlurElysiumSlider\Struct\ElysiumSliderStruct;
+use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
+use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
+use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
+use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
+use Shopware\Core\Content\Cms\DataResolver\FieldConfig;
+use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
+use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
 {
@@ -28,7 +28,8 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository,
         private readonly EventDispatcherInterface $eventDispatcher,
-    ) {}
+    ) {
+    }
 
     public function getType(): string
     {
@@ -38,7 +39,6 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
     public function collect(
         CmsSlotEntity $slot,
         ResolverContext $resolverContext
-
     ): ?CriteriaCollection {
         return null;
     }

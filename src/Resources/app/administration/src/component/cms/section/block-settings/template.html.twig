@@ -1,9 +1,9 @@
-<blur-section padding gap>
-
-    <blur-column
-        :cols-tablet="6">
-
-        <blur-number-input 
+<blur-section
+    padding
+    gap
+>
+    <blur-column :cols-tablet="6">
+        <blur-number-input
             :label="$tc('blurElysiumSection.sidebar.blockSettings.order')"
             :placeholder="viewportsPlaceholder('order', 'auto')"
             :show-device="true"
@@ -14,14 +14,11 @@
             :device="device"
             @on-device="cmsDeviceSwitch"
             :model-value="currentViewportSettings.order"
-            @update-value="value => currentViewportSettings.order = value" /> 
-
+            @update-value="value => currentViewportSettings.order = value"
+        />
     </blur-column>
-
-    <blur-column
-        :cols-tablet="6">
-
-        <blur-number-input 
+    <blur-column :cols-tablet="6">
+        <blur-number-input
             :label="$tc('blurElysiumSection.sidebar.blockSettings.rows')"
             :placeholder="viewportsPlaceholder('rowEnd', 'auto')"
             :show-device="true"
@@ -32,6 +29,7 @@
             :device="device"
             @on-device="cmsDeviceSwitch"
             :model-value="currentViewportSettings.rowEnd"
-            @update-value="value => currentViewportSettings.rowEnd = value" /> 
+            @update-value="value => currentViewportSettings.rowEnd = value"
+        />
     </blur-column>
 </blur-section>

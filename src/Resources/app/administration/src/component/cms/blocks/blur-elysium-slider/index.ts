@@ -1,14 +1,14 @@
-const { Component, Service } = Shopware
+const { Component, Service } = Shopware;
 
 Component.register(
-    'sw-cms-block-blur-elysium-slider', 
+    'sw-cms-block-blur-elysium-slider',
     () => import('@elysium/component/cms/blocks/blur-elysium-slider/component')
-)
+);
 
 Component.register(
-    'sw-cms-block-blur-elysium-slider-preview', 
+    'sw-cms-block-blur-elysium-slider-preview',
     () => import('@elysium/component/cms/blocks/blur-elysium-slider/preview')
-)
+);
 
 // eslint-disable-next-line no-undef
 Service('cmsService').registerCmsBlock({
@@ -22,9 +22,9 @@ Service('cmsService').registerCmsBlock({
         marginTop: '',
         marginLeft: '',
         marginRight: '',
-        sizingMode: 'boxed'
+        sizingMode: 'boxed',
     },
     slots: {
-        main: 'blur-elysium-slider'
-    }
-})
+        main: 'blur-elysium-slider',
+    },
+});

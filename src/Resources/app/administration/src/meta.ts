@@ -1,11 +1,9 @@
 type Module = {
-    color: string
-}
+    color: string;
+};
 
 const module: Module = {
-    color: '#e868a1'
-}
+    color: '#e868a1',
+};
 
-export {
-    module
-}
+export { module };

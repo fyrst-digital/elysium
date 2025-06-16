@@ -1,8 +1,6 @@
 /** mt-card modification utility */
 .mt-card {
-
     &.content-no-padding {
-
         .mt-card__content {
             padding: 0;
         }
@@ -14,33 +12,36 @@
 .blur-number-input,
 .blur-select-input,
 .blur-colorpicker {
-
     .mt-block-field__block {
-        padding: var(--blur-input-block-padding-y, 0px) var(--blur-input-block-padding-x, 8px) !important;
+        padding: var(--blur-input-block-padding-y, 0px)
+            var(--blur-input-block-padding-x, 8px) !important;
         border-radius: var(--blur-input-block-radius, 8px) !important;
-        box-shadow: var(--blur-input-block-shadow, 1px 1px 3px rgba(51, 68, 91, 0.1)) !important;
+        box-shadow: var(
+            --blur-input-block-shadow,
+            1px 1px 3px rgba(51, 68, 91, 0.1)
+        ) !important;
     }
 
     input {
-        padding: var(--blur-input-field-padding-y, 6px) var(--blur-input-field-padding-x, 8px) !important;
+        padding: var(--blur-input-field-padding-y, 6px)
+            var(--blur-input-field-padding-x, 8px) !important;
         line-height: var(--blur-input-lh, 2) !important;
         background-color: transparent !important;
         text-overflow: ellipsis;
     }
 
     .mt-field__addition {
-        padding: var(--blur-input-inner-padding-y, 6px) var(--blur-input-inner-padding-x, 4px) !important;
+        padding: var(--blur-input-inner-padding-y, 6px)
+            var(--blur-input-inner-padding-x, 4px) !important;
         min-width: auto;
         background-color: transparent;
         border: 0 none !important;
         line-height: 1 !important;
 
         &.is--prefix {
-
             &:empty {
-
-                ~input,
-                ~.mt-select__selection {
+                ~ input,
+                ~ .mt-select__selection {
                     --blur-input-field-padding-x: 12px;
                 }
             }
@@ -48,11 +49,12 @@
     }
 
     .mt-field__controls {
-        padding: var(--blur-input-inner-padding-y, 6px) var(--blur-input-inner-padding-x, 4px) !important;
+        padding: var(--blur-input-inner-padding-y, 6px)
+            var(--blur-input-inner-padding-x, 4px) !important;
     }
 
     &.is--disabled {
-        opacity: .5;
+        opacity: 0.5;
 
         .mt-block-field__block {
             background-color: var(--color-background-primary-disabled);
@@ -62,7 +64,6 @@
 
 /** Text input styling **/
 .blur-text-input {
-
     input {
         // padding-top: 8px;
         // padding-bottom: 8px;
@@ -76,7 +77,6 @@
 
 /** Number input styling */
 .blur-number-input {
-
     .mt-field__controls {
         width: auto;
 
@@ -114,7 +114,6 @@
 
 /** Entity select styling */
 .blur-entity-select-input {
-
     .sw-block-field__block {
         box-shadow: 0 1px 2px 0 rgba(51, 68, 91, 0.1);
         border-radius: 8px;
@@ -136,7 +135,8 @@
     }
 
     .mt-label {
-        padding: var(--blur-input-field-padding-y, 6px) var(--blur-input-field-padding-x, 8px) !important;
+        padding: var(--blur-input-field-padding-y, 6px)
+            var(--blur-input-field-padding-x, 8px) !important;
         font-size: 14px;
         user-select: none;
         font-weight: 500;
@@ -173,7 +173,7 @@
         flex-wrap: nowrap;
         cursor: pointer;
 
-        >li {
+        > li {
             display: contents;
             pointer-events: none;
         }
@@ -198,7 +198,6 @@
 
 /** Colorpicker styling */
 .blur-colorpicker {
-
     .mt-colorpicker__input {
         // padding: 8px;
         line-height: 1.5;
@@ -211,13 +210,11 @@
 
 /** Switch input styling */
 .blur-switch-input {
-
     &.has-padding {
         --switch-padding: 8px;
     }
 
     .mt-field--switch {
-
         .mt-field__label label {
             line-height: 1.5;
             padding: 0 !important;

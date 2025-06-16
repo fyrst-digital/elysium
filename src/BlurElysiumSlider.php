@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Blur\BlurElysiumSlider\Bootstrap\Lifecycle;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
-use Blur\BlurElysiumSlider\Bootstrap\Lifecycle;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BlurElysiumSlider extends Plugin
 {

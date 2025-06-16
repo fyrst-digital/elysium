@@ -1,6 +1,6 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
-const { Component, Mixin, Store } = Shopware 
+const { Component, Mixin, Store } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
@@ -8,33 +8,32 @@ export default Component.wrapComponentConfig({
     mixins: [
         Mixin.getByName('placeholder'),
         Mixin.getByName('blur-device-utilities'),
-        Mixin.getByName('blur-style-utilities')
+        Mixin.getByName('blur-style-utilities'),
     ],
 
     computed: {
-
-        slide () {
-            return Store.get('elysiumSlide').slide
+        slide() {
+            return Store.get('elysiumSlide').slide;
         },
 
-        device () {
-            return Store.get('elysiumUI').device
+        device() {
+            return Store.get('elysiumUI').device;
         },
 
-        error () {
-            return Store.get('error')
+        error() {
+            return Store.get('error');
         },
 
-        nameError () {
+        nameError() {
             return this.error.getApiError(this.slide, 'name');
         },
 
-        slideViewportSettings () {
-            return this.slide.slideSettings.viewports[this.device]
+        slideViewportSettings() {
+            return this.slide.slideSettings.viewports[this.device];
         },
     },
 
-    created () {
-        this.viewportsSettings = this.slide.slideSettings.viewports
-    }
-})
+    created() {
+        this.viewportsSettings = this.slide.slideSettings.viewports;
+    },
+});

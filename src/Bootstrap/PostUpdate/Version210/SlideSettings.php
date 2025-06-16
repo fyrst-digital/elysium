@@ -14,41 +14,41 @@ class SlideSettings
         'viewports' => [
             'mobile' => [
                 'container' => [
-                    'columnWrap' => true
+                    'columnWrap' => true,
                 ],
                 'headline' => [
-                    'fontSize' => 20
+                    'fontSize' => 20,
                 ],
                 'description' => [
-                    'fontSize' => 14
+                    'fontSize' => 14,
                 ],
                 'button' => [
-                    'size' => 'sm'
-                ]
+                    'size' => 'sm',
+                ],
             ],
             'tablet' => [
                 'headline' => [
-                    'fontSize' => 24
+                    'fontSize' => 24,
                 ],
                 'description' => [
-                    'fontSize' => 16
+                    'fontSize' => 16,
                 ],
                 'button' => [
-                    'size' => 'default'
-                ]
+                    'size' => 'default',
+                ],
             ],
             'desktop' => [
                 'headline' => [
-                    'fontSize' => 32
+                    'fontSize' => 32,
                 ],
                 'description' => [
-                    'fontSize' => 20
+                    'fontSize' => 20,
                 ],
                 'button' => [
-                    'size' => 'lg'
-                ]
-            ]
-        ]
+                    'size' => 'lg',
+                ],
+            ],
+        ],
     ];
 
     /**
@@ -65,6 +65,7 @@ class SlideSettings
 
     /**
      * @param mixed[] $replace
+     *
      * @return mixed[]
      */
     private function buildViewportSettings(?array $replace = null): array
@@ -80,14 +81,14 @@ class SlideSettings
                 'justifyContent' => 'normal',
                 'alignItems' => 'center',
                 'columnWrap' => false,
-                'order' => 'default'
+                'order' => 'default',
             ],
             'content' => [
                 'paddingX' => 0,
                 'paddingY' => 0,
                 'maxWidth' => 0,
                 'maxWidthDisabled' => true,
-                'textAlign' => 'left'
+                'textAlign' => 'left',
             ],
             'image' => [
                 'justifyContent' => 'center',
@@ -95,42 +96,42 @@ class SlideSettings
                 'maxWidthDisabled' => true,
             ],
             'slide' => [
-                /** @type int */
+                /** @var int */
                 'paddingX' => 15,
-                /** @type int */
+                /** @var int */
                 'paddingY' => 15,
-                /** @type int */
+                /** @var int */
                 'borderRadius' => 0,
-                /** @type 'stretch' | 'flex-start' | 'center' | 'flex-end' */
+                /** @var 'stretch'|'flex-start'|'center'|'flex-end' */
                 'alignItems' => 'center',
-                /** @type 'flex-start' | 'center' | 'flex-end' */
-                'justifyContent' => 'center'
+                /** @var 'flex-start'|'center'|'flex-end' */
+                'justifyContent' => 'center',
             ],
             'coverImage' => [
-                /** @type 'left' | 'center' | 'right' */
+                /** @var 'left'|'center'|'right' */
                 'objectPosX' => 'center',
-                /** @type 'top' | 'center' | 'bottom' */
+                /** @var 'top'|'center'|'bottom' */
                 'objectPosY' => 'center',
-                /** @type 'cover' | 'contain' | 'auto' */
-                'objectFit' => 'cover'
+                /** @var 'cover'|'contain'|'auto' */
+                'objectFit' => 'cover',
             ],
             'coverVideo' => [
-                /** @type 'left' | 'center' | 'right' */
+                /** @var 'left'|'center'|'right' */
                 'objectPosX' => 'center',
-                /** @type 'top' | 'center' | 'bottom' */
+                /** @var 'top'|'center'|'bottom' */
                 'objectPosY' => 'center',
-                /** @type 'cover' | 'contain' | 'auto' */
-                'objectFit' => 'cover'
+                /** @var 'cover'|'contain'|'auto' */
+                'objectFit' => 'cover',
             ],
             'headline' => [
-                'fontSize' => 20
+                'fontSize' => 20,
             ],
             'description' => [
-                'fontSize' => 14
+                'fontSize' => 14,
             ],
             'button' => [
-                'size' => 'default'
-            ]
+                'size' => 'default',
+            ],
         ];
 
         if ($replace !== null && \count($replace) > 0) {

@@ -1,6 +1,6 @@
-import template from './template.html.twig'
+import template from './template.html.twig';
 
-const { Component, Mixin, Store } = Shopware 
+const { Component, Mixin, Store } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
@@ -12,29 +12,28 @@ export default Component.wrapComponentConfig({
     ],
 
     computed: {
-
-        elysiumSlide () {
-            return Store.get('elysiumSlide')
+        elysiumSlide() {
+            return Store.get('elysiumSlide');
         },
 
-        elysiumUI () {
-            return Store.get('elysiumUI')
+        elysiumUI() {
+            return Store.get('elysiumUI');
         },
 
-        slide () {
-            return this.elysiumSlide.slide
+        slide() {
+            return this.elysiumSlide.slide;
         },
 
-        device () {
-            return this.elysiumUI.device
+        device() {
+            return this.elysiumUI.device;
         },
 
-        slideViewportSettings () {
-            return this.slide.slideSettings.viewports[this.device]
+        slideViewportSettings() {
+            return this.slide.slideSettings.viewports[this.device];
         },
     },
 
-    created () {
-        this.viewportsSettings = this.slide.slideSettings.viewports
-    }
-})
+    created() {
+        this.viewportsSettings = this.slide.slideSettings.viewports;
+    },
+});

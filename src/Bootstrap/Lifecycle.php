@@ -4,28 +4,24 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Bootstrap;
 
+use Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210\Updater as Version210Updater;
+use Blur\BlurElysiumSlider\Defaults;
 use Doctrine\DBAL\Connection;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Shopware\Administration\Notification\NotificationService;
+use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderCollection;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
-use Shopware\Administration\Notification\NotificationService;
-use Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210\Updater as Version210Updater;
-use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\Migration\Traits\EnsureThumbnailSizesTrait;
-
-use Blur\BlurElysiumSlider\Defaults;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Lifecycle
 {
     use EnsureThumbnailSizesTrait;
 
-    /**
-     * @var NotificationService $notificationService
-     */
     private NotificationService $notificationService;
 
     public function __construct(
@@ -74,22 +70,37 @@ class Lifecycle
         $this->removeDatabaseTables();
     }
 
+    public function getMediaThumbnailSizesIds(): ?array
+    {
+        $thumbnailSizeIds = null;
+
+        $thumbnailSizeIds = $this->ensureThumbnailSizes(Defaults::MEDIA_THUMBNAIL_SIZES, $this->container->get(Connection::class));
+
+        if (\count($thumbnailSizeIds) > 0) {
+            $thumbnailSizeIds = array_map(function ($thumbnailSize) {
+                return ['id' => bin2hex($thumbnailSize)];
+            }, $thumbnailSizeIds);
+        }
+
+        return $thumbnailSizeIds;
+    }
+
     private function removeDatabaseTables(): void
     {
         $connection = $this->container->get(Connection::class);
 
-        /** 
+        /**
          * Delete media folder with dependencies
          */
         try {
-            $connection->executeStatement("
-                DELETE mf, mdf, mfc 
+            $connection->executeStatement('
+                DELETE mf, mdf, mfc
                 FROM media_folder mf
                 JOIN media_default_folder mdf ON mf.default_folder_id = mdf.id
                 JOIN media_folder_configuration mfc ON mf.media_folder_configuration_id = mfc.id
-                WHERE mf.id = UNHEX(:mediaFolderId) 
-            ", [
-                'mediaFolderId' => Defaults::MEDIA_FOLDER_ID
+                WHERE mf.id = UNHEX(:mediaFolderId)
+            ', [
+                'mediaFolderId' => Defaults::MEDIA_FOLDER_ID,
             ]);
         } catch (\Exception $e) {
             throw new \RuntimeException('Failed to remove tables and data: ' . $e->getMessage());
@@ -108,7 +119,6 @@ class Lifecycle
     private function createMediaFolder(
         Context $context
     ): void {
-
         /** @var EntityRepository<MediaFolderCollection> $mediaFolderRepositroy */
         $mediaFolderRepositroy = $this->container->get('media_folder.repository');
 
@@ -119,7 +129,7 @@ class Lifecycle
 
         /** @var EntitySearchResult $searchMediaFolder */
         $searchMediaFolder = $mediaFolderRepositroy->search($searchCriteria, $context);
-        /** @var Array<'id', string>|null $thumbnailSizeIds */
+        /** @var array<'id', string>|null $thumbnailSizeIds */
         $thumbnailSizeIds = $this->getMediaThumbnailSizesIds();
 
         /**
@@ -140,26 +150,11 @@ class Lifecycle
                             'createThumbnails' => true,
                             'keepAspectRatio' => true,
                             'mediaThumbnailSizes' => $thumbnailSizeIds,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 $context
             );
         }
-    }
-
-    function getMediaThumbnailSizesIds(): ?array
-    {
-        $thumbnailSizeIds = null;
-
-        $thumbnailSizeIds = $this->ensureThumbnailSizes(Defaults::MEDIA_THUMBNAIL_SIZES, $this->container->get(Connection::class));
-
-        if (count($thumbnailSizeIds) > 0) {
-            $thumbnailSizeIds = array_map(function ($thumbnailSize) {
-                return ['id' => bin2hex($thumbnailSize)];
-            }, $thumbnailSizeIds);
-        }
-
-        return $thumbnailSizeIds;
     }
 }

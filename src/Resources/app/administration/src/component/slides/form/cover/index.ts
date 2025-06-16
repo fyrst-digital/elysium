@@ -1,7 +1,7 @@
-import slide from '../slide'
-import template from './template.html.twig'
+import slide from '../slide';
+import template from './template.html.twig';
 
-const { Component, Mixin, Store, Context } = Shopware 
+const { Component, Mixin, Store, Context } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
@@ -9,179 +9,179 @@ export default Component.wrapComponentConfig({
     mixins: [
         Mixin.getByName('notification'),
         Mixin.getByName('blur-device-utilities'),
-        Mixin.getByName('blur-style-utilities')
+        Mixin.getByName('blur-style-utilities'),
     ],
 
-    inject: [
-        'repositoryFactory',
-        'acl'
-    ],
+    inject: ['repositoryFactory', 'acl'],
 
-    data () {
+    data() {
         return {
             activeTab: 'coverImage',
             slideCoverMapping: {
                 mobile: 'slideCoverMobile',
                 tablet: 'slideCoverTablet',
-                desktop: 'slideCover'
+                desktop: 'slideCover',
             },
             mediaLoading: false,
             mediaModal: {
                 open: false,
-                type: null
-            }
-        }
+                type: null,
+            },
+        };
     },
 
     computed: {
-
-        elysiumUI () {
-            return Store.get('elysiumUI')
+        elysiumUI() {
+            return Store.get('elysiumUI');
         },
 
-        slide () {
-            return Store.get('elysiumSlide').slide
+        slide() {
+            return Store.get('elysiumSlide').slide;
         },
 
-        device () {
-            return this.elysiumUI.device
+        device() {
+            return this.elysiumUI.device;
         },
 
-        mediaSidebar () {
-            return this.elysiumUI.mediaSidebar
+        mediaSidebar() {
+            return this.elysiumUI.mediaSidebar;
         },
 
-        mediaRepository () {
-            return this.repositoryFactory.create('media')
+        mediaRepository() {
+            return this.repositoryFactory.create('media');
         },
 
-        slideViewportSettings () {
-            return this.slide.slideSettings.viewports[this.device]
+        slideViewportSettings() {
+            return this.slide.slideSettings.viewports[this.device];
         },
 
-        tabs () {
+        tabs() {
             return [
                 {
-                    label: this.$tc('blurElysiumSlides.forms.slideCoverImage.label'),
+                    label: this.$tc(
+                        'blurElysiumSlides.forms.slideCoverImage.label'
+                    ),
                     name: 'coverImage',
                 },
                 {
-                    label: this.$tc('blurElysiumSlides.forms.slideCoverVideo.label'),
+                    label: this.$tc(
+                        'blurElysiumSlides.forms.slideCoverVideo.label'
+                    ),
                     name: 'coverVideo',
                 },
-            ]
+            ];
         },
 
-        slideCoverUploadTag () {
+        slideCoverUploadTag() {
             const uploadTag = {
                 mobile: 'blur-elysium-slide-cover-mobile',
                 tablet: 'blur-elysium-slide-cover-tablet',
-                desktop: 'blur-elysium-slide-cover'
-            }
+                desktop: 'blur-elysium-slide-cover',
+            };
 
-            return uploadTag[this.device]
+            return uploadTag[this.device];
         },
 
-        slideCover () {
-            return this.slide[this.slideCoverMapping[this.device]] ?? null
+        slideCover() {
+            return this.slide[this.slideCoverMapping[this.device]] ?? null;
         },
 
-        slideCoverProp () {
-            return this.slideCoverMapping[this.device]
+        slideCoverProp() {
+            return this.slideCoverMapping[this.device];
         },
 
-        slideCoverVideo () {
-            return this.slide.slideCoverVideo ?? null
+        slideCoverVideo() {
+            return this.slide.slideCoverVideo ?? null;
         },
 
-        coverVideoUploadElement () {
-            return this.$refs.coverVideoUpload ?? null
+        coverVideoUploadElement() {
+            return this.$refs.coverVideoUpload ?? null;
         },
 
         permissionView() {
-            return this.acl.can('blur_elysium_slides.viewer')
+            return this.acl.can('blur_elysium_slides.viewer');
         },
 
         permissionCreate() {
-            return this.acl.can('blur_elysium_slides.creator')
+            return this.acl.can('blur_elysium_slides.creator');
         },
 
         permissionEdit() {
-            return this.acl.can('blur_elysium_slides.editor')
+            return this.acl.can('blur_elysium_slides.editor');
         },
 
         permissionDelete() {
-            return this.acl.can('blur_elysium_slides.deleter')
+            return this.acl.can('blur_elysium_slides.deleter');
         },
     },
 
     methods: {
+        setSlideCover(media: any, isVideo: boolean = false) {
+            this.mediaLoading = true;
 
-        setSlideCover (media: any, isVideo: boolean = false) {
-            this.mediaLoading = true
-
-            let mediaId = media.id || media.targetId || null
-            let mediaProp = isVideo ===  true ? 'slideCoverVideo' : this.slideCoverProp
+            let mediaId = media.id || media.targetId || null;
+            let mediaProp =
+                isVideo === true ? 'slideCoverVideo' : this.slideCoverProp;
 
             if (mediaId === null) {
                 // throw error message because mediaId is null
-                console.error('mediaId is null. Slide cover media can not be set.')
-                this.mediaLoading = false
+                console.error(
+                    'mediaId is null. Slide cover media can not be set.'
+                );
+                this.mediaLoading = false;
             } else {
                 // mediaId is provided handle media assignment
-                this.slide[`${mediaProp}Id`] = mediaId
+                this.slide[`${mediaProp}Id`] = mediaId;
 
                 if (media.path) {
-
                     // The media already exists in the system no need to fetch it. Use the already existing media object
                     this.slide[mediaProp] = media;
-                    this.mediaLoading = false
+                    this.mediaLoading = false;
                 } else {
-
                     // The media does not exist in the system. Fetch the media object from media repository
-                    this.mediaRepository.get(
-                        mediaId,
-                        Context.api
-                    ).then((media) => {
-                        this.slide[mediaProp] = media;
-                        this.mediaLoading = false
-                    }).catch((exception) => {
-                        console.error(exception)
-                        this.mediaLoading = false
-                    })
+                    this.mediaRepository
+                        .get(mediaId, Context.api)
+                        .then((media) => {
+                            this.slide[mediaProp] = media;
+                            this.mediaLoading = false;
+                        })
+                        .catch((exception) => {
+                            console.error(exception);
+                            this.mediaLoading = false;
+                        });
                 }
             }
         },
 
-        removeSlideCover (isVideo: boolean = false) {
-            let mediaProp = isVideo ===  true ? 'slideCoverVideo' : this.slideCoverProp
+        removeSlideCover(isVideo: boolean = false) {
+            let mediaProp =
+                isVideo === true ? 'slideCoverVideo' : this.slideCoverProp;
             this.slide[`${mediaProp}Id`] = null;
             this.slide[mediaProp] = null;
         },
 
-        openMediaModal (type: string = 'slideCover') {
-            this.mediaModal.open = true
-            this.mediaModal.type = type
+        openMediaModal(type: string = 'slideCover') {
+            this.mediaModal.open = true;
+            this.mediaModal.type = type;
         },
 
-        closeMediaModal () {
-            this.mediaModal.open = false
-            this.mediaModal.type = null
+        closeMediaModal() {
+            this.mediaModal.open = false;
+            this.mediaModal.type = null;
         },
 
-        onAddMediaModal (payload) {
-            
+        onAddMediaModal(payload) {
             if (payload.length > 0) {
                 if (this.mediaModal.type === 'slideCover') {
-                    this.setSlideCover(payload[0])
+                    this.setSlideCover(payload[0]);
                 } else if (this.mediaModal.type === 'slideCoverVideo') {
-                    this.setSlideCover(payload[0], true)
+                    this.setSlideCover(payload[0], true);
                 }
             }
-        }
+        },
     },
 
-    created () {
-        this.viewportsSettings = this.slide.slideSettings.viewports
+    created() {
+        this.viewportsSettings = this.slide.slideSettings.viewports;
     },
-})
+});

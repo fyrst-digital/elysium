@@ -4,11 +4,21 @@
     background: {
         repeat: no-repeat;
         color: var(--slide-bg-color, transparent);
-        image: var(--slide-bg-image, linear-gradient(var(--slide-gradient-deg, 45deg), var(--slide-gradient-color-start, transparent), var(--slide-gradient-color-end, transparent)));
-    };
+        image: var(
+            --slide-bg-image,
+            linear-gradient(
+                var(--slide-gradient-deg, 45deg),
+                var(--slide-gradient-color-start, transparent),
+                var(--slide-gradient-color-end, transparent)
+            )
+        );
+    }
     border-radius: var(--slide-border-radius, 0px);
     aspect-ratio: var(--slide-aspect-ratio, auto);
-    padding: calc(var(--slide-padding-y, 15px) + var(--slide-padding-offset-y, 0px)) calc(var(--slide-padding-x, 15px) + var(--slide-padding-offset-x, 0px));
+    padding: calc(
+            var(--slide-padding-y, 15px) + var(--slide-padding-offset-y, 0px)
+        )
+        calc(var(--slide-padding-x, 15px) + var(--slide-padding-offset-x, 0px));
     align-items: var(--slide-align-items, center);
     justify-content: var(--slide-justify-content, center);
     max-height: var(--slide-max-height);
@@ -27,7 +37,8 @@
     user-select: none;
     z-index: 1;
     object-fit: var(--cover-object-fit, cover);
-    object-position: var(--cover-object-pos-x, center) var(--cover-object-pos-y, center);
+    object-position: var(--cover-object-pos-x, center)
+        var(--cover-object-pos-y, center);
 }
 
 .blur-elysium-slide-container-wrapper {
@@ -39,7 +50,7 @@
     position: relative;
     z-index: 5;
     display: var(--container-display, flex);
-    flex-direction: var(--container-direction,row);
+    flex-direction: var(--container-direction, row);
     flex-wrap: var(--container-flex-wrap, nowrap);
     gap: var(--container-gap, 20px);
     justify-content: var(--container-justify-content, normal);
@@ -49,7 +60,7 @@
     border-radius: var(--container-border-radius, 0px);
     background: {
         color: var(--container-bg-color, transparent);
-    };
+    }
     overflow: hidden;
     flex-basis: 100%;
     width: 100%;

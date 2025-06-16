@@ -17,17 +17,17 @@ module.exports = (webpack) => {
     return {
         resolve: {
             alias: {
-                blurElysium: path.join(__dirname, '..', 'src')
+                blurElysium: path.join(__dirname, '..', 'src'),
             },
-            plugins: [new TsconfigPathsPlugin()]
+            plugins: [new TsconfigPathsPlugin()],
         },
         module: {
             rules: [
                 {
                     test: /\.svg/,
-                    type: 'asset/source'
-                }
-            ]
-        }
+                    type: 'asset/source',
+                },
+            ],
+        },
     };
 };

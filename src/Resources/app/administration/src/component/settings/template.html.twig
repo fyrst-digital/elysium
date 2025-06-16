@@ -1,5 +1,4 @@
 <sw-page>
-
     <template #smart-bar-back>
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         <router-link
@@ -43,26 +42,23 @@
     </template>
 
     <template #content>
-
         <sw-card-view>
-
             <sw-system-config
                 ref="systemConfig"
                 sales-channel-switchable
-                domain="BlurElysiumSlider.breakpoints">
-
+                domain="BlurElysiumSlider.breakpoints"
+            >
                 <template #beforeElements="{ card, config }">
                     <div
-                        v-html="$tc('blurElysium.settings.breakpointsDescription')" 
+                        v-html="$tc('blurElysium.settings.breakpointsDescription')"
                         :style="{
                             fontSize: '14px',
                             lineHeight: '1.5',
                             marginBottom: '30px'
-                        }"/>
+                        }"
+                    />
                 </template>
-
             </sw-system-config>
-
         </sw-card-view>
     </template>
 </sw-page>
