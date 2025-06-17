@@ -1,6 +1,9 @@
 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_cms_section_content %}
     <template v-if="section.type === 'blur-elysium-section'">
+        <div class="blur-elysium-cms-slide-skeleton-badge">
+            {{ $tc('blurElysiumSection.label') }}
+        </div>
         <blur-elysium-cms-section
             @on-add-block="openBlockBar"
             @on-select-block="onBlockSelection"

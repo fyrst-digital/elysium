@@ -1,3 +1,7 @@
+.sw-cms-section__wrapper {
+    position: relative;
+}
+
 .blur-elysium-section-grid {
     &.is--valid-drop {
         background-color: var(--color-shopware-brand-50);
@@ -6,10 +10,8 @@
 
 .blur-elysium-section-block {
     position: relative;
-    grid-column: var(--blur-elysium-section-block-col-start, auto) / span
-        var(--blur-elysium-section-block-col-end, 12);
-    grid-row: var(--blur-elysium-section-block-row-start, 1) / span
-        var(--blur-elysium-section-block-row-end, auto);
+    grid-column: var(--blur-elysium-section-block-col-start, auto) / span var(--blur-elysium-section-block-col-end, 12);
+    grid-row: var(--blur-elysium-section-block-row-start, 1) / span var(--blur-elysium-section-block-row-end, auto);
     order: var(--blur-elysium-section-block-order, 9999);
     position: relative;
 
@@ -53,10 +55,8 @@
     height: 100%;
     z-index: 100;
     width: 4px;
-    background-color: var(
-        --block-resizer-bg,
-        var(--color-interaction-primary-default)
-    );
+    background-color: var(--block-resizer-bg,
+            var(--color-interaction-primary-default));
     border-radius: 0 44px 44px 0;
     opacity: 0;
     transition: all 200ms;
