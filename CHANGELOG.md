@@ -1,3 +1,9 @@
+# 4.1.0
+
+## Changelog
+- Alt and title attributes have been added to the slide cover. Additionally, alternative alt and title texts can be assigned in the slide cover settings
+- CSS classes can now be assigned to slider and banner elements
+
 # 4.0.0
 
 ## Release Notes
