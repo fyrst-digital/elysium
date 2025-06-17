@@ -1,0 +1,2 @@
+const t=`<div :class="['blur-detail-view']"> <div :class="['blur-detail-view-start']"> <div :class="['blur-detail-view-start-wrapper']" :style="startWrapperStyles" > <slot name="start"/> </div> </div> <div :class="['blur-detail-view-content']"> <slot name="content"/> </div> <div :class="['blur-detail-view-end']" :style="endStyles" > <slot name="end"/> </div> </div>`,{Component:e}=Shopware,a=e.wrapComponentConfig({template:t,setup(){return{startWrapperStyles:{position:"sticky",top:"40px"}}}});export{a as default};
+//# sourceMappingURL=index-Dk22xYFF.js.map

@@ -259,6 +259,16 @@
                 "label": "Cover video",
                 "description": "Add a video as Slide background. The Cover video applies to all views. Valid video formats are mp4"
             },
+            "slideCoverMeta": {
+                "label": "Cover Meta",
+                "description": "Add alternative alt and title texts. This is useful when you use more than one image as a cover. This way you have finer control over these texts.",
+                "alt": {
+                    "label": "Alt text"
+                },
+                "title": {
+                    "label": "Title"
+                }
+            },
             "displaySlide": {
                 "label": "Slide",
                 "description": "These settings affect the slide itself.",

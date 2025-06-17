@@ -6,7 +6,7 @@
     "isDynamicEntry": true
   },
   "component/cms/blocks/blur-elysium-banner/preview/index.ts": {
-    "file": "assets/index-DfztRisn.js",
+    "file": "assets/index-5zmLKS6n.js",
     "name": "index",
     "src": "component/cms/blocks/blur-elysium-banner/preview/index.ts",
     "isDynamicEntry": true
@@ -18,7 +18,7 @@
     "isDynamicEntry": true
   },
   "component/cms/blocks/blur-elysium-slider/preview/index.ts": {
-    "file": "assets/index-PLAjWca0.js",
+    "file": "assets/index-9hL9uo5v.js",
     "name": "index",
     "src": "component/cms/blocks/blur-elysium-slider/preview/index.ts",
     "isDynamicEntry": true
@@ -30,13 +30,13 @@
     "isDynamicEntry": true
   },
   "component/cms/elements/blur-elysium-banner/config/index.ts": {
-    "file": "assets/index-Bzco55ZW.js",
+    "file": "assets/index-BqC0e0oO.js",
     "name": "index",
     "src": "component/cms/elements/blur-elysium-banner/config/index.ts",
     "isDynamicEntry": true
   },
   "component/cms/elements/blur-elysium-banner/preview/index.ts": {
-    "file": "assets/index-CU9hDNwy.js",
+    "file": "assets/index-CHCWaNtd.js",
     "name": "index",
     "src": "component/cms/elements/blur-elysium-banner/preview/index.ts",
     "isDynamicEntry": true
@@ -48,46 +48,46 @@
     "isDynamicEntry": true
   },
   "component/cms/elements/blur-elysium-slider/config/arrows/index.ts": {
-    "file": "assets/index-D0rxwZZz.js",
+    "file": "assets/index-Dqy8EUxT.js",
     "name": "index",
     "src": "component/cms/elements/blur-elysium-slider/config/arrows/index.ts",
     "isDynamicEntry": true
   },
   "component/cms/elements/blur-elysium-slider/config/navigation/index.ts": {
-    "file": "assets/index-DaCuDwPI.js",
+    "file": "assets/index-DumwQYBc.js",
     "name": "index",
     "src": "component/cms/elements/blur-elysium-slider/config/navigation/index.ts",
     "isDynamicEntry": true
   },
   "component/cms/elements/blur-elysium-slider/config/sizing/index.ts": {
-    "file": "assets/index-BhVaxB5i.js",
+    "file": "assets/index-lL-72_yt.js",
     "name": "index",
     "src": "component/cms/elements/blur-elysium-slider/config/sizing/index.ts",
     "isDynamicEntry": true
   },
   "component/cms/elements/blur-elysium-slider/preview/index.ts": {
-    "file": "assets/index-D-yLnmVX.js",
+    "file": "assets/index-Dhr6aCU2.js",
     "name": "index",
     "src": "component/cms/elements/blur-elysium-slider/preview/index.ts",
     "isDynamicEntry": true
   },
   "component/cms/section/add-block/index.ts": {
-    "file": "assets/index-BUfEjuTz.js",
+    "file": "assets/index-CCIJ6cIZ.js",
     "name": "index",
     "src": "component/cms/section/add-block/index.ts",
     "isDynamicEntry": true,
     "css": [
-      "assets/index-C6qeIuck.css"
+      "assets/index-C_nPNVGt.css"
     ]
   },
   "component/cms/section/block-settings/index.ts": {
-    "file": "assets/index-G6jVZbka.js",
+    "file": "assets/index-D34KgZjm.js",
     "name": "index",
     "src": "component/cms/section/block-settings/index.ts",
     "isDynamicEntry": true
   },
   "component/cms/section/index.ts": {
-    "file": "assets/index-VZblct4Q.js",
+    "file": "assets/index-C11JJEoL.js",
     "name": "index",
     "src": "component/cms/section/index.ts",
     "isDynamicEntry": true,
@@ -96,7 +96,7 @@
     ]
   },
   "component/cms/section/settings/index.ts": {
-    "file": "assets/index-DmMx2AM6.js",
+    "file": "assets/index-C3hjvJYQ.js",
     "name": "index",
     "src": "component/cms/section/settings/index.ts",
     "isDynamicEntry": true
@@ -108,19 +108,19 @@
     "isDynamicEntry": true
   },
   "component/form/device-number-input/index.ts": {
-    "file": "assets/index-MnbfeHjV.js",
+    "file": "assets/index-lljiMCqX.js",
     "name": "index",
     "src": "component/form/device-number-input/index.ts",
     "isDynamicEntry": true
   },
   "component/form/device-select-input/index.ts": {
-    "file": "assets/index-CCMyxJ5o.js",
+    "file": "assets/index-Cx6GL-2l.js",
     "name": "index",
     "src": "component/form/device-select-input/index.ts",
     "isDynamicEntry": true
   },
   "component/form/device-switch/index.ts": {
-    "file": "assets/index-BGjWQznX.js",
+    "file": "assets/index-CWjqad5D.js",
     "name": "index",
     "src": "component/form/device-switch/index.ts",
     "isDynamicEntry": true,
@@ -129,13 +129,13 @@
     ]
   },
   "component/form/number-input/index.ts": {
-    "file": "assets/index-BDXksAKt.js",
+    "file": "assets/index-kxB4NsIK.js",
     "name": "index",
     "src": "component/form/number-input/index.ts",
     "isDynamicEntry": true
   },
   "component/form/select-input/index.ts": {
-    "file": "assets/index-baZw_LP2.js",
+    "file": "assets/index-AEvpVZdq.js",
     "name": "index",
     "src": "component/form/select-input/index.ts",
     "isDynamicEntry": true
@@ -153,73 +153,73 @@
     "isDynamicEntry": true
   },
   "component/settings/index.ts": {
-    "file": "assets/index-bIVlb8-t.js",
+    "file": "assets/index-CM-zaB-y.js",
     "name": "index",
     "src": "component/settings/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/detail/index.ts": {
-    "file": "assets/index-BUCYU87I.js",
+    "file": "assets/index-qKhEkANG.js",
     "name": "index",
     "src": "component/slides/detail/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/form/container/index.ts": {
-    "file": "assets/index-BxPxW29O.js",
+    "file": "assets/index-DumFo28b.js",
     "name": "index",
     "src": "component/slides/form/container/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/form/content/index.ts": {
-    "file": "assets/index-BSVOFcie.js",
+    "file": "assets/index-Dev9IH72.js",
     "name": "index",
     "src": "component/slides/form/content/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/form/cover/index.ts": {
-    "file": "assets/index-2WycJoQK.js",
+    "file": "assets/index-BRxE3VBN.js",
     "name": "index",
     "src": "component/slides/form/cover/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/form/custom-fields/index.ts": {
-    "file": "assets/index-CiTt3xtT.js",
+    "file": "assets/index-DS0hnl2R.js",
     "name": "index",
     "src": "component/slides/form/custom-fields/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/form/custom-template-file/index.ts": {
-    "file": "assets/index-JxsHEPhL.js",
+    "file": "assets/index-uCf3hwdM.js",
     "name": "index",
     "src": "component/slides/form/custom-template-file/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/form/focus-image/index.ts": {
-    "file": "assets/index-Bl_dWtTn.js",
+    "file": "assets/index-roblNq33.js",
     "name": "index",
     "src": "component/slides/form/focus-image/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/form/general/index.ts": {
-    "file": "assets/index-aa6PtKsU.js",
+    "file": "assets/index-B-Hl7d9_.js",
     "name": "index",
     "src": "component/slides/form/general/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/form/linking/index.ts": {
-    "file": "assets/index-CRbSJox-.js",
+    "file": "assets/index-N01wY8hy.js",
     "name": "index",
     "src": "component/slides/form/linking/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/form/slide/index.ts": {
-    "file": "assets/index-Dpb4jUEu.js",
+    "file": "assets/index-DlFEnXrZ.js",
     "name": "index",
     "src": "component/slides/form/slide/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/overview/index.ts": {
-    "file": "assets/index-CjFSGGj3.js",
+    "file": "assets/index-BGy8M4cJ.js",
     "name": "index",
     "src": "component/slides/overview/index.ts",
     "isDynamicEntry": true,
@@ -228,31 +228,31 @@
     ]
   },
   "component/slides/section/advanced/index.ts": {
-    "file": "assets/index-B-Z-XYmY.js",
+    "file": "assets/index-ChPEKGqQ.js",
     "name": "index",
     "src": "component/slides/section/advanced/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/section/base/index.ts": {
-    "file": "assets/index-BGdSt3MD.js",
+    "file": "assets/index-DzWhYqNQ.js",
     "name": "index",
     "src": "component/slides/section/base/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/section/display/index.ts": {
-    "file": "assets/index-BdxFdZjE.js",
+    "file": "assets/index-BLp4QztG.js",
     "name": "index",
     "src": "component/slides/section/display/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/section/media/index.ts": {
-    "file": "assets/index-DMYyY1E3.js",
+    "file": "assets/index-Dn1p3Qrh.js",
     "name": "index",
     "src": "component/slides/section/media/index.ts",
     "isDynamicEntry": true
   },
   "component/utilities/block-two-col-config/index.ts": {
-    "file": "assets/index-v6Emio2O.js",
+    "file": "assets/index-Q9F68f_v.js",
     "name": "index",
     "src": "component/utilities/block-two-col-config/index.ts",
     "isDynamicEntry": true
@@ -276,13 +276,13 @@
     ]
   },
   "component/utilities/column/index.ts": {
-    "file": "assets/index-B63bXtqk.js",
+    "file": "assets/index-DD0L4O9l.js",
     "name": "index",
     "src": "component/utilities/column/index.ts",
     "isDynamicEntry": true
   },
   "component/utilities/detail-view/index.ts": {
-    "file": "assets/index-DIV5wDRv.js",
+    "file": "assets/index-Dk22xYFF.js",
     "name": "index",
     "src": "component/utilities/detail-view/index.ts",
     "isDynamicEntry": true,
@@ -291,13 +291,13 @@
     ]
   },
   "component/utilities/icon/index.ts": {
-    "file": "assets/index-Kofg-NZG.js",
+    "file": "assets/index-DQu0_3iI.js",
     "name": "index",
     "src": "component/utilities/icon/index.ts",
     "isDynamicEntry": true
   },
   "component/utilities/section/index.ts": {
-    "file": "assets/index-C3u5wTvN.js",
+    "file": "assets/index-C4FD9Hzb.js",
     "name": "index",
     "src": "component/utilities/section/index.ts",
     "isDynamicEntry": true,
@@ -306,13 +306,13 @@
     ]
   },
   "component/utilities/slide-search/index.ts": {
-    "file": "assets/index-BXZcOX7g.js",
+    "file": "assets/index-CAe1BfEA.js",
     "name": "index",
     "src": "component/utilities/slide-search/index.ts",
     "isDynamicEntry": true
   },
   "component/utilities/slide-selection/index.ts": {
-    "file": "assets/index-BHeFX_RW.js",
+    "file": "assets/index-C_izb6qf.js",
     "name": "index",
     "src": "component/utilities/slide-selection/index.ts",
     "isDynamicEntry": true,
@@ -327,7 +327,7 @@
     "isDynamicEntry": true
   },
   "extension/sw-cms-stage-section-selection/index.ts": {
-    "file": "assets/index-B2Nrq3pD.js",
+    "file": "assets/index-CCjc1hpM.js",
     "name": "index",
     "src": "extension/sw-cms-stage-section-selection/index.ts",
     "isDynamicEntry": true,
@@ -336,7 +336,7 @@
     ]
   },
   "extension/sw-media-quickinfo-usage/index.ts": {
-    "file": "assets/index-C5Ve5o9E.js",
+    "file": "assets/index-BTqG6aua.js",
     "name": "index",
     "src": "extension/sw-media-quickinfo-usage/index.ts",
     "isDynamicEntry": true,
@@ -348,13 +348,13 @@
     ]
   },
   "extension/sw-search-bar-item/index.ts": {
-    "file": "assets/index-9g80yi2f.js",
+    "file": "assets/index-BJzcjUE5.js",
     "name": "index",
     "src": "extension/sw-search-bar-item/index.ts",
     "isDynamicEntry": true
   },
   "main.ts": {
-    "file": "assets/blur-elysium-slider-BFLSz6w5.js",
+    "file": "assets/blur-elysium-slider-CaHpTOud.js",
     "name": "blur-elysium-slider",
     "src": "main.ts",
     "isEntry": true,

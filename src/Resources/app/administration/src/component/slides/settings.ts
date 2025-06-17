@@ -1,8 +1,8 @@
-import { SlideSettings, ViewportConfig } from '@elysium/types/slide';
+import { SlideSettings, ContentSettings, ViewportConfig } from '@elysium/types/slide';
 
 /**
  * @todo
- * - add typed `TranslationSettings`
+ * - add typed `ContentSettings`
  * - change current default to named export
  */
 
@@ -60,7 +60,7 @@ function defineViewportConfig(
     );
 }
 
-export default <SlideSettings>{
+export const defaultSlideSettings: SlideSettings = {
     slide: {
         headline: {
             color: '',
@@ -120,3 +120,10 @@ export default <SlideSettings>{
     slideTemplate: 'default',
     customTemplateFile: null,
 };
+
+export const defaultContentSettings: ContentSettings = {
+    slideCover: {
+        alt: null,
+        title: null,
+    },
+}

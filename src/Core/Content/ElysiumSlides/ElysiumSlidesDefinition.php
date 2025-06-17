@@ -75,6 +75,7 @@ class ElysiumSlidesDefinition extends EntityDefinition
             (new TranslatedField('buttonLabel'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('url'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('customFields'))->addFlags(new ApiAware()),
+            (new TranslatedField('contentSettings'))->addFlags(new ApiAware()),
             (new TranslationsAssociationField(
                 ElysiumSlidesTranslationDefinition::class,
                 'blur_elysium_slides_id'

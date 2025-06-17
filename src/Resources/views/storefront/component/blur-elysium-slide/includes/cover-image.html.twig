@@ -26,6 +26,20 @@
         {% set slideCoverTitle = slideCoverDefault.title|default(null) %}
         {% set slideCoverLabel = slideCoverDefault.alt|default(null) %}
 
+        {% if slideData.translated.contentSettings.slideCover.alt %}
+            {% set slideCoverAlt = slideData.translated.contentSettings.slideCover.alt %}
+            {% set slideCoverLabel = slideData.translated.contentSettings.slideCover.alt %}
+        {% endif %}
+
+        {% if slideData.translated.contentSettings.slideCover.title %}
+            {% set slideCoverTitle = slideData.translated.contentSettings.slideCover.title %}
+        {% endif %}
+
+        {% set blurElysiumBreakpoints = {
+            mobile: 'mobile',
+            tablet: 'tablet',
+            desktop: 'desktop'
+        } %}
         {% block blur_elysium_slide_cover_image_picture %}
             <picture 
                 class="blur-elysium-slide-cover-picture">

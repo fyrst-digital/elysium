@@ -69,6 +69,12 @@ export default Component.wrapComponentConfig({
                     ),
                     name: 'coverVideo',
                 },
+                {
+                    label: this.$tc(
+                        'blurElysiumSlides.forms.slideCoverMeta.label'
+                    ),
+                    name: 'coverMeta',
+                },
             ];
         },
 

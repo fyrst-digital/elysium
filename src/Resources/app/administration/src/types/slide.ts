@@ -123,3 +123,10 @@ export interface SlideSettings {
     slideTemplate: SlideTemplate;
     customTemplateFile: CustomTemplateFile;
 }
+
+export interface ContentSettings {
+    slideCover: {
+        alt: string | null;
+        title: string | null;
+    }
+}

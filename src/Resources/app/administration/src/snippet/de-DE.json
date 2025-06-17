@@ -251,13 +251,23 @@
                 "label": "Cover Bild",
                 "description": "Füge ein Bild als Slide Hintergrund hinzu. Das Cover Bild kann für Smartphone-, Tablet- und Desktop-Ansicht definiert werden. Das Desktop Bild dient als Standard. Gültige Bildformate sind jpg, png, webp, svg, avif"
             },
-            "slideFocusImage": {
-                "label": "Fokusbild",
-                "description": "Das Fokusbild wird als separates Bild neben dem Inhaltsbereich angezeigt."
-            },
             "slideCoverVideo": {
                 "label": "Cover Video",
                 "description": "Füge ein Video als Slide Hintergrund hinzu. Das Cover Video gilt für alle Ansichten. Gültige Videoformate sind mp4"
+            },
+            "slideCoverMeta": {
+                "label": "Cover Meta",
+                "description": "Füge alternative Alt und Title Texte hinzu. Dies ist sinnvoll wenn du mehr als ein Bild als Cover verwendest. Somit hast du eine feinere Kontrolle über diese Texte.",
+                "alt": {
+                    "label": "Alt-Text"
+                },
+                "title": {
+                    "label": "Titel"
+                }
+            },
+            "slideFocusImage": {
+                "label": "Fokusbild",
+                "description": "Das Fokusbild wird als separates Bild neben dem Inhaltsbereich angezeigt."
             },
             "displaySlide": {
                 "label": "Slide",

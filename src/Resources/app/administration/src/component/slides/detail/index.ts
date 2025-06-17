@@ -1,4 +1,4 @@
-import defaultSlideSettings from '@elysium/component/slides/settings';
+import { defaultSlideSettings, defaultContentSettings } from '@elysium/component/slides/settings';
 import template from './template.html.twig';
 
 const { Component, Context, Mixin, Data, Utils, Store } = Shopware;
@@ -56,6 +56,7 @@ export default Component.wrapComponentConfig({
     data() {
         return {
             defaultSlideSettings: structuredClone(defaultSlideSettings),
+            defaultContentSettings: structuredClone(defaultContentSettings),
             showDeleteModal: false,
             isLoading: true,
             isSaved: false,
@@ -205,8 +206,12 @@ export default Component.wrapComponentConfig({
         createSlide() {
             this.context.resetLanguageToDefault();
             const slide = this.slidesRepository.create(Context.api);
-            Object.assign(slide, { slideSettings: this.defaultSlideSettings });
+            Object.assign(slide, { 
+                slideSettings: this.defaultSlideSettings,
+                contentSettings: this.defaultContentSettings
+            });
             this.elysiumSlide.setSlide(slide);
+            console.log('new slider', this.slide)
             this.isLoading = false;
         },
 
@@ -225,15 +230,25 @@ export default Component.wrapComponentConfig({
         },
 
         loadSlide() {
+
             this.slidesRepository
                 .get(this.slideId, Context.api, new Criteria())
                 .then((slide) => {
-                    const mergedSlideSettings = Utils.object.deepMergeObject(
-                        this.defaultSlideSettings,
-                        slide.slideSettings
-                    );
-                    slide.slideSettings = mergedSlideSettings;
-                    this.elysiumSlide.setSlide(slide);
+                    // const mergedSlideSettings = Utils.object.deepMergeObject(
+                    //     this.defaultSlideSettings,
+                    //     slide.slideSettings
+                    // );
+                    // slide.slideSettings = mergedSlideSettings;
+                    // const mergedContentSettings = Utils.object.deepMergeObject(
+                    //     this.defaultContentSettings,
+                    //     slide.contentSettings
+                    // );
+                    // slide.contentSettings = mergedContentSettings;
+                    const mergedSlide = this._mergeSettings(slide, {
+                        slideSettings: this.defaultSlideSettings,
+                        contentSettings: this.defaultContentSettings,
+                    })
+                    this.elysiumSlide.setSlide(mergedSlide);
                     this.loadCustomFieldSets();
                 })
                 .catch((exception) => {
@@ -402,6 +417,18 @@ export default Component.wrapComponentConfig({
                     console.warn(error);
                 });
         },
+
+        _mergeSettings(slide: any, properties: object) {
+            Object.entries(properties).forEach(([key, defaultSettings]) => {
+                if (slide[key]) {
+                    slide[key] = Utils.object.deepMergeObject(defaultSettings, slide[key]);
+                } else {
+                    slide[key] = defaultSettings;
+                }
+            });
+            
+            return slide;
+        }
     },
 
     created() {

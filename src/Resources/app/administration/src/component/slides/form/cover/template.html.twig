@@ -40,6 +40,7 @@
             })"
         >
             <mt-loader v-if="mediaLoading"/>
+
             <template v-if="activeTab === 'coverImage'">
                 <blur-section
                     gap-y
@@ -94,8 +95,36 @@
                     </blur-column>
                 </blur-section>
             </template>
+
+            <template v-if="activeTab === 'coverMeta'">
+                <blur-section
+                    gap
+                    :description="$tc('blurElysiumSlides.forms.slideCoverMeta.description')"
+                >
+                    <blur-column
+                        :cols-tablet="6">
+
+                        <blur-text-input
+                            v-model="slide.contentSettings.slideCover.alt"
+                            :label="$tc('blurElysiumSlides.forms.slideCoverMeta.alt.label')"
+                        />
+
+                    </blur-column>
+
+                    <blur-column
+                        :cols-tablet="6">
+
+                        <blur-text-input
+                            v-model="slide.contentSettings.slideCover.title"
+                            :label="$tc('blurElysiumSlides.forms.slideCoverMeta.title.label')"
+                        />
+                    </blur-column>
+                </blur-section>
+            </template>
         </blur-column>
+
         <blur-column
+            v-if="activeTab !== 'coverMeta'"
             padding
             :cols-tablet="6"
             :cols-desktop="4"
