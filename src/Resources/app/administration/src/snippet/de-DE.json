@@ -29,6 +29,11 @@
         },
         "cmsBlockGroup": "Elysium Blöcke",
         "general": {
+            "cssClasses": {
+                "label": "CSS Klassen",
+                "helpText": "Hier kannst du eine oder mehrere CSS-Klassen, getrennt durch ein Leerzeichen, angeben. Diese Klassen werden auf das CMS Element angewendet.",
+                "placeholder": "custom-class second-custom-class"
+            },
             "placeholderSearchBar": "Nach Slide suchen...",
             "noHeadline": "Keine Überschrift",
             "removeItem": "Entfernen",

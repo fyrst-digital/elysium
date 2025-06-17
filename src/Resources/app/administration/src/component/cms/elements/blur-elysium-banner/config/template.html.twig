@@ -46,6 +46,15 @@
                 @change="config.lazyLoading.value = $event"
             />
         </blur-column>
+        <blur-column
+            :cols-tablet="6">
+
+            <blur-text-input
+                :label="$tc('blurElysium.general.cssClasses.label')"
+                :placeholder="$tc('blurElysium.general.cssClasses.placeholder')"
+                :helpText="$tc('blurElysium.general.cssClasses.helpText')"
+                v-model="config.cssClasses.value" />
+        </blur-column>
     </blur-section>
     <blur-section
         v-if="viewportConfig"

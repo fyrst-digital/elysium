@@ -29,6 +29,10 @@ export default <BannerSettings>{
         source: 'static',
         value: true,
     },
+    cssClasses: {
+        source: 'static',
+        value: '',
+    },
     viewports: {
         source: 'static',
         value: {

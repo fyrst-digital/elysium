@@ -2,6 +2,10 @@
     'blur-elysium-banner'
 ] %}
 
+{% if element.config.cssClasses.value %}
+   {% set bannerClasses = bannerClasses|merge([element.config.cssClasses.value]) %}
+{% endif %}
+
 {% block cms_element_blur_elysium_banner_root %}
 
     {% block cms_element_blur_elysium_banner %}

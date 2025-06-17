@@ -51,6 +51,10 @@
     ]) %}
 {% endif %}
 
+{% if element.config.settings.value.cssClasses %}
+   {% set sliderClasses = sliderClasses|merge([element.config.settings.value.cssClasses]) %}
+{% endif %}
+
 {% if element.config.settings.value.containerWidth is same as('content') %}
     {% set showContainerWrapper = true %}
 {% endif %}

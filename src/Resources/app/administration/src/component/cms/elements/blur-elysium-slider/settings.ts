@@ -55,6 +55,7 @@ export default <SliderSettings>{
             rewind: true,
             speed: 300,
             pauseOnHover: true,
+            cssClasses: '',
             autoplay: {
                 active: true,
                 interval: 5000,

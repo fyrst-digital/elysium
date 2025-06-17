@@ -29,6 +29,11 @@
         },
         "cmsBlockGroup": "Elysium Blocks",
         "general": {
+            "cssClasses": {
+                "label": "CSS Classes",
+                "helpText": "Here you can specify one or more CSS classes, separated by a space. These classes will be applied to the CMS element.",
+                "placeholder": "custom-class second-custom-class"
+            },
             "placeholderSearchBar": "Search for Slide...",
             "noHeadline": "No Headline",
             "removeItem": "Remove",
