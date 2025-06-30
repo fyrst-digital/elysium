@@ -6,27 +6,32 @@
             class="smart-bar__back-btn"
             :to="{ name: parentRoute }"
         >
-            <sw-icon
+            <mt-icon
                 name="regular-chevron-left"
                 color="#999999"
-                small
+                size="16"
             />
-            <sw-icon
+            <mt-icon
                 name="regular-cog"
                 color="#758CA3"
-                small
+                size="16"
             />
         </router-link>
     </template>
 
     <template #smart-bar-header>
-        <h2>
-            {{ $tc('sw-settings.index.title') }}
-            <sw-icon
-                name="regular-chevron-right-xs"
-                small
-            />
-            {{ $tc('blurElysium.settings.label') }}
+        <h2
+            :style="{
+                display: 'flex',
+                alignItems: 'baseline',
+                flexWrap: 'wrap',
+                gap: '12px',
+            }">
+            <span v-html="$tc('sw-settings.index.title')" />
+            <mt-icon
+                name="regular-chevron-right"
+                size="12" />
+            <span v-html="$tc('blurElysium.settings.label')" />
         </h2>
     </template>
 

@@ -13,5 +13,8 @@
         "@types/webpack-env": "^1.18.5",
         "tsconfig-paths-webpack-plugin": "^4.1.0",
         "vite": "^6.2.3"
+    },
+    "dependencies": {
+        "@types/node": "^24.0.7"
     }
 }
