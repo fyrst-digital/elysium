@@ -1,14 +1,11 @@
-const { Component, Service } = Shopware;
+import { useComponentRegister } from '@elysium/composables/components'
 
-Component.register(
-    'sw-cms-block-blur-elysium-slider',
-    () => import('@elysium/component/cms/blocks/blur-elysium-slider/component')
-);
+const { Service } = Shopware;
 
-Component.register(
-    'sw-cms-block-blur-elysium-slider-preview',
-    () => import('@elysium/component/cms/blocks/blur-elysium-slider/preview')
-);
+useComponentRegister([
+    { name: 'sw-cms-block-blur-elysium-slider', path: () => import('@elysium/component/cms/blocks/blur-elysium-slider/component') },
+    { name: 'sw-cms-block-blur-elysium-slider-preview', path: () => import('@elysium/component/cms/blocks/blur-elysium-slider/preview') },
+])
 
 // eslint-disable-next-line no-undef
 Service('cmsService').registerCmsBlock({
@@ -27,4 +24,4 @@ Service('cmsService').registerCmsBlock({
     slots: {
         main: 'blur-elysium-slider',
     },
-});
+})

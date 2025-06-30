@@ -1,45 +1,17 @@
-import defaultSliderSettings from '@elysium/component/cms/elements/blur-elysium-slider/settings';
-import SliderConfig from '@elysium/component/cms/elements/blur-elysium-slider/config';
-import SliderConfigSettings from '@elysium/component/cms/elements/blur-elysium-slider/config/settings';
+import { useComponentRegister } from '@elysium/composables/components'
+import defaultSliderSettings from '@elysium/component/cms/elements/blur-elysium-slider/settings'
 
-const { Component, Service } = Shopware;
+const { Service } = Shopware;
 
-Component.register(
-    'cms-el-blur-elysium-slider',
-    () =>
-        import('@elysium/component/cms/elements/blur-elysium-slider/component')
-);
-
-Component.register('blur-elysium-slider-config-settings', SliderConfigSettings);
-
-Component.register('cms-el-blur-elysium-slider-config', SliderConfig);
-
-Component.register(
-    'cms-el-blur-elysium-slider-preview',
-    () => import('@elysium/component/cms/elements/blur-elysium-slider/preview')
-);
-
-Component.register(
-    'blur-elysium-slider-config-sizing',
-    () =>
-        import(
-            '@elysium/component/cms/elements/blur-elysium-slider/config/sizing'
-        )
-);
-Component.register(
-    'blur-elysium-slider-config-navigation',
-    () =>
-        import(
-            '@elysium/component/cms/elements/blur-elysium-slider/config/navigation'
-        )
-);
-Component.register(
-    'blur-elysium-slider-config-arrows',
-    () =>
-        import(
-            '@elysium/component/cms/elements/blur-elysium-slider/config/arrows'
-        )
-);
+useComponentRegister([
+    { name: 'cms-el-blur-elysium-slider', path: () => import('@elysium/component/cms/elements/blur-elysium-slider/component') },
+    { name: 'blur-elysium-slider-config-settings', path: () => import('@elysium/component/cms/elements/blur-elysium-slider/config/settings') },
+    { name: 'cms-el-blur-elysium-slider-config', path: () => import('@elysium/component/cms/elements/blur-elysium-slider/config') },
+    { name: 'cms-el-blur-elysium-slider-preview', path: () => import('@elysium/component/cms/elements/blur-elysium-slider/preview') },
+    { name: 'blur-elysium-slider-config-sizing', path: () => import('@elysium/component/cms/elements/blur-elysium-slider/config/sizing') },
+    { name: 'blur-elysium-slider-config-navigation', path: () => import('@elysium/component/cms/elements/blur-elysium-slider/config/navigation') },
+    { name: 'blur-elysium-slider-config-arrows', path: () => import('@elysium/component/cms/elements/blur-elysium-slider/config/arrows') },
+])
 
 Service('cmsService').registerCmsElement({
     name: 'blur-elysium-slider',

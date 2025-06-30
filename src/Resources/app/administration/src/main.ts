@@ -9,8 +9,6 @@ import '@elysium/styles/components.scss';
 import '@elysium/mixin/device-utilities.mixin';
 import '@elysium/mixin/style-utilities.mixin';
 import '@elysium/module/blur-elysium-slides';
-// static loaded components
-import SlideSelectionItem from '@elysium/component/utilities/slide-selection/item';
 // cms elements
 import '@elysium/component/cms/elements/blur-elysium-slider';
 import '@elysium/component/cms/elements/blur-elysium-banner';
@@ -18,7 +16,7 @@ import '@elysium/component/cms/elements/blur-elysium-banner';
 import '@elysium/component/cms/blocks/blur-elysium-slider';
 import '@elysium/component/cms/blocks/blur-elysium-banner';
 
-const { Component, Locale, Application, Store, Service } = Shopware;
+const { Locale, Application, Store, Service } = Shopware;
 
 /**
  * Register pinia stores
@@ -32,8 +30,6 @@ Store.register(cmsStore);
  */
 Locale.extend('en-GB', enGB);
 Locale.extend('de-DE', deDE);
-
-Component.register('blur-elysium-slide-selection-item', SlideSelectionItem);
 
 /**
  * Add search tag
@@ -63,19 +59,21 @@ CustomFieldDataProviderService.addEntityName('blur_elysium_slides');
 
 /**
  * Register components
+ * @todo change the name of elysium related components from `blur-elysium-*` to `elysium-*`
+
+ * @todo change the name of general ui related components from `blur-*` to `sh-*`
  */
 useComponentRegister([
     { name: 'blur-icon', path: () => import('@elysium/component/icon') },
     { name: 'blur-section', path: () => import('@elysium/component/utilities/section') },
     { name: 'blur-column', path: () => import('@elysium/component/utilities/column') },
-    { name: 'blur-elysium-iap-subscription-card', path: () => import('@elysium/component/iap/subscription-card') },
     { name: 'blur-card-title', path: () => import('@elysium/component/utilities/card-title') },
     { name: 'blur-device-switch', path: () => import('@elysium/component/form/device-switch') },
     { name: 'blur-text-input', path: () => import('@elysium/component/form/text-input') },
     { name: 'blur-number-input', path: () => import('@elysium/component/form/number-input') },
     { name: 'blur-select-input', path: () => import('@elysium/component/form/select-input') },
     { name: 'blur-colorpicker', path: () => import('@elysium/component/form/colorpicker') },
-    { name: 'blur-elysium-block-two-col-config', path: () => import('@elysium/component/utilities/block-two-col-config') },
+    { name: 'blur-elysium-iap-subscription-card', path: () => import('@elysium/component/iap/subscription-card') },
     { name: 'blur-elysium-icon', path: () => import('@elysium/component/utilities/icon') },
     { name: 'blur-elysium-settings', path: () => import('@elysium/component/settings') },
     { name: 'blur-elysium-slides-detail-view', path: () => import('@elysium/component/utilities/detail-view') },
@@ -96,6 +94,7 @@ useComponentRegister([
     { name: 'blur-elysium-slides-form-custom-fields', path: () => import('@elysium/component/slides/form/custom-fields') },
     { name: 'blur-elysium-slide-search', path: () => import('@elysium/component/utilities/slide-search') },
     { name: 'blur-elysium-slide-selection', path: () => import('@elysium/component/utilities/slide-selection') },
+    { name: 'blur-elysium-slide-selection-item', path: () => import('@elysium/component/utilities/slide-selection/item') },
     { name: 'blur-elysium-cms-slide-skeleton', path: () => import('@elysium/component/utilities/cms-slide-skeleton') },
     { name: 'blur-elysium-cms-section', path: () => import('@elysium/component/cms/section') },
     { name: 'blur-elysium-cms-section-add-block', path: () => import('@elysium/component/cms/section/add-block') },
