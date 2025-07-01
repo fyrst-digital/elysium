@@ -100,7 +100,13 @@ export const defaultSlideSettings: SlideSettings = {
                 borderRadius: 0,
                 alignItems: 'center',
                 justifyContent: 'center',
-            }
+            },
+            container: {
+                paddingX: 15,
+                paddingY: 15,
+                borderRadius: 0,
+                gap: 20,
+            },
         }),
         tablet: defineViewportConfig({
             container: {

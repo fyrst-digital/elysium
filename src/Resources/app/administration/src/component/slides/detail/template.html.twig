@@ -70,17 +70,36 @@
         <div
             v-if="slide"
             :style="viewStyle({ 
-                mobile: { 'padding': '16px' } 
+                mobile: { 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                    alignItems: 'start',
+                    gap: '40px',
+                    width: '100%',
+                    padding: '40px' 
+                } 
             })">
 
-            <div class="sw-tabs sw-tabs--small">
+            <div :style="{
+                position: 'sticky',
+                top: '40px',
+                paddingTop: '40px',
+                maxWidth: '800px',
+                marginInline: 'auto'
+            }">
                 <elysium-slide-preview 
                     :slide="slide"
                     :device-view="device"
                 />
             </div>
             
-            <sw-tabs position-identifier="positionIdentifiers.placeholder">
+            <sw-tabs 
+                :style="{
+                    maxWidth: '800px',
+                    marginInline: 'auto'
+                }"
+                position-identifier="positionIdentifiers.placeholder">
+
                 <sw-tabs-item
                     :route="contentRoute"
                     :title="$tc('blurElysiumSlides.settings.baseLabel')"

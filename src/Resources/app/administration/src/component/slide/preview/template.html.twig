@@ -6,12 +6,15 @@
     }">
     <div 
         :style="slideStyles">
+
+        <elysium-slide-preview-container />
     </div>
     <div 
         v-if="showPreviewNotice"
         :style="{
             fontSize: '14px',
-            lineHeight: '1.5'
+            lineHeight: '1.5',
+            textWrap: 'balance'
         }">
         Dies ist nur eine ungefähre Vorschau und kann von der tatsächlichen Darstellung im Storefront abweichen. Individuelle CSS Klassen und Twig-Templates werden in dieser Vorschau nicht berücksichtigt.
     </div>

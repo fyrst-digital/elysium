@@ -39,6 +39,13 @@ export default Component.wrapComponentConfig({
         }
     },
 
+    provide() {
+        return {
+            slide: this.slide,
+            deviceView: this.deviceView,
+        };
+    },
+
     data() {
         return {
         };
@@ -62,14 +69,15 @@ export default Component.wrapComponentConfig({
             return null
         },
 
-        slideBorderRadius() {
-            const property = useViewportProp('slide.borderRadius', this.deviceView, this.slide.slideSettings.viewports)
-            return property ? `${property}px` : '0px'
-        },
-
         slideStyles() {
-            console.log(this.getViewportProp('slide.borderRadius'))
             const styles = {
+                display: 'flex',
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                alignItems: this.getViewportProp('slide.alignItems') || 'center',
+                justifyContent: this.getViewportProp('slide.justifyContent') || 'center',
+                paddingInline: this.getViewportProp('slide.paddingY') ? `${this.getViewportProp('slide.paddingY')}px` : '15px',
+                paddingBlock: this.getViewportProp('slide.paddingX') ? `${this.getViewportProp('slide.paddingX')}px` : '15px',
                 borderRadius: this.getViewportProp('slide.borderRadius') ? `${this.getViewportProp('slide.borderRadius')}px` : '0px',
                 backgroundImage: this.slideBgGradient ? this.slideBgGradient : 'none',
                 backgroundColor: this.slide.slideSettings?.slide?.bgColor || 'transparent',
@@ -82,12 +90,11 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        getViewportProp(property) {
+        getViewportProp(property: any) {
             return useViewportProp(property, this.deviceView, this.slide.slideSettings.viewports)
         }
     },
 
     created() {
-        console.log('Slide preview created', this.slide, useViewportProp('slide.borderRadius', this.deviceView, this.slide.slideSettings.viewports));
     }
 });
