@@ -66,12 +66,20 @@
     </template>
 
     <template #content>
+
         <div
             v-if="slide"
             :style="viewStyle({ 
                 mobile: { 'padding': '16px' } 
-            })"
-        >
+            })">
+
+            <div class="sw-tabs sw-tabs--small">
+                <elysium-slide-preview 
+                    :slide="slide"
+                    :device-view="device"
+                />
+            </div>
+            
             <sw-tabs position-identifier="positionIdentifiers.placeholder">
                 <sw-tabs-item
                     :route="contentRoute"

@@ -29,7 +29,7 @@
             @new-item-active="activeTab = $event"
         />
     </template>
-    <blur-elysium-slides-form-slide v-if="activeTab === 'slide'"/>
-    <blur-elysium-slides-form-container v-if="activeTab === 'container'"/>
-    <blur-elysium-slides-form-content v-if="activeTab === 'content'"/>
+    <elysium-slides-form-slide v-if="activeTab === 'slide'"/>
+    <elysium-slides-form-container v-if="activeTab === 'container'"/>
+    <elysium-slides-form-content v-if="activeTab === 'content'"/>
 </mt-card>

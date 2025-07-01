@@ -1,0 +1,18 @@
+<div
+    :style="{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px'
+    }">
+    <div 
+        :style="slideStyles">
+    </div>
+    <div 
+        v-if="showPreviewNotice"
+        :style="{
+            fontSize: '14px',
+            lineHeight: '1.5'
+        }">
+        Dies ist nur eine ungefähre Vorschau und kann von der tatsächlichen Darstellung im Storefront abweichen. Individuelle CSS Klassen und Twig-Templates werden in dieser Vorschau nicht berücksichtigt.
+    </div>
+</div>

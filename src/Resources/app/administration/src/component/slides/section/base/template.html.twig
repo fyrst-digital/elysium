@@ -31,6 +31,6 @@
             @new-item-active="activeTab = $event"
         />
     </template>
-    <blur-elysium-slides-form-general v-if="activeTab === 'content'"/>
-    <blur-elysium-slides-form-linking v-if="activeTab === 'linking'"/>
+    <elysium-slides-form-general v-if="activeTab === 'content'"/>
+    <elysium-slides-form-linking v-if="activeTab === 'linking'"/>
 </mt-card>

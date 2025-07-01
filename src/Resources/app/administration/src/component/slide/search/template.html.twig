@@ -2,7 +2,7 @@
         position: 'relative',
     }">
     <sw-simple-search-field
-        class="blur-elysium-slide-selection-search-field"
+        class="elysium-slide-selection-search-field"
         v-model:value="searchTerm"
         :delay="300"
         placeholder="Slides durchsuchen"
@@ -36,15 +36,15 @@
                 class="blur-es-selection__search-result-list-item"
                 @item-select="selectSlide"
             >
-                <div class="blur-elysium-slide-selection-search-item">
+                <div class="elysium-slide-selection-search-item">
                     <div>
                         <sw-highlight-text
-                            :class="['blur-elysium-slide-selection-search-name']"
+                            :class="['elysium-slide-selection-search-name']"
                             :searchTerm="searchTerm"
                             :text="item.translated.name"
                         />
                         <sw-highlight-text
-                            :class="['blur-elysium-slide-selection-search-title']"
+                            :class="['elysium-slide-selection-search-title']"
                             :searchTerm="searchTerm"
                             :text="item.translated.title ? item.translated.title.replace(/<\/?[^>]+>/ig, ' ') : $tc('blurElysium.general.noHeadline')"
                         />

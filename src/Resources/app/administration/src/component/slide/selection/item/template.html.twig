@@ -1,5 +1,5 @@
 <div
-    class="blur-elysium-slide-selection-item"
+    class="elysium-slide-selection-item"
     ref="selectItem"
     v-draggable="{
         {# dataGroup: 'slide-selection',  #}
@@ -26,9 +26,9 @@
     <div v-if="draggedSlide">
         {{draggedSlide}}
     </div>
-    <div class="blur-elysium-slide-selection-item-headerbar">
+    <div class="elysium-slide-selection-item-headerbar">
         <div
-            class="blur-elysium-slide-selection-item-dragger"
+            class="elysium-slide-selection-item-dragger"
             title="Drag slide"
         >
             <blur-icon
@@ -37,12 +37,12 @@
             />
         </div>
         <div
-            class="blur-elysium-slide-selection-item-slidename"
+            class="elysium-slide-selection-item-slidename"
             v-html="slideName"
         />
-        <div class="blur-elysium-slide-selection-item-actions">
+        <div class="elysium-slide-selection-item-actions">
             <div
-                class="blur-elysium-slide-selection-item-action"
+                class="elysium-slide-selection-item-action"
                 @click="positionUp"
             >
                 <blur-icon
@@ -51,7 +51,7 @@
                 />
             </div>
             <div
-                class="blur-elysium-slide-selection-item-action"
+                class="elysium-slide-selection-item-action"
                 @click="positionDown"
             >
                 <blur-icon
@@ -60,7 +60,7 @@
                 />
             </div>
             <div
-                class="blur-elysium-slide-selection-item-action"
+                class="elysium-slide-selection-item-action"
                 @click="editSlide"
             >
                 <blur-icon
@@ -69,7 +69,7 @@
                 />
             </div>
             <div
-                class="blur-elysium-slide-selection-item-action"
+                class="elysium-slide-selection-item-action"
                 @click="removeSlide"
             >
                 <blur-icon
@@ -79,9 +79,9 @@
             </div>
         </div>
     </div>
-    <div class="blur-elysium-slide-selection-item-content">
+    <div class="elysium-slide-selection-item-content">
         <div
-            class="blur-elysium-slide-selection-item-title"
+            class="elysium-slide-selection-item-title"
             v-html="slideTitle"
         />
     </div>

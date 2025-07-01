@@ -3,6 +3,9 @@ import './style.scss';
 
 const { Component } = Shopware;
 
+/**
+ * @deprecated use `elysium-slide-preview` instead. will be removed in the future
+ */
 export default Component.wrapComponentConfig({
     template,
 

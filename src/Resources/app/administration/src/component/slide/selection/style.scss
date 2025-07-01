@@ -1,41 +1,41 @@
-.blur-elysium-slide-selection-search {
+.elysium-slide-selection-search {
     margin-bottom: 20px;
     position: relative;
 }
-.blur-elysium-slide-selection-search-field {
+.elysium-slide-selection-search-field {
     .sw-block-field__block {
         box-shadow: 0 1px 2px 0 rgba(51, 68, 91, 0.1);
         border-radius: 8px;
     }
 }
-.blur-elysium-slide-selection-search-label {
+.elysium-slide-selection-search-label {
     margin-bottom: 8px;
     font-size: 14px;
 }
-.blur-elysium-slide-selection-results-label {
+.elysium-slide-selection-results-label {
     font-size: 18px;
     font-weight: 500;
     margin-bottom: 20px;
 }
-.blur-elysium-slide-selection-search-item {
+.elysium-slide-selection-search-item {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
-.blur-elysium-slide-selection-results-list {
+.elysium-slide-selection-results-list {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
-.blur-elysium-slide-selection-search-title {
+.elysium-slide-selection-search-title {
     font-size: 16px;
     font-weight: 500;
 }
-.blur-elysium-slide-selection-search-name {
+.elysium-slide-selection-search-name {
     margin-bottom: 4px;
 }
-.blur-elysium-slide-selection-empty {
+.elysium-slide-selection-empty {
     border: 1px solid #d1d9e0;
     background-color: #f9fafb;
     text-align: center;
@@ -47,7 +47,7 @@
     margin-right: auto;
     max-width: 32rem;
 }
-.blur-elysium-slide-selection-empty-actions {
+.elysium-slide-selection-empty-actions {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

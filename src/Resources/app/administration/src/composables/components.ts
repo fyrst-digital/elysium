@@ -1,8 +1,10 @@
+import type { ComponentConfig } from 'src/core/factory/async-component.factory'
+
 const { Component } = Shopware
 
 interface ComponentCollection {
     name: string
-    path: any
+    path: () => Promise<ComponentConfig>
 }
 
 export function useComponentRegister(components: ComponentCollection[]) {

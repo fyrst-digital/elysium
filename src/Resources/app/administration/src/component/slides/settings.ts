@@ -93,7 +93,15 @@ export const defaultSlideSettings: SlideSettings = {
         },
     },
     viewports: {
-        mobile: defineViewportConfig(),
+        mobile: defineViewportConfig({
+            slide: {
+                paddingX: 15,
+                paddingY: 15,
+                borderRadius: 0,
+                alignItems: 'center',
+                justifyContent: 'center',
+            }
+        }),
         tablet: defineViewportConfig({
             container: {
                 columnWrap: false,

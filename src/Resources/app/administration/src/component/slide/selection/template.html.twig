@@ -6,20 +6,20 @@
     }"
 >
     {{draggedSlideIndex}}
-    <blur-elysium-slide-search
+    <elysium-slide-search
         :selected-slides="selectedSlides"
         @add-slide="addSlide"
         @remove-slide="removeSlide"
     />
     <div
         v-if="selectedSlides.length > 0"
-        class="blur-elysium-slide-selection-results"
+        class="elysium-slide-selection-results"
     >
         <div
-            class="blur-elysium-slide-selection-results-list"
+            class="elysium-slide-selection-results-list"
             ref="selectionList"
         >
-            <blur-elysium-slide-selection-item
+            <elysium-slide-selection-item
                 v-for="(slide, index) in selectedSlides"
                 :key="index"
                 :slide="slide"
