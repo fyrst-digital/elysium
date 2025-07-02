@@ -6,7 +6,7 @@ const { Component } = Shopware;
 export default Component.wrapComponentConfig({
     template,
 
-    // inject: ['repositoryFactory'],
+    inject: ['repositoryFactory'],
 
     props: {
         slide: {
@@ -42,6 +42,8 @@ export default Component.wrapComponentConfig({
     provide() {
         return {
             slide: this.slide,
+            headline: this.headline,
+            description: this.description,
             deviceView: this.deviceView,
         };
     },
@@ -55,6 +57,18 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
+
+        headline () {
+            return this.slide.title || null
+        },
+
+        description () {
+            return this.slide.description || null
+        },
+
+        slideCoverImage() {
+            return null
+        },
 
         slideBgGradient() {
             const allowedGradientTypes = ['linear-gradient', 'radial-gradient']

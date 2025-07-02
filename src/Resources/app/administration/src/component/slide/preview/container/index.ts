@@ -24,6 +24,8 @@ export default Component.wrapComponentConfig({
                 display: 'flex',
                 flexWrap: 'wrap',
                 flexDirection: this.getViewportProp('container.columnWrap') ? 'column' : 'row',
+                justifyContent: this.getViewportProp('container.justifyContent') || 'normal',
+                alignItems: this.getViewportProp('container.alignItems') || 'center',
                 gap: this.getViewportProp('container.gap') ? `${this.getViewportProp('container.gap')}px` : '20px',
                 backgroundColor: this.slide.slideSettings?.container?.bgColor || 'transparent',
                 paddingBlock: this.getViewportProp('container.paddingY') ? `${this.getViewportProp('container.paddingY')}px` : '15px',
@@ -43,6 +45,5 @@ export default Component.wrapComponentConfig({
     },
 
     created() {
-        console.log(this.calculatedMaxWidth, this.slide)
     }
 });
