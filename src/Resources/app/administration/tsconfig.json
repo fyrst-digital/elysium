@@ -5,23 +5,22 @@
         "resolveJsonModule": true,
         "downlevelIteration": true,
         "module": "es2022",
-        "types": ["@types/webpack-env"],
         "rootDirs": [
-            "./",
-            "../../../../../../../vendor/shopware/administration/Resources/app/administration/src"
+            "./src",
+            "../../../../../../vendor/shopware/administration/Resources/app/administration/src",
+            "../../../../../../vendor/shopware/administration/Resources/app/administration",
         ],
         "baseUrl": "./",
         "paths": {
-            "@elysium/*": ["./src/*"],
-            "shopware/*": [
+            "src/*": [
                 "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/*"
-            ]
-        },
-        "lib": ["ES2020", "ES2021", "ES2022", "ES2023", "DOM"]
+            ],
+            "@elysium/*": [
+                "./src/*"
+            ],
+        }
     },
     "include": [
-        "./src/**/*",
-        "../../../../../../../vendor/shopware/administration/Resources/app/administration/src/**/*"
-    ],
-    "exclude": ["node_modules"]
+        "./src/**/*"
+    ]
 }

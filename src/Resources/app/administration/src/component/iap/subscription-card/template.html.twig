@@ -1,0 +1,42 @@
+<sw-card
+    :title="$tc('blurElysiumIAP.title')">
+    <div v-if="elysiumProIsActive">
+        <div v-html="$tc('blurElysiumIAP.subscribePro.activeDescription')" />
+    </div>
+    <div v-else
+        :style="{ 
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+        }">
+        <div v-html="$tc('blurElysiumIAP.subscribePro.callToAction')" />
+        <ul :style="{
+            listStyle: 'none',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+        }">
+            <li v-for="feature in elysiumProFeatures" 
+                :key="feature.label"
+                :style="{
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    gap: '10px',
+                }">
+                <blur-icon
+                    name="blurph-check-square-offset-bold"
+                    size="16" />
+                <span 
+                    v-if="feature.label" 
+                    v-html="$tc(feature.label)" />
+            </li>
+        </ul>
+        <mt-button
+            variant="primary"
+            size="large"
+            @click="openIAPCheckout"
+        >
+            Upgrade to Pro
+        </mt-button>
+    </div>
+</sw-card>

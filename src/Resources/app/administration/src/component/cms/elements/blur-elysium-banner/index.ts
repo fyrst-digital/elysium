@@ -1,26 +1,19 @@
-import defaultBannerSettings from '@elysium/component/cms/elements/blur-elysium-banner/settings';
+import { useComponentRegister } from '@elysium/composables/components'
+import defaultBannerSettings from '@elysium/component/cms/elements/blur-elysium-banner/settings'
 
-Shopware.Component.register(
-    'cms-el-blur-elysium-banner',
-    () =>
-        import('@elysium/component/cms/elements/blur-elysium-banner/component')
-);
+const { Service } = Shopware
 
-Shopware.Component.register(
-    'cms-el-blur-elysium-banner-config',
-    () => import('@elysium/component/cms/elements/blur-elysium-banner/config')
-);
+useComponentRegister([
+    { name: 'cms-el-blur-elysium-banner', path: () => import('@elysium/component/cms/elements/blur-elysium-banner/component') },
+    { name: 'cms-el-blur-elysium-banner-config', path: () => import('@elysium/component/cms/elements/blur-elysium-banner/config') },
+    { name: 'cms-el-blur-elysium-banner-preview', path: () => import('@elysium/component/cms/elements/blur-elysium-banner/preview') },
+])
 
-Shopware.Component.register(
-    'cms-el-blur-elysium-banner-preview',
-    () => import('@elysium/component/cms/elements/blur-elysium-banner/preview')
-);
-
-Shopware.Service('cmsService').registerCmsElement({
+Service('cmsService').registerCmsElement({
     name: 'blur-elysium-banner',
     label: 'blurElysiumBanner.label',
     component: 'cms-el-blur-elysium-banner',
     configComponent: 'cms-el-blur-elysium-banner-config',
     previewComponent: 'cms-el-blur-elysium-banner-preview',
     defaultConfig: defaultBannerSettings,
-});
+})

@@ -107,18 +107,6 @@
     "src": "component/form/colorpicker/index.ts",
     "isDynamicEntry": true
   },
-  "component/form/device-number-input/index.ts": {
-    "file": "assets/index-lljiMCqX.js",
-    "name": "index",
-    "src": "component/form/device-number-input/index.ts",
-    "isDynamicEntry": true
-  },
-  "component/form/device-select-input/index.ts": {
-    "file": "assets/index-Cx6GL-2l.js",
-    "name": "index",
-    "src": "component/form/device-select-input/index.ts",
-    "isDynamicEntry": true
-  },
   "component/form/device-switch/index.ts": {
     "file": "assets/index-CWjqad5D.js",
     "name": "index",
@@ -146,6 +134,12 @@
     "src": "component/form/text-input/index.ts",
     "isDynamicEntry": true
   },
+  "component/iap/subscription-card/index.ts": {
+    "file": "assets/index-CCeGaMhW.js",
+    "name": "index",
+    "src": "component/iap/subscription-card/index.ts",
+    "isDynamicEntry": true
+  },
   "component/icon/index.ts": {
     "file": "assets/index-D-xc01Ow.js",
     "name": "index",
@@ -153,7 +147,7 @@
     "isDynamicEntry": true
   },
   "component/settings/index.ts": {
-    "file": "assets/index-CM-zaB-y.js",
+    "file": "assets/index-AO5pkcai.js",
     "name": "index",
     "src": "component/settings/index.ts",
     "isDynamicEntry": true
@@ -219,7 +213,7 @@
     "isDynamicEntry": true
   },
   "component/slides/overview/index.ts": {
-    "file": "assets/index-Dke9s80a.js",
+    "file": "assets/index-riF5AEci.js",
     "name": "index",
     "src": "component/slides/overview/index.ts",
     "isDynamicEntry": true,
@@ -249,12 +243,6 @@
     "file": "assets/index-Dn1p3Qrh.js",
     "name": "index",
     "src": "component/slides/section/media/index.ts",
-    "isDynamicEntry": true
-  },
-  "component/utilities/block-two-col-config/index.ts": {
-    "file": "assets/index-Q9F68f_v.js",
-    "name": "index",
-    "src": "component/utilities/block-two-col-config/index.ts",
     "isDynamicEntry": true
   },
   "component/utilities/card-title/index.ts": {
@@ -320,10 +308,25 @@
       "assets/index-Cqa9Aoa6.css"
     ]
   },
+  "component/utilities/slide-selection/item/index.ts": {
+    "file": "assets/index-DAIyjoyW.js",
+    "name": "index",
+    "src": "component/utilities/slide-selection/item/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-CKQ7bpU_.css"
+    ]
+  },
   "extension/sw-cms-section/index.ts": {
     "file": "assets/index--mG5ioIg.js",
     "name": "index",
     "src": "extension/sw-cms-section/index.ts",
+    "isDynamicEntry": true
+  },
+  "extension/sw-cms-sidebar/index.ts": {
+    "file": "assets/index-C0buu8uT.js",
+    "name": "index",
+    "src": "extension/sw-cms-sidebar/index.ts",
     "isDynamicEntry": true
   },
   "extension/sw-cms-stage-section-selection/index.ts": {
@@ -336,7 +339,7 @@
     ]
   },
   "extension/sw-media-quickinfo-usage/index.ts": {
-    "file": "assets/index-CA-8gunq.js",
+    "file": "assets/index-VeB0PoOq.js",
     "name": "index",
     "src": "extension/sw-media-quickinfo-usage/index.ts",
     "isDynamicEntry": true,
@@ -354,7 +357,7 @@
     "isDynamicEntry": true
   },
   "main.ts": {
-    "file": "assets/blur-elysium-slider-C20HBXqs.js",
+    "file": "assets/blur-elysium-slider-DfL8n7Tv.js",
     "name": "blur-elysium-slider",
     "src": "main.ts",
     "isEntry": true,
@@ -371,8 +374,6 @@
       "component/cms/blocks/blur-elysium-slider/preview/index.ts",
       "component/cms/blocks/blur-elysium-banner/component/index.ts",
       "component/cms/blocks/blur-elysium-banner/preview/index.ts",
-      "extension/sw-search-bar-item/index.ts",
-      "extension/sw-media-quickinfo-usage/index.ts",
       "component/icon/index.ts",
       "component/utilities/section/index.ts",
       "component/utilities/column/index.ts",
@@ -382,9 +383,7 @@
       "component/form/number-input/index.ts",
       "component/form/select-input/index.ts",
       "component/form/colorpicker/index.ts",
-      "component/form/device-number-input/index.ts",
-      "component/form/device-select-input/index.ts",
-      "component/utilities/block-two-col-config/index.ts",
+      "component/iap/subscription-card/index.ts",
       "component/utilities/icon/index.ts",
       "component/settings/index.ts",
       "component/utilities/detail-view/index.ts",
@@ -405,16 +404,20 @@
       "component/slides/form/custom-fields/index.ts",
       "component/utilities/slide-search/index.ts",
       "component/utilities/slide-selection/index.ts",
+      "component/utilities/slide-selection/item/index.ts",
       "component/utilities/cms-slide-skeleton/index.ts",
-      "extension/sw-cms-section/index.ts",
-      "extension/sw-cms-stage-section-selection/index.ts",
       "component/cms/section/index.ts",
       "component/cms/section/add-block/index.ts",
       "component/cms/section/settings/index.ts",
-      "component/cms/section/block-settings/index.ts"
+      "component/cms/section/block-settings/index.ts",
+      "extension/sw-cms-sidebar/index.ts",
+      "extension/sw-search-bar-item/index.ts",
+      "extension/sw-media-quickinfo-usage/index.ts",
+      "extension/sw-cms-section/index.ts",
+      "extension/sw-cms-stage-section-selection/index.ts"
     ],
     "css": [
-      "assets/blur-elysium-slider-CZ78iiWQ.css"
+      "assets/blur-elysium-slider-DKUBMF_6.css"
     ]
   }
 }

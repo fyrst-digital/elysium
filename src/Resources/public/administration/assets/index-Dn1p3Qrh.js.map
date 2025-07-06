@@ -1,1 +1,18 @@
-{"version":3,"file":"index-Dn1p3Qrh.js","sources":["../../../app/administration/src/component/slides/section/media/template.html.twig","../../../app/administration/src/component/slides/section/media/index.ts"],"sourcesContent":["<div>\n    <blur-elysium-slides-form-cover/>\n    <blur-elysium-slides-form-focus-image/>\n</div>","import template from './template.html.twig';\n\nconst { Component } = Shopware;\n\nexport default Component.wrapComponentConfig({\n    template,\n});\n"],"names":["template","Component","index"],"mappings":"AAAA,MAAeA,EAAA,yFCET,CAAE,UAAAC,CAAc,EAAA,SAEPC,EAAAD,EAAU,oBAAoB,CACzC,SAAAD,CACJ,CAAC"}
+{
+    "version": 3,
+    "file": "index-Dn1p3Qrh.js",
+    "sources": [
+        "../../../app/administration/src/component/slides/section/media/template.html.twig",
+        "../../../app/administration/src/component/slides/section/media/index.ts"
+    ],
+    "sourcesContent": [
+        "<div>\n    <elysium-slides-form-cover/>\n    <elysium-slides-form-focus-image/>\n</div>",
+        "import template from './template.html.twig';\n\nconst { Component } = Shopware;\n\nexport default Component.wrapComponentConfig({\n    template,\n});\n"
+    ],
+    "names": [
+        "template",
+        "Component",
+        "index"
+    ],
+    "mappings": "AAAA,MAAeA,EAAA,yFCET,CAAE,UAAAC,CAAc,EAAA,SAEPC,EAAAD,EAAU,oBAAoB,CACzC,SAAAD,CACJ,CAAC"
+}

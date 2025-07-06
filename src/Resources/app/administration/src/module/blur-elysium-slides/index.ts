@@ -28,7 +28,7 @@ Module.register('blur-elysium-slides', {
         /** Index route */
         overview: {
             path: 'overview',
-            component: 'blur-elysium-slides-overview',
+            component: 'elysium-slides-overview',
             meta: {
                 privilege: 'blur_elysium_slides.viewer',
             },
@@ -37,7 +37,7 @@ Module.register('blur-elysium-slides', {
         /** Create slide route */
         create: {
             path: 'create',
-            component: 'blur-elysium-slides-detail',
+            component: 'elysium-slides-detail',
             props: {
                 default: () => ({ newSlide: true }),
             },
@@ -50,28 +50,28 @@ Module.register('blur-elysium-slides', {
             },
             children: {
                 content: {
-                    component: 'blur-elysium-slides-section-base',
+                    component: 'elysium-slides-section-base',
                     path: 'content',
                     meta: {
                         parentPath: 'blur.elysium.slides.overview',
                     },
                 },
                 media: {
-                    component: 'blur-elysium-slides-section-media',
+                    component: 'elysium-slides-section-media',
                     path: 'media',
                     meta: {
                         parentPath: 'blur.elysium.slides.overview',
                     },
                 },
                 display: {
-                    component: 'blur-elysium-slides-section-display',
+                    component: 'elysium-slides-section-display',
                     path: 'display',
                     meta: {
                         parentPath: 'blur.elysium.slides.overview',
                     },
                 },
                 advanced: {
-                    component: 'blur-elysium-slides-section-advanced',
+                    component: 'elysium-slides-section-advanced',
                     path: 'advanced',
                     meta: {
                         parentPath: 'blur.elysium.slides.overview',
@@ -83,7 +83,7 @@ Module.register('blur-elysium-slides', {
         /** Detail slide route */
         detail: {
             path: 'detail/:id',
-            component: 'blur-elysium-slides-detail',
+            component: 'elysium-slides-detail',
             props: {
                 default(route) {
                     return {
@@ -100,28 +100,28 @@ Module.register('blur-elysium-slides', {
             },
             children: {
                 content: {
-                    component: 'blur-elysium-slides-section-base',
+                    component: 'elysium-slides-section-base',
                     path: 'content',
                     meta: {
                         parentPath: 'blur.elysium.slides.overview',
                     },
                 },
                 media: {
-                    component: 'blur-elysium-slides-section-media',
+                    component: 'elysium-slides-section-media',
                     path: 'media',
                     meta: {
                         parentPath: 'blur.elysium.slides.overview',
                     },
                 },
                 display: {
-                    component: 'blur-elysium-slides-section-display',
+                    component: 'elysium-slides-section-display',
                     path: 'display',
                     meta: {
                         parentPath: 'blur.elysium.slides.overview',
                     },
                 },
                 advanced: {
-                    component: 'blur-elysium-slides-section-advanced',
+                    component: 'elysium-slides-section-advanced',
                     path: 'advanced',
                     meta: {
                         parentPath: 'blur.elysium.slides.overview',
@@ -131,7 +131,7 @@ Module.register('blur-elysium-slides', {
         },
 
         settings: {
-            component: 'blur-elysium-settings',
+            component: 'elysium-settings',
             path: 'settings',
             meta: {
                 icon: 'regular-cog',
@@ -158,7 +158,7 @@ Module.register('blur-elysium-slides', {
         {
             group: 'plugins',
             to: 'blur.elysium.slides.settings',
-            iconComponent: 'blur-elysium-icon',
+            iconComponent: 'elysium-icon',
             label: 'blurElysium.settingsLabel',
             privilege: 'blur_elysium_slides.viewer',
         },

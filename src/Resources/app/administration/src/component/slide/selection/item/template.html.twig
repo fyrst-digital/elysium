@@ -1,0 +1,88 @@
+<div
+    class="elysium-slide-selection-item"
+    ref="selectItem"
+    v-draggable="{
+        {# dataGroup: 'slide-selection',  #}
+        data: {
+            draggedItemIndex: index,
+        },
+        delay: 200,
+        onDragStart: dragStart,
+        onDragEnter: dragEnter,
+        {# validateDrag: validateDrag, #}
+        {# validateDrop: validateDrop, #}
+        {# onDragLeave: dragLeave,  #}
+        validateDrop: validateDrop,
+        onDrop: dropSlide,
+    }"
+    v-droppable="{ 
+        data: {
+            index: index,
+        },
+        validateDrop: validateDrop,
+        {# onDrop: dropSlide, #}
+    }"
+>
+    <div v-if="draggedSlide">
+        {{draggedSlide}}
+    </div>
+    <div class="elysium-slide-selection-item-headerbar">
+        <div
+            class="elysium-slide-selection-item-dragger"
+            title="Drag slide"
+        >
+            <blur-icon
+                name="blurph-dots-three-bold"
+                :size="14"
+            />
+        </div>
+        <div
+            class="elysium-slide-selection-item-slidename"
+            v-html="slideName"
+        />
+        <div class="elysium-slide-selection-item-actions">
+            <div
+                class="elysium-slide-selection-item-action"
+                @click="positionUp"
+            >
+                <blur-icon
+                    name="blurph-caret-up"
+                    :size="14"
+                />
+            </div>
+            <div
+                class="elysium-slide-selection-item-action"
+                @click="positionDown"
+            >
+                <blur-icon
+                    name="blurph-caret-down"
+                    :size="14"
+                />
+            </div>
+            <div
+                class="elysium-slide-selection-item-action"
+                @click="editSlide"
+            >
+                <blur-icon
+                    name="blurph-pencil-simple-line"
+                    :size="14"
+                />
+            </div>
+            <div
+                class="elysium-slide-selection-item-action"
+                @click="removeSlide"
+            >
+                <blur-icon
+                    name="blurph-trash"
+                    :size="14"
+                />
+            </div>
+        </div>
+    </div>
+    <div class="elysium-slide-selection-item-content">
+        <div
+            class="elysium-slide-selection-item-title"
+            v-html="slideTitle"
+        />
+    </div>
+</div>

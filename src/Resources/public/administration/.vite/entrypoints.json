@@ -3,7 +3,7 @@
   "entryPoints": {
     "blur-elysium-slider": {
       "css": [
-        "/bundles/blurelysiumslider/administration/assets/blur-elysium-slider-CZ78iiWQ.css"
+        "/bundles/blurelysiumslider/administration/assets/blur-elysium-slider-DKUBMF_6.css"
       ],
       "dynamic": [
         "/bundles/blurelysiumslider/administration/assets/index-vr1E64cj.js",
@@ -18,8 +18,6 @@
         "/bundles/blurelysiumslider/administration/assets/index-9hL9uo5v.js",
         "/bundles/blurelysiumslider/administration/assets/index-D7-yiHxw.js",
         "/bundles/blurelysiumslider/administration/assets/index-5zmLKS6n.js",
-        "/bundles/blurelysiumslider/administration/assets/index-BJzcjUE5.js",
-        "/bundles/blurelysiumslider/administration/assets/index-CA-8gunq.js",
         "/bundles/blurelysiumslider/administration/assets/index-D-xc01Ow.js",
         "/bundles/blurelysiumslider/administration/assets/index-C4FD9Hzb.js",
         "/bundles/blurelysiumslider/administration/assets/index-DD0L4O9l.js",
@@ -29,13 +27,11 @@
         "/bundles/blurelysiumslider/administration/assets/index-kxB4NsIK.js",
         "/bundles/blurelysiumslider/administration/assets/index-AEvpVZdq.js",
         "/bundles/blurelysiumslider/administration/assets/index-DVpkCOl-.js",
-        "/bundles/blurelysiumslider/administration/assets/index-lljiMCqX.js",
-        "/bundles/blurelysiumslider/administration/assets/index-Cx6GL-2l.js",
-        "/bundles/blurelysiumslider/administration/assets/index-Q9F68f_v.js",
+        "/bundles/blurelysiumslider/administration/assets/index-CCeGaMhW.js",
         "/bundles/blurelysiumslider/administration/assets/index-DQu0_3iI.js",
-        "/bundles/blurelysiumslider/administration/assets/index-CM-zaB-y.js",
+        "/bundles/blurelysiumslider/administration/assets/index-AO5pkcai.js",
         "/bundles/blurelysiumslider/administration/assets/index-Dk22xYFF.js",
-        "/bundles/blurelysiumslider/administration/assets/index-Dke9s80a.js",
+        "/bundles/blurelysiumslider/administration/assets/index-riF5AEci.js",
         "/bundles/blurelysiumslider/administration/assets/index-qKhEkANG.js",
         "/bundles/blurelysiumslider/administration/assets/index-DzWhYqNQ.js",
         "/bundles/blurelysiumslider/administration/assets/index-Dn1p3Qrh.js",
@@ -52,16 +48,20 @@
         "/bundles/blurelysiumslider/administration/assets/index-DS0hnl2R.js",
         "/bundles/blurelysiumslider/administration/assets/index-CAe1BfEA.js",
         "/bundles/blurelysiumslider/administration/assets/index-C_izb6qf.js",
+        "/bundles/blurelysiumslider/administration/assets/index-DAIyjoyW.js",
         "/bundles/blurelysiumslider/administration/assets/index-EG5x8ImA.js",
-        "/bundles/blurelysiumslider/administration/assets/index--mG5ioIg.js",
-        "/bundles/blurelysiumslider/administration/assets/index-CCjc1hpM.js",
         "/bundles/blurelysiumslider/administration/assets/index-D3oVxtRZ.js",
         "/bundles/blurelysiumslider/administration/assets/index-CCIJ6cIZ.js",
         "/bundles/blurelysiumslider/administration/assets/index-C3hjvJYQ.js",
-        "/bundles/blurelysiumslider/administration/assets/index-D34KgZjm.js"
+        "/bundles/blurelysiumslider/administration/assets/index-D34KgZjm.js",
+        "/bundles/blurelysiumslider/administration/assets/index-C0buu8uT.js",
+        "/bundles/blurelysiumslider/administration/assets/index-BJzcjUE5.js",
+        "/bundles/blurelysiumslider/administration/assets/index-VeB0PoOq.js",
+        "/bundles/blurelysiumslider/administration/assets/index--mG5ioIg.js",
+        "/bundles/blurelysiumslider/administration/assets/index-CCjc1hpM.js"
       ],
       "js": [
-        "/bundles/blurelysiumslider/administration/assets/blur-elysium-slider-C20HBXqs.js"
+        "/bundles/blurelysiumslider/administration/assets/blur-elysium-slider-DfL8n7Tv.js"
       ],
       "legacy": false,
       "preload": []

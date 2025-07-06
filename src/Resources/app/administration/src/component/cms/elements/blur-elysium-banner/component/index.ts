@@ -1,4 +1,5 @@
-import template from './template.html.twig';
+import template from './template.html.twig'
+import { useViewportProp } from '@elysium/composables/views'
 
 const { Component, Mixin, Data, Store, Context } = Shopware;
 const { Criteria } = Data;
@@ -46,99 +47,6 @@ export default Component.wrapComponentConfig({
         config() {
             return this.element?.config ?? null;
         },
-
-        aspectRatioStyle() {
-            const width =
-                this.config.viewports.value[this.activeViewport].aspectRatio
-                    .width;
-            const height =
-                this.config.viewports.value[this.activeViewport].aspectRatio
-                    .height;
-
-            if (
-                this.config.viewports.value[this.activeViewport].aspectRatio
-                    .auto === true
-            ) {
-                return 'auto';
-            }
-
-            return `${width} / ${height}`;
-        },
-
-        slideSkeletonTitle() {
-            if (
-                this.previewSlide !== null &&
-                this.previewSlide.translated?.title
-            ) {
-                return this.previewSlide.translated.title;
-            } else if (this.previewSlide !== null) {
-                return false;
-            }
-            return this.$tc('blurElysiumBanner.label');
-        },
-
-        slideSkeletonDescription() {
-            if (
-                this.previewSlide !== null &&
-                this.previewSlide.translated?.description
-            ) {
-                return this.previewSlide.translated.description;
-            } else if (this.previewSlide !== null) {
-                return false;
-            }
-            return this.$tc('blurElysiumBanner.messages.cmsDescription');
-        },
-
-        slideSkeletonCover() {
-            let defaultCover = null;
-
-            if (this.previewSlide !== null) {
-                if (this.previewSlide?.slideCover) {
-                    defaultCover = this.previewSlide.slideCover.url;
-                }
-
-                if (
-                    this.activeViewport === 'mobile' &&
-                    this.previewSlide?.slideCoverMobile
-                ) {
-                    return (
-                        this.previewSlide?.slideCoverMobile.url ?? defaultCover
-                    );
-                }
-
-                if (
-                    this.activeViewport === 'tablet' &&
-                    this.previewSlide?.slideCoverTablet
-                ) {
-                    return (
-                        this.previewSlide?.slideCoverTablet.url ?? defaultCover
-                    );
-                }
-            }
-
-            return defaultCover;
-        },
-
-        slideSkeletonStyles() {
-            const styles: Partial<CSSStyleDeclaration> = {};
-
-            if (this.previewSlide !== null) {
-                styles['--slide-border-color'] = 'transparent';
-
-                if (this.previewSlide.slideSettings?.slide?.bgColor) {
-                    styles['--slide-bg-color'] =
-                        this.previewSlide.slideSettings.slide.bgColor;
-                }
-            }
-
-            if (this.slideSkeletonCover !== null) {
-                styles.backgroundImage = `url(${this.slideSkeletonCover})`;
-            }
-
-            styles['--slide-aspect-ratio'] = this.aspectRatioStyle;
-
-            return styles;
-        },
     },
 
     created() {
@@ -147,6 +55,8 @@ export default Component.wrapComponentConfig({
         if (this.config.elysiumSlide?.value !== '') {
             this.loadPreviewSlide();
         }
+
+        console.log(this.config.viewports.value);
     },
 
     methods: {
@@ -161,5 +71,9 @@ export default Component.wrapComponentConfig({
                     this.previewSlide = result;
                 });
         },
+
+        getViewportProp(property: any) {
+            return useViewportProp(property, this.activeViewport, this.config.viewports.value)
+        }
     },
 });

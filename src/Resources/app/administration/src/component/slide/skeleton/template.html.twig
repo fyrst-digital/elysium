@@ -1,0 +1,16 @@
+<div
+    :style="wrapperStyles">
+
+    <div :style="containerStyles">
+        <div
+            :style="titleStyles"
+            v-if="title"
+            v-html="title"
+        />
+        <div
+            :style="descriptionStyles"
+            v-if="description"
+            v-html="description"
+        />
+    </div>
+</div>

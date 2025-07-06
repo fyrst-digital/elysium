@@ -1,0 +1,14 @@
+<div
+    :style="contentStyles">
+    
+    <component 
+        v-if="headline"
+        v-html="headline"
+        :style="headlineStyles"
+        :is="headlineTag" />
+
+    <div 
+        v-if="description"
+        v-html="description"
+        :style="descriptionStyles" />
+</div>

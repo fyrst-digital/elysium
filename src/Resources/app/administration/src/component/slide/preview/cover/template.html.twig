@@ -1,0 +1,10 @@
+<video
+    v-if="currentMedia && currentMedia?.mediaType?.name === 'VIDEO'"
+    :style="coverVideoStyles"
+    autoplay loop muted>
+    <source :src="currentMedia.url" type="video/mp4" />
+</video>
+<img
+    v-if="currentMedia && currentMedia?.mediaType?.name !== 'VIDEO'"
+    :src="currentMedia.url"
+    :style="coverImageStyles" />

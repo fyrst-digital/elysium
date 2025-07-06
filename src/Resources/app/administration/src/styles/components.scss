@@ -13,26 +13,21 @@
 .blur-select-input,
 .blur-colorpicker {
     .mt-block-field__block {
-        padding: var(--blur-input-block-padding-y, 0px)
-            var(--blur-input-block-padding-x, 8px) !important;
+        padding: var(--blur-input-block-padding-y, 0px) var(--blur-input-block-padding-x, 8px) !important;
         border-radius: var(--blur-input-block-radius, 8px) !important;
-        box-shadow: var(
-            --blur-input-block-shadow,
-            1px 1px 3px rgba(51, 68, 91, 0.1)
-        ) !important;
+        box-shadow: var(--blur-input-block-shadow,
+                1px 1px 3px rgba(51, 68, 91, 0.1)) !important;
     }
 
     input {
-        padding: var(--blur-input-field-padding-y, 6px)
-            var(--blur-input-field-padding-x, 8px) !important;
+        padding: var(--blur-input-field-padding-y, 6px) var(--blur-input-field-padding-x, 8px) !important;
         line-height: var(--blur-input-lh, 2) !important;
         background-color: transparent !important;
         text-overflow: ellipsis;
     }
 
     .mt-field__addition {
-        padding: var(--blur-input-inner-padding-y, 6px)
-            var(--blur-input-inner-padding-x, 4px) !important;
+        padding: var(--blur-input-inner-padding-y, 6px) var(--blur-input-inner-padding-x, 4px) !important;
         min-width: auto;
         background-color: transparent;
         border: 0 none !important;
@@ -40,8 +35,9 @@
 
         &.is--prefix {
             &:empty {
-                ~ input,
-                ~ .mt-select__selection {
+
+                ~input,
+                ~.mt-select__selection {
                     --blur-input-field-padding-x: 12px;
                 }
             }
@@ -49,8 +45,7 @@
     }
 
     .mt-field__controls {
-        padding: var(--blur-input-inner-padding-y, 6px)
-            var(--blur-input-inner-padding-x, 4px) !important;
+        padding: var(--blur-input-inner-padding-y, 6px) var(--blur-input-inner-padding-x, 4px) !important;
     }
 
     &.is--disabled {
@@ -135,8 +130,7 @@
     }
 
     .mt-label {
-        padding: var(--blur-input-field-padding-y, 6px)
-            var(--blur-input-field-padding-x, 8px) !important;
+        padding: var(--blur-input-field-padding-y, 6px) var(--blur-input-field-padding-x, 8px) !important;
         font-size: 14px;
         user-select: none;
         font-weight: 500;
@@ -173,7 +167,7 @@
         flex-wrap: nowrap;
         cursor: pointer;
 
-        > li {
+        >li {
             display: contents;
             pointer-events: none;
         }
@@ -234,4 +228,18 @@
             padding: var(--switch-padding, 0px) 0;
         }
     }
+}
+
+.elysium-element-badge {
+    position: absolute;
+    z-index: 5;
+    inset: 0 auto auto 0;
+    font-size: 14px;
+    margin: 8px;
+    background-color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    line-height: 1.25;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }

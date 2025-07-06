@@ -66,13 +66,16 @@
     </template>
 
     <template #content>
+
         <div
             v-if="slide"
             :style="viewStyle({ 
                 mobile: { 'padding': '16px' } 
-            })"
-        >
-            <sw-tabs position-identifier="positionIdentifiers.placeholder">
+            })">
+
+            <sw-tabs 
+                position-identifier="positionIdentifiers.placeholder">
+
                 <sw-tabs-item
                     :route="contentRoute"
                     :title="$tc('blurElysiumSlides.settings.baseLabel')"
@@ -105,6 +108,7 @@
                 </template>
             </sw-tabs>
         </div>
+
         <sw-confirm-modal
             v-if="showDeleteModal === true"
             type="delete"

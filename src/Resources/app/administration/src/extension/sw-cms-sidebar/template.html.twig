@@ -1,19 +1,4 @@
-{% block sw_cms_sidebar_block_layout_settings_content %}
-    {% parent() %}
-
-    <template v-if="selectedBlock.type === 'blur-elysium-block-two-col'">
-        <sw-sidebar-collapse :expand-on-loading="false">
-            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-            <template #header>
-                <span v-html="$tc('blurElysiumBlock.settingLabel')"/>
-            </template>
-            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-            <template #content>
-                <blur-elysium-block-two-col-config :settings="selectedBlock.customFields"/>
-            </template>
-        </sw-sidebar-collapse>
-    </template>
-{% endblock %}<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_cms_sidebar_layout_assignment %}
     {% parent() %}
 
@@ -34,7 +19,8 @@
             />
         </sw-sidebar-item>
     {% endblock %}
-{% endblock %}<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+{% endblock %}
+<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_cms_sidebar_block_overview_preview %}
     <div
         :style="{
