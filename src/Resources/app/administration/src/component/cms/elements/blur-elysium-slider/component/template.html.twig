@@ -1,8 +1,19 @@
+<div class="elysium-element-badge">
+    {{ $tc('blurElysiumSlider.label') }}
+</div>
 <elysium-slide-preview 
     v-if="previewSlide"
     :slide="previewSlide"
     :device-view="activeViewport"
     :show-preview-notice="false"
+    :aspect-ratio-x="getViewportProp('sizing.aspectRatio.width')"
+    :aspect-ratio-y="getViewportProp('sizing.aspectRatio.height')"
+    :max-height="getViewportProp('sizing.maxHeight') ? `${getViewportProp('sizing.maxHeight')}px` : 'none'"
+/>
+<elysium-slide-skeleton 
+    v-else 
+    :title="$tc('blurElysiumSlider.label')" 
+    :description="$tc('blurElysiumSlider.messages.cmsDescription')"
     :aspect-ratio-x="getViewportProp('sizing.aspectRatio.width')"
     :aspect-ratio-y="getViewportProp('sizing.aspectRatio.height')"
     :max-height="getViewportProp('sizing.maxHeight') ? `${getViewportProp('sizing.maxHeight')}px` : 'none'"

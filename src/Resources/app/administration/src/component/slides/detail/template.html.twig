@@ -70,34 +70,10 @@
         <div
             v-if="slide"
             :style="viewStyle({ 
-                mobile: { 
-                    display: 'grid', 
-                    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                    alignItems: 'start',
-                    gap: '40px',
-                    width: '100%',
-                    padding: '40px' 
-                } 
+                mobile: { 'padding': '16px' } 
             })">
 
-            <div :style="{
-                position: 'sticky',
-                top: '40px',
-                paddingTop: '40px',
-                maxWidth: '800px',
-                marginInline: 'auto'
-            }">
-                <elysium-slide-preview 
-                    :slide="slide"
-                    :device-view="device"
-                />
-            </div>
-            
             <sw-tabs 
-                :style="{
-                    maxWidth: '800px',
-                    marginInline: 'auto'
-                }"
                 position-identifier="positionIdentifiers.placeholder">
 
                 <sw-tabs-item
@@ -132,6 +108,7 @@
                 </template>
             </sw-tabs>
         </div>
+
         <sw-confirm-modal
             v-if="showDeleteModal === true"
             type="delete"
