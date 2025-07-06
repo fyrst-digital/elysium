@@ -23,6 +23,8 @@ export default Component.wrapComponentConfig({
                 flex: '1 auto',
                 display: 'flex',
                 flexWrap: 'wrap',
+                position: 'relative',
+                zIndex: 5,
                 flexDirection: this.getViewportProp('container.columnWrap') ? 'column' : 'row',
                 justifyContent: this.getViewportProp('container.justifyContent') || 'normal',
                 alignItems: this.getViewportProp('container.alignItems') || 'center',

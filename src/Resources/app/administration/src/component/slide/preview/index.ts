@@ -1,7 +1,7 @@
 import template from './template.html.twig'
 import { useViewportProp } from '@elysium/composables/views'
 
-const { Component } = Shopware;
+const { Component, Vue } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
@@ -44,7 +44,7 @@ export default Component.wrapComponentConfig({
             slide: this.slide,
             headline: this.headline,
             description: this.description,
-            deviceView: this.deviceView,
+            deviceView: Vue.computed(() => this.deviceView),
         };
     },
 
@@ -88,6 +88,7 @@ export default Component.wrapComponentConfig({
                 display: 'flex',
                 flexWrap: 'wrap',
                 flexDirection: 'row',
+                position: 'relative',
                 alignItems: this.getViewportProp('slide.alignItems') || 'center',
                 justifyContent: this.getViewportProp('slide.justifyContent') || 'center',
                 paddingInline: this.getViewportProp('slide.paddingY') ? `${this.getViewportProp('slide.paddingY')}px` : '15px',

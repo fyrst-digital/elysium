@@ -26,7 +26,8 @@ export default Component.wrapComponentConfig({
             const styles = {
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '12px'
+                gap: '12px',
+                order: this.getViewportProp('container.order') === 'reverse' ? '2' : '1',
             }
             return styles
         },

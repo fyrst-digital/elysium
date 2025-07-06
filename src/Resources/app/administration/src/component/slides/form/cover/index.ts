@@ -160,6 +160,7 @@ export default Component.wrapComponentConfig({
         },
 
         removeSlideCover(isVideo: boolean = false) {
+            console.log('Removing slide cover...');
             let mediaProp =
                 isVideo === true ? 'slideCoverVideo' : this.slideCoverProp;
             this.slide[`${mediaProp}Id`] = null;

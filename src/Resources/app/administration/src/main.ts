@@ -91,6 +91,8 @@ useComponentRegister([
     { name: 'elysium-slides-form-content', path: () => import('@elysium/component/slides/form/content') },
     { name: 'elysium-slides-form-custom-template-file', path: () => import('@elysium/component/slides/form/custom-template-file') },
     { name: 'elysium-slides-form-custom-fields', path: () => import('@elysium/component/slides/form/custom-fields') },
+    { name: 'elysium-slide-preview-focus-image', path: () => import('@elysium/component/slide/preview/focus-image') },
+    { name: 'elysium-slide-preview-cover', path: () => import('@elysium/component/slide/preview/cover') },
     { name: 'elysium-slide-preview-content', path: () => import('@elysium/component/slide/preview/content') },
     { name: 'elysium-slide-preview-container', path: () => import('@elysium/component/slide/preview/container') },
     { name: 'elysium-slide-preview', path: () => import('@elysium/component/slide/preview') },
