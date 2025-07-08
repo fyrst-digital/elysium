@@ -1,4 +1,8 @@
 {
+  "_views-Cqrtpgo4.js": {
+    "file": "assets/views-Cqrtpgo4.js",
+    "name": "views"
+  },
   "component/cms/blocks/blur-elysium-banner/component/index.ts": {
     "file": "assets/index-D7-yiHxw.js",
     "name": "index",
@@ -24,10 +28,13 @@
     "isDynamicEntry": true
   },
   "component/cms/elements/blur-elysium-banner/component/index.ts": {
-    "file": "assets/index-Hi4Qq8Hc.js",
+    "file": "assets/index-CJG6lbMI.js",
     "name": "index",
     "src": "component/cms/elements/blur-elysium-banner/component/index.ts",
-    "isDynamicEntry": true
+    "isDynamicEntry": true,
+    "imports": [
+      "_views-Cqrtpgo4.js"
+    ]
   },
   "component/cms/elements/blur-elysium-banner/config/index.ts": {
     "file": "assets/index-DGU30Fjv.js",
@@ -42,10 +49,13 @@
     "isDynamicEntry": true
   },
   "component/cms/elements/blur-elysium-slider/component/index.ts": {
-    "file": "assets/index-vr1E64cj.js",
+    "file": "assets/index-BV9IEg7q.js",
     "name": "index",
     "src": "component/cms/elements/blur-elysium-slider/component/index.ts",
-    "isDynamicEntry": true
+    "isDynamicEntry": true,
+    "imports": [
+      "_views-Cqrtpgo4.js"
+    ]
   },
   "component/cms/elements/blur-elysium-slider/config/arrows/index.ts": {
     "file": "assets/index-Dqy8EUxT.js",
@@ -53,10 +63,22 @@
     "src": "component/cms/elements/blur-elysium-slider/config/arrows/index.ts",
     "isDynamicEntry": true
   },
+  "component/cms/elements/blur-elysium-slider/config/index.ts": {
+    "file": "assets/index-gQ09nz1y.js",
+    "name": "index",
+    "src": "component/cms/elements/blur-elysium-slider/config/index.ts",
+    "isDynamicEntry": true
+  },
   "component/cms/elements/blur-elysium-slider/config/navigation/index.ts": {
     "file": "assets/index-DumwQYBc.js",
     "name": "index",
     "src": "component/cms/elements/blur-elysium-slider/config/navigation/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/cms/elements/blur-elysium-slider/config/settings/index.ts": {
+    "file": "assets/index-FHi-o90K.js",
+    "name": "index",
+    "src": "component/cms/elements/blur-elysium-slider/config/settings/index.ts",
     "isDynamicEntry": true
   },
   "component/cms/elements/blur-elysium-slider/config/sizing/index.ts": {
@@ -152,8 +174,83 @@
     "src": "component/settings/index.ts",
     "isDynamicEntry": true
   },
+  "component/slide/preview/container/index.ts": {
+    "file": "assets/index-Byho4qzS.js",
+    "name": "index",
+    "src": "component/slide/preview/container/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_views-Cqrtpgo4.js"
+    ]
+  },
+  "component/slide/preview/content/index.ts": {
+    "file": "assets/index-DiOhf9W1.js",
+    "name": "index",
+    "src": "component/slide/preview/content/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_views-Cqrtpgo4.js"
+    ]
+  },
+  "component/slide/preview/cover/index.ts": {
+    "file": "assets/index-XBnuPSZq.js",
+    "name": "index",
+    "src": "component/slide/preview/cover/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_views-Cqrtpgo4.js"
+    ]
+  },
+  "component/slide/preview/focus-image/index.ts": {
+    "file": "assets/index-Brh6YuOu.js",
+    "name": "index",
+    "src": "component/slide/preview/focus-image/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_views-Cqrtpgo4.js"
+    ]
+  },
+  "component/slide/preview/index.ts": {
+    "file": "assets/index-K5qzVStz.js",
+    "name": "index",
+    "src": "component/slide/preview/index.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_views-Cqrtpgo4.js"
+    ]
+  },
+  "component/slide/search/index.ts": {
+    "file": "assets/index-DC3ntn2z.js",
+    "name": "index",
+    "src": "component/slide/search/index.ts",
+    "isDynamicEntry": true
+  },
+  "component/slide/selection/index.ts": {
+    "file": "assets/index-DTfL65wJ.js",
+    "name": "index",
+    "src": "component/slide/selection/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-B5szwv8l.css"
+    ]
+  },
+  "component/slide/selection/item/index.ts": {
+    "file": "assets/index-B9Ef1VsB.js",
+    "name": "index",
+    "src": "component/slide/selection/item/index.ts",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-BE9x26Ks.css"
+    ]
+  },
+  "component/slide/skeleton/index.ts": {
+    "file": "assets/index-DAAn9AA5.js",
+    "name": "index",
+    "src": "component/slide/skeleton/index.ts",
+    "isDynamicEntry": true
+  },
   "component/slides/detail/index.ts": {
-    "file": "assets/index-qKhEkANG.js",
+    "file": "assets/index-WiR-gm0Y.js",
     "name": "index",
     "src": "component/slides/detail/index.ts",
     "isDynamicEntry": true
@@ -171,7 +268,7 @@
     "isDynamicEntry": true
   },
   "component/slides/form/cover/index.ts": {
-    "file": "assets/index-BRxE3VBN.js",
+    "file": "assets/index-Bd3Ur3Hm.js",
     "name": "index",
     "src": "component/slides/form/cover/index.ts",
     "isDynamicEntry": true
@@ -213,7 +310,7 @@
     "isDynamicEntry": true
   },
   "component/slides/overview/index.ts": {
-    "file": "assets/index-riF5AEci.js",
+    "file": "assets/index-cIKA2Doe.js",
     "name": "index",
     "src": "component/slides/overview/index.ts",
     "isDynamicEntry": true,
@@ -222,25 +319,25 @@
     ]
   },
   "component/slides/section/advanced/index.ts": {
-    "file": "assets/index-ChPEKGqQ.js",
+    "file": "assets/index-Blkt3rpg.js",
     "name": "index",
     "src": "component/slides/section/advanced/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/section/base/index.ts": {
-    "file": "assets/index-DzWhYqNQ.js",
+    "file": "assets/index-Cw5gEu6d.js",
     "name": "index",
     "src": "component/slides/section/base/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/section/display/index.ts": {
-    "file": "assets/index-BLp4QztG.js",
+    "file": "assets/index-CKh3l--r.js",
     "name": "index",
     "src": "component/slides/section/display/index.ts",
     "isDynamicEntry": true
   },
   "component/slides/section/media/index.ts": {
-    "file": "assets/index-Dn1p3Qrh.js",
+    "file": "assets/index-B3jf0R5M.js",
     "name": "index",
     "src": "component/slides/section/media/index.ts",
     "isDynamicEntry": true
@@ -254,32 +351,14 @@
       "assets/index-Be4699pq.css"
     ]
   },
-  "component/utilities/cms-slide-skeleton/index.ts": {
-    "file": "assets/index-EG5x8ImA.js",
-    "name": "index",
-    "src": "component/utilities/cms-slide-skeleton/index.ts",
-    "isDynamicEntry": true,
-    "css": [
-      "assets/index-DLYJxLtR.css"
-    ]
-  },
   "component/utilities/column/index.ts": {
     "file": "assets/index-DD0L4O9l.js",
     "name": "index",
     "src": "component/utilities/column/index.ts",
     "isDynamicEntry": true
   },
-  "component/utilities/detail-view/index.ts": {
-    "file": "assets/index-Dk22xYFF.js",
-    "name": "index",
-    "src": "component/utilities/detail-view/index.ts",
-    "isDynamicEntry": true,
-    "css": [
-      "assets/index-CV-VfyXU.css"
-    ]
-  },
   "component/utilities/icon/index.ts": {
-    "file": "assets/index-DQu0_3iI.js",
+    "file": "assets/index-D4a_VD1G.js",
     "name": "index",
     "src": "component/utilities/icon/index.ts",
     "isDynamicEntry": true
@@ -293,32 +372,8 @@
       "assets/index-l4PhX9Cv.css"
     ]
   },
-  "component/utilities/slide-search/index.ts": {
-    "file": "assets/index-CAe1BfEA.js",
-    "name": "index",
-    "src": "component/utilities/slide-search/index.ts",
-    "isDynamicEntry": true
-  },
-  "component/utilities/slide-selection/index.ts": {
-    "file": "assets/index-C_izb6qf.js",
-    "name": "index",
-    "src": "component/utilities/slide-selection/index.ts",
-    "isDynamicEntry": true,
-    "css": [
-      "assets/index-Cqa9Aoa6.css"
-    ]
-  },
-  "component/utilities/slide-selection/item/index.ts": {
-    "file": "assets/index-DAIyjoyW.js",
-    "name": "index",
-    "src": "component/utilities/slide-selection/item/index.ts",
-    "isDynamicEntry": true,
-    "css": [
-      "assets/index-CKQ7bpU_.css"
-    ]
-  },
   "extension/sw-cms-section/index.ts": {
-    "file": "assets/index--mG5ioIg.js",
+    "file": "assets/index-DlL3dRw3.js",
     "name": "index",
     "src": "extension/sw-cms-section/index.ts",
     "isDynamicEntry": true
@@ -330,7 +385,7 @@
     "isDynamicEntry": true
   },
   "extension/sw-cms-stage-section-selection/index.ts": {
-    "file": "assets/index-CCjc1hpM.js",
+    "file": "assets/index-r-WLFN9H.js",
     "name": "index",
     "src": "extension/sw-cms-stage-section-selection/index.ts",
     "isDynamicEntry": true,
@@ -339,7 +394,7 @@
     ]
   },
   "extension/sw-media-quickinfo-usage/index.ts": {
-    "file": "assets/index-VeB0PoOq.js",
+    "file": "assets/index-90n50TOi.js",
     "name": "index",
     "src": "extension/sw-media-quickinfo-usage/index.ts",
     "isDynamicEntry": true,
@@ -357,12 +412,14 @@
     "isDynamicEntry": true
   },
   "main.ts": {
-    "file": "assets/blur-elysium-slider-DfL8n7Tv.js",
+    "file": "assets/blur-elysium-slider-Bwk-kDkL.js",
     "name": "blur-elysium-slider",
     "src": "main.ts",
     "isEntry": true,
     "dynamicImports": [
       "component/cms/elements/blur-elysium-slider/component/index.ts",
+      "component/cms/elements/blur-elysium-slider/config/settings/index.ts",
+      "component/cms/elements/blur-elysium-slider/config/index.ts",
       "component/cms/elements/blur-elysium-slider/preview/index.ts",
       "component/cms/elements/blur-elysium-slider/config/sizing/index.ts",
       "component/cms/elements/blur-elysium-slider/config/navigation/index.ts",
@@ -386,7 +443,6 @@
       "component/iap/subscription-card/index.ts",
       "component/utilities/icon/index.ts",
       "component/settings/index.ts",
-      "component/utilities/detail-view/index.ts",
       "component/slides/overview/index.ts",
       "component/slides/detail/index.ts",
       "component/slides/section/base/index.ts",
@@ -402,10 +458,15 @@
       "component/slides/form/content/index.ts",
       "component/slides/form/custom-template-file/index.ts",
       "component/slides/form/custom-fields/index.ts",
-      "component/utilities/slide-search/index.ts",
-      "component/utilities/slide-selection/index.ts",
-      "component/utilities/slide-selection/item/index.ts",
-      "component/utilities/cms-slide-skeleton/index.ts",
+      "component/slide/skeleton/index.ts",
+      "component/slide/preview/focus-image/index.ts",
+      "component/slide/preview/cover/index.ts",
+      "component/slide/preview/content/index.ts",
+      "component/slide/preview/container/index.ts",
+      "component/slide/preview/index.ts",
+      "component/slide/search/index.ts",
+      "component/slide/selection/index.ts",
+      "component/slide/selection/item/index.ts",
       "component/cms/section/index.ts",
       "component/cms/section/add-block/index.ts",
       "component/cms/section/settings/index.ts",
@@ -417,7 +478,7 @@
       "extension/sw-cms-stage-section-selection/index.ts"
     ],
     "css": [
-      "assets/blur-elysium-slider-DKUBMF_6.css"
+      "assets/blur-elysium-slider-WqyPKiOx.css"
     ]
   }
 }

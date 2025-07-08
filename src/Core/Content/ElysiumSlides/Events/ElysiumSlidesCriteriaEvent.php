@@ -22,12 +22,19 @@ class ElysiumSlidesCriteriaEvent extends NestedEvent implements ShopwareSalesCha
      */
     protected $context;
 
+    /**
+     * @var ?string
+     */
+    protected $identifier;
+
     public function __construct(
         Criteria $criteria,
-        SalesChannelContext $context
+        SalesChannelContext $context,
+        ?string $identifier = null
     ) {
         $this->criteria = $criteria;
         $this->context = $context;
+        $this->identifier = $identifier;
     }
 
     public function getCriteria(): Criteria
@@ -43,5 +50,10 @@ class ElysiumSlidesCriteriaEvent extends NestedEvent implements ShopwareSalesCha
     public function getSalesChannelContext(): SalesChannelContext
     {
         return $this->context;
+    }
+
+    public function getIdentifier(): ?string
+    {
+        return $this->identifier;
     }
 }

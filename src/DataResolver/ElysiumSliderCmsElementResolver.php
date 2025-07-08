@@ -7,7 +7,7 @@ namespace Blur\BlurElysiumSlider\DataResolver;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesCriteriaEvent;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesResultEvent;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumCmsSlidesResultEvent;
 use Blur\BlurElysiumSlider\Struct\ElysiumSliderStruct;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
@@ -28,8 +28,7 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository,
         private readonly EventDispatcherInterface $eventDispatcher,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {
@@ -72,15 +71,16 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
                 new ElysiumSlidesCriteriaEvent($criteria, $context)
             );
 
-            $slideCollection = $this->eventDispatcher->dispatch(
-                new ElysiumSlidesResultEvent($this->elysiumSlidesRepository->search(
+            /** @var ElysiumCmsSlidesResultEvent $elysiumSlideResult */
+            $elysiumSlideResult = $this->eventDispatcher->dispatch(
+                new ElysiumCmsSlidesResultEvent($this->elysiumSlidesRepository->search(
                     $criteria,
                     $context->getContext()
-                ), $context)
+                ), $context, $slot, 'cms-element-elysium-slider')
             );
 
             /** @var ElysiumSlidesEntity[] $elysiumSlides */
-            $elysiumSlides = $slideCollection->getResult()->getElements();
+            $elysiumSlides = $elysiumSlideResult->getResult()->getElements();
             $elysiumSliderStruct->setSlideCollection($elysiumSlides);
             $slot->setData($elysiumSliderStruct);
         }

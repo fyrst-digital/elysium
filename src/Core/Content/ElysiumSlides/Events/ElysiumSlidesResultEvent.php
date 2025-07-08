@@ -22,12 +22,19 @@ class ElysiumSlidesResultEvent extends NestedEvent implements ShopwareSalesChann
      */
     protected $context;
 
+    /**
+     * @var ?string
+     */
+    protected $identifier;
+
     public function __construct(
         EntitySearchResult $result,
-        SalesChannelContext $context
+        SalesChannelContext $context,
+        ?string $identifier = null
     ) {
         $this->result = $result;
         $this->context = $context;
+        $this->identifier = $identifier;
     }
 
     public function getResult(): EntitySearchResult
@@ -48,5 +55,10 @@ class ElysiumSlidesResultEvent extends NestedEvent implements ShopwareSalesChann
     public function getSalesChannelContext(): SalesChannelContext
     {
         return $this->context;
+    }
+
+    public function getIdentifier(): ?string
+    {
+        return $this->identifier;
     }
 }
