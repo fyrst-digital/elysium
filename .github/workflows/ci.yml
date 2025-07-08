@@ -106,7 +106,6 @@ jobs:
           shopt -s extglob
           mkdir BlurElysiumSlider
           mv !(BlurElysiumSlider) BlurElysiumSlider/
-          zip -rq BlurElysiumSlider.zip BlurElysiumSlider
 
       # - name: Deploy extension to store
       #   run: |
