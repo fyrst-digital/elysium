@@ -3,7 +3,8 @@ name: CI
 on:
   push:
     branches:
-      - '*'
+      - master
+      - fix/ci
     tags:
       - '*'
   pull_request:
