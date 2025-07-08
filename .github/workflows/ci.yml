@@ -110,7 +110,7 @@ jobs:
       - name: build and zip
         run: |
           shopware-cli extension build ${{ github.workspace }}
-          shopware-cli extension zip ${{ github.workspace }}
+          shopware-cli extension zip --disable-git ${{ github.workspace }}
           ls -la ${{ github.workspace }}
 
 
