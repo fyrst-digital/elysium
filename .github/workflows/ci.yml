@@ -103,30 +103,20 @@ jobs:
       - name: Install shopware-cli
         uses: shopware/shopware-cli-action@v1
 
-      - name: debug
-        run: |
-          ls -la ${{ github.workspace }}
-
       - name: build and zip
         run: |
           shopware-cli extension zip --disable-git ${{ github.workspace }}
           ls -la ${{ github.workspace }}
 
-      - name: Upload as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          path: ${{ github.workspace }}/BlurElysiumSlider.zip
-
-
       # - name: Deploy extension to store
       #   run: |
       #     shopware-cli account producer extension upload BlurElysiumSlider.zip
 
-      # - name: Upload as artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: BlurElysiumSlider
-      #     path: ${{ github.workspace }}
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BlurElysiumSlider
+          path: ${{ github.workspace }}/BlurElysiumSlider.zip
 
   update-store-page:
     runs-on: ubuntu-latest
