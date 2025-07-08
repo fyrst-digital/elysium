@@ -33,6 +33,7 @@ jobs:
       - name: Upload validated directory
         uses: actions/upload-artifact@v4
         with:
+          include-hidden-files: true
           name: validated-plugin
           path: |
             ${{ github.workspace }}
