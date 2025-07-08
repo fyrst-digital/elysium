@@ -36,7 +36,6 @@ jobs:
           include-hidden-files: true
           name: validated-plugin
           path: |
-            include-hidden-files: true
             ${{ github.workspace }}
             **/.*
 
