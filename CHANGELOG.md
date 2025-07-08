@@ -1,3 +1,10 @@
+# 4.2.0
+
+## Changelog
+- The slide preview in the Shopping Experiences Layout Editor has been improved and now better reflects the result in the storefront.
+- `ElysiumCmsSlidesResultEvent` and `ElysiumCmsSlidesCriteriaEvent` have been added. These are triggered when the corresponding Shopping Experiences elements are called.
+- Code and TypeScript optimizations of the admin app. A slide preview component has been added.
+
 # 4.1.0
 
 ## Changelog

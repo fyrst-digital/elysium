@@ -1,3 +1,10 @@
+# 4.2.0
+
+## Changelog
+- Im Erlebniswelten Layot Editor wurde die Slide Vorschau verbessert und bilden nun besser das Resultat im Storefront ab.
+- `ElysiumCmsSlidesResultEvent` und `ElysiumCmsSlidesCriteriaEvent` wurden hinzugefügt. Diese werden beim Aufruf der entsprechenden Erlebniswelt Elemente ausgelöst.
+- Code- und Typescript-Optimierungen der Admin app. Eine Slide Preview Komponente wurde hinzugefügt
+
 # 4.1.0
 
 ## Changelog
