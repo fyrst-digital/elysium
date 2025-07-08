@@ -109,7 +109,7 @@ jobs:
 
       - name: Deploy extension to store
         run: |
-          shopware-cli account producer extension upload BlurElysiumSlider.zip
+          shopware-cli account producer extension upload --skip-for-review-result BlurElysiumSlider.zip
 
       - name: Upload as artifact
         uses: actions/upload-artifact@v4
