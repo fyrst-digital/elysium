@@ -23,9 +23,15 @@ jobs:
 
       - name: Validate plugin
         run: |
-          echo "${{ github.workspace }}"
-          rm -rf .devops .eslintrc.js .eslintignore
+          find ${{ github.workspace }} -type f \( -name ".eslintrc.js" -o -name ".eslintignore" -o -name ".gitkeep" \) -delete
+          rm -rf .devops
           shopware-cli extension validate ${{ github.workspace }}
+
+      - name: Upload validated directory
+        uses: actions/upload-artifact@v4
+        with:
+          name: validated-plugin
+          path: ${{ github.workspace }}
 
   build-changelog:
     runs-on: ubuntu-latest
@@ -53,8 +59,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: validate
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Download validated directory
+        uses: actions/download-artifact@v4
+        with:
+          name: validated-plugin
 
       - name: Install shopware-cli
         uses: shopware/shopware-cli-action@v1
@@ -62,7 +70,6 @@ jobs:
       - name: Build extension
         run: | 
           shopware-cli extension build ${{ github.workspace }}
-          rm -rf .devops
           shopt -s extglob
           mkdir BlurElysiumSlider
           mv !(BlurElysiumSlider) BlurElysiumSlider/
