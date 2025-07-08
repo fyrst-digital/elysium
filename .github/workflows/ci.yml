@@ -34,7 +34,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: validated-plugin
-          path: ${{ github.workspace }}
+          path: |
+            ${{ github.workspace }}
+            **/.*
 
   build-changelog:
     runs-on: ubuntu-latest
