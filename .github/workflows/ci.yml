@@ -23,11 +23,9 @@ jobs:
 
       - name: Validate plugin
         run: |
-          ls -la ${{ github.workspace }}
           find ${{ github.workspace }} -type f \( -name ".eslintrc.js" -o -name ".eslintignore" -o -name ".gitkeep" \) -delete
           rm -rf .devops .github .git .gitignore store
           shopware-cli extension validate --full --reporter github ${{ github.workspace }}
-          ls -la ${{ github.workspace }}
 
       - name: Upload validated directory
         uses: actions/upload-artifact@v4
