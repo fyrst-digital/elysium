@@ -36,14 +36,13 @@
     </template>
 
     <template #smart-bar-actions>
-        <sw-button
+        <mt-button
             variant="primary"
-            class="sw-extension-config__save-action"
             :disabled="!permissonEdit"
             @click.prevent="onSave"
         >
             {{ $tc('global.default.save') }}
-        </sw-button>
+        </mt-button>
     </template>
 
     <template #content>
@@ -64,6 +63,8 @@
                     />
                 </template>
             </sw-system-config>
+            
+            <elysium-iap-subscription-card />
         </sw-card-view>
     </template>
 </sw-page>

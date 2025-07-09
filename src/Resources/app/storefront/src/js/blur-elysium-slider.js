@@ -1,8 +1,9 @@
-import deepmerge from 'deepmerge';
-import Plugin from 'src/plugin-system/plugin.class';
-import Splide from './../../node_modules/@splidejs/splide/dist/js/splide.min.js';
+import deepmerge from 'deepmerge'
+import Splide from './../../node_modules/@splidejs/splide/dist/js/splide.min.js'
 
-export default class BlurElysiumSlider extends Plugin {
+const { PluginBaseClass } = window;
+
+export default class BlurElysiumSlider extends PluginBaseClass {
     slider;
 
     /**

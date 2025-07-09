@@ -26,8 +26,7 @@ class Updater
         private readonly EntityRepository $slidesRepository,
         private readonly EntityRepository $cmsSlotRepository,
         private readonly NotificationService $notificationService
-    ) {
-    }
+    ) {}
 
     public function run(): void
     {

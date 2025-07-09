@@ -13,7 +13,6 @@
     grid-column: var(--blur-elysium-section-block-col-start, auto) / span var(--blur-elysium-section-block-col-end, 12);
     grid-row: var(--blur-elysium-section-block-row-start, 1) / span var(--blur-elysium-section-block-row-end, auto);
     order: var(--blur-elysium-section-block-order, 9999);
-    position: relative;
 
     &:hover,
     &:focus,

@@ -1,3 +1,7 @@
+validation:
+  ignore:
+    - message: 'Internal error: Class Shopware\Administration\Notification\NotificationService was not found while trying to analyse it'
+
 store:
   availabilities:
     - German

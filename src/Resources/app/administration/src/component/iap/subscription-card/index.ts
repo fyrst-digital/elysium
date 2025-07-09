@@ -17,14 +17,15 @@ export default Component.wrapComponentConfig({
         },
 
         elysiumProIsActive() {
-            return false
+            return true
         },
 
         elysiumProFeatures() {
             return [
-                { label: 'blurElysiumIAP.features.officialSupport' },
+                { label: 'blurElysiumIAP.features.prioritizedSupport' },
                 { label: 'blurElysiumIAP.features.slideBulkEdit' },
                 { label: 'blurElysiumIAP.features.reusableSlideTemplates' },
+                { label: 'blurElysiumIAP.features.slideInteractivity' },
                 { label: 'blurElysiumIAP.features.advancedCmsElements' },
             ];
         }

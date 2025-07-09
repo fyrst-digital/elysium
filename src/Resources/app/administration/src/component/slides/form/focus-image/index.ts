@@ -77,7 +77,7 @@ export default Component.wrapComponentConfig({
         setFocusImage(media: any) {
             this.mediaLoading = true;
 
-            let mediaId = media.id || media.targetId || null;
+            const mediaId = media.id || media.targetId || null;
 
             if (mediaId === null) {
                 // throw error message because mediaId is null

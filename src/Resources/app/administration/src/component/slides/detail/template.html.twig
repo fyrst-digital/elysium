@@ -37,7 +37,7 @@
             </sw-button-process>
             <sw-context-button v-if="newSlide !== true">
                 <template #button>
-                    <sw-button
+                    <mt-button
                         square
                         variant="primary"
                         :disabled="isLoading"
@@ -46,7 +46,7 @@
                             name="blurph-caret-down-bold"
                             size="16"
                         />
-                    </sw-button>
+                    </mt-button>
                 </template>
                 <sw-context-menu-item
                     :disabled="!permissionCreate"

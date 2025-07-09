@@ -125,8 +125,8 @@ export default Component.wrapComponentConfig({
         setSlideCover(media: any, isVideo: boolean = false) {
             this.mediaLoading = true;
 
-            let mediaId = media.id || media.targetId || null;
-            let mediaProp =
+            const mediaId = media.id || media.targetId || null;
+            const mediaProp =
                 isVideo === true ? 'slideCoverVideo' : this.slideCoverProp;
 
             if (mediaId === null) {
@@ -160,8 +160,7 @@ export default Component.wrapComponentConfig({
         },
 
         removeSlideCover(isVideo: boolean = false) {
-            console.log('Removing slide cover...');
-            let mediaProp =
+            const mediaProp =
                 isVideo === true ? 'slideCoverVideo' : this.slideCoverProp;
             this.slide[`${mediaProp}Id`] = null;
             this.slide[mediaProp] = null;
