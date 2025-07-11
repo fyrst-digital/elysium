@@ -1,3 +1,8 @@
+# 4.2.1
+
+## Changelog
+- Database migration 1744028421SetDefaultMediaFolderId has been optimized, which could previously lead to an error when upgrading from Shopware 6.6 to 6.7.
+
 # 4.2.0
 
 ## Changelog
