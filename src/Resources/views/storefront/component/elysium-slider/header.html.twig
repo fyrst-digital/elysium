@@ -1,0 +1,26 @@
+{% set headerClasses = [
+    'elysium-slider-header',
+    'h2',
+    'mb-4'
+] %}
+
+{% set titleClasses = [
+    'elysium-slider-title',
+    'h2',
+    'mb-4'
+] %}
+
+{% set titleTag = titleTag|default('div') %}
+
+{% block component_elysium_slider_header %}
+    <header class="{{headerClasses|join(' ')}}">
+
+        {% block component_elysium_slider_title %}
+            {% if title is not empty %}
+                <{{titleTag|raw}} class="{{titleClasses|join(' ')}}">
+                    {{ title }}
+                </{{titleTag|raw}}>
+            {% endif %}
+        {% endblock %}
+    </header>
+{% endblock %}

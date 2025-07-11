@@ -2,10 +2,30 @@
     'cms-element-elysium-slider'
 ] %}
 
+{% if element.config.settings.value.cssClasses %}
+   {% set cmsElementClasses = cmsElementClasses|merge([element.config.settings.value.cssClasses]) %}
+{% endif %}
+
+{% if element.config.settings.value.overlay is same as(true) %}
+    {% set cmsElementClasses = cmsElementClasses|merge([
+        'slide-overlay'
+    ]) %}
+{% endif %}
+
 {% set showContainerWrapper = false %}
 
+{% set sliderTitle = element.translated.config.content.value.title %}
+
+{% set autoplayOptions = {
+    delay: element.translated.config.settings.value.autoplay.interval,
+    pauseOnMouseEnter: element.translated.config.settings.value.autoplay.pauseOnHover,
+    stopOnLastSlide: element.translated.config.settings.value.rewind
+} %}
+
 {% set swiperOptions = {
-    a11y: true,
+    autoplay: element.translated.config.settings.value.autoplay.active ? autoplayOptions : false,
+    rewind: element.translated.config.settings.value.rewind,
+    speed: element.translated.config.settings.value.speed,
     breakpoints: {
         (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): {
             slidesPerView: element.config.viewports.value.mobile.settings.slidesPerPage ?? 1,
@@ -35,7 +55,16 @@
         <div
             id="elysiumSlider-{{ element.id }}" 
             class="{{cmsElementClasses|join(' ')}}"
-            data-elysium-slider="{{swiperOptions|json_encode}}">
+            data-elysium-slider
+            data-swiper-options="{{swiperOptions|json_encode}}">
+
+            {% block cms_element_elysium_slider_header %} 
+                {% if sliderTitle is not empty %} 
+                    {% sw_include '@Storefront/storefront/component/elysium-slider/header.html.twig' with {
+                        title: sliderTitle
+                    } %}
+                {% endif %}
+            {% endblock %}
 
             {% block cms_element_elysium_slider_container %}
                 <div 
