@@ -21,72 +21,57 @@ class Migration1744028421SetDefaultMediaFolderId extends MigrationStep
 
     public function update(Connection $connection): void
     {
-        $countMediaDefaultFolder = $connection->fetchOne(
-            '
-            SELECT COUNT(*) 
-            FROM media_folder mf
-            WHERE mf.id = UNHEX(:mediaFolderId);
-        ',
-            [
-                'mediaFolderId' => Defaults::MEDIA_FOLDER_ID,
-            ]
+        $newMediaFolderId = hex2bin(Defaults::MEDIA_FOLDER_ID);
+
+        // Early return if already migrated
+        if ($this->isAlreadyMigrated($connection, $newMediaFolderId)) {
+            return;
+        }
+
+        $connection->transactional(function (Connection $connection) use ($newMediaFolderId) {
+            // Get original folder and validate it exists
+            $originalFolder = $this->getOriginalMediaFolder($connection);
+            if (!$originalFolder) {
+                return; // Nothing to migrate
+            }
+
+            // Update media records first (referential integrity)
+            $this->updateMediaFolderReferences($connection, $originalFolder['id'], $newMediaFolderId);
+
+            // Update folder ID in single operation
+            $connection->update(
+                'media_folder',
+                ['id' => $newMediaFolderId],
+                ['id' => $originalFolder['id']]
+            );
+        });
+    }
+
+    private function isAlreadyMigrated(Connection $connection, string $mediaFolderId): bool
+    {
+        return (bool) $connection->fetchOne(
+            'SELECT 1 FROM media_folder WHERE id = :id',
+            ['id' => $mediaFolderId]
+        );
+    }
+
+    private function getOriginalMediaFolder(Connection $connection): ?array
+    {
+        $result = $connection->fetchAssociative(
+            'SELECT mf.* FROM media_folder mf
+            JOIN media_default_folder mdf ON mf.default_folder_id = mdf.id
+            WHERE mdf.entity = :entity',
+            ['entity' => 'blur_elysium_slides']
         );
 
-        /**
-         * check if the new default media folder id is already set
-         * if not, update the media folder id and all related media
-         */
-        if ((int) $countMediaDefaultFolder === 0) {
+        return $result ?: null;
+    }
 
-            /**
-             * fetch the original media folder data
-             */
-            $originalMediaFolder = $connection->fetchAssociative('
-                SELECT mf.* 
-                FROM media_folder mf
-                JOIN media_default_folder mdf ON mf.default_folder_id = mdf.id
-                WHERE mdf.entity = :entity
-            ', [
-                'entity' => 'blur_elysium_slides',
-            ]);
-
-            /**
-             * find all media ids by the originnal media folder id
-             */
-            $mediaIds = $connection->fetchFirstColumn(
-                '
-                SELECT id 
-                FROM media
-                WHERE media_folder_id = :mediaFolderId
-            ',
-                [
-                    'mediaFolderId' => $originalMediaFolder['id'],
-                ]
-            );
-
-            /** 
-             * first, delete the original media folder by the original media folder id
-             * then change the id in the original media folder data to the new default media folder id
-             * and insert the new data into the media_folder table
-             */
-            $connection->delete('media_folder', [
-                'id' => $originalMediaFolder['id'],
-            ]);
-            $originalMediaFolder['id'] = hex2bin(Defaults::MEDIA_FOLDER_ID);
-            $connection->insert('media_folder', $originalMediaFolder);
-
-            if (count($mediaIds) > 0) {
-                $connection->executeStatement(
-                    'UPDATE media SET media_folder_id = :mediaFolderId WHERE id IN (:mediaIds)',
-                    [
-                        'mediaFolderId' => hex2bin(Defaults::MEDIA_FOLDER_ID),
-                        'mediaIds' => $mediaIds,
-                    ],
-                    [
-                        'mediaIds' => ArrayParameterType::STRING,
-                    ]
-                );
-            }
-        }
+    private function updateMediaFolderReferences(Connection $connection, string $oldFolderId, string $newFolderId): void
+    {
+        $connection->executeStatement(
+            'UPDATE media SET media_folder_id = :newId WHERE media_folder_id = :oldId',
+            ['newId' => $newFolderId, 'oldId' => $oldFolderId]
+        );
     }
 }
