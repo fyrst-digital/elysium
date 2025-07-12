@@ -23,7 +23,6 @@ export default Component.wrapComponentConfig({
 
     methods: {
         updateValue(value) {
-            console.log('updateValue', value);
             this.$emit('update-value', value);
         },
 

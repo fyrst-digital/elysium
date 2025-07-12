@@ -24,7 +24,7 @@
     "isDynamicEntry": true
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/cms/elements/blur-elysium-banner/component/index.ts": {
-    "file": "assets/index-CJG6lbMI.js",
+    "file": "assets/index-DQEqIwQp.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/cms/elements/blur-elysium-banner/component/index.ts",
     "isDynamicEntry": true,
@@ -135,7 +135,7 @@
     ]
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/form/number-input/index.ts": {
-    "file": "assets/index-kxB4NsIK.js",
+    "file": "assets/index-Bybia5nj.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/form/number-input/index.ts",
     "isDynamicEntry": true
@@ -180,7 +180,7 @@
     ]
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slide/preview/content/index.ts": {
-    "file": "assets/index-DiOhf9W1.js",
+    "file": "assets/index-CMVrIhsX.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slide/preview/content/index.ts",
     "isDynamicEntry": true,
@@ -189,7 +189,7 @@
     ]
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slide/preview/cover/index.ts": {
-    "file": "assets/index-XBnuPSZq.js",
+    "file": "assets/index-BVSVt1oC.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slide/preview/cover/index.ts",
     "isDynamicEntry": true,
@@ -198,7 +198,7 @@
     ]
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slide/preview/focus-image/index.ts": {
-    "file": "assets/index-Brh6YuOu.js",
+    "file": "assets/index-UQGl6GYU.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slide/preview/focus-image/index.ts",
     "isDynamicEntry": true,
@@ -246,7 +246,7 @@
     "isDynamicEntry": true
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slides/detail/index.ts": {
-    "file": "assets/index-C_o8LTl8.js",
+    "file": "assets/index-DRnxr2QQ.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slides/detail/index.ts",
     "isDynamicEntry": true
@@ -306,7 +306,7 @@
     "isDynamicEntry": true
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slides/overview/index.ts": {
-    "file": "assets/index-D9QASoiM.js",
+    "file": "assets/index-Ch8wtYZx.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slides/overview/index.ts",
     "isDynamicEntry": true,
@@ -368,6 +368,12 @@
       "assets/index-l4PhX9Cv.css"
     ]
   },
+  "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sidebar-navigation-item/index.ts": {
+    "file": "assets/index-CP48_pkP.js",
+    "name": "index",
+    "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sidebar-navigation-item/index.ts",
+    "isDynamicEntry": true
+  },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-section/index.ts": {
     "file": "assets/index-DlL3dRw3.js",
     "name": "index",
@@ -375,7 +381,7 @@
     "isDynamicEntry": true
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-sidebar/index.ts": {
-    "file": "assets/index-C0buu8uT.js",
+    "file": "assets/index-XXLaJkYw.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-sidebar/index.ts",
     "isDynamicEntry": true
@@ -390,7 +396,7 @@
     ]
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-media-quickinfo-usage/index.ts": {
-    "file": "assets/index-DQRbO1SL.js",
+    "file": "assets/index-C_-eiRWw.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-media-quickinfo-usage/index.ts",
     "isDynamicEntry": true,
@@ -407,12 +413,18 @@
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-search-bar-item/index.ts",
     "isDynamicEntry": true
   },
+  "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-sidebar/index.ts": {
+    "file": "assets/index-dyVYmPMR.js",
+    "name": "index",
+    "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-sidebar/index.ts",
+    "isDynamicEntry": true
+  },
   "_views-Cqrtpgo4.js": {
     "file": "assets/views-Cqrtpgo4.js",
     "name": "views"
   },
   "main.ts": {
-    "file": "assets/blur-elysium-slider-DwMT04lq.js",
+    "file": "assets/blur-elysium-slider-BQIA_R28.js",
     "name": "blur-elysium-slider",
     "src": "main.ts",
     "isEntry": true,
@@ -471,11 +483,13 @@
       "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/cms/section/add-block/index.ts",
       "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/cms/section/settings/index.ts",
       "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/cms/section/block-settings/index.ts",
+      "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-section/index.ts",
       "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-sidebar/index.ts",
+      "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-stage-section-selection/index.ts",
       "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-search-bar-item/index.ts",
       "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-media-quickinfo-usage/index.ts",
-      "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-section/index.ts",
-      "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-stage-section-selection/index.ts"
+      "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-sidebar/index.ts",
+      "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sidebar-navigation-item/index.ts"
     ],
     "css": [
       "assets/blur-elysium-slider-BYzP1NI3.css"

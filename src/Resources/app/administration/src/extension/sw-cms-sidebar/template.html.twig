@@ -5,7 +5,8 @@
     {% block sw_cms_sidebar_blur_section_settings %}
         <sw-sidebar-item
             class="sw-cms-sidebar__elysium-section-settings"
-            icon="regular-dashboard"
+            icon="elysium-cms-sidebar-icon"
+            :iconComponent="'blur-elysium-icon-dashboard'"
             :title="elysiumSectionSettingsTitle"
             :disabled="page.locked || !elysiumSectionSettingsActive"
         >

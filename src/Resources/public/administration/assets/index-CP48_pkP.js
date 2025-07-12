@@ -1,0 +1,2 @@
+const e=`{% block sw_sidebar_navigation_item %} <button :class="['sw-sidebar-navigation-item', { 'is--disabled': sidebarItem.disabled }, { 'is--active': sidebarItem.isActive }]" :disabled="sidebarItem.disabled" @click="emitButtonClicked" > <elysium-icon size="18" /> </button> {% endblock %}`,{Component:i}=Shopware,t=i.wrapComponentConfig({template:e});export{t as default};
+//# sourceMappingURL=index-CP48_pkP.js.map

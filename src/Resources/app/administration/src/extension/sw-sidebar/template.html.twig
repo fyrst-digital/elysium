@@ -1,0 +1,12 @@
+<!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+{% block sw_sidebar_navigation_item %}
+    <template v-if="item.icon === 'elysium-cms-sidebar-icon'">
+        <elysium-cms-sidebar-navigation-item
+            :sidebar-item="item"
+            @item-click="setItemActive(item)"
+        />
+    </template>
+    <template v-else>
+        {% parent() %}
+    </template>
+{% endblock %}

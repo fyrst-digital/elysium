@@ -16,7 +16,7 @@ import '@elysium/component/cms/elements/blur-elysium-banner';
 import '@elysium/component/cms/blocks/blur-elysium-slider';
 import '@elysium/component/cms/blocks/blur-elysium-banner';
 
-const { Locale, Application, Store, Service } = Shopware;
+const { Locale, Application, Component, Store, Service } = Shopware;
 
 /**
  * Register pinia stores
@@ -60,8 +60,7 @@ CustomFieldDataProviderService.addEntityName('blur_elysium_slides');
 /**
  * Register components
  * @todo change the name of elysium related components from `blur-elysium-*` to `elysium-*`
-
- * @todo change the name of general ui related components from `blur-*` to `sh-*`
+ * @todo change the name of general ui related components from `blur-*` to `py-*` and place them under `packages/pyra`
  */
 useComponentRegister([
     { name: 'blur-icon', path: () => import('@elysium/component/icon') },
@@ -110,9 +109,12 @@ useComponentRegister([
  * Extend components
  */
 useComponentOverride([
+    { name: 'sw-cms-section', path: () => import('@elysium/extension/sw-cms-section') },
     { name: 'sw-cms-sidebar', path: () => import('@elysium/extension/sw-cms-sidebar') },
+    { name: 'sw-cms-stage-section-selection', path: () => import('@elysium/extension/sw-cms-stage-section-selection') },
     { name: 'sw-search-bar-item', path: () => import('@elysium/extension/sw-search-bar-item') },
     { name: 'sw-media-quickinfo-usage', path: () => import('@elysium/extension/sw-media-quickinfo-usage') },
-    { name: 'sw-cms-section', path: () => import('@elysium/extension/sw-cms-section') },
-    { name: 'sw-cms-stage-section-selection', path: () => import('@elysium/extension/sw-cms-stage-section-selection') },
+    { name: 'sw-sidebar', path: () => import('@elysium/extension/sw-sidebar') },
 ])
+
+Component.extend('elysium-cms-sidebar-navigation-item', 'sw-sidebar-navigation-item', () => import('@elysium/extension/sidebar-navigation-item'));
