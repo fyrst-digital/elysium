@@ -55,8 +55,6 @@ export default Component.wrapComponentConfig({
         if (this.config.elysiumSlide?.value !== '') {
             this.loadPreviewSlide();
         }
-
-        console.log(this.config.viewports.value);
     },
 
     methods: {

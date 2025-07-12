@@ -1,0 +1,2 @@
+const e=`{% block sw_sidebar_navigation_item %} <template v-if="item.icon === 'elysium-cms-sidebar-icon'"> <elysium-cms-sidebar-navigation-item :sidebar-item="item" @item-click="setItemActive(item)" /> </template> <template v-else> {% parent() %} </template> {% endblock %}`,{Component:t}=Shopware,i=t.wrapComponentConfig({template:e});export{i as default};
+//# sourceMappingURL=index-dyVYmPMR.js.map

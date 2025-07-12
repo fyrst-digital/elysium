@@ -1,0 +1,12 @@
+{% block sw_sidebar_navigation_item %}
+<button
+    :class="['sw-sidebar-navigation-item', 
+    { 'is--disabled': sidebarItem.disabled },
+    { 'is--active': sidebarItem.isActive }]"
+    :disabled="sidebarItem.disabled"
+    @click="emitButtonClicked"
+>
+    <elysium-icon
+        size="18" />
+</button>
+{% endblock %}

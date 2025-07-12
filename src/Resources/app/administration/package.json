@@ -10,11 +10,10 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@types/webpack-env": "^1.18.5",
-        "tsconfig-paths-webpack-plugin": "^4.1.0",
         "vite": "^6.2.3"
     },
     "dependencies": {
+        "@shopware-ag/entity-schema-types": "^6.9.0",
         "@types/node": "^24.0.7"
     }
 }

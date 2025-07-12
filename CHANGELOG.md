@@ -1,3 +1,9 @@
+# 4.2.2
+
+## Changelog
+- The Elysium section and block settings in the Shopping Experiences sidebar can now be selected again.
+- The icon in the Shopping Experiences sidebar has been adjusted to better identify the Elysium section-related settings.
+
 # 4.2.1
 
 ## Changelog

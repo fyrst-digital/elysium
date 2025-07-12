@@ -211,7 +211,6 @@ export default Component.wrapComponentConfig({
                 contentSettings: this.defaultContentSettings
             });
             this.elysiumSlide.setSlide(slide);
-            console.log('new slider', this.slide)
             this.isLoading = false;
         },
 

@@ -1,3 +1,9 @@
+# 4.2.2
+
+## Changelog
+- Die Elysium Sektion und Block Einstellungen in der Erlebniswelten Sidebar können nun wieder angewählt werden.
+- Das Icon in der Erlebniswelten Sidebar wurde angepasst um die Elysium Sektion bezogenen Einstellungen besser zu erkennen
+
 # 4.2.1
 
 ## Changelog
