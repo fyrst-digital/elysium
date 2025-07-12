@@ -146,6 +146,7 @@ export default Component.wrapComponentConfig({
     },
 
     created() {
+        console.log('created blur-elysium-slider');
         this.initElementConfig('blur-elysium-slider');
         if (this.element.config.elysiumSlideCollection.value.length > 0) {
             this.loadSelectedSlides(
@@ -155,6 +156,7 @@ export default Component.wrapComponentConfig({
     },
 
     unmounted() {
+        console.log('unmounted blur-elysium-slider');
         this.elysiumCms.clearSelectedSlides();
     },
 });
