@@ -13,6 +13,7 @@ export default Component.wrapComponentConfig({
     data() {
         return {
             activeTab: 'content',
+            selectedSlides: []
         };
     },
 
@@ -25,12 +26,8 @@ export default Component.wrapComponentConfig({
             return Store.get('elysiumCMS');
         },
 
-        selectedSlides() {
-            return Store.get('elysiumCMS').selectedSlides;
-        },
-
         selectedSlidesIds() {
-            return this.selectedSlides.map((slide) => slide.id);
+            return this.selectedSlides.map((slide: Entity<'blur_elysium_slides'>) => slide.id);
         },
 
         device() {
@@ -84,16 +81,11 @@ export default Component.wrapComponentConfig({
 
             this.slidesRepository
                 .search(criteria, Context.api)
-                .then((result) => {
-                    /**
-                     * filter the selected slides to remove orphaned selections
-                     * @todo check if the filter funtion is really needed. Because the selectedSlidesIds are already set in the criteria `criteria.setIds(this.selectedSlidesIds)`
-                     */
+                .then((result: EntityCollection<'blur_elysium_slides'>) => {
                     const filteredSlides = result.filter((slide) =>
                         selectedSlidesIds.includes(slide.id)
                     );
                     this.selectedSlides = filteredSlides;
-                    this.elysiumCms.setSelectedSlides(filteredSlides);
                 })
                 .catch((error) => {
                     console.error('Error loading slides', error);
@@ -101,31 +93,33 @@ export default Component.wrapComponentConfig({
         },
 
         addSlide(slide: Entity<'blur_elysium_slides'>) {
-            this.elysiumCms.addSelectedSlide(slide);
+            this.selectedSlides.push(slide);
         },
 
         removeSlide(slide: Entity<'blur_elysium_slides'>) {
-            this.elysiumCms.removeSelectedSlide(slide);
+            const index = this.selectedSlides.findIndex(
+                (selectedSlide: Entity<'blur_elysium_slides'>) => selectedSlide.id === slide.id
+            );
+            if (index !== -1) this.selectedSlides.splice(index, 1);
         },
 
         moveUpSlide(slide: Entity<'blur_elysium_slides'>) {
             const currentIndex = this.selectedSlides.indexOf(slide);
+            const toIndex = currentIndex - 1;
+
             if (currentIndex > 0)
-                this.elysiumCms.moveSelectedSlide(
-                    slide,
-                    currentIndex,
-                    currentIndex - 1
-                );
+                this.selectedSlides.splice(currentIndex, 1);
+                this.selectedSlides.splice(toIndex, 0, slide);
         },
 
         moveDownSlide(slide: Entity<'blur_elysium_slides'>) {
             const currentIndex = this.selectedSlides.indexOf(slide);
-            if (currentIndex < this.selectedSlides.length - 1)
-                this.elysiumCms.moveSelectedSlide(
-                    slide,
-                    currentIndex,
-                    currentIndex + 1
-                );
+            const toIndex = currentIndex + 1;
+
+            if (currentIndex < this.selectedSlides.length - 1) {
+                this.selectedSlides.splice(currentIndex, 1);
+                this.selectedSlides.splice(toIndex, 0, slide);
+            }
         },
 
         dragSlideDrop(
@@ -133,7 +127,8 @@ export default Component.wrapComponentConfig({
             fromIndex: number,
             toIndex: number
         ) {
-            this.elysiumCms.moveSelectedSlide(slide, fromIndex, toIndex);
+            this.selectedSlides.splice(fromIndex, 1);
+            this.selectedSlides.splice(toIndex, 0, slide);
         },
     },
 
@@ -152,9 +147,5 @@ export default Component.wrapComponentConfig({
                 this.element.config.elysiumSlideCollection.value
             );
         }
-    },
-
-    unmounted() {
-        this.elysiumCms.clearSelectedSlides();
     },
 });

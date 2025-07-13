@@ -8,6 +8,17 @@ declare global {
         Shopware: ShopwareClass;
     }
 
-    type Entity<EntityName extends keyof EntitySchema.Entities> = EntitySchema.Entities[EntityName];
-    type EntityCollection<EntityName extends keyof EntitySchema.Entities> = EntitySchema.Entities[EntityName][];
+    type Entity<EntityName extends keyof CustomEntities> = CustomEntities[EntityName];
+    type EntityCollection<EntityName extends keyof CustomEntities> = CustomEntities[EntityName][];
+}
+
+interface CustomEntities extends EntitySchema.Entities {
+    blur_elysium_slides: blur_elysium_slides;
+}
+
+interface blur_elysium_slides {
+    id: string;
+    customFields?: unknown;
+    createdAt: string;
+    updatedAt?: string;
 }

@@ -24,10 +24,6 @@ export default Component.wrapComponentConfig({
             return this.cmsPage.currentCmsDeviceView;
         },
 
-        /**
-         * @todo since we just looking for at least one slide exist we can not filter orphans at this point
-         * move this function to slide-selection component
-         */
         selectedSlide: {
             get() {
                 return this.element.config.elysiumSlide.value;
