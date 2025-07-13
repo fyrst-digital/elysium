@@ -1,0 +1,32 @@
+{% set btnDefaultClasses = [
+    'btn',
+    'swiper-action'
+] %}
+{% if btnClasses is defined %}
+    {% set btnClasses = btnDefaultClasses|merge(btnClasses) %}
+{% else %}
+    {% set btnClasses = btnDefaultClasses %}
+{% endif %}
+
+{% set label = label|default(false) %}
+
+{% block component_elysium_slider_navigation_action %}
+    <button
+        type="button"
+        class="{{ btnClasses|join(' ') }}">
+
+        {% block component_elysium_slider_navigation_action_icon %}
+            {% if icon %}
+                {% sw_include '@Storefront/storefront/utilities/icon.html.twig' with {
+                    name: icon
+                } %}
+            {% endif %}
+        {% endblock %}
+
+        {% block component_elysium_slider_navigation_action_label %}
+            {% if label %}
+                <span class="btn-label visually-hidden">{{ label }}</span>
+            {% endif %}
+        {% endblock %}
+    </button>
+{% endblock %}
