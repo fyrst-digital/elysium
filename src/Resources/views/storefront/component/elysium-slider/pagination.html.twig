@@ -1,5 +1,6 @@
 {% set paginationDefaultClasses = [
-    'swiper-pagination'
+    'swiper-pagination',
+    'pagination-bullets-' ~ element.translated.config.navigation.value.shape,
 ] %}
 {% if paginationClasses is defined %}
     {% set paginationClasses = paginationDefaultClasses|merge(paginationClasses) %}

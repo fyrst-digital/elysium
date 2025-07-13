@@ -27,11 +27,17 @@
     prevEl: '.swiper-action-prev',
 } %}
 
+{% set paginationOptions = {
+    el: '#elysiumSlider-' ~ element.id ~ ' .swiper-pagination',
+    clickable: true
+} %}
+
 {% set swiperOptions = {
     autoplay: element.translated.config.settings.value.autoplay.active ? autoplayOptions : false,
     navigation: element.translated.config.arrows.value.active ? navigationOptions : false,
     rewind: element.translated.config.settings.value.rewind,
     speed: element.translated.config.settings.value.speed,
+    pagination: element.translated.config.navigation.value.active ? paginationOptions : false,
     breakpoints: {
         (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): {
             slidesPerView: element.config.viewports.value.mobile.settings.slidesPerPage ?? 1,
@@ -125,13 +131,22 @@
                         {% endif %}
                     {% endblock %}
 
-                    {% block cms_element_elysium_slider_pagination %}
-                        {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
-                            paginationClasses: ['d-flex', 'flex-wrap']
-                        } %}
+                    {% block cms_element_elysium_slider_pagination_inside_slider %}
+                        {% if element.translated.config.navigation.value.active and element.translated.config.navigation.value.position is same as('in_slider') %}
+                            {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
+                                paginationClasses: ['d-flex', 'flex-wrap', 'position-absolute', 'bottom-0', 'start-0', 'end-0', 'top-auto', 'z-2']
+                            } %}
+                        {% endif %}
                     {% endblock %}
                 </div>
 
+                {% block cms_element_elysium_slider_pagination_below_slider %}
+                    {% if element.translated.config.navigation.value.active and element.translated.config.navigation.value.position is same as('below_slider') %}
+                        {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
+                            paginationClasses: ['d-flex', 'flex-wrap']
+                        } %}
+                    {% endif %}
+                {% endblock %}
 
             {% endblock %}
         </div>

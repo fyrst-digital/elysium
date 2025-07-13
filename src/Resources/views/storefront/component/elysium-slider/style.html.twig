@@ -1,5 +1,6 @@
 {% set viewports = element.config.viewports.value %}
 {% set navigation = element.translated.config.arrows.value %}
+{% set pagination = element.translated.config.navigation.value %}
 
 {% apply spaceless %}
     <style>
@@ -17,6 +18,17 @@
             {% endif %}
             {% if navigation.bgColors.active %}
                 --arrow-bg-color-active: {{navigation.bgColors.active}};
+            {% endif %}
+
+            {# pagination styles #}
+            {% if pagination.align is same as('start') or pagination.align is same as('end') %}
+                --pagination-justify-content: {{ 'flex-' ~ pagination.align }};
+            {% endif %}
+            {% if pagination.colors.default %}
+                --pagination-bullet-color: {{pagination.colors.default}};
+            {% endif %}
+            {% if pagination.colors.active %}
+                --pagination-bullet-color-active: {{pagination.colors.active}};
             {% endif %}
         }
 
@@ -44,9 +56,33 @@
                     {% if options.sizing.paddingX %}
                         --slide-padding-offset-x: {{ options.sizing.paddingX ~ 'px' }};
                     {% endif %}
+
                     {# navigation styles #}
                     {% if options.arrows.iconSize is not empty %}
                         --arrow-icon-size: {{ options.arrows.iconSize ~ 'px' }};
+                    {% endif %}
+
+                    {# pagination styles #}
+                    {% if options.navigation.gap is not empty %}
+                        --pagination-bullet-gap: {{ options.navigation.gap ~ 'px' }};
+                    {% endif %}
+                    {% if pagination.shape is same as('circle') %}
+                        {% if options.navigation.size is same as('sm') %}
+                            --pagination-bullet-size: 12px;
+                        {% elseif options.navigation.size is same as('lg') %}
+                            --pagination-bullet-size: 20px;
+                        {% else %}
+                            --pagination-bullet-size: 16px;
+                        {% endif %}
+                    {% endif %}
+                    {% if pagination.shape is same as('bar') %}
+                        {% if options.navigation.size is same as('sm') %}
+                            --pagination-bullet-size: 24px;
+                        {% elseif options.navigation.size is same as('lg') %}
+                            --pagination-bullet-size: 40px;
+                        {% else %}
+                            --pagination-bullet-size: 32px;
+                        {% endif %}
                     {% endif %}
                 }
             }            
