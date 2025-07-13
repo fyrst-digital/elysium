@@ -1,3 +1,8 @@
+# 4.2.3
+
+## Changelog
+- Es wurde ein Fehler behoben, der verhinderte, dass Elysium Slider Elementen unterschiedliche Slides zugewiesen werden konnten
+
 # 4.2.2
 
 ## Changelog
