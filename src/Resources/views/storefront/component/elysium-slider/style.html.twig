@@ -1,11 +1,31 @@
 {% set viewports = element.config.viewports.value %}
+{% set navigation = element.translated.config.arrows.value %}
 
 {% apply spaceless %}
     <style>
+        #elysiumSlider-{{ element.id }} {
+
+            {# navigation styles #}
+            {% if navigation.colors.default %}
+                --arrow-icon-color: {{navigation.colors.default}};
+            {% endif %}
+            {% if navigation.bgColors.default %}
+                --arrow-bg-color: {{navigation.bgColors.default}};
+            {% endif %}
+            {% if navigation.colors.active %}
+                --arrow-icon-color-active: {{navigation.colors.active}};
+            {% endif %}
+            {% if navigation.bgColors.active %}
+                --arrow-bg-color-active: {{navigation.bgColors.active}};
+            {% endif %}
+        }
+
+        {# responsive styles #}
         {% for device, options in viewports %}
             @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
                 #elysiumSlider-{{ element.id }}
                 {
+                    {# slide styles #}
                     {% if options.sizing.aspectRatio.auto is same as(true) %}
                         --slide-aspect-ratio: auto;
                     {% elseif options.sizing.aspectRatio.width and options.sizing.aspectRatio.height %}
@@ -23,6 +43,10 @@
                     {% endif %}
                     {% if options.sizing.paddingX %}
                         --slide-padding-offset-x: {{ options.sizing.paddingX ~ 'px' }};
+                    {% endif %}
+                    {# navigation styles #}
+                    {% if options.arrows.iconSize is not empty %}
+                        --arrow-icon-size: {{ options.arrows.iconSize ~ 'px' }};
                     {% endif %}
                 }
             }            

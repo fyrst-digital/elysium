@@ -21,9 +21,12 @@ export default class ElysiumSlider extends PluginBaseClass {
         const swiperElement = this.el.querySelector(this.options.swiperSelector)
         this.swiper = new Swiper(swiperElement, deepmerge({
             a11y: true,
-            oberserver: true,
-            modules: [Autoplay],
+            observer: true,
+            modules: [Autoplay, Navigation, Pagination],
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
         }, inlineOptions))
-        console.log('ElysiumSlider initialized', inlineOptions)
     }
 }

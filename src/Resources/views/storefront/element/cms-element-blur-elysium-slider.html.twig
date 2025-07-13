@@ -22,8 +22,14 @@
     stopOnLastSlide: element.translated.config.settings.value.rewind
 } %}
 
+{% set navigationOptions = {
+    nextEl: '.swiper-action-next',
+    prevEl: '.swiper-action-prev',
+} %}
+
 {% set swiperOptions = {
     autoplay: element.translated.config.settings.value.autoplay.active ? autoplayOptions : false,
+    navigation: element.translated.config.arrows.value.active ? navigationOptions : false,
     rewind: element.translated.config.settings.value.rewind,
     speed: element.translated.config.settings.value.speed,
     breakpoints: {
@@ -73,6 +79,7 @@
 
                     {% block cms_element_elysium_slider_wrapper %}
                         <div class="swiper-wrapper">
+
                             {% for slide in element.data.slideCollection %}
                                 {% block cms_element_elysium_slider_item %}
                                     {% set slideTemplate = 'default' %}
@@ -99,7 +106,33 @@
                             {% endfor %}
                         </div>
                     {% endblock %}
+
+                    {% block cms_element_elysium_slider_action_prev %}
+                        {% if element.translated.config.arrows.value.active %}
+                            {% sw_include '@Storefront/storefront/component/elysium-slider/navigation-action.html.twig' with {
+                                icon: element.translated.config.arrows.value.icon.default ~ '-left',
+                                btnClasses: ['swiper-action-prev', 'btn-link', 'position-absolute', 'top-50', 'z-2', 'translate-middle-y']
+                            } %}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block cms_element_elysium_slider_action_next %}
+                        {% if element.translated.config.arrows.value.active %}
+                            {% sw_include '@Storefront/storefront/component/elysium-slider/navigation-action.html.twig' with {
+                                icon: element.translated.config.arrows.value.icon.default ~ '-right',
+                                btnClasses: ['swiper-action-next', 'btn-link', 'position-absolute', 'top-50', 'z-2', 'translate-middle-y']
+                            } %}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block cms_element_elysium_slider_pagination %}
+                        {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
+                            paginationClasses: ['d-flex', 'flex-wrap']
+                        } %}
+                    {% endblock %}
                 </div>
+
+
             {% endblock %}
         </div>
     {% else %}

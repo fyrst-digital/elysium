@@ -1,5 +1,61 @@
-@import 'navigation';
-@import 'arrows';
+.swiper-action {
+    --#{$prefix}btn-bg: var(--arrow-bg-color, transparent);
+    --#{$prefix}btn-hover-bg: var(--arrow-bg-color-active, transparent);
+    --#{$prefix}btn-color: var(--arrow-icon-color, rgba(255, 255, 255, 0.75));
+    --#{$prefix}btn-hover-color: var(--arrow-icon-color-active, rgba(255, 255, 255, 1));
+    --#{$prefix}btn-active-color: var(--arrow-icon-color-active, rgba(255, 255, 255, 1));
+    --#{$prefix}btn-border-width: var(--arrow-border-width, 2px);
+    --#{$prefix}btn-border-color: var(--arrow-border-color, transparent);
+    --#{$prefix}btn-border-radius: var(--arrow-border-radius, transparent);
+    --#{$prefix}btn-padding-x: var(--arrow-padding, 10px);
+    --#{$prefix}btn-padding-y: var(--arrow-padding, 10px);
+
+    .icon {
+        width: var(--arrow-icon-size, 24px);
+        height: var(--arrow-icon-size, 24px);
+        color: inherit;
+        display: block;
+        line-height: 1;
+    }
+
+    &.swiper-action-prev {
+        left: var(--navigation-action-offset, 0px);
+    }
+
+    &.swiper-action-next {
+        right: var(--navigation-action-offset, 0px);
+    }
+
+    &:disabled,
+    &.swiper-button-disabled {
+        opacity: var(--arrow-opacity, 0);
+    }
+
+    svg {
+        top: auto !important;
+    }
+}
+
+.swiper-pagination {
+    padding: var(--pagination-padding-y, 20px) var(--pagination-padding-x, 20px);
+    gap: var(--pagination-gap, 16px);
+    justify-content: var(--pagination-justify-content, center);
+}
+
+.swiper-pagination-bullet {
+    @extend .d-block;
+    aspect-ratio: var(--pagination-bullet-aspect-ratio, 1 / 1);
+    width: var(--pagination-bullet-size, 16px);
+    background-color: var(--pagination-bullet-color, rgba(0, 0, 0, 0.25));
+    border-radius: var(--pagination-bullet-radius, 100px);
+    cursor: var(--pagination-bullet-cursor, pointer);
+    transition: var(--pagination-bullet-transition, all 300ms);
+
+    &:hover,
+    &.swiper-pagination-bullet-active {
+        background-color: var(--pagination-bullet-color-active, rgba(0, 0, 0, 0.5));
+    }
+}
 
 .cms-element-elysium-slider {
     position: relative;
