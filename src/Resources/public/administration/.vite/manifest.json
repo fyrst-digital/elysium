@@ -54,7 +54,7 @@
     ]
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/cms/elements/blur-elysium-slider/config/arrows/index.ts": {
-    "file": "assets/index-Dqy8EUxT.js",
+    "file": "assets/index-CvfhmP5R.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/cms/elements/blur-elysium-slider/config/arrows/index.ts",
     "isDynamicEntry": true
@@ -72,7 +72,7 @@
     "isDynamicEntry": true
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/cms/elements/blur-elysium-slider/config/settings/index.ts": {
-    "file": "assets/index-FHi-o90K.js",
+    "file": "assets/index-D7lmS79t.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/cms/elements/blur-elysium-slider/config/settings/index.ts",
     "isDynamicEntry": true
@@ -306,7 +306,7 @@
     "isDynamicEntry": true
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slides/overview/index.ts": {
-    "file": "assets/index-C4XPABAJ.js",
+    "file": "assets/index-EP-SPo8R.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slides/overview/index.ts",
     "isDynamicEntry": true,
@@ -396,7 +396,7 @@
     ]
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-media-quickinfo-usage/index.ts": {
-    "file": "assets/index-DT407P-f.js",
+    "file": "assets/index-CnFzTmAq.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-media-quickinfo-usage/index.ts",
     "isDynamicEntry": true,
@@ -424,7 +424,7 @@
     "name": "views"
   },
   "main.ts": {
-    "file": "assets/blur-elysium-slider-5eOvQI1J.js",
+    "file": "assets/blur-elysium-slider-DjfgtVFm.js",
     "name": "blur-elysium-slider",
     "src": "main.ts",
     "isEntry": true,

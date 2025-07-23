@@ -53,6 +53,7 @@ export default <SliderSettings>{
         value: {
             overlay: false,
             containerWidth: 'content',
+            justifySlideHeight: true,
             rewind: true,
             speed: 300,
             pauseOnHover: true,

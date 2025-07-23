@@ -356,6 +356,7 @@
                 },
                 "rewind": "Slides zurückspulen",
                 "overlay": "Zeige Overlay",
+                "justifySlideHeight": "Slide-Höhen angleichen",
                 "speed": {
                     "label": "Slide-Geschwindigkeit",
                     "placeholder": "Zeit in Millisekunden"

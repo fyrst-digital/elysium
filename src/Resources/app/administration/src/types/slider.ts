@@ -30,6 +30,7 @@ export interface General {
     value: {
         overlay: boolean;
         containerWidth: 'content' | 'full';
+        justifySlideHeight: boolean;
         rewind: boolean;
         speed: number;
         pauseOnHover: boolean;

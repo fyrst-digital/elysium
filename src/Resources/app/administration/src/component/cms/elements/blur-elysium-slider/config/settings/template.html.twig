@@ -11,35 +11,42 @@
     :title="$tc('blurElysiumSlider.config.settings.general')"
 >
     {% block blur_cms_config_elysium_slider_rewind %}
-    <div
-        :style="viewStyle({
-                mobile: { gridColumnEnd: 'span 12' },
-                desktop: { gridColumnEnd: 'span 3' },
-            })"
-    >
-        <mt-switch
-            class="blur-switch-input"
-            :label="$tc('blurElysiumSlider.config.settings.rewind')"
-            :checked="settingsConfig.rewind"
-            @change="settingsConfig.rewind = $event"
-        />
-    </div>
+        <blur-column
+            :cols="12">
+
+            <mt-switch
+                class="blur-switch-input"
+                :label="$tc('blurElysiumSlider.config.settings.rewind')"
+                :checked="settingsConfig.rewind"
+                @change="settingsConfig.rewind = $event"
+            />
+        </blur-column>
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_overlay %}
-    <div
-        :style="viewStyle({
-                mobile: { gridColumnEnd: 'span 12' },
-                desktop: { gridColumnEnd: 'span 9' },
-            })"
-    >
-        <mt-switch
-            class="blur-switch-input"
-            :label="$tc('blurElysiumSlider.config.settings.overlay')"
-            :checked="settingsConfig.overlay"
-            @change="settingsConfig.overlay = $event"
-        />
-    </div>
+        <blur-column
+            :cols="12">
+
+            <mt-switch
+                class="blur-switch-input"
+                :label="$tc('blurElysiumSlider.config.settings.overlay')"
+                :checked="settingsConfig.overlay"
+                @change="settingsConfig.overlay = $event"
+            />
+        </blur-column>
+    {% endblock %}
+
+    {% block blur_cms_config_elysium_slider_justifySlideHeight %}
+        <blur-column
+            :cols="12">
+            
+            <mt-switch
+                class="blur-switch-input"
+                :label="$tc('blurElysiumSlider.config.settings.justifySlideHeight')"
+                :checked="settingsConfig.justifySlideHeight"
+                @change="settingsConfig.justifySlideHeight = $event"
+            />
+        </blur-column>
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_slides_per_page %}
@@ -95,6 +102,7 @@
             ]"
     />
     {% endblock %}
+
     <blur-column
         :cols-tablet="6">
 

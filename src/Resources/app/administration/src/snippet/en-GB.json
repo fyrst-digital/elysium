@@ -356,6 +356,7 @@
                 },
                 "rewind": "Rewind Slides",
                 "overlay": "Show Overlay",
+                "justifySlideHeight": "Justify slide heights",
                 "speed": {
                     "label": "Slide Speed",
                     "placeholder": "Time in Millisecond"

@@ -12,6 +12,12 @@
     ]) %}
 {% endif %}
 
+{% if element.config.settings.value.justifySlideHeight is same as(true) %}
+    {% set cmsElementClasses = cmsElementClasses|merge([
+        'justify-slide-height'
+    ]) %}
+{% endif %}
+
 {% set showContainerWrapper = false %}
 
 {% set sliderTitle = element.translated.config.content.value.title %}
