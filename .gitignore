@@ -2,6 +2,4 @@ custom/
 node_modules/
 node_modules/**
 node_modules/**/*
-blur-elysium-slider.js.LICENSE.txt
 .mdout
-splide.min.js.gz
