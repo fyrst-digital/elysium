@@ -61,6 +61,9 @@
                     {% if options.arrows.iconSize is not empty %}
                         --arrow-icon-size: {{ options.arrows.iconSize ~ 'px' }};
                     {% endif %}
+                    {% if options.arrows.offsetPadding is not empty %}
+                        --navigation-action-offset: {{ options.arrows.offsetPadding ~ 'px' }};
+                    {% endif %}
 
                     {# pagination styles #}
                     {% if options.navigation.gap is not empty %}

@@ -65,6 +65,7 @@
     position: relative;
 
     &.slide-overlay {
+        
         .blur-elysium-slide::before {
             content: '';
             display: block;

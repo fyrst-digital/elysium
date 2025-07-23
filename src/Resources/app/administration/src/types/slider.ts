@@ -97,6 +97,7 @@ export interface ViewportNavigation {
 
 export interface ViewportArrows {
     iconSize: number | null;
+    offsetPadding: number | null;
 }
 
 export interface ViewportSettings {
