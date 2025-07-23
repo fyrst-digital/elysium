@@ -119,21 +119,9 @@
                         </div>
                     {% endblock %}
 
-                    {% block cms_element_elysium_slider_action_prev %}
+                    {% block cms_element_elysium_slider_navigation %}
                         {% if element.translated.config.arrows.value.active %}
-                            {% sw_include '@Storefront/storefront/component/elysium-slider/navigation-action.html.twig' with {
-                                icon: element.translated.config.arrows.value.icon.default ~ '-left',
-                                btnClasses: ['swiper-action-prev', 'btn-link', 'position-absolute', 'top-50', 'z-2', 'translate-middle-y']
-                            } %}
-                        {% endif %}
-                    {% endblock %}
-
-                    {% block cms_element_elysium_slider_action_next %}
-                        {% if element.translated.config.arrows.value.active %}
-                            {% sw_include '@Storefront/storefront/component/elysium-slider/navigation-action.html.twig' with {
-                                icon: element.translated.config.arrows.value.icon.default ~ '-right',
-                                btnClasses: ['swiper-action-next', 'btn-link', 'position-absolute', 'top-50', 'z-2', 'translate-middle-y']
-                            } %}
+                            {% sw_include '@Storefront/storefront/component/elysium-slider/navigation.html.twig' %}
                         {% endif %}
                     {% endblock %}
 

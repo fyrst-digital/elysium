@@ -1,39 +1,43 @@
 .swiper-action {
-    --#{$prefix}btn-bg: var(--arrow-bg-color, transparent);
-    --#{$prefix}btn-hover-bg: var(--arrow-bg-color-active, transparent);
-    --#{$prefix}btn-color: var(--arrow-icon-color, rgba(255, 255, 255, 0.75));
-    --#{$prefix}btn-hover-color: var(--arrow-icon-color-active, rgba(255, 255, 255, 1));
-    --#{$prefix}btn-active-color: var(--arrow-icon-color-active, rgba(255, 255, 255, 1));
-    --#{$prefix}btn-border-width: var(--arrow-border-width, 2px);
-    --#{$prefix}btn-border-color: var(--arrow-border-color, transparent);
-    --#{$prefix}btn-border-radius: var(--arrow-border-radius, transparent);
-    --#{$prefix}btn-padding-x: var(--arrow-padding, 10px);
-    --#{$prefix}btn-padding-y: var(--arrow-padding, 10px);
+    --#{$prefix}btn-bg: var(--nav-action-bg-color, transparent);
+    --#{$prefix}btn-hover-bg: var(--nav-action-bg-color-active, transparent);
+    --#{$prefix}btn-color: var(--nav-action-icon-color, rgba(255, 255, 255, 0.75));
+    --#{$prefix}btn-hover-color: var(--nav-action-icon-color-active, rgba(255, 255, 255, 1));
+    --#{$prefix}btn-active-color: var(--nav-action-icon-color-active, rgba(255, 255, 255, 1));
+    --#{$prefix}btn-border-width: var(--nav-action-border-width, 2px);
+    --#{$prefix}btn-border-color: var(--nav-action-border-color, transparent);
+    --#{$prefix}btn-border-radius: var(--nav-action-border-radius, transparent);
+    --#{$prefix}btn-padding-x: var(--nav-action-padding, 10px);
+    --#{$prefix}btn-padding-y: var(--nav-action-padding, 10px);
 
     .icon {
-        width: var(--arrow-icon-size, 24px);
-        height: var(--arrow-icon-size, 24px);
+        width: var(--nav-action-icon-size, 24px);
+        height: var(--nav-action-icon-size, 24px);
         color: inherit;
         display: block;
         line-height: 1;
     }
 
     &.swiper-action-prev {
-        left: var(--navigation-action-offset, 0px);
+        left: var(--nav-action-offset, 0px);
     }
 
     &.swiper-action-next {
-        right: var(--navigation-action-offset, 0px);
+        right: var(--nav-action-offset, 0px);
     }
 
     &:disabled,
     &.swiper-button-disabled {
-        opacity: var(--arrow-opacity, 0);
+        opacity: var(--nav-action-opacity, 0);
     }
 
     svg {
         top: auto !important;
     }
+}
+
+.swiper-navigation {
+    display: var(--nav-display, contents);
 }
 
 .swiper-pagination {
@@ -92,32 +96,3 @@
         }
     }
 }
-
-// .blur-elysium-slider {
-//     position: relative;
-
-//     &:not(.is-initialized) {
-//         .blur-esldr__arrow-btn {
-//             @extend .d-none;
-//         }
-//     }
-
-//     &.is-loading {
-//         .splide__list {
-//             display: grid;
-//             grid-template-columns: repeat(var(--elysium-slider-columns, 1),
-//                     minmax(0, 1fr));
-//             gap: var(--elysium-slider-gap, 0px);
-//         }
-
-//         .cms-element-elysium-slide__wrapper {
-//             &:not(:first-child) {
-//                 @extend .d-none;
-//             }
-//         }
-//     }
-// }
-
-// .blur-elysium-slide__wrapper {
-//     position: relative;
-// }

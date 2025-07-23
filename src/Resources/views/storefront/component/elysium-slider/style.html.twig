@@ -8,16 +8,16 @@
 
             {# navigation styles #}
             {% if navigation.colors.default %}
-                --arrow-icon-color: {{navigation.colors.default}};
+                --nav-action-icon-color: {{navigation.colors.default}};
             {% endif %}
             {% if navigation.bgColors.default %}
-                --arrow-bg-color: {{navigation.bgColors.default}};
+                --nav-action-bg-color: {{navigation.bgColors.default}};
             {% endif %}
             {% if navigation.colors.active %}
-                --arrow-icon-color-active: {{navigation.colors.active}};
+                --nav-action-icon-color-active: {{navigation.colors.active}};
             {% endif %}
             {% if navigation.bgColors.active %}
-                --arrow-bg-color-active: {{navigation.bgColors.active}};
+                --nav-action-bg-color-active: {{navigation.bgColors.active}};
             {% endif %}
 
             {# pagination styles #}
@@ -59,10 +59,10 @@
 
                     {# navigation styles #}
                     {% if options.arrows.iconSize is not empty %}
-                        --arrow-icon-size: {{ options.arrows.iconSize ~ 'px' }};
+                        --nav-action-icon-size: {{ options.arrows.iconSize ~ 'px' }};
                     {% endif %}
                     {% if options.arrows.offsetPadding is not empty %}
-                        --navigation-action-offset: {{ options.arrows.offsetPadding ~ 'px' }};
+                        --nav-action-offset: {{ options.arrows.offsetPadding ~ 'px' }};
                     {% endif %}
 
                     {# pagination styles #}

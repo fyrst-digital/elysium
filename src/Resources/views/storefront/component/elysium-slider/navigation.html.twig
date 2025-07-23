@@ -1,0 +1,32 @@
+{% set defaultClasses = [
+    'swiper-navigation'
+] %}
+
+{% if classes is defined %}
+    {% set classes = defaultClasses|merge(classes) %}
+{% else %}
+    {% set classes = defaultClasses %}
+{% endif %}
+
+{% block component_elysium_slider_navigation %}
+    <div class="{{ classes|join(' ') }}">
+
+        {% block component_elysium_slider_navigation_action_prev %}
+            {% if element.translated.config.arrows.value.active %}
+                {% sw_include '@Storefront/storefront/component/elysium-slider/navigation-action.html.twig' with {
+                    icon: element.translated.config.arrows.value.icon.default ~ '-left',
+                    btnClasses: ['swiper-action-prev', 'btn-link', 'position-absolute', 'top-50', 'z-2', 'translate-middle-y']
+                } %}
+            {% endif %}
+        {% endblock %}
+
+        {% block component_elysium_slider_navigation_action_next %}
+            {% if element.translated.config.arrows.value.active %}
+                {% sw_include '@Storefront/storefront/component/elysium-slider/navigation-action.html.twig' with {
+                    icon: element.translated.config.arrows.value.icon.default ~ '-right',
+                    btnClasses: ['swiper-action-next', 'btn-link', 'position-absolute', 'top-50', 'z-2', 'translate-middle-y']
+                } %}
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}
