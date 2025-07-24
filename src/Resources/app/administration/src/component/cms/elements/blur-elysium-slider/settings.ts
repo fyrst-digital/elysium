@@ -1,4 +1,4 @@
-import { SliderSettings, ViewportSettings } from '@elysium/types/slider';
+import { SliderSettings, ViewportSettings, ViewportArrows } from '@elysium/types/slider';
 
 const { Utils } = Shopware;
 
@@ -12,6 +12,7 @@ const viewportSettings: ViewportSettings = {
     },
     arrows: {
         iconSize: null,
+        offsetPadding: null,
     },
     sizing: {
         aspectRatio: {
@@ -45,6 +46,8 @@ export default <SliderSettings>{
         source: 'static',
         value: {
             title: '',
+            titleTag: 'h2',
+            titleSrOnly: false,
         },
     },
     settings: {
@@ -52,6 +55,7 @@ export default <SliderSettings>{
         value: {
             overlay: false,
             containerWidth: 'content',
+            justifySlideHeight: true,
             rewind: true,
             speed: 300,
             pauseOnHover: true,
@@ -106,6 +110,7 @@ export default <SliderSettings>{
                 },
                 arrows: {
                     iconSize: 16,
+                    offsetPadding: 16,
                 },
                 sizing: {
                     aspectRatio: {
@@ -122,6 +127,7 @@ export default <SliderSettings>{
                 },
                 arrows: {
                     iconSize: 20,
+                    offsetPadding: 24,
                 },
                 sizing: {
                     aspectRatio: {
@@ -138,6 +144,7 @@ export default <SliderSettings>{
                 },
                 arrows: {
                     iconSize: 24,
+                    offsetPadding: 32,
                 },
                 sizing: {
                     aspectRatio: {

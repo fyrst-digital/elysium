@@ -1,0 +1,34 @@
+{% set headerClasses = [
+    'elysium-slider-header',
+    'h2',
+    'mb-4'
+] %}
+
+{% set titleClasses = [
+    'elysium-slider-title',
+    'h2',
+    'mb-4'
+] %}
+
+{% set srOnly = srOnly|default(false) %}
+{% set titleTag = titleTag|default('div') %}
+
+{% if srOnly is same as(true) %}
+    {% set headerClasses = headerClasses|merge(['visually-hidden']) %}
+{% endif %}
+
+{% block component_elysium_slider_header %}
+    <header class="{{headerClasses|join(' ')}}">
+
+        {% block component_elysium_slider_title %}
+            {% if title is not empty %}
+                <{{titleTag|raw}} 
+                    aria-label="{{ title|striptags }}"
+                    id="elysiumSlider-{{ element.id }}-title"
+                    class="{{titleClasses|join(' ')}}">
+                    {{ title }}
+                </{{titleTag|raw}}>
+            {% endif %}
+        {% endblock %}
+    </header>
+{% endblock %}

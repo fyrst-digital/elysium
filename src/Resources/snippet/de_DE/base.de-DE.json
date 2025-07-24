@@ -1,4 +1,14 @@
 {
+    "elysiumSlider": {
+        "navigation": {
+            "actionPrev": "Zum vorherigen Slide",
+            "actionNext": "Zum nächsten Slide"
+        },
+        "pagination": {
+            "label": "Slider Navigation"
+        },
+        "showSlidesIndicator": "Slide {current} von {total} wird angezeigt"
+    },
     "blurElysiumSlides": {
         "sliderControls": {
             "prev": "Vorheriger Slide",

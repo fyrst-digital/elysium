@@ -1,25 +1,43 @@
+# unreleased
+
+## Hinweis für Entwickler
+
+We have made significant adjustments to the slider template and CSS styling. Template paths, Twig blocks, CSS class names, and CSS variables have been changed.  
+The new structures can be found in the template `src/Resources/views/storefront/element/cms-element-blur-elysium-slider.html.twig`.  
+The updated CSS styling is located in `src/Resources/app/storefront/src/scss/_elysium-slider.scss`.
+
+## Changelog
+
+- New slider option: The HTML tag of the slider heading can now be defined. In addition to 'DIV', 'H1' to 'H6' elements are possible
+- New slider option: The slider heading can now be visually shown or hidden
+- New slider option: It is now possible to specify whether slides should align in height
+- New slider option: The outer margin of the slider arrows can now be configured
+- Overhaul of the slider template and optimization of A11y markup
+- CSS classes and variables have been changed and adjusted
+- The Splide slider library has been replaced with Swiper
+
 # 4.2.3
 
 ## Changelog
-- Fixed an issue that prevented assigning different slides to Elysium Slider elements.
+- Fixed an issue that prevented assigning different slides to Elysium Slider elements
 
 # 4.2.2
 
 ## Changelog
-- The Elysium section and block settings in the Shopping Experiences sidebar can now be selected again.
-- The icon in the Shopping Experiences sidebar has been adjusted to better identify the Elysium section-related settings.
+- The Elysium section and block settings in the Shopping Experiences sidebar can now be selected again
+- The icon in the Shopping Experiences sidebar has been adjusted to better identify the Elysium section-related settings
 
 # 4.2.1
 
 ## Changelog
-- Database migration 1744028421SetDefaultMediaFolderId has been optimized, which could previously lead to an error when upgrading from Shopware 6.6 to 6.7.
+- Database migration 1744028421SetDefaultMediaFolderId has been optimized, which could previously lead to an error when upgrading from Shopware 6.6 to 6.7
 
 # 4.2.0
 
 ## Changelog
-- The slide preview in the Shopping Experiences Layout Editor has been improved and now better reflects the result in the storefront.
-- `ElysiumCmsSlidesResultEvent` and `ElysiumCmsSlidesCriteriaEvent` have been added. These are triggered when the corresponding Shopping Experiences elements are called.
-- Code and TypeScript optimizations of the admin app. A slide preview component has been added.
+- The slide preview in the Shopping Experiences Layout Editor has been improved and now better reflects the result in the storefront
+- `ElysiumCmsSlidesResultEvent` and `ElysiumCmsSlidesCriteriaEvent` have been added. These are triggered when the corresponding Shopping Experiences elements are called
+- Code and TypeScript optimizations of the admin app. A slide preview component has been added
 
 # 4.1.0
 

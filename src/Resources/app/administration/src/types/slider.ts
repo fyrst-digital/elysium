@@ -30,6 +30,7 @@ export interface General {
     value: {
         overlay: boolean;
         containerWidth: 'content' | 'full';
+        justifySlideHeight: boolean;
         rewind: boolean;
         speed: number;
         pauseOnHover: boolean;
@@ -97,6 +98,7 @@ export interface ViewportNavigation {
 
 export interface ViewportArrows {
     iconSize: number | null;
+    offsetPadding: number | null;
 }
 
 export interface ViewportSettings {

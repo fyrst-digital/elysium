@@ -1,0 +1,22 @@
+{% set paginationDefaultClasses = [
+    'swiper-pagination',
+    'pagination-bullets-' ~ element.translated.config.navigation.value.shape,
+] %}
+
+{% if paginationClasses is defined %}
+    {% set paginationClasses = paginationDefaultClasses|merge(paginationClasses) %}
+{% else %}
+    {% set paginationClasses = paginationDefaultClasses %}
+{% endif %}
+
+{% set label = label|default(false) %}
+
+{% block component_elysium_slider_pagination %}
+    <div 
+        role="navigation"
+        {% if label %}
+            aria-label="{{ label }}"
+        {% endif %}
+        class="{{ paginationClasses|join(' ') }}">
+    </div>
+{% endblock %}

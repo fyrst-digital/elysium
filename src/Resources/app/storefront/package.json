@@ -9,6 +9,6 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@splidejs/splide": "^4.1.4"
+        "swiper": "^11.2.10"
     }
 }

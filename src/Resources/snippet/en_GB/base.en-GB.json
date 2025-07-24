@@ -1,9 +1,15 @@
 {
-    "blurElysiumSlides": {
-        "sliderControls": {
-            "prev": "Previous Slide",
-            "next": "Next Slide"
+    "elysiumSlider": {
+        "navigation": {
+            "actionPrev": "Go to previous slide",
+            "actionNext": "Go to next slide"
         },
+        "pagination": {
+            "label": "Slider pagination"
+        },
+        "showSlidesIndicator": "Showing slide {current} of {total}"
+    },
+    "blurElysiumSlides": {
         "buttonLabel": "Learn more",
         "buttonLabelProduct": "See Product"
     }

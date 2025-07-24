@@ -1,152 +1,179 @@
-{% set sliderAutoplay = element.translated.config.settings.value.autoplay %}
-{% set sliderNavigation = element.translated.config.navigation.value %}
-{% set sliderArrows = element.translated.config.arrows.value %}
-{% set sliderTitle = element.translated.config.content.value.title %}
-{% set showContainerWrapper = false %}
-
-{% set sliderOptions = {
-    splideOptions: {
-        arrows: sliderArrows.active,
-        pagination: sliderNavigation.active,
-        mediaQuery: 'min',
-        gap: '0px',
-        autoplay: sliderAutoplay.active,
-        interval: sliderAutoplay.interval,
-        pauseOnHover: sliderAutoplay.pauseOnHover,
-        speed: element.translated.config.settings.value.speed,
-        rewind: element.translated.config.settings.value.rewind,
-        breakpoints: {
-            (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): {
-                perPage: element.config.viewports.value.mobile.settings.slidesPerPage ?? 1,
-                gap: element.config.viewports.value.mobile.sizing.slidesGap ?? 0
-            },
-            (theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)): {
-                perPage: element.config.viewports.value.tablet.settings.slidesPerPage ?? 1,
-                gap: element.config.viewports.value.tablet.sizing.slidesGap ?? 0
-            },
-            (theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)): {
-                perPage: element.config.viewports.value.desktop.settings.slidesPerPage ?? 1,
-                gap: element.config.viewports.value.desktop.sizing.slidesGap ?? 0
-            }
-        }
-    }
-} %}
-
-{% set sliderClasses = [
+{% set cmsElementClasses = [
     'cms-element-elysium-slider'
 ] %}
 
-{% set slideWrapperClasses = [
-    'cms-element-elysium-slide__wrapper',
-    'splide__slide',
-    'd-flex',
-    'flex-column',
-] %}
-
-{% set slideClasses = ['flex-fill'] %}
+{% if element.config.settings.value.cssClasses %}
+   {% set cmsElementClasses = cmsElementClasses|merge([element.config.settings.value.cssClasses]) %}
+{% endif %}
 
 {% if element.config.settings.value.overlay is same as(true) %}
-    {% set sliderClasses = sliderClasses|merge([
+    {% set cmsElementClasses = cmsElementClasses|merge([
         'slide-overlay'
     ]) %}
 {% endif %}
 
-{% if element.config.settings.value.cssClasses %}
-   {% set sliderClasses = sliderClasses|merge([element.config.settings.value.cssClasses]) %}
+{% if element.config.settings.value.justifySlideHeight is same as(true) %}
+    {% set cmsElementClasses = cmsElementClasses|merge([
+        'justify-slide-height'
+    ]) %}
 {% endif %}
+
+{% set showContainerWrapper = false %}
+
+{% set sliderTitle = element.translated.config.content.value.title %}
+
+{% set autoplayOptions = {
+    delay: element.translated.config.settings.value.autoplay.interval,
+    pauseOnMouseEnter: element.translated.config.settings.value.autoplay.pauseOnHover,
+    stopOnLastSlide: element.translated.config.settings.value.rewind
+} %}
+
+{% set navigationOptions = {
+    nextEl: '.swiper-action-next',
+    prevEl: '.swiper-action-prev',
+} %}
+
+{% set paginationOptions = {
+    el: '#elysiumSlider-' ~ element.id ~ ' .swiper-pagination',
+    clickable: true
+} %}
+
+{% set swiperOptions = {
+    autoplay: element.translated.config.settings.value.autoplay.active ? autoplayOptions : false,
+    navigation: element.translated.config.arrows.value.active ? navigationOptions : false,
+    rewind: element.translated.config.settings.value.rewind,
+    speed: element.translated.config.settings.value.speed,
+    pagination: element.translated.config.navigation.value.active ? paginationOptions : false,
+    breakpoints: {
+        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): {
+            slidesPerView: element.config.viewports.value.mobile.settings.slidesPerPage ?? 1,
+            spaceBetween: element.config.viewports.value.mobile.sizing.slidesGap ?? 0
+        },
+        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)): {
+            slidesPerView: element.config.viewports.value.tablet.settings.slidesPerPage ?? 1,
+            spaceBetween: element.config.viewports.value.tablet.sizing.slidesGap ?? 0
+        },
+        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)): {
+            slidesPerView: element.config.viewports.value.desktop.settings.slidesPerPage ?? 1,
+            spaceBetween: element.config.viewports.value.desktop.sizing.slidesGap ?? 0
+        }
+    }
+} %}
 
 {% if element.config.settings.value.containerWidth is same as('content') %}
     {% set showContainerWrapper = true %}
 {% endif %}
 
-{% block cms_element_blur_elysium_slider_root %}
+{% block cms_element_blur_elysium_slider_css_styles %}
+    {% sw_include '@Storefront/storefront/component/elysium-slider/style.html.twig' %}
+{% endblock %}
 
-    {% block cms_element_blur_elysium_slider_css_styles %}
-        {% sw_include '@Storefront/storefront/component/blur-elysium-slider/style.html.twig' %}
-    {% endblock %}
+{% block cms_element_elysium_slider %}
+    {% if element.data.slideCollection is not empty %}
+        <section
+            id="elysiumSlider-{{ element.id }}" 
+            class="{{cmsElementClasses|join(' ')}}"
+            role="region"
+            {% if sliderTitle is not empty %}
+                aria-labelledby="elysiumSlider-{{ element.id }}-title"
+            {% endif %}
+            data-elysium-slider
+            data-swiper-options="{{swiperOptions|json_encode}}">
 
-    {% block cms_element_blur_elysium_slider %}
-        <div id="elysiumSlider-{{ element.id }}" 
-            data-blur-elysium-slider="{{sliderOptions|json_encode|replace({'%replace%': ''}) }}"
-            class="{{sliderClasses|join(' ')}}">
+            {% block cms_element_elysium_slider_header %} 
 
-            {% block blur_elysium_control_include_header %} 
                 {% if sliderTitle is not empty %} 
-                    {% sw_include '@Storefront/storefront/component/blur-elysium-slider/header.html.twig' %}
+                    {% sw_include '@Storefront/storefront/component/elysium-slider/header.html.twig' with {
+                        title: sliderTitle,
+                        titleTag: element.translated.config.content.value.titleTag|default('div'),
+                        srOnly: element.translated.config.content.value.titleSrOnly|default(false)
+                    } %}
                 {% endif %}
             {% endblock %}
 
-            {% if element.data.slideCollection is empty %}
+            {% block cms_element_elysium_slider_container %}
+                <div 
+                    class="swiper"
+                    id="swiper-{{ element.id }}"
+                    data-elysium-slider-swiper>
 
-                {% block cms_element_blur_elysium_slider_empty_state %}
-                    <!-- no slide collection here -->
-                {% endblock %}
-            {% else %}
+                    {% block cms_element_elysium_slider_live_update %}
+                        <span 
+                            class="visually-hidden" 
+                            aria-live="polite"
+                            data-live-update>
+                            {{ 'elysiumSlider.showSlidesIndicator'|trans }}
+                        </span>
+                    {% endblock %}
 
-                {% block cms_element_blur_elysium_slider_container %}
-                    <section class="blur-elysium-slider splide is-loading"
-                        {% if sliderTitle is not empty %}
-                            aria-label="{{sliderTitle}}"
-                        {% endif %}
-                        style="visibility: visible;"
-                        data-blur-elysium-slider-container>
+                    {% block cms_element_elysium_slider_wrapper %}
+                        <ul 
+                            role="list"
+                            class="swiper-wrapper">
 
-                        {% block cms_element_blur_elysium_slide_wrapper %}
-                            <div class="blur-elysium-slide__wrapper">
+                            {% for slide in element.data.slideCollection %}
+                                {% block cms_element_elysium_slider_item %}
+                                    {% set slideTemplate = 'default' %}
+                                    {% set slideFile = 'slide.html.twig' %}
 
-                                {% block cms_element_blur_elysium_slide_track_before %}{% endblock %}
+                                    {% if slide.product is not same as(null) and slide.slideSettings.slide.linking.type is same as('product') %}
+                                        {% set slideFile = 'slide-product.html.twig' %}
+                                    {% endif %}
 
-                                <div class="splide__track">
-                                    <ul class="splide__list">
-                                        {% for slide in element.data.slideCollection %}
-                                            <li class="{{slideWrapperClasses|join(' ')}}">
+                                    {% if slide.slideSettings.customTemplateFile is not empty %}
+                                        {% set slideTemplate = 'custom' %}
+                                        {% set slideFile = slide.slideSettings.customTemplateFile ~ '.html.twig' %}
+                                    {% endif %}
 
-                                                {% block cms_element_blur_elysium_slide_include %}
-                                                    {% set slideTemplate = 'default' %}
-                                                    {% set slideFile = 'slide.html.twig' %}
-
-                                                    {% if slide.product is not same as(null) and slide.slideSettings.slide.linking.type is same as('product') %}
-                                                        {% set slideFile = 'slide-product.html.twig' %}
-                                                    {% endif %}
-
-                                                    {% if slide.slideSettings.customTemplateFile is not empty %}
-                                                        {% set slideTemplate = 'custom' %}
-                                                        {% set slideFile = slide.slideSettings.customTemplateFile ~ '.html.twig' %}
-                                                    {% endif %}
-
-                                                    {% sw_include '@Storefront/storefront/component/blur-elysium-slide/' ~ slideTemplate ~ '/' ~ slideFile ignore missing with {
-                                                        slideData: slide,
-                                                        showContainerWrapper: showContainerWrapper
-                                                    } %}
-                                                {% endblock %}
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-
-                                {% block cms_element_blur_elysium_slide_track_after %}
-
-                                    {% block blur_elysium_slider_arrows_include_position_in_slider %}  
-                                        {% sw_include '@Storefront/storefront/component/blur-elysium-slider/arrows.html.twig' with {
-                                            config: sliderArrows,
-                                            elementId: element.id
-                                        } only %}
-                                    {% endblock %}
+                                    <li 
+                                        role="listitem"
+                                        class="swiper-slide">
+                                        {% block cms_element_blur_elysium_slider_slide %}
+                                            {% sw_include '@Storefront/storefront/component/blur-elysium-slide/' ~ slideTemplate ~ '/' ~ slideFile ignore missing with {
+                                                slideData: slide,
+                                                showContainerWrapper: showContainerWrapper
+                                            } %}
+                                        {% endblock %}
+                                    </li>
                                 {% endblock %}
-                            </div>
-                        {% endblock %}
-                        
-                        {% block blur_elysium_slider_navigation_include_under_slider %}  
-                            {% sw_include '@Storefront/storefront/component/blur-elysium-slider/navigation.html.twig' with {
-                                config: sliderNavigation,
-                                elementId: element.id
-                            } only %}
-                        {% endblock %}
+                            {% endfor %}
+                        </ul>
+                    {% endblock %}
 
-                    </section>
-                {% endblock %} 
-           {% endif %}
+                    {% block cms_element_elysium_slider_navigation %}
+                        {% if element.translated.config.arrows.value.active %}
+                            {% sw_include '@Storefront/storefront/component/elysium-slider/navigation.html.twig' %}
+                        {% endif %}
+                    {% endblock %}
 
-        </div>  
-    {% endblock %}  
+                    {% block cms_element_elysium_slider_pagination_inside_slider %}
+                        {% if element.translated.config.navigation.value.active and element.translated.config.navigation.value.position is same as('in_slider') %}
+                            {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
+                                paginationClasses: ['d-flex', 'flex-wrap', 'position-absolute', 'bottom-0', 'start-0', 'end-0', 'top-auto', 'z-2'],
+                                label: 'elysiumSlider.pagination.label'|trans
+                            } %}
+                        {% endif %}
+                    {% endblock %}
+                </div>
+
+                {% block cms_element_elysium_slider_pagination_below_slider %}
+                    {% if element.translated.config.navigation.value.active and element.translated.config.navigation.value.position is same as('below_slider') %}
+                        {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
+                            paginationClasses: ['d-flex', 'flex-wrap'],
+                            label: 'elysiumSlider.pagination.label'|trans
+                        } %}
+                    {% endif %}
+                {% endblock %}
+
+            {% endblock %}
+        </section>
+    {% else %}
+        {% block cms_element_elysium_slider_empty %}
+            {% set cmsElementClasses = cmsElementClasses|merge(['is-empty']) %}
+
+            <div class="{{cmsElementClasses|join(' ')}}">
+                <p>{{ 'sw-cms.elements.elysiumSlider.emptyText'|trans }}</p>
+            </div>
+        {% endblock %}
+    {% endif %}
 {% endblock %}

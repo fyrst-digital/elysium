@@ -1,0 +1,95 @@
+{% set viewports = element.config.viewports.value %}
+{% set navigation = element.translated.config.arrows.value %}
+{% set pagination = element.translated.config.navigation.value %}
+
+{% apply spaceless %}
+    <style>
+        #elysiumSlider-{{ element.id }} {
+
+            {# navigation styles #}
+            {% if navigation.colors.default %}
+                --nav-action-icon-color: {{navigation.colors.default}};
+            {% endif %}
+            {% if navigation.bgColors.default %}
+                --nav-action-bg-color: {{navigation.bgColors.default}};
+            {% endif %}
+            {% if navigation.colors.active %}
+                --nav-action-icon-color-active: {{navigation.colors.active}};
+            {% endif %}
+            {% if navigation.bgColors.active %}
+                --nav-action-bg-color-active: {{navigation.bgColors.active}};
+            {% endif %}
+
+            {# pagination styles #}
+            {% if pagination.align is same as('start') or pagination.align is same as('end') %}
+                --pagination-justify-content: {{ 'flex-' ~ pagination.align }};
+            {% endif %}
+            {% if pagination.colors.default %}
+                --pagination-bullet-color: {{pagination.colors.default}};
+            {% endif %}
+            {% if pagination.colors.active %}
+                --pagination-bullet-color-active: {{pagination.colors.active}};
+            {% endif %}
+        }
+
+        {# responsive styles #}
+        {% for device, options in viewports %}
+            @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
+                #elysiumSlider-{{ element.id }}
+                {
+                    {# slide styles #}
+                    {% if options.sizing.aspectRatio.auto is same as(true) %}
+                        --slide-aspect-ratio: auto;
+                    {% elseif options.sizing.aspectRatio.width and options.sizing.aspectRatio.height %}
+                        --slide-aspect-ratio: {{options.sizing.aspectRatio.width}} / {{options.sizing.aspectRatio.height}};
+                    {% endif %}
+                    {% if options.sizing.maxHeightScreen is same as(true) %}
+                        --slide-max-height: 100vh;
+                    {% elseif options.sizing.maxHeight is same as(0) %}
+                        --slide-max-height: auto;
+                    {% elseif options.sizing.maxHeight %}
+                        --slide-max-height: {{ options.sizing.maxHeight ~ 'px' }};
+                    {% endif %}
+                    {% if options.sizing.paddingY %}
+                        --slide-padding-offset-y: {{ options.sizing.paddingY ~ 'px' }};
+                    {% endif %}
+                    {% if options.sizing.paddingX %}
+                        --slide-padding-offset-x: {{ options.sizing.paddingX ~ 'px' }};
+                    {% endif %}
+
+                    {# navigation styles #}
+                    {% if options.arrows.iconSize is not empty %}
+                        --nav-action-icon-size: {{ options.arrows.iconSize ~ 'px' }};
+                    {% endif %}
+                    {% if options.arrows.offsetPadding is not empty %}
+                        --nav-action-offset: {{ options.arrows.offsetPadding ~ 'px' }};
+                    {% endif %}
+
+                    {# pagination styles #}
+                    {% if options.navigation.gap is not empty %}
+                        --pagination-bullet-gap: {{ options.navigation.gap ~ 'px' }};
+                    {% endif %}
+                    {% if pagination.shape is same as('circle') %}
+                        {% if options.navigation.size is same as('sm') %}
+                            --pagination-bullet-size: 12px;
+                        {% elseif options.navigation.size is same as('lg') %}
+                            --pagination-bullet-size: 20px;
+                        {% else %}
+                            --pagination-bullet-size: 16px;
+                        {% endif %}
+                    {% endif %}
+                    {% if pagination.shape is same as('bar') %}
+                        {% if options.navigation.size is same as('sm') %}
+                            --pagination-bullet-size: 24px;
+                        {% elseif options.navigation.size is same as('lg') %}
+                            --pagination-bullet-size: 40px;
+                        {% else %}
+                            --pagination-bullet-size: 32px;
+                        {% endif %}
+                    {% endif %}
+                }
+            }            
+        {% endfor %}
+        {% block cms_element_blur_elysium_slider_css_styles_extend %}{% endblock %}
+    </style>
+{% endapply %}
