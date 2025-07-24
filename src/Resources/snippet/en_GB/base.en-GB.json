@@ -1,9 +1,11 @@
 {
+    "elysiumSlider": {
+        "navigation": {
+            "actionPrev": "Go to previous slide",
+            "actionNext": "Go to next slide"
+        }
+    },
     "blurElysiumSlides": {
-        "sliderControls": {
-            "prev": "Previous Slide",
-            "next": "Next Slide"
-        },
         "buttonLabel": "Learn more",
         "buttonLabelProduct": "See Product"
     }

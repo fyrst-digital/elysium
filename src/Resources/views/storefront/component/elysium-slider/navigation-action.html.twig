@@ -13,6 +13,9 @@
 {% block component_elysium_slider_navigation_action %}
     <button
         type="button"
+        {% if label %}
+            aria-label="{{ label }}"
+        {% endif %}
         class="{{ btnClasses|join(' ') }}">
 
         {% block component_elysium_slider_navigation_action_icon %}

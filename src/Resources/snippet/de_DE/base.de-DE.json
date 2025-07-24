@@ -1,4 +1,10 @@
 {
+    "elysiumSlider": {
+        "navigation": {
+            "actionPrev": "Zum vorherigen Slide",
+            "actionNext": "Zum nächsten Slide"
+        }
+    },
     "blurElysiumSlides": {
         "sliderControls": {
             "prev": "Vorheriger Slide",
