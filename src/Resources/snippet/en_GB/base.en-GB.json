@@ -3,7 +3,8 @@
         "navigation": {
             "actionPrev": "Go to previous slide",
             "actionNext": "Go to next slide"
-        }
+        },
+        "showSlidesIndicator": "Showing slide {current} of {total}"
     },
     "blurElysiumSlides": {
         "buttonLabel": "Learn more",

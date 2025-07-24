@@ -46,6 +46,8 @@ export default <SliderSettings>{
         source: 'static',
         value: {
             title: '',
+            titleTag: 'h2',
+            titleSrOnly: false,
         },
     },
     settings: {

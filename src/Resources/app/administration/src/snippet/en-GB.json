@@ -344,6 +344,10 @@
             "settingsLabel": "Settings",
             "settings": {
                 "general": "General",
+                "titleSrOnly": {
+                    "label": "Visually hide text",
+                    "helpText": "Enable this option to visually hide the title. The title will still be recognized by screen readers"
+                },
                 "slidesPerPage": {
                     "label": "Slides per view",
                     "placeholder": "1"

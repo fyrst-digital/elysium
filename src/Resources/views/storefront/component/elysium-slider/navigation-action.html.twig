@@ -8,6 +8,7 @@
     {% set btnClasses = btnDefaultClasses %}
 {% endif %}
 
+{% set controlsId = controlsId|default(false) %}
 {% set label = label|default(false) %}
 
 {% block component_elysium_slider_navigation_action %}
@@ -15,6 +16,9 @@
         type="button"
         {% if label %}
             aria-label="{{ label }}"
+        {% endif %}
+        {% if controlsId %}
+            aria-controls="{{ controlsId }}"
         {% endif %}
         class="{{ btnClasses|join(' ') }}">
 

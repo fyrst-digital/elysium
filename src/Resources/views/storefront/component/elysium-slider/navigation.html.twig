@@ -16,6 +16,7 @@
                 {% sw_include '@Storefront/storefront/component/elysium-slider/navigation-action.html.twig' with {
                     icon: element.translated.config.arrows.value.icon.default ~ '-left',
                     label: 'elysiumSlider.navigation.actionPrev'|trans,
+                    controlsId: 'swiper-' ~ element.id,
                     btnClasses: ['swiper-action-prev', 'btn-link', 'position-absolute', 'top-50', 'z-2', 'translate-middle-y']
                 } %}
             {% endif %}
@@ -26,6 +27,7 @@
                 {% sw_include '@Storefront/storefront/component/elysium-slider/navigation-action.html.twig' with {
                     icon: element.translated.config.arrows.value.icon.default ~ '-right',
                     label: 'elysiumSlider.navigation.actionNext'|trans,
+                    controlsId: 'swiper-' ~ element.id,
                     btnClasses: ['swiper-action-next', 'btn-link', 'position-absolute', 'top-50', 'z-2', 'translate-middle-y']
                 } %}
             {% endif %}

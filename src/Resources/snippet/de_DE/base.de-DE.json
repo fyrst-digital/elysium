@@ -3,7 +3,8 @@
         "navigation": {
             "actionPrev": "Zum vorherigen Slide",
             "actionNext": "Zum nächsten Slide"
-        }
+        },
+        "showSlidesIndicator": "Slide {current} von {total} wird angezeigt"
     },
     "blurElysiumSlides": {
         "sliderControls": {

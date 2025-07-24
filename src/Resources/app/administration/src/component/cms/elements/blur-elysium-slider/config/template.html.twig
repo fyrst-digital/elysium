@@ -35,14 +35,49 @@
             padding
             :title="$tc('blurElysiumSlider.config.settings.general')"
         >
-            <blur-column>
+            <blur-column
+                :cols="8">
+
                 <blur-text-input
                     :label="$tc('blurElysiumSlider.config.content.sliderTitle')"
                     :model-value="element.config.content.value.title"
                     @update-value="value => element.config.content.value.title = value"
                 />
             </blur-column>
+
+            <blur-column
+                :cols="4">
+
+                <blur-select-input
+                    :options="[
+                        { value: 'div', label: 'DIV' },
+                        { value: 'h1', label: 'H1' },
+                        { value: 'h2', label: 'H2' },
+                        { value: 'h3', label: 'H3' },
+                        { value: 'h4', label: 'H4' },
+                        { value: 'h5', label: 'H5' },
+                        { value: 'h6', label: 'H6' }
+                    ]"
+                    placeholder="H2"
+                    :label="$tc('blurElysiumSlides.forms.slideHeadlineElement.label')"
+                    :helpText="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')"
+                    v-model:value="element.config.content.value.titleTag"
+                />
+            </blur-column>
+
+            <blur-column
+                :cols="12">
+
+                <mt-switch
+                    class="blur-switch-input"
+                    :label="$tc('blurElysiumSlider.config.settings.titleSrOnly.label')"
+                    :helpText="$tc('blurElysiumSlider.config.settings.titleSrOnly.helpText')"
+                    :checked="element.config.content.value.titleSrOnly"
+                    @change="element.config.content.value.titleSrOnly = $event"
+                />
+            </blur-column>
         </blur-section>
+
         <blur-section
             gap
             padding

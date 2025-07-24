@@ -344,6 +344,10 @@
             "settingsLabel": "Einstellungen",
             "settings": {
                 "general": "Allgemein",
+                "titleSrOnly": {
+                    "label": "Text visuell ausblenden",
+                    "helpText": "Aktiviere diese Option, um den Titel visuell auszublenden. Der Titel wird weiterhin von Screenreadern erfasst"
+                },
                 "slidesPerPage": {
                     "label": "Slides pro Ansicht",
                     "placeholder": "1"
