@@ -42,16 +42,30 @@ export default class ElysiumSlider extends PluginBaseClass {
 
     listeners() {
         this.swiper.on('slideChange', this.onSlideChange.bind(this));
+        this.swiper.on('paginationUpdate', this.onPaginationUpdate.bind(this));
+
+        this.$emitter.publish('listeners', { swiper: this.swiper });
     }
 
     onSlideInit(swiper) {
         this._buildliveUpdate(swiper);
         this._buildA11y(swiper);
+        this._buildA11yBullets(swiper);
+
+        this.$emitter.publish('onSlideInit', { swiper });
     }
     
     onSlideChange(swiper) {
         this._buildliveUpdate(swiper);
         this._buildA11y(swiper);
+
+        this.$emitter.publish('onSlideChange', { swiper });
+    }
+
+    onPaginationUpdate(swiper) {
+        this._buildA11yBullets(swiper);
+
+        this.$emitter.publish('onPaginationUpdate', { swiper });
     }
 
     _buildA11y(swiper) {
@@ -74,6 +88,22 @@ export default class ElysiumSlider extends PluginBaseClass {
             if (activeSlide) {
                 activeSlide.setAttribute('aria-current', 'true');
             }
+        }
+    }
+
+    _buildA11yBullets(swiper) {
+        if (swiper.pagination?.bullets?.length > 0) {
+            swiper.pagination.bullets.forEach((bullet, index) => {
+                bullet.setAttribute('role', 'button');
+                // bullet.setAttribute('aria-label', `Go to slides ${index + 1}`);
+                bullet.setAttribute('tabindex', '0');
+
+                if (bullet.classList.contains('swiper-pagination-bullet-active')) {
+                    bullet.setAttribute('aria-current', 'true');
+                } else {
+                    bullet.removeAttribute('aria-current');
+                }
+            });
         }
     }
 
