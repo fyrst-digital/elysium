@@ -10,53 +10,10 @@ use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEve
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Blur\BlurElysiumSlider\Defaults;
 
 class EntitySubscriber implements EventSubscriberInterface
 {
-    public const SECTION_NAME = 'blur-elysium-section';
-
-    public const SECTION_SETTINGS_KEY = 'elysiumSectionSettings';
-
-    /**
-     * Provides default section configuration settings for the Elysium Section.
-     *
-     * @return array<string, mixed[]>
-     */
-    public static function sectionDefauls(): array
-    {
-        return [
-            'elysiumSectionSettings' => [
-                'breakpoints' => [
-                    'mobile' => null,
-                    'tablet' => null,
-                    'desktop' => null,
-                ],
-                'viewports' => [
-                    'mobile' => [
-                        'gridCols' => 12,
-                        'gridGap' => 20,
-                        'alignItems' => 'stretch',
-                        'paddingY' => 20,
-                        'paddingX' => 0,
-                    ],
-                    'tablet' => [
-                        'gridCols' => 12,
-                        'gridGap' => 40,
-                        'alignItems' => 'stretch',
-                        'paddingY' => 40,
-                        'paddingX' => 0,
-                    ],
-                    'desktop' => [
-                        'gridCols' => 12,
-                        'gridGap' => 40,
-                        'alignItems' => 'stretch',
-                        'paddingY' => 40,
-                        'paddingX' => 0,
-                    ],
-                ],
-            ],
-        ];
-    }
 
     public function __construct(
         private readonly EntityRepository $cmsSectionRepository
@@ -84,8 +41,8 @@ class EntitySubscriber implements EventSubscriberInterface
                 if ($result->getOperation() === EntityWriteResult::OPERATION_INSERT) {
                     $payload = $result->getPayload();
 
-                    if (isset($payload['type']) && $payload['type'] === self::SECTION_NAME) {
-                        $mergedCustomFields = \array_replace_recursive(self::sectionDefauls(), isset($payload['custom_fields']) ? $payload['custom_fields'] : []);
+                    if (isset($payload['type']) && $payload['type'] === Defaults::CMS_SECTION_NAME) {
+                        $mergedCustomFields = \array_replace_recursive(Defaults::cmsSectionSettings(), isset($payload['custom_fields']) ? $payload['custom_fields'] : []);
 
                         $updates[] = [
                             'id' => $payload['id'],

@@ -28,4 +28,49 @@ final class Defaults
         ['width' => 800, 'height' => 800],
         ['width' => 1920, 'height' => 1920],
     ];
+
+    public const CMS_SECTION_NAME = 'blur-elysium-section';
+
+    public const CMS_SECTION_SETTINGS_KEY = 'elysiumSectionSettings';
+
+    /**
+     * Provides default section configuration settings for the Elysium Section.
+     *
+     * @return array<string, mixed[]>
+     */
+    public static function cmsSectionSettings(): array
+    {
+        return [
+            self::CMS_SECTION_SETTINGS_KEY => [
+                'breakpoints' => [
+                    'mobile' => null,
+                    'tablet' => null,
+                    'desktop' => null,
+                ],
+                'viewports' => [
+                    'mobile' => [
+                        'gridCols' => 12,
+                        'gridGap' => 20,
+                        'alignItems' => 'stretch',
+                        'paddingY' => 20,
+                        'paddingX' => 0,
+                    ],
+                    'tablet' => [
+                        'gridCols' => 12,
+                        'gridGap' => 40,
+                        'alignItems' => 'stretch',
+                        'paddingY' => 40,
+                        'paddingX' => 0,
+                    ],
+                    'desktop' => [
+                        'gridCols' => 12,
+                        'gridGap' => 40,
+                        'alignItems' => 'stretch',
+                        'paddingY' => 40,
+                        'paddingX' => 0,
+                    ],
+                ],
+            ],
+        ];
+    }
 }
