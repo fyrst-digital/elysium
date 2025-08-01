@@ -72,7 +72,7 @@ jobs:
 
       - name: Build and zip extension
         run: |
-          shopware-cli extension zip --release --disable-git ${{ github.workspace }}
+          shopware-cli extension zip --release ${{ github.workspace }}
 
       - name: Upload as artifact
         uses: actions/upload-artifact@v4
