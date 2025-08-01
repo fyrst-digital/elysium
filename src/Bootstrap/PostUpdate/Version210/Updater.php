@@ -6,7 +6,6 @@ namespace Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Doctrine\DBAL\Connection;
-use Shopware\Administration\Notification\NotificationService;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotCollection;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Framework\Context;
@@ -25,7 +24,7 @@ class Updater
         private readonly Context $context,
         private readonly EntityRepository $slidesRepository,
         private readonly EntityRepository $cmsSlotRepository,
-        private readonly NotificationService $notificationService
+        private readonly mixed $notificationService
     ) {}
 
     public function run(): void
@@ -206,13 +205,15 @@ class Updater
             try {
                 $this->slidesRepository->update($updateSlideSettings, $this->context);
             } catch (\Exception $e) {
-                $this->notificationService->createNotification(
-                    [
-                        'status' => 'error',
-                        'message' => 'Something went wrong during the Elysium Slide settings conversion',
-                    ],
-                    $this->context
-                );
+                if ($this->notificationService) {
+                    $this->notificationService->createNotification(
+                        [
+                            'status' => 'error',
+                            'message' => $e->getMessage(),
+                        ],
+                        $this->context
+                    );
+                }
             }
         }
     }
@@ -276,13 +277,15 @@ class Updater
             try {
                 $this->cmsSlotRepository->update($updatedCmsElementsConfig, $this->context);
             } catch (\Exception $e) {
-                $this->notificationService->createNotification(
-                    [
-                        'status' => 'error',
-                        'message' => 'Something went wrong during the Elysium Slider config conversion',
-                    ],
-                    $this->context
-                );
+                if ($this->notificationService) {
+                    $this->notificationService->createNotification(
+                        [
+                            'status' => 'error',
+                            'message' => 'Something went wrong during the Elysium Slider config conversion',
+                        ],
+                        $this->context
+                    );
+                }
                 throw $e;
             }
         }

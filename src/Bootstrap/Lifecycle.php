@@ -7,7 +7,6 @@ namespace Blur\BlurElysiumSlider\Bootstrap;
 use Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210\Updater as Version210Updater;
 use Blur\BlurElysiumSlider\Defaults;
 use Doctrine\DBAL\Connection;
-use Shopware\Administration\Notification\NotificationService;
 use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderCollection;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
@@ -22,13 +21,19 @@ class Lifecycle
 {
     use EnsureThumbnailSizesTrait;
 
-    private NotificationService $notificationService;
+    private mixed $notificationService;
 
     public function __construct(
         private readonly ContainerInterface $container
     ) {
-        /** @phpstan-ignore-next-line */
-        $this->notificationService = $container->get(NotificationService::class);
+        if (class_exists('\Shopware\Core\Framework\Notification\NotificationService')) {
+            $notificationServiceClass = \Shopware\Core\Framework\Notification\NotificationService::class;
+        } elseif (class_exists('\Shopware\Administration\Notification\NotificationService')) {
+            $notificationServiceClass = \Shopware\Administration\Notification\NotificationService::class;
+        } else {
+            throw new \RuntimeException('NotificationService class not found');
+        }
+        $this->notificationService = $notificationServiceClass ? $container->get($notificationServiceClass) : null;
     }
 
     public function postInstall(InstallContext $installContext): void
