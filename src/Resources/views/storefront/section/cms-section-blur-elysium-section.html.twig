@@ -13,16 +13,16 @@
                 {% for device, options in section.customFields.elysiumSectionSettings.viewports %}
                     @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumSectionBreakpoints[device])~'px' }}) {
                         .blur-elysium-section-grid[data-cms-section-id="{{section.id}}"] {
-                            {% if options.gridGap %}
+                            {% if options.gridGap is not empty %}
                                 --elysium-section-gap: {{ options.gridGap ~ 'px' }};
                             {% endif %}
-                            {% if options.paddingY %}
+                            {% if options.paddingY is not empty %}
                                 --elysium-section-py: {{ options.paddingY ~ 'px' }};
                             {% endif %}
-                            {% if options.paddingX %}
+                            {% if options.paddingX is not empty %}
                                 --elysium-section-px: {{ options.paddingX ~ 'px' }};
                             {% endif %}
-                            {% if options.alignItems %}
+                            {% if options.alignItems is not empty %}
                                 --elysium-section-align-items: {{ options.alignItems }};
                             {% endif %}
                         }

@@ -41,7 +41,9 @@
             <tag name="kernel.event_listener" event="Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent" method="invalidateCmsPageIds" priority="2001" />
         </service>
 
+        <!-- subscriber -->
         <service id="Blur\BlurElysiumSlider\Subscriber\EntitySubscriber">
+            <argument type="service" id="cms_section.repository"/>
             <tag name="kernel.event_subscriber"/>
         </service>
 

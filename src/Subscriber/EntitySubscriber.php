@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
-use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionEntity;
-use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityLoadedContainerEvent;
-use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityLoadedEvent;
-use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWriteEvent;
-use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\InsertCommand;
-use Shopware\Core\Framework\Event\NestedEventCollection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
+use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 
 class EntitySubscriber implements EventSubscriberInterface
 {
     public const SECTION_NAME = 'blur-elysium-section';
+
+    public const SECTION_SETTINGS_KEY = 'elysiumSectionSettings';
 
     /**
      * Provides default section configuration settings for the Elysium Section.
@@ -58,42 +58,45 @@ class EntitySubscriber implements EventSubscriberInterface
         ];
     }
 
+    public function __construct(
+        private readonly EntityRepository $cmsSectionRepository
+    ) {}
+
     public static function getSubscribedEvents()
     {
         return [
-            EntityWriteEvent::class => 'beforeWrite',
-            EntityLoadedContainerEvent::class => 'loaded',
+            EntityWrittenContainerEvent::class => 'onEntityWritten',
         ];
     }
 
-    public function beforeWrite(EntityWriteEvent $event): void
+    public function onEntityWritten(EntityWrittenContainerEvent $event): void
     {
-        $cmsSections = $event->getCommandsForEntity(CmsSectionDefinition::ENTITY_NAME);
+        /** @var ?EntityWrittenEvent $events */
+        $events = $event->getEventByEntityName(CmsSectionDefinition::ENTITY_NAME);
+        /** @var ?array<EntityWriteResult> $writeResults */
+        $writeResults = $events?->getWriteResults();
 
-        foreach ($cmsSections as $id => $section) {
-            if ($section instanceof InsertCommand && $section->getPayload()['type'] === self::SECTION_NAME) {
-                $section->addPayload('custom_fields', json_encode(self::sectionDefauls()));
-            }
-        }
-    }
+        if (is_array($writeResults) && \count($writeResults) > 0) {
+            $updates = [];
 
-    public function loaded(EntityLoadedContainerEvent $event): void
-    {
-        /** @var NestedEventCollection */
-        $events = $event->getEvents();
+            foreach ($writeResults as $result) {
 
-        if ($events->count() > 0) {
-            foreach ($events as $entity) {
-                /** @var EntityLoadedEvent $entity */
-                if ($entity->getDefinition() instanceof CmsSectionDefinition) {
-                    foreach ($entity->getEntities() as $cmsSection) {
-                        /** @var CmsSectionEntity $cmsSection */
-                        if ($cmsSection->getType() === self::SECTION_NAME) {
-                            $mergedSectionSettings = \array_replace_recursive(self::sectionDefauls()['elysiumSectionSettings'], $cmsSection->getCustomFieldsValue('elysiumSectionSettings') ?? []);
-                            $cmsSection->setCustomFields(['elysiumSectionSettings' => $mergedSectionSettings]);
-                        }
+                if ($result->getOperation() === EntityWriteResult::OPERATION_INSERT) {
+                    $payload = $result->getPayload();
+
+                    if (isset($payload['type']) && $payload['type'] === self::SECTION_NAME) {
+                        $mergedCustomFields = \array_replace_recursive(self::sectionDefauls(), isset($payload['custom_fields']) ? $payload['custom_fields'] : []);
+
+                        $updates[] = [
+                            'id' => $payload['id'],
+                            'customFields' => $mergedCustomFields,
+                        ];
                     }
                 }
+            }
+
+            if (!empty($updates)) {
+                $this->cmsSectionRepository->update($updates, $event->getContext());
             }
         }
     }

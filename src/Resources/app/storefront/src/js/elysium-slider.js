@@ -72,7 +72,7 @@ export default class ElysiumSlider extends PluginBaseClass {
         if (swiper.slides?.length > 0) {
             const activeSlide = swiper.slides[swiper.activeIndex];
 
-            swiper.slides.forEach((slide, index) => {
+            swiper.slides.forEach((slide) => {
 
                 slide.removeAttribute('aria-current');
                 
@@ -93,9 +93,8 @@ export default class ElysiumSlider extends PluginBaseClass {
 
     _buildA11yBullets(swiper) {
         if (swiper.pagination?.bullets?.length > 0) {
-            swiper.pagination.bullets.forEach((bullet, index) => {
+            swiper.pagination.bullets.forEach((bullet) => {
                 bullet.setAttribute('role', 'button');
-                // bullet.setAttribute('aria-label', `Go to slides ${index + 1}`);
                 bullet.setAttribute('tabindex', '0');
 
                 if (bullet.classList.contains('swiper-pagination-bullet-active')) {
