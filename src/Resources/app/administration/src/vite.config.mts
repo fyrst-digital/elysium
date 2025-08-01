@@ -1,4 +1,3 @@
-// New Vite config
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 

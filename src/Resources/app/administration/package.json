@@ -10,10 +10,10 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "vite": "^6.3.5"
-    },
-    "dependencies": {
         "@shopware-ag/entity-schema-types": "^6.9.0",
         "@types/node": "^24.0.7"
+    },
+    "dependencies": {
+        "vite": "^6.3.5"
     }
 }
