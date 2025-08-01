@@ -15,6 +15,7 @@ The updated CSS styling is located in `src/Resources/app/storefront/src/scss/_el
 - Overhaul of the slider template and optimization of A11y markup
 - CSS classes and variables have been changed and adjusted
 - The Splide slider library has been replaced with Swiper
+- Fixed an issue during installation under Shopware 6.7.1
 
 # 4.2.3
 

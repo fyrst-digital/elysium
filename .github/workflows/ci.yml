@@ -72,7 +72,7 @@ jobs:
 
       - name: Build and zip extension
         run: |
-          shopware-cli extension zip --disable-git ${{ github.workspace }}
+          shopware-cli extension zip --release --disable-git ${{ github.workspace }}
 
       - name: Upload as artifact
         uses: actions/upload-artifact@v4
@@ -98,17 +98,11 @@ jobs:
 
       - name: build and zip
         run: |
-          shopware-cli extension zip --disable-git ${{ github.workspace }}
+          shopware-cli extension zip --release --disable-git ${{ github.workspace }}
 
       - name: Deploy extension to store
         run: |
           shopware-cli account producer extension upload --skip-for-review-result BlurElysiumSlider.zip
-
-      - name: Upload as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: BlurElysiumSlider
-          path: ${{ github.workspace }}/BlurElysiumSlider.zip
 
   update-store-page:
     runs-on: ubuntu-latest

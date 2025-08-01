@@ -1,13 +1,11 @@
 # unreleased
 
 ## Hinweis für Entwickler
-
 Wir haben größere Anpassungen am Slider-Template, sowie CSS-Styling vorgenommen. Geändert haben sich Template-Pfade, Twig Blöcke, CSS-Klassennamen und CSS Variablen. 
 Im Template `src/Resources/views/storefront/element/cms-element-blur-elysium-slider.html.twig` sind die neuen Strukturen zu finden.
 Unter `src/Resources/app/storefront/src/scss/_elysium-slider.scss` ist das neue CSS-Styliing zu finden
 
 ## Changelog
-
 - Neue Slider Option: Der HTML-Tag der Slider-Überschrift kann nun festgelegt werden. Neben 'DIV' sind 'H1' bis 'H6' Elemente möglich
 - Neue Slider Option: Die Slider-Überschrift kann nun visuell aus- oder eingeblendet werden
 - Neue Slider Option: Es kann nun festgelegt werden ob sich Slides in der Höhe angleichen sollen
@@ -15,6 +13,7 @@ Unter `src/Resources/app/storefront/src/scss/_elysium-slider.scss` ist das neue 
 - Überarbeitung des Slider Templates, sowie Optimierung von A11y-Markup
 - CSS Klassen und Variablen wurden geändert und angepasst
 - Splide Slider-Bibliothek wurde durch Swiper ersetzt
+- Ein Fehler während der Installation unter Shopware 6.7.1 wurde behoben
 
 # 4.2.3
 
