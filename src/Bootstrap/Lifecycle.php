@@ -21,19 +21,16 @@ class Lifecycle
 {
     use EnsureThumbnailSizesTrait;
 
-    private mixed $notificationService;
+    private mixed $notificationService = null;
 
     public function __construct(
         private readonly ContainerInterface $container
     ) {
         if (class_exists('\Shopware\Core\Framework\Notification\NotificationService')) {
-            $notificationServiceClass = \Shopware\Core\Framework\Notification\NotificationService::class;
+            $this->notificationService = $container->get(\Shopware\Core\Framework\Notification\NotificationService::class);
         } elseif (class_exists('\Shopware\Administration\Notification\NotificationService')) {
-            $notificationServiceClass = \Shopware\Administration\Notification\NotificationService::class;
-        } else {
-            throw new \RuntimeException('NotificationService class not found');
+            $this->notificationService = $container->get(\Shopware\Administration\Notification\NotificationService::class);
         }
-        $this->notificationService = $notificationServiceClass ? $container->get($notificationServiceClass) : null;
     }
 
     public function postInstall(InstallContext $installContext): void

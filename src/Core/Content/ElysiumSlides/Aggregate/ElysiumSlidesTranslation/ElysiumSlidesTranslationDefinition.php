@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityTranslationDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\CustomFields;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\AllowHtml;
@@ -27,6 +28,11 @@ class ElysiumSlidesTranslationDefinition extends EntityTranslationDefinition
     public function getParentDefinitionClass(): string
     {
         return ElysiumSlidesDefinition::class;
+    }
+
+    public function getCollectionClass(): string
+    {
+        return ElysiumSlidesTranslationCollection::class;
     }
 
     protected function defineFields(): FieldCollection

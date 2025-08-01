@@ -9,11 +9,13 @@ use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationCollection;
 
 class ElysiumSlidesEntity extends Entity
 {
     use EntityCustomFieldsTrait;
     use EntityIdTrait;
+    use ContentSettingsTrait;
 
     protected ?string $productId;
 
@@ -38,6 +40,8 @@ class ElysiumSlidesEntity extends Entity
     protected ?string $presentationMediaId;
 
     protected ?MediaEntity $presentationMedia;
+
+    protected ?ElysiumSlidesTranslationCollection $translations = null;
 
     /**
      * @var mixed[]|null
@@ -248,6 +252,22 @@ class ElysiumSlidesEntity extends Entity
     public function setPresentationMedia(?MediaEntity $presentationMedia): void
     {
         $this->presentationMedia = $presentationMedia;
+    }
+
+    /**
+     * Get the value of translations
+     */
+    public function getTranslations(): ?ElysiumSlidesTranslationCollection
+    {
+        return $this->translations;
+    }
+
+    /**
+     * Set the value of translations
+     */
+    public function setTranslations(?ElysiumSlidesTranslationCollection $translations): void
+    {
+        $this->translations = $translations;
     }
 
     /**
