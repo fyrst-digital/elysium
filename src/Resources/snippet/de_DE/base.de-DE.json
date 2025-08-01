@@ -15,6 +15,7 @@
             "next": "Nächster Slide"
         },
         "buttonLabel": "Mehr Erfahren",
-        "buttonLabelProduct": "Zum Produkt"
+        "buttonLabelProduct": "Zum Produkt",
+        "noSlides": "Keine Slides gefunden"
     }
 }

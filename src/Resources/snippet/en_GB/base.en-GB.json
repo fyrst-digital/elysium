@@ -11,6 +11,7 @@
     },
     "blurElysiumSlides": {
         "buttonLabel": "Learn more",
-        "buttonLabelProduct": "See Product"
+        "buttonLabelProduct": "See Product",
+        "noSlides": "No slides found"
     }
 }

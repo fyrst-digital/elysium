@@ -69,6 +69,7 @@
 {% endblock %}
 
 {% block cms_element_elysium_slider %}
+
     {% if element.data.slideCollection is not empty %}
         <section
             id="elysiumSlider-{{ element.id }}" 
@@ -169,10 +170,12 @@
         </section>
     {% else %}
         {% block cms_element_elysium_slider_empty %}
-            {% set cmsElementClasses = cmsElementClasses|merge(['is-empty']) %}
+            {% set cmsElementClasses = cmsElementClasses|merge([
+                'p-5', 'is-empty'
+            ]) %}
 
             <div class="{{cmsElementClasses|join(' ')}}">
-                <p>{{ 'sw-cms.elements.elysiumSlider.emptyText'|trans }}</p>
+                <h4 class="m-0 text-center">{{ 'blurElysiumSlides.noSlides'|trans }}</h4>
             </div>
         {% endblock %}
     {% endif %}
