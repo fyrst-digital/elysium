@@ -1,4 +1,4 @@
-# unreleased
+# 4.3.0
 
 ## Hinweis für Entwickler
 Wir haben größere Anpassungen am Slider-Template, sowie CSS-Styling vorgenommen. Geändert haben sich Template-Pfade, Twig Blöcke, CSS-Klassennamen und CSS Variablen. 
