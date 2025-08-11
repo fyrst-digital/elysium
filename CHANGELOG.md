@@ -2,6 +2,7 @@
 
 **Changelog**
 - Vertical spacing in "Full Width" mode within Elysium sections has been removed
+- Slides can now be copied again without any issues
 
 # 4.3.0
 
