@@ -3,6 +3,7 @@
 **Changelog**
 - Vertikale Abstände im "Volle Breite"-Modus innerhalb von Elysium Sektionen wurden entfernt
 - Slides können nun wieder ohne Probleme kopiert werden
+- Elysium Blöcke in der Elerbniswelten Sidebar können wieder gescrolled werden
 
 # 4.3.0
 

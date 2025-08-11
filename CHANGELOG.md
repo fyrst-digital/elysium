@@ -3,6 +3,7 @@
 **Changelog**
 - Vertical spacing in "Full Width" mode within Elysium sections has been removed
 - Slides can now be copied again without any issues
+- Elysium blocks in the Shopping Experiences sidebar can now be scrolled again
 
 # 4.3.0
 
