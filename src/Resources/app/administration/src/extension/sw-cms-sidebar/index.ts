@@ -1,4 +1,5 @@
 import template from './template.html.twig';
+import './style.scss';
 
 const { Component } = Shopware;
 

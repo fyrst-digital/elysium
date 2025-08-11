@@ -24,8 +24,9 @@
 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_cms_sidebar_block_overview_preview %}
     <div
+        class="blur-elysium-blocks__sidebar-track"
         :style="{
-            display: currentBlockCategory === 'blur-elysium-blocks' ? 'block' : 'contents',
+            display: currentBlockCategory === 'blur-elysium-blocks' ? 'block' : 'contents'
         }"
     >
         <mt-banner
@@ -34,7 +35,10 @@
             :hideIcon="true"
             class="mt-banner-small"
             :style="{
-                margin: '16px 24px',
+                margin: '0px',
+                padding: '0px',
+                border: '0 none',
+                borderRadius: '0px',
                 textAlign: 'center',
             }"
         >

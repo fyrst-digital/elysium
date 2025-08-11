@@ -306,7 +306,7 @@
     "isDynamicEntry": true
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slides/overview/index.ts": {
-    "file": "assets/index-DO9SjvhN.js",
+    "file": "assets/index-BNEmiDlx.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/component/slides/overview/index.ts",
     "isDynamicEntry": true,
@@ -381,10 +381,13 @@
     "isDynamicEntry": true
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-sidebar/index.ts": {
-    "file": "assets/index-XXLaJkYw.js",
+    "file": "assets/index-CGEZwhyS.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-sidebar/index.ts",
-    "isDynamicEntry": true
+    "isDynamicEntry": true,
+    "css": [
+      "assets/index-yQAyNWNa.css"
+    ]
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-cms-stage-section-selection/index.ts": {
     "file": "assets/index-r-WLFN9H.js",
@@ -396,7 +399,7 @@
     ]
   },
   "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-media-quickinfo-usage/index.ts": {
-    "file": "assets/index-CBphaLuS.js",
+    "file": "assets/index-C2gibitf.js",
     "name": "index",
     "src": "../../../../../../../../custom/static-plugins/BlurElysiumSlider/src/Resources/app/administration/src/extension/sw-media-quickinfo-usage/index.ts",
     "isDynamicEntry": true,
@@ -424,7 +427,7 @@
     "name": "views"
   },
   "main.ts": {
-    "file": "assets/blur-elysium-slider-BmEN_Ip3.js",
+    "file": "assets/blur-elysium-slider-8Wz-Bqu9.js",
     "name": "blur-elysium-slider",
     "src": "main.ts",
     "isEntry": true,
