@@ -1,11 +1,16 @@
+# unreleased
+
+**Changelog**
+- Vertikale Abstände im "Volle Breite"-Modus innerhalb von Elysium Sektionen wurden entfernt
+
 # 4.3.0
 
-## Hinweis für Entwickler
+**Hinweis für Entwickler**
 Wir haben größere Anpassungen am Slider-Template, sowie CSS-Styling vorgenommen. Geändert haben sich Template-Pfade, Twig Blöcke, CSS-Klassennamen und CSS Variablen. 
 Im Template `src/Resources/views/storefront/element/cms-element-blur-elysium-slider.html.twig` sind die neuen Strukturen zu finden.
 Unter `src/Resources/app/storefront/src/scss/_elysium-slider.scss` ist das neue CSS-Styliing zu finden
 
-## Changelog
+**Changelog**
 - Neue Slider Option: Der HTML-Tag der Slider-Überschrift kann nun festgelegt werden. Neben 'DIV' sind 'H1' bis 'H6' Elemente möglich
 - Neue Slider Option: Die Slider-Überschrift kann nun visuell aus- oder eingeblendet werden
 - Neue Slider Option: Es kann nun festgelegt werden ob sich Slides in der Höhe angleichen sollen
@@ -17,30 +22,30 @@ Unter `src/Resources/app/storefront/src/scss/_elysium-slider.scss` ist das neue 
 
 # 4.2.3
 
-## Changelog
+**Changelog**
 - Es wurde ein Fehler behoben, der verhinderte, dass Elysium Slider Elementen unterschiedliche Slides zugewiesen werden konnten
 
 # 4.2.2
 
-## Changelog
+**Changelog**
 - Die Elysium Sektion und Block Einstellungen in der Erlebniswelten Sidebar können nun wieder angewählt werden.
 - Das Icon in der Erlebniswelten Sidebar wurde angepasst um die Elysium Sektion bezogenen Einstellungen besser zu erkennen
 
 # 4.2.1
 
-## Changelog
+**Changelog**
 - Datenbankmigration 1744028421SetDefaultMediaFolderId wurde optimiert, welche zu einem Fehler beim Upgrade von Shopware 6.6 auf 6.7 führen konnte. 
 
 # 4.2.0
 
-## Changelog
+**Changelog**
 - Im Erlebniswelten Layot Editor wurde die Slide Vorschau verbessert und bilden nun besser das Resultat im Storefront ab.
 - `ElysiumCmsSlidesResultEvent` und `ElysiumCmsSlidesCriteriaEvent` wurden hinzugefügt. Diese werden beim Aufruf der entsprechenden Erlebniswelt Elemente ausgelöst.
 - Code- und Typescript-Optimierungen der Admin app. Eine Slide Preview Komponente wurde hinzugefügt
 
 # 4.1.0
 
-## Changelog
+**Changelog**
 - Alt und Titel Attribute wurden dem Slide Cover hinzugefügt.Zusätzlich können in den Slide Cover Einstellungen alternative Alt und Titel Texte vergeben werden
 - Slider und Banner Elementen können nun CSS Klassen vergeben werden
 
@@ -49,19 +54,19 @@ Unter `src/Resources/app/storefront/src/scss/_elysium-slider.scss` ist das neue 
 ## Release notes
 Kompatibilitäts-Update zu Shopware 6.7
 
-## Changelog
+**Changelog**
 - Vollständiger Wechsel von vuex zu pinia und zu meteor Komponenten im Admin 
 - Vite Konfigurations-Anpassung
 - Code clean-up, Fehlerbehebungen unnd Optimierungen
 
 # 3.7.1
 
-## Changelog
+**Changelog**
 - Ein Fehler im Admin wurde behoben, bei dem der Inhaltselement-Tab in den Slide Einstellungen nicht geöffnet werden konnte
 
 # 3.7.0
 
-## Changelog
+**Changelog**
 - Ein Fehler in der Slide Auswahl des Slider Elements wurde behoben. Die Slides können nun wieder hingefügt und entfernt werden
 - Code Anpassungen und Optimierungen
   - Wechsel von vuex zu Pinia wurde vollständig umgesetzt
@@ -69,52 +74,52 @@ Kompatibilitäts-Update zu Shopware 6.7
 
 # 3.6.3
 
-## Changelog
+**Changelog**
 - Lazy loading der Sektionen styles wurde entfernt und durch statisches styling per SCSS ersetzt. Es sollte nun nicht mehr zu Darstellungsfehler in Sektionen kommen
 - Ein Darstellungsfehler im Admin UI wurde behoben. Es wurden Kontextmenüs im Slide Builder Beschreibungs-Editor abgeschnitten. Es sollten nun alle Menüs erreichbar sein.
 
 # 3.6.2
 
-## Changelog
+**Changelog**
 - Es wurden Fehler in der Slide Bearbeitung behoben. Alle Slide Einstellungen sind wieder sichtbar
 
 # 3.6.1
 
-## Changelog
+**Changelog**
 - Blöcke in Standard Sektionen können nun wieder wie gewohnt ausgewählt werden
 
 # 3.6.0
 
-## Changelog
+**Changelog**
 - Elysium Sektion wurde hinzugefügt. Diese ist in der Erlebniswelten Sektions-Auswahl verfügbar und erweitert die Erlebniswelt um dynamisch Skalierbare Blöcke, zusammenfügen von Block-Zeilen, Änderung der optischen Block-Reihenfolge und mehr. Alle Einstellungen können seperat für die Smartphone, Tablet und Desktop Ansicht festgelegt werden
 - Codebasis wurde aufgeräumt und optimiert
 
 # 3.5.4
 
-## Changelog
+**Changelog**
 - Die Werte in Zahlen-Eingabefeldern werden nun korrekt übernommen. Die entsprechenden Komponenten wurden angepasst und sollten auch ab Shopware 6.6.4 wie erwartet funktionieren
 - Anpassung von Übersetzungen
 
 # 3.5.3
 
-## Changelog
+**Changelog**
 - Eine CSS Angabe, welche negativen Einfluss auf das Slider-Verhalten haben konnte, wurde entfernt
 
 # 3.5.2
 
-## Changelog
+**Changelog**
 - Änderung der Registrierung des elysium-slider JS von asynchron zu statisch, damit der Slider ab Shopware 6.6.7 wieder wie erwartet funktioniert
 
 # 3.5.1
 
-## Changelog
+**Changelog**
 - Mit dem Wert `0` kann die maximale Begrenzung (Breite / Höhe) in geräteabhängigen Einstellungen zurückgesetzt werden.
 - Manuelles Erstellen der neuesten JS-Dateien für das Composer-Paackage
 - Übersetzungen in der Administration wurden korrigiert
 
 # 3.5.0
 
-## Changelog
+**Changelog**
 - **Wechsel der geräteabhängigen Einstellungen zu Mobile First Ansatz.** Diese Einstellungen sind nun optional und erben den Wert der kleineren G
 eräteansicht (Mobile First Ansatz). Wenn beispielsweise eine Einstellung nur in der mobilen Ansicht gesetzt ist, wird diese für Tablet und Desktop übernommen. Das gilt für Einstellungen der Slides und der Erlebniswelt Element Slider und Banner
 - **Anpassung und Optimierung der Admin UI.** Die Admin UI der Elysium-Komponenten Slides-, Slider- und Banner-Einstellungen wurde überarbeitet.  
@@ -128,29 +133,29 @@ Die Eingabemasken in allen Einstellungen wurden kompakter und übersichtlicher g
 
 # 3.4.1
 
-## Changelog
+**Changelog**
 - Ein Fehler in der Slide Einstellung (Anzeige) "Elemente untereinander anzeigen" wurde behoben. Die Option kann nur wieder korrekt angewählt werden und funktioniert wie erwartet
 - Dem Fokusbild Element wurden CSS styles hinzugefügt die eine Überschneidung mit dem Container verhindern
 
 # 3.4.0
 
-## Changelog
+**Changelog**
 - Das Produktbild eines Slides kann nun beim Verlinkungstyp 'Produkt' ausgeblendet werden
 - Im CMS Banner Element kann nun eine maximale Höhe festgelegt werden
 
 # 3.3.0
 
-## Changelog
+**Changelog**
 - Änderung: Aufgrund einer Änderung des State Managers ab Shopware 6.6.4, kam es beim einfügen von Elysium Blöcken im Erlebniswelten Layout Editor zu Fehlern. Dies wurde angepasst und das einfügen von Blöcken sollte wie erwartet funktionieren.
 
 # 3.2.1
 
-## Changelog
+**Changelog**
 - Änderung: Die SQL Syntax der Datenbank Migration 1707906587 wurde geändert um ältere MySQL und MariaDB Versionen zu unterstützen. **Wichtiger Hinweis** Ab Version 4 werden ausnahmslos die von Shopware empholenen Datenbank Versionen unterstützt
 
 # 3.2.0
 
-## Changelog
+**Changelog**
 - Verbesserung: In der Medienverwaltung wird nun die Information angezeigt, in welchem Elysium Slide ein Medium verwendet wird. Beim löschen eines verknüpften Mediums erscheint entsprechender Hinweis 
 - Verbesserung: Rollen Berechtigungen wurden im Elysium Slides Mobul hinzugefügt
 - Verbesserung: In den Slide Einstellung wurde die Option **Bild auf volle Breite strecken** dem Bildelement hinzugefügt
@@ -163,18 +168,18 @@ Die Eingabemasken in allen Einstellungen wurden kompakter und übersichtlicher g
 
 # 3.1.1
 
-## Changelog
+**Changelog**
 - Fehlerbehebung: Die UI-Icons in der Adminstration wurden angepasst. Diese werden auch ab Shopware 6.6.2 wieder korrekt angezeigt.
 
 # 3.1.0
 
-## Changelog
+**Changelog**
 - Verbesserung: Beim speichern eines Slides wird nun der Cache aller Erlebniswelten, welche ein Elysium Element zugewiesen haben, invalidiert. Somit werden Änderungen am Slide im Storefront sofort sichtbar, ohne den Cache löschen zu müssen
 - Fehlerbehebung: Ein Darstellungsfehler, bei dem es zum Überlauf der Boxen im Elysium Block 'Elysium Block — 2 Spalten' kommen konnte, wurde behoben
 
 # 3.0.1
 
-## Changelog
+**Changelog**
 - Fehlerbehebung: Die Slide Beschreibung wird nun wie erwartet gespeichert
 - Fehlerbehebung: Korrektur von Textbausteinen in der Administration
 
@@ -185,13 +190,13 @@ Dieses Update stellt die Kompatibilität mit Shopware 6.6 her. Mit dieser Versio
 
 Es wurde der gesamte Code innherhalb der Administration angepasst. Wir haben dabei den Code minimiert und auf Verbessserung der Performance sowie der Nutzererfahrung geachtet. 
 
-## Changelog
+**Changelog**
 - Verbesserung: Aktualisierung und Anpassungen der Administrations Komponenten
 - Verbesserung: Der JavaScript Code der Slider im Storefront wird nun dynamisch geladen
 
 # 2.1.0
 
-## Changelog
+**Changelog**
 
 - Feature: Eine Post Update Konvertierung der Slide und Slider Einstellungen wurde hinzugefügt. Bei der Aktualisierung von Version 1.5 auf 2.1 werden somit Slide und Slider Einstellungen automatisch übernommen. **Hinweis**: Daten aus Versionen kleiner als 1.5 werden **nicht übernommen**. Wir empfehlen außerdem dringend **vor einem Update eine Datenbank Sicherung** anzulegen
 - Fehlerbehebung: Fehler im Slide Template wurden behoben und das allgemeine Styling optimiert
@@ -225,7 +230,7 @@ Weiter können die Gerätegrößen, also ab welcher Bildschirmbreite welche Ansi
 ### Optimierung der Slide Templates und Styles
 Die Template Struktur sowie CSS Styles von Slides wurde überarbeitet und logischer gegliedert. Falls du eigene Templates verwendest, prüfe diese auf entsprechende Änderungen.
 
-## Changelog
+**Changelog**
 - Feature: Banner Erlebniswelt Element wurde hinzugefügt
 - Feature: Erlebniswelt Block 'Elysium Banner' wurde hinzugefügt
 - Feature: Erlebniswelt Block 'Elysium Block — 2 Spalten' wurde hinzugefügt
@@ -271,7 +276,7 @@ Weiter können die Gerätegrößen, also ab welcher Bildschirmbreite welche Ansi
 ### Optimierung der Slide Templates und Styles
 Die Template Struktur sowie CSS Styles von Slides wurde überarbeitet und logischer gegliedert. Falls du eigene Templates verwendest, prüfe diese auf entsprechende Änderungen.
 
-## Changelog
+**Changelog**
 - Feature: Banner Erlebniswelt Element wurde hinzugefügt
 - Feature: Erlebniswelt Block 'Elysium Banner' wurde hinzugefügt
 - Feature: Erlebniswelt Block 'Elysium Block — 2 Spalten' wurde hinzugefügt
@@ -290,34 +295,34 @@ Die Template Struktur sowie CSS Styles von Slides wurde überarbeitet und logisc
 
 # 1.5.6 
 
-## Changelog
+**Changelog**
 - Bugfix: Ein Fehler in der Slide-Auswahl des Erlebniswelten Slider Elements wurde behoben. Bei fehlender Slide Überschrift konnten keine Slides ausgewählt werden und die Slide-Auswahl wurde nicht angezeigt. Nun sollte die gesamte Slide-Auswahl, auch ohne eine hinterlegte Slide Überschrift, wie erwartet funktionieren.
 
 # 1.5.5 
 
-## Changelog
+**Changelog**
 - Feature: Es ist nun möglich mehrere Slides pro Ansicht anzeigen zu lassen. Bisher war die Ansicht auf einen Slide beschränkt. Im Erlebniswelten Slider Element gibt es unter **Größen** die **Slide Verhalten** Einstellungen. Es kann festgelegt werden wie viel Slides pro Ansicht angezeigt werden sollen.
 
 # 1.5.4 
 
-## Changelog
+**Changelog**
 - Bugfix: Ein Fehler in der Slide-Auswahl des Erlebniswelten Slider Elements wurde behoben. Bei abweichenden Sprachen konnten keine Slides ausgewählt werden und die Slide-Auswahl wurde nicht angezeigt. Nun sollte die gesamte Slide-Auswahl, in jeder ausgewählten Sprache, wie erwartet funktionieren.
 
 # 1.5.3 
 
-## Changelog
+**Changelog**
 - Feature: Im Erlebniswelten Slider Element kann nun die innere Container Breite des Inhalts festgelegt werden. Mögliche Optionen sind "Breite des Seiteninhalts" oder "Volle Breite".
 
 # 1.5.2 
 
-## Changelog
+**Changelog**
 - Änderung: Übersetzungen im Admin wurden korrigiert
 - Verbesserung: Die Darstellung des Sliders wurde optimiert. In den Slider-Einstellungen gibt es nun die Möglichkeit den Innenabstand zu konfigurieren
 - Verbesserung: Die Slide Auswahl im Admin wurde optimiert. Die Drag and Drop Funktion der einzelnen Slides ist nun besser erkennbar
 
 # 1.5.1
 
-## Changelog
+**Changelog**
 - Ein Fehler wurde behoben, bei dem der Slider fehlerhaft dargestellt wurde
 
 # 1.5.0
@@ -330,34 +335,34 @@ Neben Fehlerbehebungen bezieht sich dieses Update auf die Einstellungen des Erle
 **Wichtiger Hinweis**
 Durch diese Anpassungen ergeben sich auch Änderungen an der Datenstruktur des Erlebniswelten Elements. **[Bitte lies unsere Update-Hinweise](https://elysium-slider.blurcreative.de/de/documentation/update-notes#version-1-5-0)** zur Version 1.5.0, bevor du die Erweiterung aktualisierst.
 
-## Changelog
+**Changelog**
 - Feature: Es ist nun möglich eine Slider Überschrift zu vergeben
 - Feature: Für das Erlebniswelt Slider-Element wurden neue Einstellungen hinzugefügt
 - Änderung: Die Oberfläche der Konfigurationn des Erlebniswelt Slider-Elements wurde angepasst
 
 # 1.4.5
 
-## Changelog
+**Changelog**
 - Änderung: Eine Code-Ausgabe im Template wurde entfernt
 
 # 1.4.4
 
-## Changelog
+**Changelog**
 - Änderung: Die Groß- und Kleinschreibung der Slide-Cover Medien Dateiendungen wird nun ignoriert
 
 # 1.4.3
 
-## Changelog
+**Changelog**
 - Änderung: Versions-Kompatibilität zu Shopware 6.5.0
 
 # 1.4.2
 
-## Changelog
+**Changelog**
 - Bugfix: Die Anzeige der Slide-Cover Hintergrundbilder funktioniert nun wieder wie erwartet
 
 # 1.4.1
 
-## Changelog
+**Changelog**
 - Änderung: Die Slider-Overlay Option ist nun Standardgemäß inaktiv
 
 # 1.4.0
@@ -368,7 +373,7 @@ Durch diese Anpassungen ergeben sich auch Änderungen an der Datenstruktur des E
 Das Slide Template wurde refraktoriert. Templates für Slide Komponenten befinden sich nun unter `storefront/component/blur-elysium-slide/`.
 Das Template für das gesamte CMS-Element befindet sich nach wie vor unter `storefront/element/cms-element-blur-elysium-slider.html.twig`.
 
-## Changelog
+**Changelog**
 - Feature: In den Slide-Einstellungen gibt es nun den "Erweitert" Tab. Dieser wird erweiterte Einstellungen eines Slides enthalten
 - Feature: Pro Slide kann eine individuelle Twig-Template Datei definiert werden. Dies befindet sich im "Erweitert" Tab der Slide-Einstellungen (#44)
 - Verbesserung: Optimierung der Slide-Auswahl Ansicht im Elysium Slider CMS-Element (#55)
@@ -380,7 +385,7 @@ Das Template für das gesamte CMS-Element befindet sich nach wie vor unter `stor
 
 # 1.3.1
 
-## Changelog
+**Changelog**
 - Feature: In Slide Überschrift werden die HTML Tags br, i, u, b, strong und span akzeptiert (#50)
 - Bugfix: Title Attribut im Slide URL Overlay Template wurde korrigiert (#51 - Danke an Alexander Pankow)
 - Bugfix: Text-indent im Slide URL Overlay Template ist nun ein absoluter Wert (#51 - Danke an Alexander Pankow)
@@ -401,7 +406,7 @@ Wenn Slides ohne HTML-Element oder Textfarbe für Uberschriften initial gesperic
 Dadurch kann es aber vorkommen dass bereits gepflegte Angaben (betrifft nur HTML-Element oder Textfarbe der Überschrift) in angelegten Slides entfernt werden.  
 **Es sollten daher diese Angaben in bereits angelegten Slides überprüft werden**
 
-## Changelog
+**Changelog**
 - Feature: Neue Slide-Auswahl im Erlebniswelt-Element (#11)
 - Feature: Untersützung von Videos als Slide-Cover (#9)
 - Bugfix: Maskieren von CSS Funktionen in `Resources/app/storefront/src/scss/_elysium-slider.scss 115:26` (#40)

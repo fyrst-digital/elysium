@@ -1,3 +1,4 @@
+{% set sectionContainerClasses = ['cms-section-container'] %}
 {% set blurElysiumSectionClasses = ['blur-elysium-section-grid'] %}
 {% set blurElysiumSectionBreakpoints = {
     mobile: 'xs',
@@ -5,8 +6,14 @@
     desktop: section.customFields.elysiumSectionSettings.breakpoints.desktop ?? 'xl'
 } %}
 
+{% if section.sizingMode is same as('boxed') %}
+    {% set sectionContainerClasses = sectionContainerClasses|merge(['container']) %}
+{% else %}
+    {% set sectionContainerClasses = sectionContainerClasses|merge(['container-fluid', 'px-0']) %}
+{% endif %}
+
 {% block cms_blur_elysium_section_container %}
-    <div class="cms-section-container {% if section.sizingMode is same as('boxed') %}container{% else %}container-fluid{% endif %}">
+    <div class="{{ sectionContainerClasses|join(' ') }}">
 
         {%- if section.customFields.elysiumSectionSettings.viewports %}
             <style>
