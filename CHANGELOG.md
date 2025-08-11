@@ -1,3 +1,8 @@
+# 4.3.2
+
+**Changelog**
+- Fixed a styling problem in the Shopping Experiences sidebar
+
 # 4.3.1
 
 **Changelog**

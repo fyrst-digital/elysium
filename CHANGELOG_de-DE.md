@@ -1,3 +1,8 @@
+# 4.3.2
+
+**Changelog**
+- Ein Darstellungsproblem in der Erlebniswelten Sidebar wurde behoben
+
 # 4.3.1
 
 **Changelog**

@@ -24,7 +24,9 @@
 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_cms_sidebar_block_overview_preview %}
     <div
-        class="blur-elysium-blocks__sidebar-track"
+        :class="[
+            currentBlockCategory === 'blur-elysium-blocks' ? 'blur-elysium-blocks__sidebar-track' : null
+        ]"
         :style="{
             display: currentBlockCategory === 'blur-elysium-blocks' ? 'block' : 'contents'
         }"
