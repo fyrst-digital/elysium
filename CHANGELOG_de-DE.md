@@ -1,4 +1,4 @@
-# unreleased
+# 4.3.1
 
 **Changelog**
 - Vertikale Abstände im "Volle Breite"-Modus innerhalb von Elysium Sektionen wurden entfernt

@@ -1,4 +1,4 @@
-# unreleased
+# 4.3.1
 
 **Changelog**
 - Vertical spacing in "Full Width" mode within Elysium sections has been removed
