@@ -11,7 +11,7 @@
     }
 
     &.slide-overlay {
-        
+
         .blur-elysium-slide::before {
             content: '';
             display: block;
@@ -83,6 +83,12 @@
             gap: var(--pagination-gap, 16px);
             justify-content: var(--pagination-justify-content, center);
 
+            &.pagination-bullets-bar {
+                .swiper-pagination-bullet {
+                    --pagination-bullet-aspect-ratio: 4 / 1;
+                }
+            }
+
             &-bullet {
                 @extend .d-block;
                 aspect-ratio: var(--pagination-bullet-aspect-ratio, 1 / 1);
@@ -96,11 +102,7 @@
                 &.swiper-pagination-bullet-active {
                     background-color: var(--pagination-bullet-color-active, rgba(0, 0, 0, 0.5));
                 }
-
-                &.pagination-bullets-bar {
-                    --pagination-bullet-aspect-ratio: 4 / 1;
-                }
             }
         }
-    }    
+    }
 }
