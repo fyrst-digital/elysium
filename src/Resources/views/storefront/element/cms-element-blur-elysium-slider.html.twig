@@ -39,6 +39,10 @@
 } %}
 
 {% set swiperOptions = {
+    effect: element.translated.config.settings.value.slideEffect ?? 'slide',
+    fadeEffect: {
+        crossFade: true
+    },
     autoplay: element.translated.config.settings.value.autoplay.active ? autoplayOptions : false,
     navigation: element.translated.config.arrows.value.active ? navigationOptions : false,
     rewind: element.translated.config.settings.value.rewind,

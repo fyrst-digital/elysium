@@ -358,6 +358,12 @@
                     "full": "Full width",
                     "helpText": "Define the content container width. On <b>Page Content</b> the maximum width of the container follows the paqe content width. On <b>Full width</b> the content container is in full width"
                 },
+                "slideEffect": {
+                    "label": "Slide Effect",
+                    "helpText": "Choose the transition effect between slides. Slide effect provides a horizontal sliding animation, while Fade effect creates a smooth cross-fade transition.",
+                    "slide": "Slide",
+                    "fade": "Fade"
+                },
                 "rewind": "Rewind Slides",
                 "overlay": "Show Overlay",
                 "justifySlideHeight": "Justify slide heights",

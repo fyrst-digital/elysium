@@ -103,6 +103,22 @@
     />
     {% endblock %}
 
+    {% block blur_cms_config_elysium_slider_slide_effect %}
+    <blur-select-input
+        v-model:value="settingsConfig.slideEffect"
+        :style="viewStyle({
+                mobile: { gridColumnEnd: 'span 12' },
+                desktop: { gridColumnEnd: 'span 6' },
+            })"
+        :label="$tc('blurElysiumSlider.config.settings.slideEffect.label')"
+        :help-text="$tc('blurElysiumSlider.config.settings.slideEffect.helpText')"
+        :options="[
+                { value: 'slide', label: $tc('blurElysiumSlider.config.settings.slideEffect.slide') },
+                { value: 'fade', label: $tc('blurElysiumSlider.config.settings.slideEffect.fade') }
+            ]"
+    />
+    {% endblock %}
+
     <blur-column
         :cols-tablet="6">
 

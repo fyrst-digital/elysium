@@ -34,6 +34,7 @@ export interface General {
         rewind: boolean;
         speed: number;
         pauseOnHover: boolean;
+        slideEffect: 'slide' | 'fade';
         autoplay: Autoplay;
     };
 }
