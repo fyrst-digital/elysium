@@ -1,5 +1,5 @@
 import Swiper from 'swiper'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules'
 import deepmerge from 'deepmerge'
 
 const { PluginBaseClass } = window
@@ -33,7 +33,7 @@ export default class ElysiumSlider extends PluginBaseClass {
                 init: this.onSlideInit.bind(this),
             },
             loop: false,
-            modules: [Autoplay, Navigation, Pagination],
+            modules: [Autoplay, Navigation, Pagination, EffectFade],
             pagination: false,
         }, inlineOptions))
 
@@ -54,7 +54,7 @@ export default class ElysiumSlider extends PluginBaseClass {
 
         this.$emitter.publish('onSlideInit', { swiper });
     }
-    
+
     onSlideChange(swiper) {
         this._buildliveUpdate(swiper);
         this._buildA11y(swiper);
@@ -75,7 +75,7 @@ export default class ElysiumSlider extends PluginBaseClass {
             swiper.slides.forEach((slide) => {
 
                 slide.removeAttribute('aria-current');
-                
+
                 if (slide.classList.contains('swiper-slide-visible')) {
                     slide.setAttribute('tabindex', '-1');
                     slide.removeAttribute('aria-hidden');
@@ -84,7 +84,7 @@ export default class ElysiumSlider extends PluginBaseClass {
                     slide.setAttribute('aria-hidden', 'true');
                 }
             });
-            
+
             if (activeSlide) {
                 activeSlide.setAttribute('aria-current', 'true');
             }

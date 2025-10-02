@@ -358,6 +358,12 @@
                     "full": "Volle Breite",
                     "helpText": "Lege die Breite des Inhalts-Container fest. Bei <b>Seiteninhalt</b> folgt die maximale Breite des Containers der Breite des Seiteninhalts. Bei <b>Volle Breite</b> wird der Inhalts-Container über die gesamte Breite angezeigt"
                 },
+                "slideEffect": {
+                    "label": "Slide-Effekt",
+                    "helpText": "Wähle den Übergangseffekt zwischen den Slides. Der Slide-Effekt bietet eine horizontale Slide-Animation, während der Fade-Effekt einen sanften Überblendeffekt erzeugt.",
+                    "slide": "Slide",
+                    "fade": "Fade"
+                },
                 "rewind": "Slides zurückspulen",
                 "overlay": "Zeige Overlay",
                 "justifySlideHeight": "Slide-Höhen angleichen",

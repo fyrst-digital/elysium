@@ -59,6 +59,7 @@ export default <SliderSettings>{
             rewind: true,
             speed: 300,
             pauseOnHover: true,
+            slideEffect: 'slide',
             cssClasses: '',
             autoplay: {
                 active: true,
