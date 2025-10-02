@@ -1,3 +1,9 @@
+# 4.3.3
+
+**Changelog**
+- Fixed bar-style pagination bullets not displaying correctly
+- Fixed empty breakpoint values in responsive slide images
+
 # 4.3.2
 
 **Changelog**

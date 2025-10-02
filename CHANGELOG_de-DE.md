@@ -1,3 +1,9 @@
+# 4.3.3
+
+**Changelog**
+- Navigation im Balken-Stil wird nun korrekt dargestellt
+- Leere Breakpoint-Werte im Slide-Cover wurden behoben
+
 # 4.3.2
 
 **Changelog**
