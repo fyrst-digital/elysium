@@ -26,7 +26,7 @@ jobs:
       - name: Validate plugin
         run: |
           find ${{ github.workspace }} -type f \( -name ".eslintrc.js" -o -name ".eslintignore" -o -name ".gitkeep" \) -delete
-          rm -rf .devops .github .git .gitignore store
+          rm -rf .devops .changelogs .github .git .gitignore store
           shopware-cli extension validate --full --reporter github ${{ github.workspace }}
 
       - name: Upload validated directory
