@@ -75,6 +75,7 @@ useComponentRegister([
     { name: 'elysium-iap-subscription-card', path: () => import('@elysium/component/iap/subscription-card') },
     { name: 'elysium-icon', path: () => import('@elysium/component/utilities/icon') },
     { name: 'elysium-settings', path: () => import('@elysium/component/settings') },
+    { name: 'elysium-device-bar', path: () => import('@elysium/component/device/bar') },
     { name: 'elysium-slides-overview', path: () => import('@elysium/component/slides/overview') },
     { name: 'elysium-slides-detail', path: () => import('@elysium/component/slides/detail') },
     { name: 'elysium-slides-section-base', path: () => import('@elysium/component/slides/section/base') },

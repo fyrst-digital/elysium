@@ -14,24 +14,22 @@ export default Component.wrapComponentConfig({
             styles: {
                 container: {
                     mobile: {
-                        'display': 'flex',
-                        'flex-direction': 'column',
-                        'padding': '0px',
-                        'width': '100%',
+                        position: 'sticky',
+                        top: '0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '16px',
+                        padding: '16px 24px',
+                        backgroundColor: '#ffffff',
+                        borderBottom: '1px solid #e6e6e6',
                     }
                 },
-                canvas: {
+                label: {
                     mobile: {
-                        'flex': '1 0%',
-                        'display': 'flex',
-                        'flex-direction': 'row',
-                        'flex-wrap': 'wrap',
-                        'justify-content': 'center',
-                        'align-items': 'center',
-                        'padding': '40px',
-                        'margin': '0 auto',
-                        'width': '100%',
-                        'max-width': '1120px',
+                        flex: '1 0%',
+                        lineHeight: '1.25',
+                        fontWeight: '600',
+                        fontSize: '14px',
                     }
                 }
             }

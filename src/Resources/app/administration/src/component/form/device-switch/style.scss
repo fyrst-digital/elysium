@@ -1,8 +1,6 @@
 .blur-device-switch {
     /** container vars */
     --container-gap: 16px;
-    --container-padding-y: 30px;
-    --container-padding-x: 0;
     --container-direction: column;
     /** item vars */
     --item-align-items: center;
@@ -23,7 +21,7 @@
     display: inline-flex;
     flex-direction: var(--container-direction);
     gap: var(--container-gap);
-    padding: var(--container-padding-y) var(--container-padding-x);
+    padding: var(--container-padding-y, 0px) var(--container-padding-x, 0px);
 
     &.layout-row {
         --container-direction: row;

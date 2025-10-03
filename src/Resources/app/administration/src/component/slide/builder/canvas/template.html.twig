@@ -1,3 +1,19 @@
-<div>
-    Canvas
+<div :style="viewStyle(styles.container)">
+
+    <div>
+        Canvas display settings goes here, for exampe aspect-ratio. design inspired by chrome dev tools :>
+    </div>
+
+    <div :style="viewStyle(styles.canvas)">
+        <elysium-slide-preview 
+            v-if="slide"
+            :slide="slide"
+            :device-view="device"
+            :show-preview-notice="false"
+            :aspect-ratio-x="5"
+            :aspect-ratio-y="3"
+            :max-height="'none'"
+            :style="{ flex: '1 100%' }"
+        />
+    </div>
 </div>
