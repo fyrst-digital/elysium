@@ -67,47 +67,8 @@
 
     <template #content>
 
-        <div
-            v-if="slide"
-            :style="viewStyle({ 
-                mobile: { 'padding': '16px' } 
-            })">
-
-            <sw-tabs 
-                position-identifier="positionIdentifiers.placeholder">
-
-                <sw-tabs-item
-                    :route="contentRoute"
-                    :title="$tc('blurElysiumSlides.settings.baseLabel')"
-                    :hasError="tabContentHasError"
-                >
-                    {{ $tc('blurElysiumSlides.settings.baseLabel') }}
-                </sw-tabs-item>
-                <sw-tabs-item
-                    :route="mediaRoute"
-                    :title="$tc('blurElysiumSlides.settings.mediaLabel')"
-                >
-                    {{ $tc('blurElysiumSlides.settings.mediaLabel') }}
-                </sw-tabs-item>
-                <sw-tabs-item
-                    :route="displayRoute"
-                    :title="$tc('blurElysium.general.appearance')"
-                >
-                    {{ $tc('blurElysium.general.appearance') }}
-                </sw-tabs-item>
-                <sw-tabs-item
-                    :route="advancedRoute"
-                    :title="$tc('blurElysiumSlides.settings.advancedLabel')"
-                    :hasWarning="tabAdvancedHasWarning"
-                    :warningTooltip="tabAdvancedWarningMessage"
-                >
-                    {{ $tc('blurElysiumSlides.settings.advancedLabel') }}
-                </sw-tabs-item>
-                <template #content>
-                    <router-view/>
-                </template>
-            </sw-tabs>
-        </div>
+        <elysium-slide-builder
+            v-if="slide" />
 
         <sw-confirm-modal
             v-if="showDeleteModal === true"

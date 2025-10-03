@@ -1,0 +1,2 @@
+const e='<div :style="viewStyle(styles.sidebar)"> <div> dsfdsf </div> </div>',{Component:t,Mixin:i}=Shopware,s=t.wrapComponentConfig({template:e,mixins:[i.getByName("blur-style-utilities")],data(){return{styles:{sidebar:{mobile:{"border-left":"1px solid #e6e6e6","overflow-y":"auto",width:"var(--elysium-sidebar-w, 320px)","background-color":"#ffffff"},tablet:{"--elysium-sidebar-w":"375px"}}}}}});export{s as default};
+//# sourceMappingURL=index-Bfgd_4Fd.js.map
