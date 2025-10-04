@@ -103,6 +103,7 @@ useComponentRegister([
     { name: 'elysium-slide-builder', path: () => import('@elysium/component/slide/builder') },
     { name: 'elysium-slide-builder-canvas', path: () => import('@elysium/component/slide/builder/canvas') },
     { name: 'elysium-slide-builder-sidebar', path: () => import('@elysium/component/slide/builder/sidebar') },
+    { name: 'elysium-slide-builder-sidebar-tabs', path: () => import('@elysium/component/slide/builder/sidebar/tabs') },
     { name: 'blur-elysium-cms-section', path: () => import('@elysium/component/cms/section') },
     { name: 'blur-elysium-cms-section-add-block', path: () => import('@elysium/component/cms/section/add-block') },
     { name: 'blur-elysium-cms-section-settings', path: () => import('@elysium/component/cms/section/settings') },

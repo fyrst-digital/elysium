@@ -16,6 +16,7 @@ export default Component.wrapComponentConfig({
                     mobile: {
                         position: 'sticky',
                         top: '0',
+                        zIndex: '10',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '16px',
