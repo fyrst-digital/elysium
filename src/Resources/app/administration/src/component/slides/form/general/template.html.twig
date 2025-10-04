@@ -3,14 +3,32 @@
     padding
     :style="viewStyle({
         mobile: {
-            'border-bottom': '1px solid var(--color-border-primary-default)'
+            'border-bottom': '1px solid var(--color-border-primary-default)',
+            '--blur-section-gap-y': '8px'
         },
-    })"
->
+    })">
+
+    <blur-column :cols="12">
+        <fy-input-text 
+        label="Name"
+        placeholder="Enter slide name"
+        :required="true"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <fy-input-text 
+        label="CSS Classes"
+        placeholder="Enter CSS classes"
+        />
+    </blur-column>
+
     <blur-column
         :cols="12"
-        :cols-tablet="6"
-    >
+        :cols-tablet="6">
+
+        
+
         <blur-text-input
             :label="$tc('blurElysiumSlides.forms.slideName.label')"
             :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))"

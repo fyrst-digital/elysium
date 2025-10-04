@@ -1,0 +1,13 @@
+.fy-input-text {
+
+    &:focus,
+    &:focus-visible {
+        outline-offset: 3px;
+        outline-color: var(--color-interaction-primary-default);
+    }
+}
+
+.fy-input-required {
+    color: var(--color-icon-critical-default);
+    font-weight: 600;
+}

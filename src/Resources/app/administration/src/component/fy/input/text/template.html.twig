@@ -1,0 +1,19 @@
+<div 
+    class="fy-input"
+    :style="viewStyle(styles.container)">
+
+    <label 
+        for=""
+        :style="viewStyle(styles.label)">
+        {{label}}
+        <span 
+            class="fy-input-required"
+            v-if="required">*</span>
+    </label>
+
+    <input 
+        type="text"
+        placeholder="Placeholder"
+        class="fy-input-text"
+        :style="viewStyle(styles.input)" />
+</div>

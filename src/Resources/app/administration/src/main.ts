@@ -63,6 +63,7 @@ CustomFieldDataProviderService.addEntityName('blur_elysium_slides');
  * @todo change the name of general ui related components from `blur-*` to `py-*` and place them under `packages/pyra`
  */
 useComponentRegister([
+    { name: 'fy-input-text', path: () => import('@elysium/component/fy/input/text') },
     { name: 'blur-icon', path: () => import('@elysium/component/icon') },
     { name: 'blur-section', path: () => import('@elysium/component/utilities/section') },
     { name: 'blur-column', path: () => import('@elysium/component/utilities/column') },
