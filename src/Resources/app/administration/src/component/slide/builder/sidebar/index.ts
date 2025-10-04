@@ -17,7 +17,7 @@ export default Component.wrapComponentConfig({
                         'border-left': '1px solid #e6e6e6',
                         'overflow-y': 'auto',
                         'width': 'var(--elysium-sidebar-w, 320px)',
-                        'background-color': 'var(--color-background-primary-default, #ffffff)',
+                        'background-color': '#ffffff',
                         'color': 'var(--color-text-primary-default, #333333)',
                     },
                     tablet: { 
