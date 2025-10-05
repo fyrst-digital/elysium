@@ -24,13 +24,15 @@ export default Component.wrapComponentConfig({
             return Store.get('error');
         },
 
-        nameError() {
-            return this.error.getApiError(this.slide, 'name');
-        },
-
         slideViewportSettings() {
             return this.slide.slideSettings.viewports[this.device];
         },
+    },
+
+    methods: {
+        useError (property: string) {
+            return this.error.getApiError(this.slide, property);
+        }
     },
 
     created() {

@@ -1,5 +1,6 @@
 import template from './template.html.twig'
 import './style.scss';
+import { error } from 'node:console';
 
 const { Component, Mixin } = Shopware;
 
@@ -11,6 +12,11 @@ export default Component.wrapComponentConfig({
     ],
 
     props: {
+        modelValue: {
+            type: String,
+            required: false,
+            default: '',
+        },
         label: {
             type: String,
             required: false,
@@ -31,7 +37,14 @@ export default Component.wrapComponentConfig({
             required: false,
             default: false,
         },
+        error: {
+            type: [Object, Boolean],
+            required: false,
+            default: false,
+        }
     },
+
+    emits: ['update:modelValue'],
 
     data() {
         return {
@@ -40,7 +53,7 @@ export default Component.wrapComponentConfig({
                     mobile: {
                         display: 'grid',
                         'grid-template-columns': 'auto minmax(0, 1fr)',
-                        'gap': '16px',
+                        'gap': '4px 16px',
                         alignItems: 'center',
                     }
                 },
@@ -57,7 +70,12 @@ export default Component.wrapComponentConfig({
                         marginLeft: 'auto',
                         padding: '6px 12px',
                         borderRadius: '5px',
-                        border: '1px solid #dddddd',
+                        border: '1px solid var(--fy-input-border-color, #dddddd)',
+                        outlineColor: 'var(--fy-input-outline-color, transparent)',
+                        outlineStyle: 'solid',
+                        outlineWidth: '2px',
+                        fontSize: '14px',
+                        textOverflow: 'ellipsis',
                     }
                 }
             }

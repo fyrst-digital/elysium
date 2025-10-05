@@ -10,10 +10,11 @@
 
     <blur-column :cols="12">
         <fy-input-text 
-        label="Name"
-        placeholder="Enter slide name"
-        :required="true"
-        />
+            :label="$tc('blurElysiumSlides.forms.slideName.label')"
+            :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))"
+            :required="true"
+            :error="useError('name')"
+            v-model="slide.name" />
     </blur-column>
 
     <blur-column :cols="12">
@@ -27,12 +28,10 @@
         :cols="12"
         :cols-tablet="6">
 
-        
-
         <blur-text-input
             :label="$tc('blurElysiumSlides.forms.slideName.label')"
             :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))"
-            :error="nameError"
+            :error="useError('name')"
             :model-value="slide.name"
             @update-value="value => slide.name = value"
             required
