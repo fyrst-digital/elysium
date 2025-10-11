@@ -20,6 +20,14 @@ export default Component.wrapComponentConfig({
             type: String,
             required: true,
         },
+        layout: {
+            type: String,
+            required: false,
+            default: 'row',
+            validator(value: string) {
+                return ['row', 'column'].includes(value);
+            },
+        },
         label: {
             type: String,
             required: false,
@@ -40,7 +48,7 @@ export default Component.wrapComponentConfig({
             required: false,
             default: false,
         },
-        tooptip: {
+        tooltip: {
             type: [String, undefined],
             required: false,
             default: undefined,

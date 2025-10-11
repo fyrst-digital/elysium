@@ -1,0 +1,47 @@
+.fy-input {
+    display: grid;
+    grid-template-columns: var(--fy-input-columns, minmax(0, 1fr) minmax(0, 2fr));
+    gap: 4px 16px;
+    align-items: center;
+
+    &.is-error {
+        --fy-input-border-color: var(--color-border-critical-default);
+        --fy-input-outline-color: rgb(from var(--color-border-critical-default) r g b / 20%);
+        color: var(--color-text-critical-default);
+    }
+
+    input[type='text'] {
+        field-sizing: content;
+        width: 100%;
+        max-width: 100%;
+        min-width: 120px;
+        padding: 6px 12px;
+        border-radius: 5px;
+        border: 1px solid var(--fy-input-border-color, #dddddd);
+        outline-color: var(--fy-input-outline-color, transparent);
+        outline-style: solid;
+        outline-width: 2px;
+        outline-offset: 1px;
+        font-size: 14px;
+        text-overflow: ellipsis;
+
+        &:focus,
+        &:focus-visible {
+            --fy-input-border-color: var(--color-interaction-primary-default);
+            --fy-input-outline-color: rgb(from var(--color-interaction-primary-default) r g b / 20%);
+        }
+    }
+
+    &.layout-column {
+        --fy-input-columns: minmax(0, 1fr);
+        --fy-input-left: 0;
+    }
+}
+
+.fy-input-label {
+    font-size: 14px;
+}
+
+.fy-input-description {
+    grid-column: var(--fy-input-description-column, auto / span 2);
+}

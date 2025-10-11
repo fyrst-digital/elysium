@@ -191,7 +191,7 @@
             "useMediaAsSlideCover": "Als Slide Cover verwenden",
             "useMediaAsFocusImage": "Als Fokusbild verwenden",
             "slideName": {
-                "label": "Slide Name",
+                "label": "Name",
                 "placeholder": "mein-slide"
             },
             "slideHeadline": {
@@ -199,7 +199,7 @@
                 "placeholder": "Mein fantastischer Slide!"
             },
             "slideCssClass": {
-                "label": "Slide CSS Klassen",
+                "label": "CSS Klassen",
                 "placeholder": "custom-class second-custom-class",
                 "helpText": "Gib eine oder mehrere CSS-Klassen, getrennt durch ein Leerzeichen, an."
             },

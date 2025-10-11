@@ -1,36 +1,18 @@
-<div 
-    :class="['fy-input', { 'is-error': error }] "
-    :style="viewStyle(styles.container)">
+<fy-input 
+    :tooltip="tooltip"
+    :id="id"
+    :label="label" 
+    :error="error"
+    :required="required">
 
-    <label 
-        for=""
-        :style="viewStyle(styles.label)">
-        {{label}}
-        <span 
-            class="fy-input-required"
-            v-if="required">*</span>
-        <span
-            v-tooltip="{
-                message: 'casvx',
-            }"
-        >i</span>
-    </label>
+    <template #input>
+        <input 
+            type="text"
+            :id="id"
+            :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value)"
+            :placeholder="placeholder"
+            class="fy-input-text fy-input-control" />
+    </template>
 
-    <input 
-        type="text"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        :placeholder="placeholder"
-        class="fy-input-text fy-input-control"
-        :style="viewStyle(styles.input)" />
-
-    <div
-        v-if="error"
-        :style="{
-            'grid-column': 'auto / span 2',
-            'font-size': '12px',
-            'text-align': 'right'
-        }">
-        {{ error._detail }}
-    </div>
-</div>
+</fy-input>

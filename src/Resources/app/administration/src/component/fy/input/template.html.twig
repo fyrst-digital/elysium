@@ -1,0 +1,50 @@
+<div 
+    :class="[
+        'fy-input', 
+        `layout-${layout}`,
+        { 'is-error': error }
+    ]">
+
+    <slot name="label">
+
+        <div class="fy-input-label">
+
+            <label 
+                :for="id"
+                v-html="label" />
+
+            <span 
+                v-if="required"
+                v-html="'*'"
+                :style="{ 
+                    color: 'var(--color-icon-critical-default)',
+                    fontWeight: '600' 
+                }" />
+
+            <blur-icon
+                v-if="tooltip"
+                v-tooltip="{
+                    message: tooltip,
+                }"
+                :style="{
+                    verticalAlign: 'text-top',
+                    cursor: 'pointer'
+                }"
+                name="blurph-info-bold"
+                :size="14"
+                color="var(--color-interaction-primary-default)" />
+        </div>
+    </slot>
+
+    <slot name="input" />
+
+    <div
+        v-if="error"
+        class="fy-input-description"
+        :style="{
+            'font-size': '12px',
+            'text-align': 'right'
+        }">
+        {{ error._detail }}
+    </div>
+</div>

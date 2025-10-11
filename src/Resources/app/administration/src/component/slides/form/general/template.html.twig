@@ -10,6 +10,7 @@
 
     <blur-column :cols="12">
         <fy-input-text 
+            id="SlideName"
             :label="$tc('blurElysiumSlides.forms.slideName.label')"
             :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))"
             :required="true"
@@ -19,37 +20,15 @@
 
     <blur-column :cols="12">
         <fy-input-text 
-        label="CSS Classes"
-        placeholder="Enter CSS classes"
-        />
-    </blur-column>
-
-    <blur-column
-        :cols="12"
-        :cols-tablet="6">
-
-        <blur-text-input
-            :label="$tc('blurElysiumSlides.forms.slideName.label')"
-            :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))"
-            :error="useError('name')"
-            :model-value="slide.name"
-            @update-value="value => slide.name = value"
-            required
-        />
-    </blur-column>
-    <blur-column
-        :cols="12"
-        :cols-tablet="6"
-    >
-        <blur-text-input
+            id="SlideCSSClasses"
             :label="$tc('blurElysiumSlides.forms.slideCssClass.label')"
             :placeholder="$tc('blurElysiumSlides.forms.slideCssClass.placeholder')"
-            :helpText="$tc('blurElysiumSlides.forms.slideCssClass.helpText')"
-            :model-value="slide.slideSettings.slide.cssClass"
-            @update-value="value => slide.slideSettings.slide.cssClass = value"
+            :tooltip="$tc('blurElysiumSlides.forms.slideCssClass.helpText')"
+            v-model="slide.slideSettings.slide.cssClass"
         />
     </blur-column>
 </blur-section>
+
 <blur-section
     gap
     padding
