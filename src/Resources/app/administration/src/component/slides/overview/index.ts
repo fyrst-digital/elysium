@@ -1,6 +1,5 @@
 import { module } from '@elysium/meta';
 import template from './template.html.twig';
-import EntityCollection from 'shopware/core/data/entity-collection.data';
 
 const { Component, Mixin, Data, Filter, Context, Store } = Shopware;
 const { Criteria } = Data;
