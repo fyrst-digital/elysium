@@ -4,3 +4,6 @@ node_modules/**
 node_modules/**/*
 .mdout
 .tmp
+# administration build files
+src/Resources/public/administration/.vite
+src/Resources/public/administration/assets
