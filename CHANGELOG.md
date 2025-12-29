@@ -3,6 +3,7 @@
 **Changelog**
 - Added fading effect option to slider settings
 - Fixed sorting of the name column in the slide overview
+- Fixed empty slide name and title in the administration search
 
 # 4.3.3
 
