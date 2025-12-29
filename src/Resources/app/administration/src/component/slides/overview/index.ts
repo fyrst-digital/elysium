@@ -1,8 +1,7 @@
 import { module } from '@elysium/meta';
 import template from './template.html.twig';
-import EntityCollection from 'shopware/core/data/entity-collection.data';
 
-const { Component, Mixin, Data, State, Filter, Context, Store } = Shopware;
+const { Component, Mixin, Data, Filter, Context, Store } = Shopware;
 const { Criteria } = Data;
 
 type SortDirection = 'ASC' | 'DESC';
@@ -35,28 +34,20 @@ export default Component.wrapComponentConfig({
             slidesColumns: [
                 {
                     property: 'name',
-                    dataIndex: 'name',
                     inlineEdit: 'string',
                     label: 'blurElysiumSlides.grid.nameLabel',
                     routerLink: 'blur.elysium.slides.detail',
                     width: '250px',
                     allowResize: true,
                     primary: true,
-                    useCustomSort: true,
-                    naturalSorting: true,
                 },
                 {
                     property: 'title',
-                    dataIndex: 'title',
                     inlineEdit: 'string',
                     label: 'blurElysiumSlides.grid.headlineLabel',
                     routerLink: 'blur.elysium.slides.detail',
                     width: '1fr',
                     allowResize: true,
-                    sortable: false,
-                    primary: false,
-                    useCustomSort: false,
-                    naturalSorting: false,
                 },
             ],
             isLoading: true,
@@ -73,7 +64,10 @@ export default Component.wrapComponentConfig({
         };
     },
 
-    mixins: [Mixin.getByName('notification'), Mixin.getByName('listing')],
+    mixins: [
+        Mixin.getByName('notification'), 
+        Mixin.getByName('listing')
+    ],
 
     metaInfo() {
         return {
@@ -84,7 +78,7 @@ export default Component.wrapComponentConfig({
     watch: {
         searchTerm: {
             handler() {
-                this.loadSlides();
+                this.getList();
             },
         },
     },
@@ -100,7 +94,7 @@ export default Component.wrapComponentConfig({
             criteria.setTerm(this.searchTerm);
 
             criteria.addSorting(
-                Criteria.sort(this.sortBy, this.sortDirection, true)
+                Criteria.sort(this.sortBy, this.sortDirection, this.naturalSorting)
             );
 
             return criteria;
@@ -128,7 +122,7 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        loadSlides() {
+        getList() {
             this.isLoading = true;
 
             this.slidesRepository
@@ -150,13 +144,13 @@ export default Component.wrapComponentConfig({
         },
 
         onChangeLanguage(languageId: string) {
-            State.commit('context/setApiLanguageId', languageId);
+            Store.get('context').setApiLanguageId(languageId);
             this.isLoading = true;
-            this.loadSlides();
+            this.getList();
         },
 
-        columnSort() {
-            this.loadSlides();
+        onColumnSort(column) {
+            this.onSortColumn(column);
         },
 
         copySlide(slide) {
@@ -175,7 +169,7 @@ export default Component.wrapComponentConfig({
             this.slidesRepository
                 .clone(slide.id, cloneOptions)
                 .then(() => {
-                    this.loadSlides();
+                    this.getList();
                 })
                 .catch((error) => {
                     console.warn(error);
@@ -190,11 +184,11 @@ export default Component.wrapComponentConfig({
                 ),
             });
             this.isLoading = false;
-            this.loadSlides();
+            this.getList();
         },
     },
 
     created() {
-        this.loadSlides();
+        this.getList();
     },
 });

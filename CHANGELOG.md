@@ -1,3 +1,9 @@
+# 4.4.0
+
+**Changelog**
+- Added fading effect option to slider settings
+- Fixed sorting of the name column in the slide overview
+
 # 4.3.3
 
 **Changelog**

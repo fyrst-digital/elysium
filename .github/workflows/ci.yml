@@ -5,7 +5,7 @@ on:
     branches:
       - master
     tags:
-      - '*'
+      - "*"
   pull_request:
     branches:
       - master
@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install shopware-cli
-        uses: shopware/shopware-cli-action@v1
+        uses: shopware/shopware-cli-action@v3
         with:
-          version: 0.6.19
+          version: 0.7.1
 
       - name: Validate plugin
         run: |
