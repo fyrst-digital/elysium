@@ -1,2 +1,0 @@
-const e=`{% block sw_cms_section_content %} <template v-if="section.type === 'blur-elysium-section'"> <div class="elysium-element-badge"> {{ $tc('blurElysiumSection.label') }} </div> <blur-elysium-cms-section @on-add-block="openBlockBar" @on-select-block="onBlockSelection" :section="section" /> </template> <template v-else> {% parent %} </template> {% endblock %}`,{Component:t}=Shopware,o=t.wrapComponentConfig({template:e});export{o as default};
-//# sourceMappingURL=index-DlL3dRw3.js.map

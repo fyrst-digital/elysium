@@ -1,2 +1,0 @@
-const e=`<div :style="viewStyle({ mobile: { 'display': 'grid', 'grid-template-columns': 'minmax(0, 1fr) auto', 'gap': '0px', 'width': '100%', 'height': '100%', 'overflow': 'hidden', 'background-color': '#f5f5f5', } })"> <elysium-slide-builder-canvas /> <elysium-slide-builder-sidebar /> </div>`,{Component:i,Mixin:t}=Shopware,l=i.wrapComponentConfig({template:e,mixins:[t.getByName("blur-style-utilities")]});export{l as default};
-//# sourceMappingURL=index-DibXjEDB.js.map
