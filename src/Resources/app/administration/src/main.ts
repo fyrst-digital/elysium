@@ -15,8 +15,9 @@ import '@elysium/component/cms/elements/blur-elysium-banner';
 // cms blocks
 import '@elysium/component/cms/blocks/blur-elysium-slider';
 import '@elysium/component/cms/blocks/blur-elysium-banner';
+import { MtTextField } from '@shopware-ag/meteor-component-library';
 
-const { Locale, Application, Component, Store, Service } = Shopware;
+const { Locale, Application, Component, Store, Service, Vue } = Shopware;
 
 /**
  * Register pinia stores
@@ -63,6 +64,7 @@ CustomFieldDataProviderService.addEntityName('blur_elysium_slides');
  * @todo change the name of general ui related components from `blur-*` to `py-*` and place them under `packages/pyra`
  */
 useComponentRegister([
+    { name: 'py-text-field', path: () => import('./component/py/text-field.vue') },
     { name: 'fy-input', path: () => import('@elysium/component/fy/input') },
     { name: 'fy-input-text', path: () => import('@elysium/component/fy/input/text') },
     { name: 'blur-icon', path: () => import('@elysium/component/icon') },
@@ -113,7 +115,7 @@ useComponentRegister([
 ])
 
 /**
- * Extend components
+ * Override components
  */
 useComponentOverride([
     { name: 'sw-cms-section', path: () => import('@elysium/extension/sw-cms-section') },

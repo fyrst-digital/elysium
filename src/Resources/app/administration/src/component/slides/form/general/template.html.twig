@@ -27,6 +27,14 @@
             v-model="slide.slideSettings.slide.cssClass"
         />
     </blur-column>
+
+    <blur-column :cols="12">
+        <py-text-field 
+        label="Name"
+        placeholder="Enter text here"
+        required
+        v-model="slide.name" />
+    </blur-column>
 </blur-section>
 
 <blur-section
