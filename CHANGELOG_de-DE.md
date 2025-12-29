@@ -1,3 +1,9 @@
+# 4.4.0
+
+**Changelog**
+- Fading-Effekt zu den Slider Optionen hinzugefügt
+- Sortierung der Namensspalte in der Slide-Übersicht korrigiert
+
 # 4.3.3
 
 **Changelog**
