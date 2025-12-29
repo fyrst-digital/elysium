@@ -45,10 +45,11 @@
             :repository="slidesRepository"
             :columns="slidesColumns"
             :is-loading="isLoading"
-            :sort-by="sortBy"
+            :sort-by="currentSortBy"
             :sort-direction="sortDirection"
+            :natural-sorting="naturalSorting"
             :allow-delete="permissionDelete"
-            @column-sort="columnSort"
+            @column-sort="onColumnSort"
             @delete-item-finish="finishDeleteItems"
             @items-delete-finish="finishDeleteItems"
         >
