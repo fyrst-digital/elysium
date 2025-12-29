@@ -3,7 +3,8 @@
 **Changelog**
 - Fading-Effekt zu den Slider Optionen hinzugefügt
 - Sortierung der Namensspalte in der Slide-Übersicht korrigiert
-
+- Leere Slide-Namen und Titel in der Administration-Suche behoben
+s
 # 4.3.3
 
 **Changelog**

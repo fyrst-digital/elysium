@@ -3,21 +3,21 @@
 
     <router-link
         v-else-if="type === 'blur_elysium_slides'"
-        v-bind:to="{ name: 'blur.elysium.slides.detail', params: { id: item.id } }"
+        :to="{ name: 'blur.elysium.slides.detail', params: { id: item.id } }"
         ref="routerLink"
         class="sw-search-bar-item__link"
     >
         <span class="sw-search-bar-item__label">
             <sw-highlight-text
-                v-bind:searchTerm="searchTerm"
-                v-bind:text="item.name"
-            >
-                </sw-highlight-text>
+                v-if="item.translated.name || item.name"
+                :searchTerm="searchTerm"
+                :text="item.translated.name || item.name"
+            />
             <sw-highlight-text
-                v-bind:searchTerm="searchTerm"
-                v-bind:text="item.title"
-            >
-                </sw-highlight-text>
+                v-if="item.translated.title || item.title"
+                :searchTerm="searchTerm"
+                :text="item.translated.title || item.title"
+            />
         </span>
     </router-link>
 {% endblock %}
