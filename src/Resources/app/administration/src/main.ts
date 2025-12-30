@@ -64,7 +64,11 @@ CustomFieldDataProviderService.addEntityName('blur_elysium_slides');
  * @todo change the name of general ui related components from `blur-*` to `py-*` and place them under `packages/pyra`
  */
 useComponentRegister([
-    { name: 'py-text-field', path: () => import('./component/py/text-field.vue') },
+    { name: 'py-base-field', path: () => import('./component/py/base-field/index.vue') },
+    { name: 'py-text-field', path: () => import('./component/py/text-field/index.vue') },
+    { name: 'py-number-field', path: () => import('./component/py/number-field/index.vue') },
+    { name: 'py-select-field', path: () => import('./component/py/select-field/index.vue') },
+    { name: 'py-colorpicker-field', path: () => import('./component/py/colorpicker-field/index.vue') },
     { name: 'fy-input', path: () => import('@elysium/component/fy/input') },
     { name: 'fy-input-text', path: () => import('@elysium/component/fy/input/text') },
     { name: 'blur-icon', path: () => import('@elysium/component/icon') },

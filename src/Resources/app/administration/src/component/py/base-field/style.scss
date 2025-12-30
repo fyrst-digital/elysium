@@ -1,0 +1,69 @@
+.py-base-field {
+    display: grid;
+    gap: 4px 16px;
+    align-items: start;
+    grid-template-columns: var(--py-field-cols, minmax(0, 1fr) minmax(0, 2fr));
+
+    .mt-field {
+
+        .mt-field__addition {
+            //border: 0 none;
+            background-color: transparent;
+            padding: 6px;
+            min-width: auto;
+        }
+
+        .mt-block-field__block {
+            min-height: auto;
+            border-radius: 8px;
+        }
+
+        input {
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: auto;
+        }
+    }
+
+    .mt-select {
+
+        .mt-select__selection {
+            line-height: 1.5;
+            padding-inline: 0px;
+        }
+
+        .mt-select__select-indicator-hitbox {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    .mt-number-field__controls {
+        flex-direction: row;
+        margin: 6px;
+        width: auto;
+
+        button {
+            display: flex;
+            padding: 6px;
+
+            .mt-icon {
+                margin-top: auto !important;
+            }
+        };
+    }
+
+    .mt-colorpicker__previewWrapper {
+        border-radius: 20px;
+    }
+}
+
+.sw-text-editor-toolbar {
+    height: auto !important;
+}
+
+.sw-text-editor-toolbar .sw-text-editor-buttons {
+    display: flex;
+    flex-wrap: wrap;
+}

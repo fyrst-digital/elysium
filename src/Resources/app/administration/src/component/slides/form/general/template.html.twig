@@ -9,32 +9,22 @@
     })">
 
     <blur-column :cols="12">
-        <fy-input-text 
-            id="SlideName"
+        <py-text-field 
             :label="$tc('blurElysiumSlides.forms.slideName.label')"
-            :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))"
+            :placeholder="$tc('blurElysiumSlides.forms.slideName.placeholder')"
             :required="true"
             :error="useError('name')"
             v-model="slide.name" />
     </blur-column>
 
     <blur-column :cols="12">
-        <fy-input-text 
-            id="SlideCSSClasses"
+        <py-text-field 
             :label="$tc('blurElysiumSlides.forms.slideCssClass.label')"
             :placeholder="$tc('blurElysiumSlides.forms.slideCssClass.placeholder')"
             :tooltip="$tc('blurElysiumSlides.forms.slideCssClass.helpText')"
-            v-model="slide.slideSettings.slide.cssClass"
-        />
+            v-model="slide.slideSettings.slide.cssClass" />
     </blur-column>
 
-    <blur-column :cols="12">
-        <py-text-field 
-        label="Name"
-        placeholder="Enter text here"
-        required
-        v-model="slide.name" />
-    </blur-column>
 </blur-section>
 
 <blur-section
@@ -48,12 +38,9 @@
         },
     })"
 >
-    <blur-column
-        :cols="12"
-        :cols-tablet="4"
-        :cols-desktop="3"
-    >
-        <blur-select-input
+
+    <blur-column :cols="12">
+        <py-select-field 
             :options="[
                 { value: 'div', label: 'DIV' },
                 { value: 'h1', label: 'H1' },
@@ -65,79 +52,64 @@
             ]"
             placeholder="DIV"
             :label="$tc('blurElysiumSlides.forms.slideHeadlineElement.label')"
-            :helpText="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')"
-            v-model:value="slide.slideSettings.slide.headline.element"
-        />
+            :tooltip="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')"
+            v-model="slide.slideSettings.slide.headline.element"
+            />
     </blur-column>
-    <blur-column
-        :cols="12"
-        :cols-tablet="8"
-        :cols-desktop="9"
-    >
-        <blur-text-input
-            :label="$tc('blurElysium.general.content')"
+
+    <blur-column :cols="12">
+        <py-text-field 
+            :label="$tc('blurElysium.general.text')"
             :placeholder="placeholder(slide, 'title', $tc('blurElysiumSlides.forms.slideHeadline.placeholder'))"
-            :model-value="slide.title"
-            @update-value="value => slide.title = value"
+            v-model="slide.title"
         />
     </blur-column>
-    <blur-column
-        :cols="12"
-        :cols-tablet="4"
-        :cols-desktop="3"
-    >
-        <blur-number-input
-            :label="$tc('blurElysium.general.fontSize')"
-            :placeholder="viewportsPlaceholder('headline.fontSize', 20)"
-            :device="device"
-            :show-device="true"
-            :model-value="slideViewportSettings.headline.fontSize"
-            @on-device="deviceSwitch"
-            @update-value="value => slideViewportSettings.headline.fontSize = value"
-        />
-    </blur-column>
-    <blur-column
-        :cols="12"
-        :cols-tablet="4"
-        :cols-desktop="3"
-    >
-        <blur-colorpicker
+
+    <blur-column :cols="12">
+        <py-colorpicker-field 
             :label="$tc('blurElysium.general.textColor')"
             v-model:value="slide.slideSettings.slide.headline.color"
         />
     </blur-column>
+
+    <blur-column :cols="12">
+        <py-number-field 
+            :label="$tc('blurElysium.general.fontSize')"
+            :placeholder="viewportsPlaceholder('headline.fontSize', 20)"
+            :step="1"
+            :digits="0"
+            v-model="slideViewportSettings.headline.fontSize"
+        />
+    </blur-column>
 </blur-section>
+
 <blur-section
     gap
     padding
     :title="$tc('blurElysiumSlides.forms.slideDescription.label')"
     title-icon="blurph-textbox-bold"
 >
-    <blur-column :cols-desktop="8">
+    <blur-column :cols="12">
+        <py-colorpicker-field 
+            :label="$tc('blurElysium.general.textColor')"
+            v-model:value="slide.slideSettings.slide.description.color"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <py-number-field 
+            :label="$tc('blurElysium.general.fontSize')"
+            :placeholder="viewportsPlaceholder('description.fontSize', 14)"
+            :step="1"
+            :digits="0"
+            v-model="slideViewportSettings.description.fontSize"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
         <sw-text-editor
             v-model:value="slide.description"
             :label="$tc('blurElysium.general.content')"
         />
-    </blur-column>
-    <blur-column :cols-desktop="4">
-        <blur-section gap>
-            <blur-column>
-                <blur-colorpicker
-                    :label="$tc('blurElysium.general.textColor')"
-                    v-model:value="slide.slideSettings.slide.description.color"
-                />
-            </blur-column>
-            <blur-column>
-                <blur-number-input
-                    :label="$tc('blurElysium.general.fontSize')"
-                    :device="device"
-                    :placeholder="viewportsPlaceholder('description.fontSize', 14)"
-                    :show-device="true"
-                    @on-device="deviceSwitch"
-                    :model-value="slideViewportSettings.description.fontSize"
-                    @update-value="value => slideViewportSettings.description.fontSize = value"
-                />
-            </blur-column>
-        </blur-section>
     </blur-column>
 </blur-section>

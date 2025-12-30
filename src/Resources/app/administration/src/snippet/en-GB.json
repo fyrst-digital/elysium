@@ -40,6 +40,7 @@
             "addItem": "Add",
             "general": "General",
             "appearance": "Appearance",
+            "text": "Text",
             "content": "Content",
             "copySuffix": "copy",
             "backgroundColor": "Background color",
