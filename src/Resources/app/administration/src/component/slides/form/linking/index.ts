@@ -9,7 +9,10 @@ const { Component, Mixin, Store } = Shopware;
 export default Component.wrapComponentConfig({
     template,
 
-    mixins: [Mixin.getByName('placeholder')],
+    mixins: [
+        Mixin.getByName('placeholder'),
+        Mixin.getByName('blur-style-utilities'),
+    ],
 
     computed: {
         slide() {

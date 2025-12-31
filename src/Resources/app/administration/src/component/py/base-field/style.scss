@@ -59,6 +59,24 @@
     }
 }
 
+.py-select-popover {
+
+    .mt-select-result-list__content {
+        border-radius: 10px;
+        padding: 4px;
+    }
+
+    .mt-select-result {
+        padding: 4px;
+
+        .mt-icon {
+            width: 10px !important;
+            height: 10px !important;
+            margin-right: 8px;
+        }
+    }
+}
+
 .sw-text-editor-toolbar {
     height: auto !important;
 }
