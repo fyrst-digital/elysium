@@ -59,6 +59,17 @@
     }
 }
 
+.py-slider-field {
+
+    .mt-number-field {
+        display: none !important;
+    }
+
+    .mt-block-field__block {
+        padding: 0 !important;
+    }
+}
+
 .py-select-popover {
 
     .mt-select-result-list__content {

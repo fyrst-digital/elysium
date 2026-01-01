@@ -77,6 +77,8 @@
             "md": "Medium",
             "lg": "Groß",
             "noLimit": "Keine Begrenzung",
+            "horizontal": "Horizontal",
+            "vertical": "Vertikal",
             "textAlign": "Textausrichtung",
             "spacing": "Abstände",
             "gap": "Abstand: Zwischenraum",

@@ -3,8 +3,8 @@
     padding
     :style="viewStyle({
         mobile: {
-            'border-bottom': '1px solid var(--color-border-primary-default)',
-            '--blur-section-gap-y': '8px'
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
         },
     })"
 >
@@ -46,7 +46,9 @@
         />
     </blur-column>
 
-    <blur-column v-if="slide.slideSettings.slide?.linking?.type === 'product'">
+    <blur-column 
+        :cols="12"
+        v-if="slide.slideSettings.slide?.linking?.type === 'product'">
         <mt-switch
             @change="slide.slideSettings.slide.linking.showProductFocusImage = $event"
             :checked="slide.slideSettings.slide.linking.showProductFocusImage"
@@ -86,15 +88,22 @@
             />
     </blur-column>
 
-    <blur-column :cols="12">
+    <blur-column 
+        :cols="12"
+        :style="viewStyle({
+            mobile: {
+                'padding-block': '12px',
+                'display': 'flex',
+                'flex-direction': 'column',
+                'gap': '8px',
+            },
+        })">
         <mt-switch
             @change="slide.slideSettings.slide.linking.openExternal = $event"
             :checked="slide.slideSettings.slide.linking.openExternal"
             :label="$tc('blurElysiumSlides.forms.slideLinkingOpenExternal')"
         />
-    </blur-column>
 
-    <blur-column :cols="12">
         <mt-switch
             @change="slide.slideSettings.slide.linking.overlay = $event"
             :checked="slide.slideSettings.slide.linking.overlay"

@@ -77,6 +77,8 @@
             "md": "Medium",
             "lg": "Large",
             "noLimit": "No limit",
+            "horizontal": "Horizontal",
+            "vertical": "Vertical",
             "textAlign": "Text align",
             "left": "Left",
             "center": "Center",

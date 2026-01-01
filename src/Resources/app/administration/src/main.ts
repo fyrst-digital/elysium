@@ -67,6 +67,7 @@ useComponentRegister([
     { name: 'py-base-field', path: () => import('./component/py/base-field/index.vue') },
     { name: 'py-text-field', path: () => import('./component/py/text-field/index.vue') },
     { name: 'py-number-field', path: () => import('./component/py/number-field/index.vue') },
+    { name: 'py-slider-field', path: () => import('./component/py/slider-field/index.vue') },
     { name: 'py-select-field', path: () => import('./component/py/select-field/index.vue') },
     { name: 'py-colorpicker-field', path: () => import('./component/py/colorpicker-field/index.vue') },
     { name: 'fy-input', path: () => import('@elysium/component/fy/input') },
