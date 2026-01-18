@@ -1,0 +1,10 @@
+<py-base-field
+    :label="label">
+
+    <mt-colorpicker
+        class="py-field"
+        v-bind="$attrs"
+        :model-value="validatedValue"
+        @update:modelValue="update"
+    />
+</py-base-field>

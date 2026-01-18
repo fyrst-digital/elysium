@@ -64,12 +64,12 @@ CustomFieldDataProviderService.addEntityName('blur_elysium_slides');
  * @todo change the name of general ui related components from `blur-*` to `py-*` and place them under `packages/pyra`
  */
 useComponentRegister([
-    { name: 'py-base-field', path: () => import('./component/py/base-field/index.vue') },
-    { name: 'py-text-field', path: () => import('./component/py/text-field/index.vue') },
-    { name: 'py-number-field', path: () => import('./component/py/number-field/index.vue') },
-    { name: 'py-slider-field', path: () => import('./component/py/slider-field/index.vue') },
-    { name: 'py-select-field', path: () => import('./component/py/select-field/index.vue') },
-    { name: 'py-colorpicker-field', path: () => import('./component/py/colorpicker-field/index.vue') },
+    { name: 'py-base-field', path: () => import('./component/py/base-field') },
+    { name: 'py-text-field', path: () => import('./component/py/text-field') },
+    { name: 'py-number-field', path: () => import('./component/py/number-field') },
+    { name: 'py-slider-field', path: () => import('./component/py/slider-field') },
+    { name: 'py-select-field', path: () => import('./component/py/select-field') },
+    { name: 'py-colorpicker-field', path: () => import('./component/py/colorpicker-field') },
     { name: 'fy-input', path: () => import('@elysium/component/fy/input') },
     { name: 'fy-input-text', path: () => import('@elysium/component/fy/input/text') },
     { name: 'blur-icon', path: () => import('@elysium/component/icon') },

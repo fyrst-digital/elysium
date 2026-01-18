@@ -1,0 +1,45 @@
+<div
+    :class="[
+        'py-base-field',
+        layout ? `layout-${layout}` : 'layout-row'
+    ]">
+    <div
+        :style="{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            gap: '4px',
+            marginBlock: '6px'
+        }">
+        <label 
+            v-if="label"
+            v-html="label" 
+            class="py-label"
+            :style="{
+                fontSize: '14px',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+            }" />
+        <span 
+            v-if="required"
+            v-html="'*'"
+            :style="{ 
+                color: 'var(--color-icon-critical-default)',
+                fontWeight: '600' 
+            }" />
+        <blur-icon
+            v-if="tooltip"
+            v-tooltip="{
+                message: tooltip,
+            }"
+            :style="{
+                verticalAlign: 'text-top',
+                cursor: 'pointer'
+            }"
+            name="blurph-info-bold"
+            :size="14"
+            color="var(--color-interaction-primary-default)" />
+    </div>
+    <slot />
+</div>
