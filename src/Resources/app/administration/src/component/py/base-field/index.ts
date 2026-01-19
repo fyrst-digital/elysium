@@ -16,7 +16,7 @@ export default Component.wrapComponentConfig({
         layout: {
             type: String as () => 'row' | 'column',
             required: false,
-            default: undefined,
+            default: 'column',
         },
 
         required: {

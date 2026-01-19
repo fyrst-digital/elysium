@@ -1,4 +1,3 @@
-import slide from '../slide';
 import template from './template.html.twig';
 
 const { Component, Mixin, Store, Context } = Shopware;
@@ -16,7 +15,6 @@ export default Component.wrapComponentConfig({
 
     data() {
         return {
-            activeTab: 'coverImage',
             slideCoverMapping: {
                 mobile: 'slideCoverMobile',
                 tablet: 'slideCoverTablet',
@@ -53,29 +51,6 @@ export default Component.wrapComponentConfig({
 
         slideViewportSettings() {
             return this.slide.slideSettings.viewports[this.device];
-        },
-
-        tabs() {
-            return [
-                {
-                    label: this.$tc(
-                        'blurElysiumSlides.forms.slideCoverImage.label'
-                    ),
-                    name: 'coverImage',
-                },
-                {
-                    label: this.$tc(
-                        'blurElysiumSlides.forms.slideCoverVideo.label'
-                    ),
-                    name: 'coverVideo',
-                },
-                {
-                    label: this.$tc(
-                        'blurElysiumSlides.forms.slideCoverMeta.label'
-                    ),
-                    name: 'coverMeta',
-                },
-            ];
         },
 
         slideCoverUploadTag() {

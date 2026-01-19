@@ -4,10 +4,13 @@
     align-items: start;
     grid-template-columns: var(--py-field-cols, minmax(0, 1fr) minmax(0, 2fr));
 
+    &.layout-row {
+        --py-field-cols: minmax(0, 1fr);
+    }
+
     .mt-field {
 
         .mt-field__addition {
-            //border: 0 none;
             background-color: transparent;
             padding: 6px;
             min-width: auto;
@@ -51,7 +54,9 @@
             .mt-icon {
                 margin-top: auto !important;
             }
-        };
+        }
+
+        ;
     }
 
     .mt-colorpicker__previewWrapper {

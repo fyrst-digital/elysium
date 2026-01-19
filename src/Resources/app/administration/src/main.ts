@@ -15,7 +15,6 @@ import '@elysium/component/cms/elements/blur-elysium-banner';
 // cms blocks
 import '@elysium/component/cms/blocks/blur-elysium-slider';
 import '@elysium/component/cms/blocks/blur-elysium-banner';
-import { MtTextField } from '@shopware-ag/meteor-component-library';
 
 const { Locale, Application, Component, Store, Service, Vue } = Shopware;
 
@@ -70,8 +69,6 @@ useComponentRegister([
     { name: 'py-slider-field', path: () => import('./component/py/slider-field') },
     { name: 'py-select-field', path: () => import('./component/py/select-field') },
     { name: 'py-colorpicker-field', path: () => import('./component/py/colorpicker-field') },
-    { name: 'fy-input', path: () => import('@elysium/component/fy/input') },
-    { name: 'fy-input-text', path: () => import('@elysium/component/fy/input/text') },
     { name: 'blur-icon', path: () => import('@elysium/component/icon') },
     { name: 'blur-section', path: () => import('@elysium/component/utilities/section') },
     { name: 'blur-column', path: () => import('@elysium/component/utilities/column') },

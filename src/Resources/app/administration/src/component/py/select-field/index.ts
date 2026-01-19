@@ -13,6 +13,11 @@ export default Component.wrapComponentConfig({
             required: false,
             default: undefined,
         },
+        layout: {
+            type: String,
+            required: false,
+            default: 'column',
+        }
     },
 
     methods: {

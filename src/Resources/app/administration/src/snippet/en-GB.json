@@ -29,6 +29,7 @@
         },
         "cmsBlockGroup": "Elysium Blocks",
         "general": {
+            "settings": "Settings",
             "cssClasses": {
                 "label": "CSS Classes",
                 "helpText": "Here you can specify one or more CSS classes, separated by a space. These classes will be applied to the CMS element.",
@@ -128,9 +129,10 @@
             "spaceBetween": "Between",
             "spaceAround": "Around",
             "stretch": "Stretch",
-            "objectPosY": "Object position: vertical",
-            "objectPosX": "Object position: horizontal",
-            "objectFit": "Object fit",
+            "objectPosY": "Position: vertical",
+            "objectPosX": "Position: horizontal",
+            "objectPos": "Position",
+            "objectFit": "Fit",
             "cover": "Cover",
             "contain": "Contain",
             "ratio": "Ratio",
@@ -253,10 +255,10 @@
                 "helpText": "If this option is active, the entire slide is used as a link area. In this case, the button is hidden."
             },
             "slideCover": {
-                "label": "Slide cover"
+                "label": "Cover"
             },
             "slideCoverImage": {
-                "label": "Cover image",
+                "label": "Image",
                 "description": "Add an image as Slide background. The cover image can be defined for phone, tablet and desktop view. The desktop image serves as default. Valid image formats are jpg, png, webp, svg, avif"
             },
             "slideFocusImage": {
@@ -264,11 +266,11 @@
                 "description": "The focus image is displayed as a separate image next to the content area."
             },
             "slideCoverVideo": {
-                "label": "Cover video",
+                "label": "Video",
                 "description": "Add a video as Slide background. The Cover video applies to all views. Valid video formats are mp4"
             },
             "slideCoverMeta": {
-                "label": "Cover Meta",
+                "label": "Meta data",
                 "description": "Add alternative alt and title texts. This is useful when you use more than one image as a cover. This way you have finer control over these texts.",
                 "alt": {
                     "label": "Alt text"
