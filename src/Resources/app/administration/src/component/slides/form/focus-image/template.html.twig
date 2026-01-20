@@ -4,7 +4,11 @@
     :title="$tc('blurElysiumSlides.forms.slideFocusImage.label')"
     :description="$tc('blurElysiumSlides.forms.slideFocusImage.description')"
     :style="viewStyle({
-        mobile: { borderBottom: '1px solid var(--color-border-secondary-default)' }
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px' 
+        }
     })">
 
     <blur-column>
@@ -30,7 +34,13 @@
 
 <blur-section 
     gap
-    padding>
+    padding
+    :style="viewStyle({
+        mobile: { 
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        }
+    })">
     <blur-column>
         <mt-switch
             class="blur-switch-input"
@@ -40,18 +50,14 @@
         />
     </blur-column>
     <blur-column>
-        <blur-number-input
+        <py-number-field 
             :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
             :placeholder="viewportsPlaceholder('image.maxWidth', $t('blurElysium.general.noLimit'))"
-            :show-device="true"
-            :device="device"
-            @on-device="deviceSwitch"
-            :model-value="slideViewportSettings.image.maxWidth"
-            @update-value="value => slideViewportSettings.image.maxWidth = value"
-        />
+            v-model-value="slideViewportSettings.image.maxWidth"
+            />
     </blur-column>
     <blur-column>
-        <blur-select-input
+        <py-select-field 
             :label="$tc('blurElysium.general.jusitifyContent')"
             :placeholder="viewportsPlaceholder('image.justifyContent', 'center', 'blurElysium.general')"
             :options="[
@@ -59,10 +65,7 @@
                 { value: 'center', label: $tc('blurElysium.general.jusitifyCenter') },
                 { value: 'flex-end', label: $tc('blurElysium.general.jusitifyEnd') }
             ]"
-            :device="device"
-            :show-device="true"
-            @on-device="deviceSwitch"
-            v-model:value="slideViewportSettings.image.justifyContent"
-        />
+            v-model="slideViewportSettings.image.justifyContent"
+            />
     </blur-column>
 </blur-section>
