@@ -316,7 +316,8 @@
                 "label": "Custom template file",
                 "description": "Here you can define your own Twig template file. If you enter a Twig template file, you will need to add it to your theme or extension by yourself.",
                 "placeholder": "my-slide-template",
-                "pathInfo": "The path to this file is:<br/><code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code",
+                "pathInfoTitle": "The path to this file is:",
+                "pathInfo": "<code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code>",
                 "fileName": "File name"
             },
             "customFields": {

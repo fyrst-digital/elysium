@@ -1,28 +1,36 @@
-<mt-card
-    position-identifier="blurElysium.slide.form.customTemplateFile"
+<blur-section
+    padding
+    gap
     :title="$tc('blurElysiumSlides.forms.customTemplateFile.label')"
-    :subtitle="$tc('blurElysiumSlides.forms.customTemplateFile.description')"
-    :class="['content-no-padding']"
->
-    <blur-section
-        padding
-        gap
-    >
-        <blur-column>
-            <blur-text-input
-                :label="$tc('blurElysiumSlides.forms.customTemplateFile.fileName')"
-                :placeholder="$tc('blurElysiumSlides.forms.customTemplateFile.placeholder')"
-                :model-value="slide.slideSettings.customTemplateFile"
-                @update-value="value => slide.slideSettings.customTemplateFile = value"
-            />
+    :description="$tc('blurElysiumSlides.forms.customTemplateFile.description')"
+    :style="{
+        borderBottom: '1px solid var(--color-border-secondary-default)',
+    }">
+
+    <blur-column
+        :style="{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+        }">
+
+        <py-text-field
+            layout="column"
+            :label="$tc('blurElysiumSlides.forms.customTemplateFile.fileName')"
+            :placeholder="$tc('blurElysiumSlides.forms.customTemplateFile.placeholder')"
+            v-model="slide.slideSettings.customTemplateFile"
+        />
+
+        <mt-banner
+            v-if="slide.slideSettings.customTemplateFile"
+            :title="$t('blurElysiumSlides.forms.customTemplateFile.pathInfoTitle')"
+            :hide-icon="true"
+            :style="{
+                margin: '0px',
+            }">
             <div
-                :style="{ 
-                    fontSize: '14px',
-                    lineHeight: '1.5' 
-                }"
-                v-if="slide.slideSettings.customTemplateFile"
                 v-html="$t('blurElysiumSlides.forms.customTemplateFile.pathInfo', { file: slide.slideSettings.customTemplateFile })"
             />
-        </blur-column>
-    </blur-section>
-</mt-card>
+        </mt-banner>
+    </blur-column>
+</blur-section>

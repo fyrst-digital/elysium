@@ -316,6 +316,7 @@
                 "label": "Eigene Template Datei",
                 "description": "Hier kannst du eine eigene Twig Template Datei definieren. Wenn du hier einen Dateinamen einträgst, musst du diese Datei manuell zum Theme oder einer Erweiterung hinzufügen.",
                 "placeholder": "mein-slide-template",
+                "pathInfoTitle": "Der Pfad zu dieser Datei lautet:",
                 "pathInfo": "Der Pfad zu dieser Datei lautet:<br/><code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code",
                 "fileName": "Dateiname"
             },
