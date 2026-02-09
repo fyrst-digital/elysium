@@ -6,9 +6,12 @@
 
     &.layout-row {
         --py-field-cols: minmax(0, 1fr);
+        --py-field-label-m-block: 0px;
     }
 
     .mt-field {
+        margin-inline: var(--py-field-m-inline, 0px);
+        margin-block: var(--py-field-m-block, 0px);
 
         .mt-field__addition {
             background-color: transparent;

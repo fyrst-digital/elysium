@@ -11,13 +11,18 @@ export default Component.wrapComponentConfig({
 
     data() {
         return {
+            width: null,
+            aspectRatioX: 4,
+            aspectRatioY: 3, 
             styles: {
                 container: {
                     mobile: {
+                        'position': 'relative',
                         'display': 'flex',
                         'flex-direction': 'column',
                         'padding': '0px',
                         'width': '100%',
+                        'overflow-y': 'auto',
                     }
                 },
                 canvas: {

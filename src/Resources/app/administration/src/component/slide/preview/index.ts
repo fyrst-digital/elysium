@@ -33,6 +33,10 @@ export default Component.wrapComponentConfig({
             type: String,
             default: 'none',
         },
+        maxWidth: {
+            type: [Number, null],
+            default: null,
+        },
         showPreviewNotice: {
             type: Boolean,
             default: true,
@@ -97,7 +101,8 @@ export default Component.wrapComponentConfig({
                 backgroundImage: this.slideBgGradient ? this.slideBgGradient : 'none',
                 backgroundColor: this.slide.slideSettings?.slide?.bgColor || 'transparent',
                 aspectRatio: `${this.aspectRatioX} / ${this.aspectRatioY}`,
-                maxHeight: this.maxHeight
+                maxHeight: this.maxHeight,
+                maxWidth: this.maxWidth ? `${this.maxWidth}px` : 'none',
             }
 
             return styles

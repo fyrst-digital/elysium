@@ -8,7 +8,7 @@ export default Component.wrapComponentConfig({
 
     props: {
         label: {
-            type: String,
+            type: [String, Boolean],
             required: false,
             default: undefined,
         },

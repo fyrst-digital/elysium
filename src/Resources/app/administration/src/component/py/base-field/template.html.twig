@@ -4,13 +4,14 @@
         `layout-${layout}`
     ]">
     <div
+        v-if="label || required || tooltip"
         :style="{
             display: 'flex',
             flexDirection: 'row',
             flexWrap: 'wrap',
             alignItems: 'center',
             gap: '4px',
-            marginBlock: '6px'
+            marginBlock: 'var(--py-field-label-m-block, 6px)'
         }">
         <label 
             v-if="label"

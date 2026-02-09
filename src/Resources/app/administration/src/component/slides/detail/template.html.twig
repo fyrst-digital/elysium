@@ -17,6 +17,7 @@
     </template>
 
     <template #smart-bar-actions>
+
         <mt-button
             :disabled="(newSlide !== true && !hasChanges)"
             v-tooltip="{
@@ -28,7 +29,10 @@
         >
             {{ $tc('blurElysium.action.cancel') }}
         </mt-button>
-        <sw-button-group :split-button="true">
+
+        <sw-button-group 
+            :split-button="true">
+
             <sw-button-process
                 :is-loading="isLoading"
                 :disabled="!(permissionCreate || permissionEdit)"
@@ -37,7 +41,10 @@
             >
                 {{ $tc('sw-customer.detail.buttonSave') }}
             </sw-button-process>
-            <sw-context-button v-if="newSlide !== true">
+
+            <sw-context-button 
+                v-if="newSlide !== true">
+
                 <template #button>
                     <mt-button
                         square
@@ -50,12 +57,14 @@
                         />
                     </mt-button>
                 </template>
+
                 <sw-context-menu-item
                     :disabled="!permissionCreate"
                     @click="onCopySlide"
                 >
                     {{ $tc('blurElysiumSlides.actions.copySlide') }}
                 </sw-context-menu-item>
+                
                 <sw-context-menu-item
                     variant="danger"
                     :disabled="!permissionDelete"

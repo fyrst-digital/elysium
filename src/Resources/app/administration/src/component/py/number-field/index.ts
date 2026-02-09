@@ -9,9 +9,15 @@ export default Component.wrapComponentConfig({
 
     props: {
         label: {
-            type: String,
+            type: [String, Boolean],
             required: false,
             default: undefined,
+        },
+
+        layout: {
+            type: String as () => 'row' | 'column',
+            required: false,
+            default: 'column',
         },
     },
 });
