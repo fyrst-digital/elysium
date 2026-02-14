@@ -6,7 +6,7 @@ const { Component } = Shopware;
 export default Component.wrapComponentConfig({
     template,
 
-    inject: ['slide', 'deviceView', 'headline', 'description'],
+    inject: ['slide', 'deviceView'],
 
     data() {
         return {
@@ -22,14 +22,8 @@ export default Component.wrapComponentConfig({
             return this.slide.slideSettings?.slide?.headline?.element || 'div'
         },
 
-        contentStyles() {
-            const styles = {
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-                order: this.getViewportProp('container.order') === 'reverse' ? '2' : '1',
-            }
-            return styles
+        headline() {
+            return this.slide.title || null
         },
 
         headlineStyles() {
@@ -40,6 +34,20 @@ export default Component.wrapComponentConfig({
                 color: this.slide.slideSettings?.slide?.headline?.color || '#222',
             }
             return styles
+        },
+
+        contentStyles() {
+            const styles = {
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                order: this.getViewportProp('container.order') === 'reverse' ? '2' : '1',
+            }
+            return styles
+        },
+
+        description() {
+            return this.slide.description || null
         },
 
         descriptionStyles() {

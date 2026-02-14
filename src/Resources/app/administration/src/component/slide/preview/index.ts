@@ -45,30 +45,12 @@ export default Component.wrapComponentConfig({
 
     provide() {
         return {
-            slide: this.slide,
-            headline: this.headline,
-            description: this.description,
+            slide: Vue.computed(() => this.slide),
             deviceView: Vue.computed(() => this.deviceView),
         };
     },
 
-    data() {
-        return {
-        };
-    },
-
-    watch: {
-    },
-
     computed: {
-
-        headline () {
-            return this.slide.title || null
-        },
-
-        description () {
-            return this.slide.description || null
-        },
 
         slideCoverImage() {
             return null
@@ -114,7 +96,4 @@ export default Component.wrapComponentConfig({
             return useViewportProp(property, this.deviceView, this.slide.slideSettings.viewports)
         }
     },
-
-    created() {
-    }
 });
