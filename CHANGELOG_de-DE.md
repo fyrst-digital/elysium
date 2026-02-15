@@ -1,3 +1,10 @@
+# 4.4.1
+
+**Changelog**
+- Kompatibilität der Shopware 6.7 Migration für Produkt-Fremdschlüsselreferenzen behoben
+- Composite Constraint Key zur Migration1706795531 für Neuinstallationen hinzugefügt
+- product_version_id Feld zur ElysiumSlidesDefinition Entity hinzugefügt
+
 # 4.4.0
 
 **Changelog**
