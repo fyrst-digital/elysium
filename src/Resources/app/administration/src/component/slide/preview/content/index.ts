@@ -8,14 +8,6 @@ export default Component.wrapComponentConfig({
 
     inject: ['slide', 'deviceView'],
 
-    data() {
-        return {
-        };
-    },
-
-    watch: {
-    },
-
     computed: {
 
         headlineTag () {
@@ -56,6 +48,12 @@ export default Component.wrapComponentConfig({
                 color: this.slide.slideSettings?.slide?.description?.color || '#222',
             }
             return styles
+        },
+
+        showButton() {
+            const isCustom = Boolean(this.slide.url) && this.slide.slideSettings?.slide?.linking?.type === 'custom'
+            const isProduct = Boolean(this.slide.productId) && this.slide.slideSettings?.slide?.linking?.type === 'product'
+            return (isCustom || isProduct) && this.slide.slideSettings?.slide?.linking?.overlay !== true && Boolean(this.slide.buttonLabel)
         }
     },
 
@@ -63,5 +61,9 @@ export default Component.wrapComponentConfig({
         getViewportProp(property: any) {
             return useViewportProp(property, this.deviceView, this.slide.slideSettings.viewports)
         }
+    },
+
+    created() {
+        console.log('slide', this.slide)
     },
 });
