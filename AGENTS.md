@@ -6,6 +6,10 @@ Coding agent instructions for the BlurElysiumSlider Shopware 6.7 plugin.
 
 BlurElysiumSlider is a comprehensive Shopware 6.7 CMS extension that transforms Shopping Experience layouts with flexible sliders, banners, and a powerful slide builder. It enables merchants to create visually rich, responsive content without coding or design expertise.
 
+## Plugin Version & Compatibility
+
+Version 4 of `BlurElysiumSlider` is exclusively compatible with Shopware 6.7. It does not support earlier Shopware versions (<= 6.6).
+
 ## End User Features
 
 ### CMS Elements
