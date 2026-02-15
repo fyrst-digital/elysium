@@ -21,8 +21,9 @@ class Migration1706795531AddSlideProduct extends MigrationStep
             $connection->executeStatement('
                 ALTER TABLE `blur_elysium_slides`
                 ADD COLUMN `product_id` BINARY(16) NULL,
-                ADD CONSTRAINT `fk.blur_elysium_slides.product_id` FOREIGN KEY (`product_id`)
-                REFERENCES `product` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+                ADD COLUMN `product_version_id` BINARY(16) NULL,
+                ADD CONSTRAINT `fk.blur_elysium_slides.product_id` FOREIGN KEY (`product_id`, `product_version_id`)
+                REFERENCES `product` (`id`, `version_id`) ON DELETE SET NULL ON UPDATE CASCADE
             ');
         } catch (\Exception $e) {
             if (!preg_match(Defaults::MIGRATION_COLUMN_EXISTS, $e->getMessage())) {

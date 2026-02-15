@@ -17,6 +17,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\JsonField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToOneAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\ReferenceVersionField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
@@ -49,6 +50,7 @@ class ElysiumSlidesDefinition extends EntityDefinition
             ),
             // product association
             (new FkField('product_id', 'productId', ProductDefinition::class))->addFlags(new ApiAware()),
+            (new ReferenceVersionField(ProductDefinition::class, 'product_version_id'))->addFlags(new ApiAware()),
             (new OneToOneAssociationField('product', 'product_id', 'id', ProductDefinition::class))->addFlags(new ApiAware()),
             // media associations
             // / slide cover
