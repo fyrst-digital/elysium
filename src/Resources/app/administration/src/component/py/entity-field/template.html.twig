@@ -1,0 +1,13 @@
+<py-base-field
+    :label="label"
+    :layout="layout">
+
+    <div v-if="multi">
+        multi here
+    </div>
+    <sw-entity-single-select
+        v-else
+        class="py-field"
+        v-bind="$attrs"
+    />
+</py-base-field>

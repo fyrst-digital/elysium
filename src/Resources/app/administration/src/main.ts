@@ -69,6 +69,7 @@ useComponentRegister([
     { name: 'py-slider-field', path: () => import('./component/py/slider-field') },
     { name: 'py-select-field', path: () => import('./component/py/select-field') },
     { name: 'py-colorpicker-field', path: () => import('./component/py/colorpicker-field') },
+    { name: 'py-entity-field', path: () => import('./component/py/entity-field') },
     { name: 'blur-icon', path: () => import('@elysium/component/icon') },
     { name: 'blur-section', path: () => import('@elysium/component/utilities/section') },
     { name: 'blur-column', path: () => import('@elysium/component/utilities/column') },

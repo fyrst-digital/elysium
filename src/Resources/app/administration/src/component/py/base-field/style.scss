@@ -104,3 +104,29 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.py-field {
+
+    &.sw-entity-single-select {
+
+        .sw-entity-single-select__selection-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0px !important;
+        }
+
+        .sw-entity-single-select__selection-input {
+            padding: 0px !important;
+        }
+
+        .sw-select__selection {
+            padding: 6px 12px !important;
+        }
+    }
+
+    .sw-block-field__block {
+        border-radius: 8px;
+        height: auto;
+    }
+}
