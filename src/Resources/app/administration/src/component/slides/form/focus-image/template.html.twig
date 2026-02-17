@@ -61,7 +61,9 @@
         <py-number-field 
             :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
             :placeholder="viewportsPlaceholder('image.maxWidth', $t('blurElysium.general.noLimit'))"
-            v-model-value="slideViewportSettings.image.maxWidth"
+            :step="1"
+            :allow-empty="true"
+            v-model="slideViewportSettings.image.maxWidth"
             />
     </blur-column>
     <blur-column>
