@@ -12,6 +12,8 @@
         <py-number-field
             :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
             :placeholder="viewportsPlaceholder('content.maxWidth', $t('blurElysium.general.noLimit'))"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.content.maxWidth"
         />
     </blur-column>
@@ -33,6 +35,8 @@
         <py-number-field
             :label="$tc('blurElysium.general.horizontal')"
             :placeholder="viewportsPlaceholder('content.paddingX', 15)"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.content.paddingX"
         />
     </blur-column>
@@ -40,6 +44,8 @@
         <py-number-field
             :label="$tc('blurElysium.general.vertical')"
             :placeholder="viewportsPlaceholder('content.paddingY', 0)"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.content.paddingY"
         />
     </blur-column>

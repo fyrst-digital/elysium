@@ -29,11 +29,19 @@ export default Component.wrapComponentConfig({
         },
 
         contentStyles() {
+            const maxWidth = this.getViewportProp('content.maxWidth')
+            const paddingY = this.getViewportProp('content.paddingY')
+            const paddingX = this.getViewportProp('content.paddingX')
+            const textAlign = this.getViewportProp('content.textAlign')
             const styles = {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '12px',
                 order: this.getViewportProp('container.order') === 'reverse' ? '2' : '1',
+                maxWidth: maxWidth ? `${maxWidth}px` : 'none',
+                paddingInline: paddingX ? `${paddingX}px` : '0px',
+                paddingBlock: paddingY ? `${paddingY}px` : '0px',
+                textAlign: textAlign || 'left',
             }
             return styles
         },

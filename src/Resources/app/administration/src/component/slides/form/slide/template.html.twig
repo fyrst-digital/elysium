@@ -85,6 +85,8 @@
         <py-number-field
             :label="$tc('blurElysium.general.horizontal')"
             :placeholder="viewportsPlaceholder('slide.paddingX', 15)"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.slide.paddingX"
         />
     </blur-column>
@@ -93,6 +95,8 @@
         <py-number-field
             :label="$tc('blurElysium.general.vertical')"
             :placeholder="viewportsPlaceholder('slide.paddingY', 15)"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.slide.paddingY"
         />
     </blur-column>
@@ -101,6 +105,8 @@
         <py-number-field
             :label="$tc('blurElysium.general.borderRadius')"
             :placeholder="viewportsPlaceholder('slide.borderRadius', 0)"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.slide.borderRadius"
         />
     </blur-column>

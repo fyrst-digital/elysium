@@ -35,6 +35,8 @@
         <py-number-field
             :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
             :placeholder="viewportsPlaceholder('container.maxWidth', $t('blurElysium.general.noLimit'))"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.container.maxWidth"
         />
     </blur-column>
@@ -64,6 +66,8 @@
         <py-number-field
             :label="$tc('blurElysium.general.horizontal')"
             :placeholder="viewportsPlaceholder('container.paddingX', 15)"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.container.paddingX"
         />
     </blur-column>
@@ -72,6 +76,8 @@
         <py-number-field
             :label="$tc('blurElysium.general.vertical')"
             :placeholder="viewportsPlaceholder('container.paddingY', 15)"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.container.paddingY"
         />
     </blur-column>
@@ -79,6 +85,8 @@
         <py-number-field
             :label="$tc('blurElysium.general.gap')"
             :placeholder="viewportsPlaceholder('container.gap', 20)"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.container.gap"
         />
     </blur-column>
@@ -86,6 +94,8 @@
         <py-number-field
             :label="$tc('blurElysium.general.borderRadius')"
             :placeholder="viewportsPlaceholder('container.borderRadius', 0)"
+            :step="1"
+            :allow-empty="true"
             v-model="slideViewportSettings.container.borderRadius"
         />
     </blur-column>
