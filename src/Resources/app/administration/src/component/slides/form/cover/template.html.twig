@@ -25,7 +25,7 @@
             :upload-tag="slideCoverUploadTag"
             :source="slideCover"
             :allow-multi-select="false"
-            :default-folder="'blur_elysium_slides'"
+            :default-folder-name="'blur_elysium_slides'"
             @media-upload-remove-image="removeSlideCover"
             @media-upload-sidebar-open="openMediaModal"
         />
@@ -60,7 +60,7 @@
             upload-tag="blur-elysium-slide-cover-video"
             :source="slideCoverVideo"
             :allow-multi-select="false"
-            :default-folder="'blur_elysium_slides'"
+            :default-folder-name="'blur_elysium_slides'"
             @media-upload-remove-image="removeSlideCover(true)"
             @media-upload-sidebar-open="openMediaModal('slideCoverVideo')"
         />
