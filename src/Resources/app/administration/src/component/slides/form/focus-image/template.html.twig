@@ -25,12 +25,20 @@
             upload-tag="blur-elysium-slide-focus-image"
             :source="focusImage"
             :allow-multi-select="false"
-            :default-folder-name="'blur_elysium_slides'"
+            default-folder="'blur_elysium_slides"
             @media-upload-remove-image="removeFocusImage"
             @media-upload-sidebar-open="mediaModal.open = true"
         />
     </blur-column>
 </blur-section>
+
+<sw-media-modal-v2
+    v-if="mediaModal.open"
+    :allow-multi-select="false"
+    entity-context="blur_elysium_slides"
+    @media-modal-selection-change="onAddMediaModal"
+    @modal-close="closeMediaModal"
+/>
 
 <blur-section 
     gap

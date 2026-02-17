@@ -117,6 +117,10 @@ export default Component.wrapComponentConfig({
         onAddMediaModal(payload) {
             this.setFocusImage(payload[0]);
         },
+
+        closeMediaModal() {
+            this.mediaModal.open = false;
+        },
     },
 
     created() {
