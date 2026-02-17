@@ -1,4 +1,3 @@
-
 {% block blur_elysium_slide_image %}
     {% set containerClasses = [
         'blur-elysium-slide-image'
@@ -15,7 +14,9 @@
                 {% sw_thumbnails 'elysium-slide-focus-image' with {
                     media: imageMedia,
                     attributes: {
-                        'loading': lazyLoading === true ? 'lazy' : 'eager'
+                        'loading': lazyLoading === true ? 'lazy' : 'eager',
+                        'class': 'd-block img-fluid',
+                        'style': 'width: var(--slide-focus-image-w, 100%);'
                     }
                 } %}
             </div>

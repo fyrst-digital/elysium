@@ -49,14 +49,7 @@
             '--container-gap-y': '12px'
         }
     })">
-    <blur-column>
-        <mt-switch
-            class="blur-switch-input"
-            @change="slideViewportSettings.image.imageFullWidth = $event"
-            :checked="slideViewportSettings.image.imageFullWidth"
-            :label="$tc('blurElysiumSlides.forms.focusImage.fullWidth')"
-        />
-    </blur-column>
+    
     <blur-column>
         <py-number-field 
             :label="$tc('blurElysiumSlides.forms.slideWidth.label')"

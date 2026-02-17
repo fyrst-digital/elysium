@@ -36,7 +36,6 @@ const viewportConfig: ViewportConfig = {
     image: {
         justifyContent: null,
         maxWidth: null,
-        imageFullWidth: false,
     },
     coverMedia: {
         objectPosX: null,
