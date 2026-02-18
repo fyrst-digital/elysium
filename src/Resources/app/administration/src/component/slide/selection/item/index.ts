@@ -1,6 +1,8 @@
 import template from './template.html.twig';
 import './style.scss';
 
+import { DragConfig, DragData, DropData } from '@elysium/types/dnd';
+
 const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
@@ -46,25 +48,25 @@ export default Component.wrapComponentConfig({
             this.$emit('remove-slide', this.slide);
         },
 
-        dragStart(dragConfig: unknown) {
+        dragStart(dragConfig: DragConfig) {
             this.$emit('drag-slide-start', this.slide, dragConfig);
         },
 
-        dragEnter(_dragData: unknown, _dropData: unknown, _validDrag: boolean) {},
+        dragEnter(_dragData: DragData, _dropData: DropData, _validDrag: boolean) {},
 
-        dragLeave(_dragData: unknown, _dropData: unknown, _validDrag: boolean) {},
+        dragLeave(_dragData: DragData, _dropData: DropData, _validDrag: boolean) {},
 
-        validateDrop(dragData: unknown, dropData: unknown) {
+        validateDrop(dragData: DragData, dropData: DropData) {
             let isValid = false;
             if (
-                typeof (dropData as { index?: number })?.index === 'number' &&
-                (dragData as { draggedItemIndex?: number })?.draggedItemIndex !== (dropData as { index?: number })?.index
+                typeof dropData?.index === 'number' &&
+                dragData?.draggedItemIndex !== dropData?.index
             )
                 isValid = true;
             return isValid;
         },
 
-        dropSlide(dragData: unknown, dropData: unknown) {
+        dropSlide(dragData: DragData, dropData: DropData) {
             this.$emit('drag-slide-drop', dragData, dropData);
         },
     },

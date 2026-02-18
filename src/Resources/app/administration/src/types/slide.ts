@@ -129,3 +129,50 @@ export interface ContentSettings {
         title: string | null;
     }
 }
+
+export interface Product {
+    id: string;
+    name: string | null;
+    cover?: {
+        media: {
+            url: string;
+        };
+    };
+}
+
+export interface Category {
+    id: string;
+    name: string | null;
+}
+
+export interface Media {
+    id: string;
+    url: string;
+    name: string | null;
+}
+
+export interface ElysiumSlide {
+    id: string;
+    name: string | null;
+    active: boolean;
+    slideSettings: SlideSettings;
+    slideCover: Media | null;
+    slideCoverId: string | null;
+    slideCoverMobile: Media | null;
+    slideCoverMobileId: string | null;
+    slideCoverTablet: Media | null;
+    slideCoverTabletId: string | null;
+    slideCoverVideo: Media | null;
+    slideCoverVideoId: string | null;
+    productId: string | null;
+    product: Product | null;
+    categoryId: string | null;
+    category: Category | null;
+    url: string | null;
+    buttonLabel: string | null;
+    translated: {
+        name: string | null;
+        title: string | null;
+    };
+    customFields: Record<string, unknown>;
+}

@@ -1,6 +1,8 @@
+type Device = 'mobile' | 'tablet' | 'desktop';
+
 interface UIState {
-    device: string;
-    mediaSidebar: unknown;
+    device: Device;
+    mediaSidebar: HTMLElement | null;
 }
 
 export default {
@@ -12,7 +14,7 @@ export default {
     }),
 
     actions: {
-        setDevice(device: string) {
+        setDevice(device: Device) {
             this.device = device;
         },
 
@@ -20,7 +22,7 @@ export default {
             this.device = 'desktop';
         },
 
-        setMediaSidebar(element: unknown) {
+        setMediaSidebar(element: HTMLElement | null) {
             this.mediaSidebar = element;
         },
     },

@@ -1,5 +1,7 @@
 import template from './template.html.twig'
 
+import { SidebarTab } from '@elysium/types/dnd';
+
 const { Component, Mixin } = Shopware;
 
 export default Component.wrapComponentConfig({
@@ -48,9 +50,8 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        isActive(tab: unknown) {
-            const tabObj = tab as { route: () => { name: string } };
-            return this.$route.name === tabObj?.route()?.name;
+        isActive(tab: SidebarTab) {
+            return this.$route.name === tab?.route()?.name;
         },
     }
 });

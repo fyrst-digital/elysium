@@ -1,6 +1,6 @@
 interface CMSState {
     elementId: string | null;
-    elementConfig: unknown;
+    elementConfig: Record<string, unknown> | null;
 }
 
 export default {
@@ -16,7 +16,7 @@ export default {
             this.elementId = elementId;
         },
 
-        setElementConfig(elementConfig: unknown) {
+        setElementConfig(elementConfig: Record<string, unknown> | null) {
             this.elementConfig = elementConfig;
         },
     },

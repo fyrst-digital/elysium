@@ -1,5 +1,7 @@
 import template from './template.html.twig';
 
+import { MediaItem } from '@elysium/types/media';
+
 const { Component, Mixin, Store, Context } = Shopware;
 
 export default Component.wrapComponentConfig({
@@ -74,28 +76,23 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        setFocusImage(media: unknown) {
+        setFocusImage(media: MediaItem) {
             this.mediaLoading = true;
 
-            const mediaObj = media as { id?: string; targetId?: string; path?: string } | null;
-            const mediaId = mediaObj?.id || mediaObj?.targetId || null;
+            const mediaId = media?.id || media?.targetId || null;
 
             if (mediaId === null) {
-                // throw error message because mediaId is null
                 console.error(
                     'mediaId is null. Slide cover media can not be set.'
                 );
                 this.mediaLoading = false;
             } else {
-                // mediaId is provided handle media assignment
                 this.slide.presentationMediaId = mediaId;
 
-                if (mediaObj?.path) {
-                    // The media already exists in the system no need to fetch it. Use the already existing media object
+                if (media?.path) {
                     this.slide.presentationMedia = media;
                     this.mediaLoading = false;
                 } else {
-                    // The media does not exist in the system. Fetch the media object from media repository
                     this.mediaRepository
                         .get(mediaId, Context.api)
                         .then((media) => {

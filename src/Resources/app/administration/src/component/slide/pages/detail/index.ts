@@ -1,5 +1,6 @@
 import { defaultSlideSettings, defaultContentSettings } from '@elysium/component/slide/settings';
 import template from './template.html.twig';
+import { ElysiumSlide } from '@elysium/types/slide';
 
 const { Component, Context, Mixin, Data, Utils, Store } = Shopware;
 const { Criteria } = Data;
@@ -417,11 +418,11 @@ export default Component.wrapComponentConfig({
                 });
         },
 
-        _mergeSettings(slide: unknown, properties: object) {
-            const slideObj = slide as Record<string, unknown>;
+        _mergeSettings(slide: ElysiumSlide, properties: Record<string, unknown>) {
+            const slideObj = slide as unknown as Record<string, unknown>;
             Object.entries(properties).forEach(([key, defaultSettings]) => {
                 if (slideObj[key]) {
-                    slideObj[key] = Utils.object.deepMergeObject(defaultSettings, slideObj[key] as object);
+                    slideObj[key] = Utils.object.deepMergeObject(defaultSettings as object, slideObj[key] as object);
                 } else {
                     slideObj[key] = defaultSettings;
                 }
