@@ -17,11 +17,9 @@ class Migration1750099000AddSlideProductVersionId extends MigrationStep
 
     public function update(Connection $connection): void
     {
-        $connection->transactional(function (Connection $connection) {
-            $this->addProductVersionIdColumn($connection);
-            $this->populateProductVersionId($connection);
-            $this->updateForeignKeyConstraint($connection);
-        });
+        $this->addProductVersionIdColumn($connection);
+        $this->populateProductVersionId($connection);
+        $this->updateForeignKeyConstraint($connection);
     }
 
     private function addProductVersionIdColumn(Connection $connection): void
