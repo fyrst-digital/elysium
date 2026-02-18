@@ -92,7 +92,7 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        getViewportProp(property: any) {
+        getViewportProp(property: string) {
             return useViewportProp(property, this.deviceView, this.slide.slideSettings.viewports)
         }
     },

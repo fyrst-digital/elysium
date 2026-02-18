@@ -16,7 +16,7 @@ import '@elysium/component/cms/elements/blur-elysium-banner';
 import '@elysium/component/cms/blocks/blur-elysium-slider';
 import '@elysium/component/cms/blocks/blur-elysium-banner';
 
-const { Locale, Application, Component, Store, Service, Vue } = Shopware;
+const { Locale, Application, Component, Store, Service } = Shopware;
 
 /**
  * Register pinia stores

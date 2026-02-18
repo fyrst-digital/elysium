@@ -417,12 +417,13 @@ export default Component.wrapComponentConfig({
                 });
         },
 
-        _mergeSettings(slide: any, properties: object) {
+        _mergeSettings(slide: unknown, properties: object) {
+            const slideObj = slide as Record<string, unknown>;
             Object.entries(properties).forEach(([key, defaultSettings]) => {
-                if (slide[key]) {
-                    slide[key] = Utils.object.deepMergeObject(defaultSettings, slide[key]);
+                if (slideObj[key]) {
+                    slideObj[key] = Utils.object.deepMergeObject(defaultSettings, slideObj[key] as object);
                 } else {
-                    slide[key] = defaultSettings;
+                    slideObj[key] = defaultSettings;
                 }
             });
             

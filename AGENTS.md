@@ -43,19 +43,18 @@ Version 4 of `BlurElysiumSlider` is exclusively compatible with Shopware 6.7. It
 - Screen reader announcements on slide change
 
 ## Build, Lint & Test Commands
-Within our project we only use bun. While on the shopware root level only npm is being used.
 
 ### Lint Commands
 ```bash
 # Lint administration code (TypeScript/Vue)
-bun run lint:administration
+npm run lint:administration
 
 # Lint storefront code (JavaScript/Vue)
-bun run lint:storefront
+npm run lint:storefront
 
 # Auto-fix lint issues
-bun run lint:administration:fix
-bun run lint:storefront:fix
+npm run lint:administration:fix
+npm run lint:storefront:fix
 ```
 
 ### Build Commands (run from Shopware root)

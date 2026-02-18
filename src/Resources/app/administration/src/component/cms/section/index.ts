@@ -39,9 +39,7 @@ export default Component.wrapComponentConfig({
                                 structuredClone(blockSettings),
                         };
                     } else if (
-                        !block.customFields.hasOwnProperty(
-                            'elysiumBlockSettings'
-                        )
+                        !Object.hasOwn(block.customFields, 'elysiumBlockSettings')
                     ) {
                         block.customFields.elysiumBlockSettings =
                             structuredClone(blockSettings);
@@ -84,7 +82,7 @@ export default Component.wrapComponentConfig({
         },
 
         dropBlock(block, index) {
-            if (this.section.blocks[index].hasOwnProperty('customFields')) {
+            if (Object.hasOwn(this.section.blocks[index], 'customFields')) {
                 this.section.blocks[index].customFields.elysiumBlockSettings =
                     structuredClone(blockSettings);
             } else {

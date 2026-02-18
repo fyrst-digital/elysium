@@ -74,10 +74,11 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        setFocusImage(media: any) {
+        setFocusImage(media: unknown) {
             this.mediaLoading = true;
 
-            const mediaId = media.id || media.targetId || null;
+            const mediaObj = media as { id?: string; targetId?: string; path?: string } | null;
+            const mediaId = mediaObj?.id || mediaObj?.targetId || null;
 
             if (mediaId === null) {
                 // throw error message because mediaId is null
@@ -89,7 +90,7 @@ export default Component.wrapComponentConfig({
                 // mediaId is provided handle media assignment
                 this.slide.presentationMediaId = mediaId;
 
-                if (media.path) {
+                if (mediaObj?.path) {
                     // The media already exists in the system no need to fetch it. Use the already existing media object
                     this.slide.presentationMedia = media;
                     this.mediaLoading = false;

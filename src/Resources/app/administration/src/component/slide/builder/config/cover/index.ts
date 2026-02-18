@@ -97,10 +97,11 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        setSlideCover(media: any, isVideo: boolean = false) {
+        setSlideCover(media: unknown, isVideo: boolean = false) {
             this.mediaLoading = true;
 
-            const mediaId = media.id || media.targetId || null;
+            const mediaObj = media as { id?: string; targetId?: string; path?: string } | null;
+            const mediaId = mediaObj?.id || mediaObj?.targetId || null;
             const mediaProp =
                 isVideo === true ? 'slideCoverVideo' : this.slideCoverProp;
 
@@ -114,7 +115,7 @@ export default Component.wrapComponentConfig({
                 // mediaId is provided handle media assignment
                 this.slide[`${mediaProp}Id`] = mediaId;
 
-                if (media.path) {
+                if (mediaObj?.path) {
                     // The media already exists in the system no need to fetch it. Use the already existing media object
                     this.slide[mediaProp] = media;
                     this.mediaLoading = false;

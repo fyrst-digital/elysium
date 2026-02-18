@@ -57,19 +57,19 @@ export default Component.wrapComponentConfig({
 
         dragSlideStart(
             slide: Entity<'blur_elysium_slides'>,
-            dragConfig: any,
-            draggedSlide: any
+            dragConfig: unknown,
+            _draggedSlide: unknown
         ) {
             this.slide = slide;
-            this.draggedItemIndex = dragConfig.data?.draggedItemIndex;
+            this.draggedItemIndex = (dragConfig as { data?: { draggedItemIndex?: number } })?.data?.draggedItemIndex;
             this.$emit(
                 'drag-slide-start',
                 slide,
-                dragConfig.data?.draggedItemIndex
+                (dragConfig as { data?: { draggedItemIndex?: number } })?.data?.draggedItemIndex
             );
         },
 
-        dragSlideDrop(dragData: any, dropData: any) {
+        dragSlideDrop(dragData: unknown, dropData: unknown) {
             if (dropData === null) {
                 return;
             }
@@ -77,7 +77,7 @@ export default Component.wrapComponentConfig({
                 'drag-slide-drop',
                 this.slide,
                 this.draggedItemIndex,
-                dropData.index
+                (dropData as { index?: number })?.index
             );
         },
     },

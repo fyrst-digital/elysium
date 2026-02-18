@@ -1,8 +1,7 @@
 import template from './template.html.twig';
 import './style.scss';
 
-const { Component, Data, Context } = Shopware;
-const { Criteria } = Data;
+const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
@@ -47,25 +46,25 @@ export default Component.wrapComponentConfig({
             this.$emit('remove-slide', this.slide);
         },
 
-        dragStart(dragConfig: any) {
+        dragStart(dragConfig: unknown) {
             this.$emit('drag-slide-start', this.slide, dragConfig);
         },
 
-        dragEnter(dragData: any, dropData: any, validDrag: boolean) {},
+        dragEnter(_dragData: unknown, _dropData: unknown, _validDrag: boolean) {},
 
-        dragLeave(dragData: any, dropData: any, validDrag: boolean) {},
+        dragLeave(_dragData: unknown, _dropData: unknown, _validDrag: boolean) {},
 
-        validateDrop(dragData: any, dropData: any) {
+        validateDrop(dragData: unknown, dropData: unknown) {
             let isValid = false;
             if (
-                typeof dropData?.index === 'number' &&
-                dragData.draggedItemIndex !== dropData?.index
+                typeof (dropData as { index?: number })?.index === 'number' &&
+                (dragData as { draggedItemIndex?: number })?.draggedItemIndex !== (dropData as { index?: number })?.index
             )
                 isValid = true;
             return isValid;
         },
 
-        dropSlide(dragData: any, dropData: any) {
+        dropSlide(dragData: unknown, dropData: unknown) {
             this.$emit('drag-slide-drop', dragData, dropData);
         },
     },

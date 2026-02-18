@@ -1,10 +1,6 @@
-/**
- * @todo replace any with proper types
- */
-
 interface SlideState {
-    slide: any;
-    customFieldSet: any;
+    slide: unknown;
+    customFieldSet: unknown;
 }
 
 export default {
@@ -16,23 +12,24 @@ export default {
     }),
 
     getters: {
-        slideViewportSettings(state: SlideState): any {
-            return state.slide?.slideSettings?.viewports ?? null;
+        slideViewportSettings(state: SlideState): unknown {
+            const slide = state.slide as { slideSettings?: { viewports?: unknown } } | null;
+            return slide?.slideSettings?.viewports ?? null;
         },
     },
 
     actions: {
-        setSlide(slide: any): void {
+        setSlide(slide: unknown): void {
             this.slide = slide;
         },
 
-        setCustomFieldSet(customFieldSet: any): void {
+        setCustomFieldSet(customFieldSet: unknown): void {
             this.customFieldSet = customFieldSet;
         },
 
-        setSlideProp({ key, value }: { key: string; value: any }): void {
+        setSlideProp({ key, value }: { key: string; value: unknown }): void {
             if (this.slide) {
-                this.slide[key] = value;
+                (this.slide as Record<string, unknown>)[key] = value;
             }
         },
 

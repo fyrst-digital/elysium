@@ -72,7 +72,7 @@ export default Component.wrapComponentConfig({
                 });
         },
 
-        getViewportProp(property: any) {
+        getViewportProp(property: string) {
             return useViewportProp(property, this.activeViewport, this.config.viewports.value)
         }
     },

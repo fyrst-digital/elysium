@@ -1,6 +1,6 @@
 import template from './template.html.twig';
 
-const { Component, Store, InAppPurchase } = Shopware;
+const { Component, Store } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,

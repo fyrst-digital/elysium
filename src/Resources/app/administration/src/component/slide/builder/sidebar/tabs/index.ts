@@ -48,8 +48,9 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        isActive (tab: any) {
-            return this.$route.name === tab.route().name;
+        isActive(tab: unknown) {
+            const tabObj = tab as { route: () => { name: string } };
+            return this.$route.name === tabObj?.route()?.name;
         },
     }
 });

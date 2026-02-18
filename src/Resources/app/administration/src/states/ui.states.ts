@@ -1,10 +1,6 @@
-/**
- * @todo replace any with proper types
- */
-
 interface UIState {
     device: string;
-    mediaSidebar: any;
+    mediaSidebar: unknown;
 }
 
 export default {
@@ -24,7 +20,7 @@ export default {
             this.device = 'desktop';
         },
 
-        setMediaSidebar(element: any) {
+        setMediaSidebar(element: unknown) {
             this.mediaSidebar = element;
         },
     },
