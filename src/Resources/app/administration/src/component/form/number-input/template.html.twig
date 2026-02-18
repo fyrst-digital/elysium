@@ -27,12 +27,12 @@
                 gap: '8px'
             }"
         >
-            <blur-icon
+            <py-icon
                 v-tooltip="{
                     message: $t('blurElysium.messages.deviceSettingNote', { device: $tc(`blurElysium.device.${device}`) })
                 }"
                 :size="14"
-                :name="`blurph-device-${device}`"
+                :name="`device-${device}`"
                 :style="{
                     cursor: 'pointer'
                 }"

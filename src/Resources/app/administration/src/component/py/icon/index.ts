@@ -1,11 +1,10 @@
 import template from './template.html.twig';
+import './style.scss';
 
 const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
-
-    inject: ['feature'],
 
     props: {
         name: {
@@ -16,16 +15,6 @@ export default Component.wrapComponentConfig({
             type: String,
             required: false,
             default: null,
-        },
-        small: {
-            type: Boolean,
-            required: false,
-            default: false,
-        },
-        large: {
-            type: Boolean,
-            required: false,
-            default: false,
         },
         size: {
             type: String,
@@ -46,17 +35,9 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
-        iconName() {
-            return `icons-${this.name}`;
-        },
-
         classes() {
             return [
-                `icon--${this.name}`,
-                {
-                    'sw-icon--small': this.small,
-                    'sw-icon--large': this.large,
-                },
+                `icon-${this.name}`,
             ];
         },
 
@@ -75,40 +56,24 @@ export default Component.wrapComponentConfig({
         },
     },
 
-    beforeMount() {
-        this.iconSvgData = `<svg id="meteor-icon-kit__${this.name}"></svg>`;
-    },
-
-    watch: {
-        name: {
-            handler(newName) {
-                if (!newName) {
-                    return;
-                }
-
-                const [variant, ...iconName] = newName.split('-');
-                this.loadIconSvgData(variant, iconName.join('-'), newName);
-            },
-            immediate: true,
-        },
+    created() {
+        this.loadIcon(this.name);
     },
 
     methods: {
-        async loadIconSvgData(
-            variant: string,
-            iconName: string,
-            iconFullName: string
-        ) {
+        async loadIcon(name: string) {
             const iconUrl = new URL(
-                `../../icons/${variant}/${iconName}.svg`,
+                `../../../assets/icons/${name}.svg`,
                 import.meta.url
             );
             const response = await fetch(iconUrl.toString());
 
+            console.log(response)
+
             if (response.ok) {
                 this.iconSvgData = await response.text();
             } else {
-                console.error(`Icon ${iconFullName} not found`);
+                console.error(`Icon ${name} not found`);
             }
         },
     },

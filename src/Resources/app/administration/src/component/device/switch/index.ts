@@ -28,17 +28,17 @@ export default Component.wrapComponentConfig({
             viewports: [
                 {
                     name: 'mobile',
-                    icon: 'blurph-device-mobile',
+                    icon: 'device-mobile',
                     label: this.$tc('blurElysium.device.phone'),
                 },
                 {
                     name: 'tablet',
-                    icon: 'blurph-device-tablet',
+                    icon: 'device-tablet',
                     label: this.$tc('blurElysium.device.tablet'),
                 },
                 {
                     name: 'desktop',
-                    icon: 'blurph-device-desktop',
+                    icon: 'device-desktop',
                     label: this.$tc('blurElysium.device.desktop'),
                 },
             ],
