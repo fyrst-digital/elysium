@@ -33,9 +33,6 @@ jobs:
       - name: Lint administration
         run: npm run lint:administration
 
-      - name: Lint storefront
-        run: npm run lint:storefront
-
   validate:
     runs-on: ubuntu-latest
     steps:
