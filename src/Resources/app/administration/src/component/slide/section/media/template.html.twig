@@ -1,0 +1,14 @@
+<mt-tabs
+    :defaultItem="activeTab"
+    :items="tabs"
+    @new-item-active="activeTab = $event"
+/>
+
+<div>
+    <template v-if="activeTab === 'slideCover'">
+        <elysium-slides-form-cover/>
+    </template>
+    <template v-if="activeTab === 'focusImage'">
+        <elysium-slides-form-focus-image/>
+    </template>
+</div>

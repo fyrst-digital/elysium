@@ -1,0 +1,153 @@
+<blur-section
+    gap
+    padding
+    :title="$tc('blurElysiumSlides.forms.slideBackground.label')"
+    title-icon="paint-bucket-bold"
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px' 
+        },
+    })"
+>
+    <blur-column :cols="12">
+        <py-colorpicker-field
+            :label="$tc('blurElysium.general.backgroundColor')"
+            v-model:value="slide.slideSettings.slide.bgColor"
+        />
+    </blur-column>
+</blur-section>
+
+<blur-section
+    gap
+    padding
+    :title="$tc('blurElysiumSlides.forms.slideGradient.label')"
+    title-icon="circle-half-bold"
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px' 
+        },
+    })">
+
+    <blur-column :cols="12">
+        <py-colorpicker-field
+            :label="$tc('blurElysiumSlides.forms.slideGradient.startColor')"
+            v-model:value="slide.slideSettings.slide.bgGradient.startColor"
+        />
+    </blur-column>
+    
+    <blur-column :cols="12">
+        <py-colorpicker-field
+            :label="$tc('blurElysiumSlides.forms.slideGradient.endColor')"
+            v-model:value="slide.slideSettings.slide.bgGradient.endColor"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <py-select-field
+            :options="[
+                { value: 'linear-gradient', label: $tc('blurElysiumSlides.forms.slideGradient.gradientTypeLinear') }
+            ]"
+            :hideClearableButton="true"
+            :placeholder="$tc('blurElysiumSlides.forms.slideGradient.gradientTypeLinear')"
+            :label="$tc('blurElysiumSlides.forms.slideGradient.gradientType')"
+            v-model="slide.slideSettings.slide.bgGradient.gradientType"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <py-slider-field 
+            :label="$tc('blurElysiumSlides.forms.slideGradient.gradientDeg')"
+            :min="0"
+            :max="360" 
+            :mark-count="3"
+            v-model="slide.slideSettings.slide.bgGradient.gradientDeg" />
+    </blur-column>
+</blur-section>
+
+<blur-section
+    gap
+    padding
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px' 
+        },
+    })"
+    :title="$tc('blurElysium.general.spacing')"
+    title-icon="ruler-bold">
+
+    <blur-column :cols="12">
+        <py-number-field
+            :label="$tc('blurElysium.general.horizontal')"
+            :placeholder="viewportsPlaceholder('slide.paddingX', 15)"
+            :step="1"
+            :allow-empty="true"
+            v-model="slideViewportSettings.slide.paddingX"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <py-number-field
+            :label="$tc('blurElysium.general.vertical')"
+            :placeholder="viewportsPlaceholder('slide.paddingY', 15)"
+            :step="1"
+            :allow-empty="true"
+            v-model="slideViewportSettings.slide.paddingY"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <py-number-field
+            :label="$tc('blurElysium.general.borderRadius')"
+            :placeholder="viewportsPlaceholder('slide.borderRadius', 0)"
+            :step="1"
+            :allow-empty="true"
+            v-model="slideViewportSettings.slide.borderRadius"
+        />
+    </blur-column>
+</blur-section>
+
+<blur-section
+    gap
+    padding
+    :title="$tc('blurElysium.general.alignment')"
+    :description="$tc('blurElysiumSlides.forms.displaySlide.alignmentDescription')"
+    title-icon="arrows-out-line-horizontal-bold"
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px' 
+        },
+    })">
+    
+    <blur-column :cols="12">
+        <py-select-field
+            :label="$tc('blurElysium.general.horizontal')"
+            :placeholder="viewportsPlaceholder('slide.justifyContent', 'center', 'blurElysium.general.alignX')"
+            :options="[
+                { value: 'flex-start', label: $tc('blurElysium.general.alignX.flexStart') },
+                { value: 'center', label: $tc('blurElysium.general.alignX.center') },
+                { value: 'flex-end', label: $tc('blurElysium.general.alignX.flexEnd') }
+            ]"
+            v-model="slideViewportSettings.slide.justifyContent"
+        />
+    </blur-column>
+    <blur-column :cols="12">
+        <py-select-field
+            :label="$tc('blurElysium.general.vertical')"
+            :placeholder="viewportsPlaceholder('slide.alignItems', 'center', 'blurElysium.general.alignY')"
+            :options="[
+                { value: 'flex-start', label: $tc('blurElysium.general.top') },
+                { value: 'center', label: $tc('blurElysium.general.center') },
+                { value: 'flex-end', label: $tc('blurElysium.general.bottom') }
+            ]"
+            v-model="slideViewportSettings.slide.alignItems"
+        />
+    </blur-column>
+</blur-section>

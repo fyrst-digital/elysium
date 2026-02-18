@@ -71,7 +71,6 @@ export interface ViewportContentConfig {
 export interface ViewportImageConfig {
     justifyContent?: JustifyContent | null;
     maxWidth?: number | null;
-    imageFullWidth?: false;
 }
 
 export interface ViewportSlideConfig {

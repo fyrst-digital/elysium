@@ -1,0 +1,12 @@
+<py-base-field
+    :label="label"
+    :layout="layout">
+
+    <mt-select
+        ref="MtSelectElement"
+        class="py-field"
+        v-bind="$attrs"
+        @select-expanded="onOpen"
+    >
+    </mt-select>
+</py-base-field>

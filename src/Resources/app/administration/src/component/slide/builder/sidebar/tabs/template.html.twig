@@ -1,0 +1,16 @@
+<div :style="viewStyle(styles.container)">
+
+    <template 
+        v-for="tab in tabs" 
+        :key="tab.label">
+
+        <router-link 
+            :to="tab.route()"
+            :class="[
+                'elysium-btn',
+                { 'active': isActive(tab) }
+            ]">
+            {{ tab.label }}
+        </router-link>
+    </template>
+</div>

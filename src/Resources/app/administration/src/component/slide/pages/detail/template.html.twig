@@ -1,0 +1,94 @@
+<sw-page
+    :show-search-bar="false">
+
+    <template #smart-bar-header>
+        <h2>
+            {{ metaTitle }}
+        </h2>
+    </template>
+
+    <template #language-switch>
+        <sw-language-switch
+            :save-changes-function="saveOnLanguageChange"
+            :abort-change-function="abortOnLanguageChange"
+            :disabled="newSlide === true"
+            @on-change="onChangeLanguage"
+        />
+    </template>
+
+    <template #smart-bar-actions>
+
+        <mt-button
+            :disabled="(newSlide !== true && !hasChanges)"
+            v-tooltip="{
+                message: cancelActionMessage
+            }"
+            variant="secondary"
+            size="default"
+            @click="cancelAction"
+        >
+            {{ $tc('blurElysium.action.cancel') }}
+        </mt-button>
+
+        <sw-button-group 
+            :split-button="true">
+
+            <sw-button-process
+                :is-loading="isLoading"
+                :disabled="!(permissionCreate || permissionEdit)"
+                variant="primary"
+                @click.prevent="saveSlide"
+            >
+                {{ $tc('sw-customer.detail.buttonSave') }}
+            </sw-button-process>
+
+            <sw-context-button 
+                v-if="newSlide !== true">
+
+                <template #button>
+                    <mt-button
+                        square
+                        variant="primary"
+                        :disabled="isLoading"
+                    >
+                        <py-icon
+                            name="caret-down-bold"
+                            size="16"
+                        />
+                    </mt-button>
+                </template>
+
+                <sw-context-menu-item
+                    :disabled="!permissionCreate"
+                    @click="onCopySlide"
+                >
+                    {{ $tc('blurElysiumSlides.actions.copySlide') }}
+                </sw-context-menu-item>
+                
+                <sw-context-menu-item
+                    variant="danger"
+                    :disabled="!permissionDelete"
+                    @click="permissionDelete === true ? showDeleteModal = true : null"
+                >
+                    {{ $tc('blurElysiumSlides.actions.deleteSlide') }}
+                </sw-context-menu-item>
+            </sw-context-button>
+        </sw-button-group>
+    </template>
+
+    <template #content>
+
+        <elysium-slide-builder
+            v-if="slide" />
+
+        <sw-confirm-modal
+            v-if="showDeleteModal === true"
+            type="delete"
+            :title="$tc('blurElysiumSlides.actions.deleteSlide')"
+            :text="$tc('blurElysiumSlides.messages.slideDeleteConfirm')"
+            @confirm="deleteSlide"
+            @cancel="showDeleteModal = false"
+            @close="showDeleteModal = false"
+        />
+    </template>
+</sw-page>

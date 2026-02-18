@@ -1,0 +1,132 @@
+.py-base-field {
+    display: grid;
+    gap: 4px 16px;
+    align-items: start;
+    grid-template-columns: var(--py-field-cols, minmax(0, 1fr) minmax(0, 2fr));
+
+    &.layout-row {
+        --py-field-cols: minmax(0, 1fr);
+        --py-field-label-m-block: 0px;
+    }
+
+    .mt-field {
+        margin-inline: var(--py-field-m-inline, 0px);
+        margin-block: var(--py-field-m-block, 0px);
+
+        .mt-field__addition {
+            background-color: transparent;
+            padding: 6px;
+            min-width: auto;
+        }
+
+        .mt-block-field__block {
+            min-height: auto;
+            border-radius: 8px;
+        }
+
+        input {
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: auto;
+        }
+    }
+
+    .mt-select {
+
+        .mt-select__selection {
+            line-height: 1.5;
+            padding-inline: 0px;
+        }
+
+        .mt-select__select-indicator-hitbox {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    .mt-number-field__controls {
+        flex-direction: row;
+        margin: 6px;
+        width: auto;
+
+        button {
+            display: flex;
+            padding: 6px;
+
+            .mt-icon {
+                margin-top: auto !important;
+            }
+        }
+
+        ;
+    }
+
+    .mt-colorpicker__previewWrapper {
+        border-radius: 20px;
+    }
+}
+
+.py-slider-field {
+
+    .mt-number-field {
+        display: none !important;
+    }
+
+    .mt-block-field__block {
+        padding: 0 !important;
+    }
+}
+
+.py-select-popover {
+
+    .mt-select-result-list__content {
+        border-radius: 10px;
+        padding: 4px;
+    }
+
+    .mt-select-result {
+        padding: 4px;
+
+        .mt-icon {
+            width: 10px !important;
+            height: 10px !important;
+            margin-right: 8px;
+        }
+    }
+}
+
+.sw-text-editor-toolbar {
+    height: auto !important;
+}
+
+.sw-text-editor-toolbar .sw-text-editor-buttons {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.py-field {
+
+    &.sw-entity-single-select {
+
+        .sw-entity-single-select__selection-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0px !important;
+        }
+
+        .sw-entity-single-select__selection-input {
+            padding: 0px !important;
+        }
+
+        .sw-select__selection {
+            padding: 6px 12px !important;
+        }
+    }
+
+    .sw-block-field__block {
+        border-radius: 8px;
+        height: auto;
+    }
+}

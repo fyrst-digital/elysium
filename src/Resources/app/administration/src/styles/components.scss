@@ -225,3 +225,27 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }
+
+.elysium-btn {
+    display: inline-flex;
+    padding: var(--btn-padding-y, 6px) var(--btn-padding-x, 10px);
+    border-radius: var(--btn-border-radius, 6px);
+    background-color: var(--btn-bg, var(--color-background-primary-default, #ffffff));
+    color: var(--btn-color, var(--color-text-primary-default, #333333));
+    border: 1px solid var(--btn-border-color, var(--color-border-primary-default, #dddddd));
+    line-height: 1.25;
+    font-size: var(--btn-font-size, 14px);
+    font-weight: var(--btn-font-weight, 600);
+    text-decoration-line: var(--btn-decoration-line, none);
+    transition: all 200ms;
+
+    &:hover {
+        --btn-bg: var(--color-background-tertiary-default, #eeeeee);
+    }
+
+    &.active {
+        --btn-bg: var(--color-interaction-primary-default);
+        --btn-color: var(--color-text-static-default);
+        --btn-border-color: var(--color-interaction-primary-default);
+    }
+}

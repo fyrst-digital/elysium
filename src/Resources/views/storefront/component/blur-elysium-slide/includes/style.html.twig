@@ -103,11 +103,6 @@
                             {% elseif options.container.order is same as('default') %}
                                 --image-order: 2;
                             {% endif %}
-                            {% if options.image.imageFullWidth is same as(true) %}
-                                --image-width: 100%;
-                            {% else %}
-                                --image-width: auto;
-                            {% endif %}
                             {% if options.image.justifyContent is defined %}
                                 --image-justify-content: {{ options.image.justifyContent }};
                             {% endif %}

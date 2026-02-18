@@ -11,4 +11,11 @@
         v-if="description"
         v-html="description"
         :style="descriptionStyles" />
+
+    <mt-button
+        v-if="showButton"
+        size="default"
+        :target="slide.slideSettings?.slide?.linking?.openExternal ? '_blank' : '_self'">
+        {{slide.buttonLabel}}
+    </mt-button>
 </div>

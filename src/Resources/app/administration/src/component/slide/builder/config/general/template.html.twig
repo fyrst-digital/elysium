@@ -1,0 +1,124 @@
+<blur-section
+    gap
+    padding
+    :style="viewStyle({
+        mobile: {
+            'border-bottom': '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        },
+    })">
+
+    <blur-column :cols="12">
+        <py-text-field 
+            :label="$tc('blurElysiumSlides.forms.slideName.label')"
+            :placeholder="$tc('blurElysiumSlides.forms.slideName.placeholder')"
+            :required="true"
+            :error="useError('name')"
+            v-model="slide.name" />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <py-text-field 
+            :label="$tc('blurElysiumSlides.forms.slideCssClass.label')"
+            :placeholder="$tc('blurElysiumSlides.forms.slideCssClass.placeholder')"
+            :tooltip="$tc('blurElysiumSlides.forms.slideCssClass.helpText')"
+            v-model="slide.slideSettings.slide.cssClass" />
+    </blur-column>
+
+</blur-section>
+
+<blur-section
+    gap
+    padding
+    :title="$tc('blurElysiumSlides.forms.slideHeadline.label')"
+    title-icon="text-h-one-bold"
+    :style="viewStyle({
+        mobile: {
+            'border-bottom': '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        },
+    })"
+>
+
+    <blur-column :cols="12">
+        <py-select-field 
+            :options="[
+                { value: 'div', label: 'DIV' },
+                { value: 'h1', label: 'H1' },
+                { value: 'h2', label: 'H2' },
+                { value: 'h3', label: 'H3' },
+                { value: 'h4', label: 'H4' },
+                { value: 'h5', label: 'H5' },
+                { value: 'h6', label: 'H6' }
+            ]"
+            placeholder="DIV"
+            :label="$tc('blurElysiumSlides.forms.slideHeadlineElement.label')"
+            :tooltip="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')"
+            v-model="slide.slideSettings.slide.headline.element"
+            />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <py-text-field 
+            :label="$tc('blurElysium.general.text')"
+            :placeholder="placeholder(slide, 'title', $tc('blurElysiumSlides.forms.slideHeadline.placeholder'))"
+            v-model="slide.title"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <py-colorpicker-field 
+            :label="$tc('blurElysium.general.textColor')"
+            v-model:value="slide.slideSettings.slide.headline.color"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <py-number-field 
+            :label="$tc('blurElysium.general.fontSize')"
+            :placeholder="viewportsPlaceholder('headline.fontSize', 20)"
+            :step="1"
+            :digits="0"
+            v-model="slideViewportSettings.headline.fontSize"
+        />
+    </blur-column>
+</blur-section>
+
+<blur-section
+    gap
+    padding
+    :title="$tc('blurElysiumSlides.forms.slideDescription.label')"
+    title-icon="textbox-bold"
+    :style="viewStyle({
+        mobile: {
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        },
+    })"
+>
+    <blur-column :cols="12">
+        <py-colorpicker-field 
+            :label="$tc('blurElysium.general.textColor')"
+            v-model:value="slide.slideSettings.slide.description.color"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <py-number-field 
+            :label="$tc('blurElysium.general.fontSize')"
+            :placeholder="viewportsPlaceholder('description.fontSize', 14)"
+            :step="1"
+            :digits="0"
+            v-model="slideViewportSettings.description.fontSize"
+        />
+    </blur-column>
+
+    <blur-column :cols="12">
+        <sw-text-editor
+            v-model:value="slide.description"
+            :label="$tc('blurElysium.general.content')"
+        />
+    </blur-column>
+</blur-section>

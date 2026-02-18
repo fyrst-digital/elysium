@@ -1,0 +1,10 @@
+{
+  "json.schemas": [
+    {
+      "url": "https://opencode.ai/config.json"
+    },
+    {
+      "url": "https://models.dev/model-schema.json"
+    }
+  ]
+}

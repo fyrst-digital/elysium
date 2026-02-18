@@ -33,6 +33,10 @@ export default Component.wrapComponentConfig({
             type: String,
             default: 'none',
         },
+        maxWidth: {
+            type: [Number, null],
+            default: null,
+        },
         showPreviewNotice: {
             type: Boolean,
             default: true,
@@ -41,30 +45,12 @@ export default Component.wrapComponentConfig({
 
     provide() {
         return {
-            slide: this.slide,
-            headline: this.headline,
-            description: this.description,
+            slide: Vue.computed(() => this.slide),
             deviceView: Vue.computed(() => this.deviceView),
         };
     },
 
-    data() {
-        return {
-        };
-    },
-
-    watch: {
-    },
-
     computed: {
-
-        headline () {
-            return this.slide.title || null
-        },
-
-        description () {
-            return this.slide.description || null
-        },
 
         slideCoverImage() {
             return null
@@ -97,7 +83,8 @@ export default Component.wrapComponentConfig({
                 backgroundImage: this.slideBgGradient ? this.slideBgGradient : 'none',
                 backgroundColor: this.slide.slideSettings?.slide?.bgColor || 'transparent',
                 aspectRatio: `${this.aspectRatioX} / ${this.aspectRatioY}`,
-                maxHeight: this.maxHeight
+                maxHeight: this.maxHeight,
+                maxWidth: this.maxWidth ? `${this.maxWidth}px` : 'none',
             }
 
             return styles
@@ -109,7 +96,4 @@ export default Component.wrapComponentConfig({
             return useViewportProp(property, this.deviceView, this.slide.slideSettings.viewports)
         }
     },
-
-    created() {
-    }
 });

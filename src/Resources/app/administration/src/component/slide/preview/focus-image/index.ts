@@ -1,4 +1,3 @@
-import container from '../container';
 import template from './template.html.twig'
 import { useViewportProp } from '@elysium/composables/views'
 
@@ -24,16 +23,22 @@ export default Component.wrapComponentConfig({
         },
 
         containerStyles() {
+            const justifyContent = this.getViewportProp('image.justifyContent')
             const styles = {
                 flex: '1 0%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: justifyContent,
                 order: this.getViewportProp('container.order') === 'reverse' ? '1' : '2',
             }
             return styles
         },
 
         focusImageStyles() {
+            const maxWidth = this.getViewportProp('image.maxWidth')
             const styles = {
-                maxWidth: '100%',
+                width: '100%',
+                maxWidth: maxWidth ? `${maxWidth}px` : '100%',
             }
             return styles
         }

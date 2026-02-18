@@ -6,15 +6,7 @@ const { Component } = Shopware;
 export default Component.wrapComponentConfig({
     template,
 
-    inject: ['slide', 'deviceView', 'headline', 'description'],
-
-    data() {
-        return {
-        };
-    },
-
-    watch: {
-    },
+    inject: ['slide', 'deviceView'],
 
     computed: {
 
@@ -22,14 +14,8 @@ export default Component.wrapComponentConfig({
             return this.slide.slideSettings?.slide?.headline?.element || 'div'
         },
 
-        contentStyles() {
-            const styles = {
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-                order: this.getViewportProp('container.order') === 'reverse' ? '2' : '1',
-            }
-            return styles
+        headline() {
+            return this.slide.title || null
         },
 
         headlineStyles() {
@@ -42,12 +28,40 @@ export default Component.wrapComponentConfig({
             return styles
         },
 
+        contentStyles() {
+            const maxWidth = this.getViewportProp('content.maxWidth')
+            const paddingY = this.getViewportProp('content.paddingY')
+            const paddingX = this.getViewportProp('content.paddingX')
+            const textAlign = this.getViewportProp('content.textAlign')
+            const styles = {
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                order: this.getViewportProp('container.order') === 'reverse' ? '2' : '1',
+                maxWidth: maxWidth ? `${maxWidth}px` : 'none',
+                paddingInline: paddingX ? `${paddingX}px` : '0px',
+                paddingBlock: paddingY ? `${paddingY}px` : '0px',
+                textAlign: textAlign || 'left',
+            }
+            return styles
+        },
+
+        description() {
+            return this.slide.description || null
+        },
+
         descriptionStyles() {
             const styles = {
                 fontSize: this.getViewportProp('description.fontSize') ? `${this.getViewportProp('description.fontSize')}px` : '20px',
                 color: this.slide.slideSettings?.slide?.description?.color || '#222',
             }
             return styles
+        },
+
+        showButton() {
+            const isCustom = Boolean(this.slide.url) && this.slide.slideSettings?.slide?.linking?.type === 'custom'
+            const isProduct = Boolean(this.slide.productId) && this.slide.slideSettings?.slide?.linking?.type === 'product'
+            return (isCustom || isProduct) && this.slide.slideSettings?.slide?.linking?.overlay !== true && Boolean(this.slide.buttonLabel)
         }
     },
 
@@ -55,5 +69,9 @@ export default Component.wrapComponentConfig({
         getViewportProp(property: any) {
             return useViewportProp(property, this.deviceView, this.slide.slideSettings.viewports)
         }
+    },
+
+    created() {
+        console.log('slide', this.slide)
     },
 });

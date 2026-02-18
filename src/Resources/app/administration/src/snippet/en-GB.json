@@ -29,6 +29,7 @@
         },
         "cmsBlockGroup": "Elysium Blocks",
         "general": {
+            "settings": "Settings",
             "cssClasses": {
                 "label": "CSS Classes",
                 "helpText": "Here you can specify one or more CSS classes, separated by a space. These classes will be applied to the CMS element.",
@@ -40,6 +41,7 @@
             "addItem": "Add",
             "general": "General",
             "appearance": "Appearance",
+            "text": "Text",
             "content": "Content",
             "copySuffix": "copy",
             "backgroundColor": "Background color",
@@ -76,6 +78,8 @@
             "md": "Medium",
             "lg": "Large",
             "noLimit": "No limit",
+            "horizontal": "Horizontal",
+            "vertical": "Vertical",
             "textAlign": "Text align",
             "left": "Left",
             "center": "Center",
@@ -125,9 +129,10 @@
             "spaceBetween": "Between",
             "spaceAround": "Around",
             "stretch": "Stretch",
-            "objectPosY": "Object position: vertical",
-            "objectPosX": "Object position: horizontal",
-            "objectFit": "Object fit",
+            "objectPosY": "Position: vertical",
+            "objectPosX": "Position: horizontal",
+            "objectPos": "Position",
+            "objectFit": "Fit",
             "cover": "Cover",
             "contain": "Contain",
             "ratio": "Ratio",
@@ -191,7 +196,7 @@
             "useMediaAsSlideCover": "Use as Slide cover",
             "useMediaAsFocusImage": "Use as Focus image",
             "slideName": {
-                "label": "Slide name",
+                "label": "Name",
                 "placeholder": "my-slide"
             },
             "slideHeadline": {
@@ -199,7 +204,7 @@
                 "placeholder": "My awesome Slide!"
             },
             "slideCssClass": {
-                "label": "Slide CSS Classes",
+                "label": "CSS Classes",
                 "placeholder": "custom-class second-custom-class",
                 "helpText": "Specify one or more CSS classes for the slide, separated by a space"
             },
@@ -250,10 +255,10 @@
                 "helpText": "If this option is active, the entire slide is used as a link area. In this case, the button is hidden."
             },
             "slideCover": {
-                "label": "Slide cover"
+                "label": "Cover"
             },
             "slideCoverImage": {
-                "label": "Cover image",
+                "label": "Image",
                 "description": "Add an image as Slide background. The cover image can be defined for phone, tablet and desktop view. The desktop image serves as default. Valid image formats are jpg, png, webp, svg, avif"
             },
             "slideFocusImage": {
@@ -261,11 +266,11 @@
                 "description": "The focus image is displayed as a separate image next to the content area."
             },
             "slideCoverVideo": {
-                "label": "Cover video",
+                "label": "Video",
                 "description": "Add a video as Slide background. The Cover video applies to all views. Valid video formats are mp4"
             },
             "slideCoverMeta": {
-                "label": "Cover Meta",
+                "label": "Meta data",
                 "description": "Add alternative alt and title texts. This is useful when you use more than one image as a cover. This way you have finer control over these texts.",
                 "alt": {
                     "label": "Alt text"
@@ -311,7 +316,8 @@
                 "label": "Custom template file",
                 "description": "Here you can define your own Twig template file. If you enter a Twig template file, you will need to add it to your theme or extension by yourself.",
                 "placeholder": "my-slide-template",
-                "pathInfo": "The path to this file is:<br/><code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code",
+                "pathInfoTitle": "The path to this file is:",
+                "pathInfo": "<code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code>",
                 "fileName": "File name"
             },
             "customFields": {

@@ -29,6 +29,7 @@
         },
         "cmsBlockGroup": "Elysium Blöcke",
         "general": {
+            "settings": "Einstellungen",
             "cssClasses": {
                 "label": "CSS Klassen",
                 "helpText": "Hier kannst du eine oder mehrere CSS-Klassen, getrennt durch ein Leerzeichen, angeben. Diese Klassen werden auf das CMS Element angewendet.",
@@ -40,6 +41,7 @@
             "addItem": "Hinzufügen",
             "general": "Allgemein",
             "appearance": "Aussehen",
+            "text": "Text",
             "content": "Inhalt",
             "copySuffix": "kopie",
             "backgroundColor": "Hintergrundfarbe",
@@ -76,6 +78,8 @@
             "md": "Medium",
             "lg": "Groß",
             "noLimit": "Keine Begrenzung",
+            "horizontal": "Horizontal",
+            "vertical": "Vertikal",
             "textAlign": "Textausrichtung",
             "spacing": "Abstände",
             "gap": "Abstand: Zwischenraum",
@@ -121,9 +125,10 @@
             "alignEnd": "Ende",
             "flexStart": "Beginn",
             "flexEnd": "Ende",
-            "objectPosY": "Objekt Position: Vertikal",
-            "objectPosX": "Objekt Position: Horizontal",
-            "objectFit": "Objekt Anpassung",
+            "objectPosY": "Position: Vertikal",
+            "objectPosX": "Position: Horizontal",
+            "objectPos": "Position",
+            "objectFit": "Anpassung",
             "normal": "Normal",
             "spaceBetween": "Zwischen",
             "spaceAround": "Um",
@@ -191,7 +196,7 @@
             "useMediaAsSlideCover": "Als Slide Cover verwenden",
             "useMediaAsFocusImage": "Als Fokusbild verwenden",
             "slideName": {
-                "label": "Slide Name",
+                "label": "Name",
                 "placeholder": "mein-slide"
             },
             "slideHeadline": {
@@ -199,7 +204,7 @@
                 "placeholder": "Mein fantastischer Slide!"
             },
             "slideCssClass": {
-                "label": "Slide CSS Klassen",
+                "label": "CSS Klassen",
                 "placeholder": "custom-class second-custom-class",
                 "helpText": "Gib eine oder mehrere CSS-Klassen, getrennt durch ein Leerzeichen, an."
             },
@@ -250,18 +255,18 @@
                 "helpText": "Ist diese Option aktiv, wird der gesamte Slide als Verknüpfungsfläche genutzt. In diesem Fall wird der Button ausgeblendet"
             },
             "slideCover": {
-                "label": "Slide Cover"
+                "label": "Cover"
             },
             "slideCoverImage": {
-                "label": "Cover Bild",
+                "label": "Bild",
                 "description": "Füge ein Bild als Slide Hintergrund hinzu. Das Cover Bild kann für Smartphone-, Tablet- und Desktop-Ansicht definiert werden. Das Desktop Bild dient als Standard. Gültige Bildformate sind jpg, png, webp, svg, avif"
             },
             "slideCoverVideo": {
-                "label": "Cover Video",
+                "label": "Video",
                 "description": "Füge ein Video als Slide Hintergrund hinzu. Das Cover Video gilt für alle Ansichten. Gültige Videoformate sind mp4"
             },
             "slideCoverMeta": {
-                "label": "Cover Meta",
+                "label": "Metadaten",
                 "description": "Füge alternative Alt und Title Texte hinzu. Dies ist sinnvoll wenn du mehr als ein Bild als Cover verwendest. Somit hast du eine feinere Kontrolle über diese Texte.",
                 "alt": {
                     "label": "Alt-Text"
@@ -311,6 +316,7 @@
                 "label": "Eigene Template Datei",
                 "description": "Hier kannst du eine eigene Twig Template Datei definieren. Wenn du hier einen Dateinamen einträgst, musst du diese Datei manuell zum Theme oder einer Erweiterung hinzufügen.",
                 "placeholder": "mein-slide-template",
+                "pathInfoTitle": "Der Pfad zu dieser Datei lautet:",
                 "pathInfo": "Der Pfad zu dieser Datei lautet:<br/><code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code",
                 "fileName": "Dateiname"
             },

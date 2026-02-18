@@ -1,0 +1,79 @@
+<blur-section
+    gap
+    padding
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        },
+    })">
+    <blur-column>
+        <py-number-field
+            :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
+            :placeholder="viewportsPlaceholder('content.maxWidth', $t('blurElysium.general.noLimit'))"
+            :step="1"
+            :allow-empty="true"
+            v-model="slideViewportSettings.content.maxWidth"
+        />
+    </blur-column>
+</blur-section>
+
+<blur-section
+    gap
+    padding
+    :title="$tc('blurElysium.general.spacing')"
+    title-icon="ruler-bold"
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        },
+    })">
+    <blur-column>
+        <py-number-field
+            :label="$tc('blurElysium.general.horizontal')"
+            :placeholder="viewportsPlaceholder('content.paddingX', 15)"
+            :step="1"
+            :allow-empty="true"
+            v-model="slideViewportSettings.content.paddingX"
+        />
+    </blur-column>
+    <blur-column>
+        <py-number-field
+            :label="$tc('blurElysium.general.vertical')"
+            :placeholder="viewportsPlaceholder('content.paddingY', 0)"
+            :step="1"
+            :allow-empty="true"
+            v-model="slideViewportSettings.content.paddingY"
+        />
+    </blur-column>
+</blur-section>
+
+<blur-section
+    gap
+    padding
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        },
+    })"
+    :title="$tc('blurElysium.general.alignment')"
+    title-icon="arrows-out-line-horizontal-bold">
+    
+    <blur-column>
+        <py-select-field
+            :label="$tc('blurElysium.general.textAlign')"
+            :placeholder="viewportsPlaceholder('content.textAlign', 'left', 'blurElysium.general')"
+            :options="[
+                { value: 'left', label: $tc('blurElysium.general.left') },
+                { value: 'center', label: $tc('blurElysium.general.center') },
+                { value: 'right', label: $tc('blurElysium.general.right') }
+            ]"
+            v-model="slideViewportSettings.content.textAlign"
+        />
+    </blur-column>
+</blur-section>

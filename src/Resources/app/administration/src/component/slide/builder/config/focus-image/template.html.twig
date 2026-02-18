@@ -1,0 +1,74 @@
+<blur-section
+    gap
+    padding
+    :title="$tc('blurElysiumSlides.forms.slideFocusImage.label')"
+    :description="$tc('blurElysiumSlides.forms.slideFocusImage.description')"
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px' 
+        }
+    })">
+
+    <blur-column>
+        <sw-upload-listener
+            upload-tag="blur-elysium-slide-focus-image"
+            auto-upload
+            @media-upload-finish="setFocusImage"
+        />
+        <sw-media-upload-v2
+            variant="regular"
+            label="Medium"
+            :disabled="!(permissionCreate || permissionEdit)"
+            file-accept="image/*"
+            upload-tag="blur-elysium-slide-focus-image"
+            :source="focusImage"
+            :allow-multi-select="false"
+            default-folder="blur_elysium_slides"
+            @media-upload-remove-image="removeFocusImage"
+            @media-upload-sidebar-open="mediaModal.open = true"
+        />
+    </blur-column>
+</blur-section>
+
+<sw-media-modal-v2
+    v-if="mediaModal.open"
+    :allow-multi-select="false"
+    entity-context="blur_elysium_slides"
+    @media-modal-selection-change="onAddMediaModal"
+    @modal-close="closeMediaModal"
+/>
+
+<blur-section 
+    gap
+    padding
+    :style="viewStyle({
+        mobile: { 
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        }
+    })">
+    
+    <blur-column>
+        <py-number-field 
+            :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
+            :placeholder="viewportsPlaceholder('image.maxWidth', $t('blurElysium.general.noLimit'))"
+            :step="1"
+            :allow-empty="true"
+            v-model="slideViewportSettings.image.maxWidth"
+            />
+    </blur-column>
+    <blur-column>
+        <py-select-field 
+            :label="$tc('blurElysium.general.jusitifyContent')"
+            :placeholder="viewportsPlaceholder('image.justifyContent', 'center', 'blurElysium.general')"
+            :options="[
+                { value: 'flex-start', label: $tc('blurElysium.general.jusitifyStart') },
+                { value: 'center', label: $tc('blurElysium.general.jusitifyCenter') },
+                { value: 'flex-end', label: $tc('blurElysium.general.jusitifyEnd') }
+            ]"
+            v-model="slideViewportSettings.image.justifyContent"
+            />
+    </blur-column>
+</blur-section>

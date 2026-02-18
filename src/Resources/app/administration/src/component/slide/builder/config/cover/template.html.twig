@@ -1,0 +1,153 @@
+<blur-section
+    gap
+    padding
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        },
+    })"
+    :title="$tc('blurElysiumSlides.forms.slideCoverImage.label')"
+    :description="$tc('blurElysiumSlides.forms.slideCoverImage.description')">
+
+    <blur-column>
+        <sw-upload-listener
+            :upload-tag="slideCoverUploadTag"
+            auto-upload
+            @media-upload-finish="setSlideCover"
+        />
+        <sw-media-upload-v2
+            variant="regular"
+            label="Medium"
+            :disabled="!(permissionCreate || permissionEdit)"
+            file-accept="image/*"
+            :upload-tag="slideCoverUploadTag"
+            :source="slideCover"
+            :allow-multi-select="false"
+            default-folder="blur_elysium_slides"
+            @media-upload-remove-image="removeSlideCover"
+            @media-upload-sidebar-open="openMediaModal"
+        />
+    </blur-column>
+</blur-section>
+
+<blur-section
+    gap
+    padding
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        },
+    })"
+    :title="$tc('blurElysiumSlides.forms.slideCoverVideo.label')"
+    :description="$tc('blurElysiumSlides.forms.slideCoverVideo.description')">
+
+    <blur-column>
+        <sw-upload-listener
+            upload-tag="blur-elysium-slide-cover-video"
+            auto-upload
+            @media-upload-finish="payload => setSlideCover(payload, true)"
+        />
+        <sw-media-upload-v2
+            ref="coverVideoUploadElement"
+            variant="regular"
+            label="Medium"
+            :disabled="!(permissionCreate || permissionEdit)"
+            file-accept="video/*"
+            upload-tag="blur-elysium-slide-cover-video"
+            :source="slideCoverVideo"
+            :allow-multi-select="false"
+            default-folder="blur_elysium_slides"
+            @media-upload-remove-image="removeSlideCover(true)"
+            @media-upload-sidebar-open="openMediaModal('slideCoverVideo')"
+        />
+    </blur-column>
+</blur-section>
+
+<blur-section
+    gap
+    padding
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        },
+    })"
+    :title="$tc('blurElysium.general.settings')">
+
+    <blur-column>
+        <py-select-field
+            :label="$tc('blurElysium.general.objectPos')"
+            :placeholder="viewportsPlaceholder('coverMedia.objectPosY', 'center', 'blurElysium.general')"
+            :options="[
+                { value: 'top', label: $tc('blurElysium.general.top') },
+                { value: 'center', label: $tc('blurElysium.general.center') },
+                { value: 'bottom', label: $tc('blurElysium.general.bottom') }
+            ]"
+            v-model="slideViewportSettings.coverMedia.objectPosY" />
+    </blur-column>
+    
+    <blur-column>
+        <py-select-field
+            :label="$tc('blurElysium.general.objectPos')"
+            :placeholder="viewportsPlaceholder('coverMedia.objectPosX', 'center', 'blurElysium.general')"
+            :options="[
+                { value: 'left', label: $tc('blurElysium.general.left') },
+                { value: 'center', label: $tc('blurElysium.general.center') },
+                { value: 'right', label: $tc('blurElysium.general.right') }
+            ]"
+            v-model="slideViewportSettings.coverMedia.objectPosX" />
+    </blur-column>
+
+    <blur-column>
+        <py-select-field
+            :label="$tc('blurElysium.general.objectFit')"
+            :placeholder="viewportsPlaceholder('coverMedia.objectFit', 'cover', 'blurElysium.general')"
+            :options="[
+                { value: 'cover', label: $tc('blurElysium.general.cover') },
+                { value: 'contain', label: $tc('blurElysium.general.contain') },
+                { value: 'auto', label: $tc('blurElysium.general.auto') }
+            ]"
+            v-model="slideViewportSettings.coverMedia.objectFit" />
+    </blur-column>
+</blur-section>
+
+<blur-section
+    gap
+    padding
+    :title="$tc('blurElysiumSlides.forms.slideCoverMeta.label')"
+    :style="viewStyle({
+        mobile: { 
+            borderBottom: '1px solid var(--color-border-secondary-default)',
+            '--blur-section-gap-y': '8px',
+            '--container-gap-y': '12px'
+        },
+    })"
+    :description="$tc('blurElysiumSlides.forms.slideCoverMeta.description')">
+
+    <blur-column>
+        <py-text-field
+            v-model="slide.contentSettings.slideCover.alt"
+            :label="$tc('blurElysiumSlides.forms.slideCoverMeta.alt.label')"
+        />
+    </blur-column>
+
+    <blur-column>
+        <py-text-field
+            v-model="slide.contentSettings.slideCover.title"
+            :label="$tc('blurElysiumSlides.forms.slideCoverMeta.title.label')"
+        />
+    </blur-column>
+</blur-section>
+
+<sw-media-modal-v2
+    v-if="mediaModal.open"
+    :allow-multi-select="false"
+    entity-context="blur_elysium_slides"
+    @media-modal-selection-change="onAddMediaModal"
+    @modal-close="closeMediaModal"
+/>

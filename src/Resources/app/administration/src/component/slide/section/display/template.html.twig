@@ -1,0 +1,10 @@
+<div>
+    <mt-tabs
+        :defaultItem="activeTab"
+        :items="tabs"
+        @new-item-active="activeTab = $event"
+    />
+    <elysium-slides-form-slide v-if="activeTab === 'slide'"/>
+    <elysium-slides-form-container v-if="activeTab === 'container'"/>
+    <elysium-slides-form-content v-if="activeTab === 'content'"/>
+</div>
