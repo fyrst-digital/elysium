@@ -1,4 +1,3 @@
-import display from '@elysium/component/slides/section/display';
 import template from './template.html.twig'
 import { useViewportProp } from '@elysium/composables/views'
 

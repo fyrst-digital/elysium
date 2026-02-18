@@ -1,4 +1,4 @@
-import { defaultSlideSettings, defaultContentSettings } from '@elysium/component/slides/settings';
+import { defaultSlideSettings, defaultContentSettings } from '@elysium/component/slide/settings';
 import template from './template.html.twig';
 
 const { Component, Context, Mixin, Data, Utils, Store } = Shopware;
