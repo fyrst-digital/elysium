@@ -1,3 +1,8 @@
+# 4.4.2
+
+**Changelog**
+- Fixed update error from version 4.4.1. A new migration has been added.
+
 # 4.4.1
 
 **Changelog**

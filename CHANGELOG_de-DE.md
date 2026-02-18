@@ -1,3 +1,8 @@
+# 4.4.2
+
+**Changelog**
+- Aktualisierungsfehler aus Version 4.4.1 wurde behoben. Eine neue Migration wurde hinzugefügt.
+
 # 4.4.1
 
 **Changelog**
