@@ -1,9 +1,6 @@
-/**
- * @todo replace any with proper types
- */
 interface CMSState {
     elementId: string | null;
-    elementConfig: any | null;
+    elementConfig: Record<string, unknown> | null;
 }
 
 export default {
@@ -19,7 +16,7 @@ export default {
             this.elementId = elementId;
         },
 
-        setElementConfig(elementConfig: any | null) {
+        setElementConfig(elementConfig: Record<string, unknown> | null) {
             this.elementConfig = elementConfig;
         },
     },

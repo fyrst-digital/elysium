@@ -1,10 +1,8 @@
-/**
- * @todo replace any with proper types
- */
+import { SlideViewports, ElysiumSlide } from '@elysium/types/slide';
 
 interface SlideState {
-    slide: any;
-    customFieldSet: any;
+    slide: ElysiumSlide | null;
+    customFieldSet: Entity<'custom_field_set'> | null;
 }
 
 export default {
@@ -16,23 +14,23 @@ export default {
     }),
 
     getters: {
-        slideViewportSettings(state: SlideState): any {
+        slideViewportSettings(state: SlideState): SlideViewports | null {
             return state.slide?.slideSettings?.viewports ?? null;
         },
     },
 
     actions: {
-        setSlide(slide: any): void {
+        setSlide(slide: ElysiumSlide | null): void {
             this.slide = slide;
         },
 
-        setCustomFieldSet(customFieldSet: any): void {
+        setCustomFieldSet(customFieldSet: Entity<'custom_field_set'> | null): void {
             this.customFieldSet = customFieldSet;
         },
 
-        setSlideProp({ key, value }: { key: string; value: any }): void {
+        setSlideProp({ key, value }: { key: string; value: unknown }): void {
             if (this.slide) {
-                this.slide[key] = value;
+                (this.slide as Record<string, unknown>)[key] = value;
             }
         },
 

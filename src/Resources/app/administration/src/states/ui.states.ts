@@ -1,10 +1,8 @@
-/**
- * @todo replace any with proper types
- */
+type Device = 'mobile' | 'tablet' | 'desktop';
 
 interface UIState {
-    device: string;
-    mediaSidebar: any;
+    device: Device;
+    mediaSidebar: HTMLElement | null;
 }
 
 export default {
@@ -16,7 +14,7 @@ export default {
     }),
 
     actions: {
-        setDevice(device: string) {
+        setDevice(device: Device) {
             this.device = device;
         },
 
@@ -24,7 +22,7 @@ export default {
             this.device = 'desktop';
         },
 
-        setMediaSidebar(element: any) {
+        setMediaSidebar(element: HTMLElement | null) {
             this.mediaSidebar = element;
         },
     },

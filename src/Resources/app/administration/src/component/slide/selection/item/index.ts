@@ -1,8 +1,9 @@
 import template from './template.html.twig';
 import './style.scss';
 
-const { Component, Data, Context } = Shopware;
-const { Criteria } = Data;
+import { DragConfig, DragData, DropData } from '@elysium/types/dnd';
+
+const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
@@ -47,25 +48,25 @@ export default Component.wrapComponentConfig({
             this.$emit('remove-slide', this.slide);
         },
 
-        dragStart(dragConfig: any) {
+        dragStart(dragConfig: DragConfig) {
             this.$emit('drag-slide-start', this.slide, dragConfig);
         },
 
-        dragEnter(dragData: any, dropData: any, validDrag: boolean) {},
+        dragEnter(_dragData: DragData, _dropData: DropData, _validDrag: boolean) {},
 
-        dragLeave(dragData: any, dropData: any, validDrag: boolean) {},
+        dragLeave(_dragData: DragData, _dropData: DropData, _validDrag: boolean) {},
 
-        validateDrop(dragData: any, dropData: any) {
+        validateDrop(dragData: DragData, dropData: DropData) {
             let isValid = false;
             if (
                 typeof dropData?.index === 'number' &&
-                dragData.draggedItemIndex !== dropData?.index
+                dragData?.draggedItemIndex !== dropData?.index
             )
                 isValid = true;
             return isValid;
         },
 
-        dropSlide(dragData: any, dropData: any) {
+        dropSlide(dragData: DragData, dropData: DropData) {
             this.$emit('drag-slide-drop', dragData, dropData);
         },
     },

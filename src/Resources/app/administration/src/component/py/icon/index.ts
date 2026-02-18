@@ -68,8 +68,6 @@ export default Component.wrapComponentConfig({
             );
             const response = await fetch(iconUrl.toString());
 
-            console.log(response)
-
             if (response.ok) {
                 this.iconSvgData = await response.text();
             } else {

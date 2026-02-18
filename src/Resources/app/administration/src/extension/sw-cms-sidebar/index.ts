@@ -12,7 +12,7 @@ export default Component.wrapComponentConfig({
         },
 
         elysiumSectionSettingsTitle() {
-            if (this.selectedBlock?.customFields?.hasOwnProperty('elysiumBlockSettings')) {
+            if (Object.hasOwn(this.selectedBlock?.customFields ?? {}, 'elysiumBlockSettings')) {
                 return this.$tc('blurElysiumSection.sidebar.blockSettingsTitle');
             } else {
                 return this.$tc('blurElysiumSection.sidebar.sectionSettingsTitle');
@@ -20,8 +20,8 @@ export default Component.wrapComponentConfig({
         },
 
         elysiumSectionSettingsActive() {
-            return this.selectedSection?.customFields?.hasOwnProperty('elysiumSectionSettings') ||
-                this.selectedBlock?.customFields?.hasOwnProperty('elysiumBlockSettings');
+            return Object.hasOwn(this.selectedSection?.customFields ?? {}, 'elysiumSectionSettings') ||
+                Object.hasOwn(this.selectedBlock?.customFields ?? {}, 'elysiumBlockSettings');
         }
     },
 });

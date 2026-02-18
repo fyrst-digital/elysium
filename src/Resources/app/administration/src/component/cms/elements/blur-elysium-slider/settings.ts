@@ -1,4 +1,4 @@
-import { SliderSettings, ViewportSettings, ViewportArrows } from '@elysium/types/slider';
+import { SliderSettings, ViewportSettings } from '@elysium/types/slider';
 
 const { Utils } = Shopware;
 

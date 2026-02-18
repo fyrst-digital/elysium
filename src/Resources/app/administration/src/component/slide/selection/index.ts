@@ -1,6 +1,8 @@
 import template from './template.html.twig';
 import './style.scss';
 
+import { DragConfig, DragData, DropData } from '@elysium/types/dnd';
+
 const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
@@ -57,19 +59,19 @@ export default Component.wrapComponentConfig({
 
         dragSlideStart(
             slide: Entity<'blur_elysium_slides'>,
-            dragConfig: any,
-            draggedSlide: any
+            dragConfig: DragConfig,
+            _draggedSlide: DragData
         ) {
             this.slide = slide;
-            this.draggedItemIndex = dragConfig.data?.draggedItemIndex;
+            this.draggedItemIndex = dragConfig?.data?.draggedItemIndex;
             this.$emit(
                 'drag-slide-start',
                 slide,
-                dragConfig.data?.draggedItemIndex
+                dragConfig?.data?.draggedItemIndex
             );
         },
 
-        dragSlideDrop(dragData: any, dropData: any) {
+        dragSlideDrop(dragData: DragData, dropData: DropData) {
             if (dropData === null) {
                 return;
             }

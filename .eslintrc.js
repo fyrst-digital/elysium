@@ -30,7 +30,7 @@ module.exports = {
 		 */
 		// "@typescript-eslint/strict-boolean-expressions": "error", 
 		"@typescript-eslint/no-explicit-any": "error",       
-		"@typescript-eslint/no-unused-vars": "error",     
+		"@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],     
 		"@typescript-eslint/no-non-null-assertion": "error",      
         "indent": [0, "tab"],
         "no-tabs": 0,
