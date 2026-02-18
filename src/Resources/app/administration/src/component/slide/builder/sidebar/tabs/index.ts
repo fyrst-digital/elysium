@@ -11,6 +11,12 @@ export default Component.wrapComponentConfig({
 
     data() {
         return {
+            tabConfig: [
+                { label: 'blurElysiumSlides.settings.baseLabel', routeSuffix: 'content' },
+                { label: 'blurElysiumSlides.settings.mediaLabel', routeSuffix: 'media' },
+                { label: 'blurElysium.general.appearance', routeSuffix: 'display' },
+                { label: 'blurElysiumSlides.settings.advancedLabel', routeSuffix: 'advanced' },
+            ],
             styles: {
                 container: { 
                     mobile: { 
@@ -32,50 +38,18 @@ export default Component.wrapComponentConfig({
             return this.$route.params.id;
         },
         tabs () {
-            return [
-                {
-                    label: this.$t('blurElysiumSlides.settings.baseLabel'),
-                    route: () => {
-                        return {
-                            name: 'blur.elysium.slides.detail.content',
-                            params: { id: this.slideId },
-                        };
-                    },
-                },
-                {
-                    label: this.$t('blurElysiumSlides.settings.mediaLabel'),
-                    route: () => {
-                        return {
-                            name: 'blur.elysium.slides.detail.media',
-                            params: { id: this.slideId },
-                        };
-                    },
-                },
-                {
-                    label: this.$t('blurElysium.general.appearance'),
-                    route: () => {
-                        return {
-                            name: 'blur.elysium.slides.detail.display',
-                            params: { id: this.slideId },
-                        };
-                    },
-                },
-                {
-                    label: this.$t('blurElysiumSlides.settings.advancedLabel'),
-                    route: () => {
-                        return {
-                            name: 'blur.elysium.slides.detail.advanced',
-                            params: { id: this.slideId },
-                        };
-                    },
-                }
-            ];
+            return this.tabConfig.map((config) => ({
+                label: this.$t(config.label),
+                route: () => this.slideId
+                    ? { name: `blur.elysium.slides.detail.${config.routeSuffix}`, params: { id: this.slideId } }
+                    : { name: `blur.elysium.slides.create.${config.routeSuffix}` },
+            }));
         },
     },
 
     methods: {
         isActive (tab: any) {
             return this.$route.name === tab.route().name;
-        }
+        },
     }
 });
