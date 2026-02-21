@@ -1,3 +1,10 @@
+# 4.5.0
+
+**Changelog**
+- Major revamp of the Slide Builder editor 
+- A preview has been added to the Slide Builder editor
+
+
 # 4.4.2
 
 **Changelog**
