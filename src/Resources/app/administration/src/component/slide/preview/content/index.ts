@@ -1,5 +1,10 @@
 import template from './template.html.twig'
 import { useViewportProp } from '@elysium/composables/views'
+import {
+    buttonColorStyles,
+    buttonSizeStyles,
+} from '@elysium/component/utilities/settings/buttons';
+import type { ButtonColor, ButtonSize } from '@elysium/types/button';
 
 const { Component } = Shopware;
 
@@ -62,7 +67,28 @@ export default Component.wrapComponentConfig({
             const isCustom = Boolean(this.slide.url) && this.slide.slideSettings?.slide?.linking?.type === 'custom'
             const isProduct = Boolean(this.slide.productId) && this.slide.slideSettings?.slide?.linking?.type === 'product'
             return (isCustom || isProduct) && this.slide.slideSettings?.slide?.linking?.overlay !== true && Boolean(this.slide.buttonLabel)
-        }
+        },
+
+        buttonAppearance(): ButtonColor {
+            return this.slide.slideSettings?.slide?.linking?.buttonAppearance || 'primary';
+        },
+
+        buttonSize(): ButtonSize {
+            return this.slide.slideSettings?.slide?.linking?.buttonSize || 'md';
+        },
+
+        buttonStyles() {
+            const colorStyle = buttonColorStyles[this.buttonAppearance] || buttonColorStyles.primary;
+            const sizeStyle = buttonSizeStyles[this.buttonSize] || buttonSizeStyles.md;
+
+            return {
+                backgroundColor: colorStyle.backgroundColor,
+                color: colorStyle.color,
+                border: colorStyle.borderColor ? `1px solid ${colorStyle.borderColor}` : 'none',
+                padding: sizeStyle.padding,
+                fontSize: sizeStyle.fontSize,
+            };
+        },
     },
 
     methods: {

@@ -15,6 +15,7 @@
     <mt-button
         v-if="showButton"
         size="default"
+        :style="buttonStyles"
         :target="slide.slideSettings?.slide?.linking?.openExternal ? '_blank' : '_self'">
         {{slide.buttonLabel}}
     </mt-button>

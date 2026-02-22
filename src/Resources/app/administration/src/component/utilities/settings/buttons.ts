@@ -59,3 +59,40 @@ export const buttonSizes: ButtonSizeOption[] = [
     { value: 'md', label: 'blurElysium.general.md' },
     { value: 'lg', label: 'blurElysium.general.lg' },
 ];
+
+interface ButtonColorStyle {
+    backgroundColor: string;
+    color: string;
+    borderColor?: string;
+}
+
+interface ButtonSizeStyle {
+    padding: string;
+    fontSize: string;
+}
+
+export const buttonColorStyles: Record<ButtonColor, ButtonColorStyle> = {
+    primary: { backgroundColor: '#0d6efd', color: '#ffffff' },
+    secondary: { backgroundColor: '#6c757d', color: '#ffffff' },
+    success: { backgroundColor: '#198754', color: '#ffffff' },
+    danger: { backgroundColor: '#dc3545', color: '#ffffff' },
+    warning: { backgroundColor: '#ffc107', color: '#212529' },
+    info: { backgroundColor: '#0dcaf0', color: '#212529' },
+    light: { backgroundColor: '#f8f9fa', color: '#212529' },
+    dark: { backgroundColor: '#212529', color: '#ffffff' },
+    link: { backgroundColor: 'transparent', color: '#0d6efd' },
+    'outline-primary': { backgroundColor: 'transparent', color: '#0d6efd', borderColor: '#0d6efd' },
+    'outline-secondary': { backgroundColor: 'transparent', color: '#6c757d', borderColor: '#6c757d' },
+    'outline-success': { backgroundColor: 'transparent', color: '#198754', borderColor: '#198754' },
+    'outline-danger': { backgroundColor: 'transparent', color: '#dc3545', borderColor: '#dc3545' },
+    'outline-warning': { backgroundColor: 'transparent', color: '#ffc107', borderColor: '#ffc107' },
+    'outline-info': { backgroundColor: 'transparent', color: '#0dcaf0', borderColor: '#0dcaf0' },
+    'outline-light': { backgroundColor: 'transparent', color: '#f8f9fa', borderColor: '#f8f9fa' },
+    'outline-dark': { backgroundColor: 'transparent', color: '#212529', borderColor: '#212529' },
+};
+
+export const buttonSizeStyles: Record<ButtonSize, ButtonSizeStyle> = {
+    sm: { padding: '4px 16px', fontSize: '12px' },
+    md: { padding: '12px 16px', fontSize: '16px' },
+    lg: { padding: '16px 20px', fontSize: '20px' },
+};
