@@ -18,8 +18,24 @@ export default Component.wrapComponentConfig({
 
     computed: {
 
-        focusImageUrl () {
-            return this.slide.presentationMedia?.url || null
+        focusImageUrl() {
+            if (this.slide.presentationMedia) {
+                console.log('focusImageUrl 1', this.slide)
+                return this.slide.presentationMedia.url || null;
+            }
+            
+            if (
+                this.slide.productId &&
+                this.slide.slideSettings?.slide?.linking?.type === 'product' &&
+                this.slide.slideSettings?.slide?.linking?.showProductFocusImage === true &&
+                this.slide.product?.cover?.media
+            ) {
+                console.log('focusImageUrl 2', this.slide.product.cover.media.url)
+                return this.slide.product.cover.media.url || null;
+            }
+
+
+            return null;
         },
 
         containerStyles() {

@@ -66,6 +66,7 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
             $criteria->addAssociation('product');
             $criteria->addAssociation('product.media');
             $criteria->addAssociation('product.cover');
+            $criteria->addAssociation('product.cover.media');
 
             $this->eventDispatcher->dispatch(
                 new ElysiumSlidesCriteriaEvent($criteria, $context)

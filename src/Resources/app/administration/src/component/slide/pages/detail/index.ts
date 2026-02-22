@@ -231,8 +231,13 @@ export default Component.wrapComponentConfig({
 
         loadSlide() {
 
+            const criteria = new Criteria();
+            criteria.addAssociation('product');
+            criteria.addAssociation('product.cover');
+            criteria.addAssociation('product.cover.media');
+
             this.slidesRepository
-                .get(this.slideId, Context.api, new Criteria())
+                .get(this.slideId, Context.api, criteria)
                 .then((slide) => {
                     // const mergedSlideSettings = Utils.object.deepMergeObject(
                     //     this.defaultSlideSettings,

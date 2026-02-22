@@ -2,7 +2,7 @@
 
 {% block blur_elysium_slide_image_element %}
     {# overwrite focus image #}
-    {% if slideData.product.cover and slideData.presentationMedia is null and slideData.slideSettings.slide.linking.showProductFocusImage is same as(true) %}
+    {% if slideData.product.cover and slideData.slideSettings.slide.linking.showProductFocusImage is same as(true) %}
         {% set imageMedia = slideData.product.cover.media %}
     {% endif %}
 
