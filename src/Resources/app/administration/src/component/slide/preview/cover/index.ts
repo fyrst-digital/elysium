@@ -41,6 +41,7 @@ export default Component.wrapComponentConfig({
                 inset: '0',
                 width: '100%',
                 height: '100%',
+                borderRadius: 'inherit',
                 objectFit: this.getViewportProp('coverMedia.objectFit') || 'cover',
                 objectPosition: `${this.getViewportProp('coverMedia.objectPosX') || 'center'} ${this.getViewportProp('coverMedia.objectPosY') || 'center'}`,
             }
@@ -54,6 +55,7 @@ export default Component.wrapComponentConfig({
                 inset: '0',
                 width: '100%',
                 height: '100%',
+                borderRadius: 'inherit',
                 objectFit: this.getViewportProp('coverMedia.objectFit') || 'cover',
                 objectPosition: `${this.getViewportProp('coverMedia.objectPosX') || 'center'} ${this.getViewportProp('coverMedia.objectPosY') || 'center'}`,
             }

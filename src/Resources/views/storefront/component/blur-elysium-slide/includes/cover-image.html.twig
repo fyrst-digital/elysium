@@ -68,6 +68,7 @@
                         aria-label="{{ slideCoverLabel }}"
                     {% endif %}
                     class="blur-elysium-slide-cover-image" 
+                    style="border-radius: var(--slide-border-radius, 0px);"
                     {% if lazyLoading is same as(true) %}
                         loading="lazy"
                     {% endif %} />
