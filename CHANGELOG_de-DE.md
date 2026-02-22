@@ -2,6 +2,7 @@
 
 **Changelog**
 - Der Slide-Verlauf wird nun korrekt angezeigt, wenn Start- oder Endfarbe leer ist
+- Der Slide-Radius wird nun korrekt angezeigt, wenn ein Cover Bild oder Video gesetzt ist
 
 # 4.5.0
 
