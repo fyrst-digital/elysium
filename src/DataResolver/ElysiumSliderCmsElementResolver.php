@@ -61,7 +61,9 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
             $criteria = new Criteria($elysiumSlideIds);
             $criteria->addAssociation('media');
             /**
-             * @todo only set association if the right linking type is set
+             * @todo #76
+             * - only set association if the right linking type is set
+             * - create and include a centralized slide loader 
              */
             $criteria->addAssociation('product');
             $criteria->addAssociation('product.media');
