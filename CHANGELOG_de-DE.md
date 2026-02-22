@@ -1,3 +1,8 @@
+# 4.5.1
+
+**Changelog**
+- Der Slide-Verlauf wird nun korrekt angezeigt, wenn Start- oder Endfarbe leer ist
+
 # 4.5.0
 
 **Changelog**

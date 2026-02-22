@@ -1,3 +1,8 @@
+# 4.5.1
+
+**Changelog**
+- Slide gradient is displayed correctly now if start or end color is empty
+
 # 4.5.0
 
 **Changelog**
