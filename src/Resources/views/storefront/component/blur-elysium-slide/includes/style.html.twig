@@ -4,8 +4,8 @@
 
 {% set slideStyles = {
     '--slide-bg-color': slideData.slideSettings.slide.bgColor,
-    '--slide-gradient-color-start': slideData.slideSettings.slide.bgGradient.startColor,
-    '--slide-gradient-color-end': slideData.slideSettings.slide.bgGradient.endColor,
+    '--slide-gradient-color-start': slideData.slideSettings.slide.bgGradient.startColor ?: 'transparent',
+    '--slide-gradient-color-end': slideData.slideSettings.slide.bgGradient.endColor ?: 'transparent',
     '--slide-gradient-deg': slideData.slideSettings.slide.bgGradient.gradientDeg ? slideData.slideSettings.slide.bgGradient.gradientDeg ~ 'deg' : null,
     '--container-bg-color': slideData.slideSettings.container.bgColor,
     '--description-color': slideData.slideSettings.slide.description.color,
