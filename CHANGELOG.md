@@ -1,6 +1,7 @@
 # 4.5.1
 
 **Changelog**
+- Slide preview now correctly displays button colors and sizes matching the selection
 - Slide gradient is displayed correctly now if start or end color is empty
 - Slide radius is dispayed correctly if slide cover image or video is set
 
