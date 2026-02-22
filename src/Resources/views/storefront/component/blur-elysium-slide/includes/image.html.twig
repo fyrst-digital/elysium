@@ -10,7 +10,7 @@
 
     {% block blur_elysium_slide_image_element %}
         {% if imageMedia %}           
-            <div class="{{ containerClasses|join(' ') }}">
+            <div class="{{ containerClasses|join(' ') }}" style="flex: var(--image-flex-grow, 1) 0 var(--image-flex-basis, 0%); justify-content: var(--image-justify-content, center); align-items: var(--image-align-items, center); order: var(--image-order, 2); width: 100%; max-width: var(--image-max-w, none);">
                 {% sw_thumbnails 'elysium-slide-focus-image' with {
                     media: imageMedia,
                     attributes: {

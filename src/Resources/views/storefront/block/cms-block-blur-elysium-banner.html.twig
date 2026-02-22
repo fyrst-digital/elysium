@@ -7,7 +7,8 @@
 
     {% block cms_block_blur_elysium_block_two_col_element %}
         <div class="{{ blockClasses|join(' ') }}" 
-            data-cms-block="{{ block.id }}">
+            data-cms-block="{{ block.id }}"
+            style="padding: 0; grid-template-columns: var(--columns);">
 
             {% block cms_block_blur_elysium_block_slot_main %}
                 {% set element = block.slots.getSlot('main') %}

@@ -25,12 +25,12 @@
     ] %}
 
     {% block blur_elysium_slide_content_element %}
-        <div class="blur-elysium-slide-content">
+        <div class="blur-elysium-slide-content" style="display: var(--content-display, flex); flex-direction: var(--content-direction, column); gap: var(--content-gap, 24px); order: var(--content-order, 1); flex: var(--content-flex-grow, 1) 0 var(--content-flex-basis, 0%); width: 100%; padding: var(--content-padding-y, 0px) var(--content-padding-x, 0px); text-align: var(--content-text-align, left); max-width: var(--content-max-w, none);">
             {% block blur_elysium_slide_headline %}
 
                 {% if headlineContent %}
                     <{{headlineElement|raw}} 
-                        class="{{ headlineClasses|join(' ') }}">
+                        class="{{ headlineClasses|join(' ') }}" style="color: var(--headline-color, inherit); font-size: var(--headline-font-size, 20px); margin: 0;">
                         {{ headlineContent|raw }}
                     </{{headlineElement|raw}}>
                 {% endif %}
@@ -38,7 +38,7 @@
 
             {% block blur_elysium_slide_description %}
                 {% if descriptionContent %}
-                    <div class="{{ descriptionClasses|join(' ') }}">
+                    <div class="{{ descriptionClasses|join(' ') }}" style="color: var(--description-color, inherit); font-size: var(--description-font-size, inherit);">
                         {{ descriptionContent|raw }}
                     </div>
                 {% endif %}

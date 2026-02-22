@@ -42,7 +42,7 @@
 
         <div class="{{ slideClasses|join(' ') }}{% if slideData.slideSettings.slide.cssClass %} {{ slideData.slideSettings.slide.cssClass }}{% endif %}"
             data-elysium-slide-id="{{ slideData.id }}"
-            style="aspect-ratio: var(--slide-aspect-ratio, auto);">
+            style="aspect-ratio: var(--slide-aspect-ratio, auto); border-radius: var(--slide-border-radius, 0px); padding: calc(var(--slide-padding-y, 15px) + var(--slide-padding-offset-y, 0px)) calc(var(--slide-padding-x, 15px) + var(--slide-padding-offset-x, 0px)); align-items: var(--slide-align-items, center); justify-content: var(--slide-justify-content, center); max-height: var(--slide-max-height);">
 
             {% block blur_elysium_slide_prepend %}{% endblock %}
             
@@ -55,7 +55,7 @@
 
             {% block blur_elysium_slide_container_wrapper %}
                 {% if showContainerWrapper is same as(true) %}
-                    <div class="container d-flex blur-elysium-slide-container-wrapper">
+                    <div class="container d-flex blur-elysium-slide-container-wrapper" style="align-items: var(--slide-align-items, center); justify-content: var(--slide-justify-content, center);">
                 {% endif %}
                 {{ block('blur_elysium_slide_container') }}
                 {% if showContainerWrapper is same as(true) %}

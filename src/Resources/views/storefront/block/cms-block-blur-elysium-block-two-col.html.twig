@@ -39,7 +39,8 @@
 
     {% block cms_block_blur_elysium_block_two_col_element %}
         <div class="{{ blockClasses|join(' ') }}" 
-            data-cms-block="{{ block.id }}">
+            data-cms-block="{{ block.id }}"
+            style="padding: 0; grid-template-columns: var(--columns); gap: var(--gap, 0);">
 
             {% block cms_block_blur_elysium_block_slot_one %}
                 {% set element = block.slots.getSlot('left') %}

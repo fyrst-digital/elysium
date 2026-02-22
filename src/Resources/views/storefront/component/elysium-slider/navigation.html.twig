@@ -9,7 +9,7 @@
 {% endif %}
 
 {% block component_elysium_slider_navigation %}
-    <div class="{{ classes|join(' ') }}">
+    <div class="{{ classes|join(' ') }}" style="display: var(--nav-display, contents);">
 
         {% block component_elysium_slider_navigation_action_prev %}
             {% if element.translated.config.arrows.value.active %}

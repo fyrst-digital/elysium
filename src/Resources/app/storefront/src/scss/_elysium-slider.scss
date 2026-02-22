@@ -37,16 +37,6 @@
         }
 
         &-action {
-            --#{$prefix}btn-bg: var(--nav-action-bg-color, transparent);
-            --#{$prefix}btn-hover-bg: var(--nav-action-bg-color-active, transparent);
-            --#{$prefix}btn-color: var(--nav-action-icon-color, rgba(255, 255, 255, 0.75));
-            --#{$prefix}btn-hover-color: var(--nav-action-icon-color-active, rgba(255, 255, 255, 1));
-            --#{$prefix}btn-active-color: var(--nav-action-icon-color-active, rgba(255, 255, 255, 1));
-            --#{$prefix}btn-border-width: var(--nav-action-border-width, 2px);
-            --#{$prefix}btn-border-color: var(--nav-action-border-color, transparent);
-            --#{$prefix}btn-border-radius: var(--nav-action-border-radius, transparent);
-            --#{$prefix}btn-padding-x: var(--nav-action-padding, 10px);
-            --#{$prefix}btn-padding-y: var(--nav-action-padding, 10px);
 
             .icon {
                 width: var(--nav-action-icon-size, 24px);
@@ -74,14 +64,7 @@
             }
         }
 
-        &-navigation {
-            display: var(--nav-display, contents);
-        }
-
         &-pagination {
-            padding: var(--pagination-padding-y, 20px) var(--pagination-padding-x, 20px);
-            gap: var(--pagination-gap, 16px);
-            justify-content: var(--pagination-justify-content, center);
 
             &.pagination-bullets-bar {
                 .swiper-pagination-bullet {

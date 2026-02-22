@@ -7,7 +7,7 @@
     ] %}
 
     {% block blur_elysium_slide_container_element %}
-        <div class="{{ containerClasses|join(' ') }}">
+        <div class="{{ containerClasses|join(' ') }}" style="display: var(--container-display, flex); flex-direction: var(--container-direction, row); flex-wrap: var(--container-flex-wrap, nowrap); gap: var(--container-gap, 20px); justify-content: var(--container-justify-content, normal); align-items: var(--container-align-items, center); max-width: var(--container-max-width, none); padding: var(--container-padding-y, 15px) var(--container-padding-x, 15px); border-radius: var(--container-border-radius, 0px); background-color: var(--container-bg-color, transparent); overflow: hidden; flex-basis: 100%; width: 100%;">
             {{ block('blur_elysium_slide_content') }}
             {{ block('blur_elysium_slide_image') }}
         </div>

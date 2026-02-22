@@ -3,7 +3,7 @@
     {% block block_blur_elysium_slider_main_slot %}
         {% set element = block.slots.getSlot('main') %}
 
-        <div class="blur-elysium-block slider-block" data-cms-element-id="{{ element.id }}">
+        <div class="blur-elysium-block slider-block" data-cms-element-id="{{ element.id }}" style="padding: 0; grid-template-columns: var(--columns);">
             {% block block_blur_elysium_slider_main_slot_incldue %}
                 {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
             {% endblock %}

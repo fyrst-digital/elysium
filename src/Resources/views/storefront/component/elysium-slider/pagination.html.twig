@@ -17,6 +17,7 @@
         {% if label %}
             aria-label="{{ label }}"
         {% endif %}
-        class="{{ paginationClasses|join(' ') }}">
+        class="{{ paginationClasses|join(' ') }}"
+        style="padding: var(--pagination-padding-y, 20px) var(--pagination-padding-x, 20px); gap: var(--pagination-gap, 16px); justify-content: var(--pagination-justify-content, center);">
     </div>
 {% endblock %}

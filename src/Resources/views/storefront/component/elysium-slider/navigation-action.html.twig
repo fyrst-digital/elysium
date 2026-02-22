@@ -20,7 +20,8 @@
         {% if controlsId %}
             aria-controls="{{ controlsId }}"
         {% endif %}
-        class="{{ btnClasses|join(' ') }}">
+        class="{{ btnClasses|join(' ') }}"
+        style="--bs-btn-bg: var(--nav-action-bg-color, transparent); --bs-btn-hover-bg: var(--nav-action-bg-color-active, transparent); --bs-btn-color: var(--nav-action-icon-color, rgba(255, 255, 255, 0.75)); --bs-btn-hover-color: var(--nav-action-icon-color-active, rgba(255, 255, 255, 1)); --bs-btn-active-color: var(--nav-action-icon-color-active, rgba(255, 255, 255, 1)); --bs-btn-border-width: var(--nav-action-border-width, 2px); --bs-btn-border-color: var(--nav-action-border-color, transparent); --bs-btn-border-radius: var(--nav-action-border-radius, transparent); --bs-btn-padding-x: var(--nav-action-padding, 10px); --bs-btn-padding-y: var(--nav-action-padding, 10px);">
 
         {% block component_elysium_slider_navigation_action_icon %}
             {% if icon %}

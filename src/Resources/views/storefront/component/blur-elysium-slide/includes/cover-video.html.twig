@@ -2,7 +2,7 @@
     {% if slideData.slideCoverVideo %}
         <video autoplay muted loop
             class="blur-elysium-slide-cover-video"
-            style="border-radius: var(--slide-border-radius, 0px);">
+            style="border-radius: var(--slide-border-radius, 0px); user-select: none; object-fit: var(--cover-object-fit, cover); object-position: var(--cover-object-pos-x, center) var(--cover-object-pos-y, center);">
             <source src="{{slideData.slideCoverVideo.url}}" type="{{slideData.slideCoverVideo.mimeType}}">
         </video>
     {% endif %}
