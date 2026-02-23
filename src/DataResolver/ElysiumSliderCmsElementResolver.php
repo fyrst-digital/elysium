@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\DataResolver;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesCriteriaEvent;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumCmsSlidesResultEvent;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader;
 use Blur\BlurElysiumSlider\Struct\ElysiumSliderStruct;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
@@ -16,18 +14,11 @@ use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
 use Shopware\Core\Content\Cms\DataResolver\FieldConfig;
 use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
 use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
 {
-    /**
-     * @param EntityRepository<ElysiumSlidesCollection> $elysiumSlidesRepository
-     */
     public function __construct(
-        private readonly EntityRepository $elysiumSlidesRepository,
-        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ElysiumSlideLoader $slideLoader,
     ) {}
 
     public function getType(): string
@@ -58,33 +49,9 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
         $elysiumSlideIds = $elysiumSlideConfig->getValue();
 
         if (!empty($elysiumSlideIds)) {
-            $criteria = new Criteria($elysiumSlideIds);
-            $criteria->addAssociation('media');
-            /**
-             * @todo #76
-             * - only set association if the right linking type is set
-             * - create and include a centralized slide loader 
-             */
-            $criteria->addAssociation('product');
-            $criteria->addAssociation('product.media');
-            $criteria->addAssociation('product.cover');
-            $criteria->addAssociation('product.cover.media');
+            $slides = $this->slideLoader->load($elysiumSlideIds, null, $context);
 
-            $this->eventDispatcher->dispatch(
-                new ElysiumSlidesCriteriaEvent($criteria, $context)
-            );
-
-            /** @var ElysiumCmsSlidesResultEvent $elysiumSlideResult */
-            $elysiumSlideResult = $this->eventDispatcher->dispatch(
-                new ElysiumCmsSlidesResultEvent($this->elysiumSlidesRepository->search(
-                    $criteria,
-                    $context->getContext()
-                ), $context, $slot, 'cms-element-elysium-slider')
-            );
-
-            /** @var ElysiumSlidesEntity[] $elysiumSlides */
-            $elysiumSlides = $elysiumSlideResult->getResult()->getElements();
-            $elysiumSliderStruct->setSlideCollection($elysiumSlides);
+            $elysiumSliderStruct->setSlideCollection($slides->getElements());
             $slot->setData($elysiumSliderStruct);
         }
     }

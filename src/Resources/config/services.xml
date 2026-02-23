@@ -7,15 +7,13 @@
 
         <!-- Elysium Slider Data Resolver -->
         <service id="Blur\BlurElysiumSlider\DataResolver\ElysiumSliderCmsElementResolver">
-            <argument type="service" id="blur_elysium_slides.repository"/>
-            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader"/>
             <tag name="shopware.cms.data_resolver" />
         </service>
 
         <!-- Elysium Banner Data Resolver -->
         <service id="Blur\BlurElysiumSlider\DataResolver\ElysiumBannerCmsElementResolver">
-            <argument type="service" id="blur_elysium_slides.repository"/>
-            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader"/>
             <tag name="shopware.cms.data_resolver" />
         </service>
 
@@ -57,5 +55,16 @@
         <service id="Blur\BlurElysiumSlider\Twig\CreateSrcset" public="true">
             <tag name="twig.extension"/> <!--Required-->
         </service>
+
+        <!-- Elysium Slide Loader -->
+        <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader">
+            <argument type="service" id="blur_elysium_slides.repository"/>
+        </service>
+
+        <!-- Elysium Slide Route -->
+        <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideRoute" public="true">
+            <argument type="service" id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader"/>
+        </service>
+
     </services>
 </container>
