@@ -75,6 +75,8 @@ export const defaultSlideSettings: SlideSettings = {
             openExternal: false,
             overlay: false,
             showProductFocusImage: true,
+            showProductTitle: true,
+            showProductDescription: true,
         },
         bgColor: '',
         bgGradient: {

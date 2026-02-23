@@ -11,13 +11,17 @@
 
 {% block blur_elysium_slide %}
     {# overwrite headline content #}
-    {% if slideData.product.translated.name and slideData.translated.title is null %}
+    {% if slideData.slideSettings.slide.linking.showProductTitle is same as(true) and slideData.product.translated.name %}
         {% set headlineContent = slideData.product.translated.name %}
+    {% elseif slideData.translated.title %}
+        {% set headlineContent = slideData.translated.title %}
     {% endif %}
     
     {# overwrite description content #}
-    {% if slideData.product.translated.description and slideData.translated.description is null %}
+    {% if slideData.slideSettings.slide.linking.showProductDescription is same as(true) and slideData.product.translated.description %}
         {% set descriptionContent = slideData.product.translated.description|raw %}
+    {% elseif slideData.translated.description %}
+        {% set descriptionContent = slideData.translated.description|raw %}
     {% endif %}
 
     {# overwrite actions #}

@@ -29,6 +29,8 @@ export type SlideLinking = {
     openExternal: boolean;
     overlay: boolean;
     showProductFocusImage: boolean;
+    showProductTitle: boolean;
+    showProductDescription: boolean;
 };
 
 export type SlideTemplate = string | null | 'default';
