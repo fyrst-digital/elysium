@@ -20,6 +20,13 @@ export default Component.wrapComponentConfig({
         },
 
         headline() {
+            const showProductTitle = this.slide.slideSettings?.slide?.linking?.showProductTitle !== false;
+            const isProductLink = this.slide.slideSettings?.slide?.linking?.type === 'product';
+
+            if (isProductLink && showProductTitle && this.slide.product?.name) {
+                return this.slide.product.name;
+            }
+
             return this.slide.title || null
         },
 
@@ -52,6 +59,13 @@ export default Component.wrapComponentConfig({
         },
 
         description() {
+            const showProductDescription = this.slide.slideSettings?.slide?.linking?.showProductDescription !== false;
+            const isProductLink = this.slide.slideSettings?.slide?.linking?.type === 'product';
+
+            if (isProductLink && showProductDescription && this.slide.product?.description) {
+                return this.slide.product.description;
+            }
+
             return this.slide.description || null
         },
 

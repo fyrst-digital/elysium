@@ -235,7 +235,9 @@
                 "customUrlPlaceholder": "/my/url/path or https://example.com",
                 "customUrlHelpText": "Set the linking URL of the slide. This can be both an absolute or a relative URL.",
                 "selectProduct": "Select product",
-                "showProductFocusImage": "Show product image"
+                "showProductFocusImage": "Show product image",
+                "showProductTitle": "Show product title",
+                "showProductDescription": "Show product description"
             },
             "slideButtonLabel": {
                 "label": "Button label",

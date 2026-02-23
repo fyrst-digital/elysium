@@ -44,7 +44,9 @@ Version 4 of `BlurElysiumSlider` is exclusively compatible with Shopware 6.7. It
 
 ## Build, Lint & Test Commands
 
-### Lint Commands
+### Lint Commands (run from plugin root)
+Before run linter, run `npm install` to ensure the devDependecies exist. This is because shopware removes devDependencies when building.
+
 ```bash
 # Lint administration code (TypeScript/Vue)
 npm run lint:administration

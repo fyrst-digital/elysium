@@ -38,6 +38,9 @@ export default Component.wrapComponentConfig({
 
         slideCriteria() {
             const criteria = new Criteria();
+            criteria.addAssociation('product');
+            criteria.addAssociation('product.cover');
+            criteria.addAssociation('product.cover.media');
 
             return criteria;
         },

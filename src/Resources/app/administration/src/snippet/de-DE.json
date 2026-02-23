@@ -235,7 +235,9 @@
                 "customUrlPlaceholder": "/mein/shop/pfad oder https://example.com",
                 "customUrlHelpText": "Legt die Verlinkte Adresse fest. Dies kann sowohl eine absolute als auch eine relative Adresse sein",
                 "selectProduct": "Produkt wählen",
-                "showProductFocusImage": "Produktbild anzeigen"
+                "showProductFocusImage": "Produktbild anzeigen",
+                "showProductTitle": "Produkttitel anzeigen",
+                "showProductDescription": "Produktbeschreibung anzeigen"
             },
             "slideButtonLabel": {
                 "label": "Buttonbeschriftung",

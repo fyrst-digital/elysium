@@ -19,8 +19,6 @@ class ElysiumSlidesEntity extends Entity
 
     protected ?string $productId;
 
-    protected ?string $productVersionId;
-
     protected ?ProductEntity $product;
 
     protected ?string $slideCoverId;
@@ -74,22 +72,6 @@ class ElysiumSlidesEntity extends Entity
     public function setProductId(?string $productId): void
     {
         $this->productId = $productId;
-    }
-
-    /**
-     * Get the value of productVersionId
-     */
-    public function getProductVersionId(): ?string
-    {
-        return $this->productVersionId;
-    }
-
-    /**
-     * Set the value of productVersionId
-     */
-    public function setProductVersionId(?string $productVersionId): void
-    {
-        $this->productVersionId = $productVersionId;
     }
 
     /**

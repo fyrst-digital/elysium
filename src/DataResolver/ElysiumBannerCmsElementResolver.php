@@ -58,11 +58,18 @@ class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
 
         if (!empty($elysiumSlideId)) {
             $criteria = new Criteria([$elysiumSlideId]);
+            /**
+             * @todo #76
+             * - only set association if the right linking type is set
+             * - create and include a centralized slide loader 
+             */
             $criteria->addAssociation('media');
             $criteria->addAssociation('media.mediaFolder');
             $criteria->addAssociation('media.mediaFolder.configuration');
+            $criteria->addAssociation('product');
             $criteria->addAssociation('product.media');
             $criteria->addAssociation('product.cover');
+            $criteria->addAssociation('product.cover.media');
 
             $this->eventDispatcher->dispatch(
                 new ElysiumCmsSlidesCriteriaEvent($criteria, $context, $slot, self::EVENT_ID)
