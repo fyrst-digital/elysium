@@ -1,6 +1,9 @@
 # 4.5.1
 
 **Changelog**
+- Option zum Anzeigen/Ausblenden von Produktname und -beschreibung im Slide Editor hinzugefügt
+- Fokusbild-Anzeige bei gesetzter Produktverknüpfung wurde korrigiert
+- Slide-Produktzuordnung wurde korrigiert
 - Die Slide-Vorschau zeigt nun unterschiedliche Button-Farben und Größen entsprechend der Auswahl
 - Der Slide-Verlauf wird nun korrekt angezeigt, wenn Start- oder Endfarbe leer ist
 - Der Slide-Radius wird nun korrekt angezeigt, wenn ein Cover Bild oder Video gesetzt ist

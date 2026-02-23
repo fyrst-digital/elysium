@@ -1,6 +1,9 @@
 # 4.5.1
 
 **Changelog**
+- Option to show/hide product name and description in slide editor was added
+- Fixed focus image display when product linking is set
+- Fixed slide product association
 - Slide preview now correctly displays button colors and sizes matching the selection
 - Slide gradient is displayed correctly now if start or end color is empty
 - Slide radius is dispayed correctly if slide cover image or video is set
