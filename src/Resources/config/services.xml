@@ -62,8 +62,7 @@
         </service>
 
         <!-- Elysium Slide Route -->
-        <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\AbstractElysiumSlideRoute"
-                 class="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideRoute">
+        <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideRoute" public="true">
             <argument type="service" id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader"/>
         </service>
 
