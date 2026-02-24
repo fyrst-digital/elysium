@@ -33,7 +33,7 @@ class ElysiumSlideLoader
             $context?->getContext()
         );
 
-        return $result->getEntities();
+        return new ElysiumSlidesCollection($result->getEntities()->getElements());
     }
 
     private function addAssociations(Criteria $criteria): void
