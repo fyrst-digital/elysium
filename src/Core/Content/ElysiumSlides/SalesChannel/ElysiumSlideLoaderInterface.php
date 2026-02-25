@@ -10,5 +10,5 @@ use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 interface ElysiumSlideLoaderInterface
 {
-    public function load(array $slideIds, ?Criteria $criteria, SalesChannelContext $context): ElysiumSlidesCollection;
+    public function load(array $slideIds, ?Criteria $criteria, SalesChannelContext $context, ?string $identifier = null): ElysiumSlidesCollection;
 }

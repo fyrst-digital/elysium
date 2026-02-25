@@ -48,7 +48,7 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
         $elysiumSlideIds = $elysiumSlideConfig->getValue();
 
         if (!empty($elysiumSlideIds)) {
-            $slides = $this->slideLoader->load($elysiumSlideIds, null, $context);
+            $slides = $this->slideLoader->load($elysiumSlideIds, null, $context, "cms-element-elysium-slider-{$slot->getId()}");
 
             $elysiumSliderStruct->setSlideCollection($slides->getElements());
             $slot->setData($elysiumSliderStruct);

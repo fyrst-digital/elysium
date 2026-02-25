@@ -44,7 +44,7 @@ class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
         $elysiumSlideId = $fieldConfigCollection->get('elysiumSlide')?->getValue() ?? '';
 
         if (!empty($elysiumSlideId)) {
-            $slides = $this->slideLoader->load([$elysiumSlideId], null, $context);
+            $slides = $this->slideLoader->load([$elysiumSlideId], null, $context, "cms-element-elysium-banner-{$slot->getId()}");
             $slide = $slides->get($elysiumSlideId);
 
             $elysiumBannerStruct->setElysiumSlide($slide);
