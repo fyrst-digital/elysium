@@ -14,6 +14,7 @@ use Shopware\Core\PlatformRequest;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 
 #[Route(defaults: [PlatformRequest::ATTRIBUTE_ROUTE_SCOPE => [StoreApiRouteScope::ID]])]
 class ElysiumSlideRoute extends AbstractElysiumSlideRoute
@@ -35,7 +36,10 @@ class ElysiumSlideRoute extends AbstractElysiumSlideRoute
             new ElysiumSlidesResultEvent($this->loadSlides($criteria, $context), $context, $identifier)
         );
 
-        return new ElysiumSlideRouteResponse($result->getResult()->getEntities());
+        /** @var ElysiumSlidesCollection $slides */
+        $slides = $result->getResult()->getEntities();
+
+        return new ElysiumSlideRouteResponse($slides);
     }
 
     #[Route(path: '/store-api/elysium-slide/{slideId}', name: 'store-api.elysium-slide.detail', methods: ['GET'], defaults: ['_entity' => 'blur_elysium_slides'])]

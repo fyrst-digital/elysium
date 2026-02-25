@@ -11,6 +11,8 @@ class ElysiumSlideRouteResponse extends StoreApiResponse
 {
     public function getSlides(): ElysiumSlidesCollection
     {
-        return $this->object;
+        /** @var ElysiumSlidesCollection $slides */
+        $slides = $this->object;
+        return $slides;
     }
 }
