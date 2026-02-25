@@ -7,6 +7,7 @@
 - Slide preview now correctly displays button colors and sizes matching the selection
 - Slide gradient is displayed correctly now if start or end color is empty
 - Slide radius is dispayed correctly if slide cover image or video is set
+- Removed `ElysiumCmsSlidesResultEvent` without replacement. The more common `ElysiumSlidesResultEvent` can be used
 
 # 4.5.0
 

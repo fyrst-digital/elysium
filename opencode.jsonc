@@ -1,9 +1,33 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "lsp": {
+    "php intelephense": {
+      "disabled": true
+    },
+    "intelephense": {
+      "command": [
+        "intelephense",
+        "--stdio"
+      ],
+      "extensions": [
+        ".php"
+      ],
+      "initialization": {
+        "environment": {
+          "documentRoot": "../../../"
+        }
+      }
+    }
+  },
   "mcp": {
     "chrome-devtools": {
       "type": "local",
-      "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--headless"],
+      "command": [
+        "npx",
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--headless"
+      ],
       "enabled": true
     }
   }

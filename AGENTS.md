@@ -168,6 +168,8 @@ export default {
 
 ### PHP
 
+- Always prefer curly brace syntax literals to concatenate strings: `"string1 {$object->getId()} string2"`, `"string1 {$variable} string2"`
+
 #### Formatting
 - `declare(strict_types=1);` at top of every file
 - PSR-4 autoloading: namespace `Blur\BlurElysiumSlider\`
