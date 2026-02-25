@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlideLoadedEvent;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesCriteriaEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -30,12 +29,8 @@ class ElysiumSlideLoader implements ElysiumSlideLoaderInterface
             new ElysiumSlidesCriteriaEvent($criteria, $context, $identifier)
         );
 
-        $response = $this->slideRoute->load($criteria, $context);
-        $slides = $response->getSlides();
+        $response = $this->slideRoute->load($criteria, $context, $identifier);
 
-        $event = new ElysiumSlideLoadedEvent($slides, $context);
-        $this->eventDispatcher->dispatch($event);
-
-        return $event->getSlides();
+        return $response->getSlides();
     }
 }

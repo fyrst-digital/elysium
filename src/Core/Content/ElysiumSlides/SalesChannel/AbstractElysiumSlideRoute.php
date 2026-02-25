@@ -11,7 +11,7 @@ abstract class AbstractElysiumSlideRoute
 {
     abstract public function getDecorated(): AbstractElysiumSlideRoute;
 
-    abstract public function load(Criteria $criteria, SalesChannelContext $context): ElysiumSlideRouteResponse;
+    abstract public function load(Criteria $criteria, SalesChannelContext $context, ?string $identifier = null): ElysiumSlideRouteResponse;
 
     abstract public function loadDetail(string $slideId, SalesChannelContext $context): ElysiumSlideRouteResponse;
 }
