@@ -31,13 +31,11 @@ class ElysiumSlideRoute extends AbstractElysiumSlideRoute
     #[Route(path: '/store-api/elysium-slide', name: 'store-api.elysium-slide.search', methods: ['GET', 'POST'], defaults: ['_entity' => 'blur_elysium_slides'])]
     public function load(Criteria $criteria, SalesChannelContext $context, ?string $identifier = null): ElysiumSlideRouteResponse
     {
-        $result = $this->loadSlides($criteria, $context);
-
-        $this->eventDispatcher->dispatch(
-            new ElysiumSlidesResultEvent($result, $context, $identifier)
+        $result = $this->eventDispatcher->dispatch(
+            new ElysiumSlidesResultEvent($this->loadSlides($criteria, $context), $context, $identifier)
         );
 
-        return new ElysiumSlideRouteResponse($result->getEntities());
+        return new ElysiumSlideRouteResponse($result->getResult()->getEntities());
     }
 
     #[Route(path: '/store-api/elysium-slide/{slideId}', name: 'store-api.elysium-slide.detail', methods: ['GET'], defaults: ['_entity' => 'blur_elysium_slides'])]
