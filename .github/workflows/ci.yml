@@ -1,7 +1,7 @@
 name: CI
 
 env:
-  SHOPWARE_CLI_VERSION: '0.10.4'
+  SHOPWARE_CLI_VERSION: '0.11.0'
 
 on:
   push:
