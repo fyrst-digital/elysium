@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\DataResolver;
 
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader;
 use Blur\BlurElysiumSlider\Struct\ElysiumSliderStruct;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;

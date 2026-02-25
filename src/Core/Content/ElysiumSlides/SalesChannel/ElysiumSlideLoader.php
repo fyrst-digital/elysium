@@ -5,47 +5,32 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlideLoadedEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class ElysiumSlideLoader
+class ElysiumSlideLoader implements ElysiumSlideLoaderInterface
 {
     public function __construct(
-        private readonly EntityRepository $elysiumSlidesRepository,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly AbstractElysiumSlideRoute $slideRoute,
     ) {}
 
-    public function load(
-        array $slideIds,
-        ?Criteria $criteria = null,
-        SalesChannelContext $context = null
-    ): ElysiumSlidesCollection {
+    public function load(array $slideIds, ?Criteria $criteria, SalesChannelContext $context): ElysiumSlidesCollection
+    {
         $criteria ??= new Criteria();
 
         if (!empty($slideIds)) {
             $criteria->setIds($slideIds);
         }
 
-        $this->addAssociations($criteria);
+        $response = $this->slideRoute->load($criteria, $context);
+        $slides = $response->getSlides();
 
-        $result = $this->elysiumSlidesRepository->search(
-            $criteria,
-            $context?->getContext()
-        );
+        $event = new ElysiumSlideLoadedEvent($slides, $context);
+        $this->eventDispatcher->dispatch($event);
 
-        return new ElysiumSlidesCollection($result->getEntities()->getElements());
-    }
-
-    private function addAssociations(Criteria $criteria): void
-    {
-        $criteria->addAssociation('media');
-        $criteria->addAssociation('media.mediaFolder');
-        $criteria->addAssociation('media.mediaFolder.configuration');
-        $criteria->addAssociation('product');
-        $criteria->addAssociation('product.media');
-        $criteria->addAssociation('product.cover');
-        $criteria->addAssociation('product.cover.media');
-        $criteria->addAssociation('category');
-        $criteria->addAssociation('category.media');
+        return $event->getSlides();
     }
 }

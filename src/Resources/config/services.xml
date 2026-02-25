@@ -56,14 +56,15 @@
             <tag name="twig.extension"/> <!--Required-->
         </service>
 
-        <!-- Elysium Slide Loader -->
+        <!-- Elysium Slide Loader - depends on Route -->
         <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader">
-            <argument type="service" id="blur_elysium_slides.repository"/>
+            <argument type="service" id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface"/>
+            <argument type="service" id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideRoute"/>
         </service>
 
         <!-- Elysium Slide Route -->
         <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideRoute" public="true">
-            <argument type="service" id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader"/>
+            <argument type="service" id="blur_elysium_slides.repository"/>
         </service>
 
     </services>
