@@ -154,7 +154,7 @@
                     {% block cms_element_elysium_slider_pagination_inside_slider %}
                         {% if element.translated.config.navigation.value.active and element.translated.config.navigation.value.position is same as('in_slider') %}
                             {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
-                                paginationClasses: ['d-flex', 'flex-wrap', 'position-absolute', 'bottom-0', 'start-0', 'end-0', 'top-auto', 'z-2'],
+                                paginationClasses: ['d-flex', 'flex-wrap', 'position-absolute', 'bottom-0', 'start-0', 'end-0', 'top-auto', 'z-2', 'pagination-in-slider'],
                                 label: 'elysiumSlider.pagination.label'|trans
                             } %}
                         {% endif %}
@@ -164,12 +164,11 @@
                 {% block cms_element_elysium_slider_pagination_below_slider %}
                     {% if element.translated.config.navigation.value.active and element.translated.config.navigation.value.position is same as('below_slider') %}
                         {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
-                            paginationClasses: ['d-flex', 'flex-wrap'],
+                            paginationClasses: ['d-flex', 'flex-wrap', 'pagination-below-slider'],
                             label: 'elysiumSlider.pagination.label'|trans
                         } %}
                     {% endif %}
                 {% endblock %}
-
             {% endblock %}
         </section>
     {% else %}
