@@ -8,6 +8,8 @@
 - Slide gradient is displayed correctly now if start or end color is empty
 - Slide radius is dispayed correctly if slide cover image or video is set
 - Removed `ElysiumCmsSlidesResultEvent` without replacement. The more common `ElysiumSlidesResultEvent` can be used
+- Fixed pagination positioning in slider element - Fixes #83
+- Correction of the position setting in the slider navigation
 
 # 4.5.0
 
