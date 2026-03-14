@@ -84,8 +84,12 @@ store:
       - "Lighthouse-optimized: picture tag, lazy loading, thumbnails, and fixed aspect ratios for top performance and fewer layout shifts"
   faq:
     de: 
+      - question: Was sind Technical Preview Funktionen und bleiben sie kostenlos?
+        answer: Technical Preview Funktionen sind kostenlose, experimentelle Beta-Funktionen. Sie ermöglichen das Testen kommender Funktionen vor der offiziellen Veröffentlichung. Alle als Technical Preview gekennzeichneten Funktionen sind für die Zukunft als kostenpflichtige Pro Features geplant. Sobald eine Technical Preview Funktion in den Pro-Status übergeht, ist sie nur noch über ein kostenpflichtiges Abonnement über Shopwares In-App-Käufe verfügbar.
       - question: Wie wird die kostenfreie Version der Elysium Erweiterung unterstützt
         answer: Diese kostenfreie Version der Elysium Erweiterung erhält nicht priorisierte Fehlerbehebungen und Kompatibilität Updates. Nur die aktuellste Major Version der Erweiterung, welche jeweils mit der aktuellsten Shopware Version kompatibel ist, erhält Updates. Außerdem wird kein Support garantiert und es wird keine Funktionserweiterungen geben.
     en: 
+      - question: What are Technical Preview Features and will they remain free?
+        answer: Technical Preview features are free, experimental beta functionality. They allow you to test upcoming capabilities before their official release. Every feature marked as "Technical Preview" is planned to become a paid Pro Feature in the future. Once a Technical Preview feature transitions to Pro status, it will only be available through a paid subscription plan via Shopware's in-app purchases.
       - question: How is the free version of the Elysium extension supported?
         answer: This free version of the Elysium extension receives non-prioritized bug fixes and compatibility updates. Only the latest major version of the extension, which is compatible with the latest Shopware version, will receive updates. Additionally, no support is guaranteed, and there will be no feature extensions.

@@ -16,4 +16,11 @@ Slides can be linked with products, individually extended via additional field s
 ## Optimized for Performance and SEO  
 For optimal performance, the plugin is Lighthouse-optimized: images are embedded via the picture tag, with lazy loading and fixed aspect ratios to avoid layout shifts. SEO-relevant content such as H-tags and structured banners can also be used in a targeted manner.
 
+## Technical Preview Features
+
+Technical Preview features are experimental enhancements and features provided free of charge. They allow you to test upcoming features before their official release.
+
+**Please note that every feature labelled as a 'Technical Preview' is planned to become a paid 'Pro Feature' in the future.** Once a Technical Preview feature transitions to Pro status, it will only be available via in-app purchases as part of a paid Pro plan.  
+Take advantage of the free trial period to evaluate these features and determine whether they meet your needs.
+
 **Do you like our extension? Feel free to leave us a review.**

@@ -16,4 +16,11 @@ Slides lassen sich mit Produkten verknüpfen, über Zusatzfeld-Sets individuell 
 ## Optimiert für Performance und SEO  
 Für beste Performance ist das Plugin Lighthouse-optimiert: Bilder werden per Picture-Tag eingebunden, mit Lazy Loading und festen Seitenverhältnissen zur Vermeidung von Layout-Shifts. Auch SEO-relevante Inhalte wie H-Tags und strukturierte Banner lassen sich gezielt einsetzen.
 
+## Technische Vorschau Funktionen
+
+Technische Vorschau Funktionen sind experimentelle Funktionen und Erweiterungen, die kostenlos zur Verfügung gestellt werden. Diese ermöglichen es dir, kommende Funktionen vor deren offizieller Veröffentlichung zu testen.
+
+**Jede als "Technische Vorschau" gekennzeichnete Funktion ist für die Zukunft als kostenpflichtiges "Pro Feature" geplant.** Sobald eine Technische Vorschau Funktion in den Pro-Status übergeht, ist sie nur noch über ein kostenpflichtigen Pro-Plan über In-App-Käufe verfügbar.  
+Nutze die kostenlose Phase, um diese Funktionen für deinen Bedarf zu evaluieren.
+
 **Dir gefällt unsere Erweiterung? Dann lass uns gerne eine Bewertung da.**
