@@ -15,6 +15,6 @@
     },
     "dependencies": {
         "@shopware-ag/meteor-component-library": "^4.24.0",
-        "vite": "^6.3.5"
+        "vite": "^6.4.1"
     }
 }
