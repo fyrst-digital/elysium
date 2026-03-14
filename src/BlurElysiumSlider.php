@@ -10,9 +10,23 @@ use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Shopware\Core\Framework\Feature;
 
 class BlurElysiumSlider extends Plugin
 {
+    public const FEATURES = [
+        'elysium_preview_elasticsearch' => ['description' => 'Enables Elasticsearch compatibility in the Admin']
+    ];
+
+    public function boot()
+    {
+        parent::boot();
+
+        if (count(self::FEATURES) > 0) {
+            Feature::registerFeatures(self::FEATURES);
+        }
+    }
+
     public function postInstall(InstallContext $installContext): void
     {
         /** @var ContainerInterface $container */
