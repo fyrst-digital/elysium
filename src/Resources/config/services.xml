@@ -74,6 +74,8 @@
         <service id="Blur\BlurElysiumSlider\Elasticsearch\Admin\Indexer\ElysiumSlidesAdminSearchIndexer">
             <argument type="service" id="Doctrine\DBAL\Connection"/>
             <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\IteratorFactory"/>
+            <argument type="service" id="blur_elysium_slides.repository"/>
+            <argument>%elasticsearch.indexing_batch_size%</argument>
             <tag name="shopware.elastic.admin-searcher-index" key="blur_elysium_slides"/>
         </service>
 
