@@ -6,20 +6,27 @@ namespace Blur\BlurElysiumSlider;
 
 use Blur\BlurElysiumSlider\Bootstrap\Lifecycle;
 use Blur\BlurElysiumSlider\Defaults;
+use Blur\BlurElysiumSlider\DependencyInjection\CompilerPass\ElysiumCompilerPass;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Shopware\Core\Framework\Feature;
 
 class BlurElysiumSlider extends Plugin
 {
-
     public function boot(): void
     {
         parent::boot();
         Feature::registerFeatures(Defaults::FEATURES);
+    }
+
+    public function build(ContainerBuilder $container): void
+    {
+        parent::build($container);
+        $container->addCompilerPass(new ElysiumCompilerPass());
     }
 
     public function postInstall(InstallContext $installContext): void
