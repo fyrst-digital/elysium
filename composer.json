@@ -9,7 +9,7 @@
         "Banner",
         "Slider"
     ],
-    "version": "4.5.1",
+    "version": "4.6.0",
     "type": "shopware-platform-plugin",
     "minimum-stability": "stable",
     "license": "MIT",
@@ -21,7 +21,8 @@
         }
     ],
     "require": {
-        "shopware/core": "^6.7"
+        "shopware/core": "^6.7",
+        "shopware/elasticsearch": "^6.7"
     },
     "extra": {
         "shopware-plugin-class": "Blur\\BlurElysiumSlider\\BlurElysiumSlider",
