@@ -9,6 +9,8 @@ changelog:
 validation:
   ignore:
     - message: 'Internal error: Class Shopware\Administration\Notification\NotificationService was not found while trying to analyse it'
+    - message: 'Instantiation of deprecated class Symfony\\Component\\DependencyInjection\\Loader\\XmlFileLoader'
+    - message: 'Call to method load\\(\\) of deprecated class Symfony\\Component\\DependencyInjection\\Loader\\XmlFileLoader'
 
 store:
   availabilities:
