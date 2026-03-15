@@ -1,3 +1,8 @@
+# 4.6.0
+
+**Changelog**
+- Added Elasticsearch support for slide search in administration (technical preview)
+
 # 4.5.1
 
 **Changelog**
