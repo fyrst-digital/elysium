@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider;
 
 use Blur\BlurElysiumSlider\Bootstrap\Lifecycle;
+use Blur\BlurElysiumSlider\Defaults;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
@@ -14,17 +15,11 @@ use Shopware\Core\Framework\Feature;
 
 class BlurElysiumSlider extends Plugin
 {
-    public const FEATURES = [
-        'elysium_preview_elasticsearch' => ['description' => 'Enables Elasticsearch compatibility in the Admin']
-    ];
 
     public function boot(): void
     {
         parent::boot();
-
-        if (count(self::FEATURES) > 0) {
-            Feature::registerFeatures(self::FEATURES);
-        }
+        Feature::registerFeatures(Defaults::FEATURES);
     }
 
     public function postInstall(InstallContext $installContext): void

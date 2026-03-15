@@ -73,7 +73,13 @@ final class ElysiumSlidesAdminSearchIndexer extends AbstractAdminIndexer
         $mapped = [];
         foreach ($data as $row) {
             $id = (string) $row['id'];
-            $text = \implode(' ', array_filter($row));
+            /**
+             * @todo
+             * @deprecated
+             * Keep this for reference. Remove before merging PR
+             * $text = \implode(' ', array_filter($row));
+             */
+            $text = \implode(' ', array_filter([$row['name'], $row['title']]));
             $mapped[$id] = ['id' => $id, 'text' => \strtolower($text)];
         }
 
