@@ -17,11 +17,9 @@ use Shopware\Core\Framework\Plugin\Exception\DecorationPatternException;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Elasticsearch\Admin\Indexer\AbstractAdminIndexer;
 
-final class ElysiumSlidesAdminSearchIndexer extends AbstractAdminIndexer
+class ElysiumSlidesAdminSearchIndexer extends AbstractAdminIndexer
 {
     /**
-     * @internal
-     *
      * @param EntityRepository<ElysiumSlidesCollection> $repository
      */
     public function __construct(

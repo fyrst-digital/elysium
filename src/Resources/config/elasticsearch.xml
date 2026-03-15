@@ -5,7 +5,8 @@
 
     <services>
         <!-- Elasticsearch Admin Search Indexer -->
-        <service id="Blur\BlurElysiumSlider\Elasticsearch\Admin\Indexer\ElysiumSlidesAdminSearchIndexer">
+        <service id="Blur\BlurElysiumSlider\Elasticsearch\Admin\Indexer\ElysiumSlidesAdminSearchIndexer"
+        class="Blur\BlurElysiumSlider\Elasticsearch\Admin\Indexer\ElysiumSlidesAdminSearchIndexer">
             <argument type="service" id="Doctrine\DBAL\Connection"/>
             <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\IteratorFactory"/>
             <argument type="service" id="blur_elysium_slides.repository"/>

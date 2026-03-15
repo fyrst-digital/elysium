@@ -17,15 +17,11 @@ use Shopware\Core\Framework\Feature;
 
 class BlurElysiumSlider extends Plugin
 {
-    public function boot(): void
-    {
-        parent::boot();
-        Feature::registerFeatures(Defaults::FEATURES);
-    }
 
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
+        Feature::registerFeatures(Defaults::FEATURES);
         $container->addCompilerPass(new ElysiumCompilerPass());
     }
 

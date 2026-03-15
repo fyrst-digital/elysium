@@ -24,10 +24,17 @@ Once installed, Elysium adds new elements to your Shopping Experience editor. Si
 
 ## Elasticsearch (technical preview)
 
-1. Enable feature flag: FEATURE_ELYSIUM_PREVIEW_ELASTICSEARCH=1
-2. Enable ES in admin: SHOPWARE_ADMIN_ES_ENABLED=1
-3. Run: bin/console es:admin:index
-4. Elysium slides will now appear in admin search
+1. Enable ES in admin `SHOPWARE_ADMIN_ES_ENABLED=1` and set an url `ADMIN_OPENSEARCH_URL=http://localhost:9200`, for example
+2. Run `bin/console es:admin:index` or other methods to index the existing Elysium Slides entities
+3. Elysium slides will now appear in admin search
+
+To verify that the Elysium Slides was corectlly indexed, visit:
+```
+http://<opensearch_url>/sw-admin-blur-elysium-slides_*/_search?pretty
+http://localhost:9200/sw-admin-blur-elysium-slides_*/_search?pretty
+```
+In the response there should be the indexed slides with their search strings.
+**Note** `es:admin:test` ignores custom entities so no entries will return here
 
 ## Installation
 
