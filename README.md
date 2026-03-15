@@ -22,6 +22,13 @@ Elysium transforms how you design your online store. Instead of wrestling with c
 
 Once installed, Elysium adds new elements to your Shopping Experience editor. Simply create a new shopping experience page or edit an existing one, then drag the Elysium Slider, Elysium Banner, or Elysium Section elements onto your page. Configure your content using the intuitive settings panel - no coding required.
 
+## Elasticsearch (technical preview)
+
+1. Enable feature flag: FEATURE_ELYSIUM_PREVIEW_ELASTICSEARCH=1
+2. Enable ES in admin: SHOPWARE_ADMIN_ES_ENABLED=1
+3. Run: bin/console es:admin:index
+4. Elysium slides will now appear in admin search
+
 ## Installation
 
 ### Manual 

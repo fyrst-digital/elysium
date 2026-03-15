@@ -13,6 +13,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Inherited;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\SearchRanking;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\JsonField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
@@ -68,8 +69,8 @@ class ElysiumSlidesDefinition extends EntityDefinition
             // slide settings
             (new JsonField('slide_settings', 'slideSettings'))->addFlags(new ApiAware()),
             // translation
-            (new TranslatedField('name'))->addFlags(new ApiAware(), new Required(), new Inherited()),
-            (new TranslatedField('title'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('name'))->addFlags(new ApiAware(), new Required(), new Inherited(), new SearchRanking(SearchRanking::HIGH_SEARCH_RANKING)),
+            (new TranslatedField('title'))->addFlags(new ApiAware(), new Inherited(), new SearchRanking(SearchRanking::MIDDLE_SEARCH_RANKING)),
             (new TranslatedField('description'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('buttonLabel'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('url'))->addFlags(new ApiAware(), new Inherited()),

@@ -18,7 +18,7 @@ class BlurElysiumSlider extends Plugin
         'elysium_preview_elasticsearch' => ['description' => 'Enables Elasticsearch compatibility in the Admin']
     ];
 
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
 
