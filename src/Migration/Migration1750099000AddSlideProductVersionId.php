@@ -54,13 +54,21 @@ class Migration1750099000AddSlideProductVersionId extends MigrationStep
 
     private function dropOldForeignKey(Connection $connection): void
     {
+        if (!$this->foreignKeyExists(
+            $connection,
+            'blur_elysium_slides',
+            'fk.blur_elysium_slides.product_id'
+        )) {
+            return;
+        }
+
         try {
             $connection->executeStatement('
                 ALTER TABLE `blur_elysium_slides`
                 DROP FOREIGN KEY `fk.blur_elysium_slides.product_id`
             ');
         } catch (\Exception $e) {
-            if (!preg_match('/Cannot drop foreign key/', $e->getMessage())) {
+            if (!preg_match(Defaults::MIGRATION_FK_NOT_EXISTS, $e->getMessage())) {
                 throw $e;
             }
         }
@@ -68,6 +76,14 @@ class Migration1750099000AddSlideProductVersionId extends MigrationStep
 
     private function addNewForeignKey(Connection $connection): void
     {
+        if ($this->foreignKeyExists(
+            $connection,
+            'blur_elysium_slides',
+            'fk.blur_elysium_slides.product_id'
+        )) {
+            return;
+        }
+
         try {
             $connection->executeStatement('
                 ALTER TABLE `blur_elysium_slides`
@@ -76,9 +92,20 @@ class Migration1750099000AddSlideProductVersionId extends MigrationStep
                 REFERENCES `product` (`id`, `version_id`) ON DELETE SET NULL ON UPDATE CASCADE
             ');
         } catch (\Exception $e) {
-            if (!preg_match('/Duplicate key name/', $e->getMessage())) {
+            if (!preg_match(Defaults::MIGRATION_FK_ALREADY_EXISTS, $e->getMessage())) {
                 throw $e;
             }
         }
+    }
+
+    private function foreignKeyExists(Connection $connection, string $tableName, string $constraintName): bool
+    {
+        return (bool) $connection->fetchOne(
+            'SELECT 1 FROM information_schema.TABLE_CONSTRAINTS
+            WHERE CONSTRAINT_NAME = :constraintName
+            AND TABLE_NAME = :tableName
+            AND CONSTRAINT_TYPE = \'FOREIGN KEY\'',
+            ['constraintName' => $constraintName, 'tableName' => $tableName]
+        );
     }
 }

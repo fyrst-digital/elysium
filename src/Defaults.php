@@ -10,6 +10,10 @@ final class Defaults
 
     public const MIGRATION_COLUMN_NOT_EXISTS = '/unknown column|SQLSTATE[42S22]/i';
 
+    public const MIGRATION_FK_NOT_EXISTS = '/cannot drop foreign key|can\'t drop foreign key|error dropping foreign key/i';
+
+    public const MIGRATION_FK_ALREADY_EXISTS = '/duplicate key name|duplicate foreign key/i';
+
     /**
      * @var string
      */
