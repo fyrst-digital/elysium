@@ -37,6 +37,13 @@ final class Defaults
 
     public const CMS_SECTION_SETTINGS_KEY = 'elysiumSectionSettings';
 
+    public const FEATURES = [
+        'elysium_preview_elasticsearch' => [
+            'description' => 'Enables Elasticsearch compatibility in the Admin',
+            'default' => true
+        ]
+    ];
+
     /**
      * Provides default section configuration settings for the Elysium Section.
      *
