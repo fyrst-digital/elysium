@@ -1,3 +1,9 @@
+# 4.6.1
+
+**Changelog**
+- Fixed migration `1750099000` to prevent update errors when foreign keys already exist or are missing
+- Added database migration tests to ensure reliability
+
 # 4.6.0
 
 **Changelog**

@@ -1,3 +1,9 @@
+# 4.6.1
+
+**Changelog**
+- Migration `1750099000` korrigiert um Aktualisierungsfehler zu vermeiden, wenn Fremdschlüssel bereits existieren oder fehlen
+- PHP Unit Tests für Migrationen hinzugefügt um Zuverlässigkeit zu gewährleisten
+
 # 4.6.0
 
 **Changelog**
