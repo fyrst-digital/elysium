@@ -16,6 +16,27 @@ class Migration1744028421SetDefaultMediaFolderIdTest extends AbstractMigrationTe
 
     protected function tearDown(): void
     {
+        // Clean up in reverse dependency order (child tables first)
+
+        // Delete media entries created by this test
+        $this->connection->executeStatement(
+            "DELETE FROM media WHERE file_name LIKE 'test-image%'"
+        );
+
+        // Clean up media folders created by tests
+        $defaultFolderId = $this->connection->fetchOne(
+            'SELECT id FROM media_default_folder WHERE entity = ?',
+            ['blur_elysium_slides']
+        );
+
+        if ($defaultFolderId) {
+            // Delete any media folders linked to our default folder
+            $this->connection->executeStatement(
+                'DELETE FROM media_folder WHERE default_folder_id = ?',
+                [$defaultFolderId]
+            );
+        }
+
         $this->dropTableIfExists('blur_elysium_slides_translation');
         $this->dropTableIfExists('blur_elysium_slides');
         parent::tearDown();

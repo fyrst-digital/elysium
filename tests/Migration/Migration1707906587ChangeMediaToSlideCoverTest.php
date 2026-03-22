@@ -3,6 +3,7 @@
 namespace Blur\BlurElysiumSlider\Tests\Migration;
 
 use Blur\BlurElysiumSlider\Migration\Migration1707906587ChangeMediaToSlideCover;
+use Shopware\Core\Framework\Uuid\Uuid;
 
 class Migration1707906587ChangeMediaToSlideCoverTest extends AbstractMigrationTestCase
 {
@@ -63,5 +64,27 @@ class Migration1707906587ChangeMediaToSlideCoverTest extends AbstractMigrationTe
 
         $this->assertColumnExists('blur_elysium_slides', 'slide_cover_id');
         $this->assertColumnExists('blur_elysium_slides', 'slide_cover_mobile_id');
+    }
+
+    public function testMigrationPreservesExistingData(): void
+    {
+        $mediaId = Uuid::randomBytes();
+        $mediaPortraitId = Uuid::randomBytes();
+
+        $slideId = $this->insertSlide([
+            'media_id' => $mediaId,
+            'media_portrait_id' => $mediaPortraitId,
+        ]);
+
+        $migration = new Migration1707906587ChangeMediaToSlideCover();
+        $this->runMigration($migration);
+
+        $slide = $this->connection->fetchAssociative(
+            'SELECT slide_cover_id, slide_cover_mobile_id FROM blur_elysium_slides WHERE id = ?',
+            [$slideId]
+        );
+
+        static::assertEquals($mediaId, $slide['slide_cover_id'], 'media_id data should be preserved in slide_cover_id');
+        static::assertEquals($mediaPortraitId, $slide['slide_cover_mobile_id'], 'media_portrait_id data should be preserved in slide_cover_mobile_id');
     }
 }
