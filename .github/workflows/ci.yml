@@ -148,7 +148,7 @@ jobs:
 
       - name: zip extension
         run: |
-          shopware-cli extension zip --disable-git --release ${{ github.workspace }}
+          shopware-cli extension zip --disable-git ${{ github.workspace }}
 
       - name: List
         run: | 
