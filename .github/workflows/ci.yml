@@ -74,8 +74,8 @@ jobs:
         with:
           path: custom/plugins/BlurElysiumSlider
 
-      - name: Run Migration Tests
-        run: ./vendor/bin/phpunit --configuration="custom/plugins/BlurElysiumSlider/phpunit.xml" --testsuite migration
+      - name: Run Tests
+        run: ./vendor/bin/phpunit --configuration="custom/plugins/BlurElysiumSlider/phpunit.xml"
 
   build-changelog:
     runs-on: ubuntu-latest
