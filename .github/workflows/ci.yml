@@ -123,6 +123,27 @@ jobs:
           name: BlurElysiumSlider
           path: ${{ github.workspace }}/BlurElysiumSlider.zip
 
+  deploy-extension-to-store-debug:
+    runs-on: ubuntu-latest
+    needs: [build-extension]
+    env:
+      SHOPWARE_CLI_ACCOUNT_EMAIL: ${{ secrets.SHOPWARE_CLI_ACCOUNT_EMAIL }}
+      SHOPWARE_CLI_ACCOUNT_PASSWORD: ${{ secrets.SHOPWARE_CLI_ACCOUNT_PASSWORD }}
+    steps:
+      - name: Get extension artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: BlurElysiumSlider
+          path: ${{ github.workspace }}
+
+      - name: List
+        run: | 
+          ls -la
+
+      - name: Deploy extension to store
+        run: |
+          shopware-cli account producer extension upload --skip-for-review-result ${{ github.workspace }}/BlurElysiumSlider/BlurElysiumSlider.zip
+
   deploy-extension-to-store:
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
