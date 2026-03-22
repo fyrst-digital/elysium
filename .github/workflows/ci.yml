@@ -48,7 +48,7 @@ jobs:
       - name: Validate plugin
         run: |
           find ${{ github.workspace }} -type f \( -name ".eslintrc.js" -o -name ".eslintignore" -o -name ".gitkeep" \) -delete
-          rm -rf .devops .changelogs .github .git .gitignore .vscode store opencode.jsonc AGENTS.md 
+          rm -rf .devops .changelogs .github .git .gitignore .vscode .opencode store opencode.jsonc AGENTS.md 
           shopware-cli extension validate --full --reporter github ${{ github.workspace }}
 
       - name: Build plugin
@@ -140,6 +140,15 @@ jobs:
         with:
           name: BlurElysiumSlider
           path: ${{ github.workspace }}
+
+      - name: Install shopware-cli
+        uses: shopware/shopware-cli-action@v3
+        with:
+          version: ${{ env.SHOPWARE_CLI_VERSION }}
+
+      - name: zip extension
+        run: |
+          shopware-cli extension zip --disable-git --release ${{ github.workspace }}
 
       - name: List
         run: | 
