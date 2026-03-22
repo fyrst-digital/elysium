@@ -75,7 +75,7 @@ jobs:
           php-version: '8.3'
 
       - name: Run Migration Tests
-        run: ./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider/phpunit.xml" --testsuite migration
+        run: ./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider" --testsuite migration
 
   build-changelog:
     runs-on: ubuntu-latest
