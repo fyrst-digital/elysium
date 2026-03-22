@@ -60,7 +60,7 @@ jobs:
             '.*'
             **/.*
 
-  test-migrations:
+  php-unit-test:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Shopware
@@ -100,7 +100,7 @@ jobs:
 
   build-extension:
     runs-on: ubuntu-latest
-    needs: [validate, lint, test-migrations]
+    needs: [validate, lint, php-unit-test]
     steps:
       - name: Get validated plugin
         uses: actions/download-artifact@v4
