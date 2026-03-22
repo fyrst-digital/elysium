@@ -29,8 +29,6 @@ class Lifecycle
     ) {
         if (class_exists('\Shopware\Core\Framework\Notification\NotificationService')) {
             $this->notificationService = $container->get(\Shopware\Core\Framework\Notification\NotificationService::class);
-        } elseif (class_exists('\Shopware\Administration\Notification\NotificationService')) {
-            $this->notificationService = $container->get(\Shopware\Administration\Notification\NotificationService::class);
         }
     }
 
