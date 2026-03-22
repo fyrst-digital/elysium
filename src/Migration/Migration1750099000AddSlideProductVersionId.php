@@ -104,6 +104,7 @@ class Migration1750099000AddSlideProductVersionId extends MigrationStep
             'SELECT 1 FROM information_schema.TABLE_CONSTRAINTS
             WHERE CONSTRAINT_NAME = :constraintName
             AND TABLE_NAME = :tableName
+            AND TABLE_SCHEMA = DATABASE()
             AND CONSTRAINT_TYPE = \'FOREIGN KEY\'',
             ['constraintName' => $constraintName, 'tableName' => $tableName]
         );

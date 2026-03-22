@@ -12,6 +12,7 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
 use Shopware\Core\Migration\Traits\EnsureThumbnailSizesTrait;
@@ -28,8 +29,6 @@ class Lifecycle
     ) {
         if (class_exists('\Shopware\Core\Framework\Notification\NotificationService')) {
             $this->notificationService = $container->get(\Shopware\Core\Framework\Notification\NotificationService::class);
-        } elseif (class_exists('\Shopware\Administration\Notification\NotificationService')) {
-            $this->notificationService = $container->get(\Shopware\Administration\Notification\NotificationService::class);
         }
     }
 
@@ -123,6 +122,8 @@ class Lifecycle
     ): void {
         /** @var EntityRepository<MediaFolderCollection> $mediaFolderRepositroy */
         $mediaFolderRepositroy = $this->container->get('media_folder.repository');
+        /** @var EntityRepository $mediaDefaultFolderRepository */
+        $mediaDefaultFolderRepository = $this->container->get('media_default_folder.repository');
 
         $searchCriteria = new Criteria([Defaults::MEDIA_FOLDER_ID]);
         $searchCriteria->addAssociation('configuration');
@@ -139,24 +140,32 @@ class Lifecycle
          * create it with default media thumbnails
          */
         if ($searchMediaFolder->getTotal() <= 0) {
-            $mediaFolderRepositroy->create(
-                [
-                    [
-                        'id' => Defaults::MEDIA_FOLDER_ID,
-                        'name' => Defaults::MEDIA_FOLDER_NAME,
-                        'useParentConfiguration' => false,
-                        'defaultFolder' => [
-                            'entity' => 'blur_elysium_slides',
-                        ],
-                        'configuration' => [
-                            'createThumbnails' => true,
-                            'keepAspectRatio' => true,
-                            'mediaThumbnailSizes' => $thumbnailSizeIds,
-                        ],
-                    ],
+            // Check if default folder already exists
+            $defaultFolderCriteria = new Criteria();
+            $defaultFolderCriteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));
+            $existingDefaultFolderId = $mediaDefaultFolderRepository->searchIds($defaultFolderCriteria, $context)->firstId();
+
+            $mediaFolderData = [
+                'id' => Defaults::MEDIA_FOLDER_ID,
+                'name' => Defaults::MEDIA_FOLDER_NAME,
+                'useParentConfiguration' => false,
+                'configuration' => [
+                    'createThumbnails' => true,
+                    'keepAspectRatio' => true,
+                    'mediaThumbnailSizes' => $thumbnailSizeIds,
                 ],
-                $context
-            );
+            ];
+
+            // Use existing default folder or create new one
+            if ($existingDefaultFolderId) {
+                $mediaFolderData['defaultFolderId'] = $existingDefaultFolderId;
+            } else {
+                $mediaFolderData['defaultFolder'] = [
+                    'entity' => 'blur_elysium_slides',
+                ];
+            }
+
+            $mediaFolderRepositroy->create([$mediaFolderData], $context);
         }
     }
 }

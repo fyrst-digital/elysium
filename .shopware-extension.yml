@@ -10,7 +10,7 @@ changelog:
 
 validation:
   ignore:
-    - message: 'Internal error: Class Shopware\Administration\Notification\NotificationService was not found while trying to analyse it'
+    - message: 'Internal error: Class Shopware\\Administration\\Notification\\NotificationService was not found while trying to analyse it'
     - message: 'XmlFileLoader'
 
 store:

@@ -60,6 +60,23 @@ jobs:
             '.*'
             **/.*
 
+  php-unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Shopware
+        uses: shopware/setup-shopware@v2
+        with:
+          shopware-version: v6.7.8.2
+          php-version: '8.3'
+
+      - name: Checkout plugin
+        uses: actions/checkout@v4
+        with:
+          path: custom/plugins/BlurElysiumSlider
+
+      - name: Run Tests
+        run: ./vendor/bin/phpunit --configuration="custom/plugins/BlurElysiumSlider/phpunit.xml"
+
   build-changelog:
     runs-on: ubuntu-latest
 
@@ -83,7 +100,7 @@ jobs:
 
   build-extension:
     runs-on: ubuntu-latest
-    needs: [validate, lint]
+    needs: [validate, lint, php-unit-test]
     steps:
       - name: Get validated plugin
         uses: actions/download-artifact@v4
