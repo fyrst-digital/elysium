@@ -74,11 +74,6 @@ jobs:
         with:
           path: custom/static-plugins/BlurElysiumSlider
 
-      - name: Register plugin with Composer
-        run: |
-          composer config repositories.blur-elysium-slider '{"type": "path", "url": "custom/static-plugins/BlurElysiumSlider", "options": {"symlink": true}}'
-          composer require blurcreative/elysium-slider:@dev --no-interaction
-
       - name: Run Migration Tests
         run: ./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider/phpunit.xml" --testsuite migration
 
