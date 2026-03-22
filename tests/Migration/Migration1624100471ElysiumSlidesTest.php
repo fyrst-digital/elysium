@@ -2,74 +2,53 @@
 
 namespace Blur\BlurElysiumSlider\Tests\Migration;
 
-use Doctrine\DBAL\Connection;
-use PHPUnit\Framework\TestCase;
-use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
+use Blur\BlurElysiumSlider\Migration\Migration1624100471ElysiumSlides;
 
-class Migration1624100471ElysiumSlidesTest extends TestCase
+class Migration1624100471ElysiumSlidesTest extends AbstractMigrationTestCase
 {
-    use KernelTestBehaviour;
-
-    private Connection $connection;
-
-    protected function setUp(): void
+    public function testMigrationCreatesTable(): void
     {
-        parent::setUp();
-        $this->connection = $this->getContainer()->get(Connection::class);
-        $this->connection->beginTransaction();
-    }
+        $migration = new Migration1624100471ElysiumSlides();
+        $this->runMigration($migration);
 
-    protected function tearDown(): void
-    {
-        $this->connection->rollBack();
-        parent::tearDown();
-    }
-
-    public function testTableExists(): void
-    {
-        $exists = $this->connection->fetchOne(
-            'SELECT 1 FROM information_schema.TABLES WHERE TABLE_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides']
-        );
-
-        static::assertNotFalse($exists, 'Table blur_elysium_slides should exist');
+        $this->assertTableExists('blur_elysium_slides');
     }
 
     public function testTableHasRequiredColumns(): void
     {
-        $columns = $this->connection->fetchAll(
-            'SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM information_schema.COLUMNS WHERE TABLE_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides']
-        );
+        $migration = new Migration1624100471ElysiumSlides();
+        $this->runMigration($migration);
 
-        $columnNames = array_column($columns, 'COLUMN_NAME');
-
-        static::assertContains('id', $columnNames, 'Table should have id column');
-        static::assertContains('translations', $columnNames, 'Table should have translations column');
-        static::assertContains('media_id', $columnNames, 'Table should have media_id column');
-        static::assertContains('created_at', $columnNames, 'Table should have created_at column');
-        static::assertContains('updated_at', $columnNames, 'Table should have updated_at column');
+        $this->assertColumnExists('blur_elysium_slides', 'id', 'binary', false);
+        $this->assertColumnExists('blur_elysium_slides', 'translations', 'binary', true);
+        $this->assertColumnExists('blur_elysium_slides', 'media_id', 'binary', true);
+        $this->assertColumnExists('blur_elysium_slides', 'created_at', 'datetime', false);
+        $this->assertColumnExists('blur_elysium_slides', 'updated_at', 'datetime', true);
     }
 
-    public function testIdColumnIsBinary16(): void
+    public function testPrimaryKeyExists(): void
     {
-        $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_TYPE FROM information_schema.COLUMNS WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'id']
-        );
+        $migration = new Migration1624100471ElysiumSlides();
+        $this->runMigration($migration);
 
-        static::assertNotFalse($column, 'id column should exist');
-        static::assertStringContainsString('binary', $column['COLUMN_TYPE'], 'id column should be binary');
+        $this->assertIndexExists('blur_elysium_slides', 'PRIMARY');
     }
 
-    public function testForeignKeyExists(): void
+    public function testForeignKeyToMediaExists(): void
     {
-        $fk = $this->connection->fetchOne(
-            'SELECT 1 FROM information_schema.TABLE_CONSTRAINTS
-            WHERE TABLE_NAME = ? AND CONSTRAINT_TYPE = ? AND CONSTRAINT_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'FOREIGN KEY', 'fk.blur_elysium_slides.media_id']
-        );
+        $migration = new Migration1624100471ElysiumSlides();
+        $this->runMigration($migration);
 
-        static::assertNotFalse($fk, 'Foreign key for media_id should exist');
+        $this->assertForeignKeyExists('blur_elysium_slides', 'fk.blur_elysium_slides.media_id');
+    }
+
+    public function testMigrationIsIdempotent(): void
+    {
+        $migration = new Migration1624100471ElysiumSlides();
+
+        $this->runMigration($migration);
+        $this->runMigration($migration);
+
+        $this->assertTableExists('blur_elysium_slides');
     }
 }

@@ -2,50 +2,39 @@
 
 namespace Blur\BlurElysiumSlider\Tests\Migration;
 
-use Doctrine\DBAL\Connection;
-use PHPUnit\Framework\TestCase;
-use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
+use Blur\BlurElysiumSlider\Migration\Migration1707908486AddSlideCoverTablet;
 
-class Migration1707908486AddSlideCoverTabletTest extends TestCase
+class Migration1707908486AddSlideCoverTabletTest extends AbstractMigrationTestCase
 {
-    use KernelTestBehaviour;
-
-    private Connection $connection;
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->connection = $this->getContainer()->get(Connection::class);
-        $this->connection->beginTransaction();
+        $this->createSlideTable();
     }
 
-    protected function tearDown(): void
+    public function testMigrationAddsColumn(): void
     {
-        $this->connection->rollBack();
-        parent::tearDown();
+        $migration = new Migration1707908486AddSlideCoverTablet();
+        $this->runMigration($migration);
+
+        $this->assertColumnExists('blur_elysium_slides', 'slide_cover_tablet_id', 'binary', true);
     }
 
-    public function testSlideCoverTabletColumnExists(): void
+    public function testMigrationAddsForeignKey(): void
     {
-        $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM information_schema.COLUMNS
-            WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'slide_cover_tablet_id']
-        );
+        $migration = new Migration1707908486AddSlideCoverTablet();
+        $this->runMigration($migration);
 
-        static::assertNotFalse($column, 'slide_cover_tablet_id column should exist in blur_elysium_slides');
-        static::assertStringContainsString('binary', $column['COLUMN_TYPE'], 'slide_cover_tablet_id should be binary type');
-        static::assertEquals('YES', $column['IS_NULLABLE'], 'slide_cover_tablet_id should be nullable');
+        $this->assertForeignKeyExists('blur_elysium_slides', 'fk.blur_elysium_slides.slide_cover_tablet_id');
     }
 
-    public function testForeignKeyExists(): void
+    public function testMigrationIsIdempotent(): void
     {
-        $fk = $this->connection->fetchOne(
-            'SELECT 1 FROM information_schema.TABLE_CONSTRAINTS
-            WHERE TABLE_NAME = ? AND CONSTRAINT_TYPE = ? AND CONSTRAINT_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'FOREIGN KEY', 'fk.blur_elysium_slides.slide_cover_tablet_id']
-        );
+        $migration = new Migration1707908486AddSlideCoverTablet();
 
-        static::assertNotFalse($fk, 'Foreign key for slide_cover_tablet_id should exist');
+        $this->runMigration($migration);
+        $this->runMigration($migration);
+
+        $this->assertColumnExists('blur_elysium_slides', 'slide_cover_tablet_id');
     }
 }

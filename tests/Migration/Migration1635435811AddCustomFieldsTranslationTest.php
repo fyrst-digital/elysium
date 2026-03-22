@@ -2,53 +2,32 @@
 
 namespace Blur\BlurElysiumSlider\Tests\Migration;
 
-use Doctrine\DBAL\Connection;
-use PHPUnit\Framework\TestCase;
-use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
+use Blur\BlurElysiumSlider\Migration\Migration1635435811AddCustomFieldsTranslation;
 
-class Migration1635435811AddCustomFieldsTranslationTest extends TestCase
+class Migration1635435811AddCustomFieldsTranslationTest extends AbstractMigrationTestCase
 {
-    use KernelTestBehaviour;
-
-    private Connection $connection;
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->connection = $this->getContainer()->get(Connection::class);
-        $this->connection->beginTransaction();
+        $this->createSlideTable();
+        $this->createSlideTranslationTable();
     }
 
-    protected function tearDown(): void
+    public function testMigrationAddsColumn(): void
     {
-        $this->connection->rollBack();
-        parent::tearDown();
-    }
+        $migration = new Migration1635435811AddCustomFieldsTranslation();
+        $this->runMigration($migration);
 
-    public function testCustomFieldsColumnExists(): void
-    {
-        $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_NAME, DATA_TYPE FROM information_schema.COLUMNS
-            WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides_translation', 'custom_fields']
-        );
-
-        static::assertNotFalse($column, 'custom_fields column should exist in blur_elysium_slides_translation');
-        static::assertEquals('json', $column['DATA_TYPE'], 'custom_fields should be JSON type');
+        $this->assertColumnExists('blur_elysium_slides_translation', 'custom_fields', 'json', true);
     }
 
     public function testMigrationIsIdempotent(): void
     {
-        $this->connection->executeStatement(
-            'ALTER TABLE `blur_elysium_slides_translation` ADD COLUMN IF NOT EXISTS `custom_fields` JSON NULL'
-        );
+        $migration = new Migration1635435811AddCustomFieldsTranslation();
 
-        $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_NAME FROM information_schema.COLUMNS
-            WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides_translation', 'custom_fields']
-        );
+        $this->runMigration($migration);
+        $this->runMigration($migration);
 
-        static::assertNotFalse($column, 'custom_fields column should still exist after re-running migration');
+        $this->assertColumnExists('blur_elysium_slides_translation', 'custom_fields');
     }
 }

@@ -2,52 +2,48 @@
 
 namespace Blur\BlurElysiumSlider\Tests\Migration;
 
-use Doctrine\DBAL\Connection;
-use PHPUnit\Framework\TestCase;
-use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
+use Blur\BlurElysiumSlider\Migration\Migration1706795531AddSlideProduct;
 
-class Migration1706795531AddSlideProductTest extends TestCase
+class Migration1706795531AddSlideProductTest extends AbstractMigrationTestCase
 {
-    use KernelTestBehaviour;
-
-    private Connection $connection;
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->connection = $this->getContainer()->get(Connection::class);
-        $this->connection->beginTransaction();
+        $this->createSlideTable();
     }
 
-    protected function tearDown(): void
+    public function testMigrationAddsProductIdColumn(): void
     {
-        $this->connection->rollBack();
-        parent::tearDown();
+        $migration = new Migration1706795531AddSlideProduct();
+        $this->runMigration($migration);
+
+        $this->assertColumnExists('blur_elysium_slides', 'product_id', 'binary', true);
     }
 
-    public function testProductIdColumnExists(): void
+    public function testMigrationAddsProductVersionIdColumn(): void
     {
-        $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM information_schema.COLUMNS
-            WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'product_id']
-        );
+        $migration = new Migration1706795531AddSlideProduct();
+        $this->runMigration($migration);
 
-        static::assertNotFalse($column, 'product_id column should exist in blur_elysium_slides');
-        static::assertStringContainsString('binary', $column['COLUMN_TYPE'], 'product_id should be binary type');
-        static::assertEquals('YES', $column['IS_NULLABLE'], 'product_id should be nullable');
+        $this->assertColumnExists('blur_elysium_slides', 'product_version_id', 'binary', true);
     }
 
-    public function testProductVersionIdColumnExists(): void
+    public function testMigrationAddsForeignKey(): void
     {
-        $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM information_schema.COLUMNS
-            WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'product_version_id']
-        );
+        $migration = new Migration1706795531AddSlideProduct();
+        $this->runMigration($migration);
 
-        static::assertNotFalse($column, 'product_version_id column should exist in blur_elysium_slides');
-        static::assertStringContainsString('binary', $column['COLUMN_TYPE'], 'product_version_id should be binary type');
-        static::assertEquals('YES', $column['IS_NULLABLE'], 'product_version_id should be nullable');
+        $this->assertForeignKeyExists('blur_elysium_slides', 'fk.blur_elysium_slides.product_id');
+    }
+
+    public function testMigrationIsIdempotent(): void
+    {
+        $migration = new Migration1706795531AddSlideProduct();
+
+        $this->runMigration($migration);
+        $this->runMigration($migration);
+
+        $this->assertColumnExists('blur_elysium_slides', 'product_id');
+        $this->assertColumnExists('blur_elysium_slides', 'product_version_id');
     }
 }

@@ -2,84 +2,64 @@
 
 namespace Blur\BlurElysiumSlider\Tests\Migration;
 
-use Doctrine\DBAL\Connection;
-use PHPUnit\Framework\TestCase;
-use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
+use Blur\BlurElysiumSlider\Migration\Migration1624108754ElysiumSlidesTranslation;
 
-class Migration1624108754ElysiumSlidesTranslationTest extends TestCase
+class Migration1624108754ElysiumSlidesTranslationTest extends AbstractMigrationTestCase
 {
-    use KernelTestBehaviour;
-
-    private Connection $connection;
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->connection = $this->getContainer()->get(Connection::class);
-        $this->connection->beginTransaction();
+        $this->createSlideTable();
     }
 
-    protected function tearDown(): void
+    public function testMigrationCreatesTable(): void
     {
-        $this->connection->rollBack();
-        parent::tearDown();
-    }
+        $migration = new Migration1624108754ElysiumSlidesTranslation();
+        $this->runMigration($migration);
 
-    public function testTranslationTableExists(): void
-    {
-        $exists = $this->connection->fetchOne(
-            'SELECT 1 FROM information_schema.TABLES WHERE TABLE_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides_translation']
-        );
-
-        static::assertNotFalse($exists, 'Table blur_elysium_slides_translation should exist');
+        $this->assertTableExists('blur_elysium_slides_translation');
     }
 
     public function testTableHasRequiredColumns(): void
     {
-        $columns = $this->connection->fetchAll(
-            'SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides_translation']
-        );
+        $migration = new Migration1624108754ElysiumSlidesTranslation();
+        $this->runMigration($migration);
 
-        $columnNames = array_column($columns, 'COLUMN_NAME');
-
-        static::assertContains('blur_elysium_slides_id', $columnNames, 'Table should have blur_elysium_slides_id column');
-        static::assertContains('language_id', $columnNames, 'Table should have language_id column');
-        static::assertContains('name', $columnNames, 'Table should have name column');
-        static::assertContains('title', $columnNames, 'Table should have title column');
-        static::assertContains('description', $columnNames, 'Table should have description column');
-        static::assertContains('button_label', $columnNames, 'Table should have button_label column');
-        static::assertContains('url', $columnNames, 'Table should have url column');
-        static::assertContains('created_at', $columnNames, 'Table should have created_at column');
-        static::assertContains('updated_at', $columnNames, 'Table should have updated_at column');
+        $this->assertColumnExists('blur_elysium_slides_translation', 'blur_elysium_slides_id', 'binary', false);
+        $this->assertColumnExists('blur_elysium_slides_translation', 'language_id', 'binary', false);
+        $this->assertColumnExists('blur_elysium_slides_translation', 'name', 'varchar', true);
+        $this->assertColumnExists('blur_elysium_slides_translation', 'title', 'varchar', true);
+        $this->assertColumnExists('blur_elysium_slides_translation', 'description', 'longtext', true);
+        $this->assertColumnExists('blur_elysium_slides_translation', 'button_label', 'varchar', true);
+        $this->assertColumnExists('blur_elysium_slides_translation', 'url', 'longtext', true);
+        $this->assertColumnExists('blur_elysium_slides_translation', 'created_at', 'datetime', false);
+        $this->assertColumnExists('blur_elysium_slides_translation', 'updated_at', 'datetime', true);
     }
 
     public function testPrimaryKeyExists(): void
     {
-        $pk = $this->connection->fetchAll(
-            'SELECT COLUMN_NAME FROM information_schema.KEY_COLUMN_USAGE
-            WHERE TABLE_NAME = ? AND TABLE_SCHEMA = DATABASE() AND CONSTRAINT_NAME = ?',
-            ['blur_elysium_slides_translation', 'PRIMARY']
-        );
+        $migration = new Migration1624108754ElysiumSlidesTranslation();
+        $this->runMigration($migration);
 
-        $pkColumns = array_column($pk, 'COLUMN_NAME');
-
-        static::assertContains('blur_elysium_slides_id', $pkColumns, 'Primary key should include blur_elysium_slides_id');
-        static::assertContains('language_id', $pkColumns, 'Primary key should include language_id');
+        $this->assertIndexExists('blur_elysium_slides_translation', 'PRIMARY');
     }
 
     public function testForeignKeysExist(): void
     {
-        $fks = $this->connection->fetchAll(
-            'SELECT CONSTRAINT_NAME FROM information_schema.TABLE_CONSTRAINTS
-            WHERE TABLE_NAME = ? AND CONSTRAINT_TYPE = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides_translation', 'FOREIGN KEY']
-        );
+        $migration = new Migration1624108754ElysiumSlidesTranslation();
+        $this->runMigration($migration);
 
-        $fkNames = array_column($fks, 'CONSTRAINT_NAME');
+        $this->assertForeignKeyExists('blur_elysium_slides_translation', 'fk.blur_elysium_slides_translation.blur_elysium_slides_id');
+        $this->assertForeignKeyExists('blur_elysium_slides_translation', 'fk.blur_elysium_slides_translation.language_id');
+    }
 
-        static::assertContains('fk.blur_elysium_slides_translation.blur_elysium_slides_id', $fkNames, 'Foreign key to slides should exist');
-        static::assertContains('fk.blur_elysium_slides_translation.language_id', $fkNames, 'Foreign key to language should exist');
+    public function testMigrationIsIdempotent(): void
+    {
+        $migration = new Migration1624108754ElysiumSlidesTranslation();
+
+        $this->runMigration($migration);
+        $this->runMigration($migration);
+
+        $this->assertTableExists('blur_elysium_slides_translation');
     }
 }

@@ -3,60 +3,137 @@
 namespace Blur\BlurElysiumSlider\Tests\Migration;
 
 use Blur\BlurElysiumSlider\Defaults;
-use Doctrine\DBAL\Connection;
-use PHPUnit\Framework\TestCase;
-use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
+use Blur\BlurElysiumSlider\Migration\Migration1744028421SetDefaultMediaFolderId;
+use Shopware\Core\Framework\Uuid\Uuid;
 
-class Migration1744028421SetDefaultMediaFolderIdTest extends TestCase
+class Migration1744028421SetDefaultMediaFolderIdTest extends AbstractMigrationTestCase
 {
-    use KernelTestBehaviour;
-
-    private Connection $connection;
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->connection = $this->getContainer()->get(Connection::class);
-        $this->connection->beginTransaction();
+        $this->cleanupExistingMediaFolder();
     }
 
     protected function tearDown(): void
     {
-        $this->connection->rollBack();
+        $this->dropTableIfExists('blur_elysium_slides_translation');
+        $this->dropTableIfExists('blur_elysium_slides');
         parent::tearDown();
     }
 
-    public function testMediaFolderExistsWithCorrectId(): void
+    public function testMigrationCreatesMediaFolderWithCorrectId(): void
     {
-        $mediaFolderId = hex2bin(Defaults::MEDIA_FOLDER_ID);
+        $this->createMediaDefaultFolder();
+        $this->createOriginalMediaFolder();
 
+        $migration = new Migration1744028421SetDefaultMediaFolderId();
+        $this->runMigration($migration);
+
+        $newFolderId = hex2bin(Defaults::MEDIA_FOLDER_ID);
         $folder = $this->connection->fetchAssociative(
-            'SELECT id, name FROM media_folder WHERE id = ?',
-            [$mediaFolderId]
+            'SELECT id FROM media_folder WHERE id = ?',
+            [$newFolderId]
         );
 
         static::assertNotFalse($folder, 'Media folder with default ID should exist');
     }
 
-    public function testDefaultFolderConfigurationExists(): void
+    public function testMigrationMigratesMediaToNewFolder(): void
     {
-        $defaultFolder = $this->connection->fetchAssociative(
-            'SELECT mdf.id, mdf.folder_name, mdf.entity FROM media_default_folder mdf WHERE mdf.entity = ?',
-            ['blur_elysium_slides']
+        $this->createMediaDefaultFolder();
+        $oldFolderId = $this->createOriginalMediaFolder();
+
+        // Create a media entry in the old folder
+        $mediaId = Uuid::randomBytes();
+        $this->connection->insert('media', [
+            'id' => $mediaId,
+            'media_folder_id' => $oldFolderId,
+            'file_name' => 'test-image',
+            'file_size' => 1024,
+            'mime_type' => 'image/jpeg',
+            'created_at' => (new \DateTime())->format(\Shopware\Core\Defaults::STORAGE_DATE_TIME_FORMAT),
+        ]);
+
+        $migration = new Migration1744028421SetDefaultMediaFolderId();
+        $this->runMigration($migration);
+
+        // Verify media was moved to new folder
+        $newFolderId = hex2bin(Defaults::MEDIA_FOLDER_ID);
+        $media = $this->connection->fetchAssociative(
+            'SELECT media_folder_id FROM media WHERE id = ?',
+            [$mediaId]
         );
 
-        static::assertNotFalse($defaultFolder, 'Default folder configuration for blur_elysium_slides should exist');
+        static::assertEquals($newFolderId, $media['media_folder_id'], 'Media should be moved to new folder');
     }
 
     public function testMigrationIsIdempotent(): void
     {
-        $mediaFolderId = hex2bin(Defaults::MEDIA_FOLDER_ID);
+        $this->createMediaDefaultFolder();
+        $this->createOriginalMediaFolder();
 
-        $firstCheck = $this->connection->fetchOne(
-            'SELECT 1 FROM media_folder WHERE id = ?',
-            [$mediaFolderId]
+        $migration = new Migration1744028421SetDefaultMediaFolderId();
+
+        $this->runMigration($migration);
+        $this->runMigration($migration);
+
+        $newFolderId = hex2bin(Defaults::MEDIA_FOLDER_ID);
+        $folder = $this->connection->fetchAssociative(
+            'SELECT id FROM media_folder WHERE id = ?',
+            [$newFolderId]
         );
 
-        static::assertNotFalse($firstCheck, 'Media folder should exist on first check');
+        static::assertNotFalse($folder, 'Media folder should still exist after re-running migration');
+    }
+
+    private function cleanupExistingMediaFolder(): void
+    {
+        // Get the default folder ID for blur_elysium_slides
+        $defaultFolderId = $this->connection->fetchOne(
+            'SELECT id FROM media_default_folder WHERE entity = ?',
+            ['blur_elysium_slides']
+        );
+
+        if ($defaultFolderId) {
+            // Delete any existing media folder linked to this default folder
+            $this->connection->executeStatement(
+                'DELETE FROM media_folder WHERE default_folder_id = ?',
+                [$defaultFolderId]
+            );
+        }
+    }
+
+    private function createMediaDefaultFolder(): void
+    {
+        $exists = $this->connection->fetchOne(
+            'SELECT 1 FROM media_default_folder WHERE entity = ?',
+            ['blur_elysium_slides']
+        );
+
+        if (!$exists) {
+            $this->connection->insert('media_default_folder', [
+                'id' => Uuid::randomBytes(),
+                'entity' => 'blur_elysium_slides',
+                'created_at' => (new \DateTime())->format(\Shopware\Core\Defaults::STORAGE_DATE_TIME_FORMAT),
+            ]);
+        }
+    }
+
+    private function createOriginalMediaFolder(): string
+    {
+        $defaultFolderId = $this->connection->fetchOne(
+            'SELECT id FROM media_default_folder WHERE entity = ?',
+            ['blur_elysium_slides']
+        );
+
+        $folderId = Uuid::randomBytes();
+        $this->connection->insert('media_folder', [
+            'id' => $folderId,
+            'name' => Defaults::MEDIA_FOLDER_NAME . ' (old)',
+            'default_folder_id' => $defaultFolderId,
+            'created_at' => (new \DateTime())->format(\Shopware\Core\Defaults::STORAGE_DATE_TIME_FORMAT),
+        ]);
+
+        return $folderId;
     }
 }

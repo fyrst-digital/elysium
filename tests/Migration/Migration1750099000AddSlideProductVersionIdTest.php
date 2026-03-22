@@ -2,70 +2,97 @@
 
 namespace Blur\BlurElysiumSlider\Tests\Migration;
 
-use Doctrine\DBAL\Connection;
-use PHPUnit\Framework\TestCase;
-use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
+use Blur\BlurElysiumSlider\Migration\Migration1750099000AddSlideProductVersionId;
+use Shopware\Core\Framework\Uuid\Uuid;
 
-class Migration1750099000AddSlideProductVersionIdTest extends TestCase
+class Migration1750099000AddSlideProductVersionIdTest extends AbstractMigrationTestCase
 {
-    use KernelTestBehaviour;
-
-    private Connection $connection;
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->connection = $this->getContainer()->get(Connection::class);
-        $this->connection->beginTransaction();
+        $this->createSlideTableWithProductId();
     }
 
-    protected function tearDown(): void
+    public function testMigrationAddsProductVersionIdColumn(): void
     {
-        $this->connection->rollBack();
-        parent::tearDown();
+        $migration = new Migration1750099000AddSlideProductVersionId();
+        $this->runMigration($migration);
+
+        $this->assertColumnExists('blur_elysium_slides', 'product_version_id', 'binary', true);
     }
 
-    public function testProductVersionIdColumnExists(): void
+    public function testMigrationAddsForeignKeyConstraint(): void
     {
-        $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM information_schema.COLUMNS
-            WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'product_version_id']
+        $migration = new Migration1750099000AddSlideProductVersionId();
+        $this->runMigration($migration);
+
+        $this->assertForeignKeyExists('blur_elysium_slides', 'fk.blur_elysium_slides.product_id');
+    }
+
+    public function testMigrationPopulatesProductVersionIdFromProduct(): void
+    {
+        // Create a product
+        $productId = $this->insertProduct([
+            'product_number' => 'TEST-PRODUCT-001',
+        ]);
+
+        // Get the product's version_id
+        $product = $this->connection->fetchAssociative(
+            'SELECT version_id FROM product WHERE id = ?',
+            [$productId]
         );
 
-        static::assertNotFalse($column, 'product_version_id column should exist in blur_elysium_slides');
-        static::assertStringContainsString('binary', $column['COLUMN_TYPE'], 'product_version_id should be binary type');
-        static::assertEquals('YES', $column['IS_NULLABLE'], 'product_version_id should be nullable');
-    }
+        // Create a slide with product_id but NULL product_version_id
+        $slideId = $this->insertSlide([
+            'product_id' => $productId,
+            'product_version_id' => null,
+        ]);
 
-    public function testForeignKeyConstraintExists(): void
-    {
-        $fk = $this->connection->fetchOne(
-            'SELECT 1 FROM information_schema.TABLE_CONSTRAINTS
-            WHERE TABLE_NAME = ? AND CONSTRAINT_TYPE = ? AND CONSTRAINT_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'FOREIGN KEY', 'fk.blur_elysium_slides.product_id']
+        $migration = new Migration1750099000AddSlideProductVersionId();
+        $this->runMigration($migration);
+
+        // Verify product_version_id was populated
+        $slide = $this->connection->fetchAssociative(
+            'SELECT product_version_id FROM blur_elysium_slides WHERE id = ?',
+            [$slideId]
         );
 
-        static::assertNotFalse($fk, 'Foreign key for product_id with version_id should exist');
+        static::assertEquals(
+            $product['version_id'],
+            $slide['product_version_id'],
+            'product_version_id should be populated from product table'
+        );
     }
 
-    public function testProductVersionIdIsPopulatedForExistingProducts(): void
+    public function testMigrationHandlesSlidesWithoutProduct(): void
     {
-        $slidesWithProduct = $this->connection->fetchAll(
-            'SELECT id, product_id, product_version_id FROM blur_elysium_slides WHERE product_id IS NOT NULL'
+        // Create a slide without product_id
+        $slideId = $this->insertSlide([
+            'product_id' => null,
+            'product_version_id' => null,
+        ]);
+
+        $migration = new Migration1750099000AddSlideProductVersionId();
+        $this->runMigration($migration);
+
+        // Verify slide still exists and product_version_id is still NULL
+        $slide = $this->connection->fetchAssociative(
+            'SELECT product_id, product_version_id FROM blur_elysium_slides WHERE id = ?',
+            [$slideId]
         );
 
-        if (count($slidesWithProduct) === 0) {
-            static::assertTrue(true, 'No slides with products exist - test is not applicable');
+        static::assertNull($slide['product_id']);
+        static::assertNull($slide['product_version_id']);
+    }
 
-            return;
-        }
+    public function testMigrationIsIdempotent(): void
+    {
+        $migration = new Migration1750099000AddSlideProductVersionId();
 
-        foreach ($slidesWithProduct as $slide) {
-            static::assertNotNull(
-                $slide['product_version_id'],
-                'product_version_id should be populated for slides with product_id'
-            );
-        }
+        $this->runMigration($migration);
+        $this->runMigration($migration);
+
+        $this->assertColumnExists('blur_elysium_slides', 'product_version_id');
+        $this->assertForeignKeyExists('blur_elysium_slides', 'fk.blur_elysium_slides.product_id');
     }
 }

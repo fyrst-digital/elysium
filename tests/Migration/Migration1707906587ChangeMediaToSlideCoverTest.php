@@ -2,77 +2,66 @@
 
 namespace Blur\BlurElysiumSlider\Tests\Migration;
 
-use Doctrine\DBAL\Connection;
-use PHPUnit\Framework\TestCase;
-use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
+use Blur\BlurElysiumSlider\Migration\Migration1707906587ChangeMediaToSlideCover;
 
-class Migration1707906587ChangeMediaToSlideCoverTest extends TestCase
+class Migration1707906587ChangeMediaToSlideCoverTest extends AbstractMigrationTestCase
 {
-    use KernelTestBehaviour;
-
-    private Connection $connection;
-
     protected function setUp(): void
     {
         parent::setUp();
-        $this->connection = $this->getContainer()->get(Connection::class);
-        $this->connection->beginTransaction();
+        $this->createSlideTableWithMediaColumns();
     }
 
-    protected function tearDown(): void
+    public function testMigrationRenamesMediaIdToSlideCoverId(): void
     {
-        $this->connection->rollBack();
-        parent::tearDown();
+        $migration = new Migration1707906587ChangeMediaToSlideCover();
+        $this->runMigration($migration);
+
+        $this->assertColumnExists('blur_elysium_slides', 'slide_cover_id', 'binary', true);
     }
 
-    public function testSlideCoverIdColumnExists(): void
+    public function testMigrationRenamesMediaPortraitIdToSlideCoverMobileId(): void
     {
-        $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM information_schema.COLUMNS
-            WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'slide_cover_id']
-        );
+        $migration = new Migration1707906587ChangeMediaToSlideCover();
+        $this->runMigration($migration);
 
-        static::assertNotFalse($column, 'slide_cover_id column should exist in blur_elysium_slides');
-        static::assertStringContainsString('binary', $column['COLUMN_TYPE'], 'slide_cover_id should be binary type');
-        static::assertEquals('YES', $column['IS_NULLABLE'], 'slide_cover_id should be nullable');
-    }
-
-    public function testSlideCoverMobileColumnExists(): void
-    {
-        $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM information_schema.COLUMNS
-            WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'slide_cover_mobile_id']
-        );
-
-        static::assertNotFalse($column, 'slide_cover_mobile_id column should exist in blur_elysium_slides');
-        static::assertStringContainsString('binary', $column['COLUMN_TYPE'], 'slide_cover_mobile_id should be binary type');
+        $this->assertColumnExists('blur_elysium_slides', 'slide_cover_mobile_id', 'binary', true);
     }
 
     public function testOldMediaIdColumnDoesNotExist(): void
     {
+        $migration = new Migration1707906587ChangeMediaToSlideCover();
+        $this->runMigration($migration);
+
         $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_NAME FROM information_schema.COLUMNS
-            WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
+            'SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
             ['blur_elysium_slides', 'media_id']
         );
 
         static::assertFalse($column, 'Old media_id column should not exist (renamed to slide_cover_id)');
     }
 
-    public function testMigrationIsIdempotent(): void
+    public function testOldMediaPortraitIdColumnDoesNotExist(): void
     {
-        $this->connection->executeStatement(
-            'ALTER TABLE `blur_elysium_slides` RENAME COLUMN IF EXISTS `media_id` TO `slide_cover_id`'
-        );
+        $migration = new Migration1707906587ChangeMediaToSlideCover();
+        $this->runMigration($migration);
 
         $column = $this->connection->fetchAssociative(
-            'SELECT COLUMN_NAME FROM information_schema.COLUMNS
-            WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'slide_cover_id']
+            'SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
+            ['blur_elysium_slides', 'media_portrait_id']
         );
 
-        static::assertNotFalse($column, 'slide_cover_id column should exist after re-running migration');
+        static::assertFalse($column, 'Old media_portrait_id column should not exist (renamed to slide_cover_mobile_id)');
+    }
+
+    public function testMigrationIsIdempotent(): void
+    {
+        $migration = new Migration1707906587ChangeMediaToSlideCover();
+
+        $this->runMigration($migration);
+        $this->runMigration($migration);
+
+        $this->assertColumnExists('blur_elysium_slides', 'slide_cover_id');
+        $this->assertColumnExists('blur_elysium_slides', 'slide_cover_mobile_id');
     }
 }
