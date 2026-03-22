@@ -72,10 +72,10 @@ jobs:
       - name: Checkout plugin
         uses: actions/checkout@v4
         with:
-          path: custom/static-plugins/BlurElysiumSlider
+          path: custom/plugins/BlurElysiumSlider
 
       - name: Run Migration Tests
-        run: ./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider/phpunit.xml" --testsuite migration
+        run: ./vendor/bin/phpunit --configuration="custom/plugins/BlurElysiumSlider/phpunit.xml" --testsuite migration
 
   build-changelog:
     runs-on: ubuntu-latest
