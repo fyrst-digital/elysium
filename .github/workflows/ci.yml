@@ -63,19 +63,19 @@ jobs:
   test-migrations:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          path: custom/static-plugins/BlurElysiumSlider
-
       - name: Setup Shopware
         uses: shopware/setup-shopware@v2
         with:
           shopware-version: v6.7.8.2
           php-version: '8.3'
 
+      - name: Checkout plugin
+        uses: actions/checkout@v4
+        with:
+          path: custom/static-plugins/BlurElysiumSlider
+
       - name: Run Migration Tests
-        run: ./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider" --testsuite migration
+        run: ./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider/phpunit.xml" --testsuite migration
 
   build-changelog:
     runs-on: ubuntu-latest
