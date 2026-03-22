@@ -143,7 +143,7 @@ class Lifecycle
             // Check if default folder already exists
             $defaultFolderCriteria = new Criteria();
             $defaultFolderCriteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));
-            $existingDefaultFolder = $mediaDefaultFolderRepository->search($defaultFolderCriteria, $context)->first();
+            $existingDefaultFolderId = $mediaDefaultFolderRepository->searchIds($defaultFolderCriteria, $context)->firstId();
 
             $mediaFolderData = [
                 'id' => Defaults::MEDIA_FOLDER_ID,
@@ -157,8 +157,8 @@ class Lifecycle
             ];
 
             // Use existing default folder or create new one
-            if ($existingDefaultFolder) {
-                $mediaFolderData['defaultFolderId'] = $existingDefaultFolder->getId();
+            if ($existingDefaultFolderId) {
+                $mediaFolderData['defaultFolderId'] = $existingDefaultFolderId;
             } else {
                 $mediaFolderData['defaultFolder'] = [
                     'entity' => 'blur_elysium_slides',
