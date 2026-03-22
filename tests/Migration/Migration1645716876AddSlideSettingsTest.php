@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Blur\BlurElysiumSlider\Migration\Test;
+namespace Blur\BlurElysiumSlider\Tests\Migration;
 
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
 
-class Migration1750098814AddContentSettingsTest extends TestCase
+class Migration1645716876AddSlideSettingsTest extends TestCase
 {
     use KernelTestBehaviour;
 
@@ -25,35 +25,31 @@ class Migration1750098814AddContentSettingsTest extends TestCase
         parent::tearDown();
     }
 
-    public function testContentSettingsColumnExists(): void
+    public function testSlideSettingsColumnExists(): void
     {
         $column = $this->connection->fetchAssociative(
             'SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE FROM information_schema.COLUMNS
             WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides_translation', 'content_settings']
+            ['blur_elysium_slides', 'slide_settings']
         );
 
-        static::assertNotFalse($column, 'content_settings column should exist in blur_elysium_slides_translation');
-        static::assertEquals('json', $column['DATA_TYPE'], 'content_settings should be JSON type');
-        static::assertEquals('YES', $column['IS_NULLABLE'], 'content_settings should be nullable');
+        static::assertNotFalse($column, 'slide_settings column should exist in blur_elysium_slides');
+        static::assertEquals('json', $column['DATA_TYPE'], 'slide_settings should be JSON type');
+        static::assertEquals('YES', $column['IS_NULLABLE'], 'slide_settings should be nullable');
     }
 
     public function testMigrationIsIdempotent(): void
     {
-        try {
-            $this->connection->executeStatement(
-                'ALTER TABLE `blur_elysium_slides_translation` ADD COLUMN `content_settings` JSON NULL'
-            );
-        } catch (\Doctrine\DBAL\Exception $e) {
-            // Ignore duplicate column errors - migration is idempotent
-        }
+        $this->connection->executeStatement(
+            'ALTER TABLE `blur_elysium_slides` ADD COLUMN IF NOT EXISTS `slide_settings` JSON NULL'
+        );
 
         $column = $this->connection->fetchAssociative(
             'SELECT COLUMN_NAME FROM information_schema.COLUMNS
             WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides_translation', 'content_settings']
+            ['blur_elysium_slides', 'slide_settings']
         );
 
-        static::assertNotFalse($column, 'content_settings column should exist after re-running migration');
+        static::assertNotFalse($column, 'slide_settings column should still exist after re-running migration');
     }
 }

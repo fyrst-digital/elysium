@@ -8,4 +8,4 @@ $loader = (new TestBootstrapper())
     ->bootstrap()
     ->getClassLoader();
 
-$loader->addPsr4('Blur\\BlurElysiumSlider\\Migration\\Test\\', __DIR__ . '/../src/Migration/Test');
+$loader->addPsr4('Blur\\BlurElysiumSlider\\Tests\\Migration\\', __DIR__ . '/Migration');

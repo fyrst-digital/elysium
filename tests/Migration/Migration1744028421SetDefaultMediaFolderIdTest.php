@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Blur\BlurElysiumSlider\Migration\Test;
+namespace Blur\BlurElysiumSlider\Tests\Migration;
 
 use Blur\BlurElysiumSlider\Defaults;
 use Doctrine\DBAL\Connection;

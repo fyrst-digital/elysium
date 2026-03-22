@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Blur\BlurElysiumSlider\Migration\Test;
+namespace Blur\BlurElysiumSlider\Tests\Migration;
 
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Test\TestCaseBase\KernelTestBehaviour;
 
-class Migration1709495787AddSlideCoverVideoTest extends TestCase
+class Migration1707908486AddSlideCoverTabletTest extends TestCase
 {
     use KernelTestBehaviour;
 
@@ -25,17 +25,17 @@ class Migration1709495787AddSlideCoverVideoTest extends TestCase
         parent::tearDown();
     }
 
-    public function testSlideCoverVideoColumnExists(): void
+    public function testSlideCoverTabletColumnExists(): void
     {
         $column = $this->connection->fetchAssociative(
             'SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM information_schema.COLUMNS
             WHERE TABLE_NAME = ? AND COLUMN_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'slide_cover_video_id']
+            ['blur_elysium_slides', 'slide_cover_tablet_id']
         );
 
-        static::assertNotFalse($column, 'slide_cover_video_id column should exist in blur_elysium_slides');
-        static::assertStringContainsString('binary', $column['COLUMN_TYPE'], 'slide_cover_video_id should be binary type');
-        static::assertEquals('YES', $column['IS_NULLABLE'], 'slide_cover_video_id should be nullable');
+        static::assertNotFalse($column, 'slide_cover_tablet_id column should exist in blur_elysium_slides');
+        static::assertStringContainsString('binary', $column['COLUMN_TYPE'], 'slide_cover_tablet_id should be binary type');
+        static::assertEquals('YES', $column['IS_NULLABLE'], 'slide_cover_tablet_id should be nullable');
     }
 
     public function testForeignKeyExists(): void
@@ -43,9 +43,9 @@ class Migration1709495787AddSlideCoverVideoTest extends TestCase
         $fk = $this->connection->fetchOne(
             'SELECT 1 FROM information_schema.TABLE_CONSTRAINTS
             WHERE TABLE_NAME = ? AND CONSTRAINT_TYPE = ? AND CONSTRAINT_NAME = ? AND TABLE_SCHEMA = DATABASE()',
-            ['blur_elysium_slides', 'FOREIGN KEY', 'fk.blur_elysium_slides.slide_cover_video_id']
+            ['blur_elysium_slides', 'FOREIGN KEY', 'fk.blur_elysium_slides.slide_cover_tablet_id']
         );
 
-        static::assertNotFalse($fk, 'Foreign key for slide_cover_video_id should exist');
+        static::assertNotFalse($fk, 'Foreign key for slide_cover_tablet_id should exist');
     }
 }
