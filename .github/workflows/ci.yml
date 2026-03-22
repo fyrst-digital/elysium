@@ -139,10 +139,7 @@ jobs:
       - name: List
         run: | 
           ls -la
-
-      - name: Deploy extension to store
-        run: |
-          shopware-cli account producer extension upload --skip-for-review-result ${{ github.workspace }}/BlurElysiumSlider/BlurElysiumSlider.zip
+          unzip -l BlurElysiumSlider.zip
 
   deploy-extension-to-store:
     if: startsWith(github.ref, 'refs/tags/')
