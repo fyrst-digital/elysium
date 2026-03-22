@@ -71,8 +71,8 @@ jobs:
       - name: Setup Shopware
         uses: shopware/setup-shopware@v1
         with:
-          env: test
           shopware-version: v6.7.0.0
+          php-version: '8.3'
 
       - name: Run Migration Tests
         run: ./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider" --testsuite migration
