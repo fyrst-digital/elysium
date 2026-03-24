@@ -60,7 +60,7 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
 
     private function scheduleInvalidationForField(string $slideId, string $fieldName, array $payload): void
     {
-        if (!isset($payload[$fieldName]) || $payload[$fieldName] === null) {
+        if (!isset($payload[$fieldName])) {
             return;
         }
 
