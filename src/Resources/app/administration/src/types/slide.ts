@@ -157,6 +157,8 @@ export interface ElysiumSlide {
     id: string;
     name: string | null;
     active: boolean;
+    activeFrom: string | null;
+    activeUntil: string | null;
     slideSettings: SlideSettings;
     slideCover: Media | null;
     slideCoverId: string | null;

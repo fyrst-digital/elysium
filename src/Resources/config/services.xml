@@ -51,6 +51,10 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
+        <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlSubscriber">
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
         <service id="Blur\BlurElysiumSlider\Twig\CamelToKebabCase" public="true">
             <tag name="twig.extension"/> <!--Required-->
         </service>

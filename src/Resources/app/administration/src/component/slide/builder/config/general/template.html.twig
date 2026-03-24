@@ -26,6 +26,24 @@
             v-model="slide.slideSettings.slide.cssClass" />
     </blur-column>
 
+    <blur-column :cols="6">
+        <mt-date-picker 
+            :label="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.label')"
+            :placeholder="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.placeholder')"
+            :help-text="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.helpText')"
+            v-model="slide.activeFrom"
+            type="datetime" />
+    </blur-column>
+
+    <blur-column :cols="6">
+        <mt-date-picker 
+            :label="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.label')"
+            :placeholder="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.placeholder')"
+            :help-text="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.helpText')"
+            v-model="slide.activeUntil"
+            type="datetime" />
+    </blur-column>
+
 </blur-section>
 
 <blur-section

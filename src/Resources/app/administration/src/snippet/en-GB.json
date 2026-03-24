@@ -208,6 +208,19 @@
                 "placeholder": "custom-class second-custom-class",
                 "helpText": "Specify one or more CSS classes for the slide, separated by a space"
             },
+            "slideTimeControl": {
+                "label": "Time Control",
+                "activeFrom": {
+                    "label": "Active from",
+                    "placeholder": "Select start date and time",
+                    "helpText": "Slide will be displayed from this datetime onwards. Leave empty for no start restriction."
+                },
+                "activeUntil": {
+                    "label": "Active until",
+                    "placeholder": "Select end date and time",
+                    "helpText": "Slide will be displayed until this datetime. Leave empty for no end restriction."
+                }
+            },
             "slideHeadlineElement": {
                 "label": "HTML Element",
                 "helpText": "Specify an HTML element for the heading. If no element is selected, a <b>div</b> element is used"

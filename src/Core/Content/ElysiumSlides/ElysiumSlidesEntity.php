@@ -41,6 +41,10 @@ class ElysiumSlidesEntity extends Entity
 
     protected ?MediaEntity $presentationMedia;
 
+    protected ?\DateTimeInterface $activeFrom;
+
+    protected ?\DateTimeInterface $activeUntil;
+
     protected ?ElysiumSlidesTranslationCollection $translations = null;
 
     /**
@@ -252,6 +256,38 @@ class ElysiumSlidesEntity extends Entity
     public function setPresentationMedia(?MediaEntity $presentationMedia): void
     {
         $this->presentationMedia = $presentationMedia;
+    }
+
+    /**
+     * Get the value of activeFrom
+     */
+    public function getActiveFrom(): ?\DateTimeInterface
+    {
+        return $this->activeFrom;
+    }
+
+    /**
+     * Set the value of activeFrom
+     */
+    public function setActiveFrom(?\DateTimeInterface $activeFrom): void
+    {
+        $this->activeFrom = $activeFrom;
+    }
+
+    /**
+     * Get the value of activeUntil
+     */
+    public function getActiveUntil(): ?\DateTimeInterface
+    {
+        return $this->activeUntil;
+    }
+
+    /**
+     * Set the value of activeUntil
+     */
+    public function setActiveUntil(?\DateTimeInterface $activeUntil): void
+    {
+        $this->activeUntil = $activeUntil;
     }
 
     /**
