@@ -9,6 +9,7 @@ use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
+use Shopware\Core\Framework\Feature;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -29,6 +30,10 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
 
     public function onSlideWritten(EntityWrittenContainerEvent $event): void
     {
+        if (!Feature::isActive('elysium_preview_time_control')) {
+            return;
+        }
+
         $slideEvent = $event->getEventByEntityName(ElysiumSlidesDefinition::ENTITY_NAME);
 
         if (!$slideEvent instanceof EntityWrittenEvent) {
