@@ -32,6 +32,59 @@
         }
     }
 
+    .mt-datepicker__clear-button {
+        height: auto;
+        padding: 8px;
+        border-radius: 99rem;
+    }
+
+    .dp--clear-btn {
+        padding-right: 0px;
+        right: 34px;
+    }
+
+    .dp__input_icon {
+        height: auto;
+        inset: 1px;
+        left: auto;
+        width: auto;
+        transform: none;
+        padding: 4px 8px;
+        border-radius: 0 8px 8px 0;
+
+        >.mt-icon {
+            width: 14px;
+            height: 14px;
+
+            >svg {
+                width: 100% !important;
+                height: 100% !important;
+                position: static !important;
+                transform: none !important;
+            }
+        }
+    }
+
+    .dp__input_wrap {
+        position: relative;
+    }
+
+    .dp__input {
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        min-height: auto;
+        height: auto;
+        border-radius: 8px;
+        padding-inline-end: 64px;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }
+
+    .mt-datepicker__hint {
+        display: none;
+    }
+
     .mt-select {
 
         .mt-select__selection {

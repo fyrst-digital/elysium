@@ -71,6 +71,7 @@ useComponentRegister([
     { name: 'py-colorpicker-field', path: () => import('./component/py/colorpicker-field') },
     { name: 'py-entity-field', path: () => import('./component/py/entity-field') },
     { name: 'py-icon', path: () => import('./component/py/icon') },
+    { name: 'py-datepicker', path: () => import('./component/py/datepicker') },
     { name: 'blur-section', path: () => import('@elysium/component/utilities/section') },
     { name: 'blur-column', path: () => import('@elysium/component/utilities/column') },
     { name: 'blur-card-title', path: () => import('@elysium/component/utilities/card-title') },

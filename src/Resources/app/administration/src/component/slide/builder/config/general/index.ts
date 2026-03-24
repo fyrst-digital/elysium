@@ -5,6 +5,8 @@ const { Component, Mixin, Store } = Shopware;
 export default Component.wrapComponentConfig({
     template,
 
+    inject: ['feature'],
+
     mixins: [
         Mixin.getByName('placeholder'),
         Mixin.getByName('blur-device-utilities'),
@@ -26,6 +28,10 @@ export default Component.wrapComponentConfig({
 
         slideViewportSettings() {
             return this.slide.slideSettings.viewports[this.device];
+        },
+
+        isTimeControlActive(): boolean {
+            return this.feature.isActive('elysium_preview_time_control');
         },
     },
 

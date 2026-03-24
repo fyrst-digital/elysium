@@ -9,7 +9,7 @@
         },
     })">
 
-    <blur-column :cols="12">
+    <blur-column>
         <py-text-field 
             :label="$tc('blurElysiumSlides.forms.slideName.label')"
             :placeholder="$tc('blurElysiumSlides.forms.slideName.placeholder')"
@@ -18,7 +18,7 @@
             v-model="slide.name" />
     </blur-column>
 
-    <blur-column :cols="12">
+    <blur-column>
         <py-text-field 
             :label="$tc('blurElysiumSlides.forms.slideCssClass.label')"
             :placeholder="$tc('blurElysiumSlides.forms.slideCssClass.placeholder')"
@@ -26,22 +26,22 @@
             v-model="slide.slideSettings.slide.cssClass" />
     </blur-column>
 
-    <blur-column :cols="6">
-        <mt-date-picker 
+    <blur-column v-if="isTimeControlActive">
+        <py-datepicker
             :label="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.label')"
             :placeholder="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.placeholder')"
-            :help-text="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.helpText')"
-            v-model="slide.activeFrom"
-            type="datetime" />
+            :tooltip="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.helpText')"
+            :model-value="slide.activeFrom"
+            @update:model-value="slide.activeFrom = $event" />
     </blur-column>
 
-    <blur-column :cols="6">
-        <mt-date-picker 
+    <blur-column v-if="isTimeControlActive">
+        <py-datepicker
             :label="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.label')"
             :placeholder="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.placeholder')"
-            :help-text="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.helpText')"
-            v-model="slide.activeUntil"
-            type="datetime" />
+            :tooltip="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.helpText')"
+            :model-value="slide.activeUntil"
+            @update:model-value="slide.activeUntil = $event" />
     </blur-column>
 
 </blur-section>
