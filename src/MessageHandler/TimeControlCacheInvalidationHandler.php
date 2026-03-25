@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\MessageHandler;
 
 use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
+use Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\Adapter\Cache\CacheInvalidator;
-use Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -15,6 +15,7 @@ class TimeControlCacheInvalidationHandler
 {
     public function __construct(
         private readonly CacheInvalidator $cacheInvalidator,
+        private readonly ElysiumCmsPageLookup $cmsPageLookup,
         private readonly Connection $connection
     ) {}
 
@@ -27,38 +28,11 @@ class TimeControlCacheInvalidationHandler
             return;
         }
 
-        $cmsPageIds = $this->connection->fetchFirstColumn(
-            "SELECT DISTINCT LOWER(HEX(cms_section.cms_page_id)) AS cms_page_id
-            FROM cms_slot
-            JOIN cms_slot_translation ON cms_slot_translation.cms_slot_id = cms_slot.id
-            JOIN cms_block ON cms_block.id = cms_slot.cms_block_id
-            JOIN cms_section ON cms_section.id = cms_block.cms_section_id
-            WHERE cms_slot.type = 'blur-elysium-banner'
-              AND JSON_UNQUOTE(JSON_EXTRACT(cms_slot_translation.config, '$.elysiumSlide.value')) = :slideId
+        $tags = $this->cmsPageLookup->getCmsCacheTagsBySlideIds($slideId);
 
-            UNION
-
-            SELECT DISTINCT LOWER(HEX(cms_section.cms_page_id)) AS cms_page_id
-            FROM cms_slot
-            JOIN cms_slot_translation ON cms_slot_translation.cms_slot_id = cms_slot.id
-            JOIN cms_block ON cms_block.id = cms_slot.cms_block_id
-            JOIN cms_section ON cms_section.id = cms_block.cms_section_id
-            WHERE cms_slot.type = 'blur-elysium-slider'
-              AND JSON_CONTAINS(
-                JSON_EXTRACT(cms_slot_translation.config, '$.elysiumSlideCollection.value'),
-                JSON_QUOTE(:slideId)
-              )",
-            ['slideId' => $slideId]
-        );
-
-        if (empty($cmsPageIds)) {
-            return;
+        if (!empty($tags)) {
+            $this->cacheInvalidator->invalidate($tags);
         }
-
-        $cmsPageIds = array_unique($cmsPageIds);
-        $tags = array_map(EntityCacheKeyGenerator::buildCmsTag(...), $cmsPageIds);
-
-        $this->cacheInvalidator->invalidate($tags);
     }
 
     private function shouldInvalidate(string $slideId, \DateTimeInterface $invalidationTime): bool
