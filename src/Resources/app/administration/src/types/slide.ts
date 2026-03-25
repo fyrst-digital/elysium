@@ -11,6 +11,10 @@ import {
 
 import { ButtonColor, ButtonSize } from '@elysium/types/button';
 
+export interface SlideError {
+    code: string;
+}
+
 export type SlideLayoutOrder = 'default' | 'reverse';
 
 export type SlideHeadline = {

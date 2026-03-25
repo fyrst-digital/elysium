@@ -168,9 +168,13 @@
             "slideSavedSuccess": "Slide <b>{slide}</b> wurde gespeichert",
             "emptySlideNameErrorTitle": "Kein Slide Name",
             "emptySlideNameError": "Bitte gib einen Namen für den Slide an",
-            "slideSaveError": "Etwas ging schief. Der Slide konnte nicht gespeichert werden",
+            "slideSaveErrorTitle": "Etwas ist schief gelaufen",
+            "slideSaveError": " Der Slide konnte nicht gespeichert werden",
             "productLinkingMissingEntity": "Bitte wähle ein Produkt welches du verknüpfen möchtest",
             "customTemplateFileDefinedNotice": "Du hast eine eigene Template Datei festgelegt. Einige Einstellungen könnten überschrieben werden."
+        },
+        "violations": {
+            "TIME_CONTROL_INVALID_RANGE": "Das Datum \"Aktiv ab\" muss vor dem Datum \"Aktiv bis\" liegen."
         },
         "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
         "actions": {
