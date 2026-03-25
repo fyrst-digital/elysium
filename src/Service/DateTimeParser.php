@@ -28,6 +28,6 @@ class DateTimeParser
             );
         }
 
-        return $result ?: null;
+        return $result !== false ? $result : null;
     }
 }
