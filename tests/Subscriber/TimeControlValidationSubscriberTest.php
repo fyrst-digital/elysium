@@ -157,8 +157,8 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         $this->connection
             ->expects(static::once())
-            ->method('fetchAssociative')
-            ->willReturn(['active_from' => null, 'active_until' => '2025-12-31 23:59:59']);
+            ->method('fetchAllAssociative')
+            ->willReturn([['id' => $id, 'active_from' => null, 'active_until' => '2025-12-31 23:59:59']]);
 
         $this->subscriber->validateTimeControl($event);
 
@@ -173,8 +173,8 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         $this->connection
             ->expects(static::once())
-            ->method('fetchAssociative')
-            ->willReturn(['active_from' => '2025-01-01 00:00:00', 'active_until' => null]);
+            ->method('fetchAllAssociative')
+            ->willReturn([['id' => $id, 'active_from' => '2025-01-01 00:00:00', 'active_until' => null]]);
 
         $this->subscriber->validateTimeControl($event);
 
@@ -189,8 +189,8 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         $this->connection
             ->expects(static::once())
-            ->method('fetchAssociative')
-            ->willReturn(false);
+            ->method('fetchAllAssociative')
+            ->willReturn([]);
 
         $this->subscriber->validateTimeControl($event);
 
@@ -245,8 +245,8 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         $this->connection
             ->expects(static::once())
-            ->method('fetchAssociative')
-            ->willReturn(['active_from' => null, 'active_until' => '2025-01-01 00:00:00']);
+            ->method('fetchAllAssociative')
+            ->willReturn([['id' => $id, 'active_from' => null, 'active_until' => '2025-01-01 00:00:00']]);
 
         $this->subscriber->validateTimeControl($event);
 
@@ -261,8 +261,8 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         $this->connection
             ->expects(static::once())
-            ->method('fetchAssociative')
-            ->willReturn(['active_from' => '2025-12-31 23:59:59', 'active_until' => null]);
+            ->method('fetchAllAssociative')
+            ->willReturn([['id' => $id, 'active_from' => '2025-12-31 23:59:59', 'active_until' => null]]);
 
         $this->subscriber->validateTimeControl($event);
 

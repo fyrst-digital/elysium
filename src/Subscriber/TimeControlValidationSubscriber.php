@@ -32,6 +32,8 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
     public function validateTimeControl(PreWriteValidationEvent $event): void
     {
         $violations = new ConstraintViolationList();
+        $idsNeedingFetch = [];
+        $commandsToValidate = [];
 
         foreach ($event->getCommands() as $command) {
             $entityName = $command->getEntityName();
@@ -57,7 +59,25 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
             }
 
             if ($id !== null && ($activeFrom === null || $activeUntil === null)) {
-                $existing = $this->fetchExistingValues($id);
+                $idsNeedingFetch[$id] = true;
+            }
+
+            $commandsToValidate[] = [
+                'id' => $id,
+                'activeFrom' => $activeFrom,
+                'activeUntil' => $activeUntil,
+            ];
+        }
+
+        $existingValuesMap = $this->fetchExistingValuesBatch(array_keys($idsNeedingFetch));
+
+        foreach ($commandsToValidate as $item) {
+            $id = $item['id'];
+            $activeFrom = $item['activeFrom'];
+            $activeUntil = $item['activeUntil'];
+
+            if ($id !== null && ($activeFrom === null || $activeUntil === null)) {
+                $existing = $existingValuesMap[$id] ?? [];
                 $activeFrom = $activeFrom ?? ($existing['active_from'] ?? null);
                 $activeUntil = $activeUntil ?? ($existing['active_until'] ?? null);
             }
@@ -105,13 +125,36 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
         }
     }
 
-    private function fetchExistingValues(string $id): array
+    private function fetchExistingValuesBatch(array $ids): array
     {
-        $result = $this->connection->fetchAssociative(
-            'SELECT active_from, active_until FROM blur_elysium_slides WHERE id = :id',
-            ['id' => $id]
+        if (empty($ids)) {
+            return [];
+        }
+
+        $placeholders = [];
+        $params = [];
+        foreach ($ids as $index => $id) {
+            $placeholders[] = ":id_$index";
+            $params["id_$index"] = $id;
+        }
+
+        $sql = sprintf(
+            'SELECT LOWER(HEX(id)) as id, active_from, active_until 
+             FROM blur_elysium_slides 
+             WHERE id IN (%s)',
+            implode(', ', $placeholders)
         );
 
-        return $result ?: [];
+        $results = $this->connection->fetchAllAssociative($sql, $params);
+
+        $map = [];
+        foreach ($results as $row) {
+            $map[$row['id']] = [
+                'active_from' => $row['active_from'],
+                'active_until' => $row['active_until'],
+            ];
+        }
+
+        return $map;
     }
 }
