@@ -6,10 +6,12 @@ namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
+use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
 use Shopware\Core\Framework\Feature;
+use Symfony\Component\Clock\ClockInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -18,7 +20,8 @@ use Symfony\Component\Messenger\Stamp\DelayStamp;
 class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly MessageBusInterface $messageBus
+        private readonly MessageBusInterface $messageBus,
+        private readonly ClockInterface $clock
     ) {}
 
     public static function getSubscribedEvents(): array
@@ -70,11 +73,13 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
             $datetime = \DateTimeImmutable::createFromInterface($value);
         } else {
             $datetime = \DateTimeImmutable::createFromFormat(
-                'Y-m-d H:i:s.v',
-                $value
+                Defaults::STORAGE_DATE_TIME_FORMAT,
+                $value,
+                new \DateTimeZone('UTC')
             ) ?: \DateTimeImmutable::createFromFormat(
                 'Y-m-d H:i:s',
-                $value
+                $value,
+                new \DateTimeZone('UTC')
             );
         }
 
@@ -82,7 +87,7 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $now = new \DateTimeImmutable();
+        $now = $this->clock->now();
         $delaySeconds = $datetime->getTimestamp() - $now->getTimestamp();
 
         if ($delaySeconds <= 0) {

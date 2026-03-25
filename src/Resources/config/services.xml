@@ -56,11 +56,13 @@
         </service>
 
         <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlSubscriber">
+            <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
             <tag name="kernel.event_subscriber"/>
         </service>
 
         <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlCacheInvalidationSubscriber">
             <argument type="service" id="messenger.default_bus"/>
+            <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
             <tag name="kernel.event_subscriber"/>
         </service>
 

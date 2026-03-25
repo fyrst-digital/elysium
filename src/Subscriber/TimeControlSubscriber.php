@@ -6,14 +6,20 @@ namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumCmsSlidesCriteriaEvent;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesCriteriaEvent;
-use Shopware\Core\Framework\Feature;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
+use Shopware\Core\Defaults;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\OrFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
+use Shopware\Core\Framework\Feature;
+use Symfony\Component\Clock\ClockInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TimeControlSubscriber implements EventSubscriberInterface
 {
+    public function __construct(
+        private readonly ClockInterface $clock
+    ) {}
+
     public static function getSubscribedEvents(): array
     {
         return [
@@ -29,23 +35,23 @@ class TimeControlSubscriber implements EventSubscriberInterface
         }
 
         $criteria = $event->getCriteria();
-        $now = new \DateTimeImmutable();
+        $now = $this->clock->now();
 
         $activeFromCondition = new RangeFilter('activeFrom', [
-            RangeFilter::LTE => $now->format('Y-m-d H:i:s'),
+            RangeFilter::LTE => $now->format(Defaults::STORAGE_DATE_TIME_FORMAT),
         ]);
 
         $activeUntilCondition = new RangeFilter('activeUntil', [
-            RangeFilter::GTE => $now->format('Y-m-d H:i:s'),
+            RangeFilter::GTE => $now->format(Defaults::STORAGE_DATE_TIME_FORMAT),
         ]);
 
         $activeFromFilter = new MultiFilter(MultiFilter::CONNECTION_OR, [
-            new \Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter('activeFrom', null),
+            new EqualsFilter('activeFrom', null),
             $activeFromCondition,
         ]);
 
         $activeUntilFilter = new MultiFilter(MultiFilter::CONNECTION_OR, [
-            new \Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter('activeUntil', null),
+            new EqualsFilter('activeUntil', null),
             $activeUntilCondition,
         ]);
 
