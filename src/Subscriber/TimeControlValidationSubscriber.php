@@ -47,9 +47,7 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
             }
 
             $payload = $command->getPayload();
-            $primaryKey = $command->getPrimaryKey();
-            $id = $primaryKey['id'] ?? null;
-
+            $id = $command->getPrimaryKey()['id'] ?? null;
             $activeFrom = $payload['active_from'] ?? null;
             $activeUntil = $payload['active_until'] ?? null;
 
@@ -62,39 +60,26 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
                 $idsNeedingFetch[$id] = true;
             }
 
-            $commandsToValidate[] = [
-                'id' => $id,
-                'activeFrom' => $activeFrom,
-                'activeUntil' => $activeUntil,
-            ];
+            $commandsToValidate[] = ['id' => $id, 'activeFrom' => $activeFrom, 'activeUntil' => $activeUntil];
         }
 
         $existingValuesMap = $this->fetchExistingValuesBatch(array_keys($idsNeedingFetch));
 
         foreach ($commandsToValidate as $item) {
-            $id = $item['id'];
-            $activeFrom = $item['activeFrom'];
-            $activeUntil = $item['activeUntil'];
-
-            if ($id !== null && ($activeFrom === null || $activeUntil === null)) {
-                $existing = $existingValuesMap[$id] ?? [];
-                $activeFrom = $activeFrom ?? ($existing['active_from'] ?? null);
-                $activeUntil = $activeUntil ?? ($existing['active_until'] ?? null);
-            }
+            $id = $item['id'] ?? '';
+            $activeFrom = $item['activeFrom'] ?? $existingValuesMap[$id]['active_from'] ?? null;
+            $activeUntil = $item['activeUntil'] ?? $existingValuesMap[$id]['active_until'] ?? null;
 
             $this->validateDates($activeFrom, $activeUntil, $violations);
         }
 
-        if (\count($violations) > 0) {
+        if (count($violations)) {
             $event->getExceptions()->add(new WriteConstraintViolationException($violations));
         }
     }
 
-    private function validateDates(
-        ?string $activeFrom,
-        ?string $activeUntil,
-        ConstraintViolationList $violations
-    ): void {
+    private function validateDates(?string $activeFrom, ?string $activeUntil, ConstraintViolationList $violations): void
+    {
         if ($activeFrom === null || $activeUntil === null) {
             return;
         }
@@ -102,27 +87,16 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
         $fromDate = $this->dateTimeParser->parseFromStorage($activeFrom);
         $untilDate = $this->dateTimeParser->parseFromStorage($activeUntil);
 
-        if ($fromDate === null || $untilDate === null) {
+        if ($fromDate === null || $untilDate === null || $fromDate < $untilDate) {
             return;
         }
 
-        if ($fromDate >= $untilDate) {
-            $violations->add(
-                new ConstraintViolation(
-                    'The "activeFrom" date must be before the "activeUntil" date.',
-                    'The "{{ field1 }}" date must be before the "{{ field2 }}" date.',
-                    [
-                        '{{ field1 }}' => 'activeFrom',
-                        '{{ field2 }}' => 'activeUntil',
-                    ],
-                    null,
-                    '/activeFrom',
-                    $activeFrom,
-                    null,
-                    self::VIOLATION_CODE
-                )
-            );
-        }
+        $violations->add(new ConstraintViolation(
+            'The "activeFrom" date must be before the "activeUntil" date.',
+            'The "{{ field1 }}" date must be before the "{{ field2 }}" date.',
+            ['{{ field1 }}' => 'activeFrom', '{{ field2 }}' => 'activeUntil'],
+            null, '/activeFrom', $activeFrom, null, self::VIOLATION_CODE
+        ));
     }
 
     private function fetchExistingValuesBatch(array $ids): array
@@ -131,30 +105,19 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
             return [];
         }
 
-        $placeholders = [];
-        $params = [];
-        foreach ($ids as $index => $id) {
-            $placeholders[] = ":id_$index";
-            $params["id_$index"] = $id;
-        }
+        $placeholders = array_map(fn($i) => ":id_$i", array_keys($ids));
+        $params = array_combine($placeholders, $ids);
 
         $sql = sprintf(
-            'SELECT LOWER(HEX(id)) as id, active_from, active_until 
-             FROM blur_elysium_slides 
-             WHERE id IN (%s)',
+            'SELECT LOWER(HEX(id)) as id, active_from, active_until FROM blur_elysium_slides WHERE id IN (%s)',
             implode(', ', $placeholders)
         );
 
         $results = $this->connection->fetchAllAssociative($sql, $params);
 
-        $map = [];
-        foreach ($results as $row) {
-            $map[$row['id']] = [
-                'active_from' => $row['active_from'],
-                'active_until' => $row['active_until'],
-            ];
-        }
-
-        return $map;
+        return array_combine(
+            array_column($results, 'id'),
+            array_map(fn($r) => ['active_from' => $r['active_from'], 'active_until' => $r['active_until']], $results)
+        );
     }
 }
