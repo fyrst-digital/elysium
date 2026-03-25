@@ -14,14 +14,20 @@ class DateTimeParser
             return null;
         }
 
-        return \DateTimeImmutable::createFromFormat(
+        $result = \DateTimeImmutable::createFromFormat(
             Defaults::STORAGE_DATE_TIME_FORMAT,
             $dateTime,
             new \DateTimeZone('UTC')
-        ) ?: \DateTimeImmutable::createFromFormat(
-            'Y-m-d H:i:s',
-            $dateTime,
-            new \DateTimeZone('UTC')
         );
+
+        if ($result === false) {
+            $result = \DateTimeImmutable::createFromFormat(
+                'Y-m-d H:i:s',
+                $dateTime,
+                new \DateTimeZone('UTC')
+            );
+        }
+
+        return $result ?: null;
     }
 }
