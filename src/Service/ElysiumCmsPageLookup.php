@@ -15,13 +15,11 @@ class ElysiumCmsPageLookup
     ) {}
 
     /**
-     * @param string|string[] $slideIds Single or multiple slide IDs (hex)
+     * @param string[] $slideIds Multiple slide IDs (hex)
      * @return string[] Cache tags for CMS pages
      */
-    public function getCmsCacheTagsBySlideIds(string|array $slideIds): array
+    public function getCmsCacheTagsBySlideIds(array $slideIds): array
     {
-        $slideIds = (array) $slideIds;
-        
         if (empty($slideIds)) {
             return [];
         }
@@ -43,23 +41,14 @@ class ElysiumCmsPageLookup
             JOIN cms_block ON cms_block.id = cms_slot.cms_block_id
             JOIN cms_section ON cms_section.id = cms_block.cms_section_id
             WHERE cms_slot.type = 'blur-elysium-slider'
-              AND (
-                JSON_CONTAINS(
-                    JSON_EXTRACT(cms_slot_translation.config, '$.elysiumSlideCollection.value'),
-                    JSON_QUOTE(:singleSlideId)
-                )
-                OR EXISTS (
-                    SELECT 1 FROM JSON_TABLE(
-                        JSON_EXTRACT(cms_slot_translation.config, '$.elysiumSlideCollection.value'),
-                        '$[*]' COLUMNS (slide_id VARCHAR(32) PATH '$')
-                    ) AS jt
-                    WHERE jt.slide_id IN (:slideIds)
-                )
+              AND EXISTS (
+                  SELECT 1 FROM JSON_TABLE(
+                      JSON_EXTRACT(cms_slot_translation.config, '$.elysiumSlideCollection.value'),
+                      '$[*]' COLUMNS (slide_id VARCHAR(32) PATH '$')
+                  ) AS jt
+                  WHERE jt.slide_id IN (:slideIds)
               )",
-            [
-                'slideIds' => $slideIds,
-                'singleSlideId' => $slideIds[0] ?? '',
-            ],
+            ['slideIds' => $slideIds],
             ['slideIds' => ArrayParameterType::STRING]
         );
 

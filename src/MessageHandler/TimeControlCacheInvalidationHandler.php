@@ -31,7 +31,7 @@ class TimeControlCacheInvalidationHandler
             return;
         }
 
-        $tags = $this->cmsPageLookup->getCmsCacheTagsBySlideIds($slideId);
+        $tags = $this->cmsPageLookup->getCmsCacheTagsBySlideIds([$slideId]);
 
         if (!empty($tags)) {
             $this->cacheInvalidator->invalidate($tags);
