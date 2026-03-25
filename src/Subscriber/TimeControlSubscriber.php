@@ -35,7 +35,7 @@ class TimeControlSubscriber implements EventSubscriberInterface
         }
 
         $criteria = $event->getCriteria();
-        $now = $this->clock->now();
+        $now = $this->clock->now()->setTimezone(new \DateTimeZone('UTC'));
 
         $activeFromCondition = new RangeFilter('activeFrom', [
             RangeFilter::LTE => $now->format(Defaults::STORAGE_DATE_TIME_FORMAT),
