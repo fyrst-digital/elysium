@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Migration;
 
+use Blur\BlurElysiumSlider\Defaults;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Exception\NonUniqueFieldNameException;
 use Shopware\Core\Framework\Migration\MigrationStep;
 
 class Migration1750171200AddSlideTimeControl extends MigrationStep
@@ -22,8 +22,8 @@ class Migration1750171200AddSlideTimeControl extends MigrationStep
                 ALTER TABLE `blur_elysium_slides`
                 ADD COLUMN `active_from` DATETIME(3) NULL
             ');
-        } catch (\Throwable $e) {
-            if (!($e instanceof NonUniqueFieldNameException)) {
+        } catch (\Exception $e) {
+            if (!preg_match(Defaults::MIGRATION_COLUMN_EXISTS, $e->getMessage())) {
                 throw $e;
             }
         }
@@ -33,8 +33,8 @@ class Migration1750171200AddSlideTimeControl extends MigrationStep
                 ALTER TABLE `blur_elysium_slides`
                 ADD COLUMN `active_until` DATETIME(3) NULL
             ');
-        } catch (\Throwable $e) {
-            if (!($e instanceof NonUniqueFieldNameException)) {
+        } catch (\Exception $e) {
+            if (!preg_match(Defaults::MIGRATION_COLUMN_EXISTS, $e->getMessage())) {
                 throw $e;
             }
         }
