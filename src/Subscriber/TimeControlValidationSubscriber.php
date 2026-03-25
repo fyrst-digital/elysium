@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
+use Blur\BlurElysiumSlider\Service\DateTimeParser;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Validation\PreWriteValidationEvent;
 use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
@@ -17,7 +18,8 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
     private const VIOLATION_CODE = 'TIME_CONTROL_INVALID_RANGE';
 
     public function __construct(
-        private readonly Connection $connection
+        private readonly Connection $connection,
+        private readonly DateTimeParser $dateTimeParser
     ) {}
 
     public static function getSubscribedEvents(): array
@@ -77,14 +79,14 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $fromTimestamp = strtotime($activeFrom);
-        $untilTimestamp = strtotime($activeUntil);
+        $fromDate = $this->dateTimeParser->parseFromStorage($activeFrom);
+        $untilDate = $this->dateTimeParser->parseFromStorage($activeUntil);
 
-        if ($fromTimestamp === false || $untilTimestamp === false) {
+        if ($fromDate === null || $untilDate === null) {
             return;
         }
 
-        if ($fromTimestamp >= $untilTimestamp) {
+        if ($fromDate >= $untilDate) {
             $violations->add(
                 new ConstraintViolation(
                     'The "activeFrom" date must be before the "activeUntil" date.',

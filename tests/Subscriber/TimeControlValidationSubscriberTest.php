@@ -3,6 +3,7 @@
 namespace Blur\BlurElysiumSlider\Tests\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
+use Blur\BlurElysiumSlider\Service\DateTimeParser;
 use Blur\BlurElysiumSlider\Subscriber\TimeControlValidationSubscriber;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -20,12 +21,24 @@ class TimeControlValidationSubscriberTest extends TestCase
 {
     private Connection&MockObject $connection;
 
+    private DateTimeParser&MockObject $dateTimeParser;
+
     private TimeControlValidationSubscriber $subscriber;
 
     protected function setUp(): void
     {
         $this->connection = $this->createMock(Connection::class);
-        $this->subscriber = new TimeControlValidationSubscriber($this->connection);
+        $this->dateTimeParser = $this->createMock(DateTimeParser::class);
+        $this->dateTimeParser
+            ->method('parseFromStorage')
+            ->willReturnCallback(function (?string $dateTime) {
+                if ($dateTime === null) {
+                    return null;
+                }
+                $parsed = strtotime($dateTime);
+                return $parsed !== false ? new \DateTimeImmutable('@' . $parsed) : null;
+            });
+        $this->subscriber = new TimeControlValidationSubscriber($this->connection, $this->dateTimeParser);
     }
 
     public function testGetSubscribedEvents(): void

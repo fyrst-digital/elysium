@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\MessageHandler;
 
 use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
+use Blur\BlurElysiumSlider\Service\DateTimeParser;
 use Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Defaults;
@@ -17,7 +18,8 @@ class TimeControlCacheInvalidationHandler
     public function __construct(
         private readonly CacheInvalidator $cacheInvalidator,
         private readonly ElysiumCmsPageLookup $cmsPageLookup,
-        private readonly Connection $connection
+        private readonly Connection $connection,
+        private readonly DateTimeParser $dateTimeParser
     ) {}
 
     public function __invoke(TimeControlCacheInvalidationMessage $message): void
@@ -59,22 +61,14 @@ class TimeControlCacheInvalidationHandler
         $invalidationTimeString = $invalidationTimeUtc->format(Defaults::STORAGE_DATE_TIME_FORMAT);
 
         if ($activeFrom !== null) {
-            $activeFromTime = \DateTimeImmutable::createFromFormat(
-                Defaults::STORAGE_DATE_TIME_FORMAT,
-                $activeFrom,
-                new \DateTimeZone('UTC')
-            );
+            $activeFromTime = $this->dateTimeParser->parseFromStorage($activeFrom);
             if ($activeFromTime && $activeFromTime->format(Defaults::STORAGE_DATE_TIME_FORMAT) === $invalidationTimeString) {
                 return true;
             }
         }
 
         if ($activeUntil !== null) {
-            $activeUntilTime = \DateTimeImmutable::createFromFormat(
-                Defaults::STORAGE_DATE_TIME_FORMAT,
-                $activeUntil,
-                new \DateTimeZone('UTC')
-            );
+            $activeUntilTime = $this->dateTimeParser->parseFromStorage($activeUntil);
             if ($activeUntilTime && $activeUntilTime->format(Defaults::STORAGE_DATE_TIME_FORMAT) === $invalidationTimeString) {
                 return true;
             }

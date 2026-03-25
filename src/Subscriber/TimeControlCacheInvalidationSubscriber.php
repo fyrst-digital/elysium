@@ -6,7 +6,7 @@ namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
-use Shopware\Core\Defaults;
+use Blur\BlurElysiumSlider\Service\DateTimeParser;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
@@ -21,7 +21,8 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private readonly MessageBusInterface $messageBus,
-        private readonly ClockInterface $clock
+        private readonly ClockInterface $clock,
+        private readonly DateTimeParser $dateTimeParser
     ) {}
 
     public static function getSubscribedEvents(): array
@@ -57,8 +58,8 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->scheduleInvalidationForField($slideId, 'activeFrom', $payload);
-        $this->scheduleInvalidationForField($slideId, 'activeUntil', $payload);
+        $this->scheduleInvalidationForField($slideId, 'active_from', $payload);
+        $this->scheduleInvalidationForField($slideId, 'active_until', $payload);
     }
 
     private function scheduleInvalidationForField(string $slideId, string $fieldName, array $payload): void
@@ -72,18 +73,10 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
         if ($value instanceof \DateTimeInterface) {
             $datetime = \DateTimeImmutable::createFromInterface($value);
         } else {
-            $datetime = \DateTimeImmutable::createFromFormat(
-                Defaults::STORAGE_DATE_TIME_FORMAT,
-                $value,
-                new \DateTimeZone('UTC')
-            ) ?: \DateTimeImmutable::createFromFormat(
-                'Y-m-d H:i:s',
-                $value,
-                new \DateTimeZone('UTC')
-            );
+            $datetime = $this->dateTimeParser->parseFromStorage($value);
         }
 
-        if ($datetime === false) {
+        if ($datetime === null) {
             return;
         }
 
