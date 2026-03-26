@@ -66,8 +66,8 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
 
             if ($id !== null && ($activeFrom === null || $activeUntil === null)) {
                 $existing = $existingSlidesData[$id] ?? [];
-                $activeFrom = $activeFrom ?? ($existing['active_from'] ?? null);
-                $activeUntil = $activeUntil ?? ($existing['active_until'] ?? null);
+                $activeFrom = array_key_exists('active_from', $payload) ? $activeFrom : ($existing['active_from'] ?? null);
+                $activeUntil = array_key_exists('active_until', $payload) ? $activeUntil : ($existing['active_until'] ?? null);
             }
 
             $this->validateDates($activeFrom, $activeUntil, $violations);
