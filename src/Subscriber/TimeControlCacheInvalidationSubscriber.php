@@ -6,7 +6,6 @@ namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
-use Blur\BlurElysiumSlider\Service\DateTimeParser;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
@@ -21,8 +20,7 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private readonly MessageBusInterface $messageBus,
-        private readonly ClockInterface $clock,
-        private readonly DateTimeParser $dateTimeParser
+        private readonly ClockInterface $clock
     ) {}
 
     public static function getSubscribedEvents(): array
@@ -101,22 +99,5 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
                 new TimeControlCacheInvalidationMessage($slideId, $datetime)
             ))->with(new DelayStamp($delaySeconds * 1000))
         );
-    }
-
-    private function parseDateTime(string $value): ?\DateTimeImmutable
-    {
-        if (str_contains($value, 'T')) {
-            $result = \DateTimeImmutable::createFromFormat(\DateTimeInterface::ISO8601, $value);
-            if ($result !== false) {
-                return $result;
-            }
-
-            $result = \DateTimeImmutable::createFromFormat(\DateTimeInterface::RFC3339, $value);
-            if ($result !== false) {
-                return $result;
-            }
-        }
-
-        return $this->dateTimeParser->parseFromStorage($value);
     }
 }
