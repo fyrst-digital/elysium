@@ -168,9 +168,13 @@
             "slideSavedSuccess": "Slide <b>{slide}</b> has been saved",
             "emptySlideNameErrorTitle": "No Slide name",
             "emptySlideNameError": "Please provide a Slide name",
-            "slideSaveError": "Something went wrong. The Slide couldn't be saved",
+            "slideSaveErrorTitle": "Something went wrong",
+            "slideSaveError": "The Slide couldn't be saved",
             "productLinkingMissingEntity": "Please select a product you would like to link",
             "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten."
+        },
+        "violations": {
+            "TIME_CONTROL_INVALID_RANGE": "The \"Active from\" date must be before the \"Active until\" date."
         },
         "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
         "actions": {
@@ -207,6 +211,19 @@
                 "label": "CSS Classes",
                 "placeholder": "custom-class second-custom-class",
                 "helpText": "Specify one or more CSS classes for the slide, separated by a space"
+            },
+            "slideTimeControl": {
+                "label": "Time Control",
+                "activeFrom": {
+                    "label": "Active from",
+                    "placeholder": "Select start date and time",
+                    "helpText": "Slide will be displayed from this datetime onwards. Leave empty for no start restriction."
+                },
+                "activeUntil": {
+                    "label": "Active until",
+                    "placeholder": "Select end date and time",
+                    "helpText": "Slide will be displayed until this datetime. Leave empty for no end restriction."
+                }
             },
             "slideHeadlineElement": {
                 "label": "HTML Element",

@@ -35,9 +35,13 @@
             <tag name="shopware.entity.definition" entity="blur_elysium_slides_translation" />
         </service>
 
+        <service id="Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup">
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
+        </service>
+
         <service id="Blur\BlurElysiumSlider\Subscriber\CacheInvalidationSubscriber">
             <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheInvalidator"/>
-            <argument type="service" id="Doctrine\DBAL\Connection"/>
+            <argument type="service" id="Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup"/>
             <tag name="kernel.event_listener" event="Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent" method="invalidateCmsPageIds" priority="2001" />
         </service>
 
@@ -49,6 +53,28 @@
 
         <service id="Blur\BlurElysiumSlider\Subscriber\UnusedMediaSubscriber">
             <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlSubscriber">
+            <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlCacheInvalidationSubscriber">
+            <argument type="service" id="messenger.default_bus"/>
+            <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlValidationSubscriber">
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="Blur\BlurElysiumSlider\MessageHandler\TimeControlCacheInvalidationHandler">
+            <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheInvalidator"/>
+            <argument type="service" id="Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup"/>
+            <tag name="messenger.message_handler"/>
         </service>
 
         <service id="Blur\BlurElysiumSlider\Twig\CamelToKebabCase" public="true">

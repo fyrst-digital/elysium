@@ -41,6 +41,10 @@ final class Defaults
         'elysium_preview_elasticsearch' => [
             'description' => 'Enables Elasticsearch compatibility in the Admin',
             'default' => true
+        ],
+        'elysium_preview_time_control' => [
+            'description' => 'Enables time-controlled slides scheduling',
+            'default' => true
         ]
     ];
 

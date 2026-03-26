@@ -17,6 +17,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\SearchRanking;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\JsonField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\DateTimeField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
@@ -66,6 +67,9 @@ class ElysiumSlidesDefinition extends EntityDefinition
             // / media presentation
             (new FkField('presentation_media_id', 'presentationMediaId', MediaDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('presentationMedia', 'presentation_media_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
+            // time control
+            (new DateTimeField('active_from', 'activeFrom'))->addFlags(new ApiAware()),
+            (new DateTimeField('active_until', 'activeUntil'))->addFlags(new ApiAware()),
             // slide settings
             (new JsonField('slide_settings', 'slideSettings'))->addFlags(new ApiAware()),
             // translation

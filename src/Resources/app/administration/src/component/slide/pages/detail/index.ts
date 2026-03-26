@@ -1,6 +1,6 @@
 import { defaultSlideSettings, defaultContentSettings } from '@elysium/component/slide/settings';
 import template from './template.html.twig';
-import { ElysiumSlide } from '@elysium/types/slide';
+import { ElysiumSlide, SlideError } from '@elysium/types/slide';
 
 const { Component, Context, Mixin, Data, Utils, Store } = Shopware;
 const { Criteria } = Data;
@@ -339,27 +339,33 @@ export default Component.wrapComponentConfig({
                     this.loadSlide();
                 })
                 .catch((reason) => {
+                    const errors: SlideError[] | null = reason.response?.data?.errors || null
+                    let errorTitle = this.$tc('blurElysiumSlides.messages.slideSaveErrorTitle')
+                    let errorMessage = this.$tc('blurElysiumSlides.messages.slideSaveError')
                     if (
                         this.slide.name === undefined ||
                         this.slide.name === null ||
                         this.slide.name === ''
                     ) {
-                        this.createNotificationError({
-                            title: this.$tc(
-                                'blurElysiumSlides.messages.emptySlideNameErrorTitle'
-                            ),
-                            message: this.$tc(
-                                'blurElysiumSlides.messages.emptySlideNameError'
-                            ),
-                        });
+                        errorTitle = this.$tc('blurElysiumSlides.messages.emptySlideNameErrorTitle')
+                        errorMessage = this.$tc('blurElysiumSlides.messages.emptySlideNameError')
+                    } 
+
+                    if (errors?.length > 0) {
+                        errors.forEach((error) => {
+                            this.createNotificationError({
+                                title: errorTitle,
+                                message: this.$tc(`blurElysiumSlides.violations.${error.code}`),
+                            })
+                        })
                     } else {
                         this.createNotificationError({
-                            message: this.$tc(
-                                'blurElysiumSlides.messages.slideSaveError'
-                            ),
+                            title: errorTitle,
+                            message: errorMessage,
                         });
                     }
-                    console.error(reason);
+
+                    console.error(errors);
                     this.isLoading = false;
                 });
         },

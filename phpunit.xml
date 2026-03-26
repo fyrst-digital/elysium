@@ -19,6 +19,9 @@
         <testsuite name="migration">
             <directory>tests/Migration</directory>
         </testsuite>
+        <testsuite name="subscriber">
+            <directory>tests/Subscriber</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
