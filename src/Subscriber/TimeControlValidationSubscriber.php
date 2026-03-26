@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
-use Blur\BlurElysiumSlider\Service\DateTimeParser;
-use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Validation\PreWriteValidationEvent;
 use Shopware\Core\Framework\Feature;
@@ -20,8 +18,7 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
     private const VIOLATION_CODE = 'TIME_CONTROL_INVALID_RANGE';
 
     public function __construct(
-        private readonly Connection $connection,
-        private readonly DateTimeParser $dateTimeParser
+        private readonly Connection $connection
     ) {}
 
     public static function getSubscribedEvents(): array
@@ -31,11 +28,6 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @todo the whole method with dependend functions looks awkward, not readable and not maintanable. It shoud follow clean code principles
-     * consider refractoring of this. Simplify it drasticly
-     */
-
     public function validateTimeControl(PreWriteValidationEvent $event): void
     {
         if (!Feature::isActive('elysium_preview_time_control')) {
@@ -43,8 +35,19 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
         }
 
         $violations = new ConstraintViolationList();
-        $idsNeedingFetch = [];
-        $commandsToValidate = [];
+
+        /**
+         * @todo
+         * There might be performance concerns on fetching slide data if that validation event get triggered in bulk.
+         * 
+         * We can get all priary key with:
+         * $event->getPrimaryKeys(ElysiumSlidesDefinition::ENTITY_NAME)
+         * 
+         * fetch the active dates from slides upfront and use these data if active_from or active_until is missing in the payload.
+         * In the best case we have one fetch query in bulk scenario.
+         * In the worst case (active_from and active_until is in the payload of just one slide validation) we wated one fetch sql query.
+         * Thats a no brainer tradeoff
+         */
 
         foreach ($event->getCommands() as $command) {
             $entityName = $command->getEntityName();
@@ -58,9 +61,12 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
             }
 
             $payload = $command->getPayload();
-            $id = $command->getPrimaryKey()['id'] ?? null;
+            $primaryKey = $command->getPrimaryKey();
+            $id = $primaryKey['id'] ?? null;
+
             $activeFrom = $payload['active_from'] ?? null;
             $activeUntil = $payload['active_until'] ?? null;
+
 
             if ($privilege === 'create') {
                 $this->validateDates($activeFrom, $activeUntil, $violations);
@@ -68,18 +74,10 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
             }
 
             if ($id !== null && ($activeFrom === null || $activeUntil === null)) {
-                $idsNeedingFetch[$id] = true;
+                $existing = $this->fetchExistingValues($id);
+                $activeFrom = $activeFrom ?? ($existing['active_from'] ?? null);
+                $activeUntil = $activeUntil ?? ($existing['active_until'] ?? null);
             }
-
-            $commandsToValidate[] = ['id' => $id, 'activeFrom' => $activeFrom, 'activeUntil' => $activeUntil];
-        }
-
-        $existingValuesMap = $this->fetchExistingValuesBatch(array_keys($idsNeedingFetch));
-
-        foreach ($commandsToValidate as $item) {
-            $id = $item['id'];
-            $activeFrom = $item['activeFrom'] ?? $existingValuesMap[$id]['active_from'] ?? null;
-            $activeUntil = $item['activeUntil'] ?? $existingValuesMap[$id]['active_until'] ?? null;
 
             $this->validateDates($activeFrom, $activeUntil, $violations);
         }
@@ -89,52 +87,48 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
         }
     }
 
-    private function validateDates(?string $activeFrom, ?string $activeUntil, ConstraintViolationList $violations): void
-    {
+    private function validateDates(
+        ?string $activeFrom,
+        ?string $activeUntil,
+        ConstraintViolationList $violations
+    ): void {
         if ($activeFrom === null || $activeUntil === null) {
             return;
         }
 
-        $fromDate = $this->dateTimeParser->parseFromStorage($activeFrom);
-        $untilDate = $this->dateTimeParser->parseFromStorage($activeUntil);
+        $fromTimestamp = strtotime($activeFrom);
+        $untilTimestamp = strtotime($activeUntil);
 
-        if ($fromDate === null || $untilDate === null || $fromDate < $untilDate) {
+        if ($fromTimestamp === false || $untilTimestamp === false) {
             return;
         }
 
-        $violations->add(new ConstraintViolation(
-            'The "activeFrom" date must be before the "activeUntil" date.',
-            'The "{{ field1 }}" date must be before the "{{ field2 }}" date.',
-            ['{{ field1 }}' => 'activeFrom', '{{ field2 }}' => 'activeUntil'],
-            null,
-            '/activeFrom',
-            $activeFrom,
-            null,
-            self::VIOLATION_CODE
-        ));
+        if ($fromTimestamp >= $untilTimestamp) {
+            $violations->add(
+                new ConstraintViolation(
+                    'The "activeFrom" date must be before the "activeUntil" date.',
+                    'The "{{ field1 }}" date must be before the "{{ field2 }}" date.',
+                    [
+                        '{{ field1 }}' => 'activeFrom',
+                        '{{ field2 }}' => 'activeUntil',
+                    ],
+                    null,
+                    '/activeFrom',
+                    $activeFrom,
+                    null,
+                    self::VIOLATION_CODE
+                )
+            );
+        }
     }
 
-    private function fetchExistingValuesBatch(array $ids): array
+    private function fetchExistingValues(string $id): array
     {
-        if (empty($ids)) {
-            return [];
-        }
-
-        $sql = 'SELECT LOWER(HEX(id)) as id, active_from, active_until 
-                FROM blur_elysium_slides WHERE id IN (:ids)';
-
-        $results = $this->connection->fetchAllAssociative(
-            $sql,
-            ['ids' => array_values($ids)],
-            ['ids' => ArrayParameterType::STRING]
+        $result = $this->connection->fetchAssociative(
+            'SELECT active_from, active_until FROM blur_elysium_slides WHERE id = :id',
+            ['id' => $id]
         );
 
-        $mapped = [];
-        foreach ($results as $result) {
-            $id = $result['id'];
-            $mapped[$id] = ['active_from' => $result['active_from'], 'active_until' => $result['active_until']];
-        }
-
-        return $mapped;
+        return $result ?: [];
     }
 }

@@ -71,7 +71,6 @@
 
         <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlValidationSubscriber">
             <argument type="service" id="Doctrine\DBAL\Connection"/>
-            <argument type="service" id="Blur\BlurElysiumSlider\Service\DateTimeParser"/>
             <tag name="kernel.event_subscriber"/>
         </service>
 

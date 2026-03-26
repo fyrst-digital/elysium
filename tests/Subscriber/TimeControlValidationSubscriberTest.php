@@ -3,7 +3,6 @@
 namespace Blur\BlurElysiumSlider\Tests\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
-use Blur\BlurElysiumSlider\Service\DateTimeParser;
 use Blur\BlurElysiumSlider\Subscriber\TimeControlValidationSubscriber;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
@@ -14,6 +13,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\WriteCommand;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\EntityExistence;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Validation\PreWriteValidationEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\WriteContext;
+use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolation;
@@ -22,24 +22,21 @@ class TimeControlValidationSubscriberTest extends TestCase
 {
     private Connection&MockObject $connection;
 
-    private DateTimeParser&MockObject $dateTimeParser;
-
     private TimeControlValidationSubscriber $subscriber;
 
     protected function setUp(): void
     {
+        Feature::registerFeatures([
+            'elysium_preview_time_control' => ['default' => true],
+        ]);
+
         $this->connection = $this->createMock(Connection::class);
-        $this->dateTimeParser = $this->createMock(DateTimeParser::class);
-        $this->dateTimeParser
-            ->method('parseFromStorage')
-            ->willReturnCallback(function (?string $dateTime) {
-                if ($dateTime === null) {
-                    return null;
-                }
-                $parsed = strtotime($dateTime);
-                return $parsed !== false ? new \DateTimeImmutable('@' . $parsed) : null;
-            });
-        $this->subscriber = new TimeControlValidationSubscriber($this->connection, $this->dateTimeParser);
+        $this->subscriber = new TimeControlValidationSubscriber($this->connection);
+    }
+
+    protected function tearDown(): void
+    {
+        Feature::resetRegisteredFeatures();
     }
 
     public function testGetSubscribedEvents(): void
@@ -158,13 +155,12 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         $this->connection
             ->expects(static::once())
-            ->method('fetchAllAssociative')
+            ->method('fetchAssociative')
             ->with(
                 static::anything(),
-                static::callback(fn($params) => isset($params['ids']) && \is_array($params['ids'])),
-                ['ids' => ArrayParameterType::STRING]
+                ['id' => $id]
             )
-            ->willReturn([['id' => $id, 'active_from' => null, 'active_until' => '2025-12-31 23:59:59']]);
+            ->willReturn(['active_from' => null, 'active_until' => '2025-12-31 23:59:59']);
 
         $this->subscriber->validateTimeControl($event);
 
@@ -179,13 +175,12 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         $this->connection
             ->expects(static::once())
-            ->method('fetchAllAssociative')
+            ->method('fetchAssociative')
             ->with(
                 static::anything(),
-                static::callback(fn($params) => isset($params['ids']) && \is_array($params['ids'])),
-                ['ids' => ArrayParameterType::STRING]
+                ['id' => $id]
             )
-            ->willReturn([['id' => $id, 'active_from' => '2025-01-01 00:00:00', 'active_until' => null]]);
+            ->willReturn(['active_from' => '2025-01-01 00:00:00', 'active_until' => null]);
 
         $this->subscriber->validateTimeControl($event);
 
@@ -200,13 +195,12 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         $this->connection
             ->expects(static::once())
-            ->method('fetchAllAssociative')
+            ->method('fetchAssociative')
             ->with(
                 static::anything(),
-                static::callback(fn($params) => isset($params['ids']) && \is_array($params['ids'])),
-                ['ids' => ArrayParameterType::STRING]
+                ['id' => $id]
             )
-            ->willReturn([]);
+            ->willReturn(false);
 
         $this->subscriber->validateTimeControl($event);
 
@@ -261,13 +255,12 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         $this->connection
             ->expects(static::once())
-            ->method('fetchAllAssociative')
+            ->method('fetchAssociative')
             ->with(
                 static::anything(),
-                static::callback(fn($params) => isset($params['ids']) && \is_array($params['ids'])),
-                ['ids' => ArrayParameterType::STRING]
+                ['id' => $id]
             )
-            ->willReturn([['id' => $id, 'active_from' => null, 'active_until' => '2025-01-01 00:00:00']]);
+            ->willReturn(['active_from' => null, 'active_until' => '2025-01-01 00:00:00']);
 
         $this->subscriber->validateTimeControl($event);
 
@@ -282,13 +275,12 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         $this->connection
             ->expects(static::once())
-            ->method('fetchAllAssociative')
+            ->method('fetchAssociative')
             ->with(
                 static::anything(),
-                static::callback(fn($params) => isset($params['ids']) && \is_array($params['ids'])),
-                ['ids' => ArrayParameterType::STRING]
+                ['id' => $id]
             )
-            ->willReturn([['id' => $id, 'active_from' => '2025-12-31 23:59:59', 'active_until' => null]]);
+            ->willReturn(['active_from' => '2025-12-31 23:59:59', 'active_until' => null]);
 
         $this->subscriber->validateTimeControl($event);
 
