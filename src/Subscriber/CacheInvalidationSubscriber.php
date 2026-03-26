@@ -27,7 +27,7 @@ class CacheInvalidationSubscriber
         $tags = $this->cmsPageLookup->getCmsCacheTagsBySlideIds($slideIds);
 
         if (!empty($tags)) {
-            $this->cacheInvalidator->invalidate($tags);
+            $this->cacheInvalidator->invalidate($tags, true);
         }
     }
 }
