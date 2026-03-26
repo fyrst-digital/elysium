@@ -186,7 +186,12 @@
         },
         "grid": {
             "nameLabel": "Name",
-            "headlineLabel": "Headline"
+            "headlineLabel": "Headline",
+            "hints": {
+                "hasCustomFields": "Has custom fields",
+                "hasActiveFrom": "Has active from date",
+                "hasActiveUntil": "Has active until date"
+            }
         },
         "settings": {
             "baseLabel": "General",

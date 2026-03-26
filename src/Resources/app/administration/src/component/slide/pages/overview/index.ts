@@ -177,6 +177,24 @@ export default Component.wrapComponentConfig({
                 });
         },
 
+        getSlideHints(slide: { customFields: Record<string, unknown> | null; activeFrom: string | null; activeUntil: string | null }): string[] {
+            const hints: string[] = [];
+
+            if (slide.customFields && Object.keys(slide.customFields).length > 0) {
+                hints.push(this.$tc('blurElysiumSlides.grid.hints.hasCustomFields'));
+            }
+
+            if (slide.activeFrom) {
+                hints.push(this.$tc('blurElysiumSlides.grid.hints.hasActiveFrom'));
+            }
+
+            if (slide.activeUntil) {
+                hints.push(this.$tc('blurElysiumSlides.grid.hints.hasActiveUntil'));
+            }
+
+            return hints;
+        },
+
         finishDeleteItems() {
             this.createNotificationSuccess({
                 message: this.$tc(

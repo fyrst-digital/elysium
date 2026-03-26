@@ -53,6 +53,42 @@
             @delete-item-finish="finishDeleteItems"
             @items-delete-finish="finishDeleteItems"
         >
+            <template #column-name="{ item }">
+                <div :style="{ display: 'flex', alignItems: 'center', gap: '8px' }">
+                    <router-link
+                        v-if="permissionView"
+                        :to="{ name: 'blur.elysium.slides.detail', params: { id: item.id } }"
+                    >
+                        {{ item.name }}
+                    </router-link>
+                    <template v-else>{{ item.name }}</template>
+                    <py-icon 
+                        v-if="getSlideHints(item).length > 0"
+                        name="info-bold"
+                        :size="14" 
+                        :style="{
+                            color: 'var(--color-icon-secondary-default)',
+                            cursor: 'pointer'
+                        }"
+                        v-tooltip="{
+                            message: getSlideHints(item).join('<br/>'),
+                        }" />
+                    {# <mt-icon
+                        v-if="getSlideHints(item).length > 0"
+                        name="default-info-circle"
+                        size="16px"
+                        :style="{ color: '#3498db', cursor: 'help' }"
+                    >
+                        <template #tooltip>
+                            <div :style="{ display: 'flex', flexDirection: 'column', gap: '4px' }">
+                                <div v-for="hint in getSlideHints(item)" :key="hint">
+                                    {{ hint }}
+                                </div>
+                            </div>
+                        </template>
+                    </mt-icon> #}
+                </div>
+            </template>
             <template #more-actions="{ item }">
                 <sw-context-menu-item
                     :disabled="!permissionCreate"

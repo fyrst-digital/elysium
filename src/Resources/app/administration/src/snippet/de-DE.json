@@ -186,7 +186,12 @@
         },
         "grid": {
             "nameLabel": "Name",
-            "headlineLabel": "Überschrift"
+            "headlineLabel": "Überschrift",
+            "hints": {
+                "hasCustomFields": "Hat benutzerdefinierte Felder",
+                "hasActiveFrom": "Hat Startdatum",
+                "hasActiveUntil": "Hat Enddatum"
+            }
         },
         "settings": {
             "baseLabel": "Allgemein",
