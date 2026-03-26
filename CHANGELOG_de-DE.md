@@ -1,3 +1,8 @@
+# 4.7.0
+
+**Changelog**
+- Zeitsteuerung für Slides hinzugefügt (Technische Vorschau). Slides können nun mit Start- und Enddatum geplant werden, um automatisch im Storefront angezeigt und ausgeblendet zu werden
+
 # 4.6.1
 
 **Changelog**

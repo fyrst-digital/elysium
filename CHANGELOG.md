@@ -1,3 +1,8 @@
+# 4.7.0
+
+**Changelog**
+- Added time-controlled slides feature (technical preview). Slides can now be scheduled with start and end dates to automatically appear and disappear from the storefront
+
 # 4.6.1
 
 **Changelog**
