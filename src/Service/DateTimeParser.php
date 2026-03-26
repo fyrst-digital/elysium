@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Service;
 
-use Shopware\Core\Defaults;
-
 class DateTimeParser
 {
+    private const STORAGE_FORMAT = 'Y-m-d H:i:s';
+
     public function parseFromStorage(?string $dateTime): ?\DateTimeImmutable
     {
         if ($dateTime === null) {
@@ -15,18 +15,10 @@ class DateTimeParser
         }
 
         $result = \DateTimeImmutable::createFromFormat(
-            Defaults::STORAGE_DATE_TIME_FORMAT,
+            self::STORAGE_FORMAT,
             $dateTime,
             new \DateTimeZone('UTC')
         );
-
-        if ($result === false) {
-            $result = \DateTimeImmutable::createFromFormat(
-                'Y-m-d H:i:s',
-                $dateTime,
-                new \DateTimeZone('UTC')
-            );
-        }
 
         return $result !== false ? $result : null;
     }

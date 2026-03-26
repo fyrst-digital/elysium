@@ -58,48 +58,47 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->scheduleInvalidationForField($slideId, 'activeFrom', $payload);
-        $this->scheduleInvalidationForField($slideId, 'activeUntil', $payload);
+        // At this point the datetimes from the payload are UTC!
+        $this->scheduleInvalidation($slideId, 'activeFrom', $payload);
+        $this->scheduleInvalidation($slideId, 'activeUntil', $payload);
     }
 
-    private function scheduleInvalidationForField(string $slideId, string $fieldName, array $payload): void
+    private function scheduleInvalidation(string $slideId, string $fieldName, array $payload): void
     {
-        if (!array_key_exists($fieldName, $payload)) {
+        if (!isset($payload[$fieldName])) {
             return;
         }
 
         $value = $payload[$fieldName];
 
-        if ($value === null) {
-            return;
-        }
+
 
         if ($value instanceof \DateTimeInterface) {
             $datetime = \DateTimeImmutable::createFromInterface($value);
-        } elseif (is_string($value)) {
-            $datetime = $this->parseDateTime($value);
         } else {
+            $datetime = \DateTimeImmutable::createFromFormat(
+                'Y-m-d H:i:s',
+                $value
+            );
+        }
+
+        if ($datetime === false) {
             return;
         }
 
-        if ($datetime === null) {
-            return;
-        }
-
-        $datetimeUtc = $datetime->setTimezone(new \DateTimeZone('UTC'));
         $now = $this->clock->now();
-        $delaySeconds = $datetimeUtc->getTimestamp() - $now->getTimestamp();
+        $delaySeconds = $datetime->getTimestamp() - $now->getTimestamp();
 
         if ($delaySeconds <= 0) {
             $this->messageBus->dispatch(
-                new TimeControlCacheInvalidationMessage($slideId, $datetimeUtc)
+                new TimeControlCacheInvalidationMessage($slideId, $datetime)
             );
             return;
         }
 
         $this->messageBus->dispatch(
             (new Envelope(
-                new TimeControlCacheInvalidationMessage($slideId, $datetimeUtc)
+                new TimeControlCacheInvalidationMessage($slideId, $datetime)
             ))->with(new DelayStamp($delaySeconds * 1000))
         );
     }
