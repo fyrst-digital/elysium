@@ -8,6 +8,7 @@ use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Service\DateTimeParser;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Validation\PreWriteValidationEvent;
+use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Validator\ConstraintViolation;
@@ -29,8 +30,17 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @todo the whole method with dependend functions looks awkward, not readable and not maintanable. It shoud follow clean code principles
+     * consider refractoring of this. Simplify it drasticly
+     */
+
     public function validateTimeControl(PreWriteValidationEvent $event): void
     {
+        if (!Feature::isActive('elysium_preview_time_control')) {
+            return;
+        }
+
         $violations = new ConstraintViolationList();
         $idsNeedingFetch = [];
         $commandsToValidate = [];
@@ -66,14 +76,14 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
         $existingValuesMap = $this->fetchExistingValuesBatch(array_keys($idsNeedingFetch));
 
         foreach ($commandsToValidate as $item) {
-            $id = $item['id'] ?? '';
+            $id = $item['id'];
             $activeFrom = $item['activeFrom'] ?? $existingValuesMap[$id]['active_from'] ?? null;
             $activeUntil = $item['activeUntil'] ?? $existingValuesMap[$id]['active_until'] ?? null;
 
             $this->validateDates($activeFrom, $activeUntil, $violations);
         }
 
-        if (count($violations)) {
+        if (\count($violations) > 0) {
             $event->getExceptions()->add(new WriteConstraintViolationException($violations));
         }
     }
@@ -95,7 +105,11 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
             'The "activeFrom" date must be before the "activeUntil" date.',
             'The "{{ field1 }}" date must be before the "{{ field2 }}" date.',
             ['{{ field1 }}' => 'activeFrom', '{{ field2 }}' => 'activeUntil'],
-            null, '/activeFrom', $activeFrom, null, self::VIOLATION_CODE
+            null,
+            '/activeFrom',
+            $activeFrom,
+            null,
+            self::VIOLATION_CODE
         ));
     }
 
@@ -115,9 +129,12 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
 
         $results = $this->connection->fetchAllAssociative($sql, $params);
 
-        return array_combine(
-            array_column($results, 'id'),
-            array_map(fn($r) => ['active_from' => $r['active_from'], 'active_until' => $r['active_until']], $results)
-        );
+        $mapped = [];
+        foreach ($results as $result) {
+            $id = $result['id'];
+            $mapped[$id] = ['active_from' => $result['active_from'], 'active_until' => $result['active_until']];
+        }
+
+        return $mapped;
     }
 }

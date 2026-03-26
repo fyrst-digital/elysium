@@ -80,19 +80,20 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $datetimeUtc = $datetime->setTimezone(new \DateTimeZone('UTC'));
         $now = $this->clock->now();
-        $delaySeconds = $datetime->getTimestamp() - $now->getTimestamp();
+        $delaySeconds = $datetimeUtc->getTimestamp() - $now->getTimestamp();
 
         if ($delaySeconds <= 0) {
             $this->messageBus->dispatch(
-                new TimeControlCacheInvalidationMessage($slideId, $datetime)
+                new TimeControlCacheInvalidationMessage($slideId, $datetimeUtc)
             );
             return;
         }
 
         $this->messageBus->dispatch(
             (new Envelope(
-                new TimeControlCacheInvalidationMessage($slideId, $datetime)
+                new TimeControlCacheInvalidationMessage($slideId, $datetimeUtc)
             ))->with(new DelayStamp($delaySeconds * 1000))
         );
     }
