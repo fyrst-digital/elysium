@@ -6,7 +6,6 @@ namespace Blur\BlurElysiumSlider\MessageHandler;
 
 use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
 use Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup;
-use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\Adapter\Cache\CacheInvalidator;
 use Shopware\Core\Framework\Feature;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;

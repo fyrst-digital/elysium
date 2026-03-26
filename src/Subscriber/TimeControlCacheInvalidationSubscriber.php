@@ -58,22 +58,28 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->scheduleInvalidationForField($slideId, 'active_from', $payload);
-        $this->scheduleInvalidationForField($slideId, 'active_until', $payload);
+        $this->scheduleInvalidationForField($slideId, 'activeFrom', $payload);
+        $this->scheduleInvalidationForField($slideId, 'activeUntil', $payload);
     }
 
     private function scheduleInvalidationForField(string $slideId, string $fieldName, array $payload): void
     {
-        if (!isset($payload[$fieldName])) {
+        if (!array_key_exists($fieldName, $payload)) {
             return;
         }
 
         $value = $payload[$fieldName];
 
+        if ($value === null) {
+            return;
+        }
+
         if ($value instanceof \DateTimeInterface) {
             $datetime = \DateTimeImmutable::createFromInterface($value);
+        } elseif (is_string($value)) {
+            $datetime = $this->parseDateTime($value);
         } else {
-            $datetime = $this->dateTimeParser->parseFromStorage($value);
+            return;
         }
 
         if ($datetime === null) {
@@ -96,5 +102,22 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
                 new TimeControlCacheInvalidationMessage($slideId, $datetimeUtc)
             ))->with(new DelayStamp($delaySeconds * 1000))
         );
+    }
+
+    private function parseDateTime(string $value): ?\DateTimeImmutable
+    {
+        if (str_contains($value, 'T')) {
+            $result = \DateTimeImmutable::createFromFormat(\DateTimeInterface::ISO8601, $value);
+            if ($result !== false) {
+                return $result;
+            }
+
+            $result = \DateTimeImmutable::createFromFormat(\DateTimeInterface::RFC3339, $value);
+            if ($result !== false) {
+                return $result;
+            }
+        }
+
+        return $this->dateTimeParser->parseFromStorage($value);
     }
 }
