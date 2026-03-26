@@ -5,6 +5,7 @@ namespace Blur\BlurElysiumSlider\Tests\Subscriber;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Service\DateTimeParser;
 use Blur\BlurElysiumSlider\Subscriber\TimeControlValidationSubscriber;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -158,6 +159,11 @@ class TimeControlValidationSubscriberTest extends TestCase
         $this->connection
             ->expects(static::once())
             ->method('fetchAllAssociative')
+            ->with(
+                static::anything(),
+                static::callback(fn($params) => isset($params['ids']) && \is_array($params['ids'])),
+                ['ids' => ArrayParameterType::STRING]
+            )
             ->willReturn([['id' => $id, 'active_from' => null, 'active_until' => '2025-12-31 23:59:59']]);
 
         $this->subscriber->validateTimeControl($event);
@@ -174,6 +180,11 @@ class TimeControlValidationSubscriberTest extends TestCase
         $this->connection
             ->expects(static::once())
             ->method('fetchAllAssociative')
+            ->with(
+                static::anything(),
+                static::callback(fn($params) => isset($params['ids']) && \is_array($params['ids'])),
+                ['ids' => ArrayParameterType::STRING]
+            )
             ->willReturn([['id' => $id, 'active_from' => '2025-01-01 00:00:00', 'active_until' => null]]);
 
         $this->subscriber->validateTimeControl($event);
@@ -190,6 +201,11 @@ class TimeControlValidationSubscriberTest extends TestCase
         $this->connection
             ->expects(static::once())
             ->method('fetchAllAssociative')
+            ->with(
+                static::anything(),
+                static::callback(fn($params) => isset($params['ids']) && \is_array($params['ids'])),
+                ['ids' => ArrayParameterType::STRING]
+            )
             ->willReturn([]);
 
         $this->subscriber->validateTimeControl($event);
@@ -246,6 +262,11 @@ class TimeControlValidationSubscriberTest extends TestCase
         $this->connection
             ->expects(static::once())
             ->method('fetchAllAssociative')
+            ->with(
+                static::anything(),
+                static::callback(fn($params) => isset($params['ids']) && \is_array($params['ids'])),
+                ['ids' => ArrayParameterType::STRING]
+            )
             ->willReturn([['id' => $id, 'active_from' => null, 'active_until' => '2025-01-01 00:00:00']]);
 
         $this->subscriber->validateTimeControl($event);
@@ -262,6 +283,11 @@ class TimeControlValidationSubscriberTest extends TestCase
         $this->connection
             ->expects(static::once())
             ->method('fetchAllAssociative')
+            ->with(
+                static::anything(),
+                static::callback(fn($params) => isset($params['ids']) && \is_array($params['ids'])),
+                ['ids' => ArrayParameterType::STRING]
+            )
             ->willReturn([['id' => $id, 'active_from' => '2025-12-31 23:59:59', 'active_until' => null]]);
 
         $this->subscriber->validateTimeControl($event);

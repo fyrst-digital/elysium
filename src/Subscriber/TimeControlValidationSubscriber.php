@@ -6,6 +6,7 @@ namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Service\DateTimeParser;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Validation\PreWriteValidationEvent;
 use Shopware\Core\Framework\Feature;
@@ -119,15 +120,14 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
             return [];
         }
 
-        $placeholders = array_map(fn($i) => ":id_$i", array_keys($ids));
-        $params = array_combine($placeholders, $ids);
+        $sql = 'SELECT LOWER(HEX(id)) as id, active_from, active_until 
+                FROM blur_elysium_slides WHERE id IN (:ids)';
 
-        $sql = sprintf(
-            'SELECT LOWER(HEX(id)) as id, active_from, active_until FROM blur_elysium_slides WHERE id IN (%s)',
-            implode(', ', $placeholders)
+        $results = $this->connection->fetchAllAssociative(
+            $sql,
+            ['ids' => array_values($ids)],
+            ['ids' => ArrayParameterType::STRING]
         );
-
-        $results = $this->connection->fetchAllAssociative($sql, $params);
 
         $mapped = [];
         foreach ($results as $result) {
