@@ -45,9 +45,13 @@ class SlideValidationSubscriberTest extends TestCase
         $events = SlideValidationSubscriber::getSubscribedEvents();
 
         static::assertArrayHasKey(PreWriteValidationEvent::class, $events);
-        static::assertArrayHasKey('sanitizeSlideName', $events[PreWriteValidationEvent::class]);
-        static::assertArrayHasKey('validateSlideName', $events[PreWriteValidationEvent::class]);
-        static::assertArrayHasKey('validateTimeControl', $events[PreWriteValidationEvent::class]);
+        $eventListeners = $events[PreWriteValidationEvent::class];
+        static::assertIsArray($eventListeners);
+
+        $listenerMethods = array_column($eventListeners, 0);
+        static::assertContains('sanitizeSlideName', $listenerMethods);
+        static::assertContains('validateSlideName', $listenerMethods);
+        static::assertContains('validateTimeControl', $listenerMethods);
     }
 
     // =====================================================
