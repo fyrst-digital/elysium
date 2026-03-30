@@ -2,8 +2,9 @@
 
 namespace Blur\BlurElysiumSlider\Tests\Subscriber;
 
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
-use Blur\BlurElysiumSlider\Subscriber\TimeControlValidationSubscriber;
+use Blur\BlurElysiumSlider\Subscriber\SlideValidationSubscriber;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -18,11 +19,11 @@ use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Symfony\Component\Validator\ConstraintViolation;
 
-class TimeControlValidationSubscriberTest extends TestCase
+class SlideValidationSubscriberTest extends TestCase
 {
     private Connection&MockObject $connection;
 
-    private TimeControlValidationSubscriber $subscriber;
+    private SlideValidationSubscriber $subscriber;
 
     protected function setUp(): void
     {
@@ -31,7 +32,7 @@ class TimeControlValidationSubscriberTest extends TestCase
         ]);
 
         $this->connection = $this->createMock(Connection::class);
-        $this->subscriber = new TimeControlValidationSubscriber($this->connection);
+        $this->subscriber = new SlideValidationSubscriber($this->connection);
     }
 
     protected function tearDown(): void
@@ -41,14 +42,204 @@ class TimeControlValidationSubscriberTest extends TestCase
 
     public function testGetSubscribedEvents(): void
     {
-        $events = TimeControlValidationSubscriber::getSubscribedEvents();
+        $events = SlideValidationSubscriber::getSubscribedEvents();
 
         static::assertArrayHasKey(PreWriteValidationEvent::class, $events);
-        static::assertEquals('validateTimeControl', $events[PreWriteValidationEvent::class]);
+        static::assertArrayHasKey('sanitizeSlideName', $events[PreWriteValidationEvent::class]);
+        static::assertArrayHasKey('validateSlideName', $events[PreWriteValidationEvent::class]);
+        static::assertArrayHasKey('validateTimeControl', $events[PreWriteValidationEvent::class]);
     }
 
     // =====================================================
-    // Happy Path - Create Operations
+    // Slide Name Sanitization Tests
+    // =====================================================
+
+    public function testSanitizeSlideNameTrimsLeadingWhitespace(): void
+    {
+        $command = new TranslationTestWriteCommand('create', ['name' => '  my-slide']);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->sanitizeSlideName($event);
+
+        static::assertSame('my-slide', $command->getPayload()['name']);
+    }
+
+    public function testSanitizeSlideNameTrimsTrailingWhitespace(): void
+    {
+        $command = new TranslationTestWriteCommand('create', ['name' => 'my-slide  ']);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->sanitizeSlideName($event);
+
+        static::assertSame('my-slide', $command->getPayload()['name']);
+    }
+
+    public function testSanitizeSlideNameTrimsBothLeadingAndTrailingWhitespace(): void
+    {
+        $command = new TranslationTestWriteCommand('create', ['name' => '  my-slide  ']);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->sanitizeSlideName($event);
+
+        static::assertSame('my-slide', $command->getPayload()['name']);
+    }
+
+    public function testSanitizeSlideNameDoesNotTrimMiddleSpaces(): void
+    {
+        $command = new TranslationTestWriteCommand('create', ['name' => 'my slide name']);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->sanitizeSlideName($event);
+
+        static::assertSame('my slide name', $command->getPayload()['name']);
+    }
+
+    public function testSanitizeSlideNameIgnoresNullName(): void
+    {
+        $command = new TranslationTestWriteCommand('create', []);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->sanitizeSlideName($event);
+
+        static::assertArrayNotHasKey('name', $command->getPayload());
+    }
+
+    public function testSanitizeSlideNameIgnoresNonTranslationEntities(): void
+    {
+        $command = new TestWriteCommand('create', ['name' => '  my-slide  ']);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->sanitizeSlideName($event);
+
+        static::assertSame('  my-slide  ', $command->getPayload()['name']);
+    }
+
+    // =====================================================
+    // Slide Name Validation Tests
+    // =====================================================
+
+    #[DataProvider('validSlideNameProvider')]
+    public function testValidatesSlideNameWithValidNames(string $name): void
+    {
+        $command = new TranslationTestWriteCommand('create', ['name' => $name]);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->validateSlideName($event);
+
+        static::assertCount(0, $event->getExceptions()->getExceptions());
+    }
+
+    public static function validSlideNameProvider(): array
+    {
+        return [
+            'simple name' => ['my-slide'],
+            'name with numbers' => ['slide-2024'],
+            'name with spaces' => ['my slide name'],
+            'name with spaces and dashes' => ['my-slide-name-2024'],
+            'single character' => ['a'],
+            'single number' => ['1'],
+            'name with multiple spaces' => ['a b c d e'],
+            'uppercase letters' => ['MySlideName'],
+            'mixed case' => ['My-Slide-Name-2024'],
+        ];
+    }
+
+    #[DataProvider('invalidSlideNameProvider')]
+    public function testValidatesSlideNameWithInvalidNames(string $name): void
+    {
+        $command = new TranslationTestWriteCommand('create', ['name' => $name]);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->validateSlideName($event);
+
+        $exceptions = $event->getExceptions()->getExceptions();
+        static::assertCount(1, $exceptions);
+        static::assertInstanceOf(WriteConstraintViolationException::class, $exceptions[0]);
+    }
+
+    public static function invalidSlideNameProvider(): array
+    {
+        return [
+            'leading whitespace' => [' my-slide'],
+            'trailing whitespace' => ['my-slide '],
+            'special characters' => ['my@slide'],
+            'underscore' => ['my_slide'],
+            'dot' => ['my.slide'],
+            'parentheses' => ['my(slide)'],
+            'brackets' => ['my[slide]'],
+            'equals' => ['my=slide'],
+            'plus' => ['my+slide'],
+            'ampersand' => ['my&slide'],
+            'at sign' => ['my@slide'],
+            'hash' => ['my#slide'],
+            'dollar' => ['my$slide'],
+            'percent' => ['my%slide'],
+            'caret' => ['my^slide'],
+            'asterisk' => ['my*slide'],
+            'exclamation' => ['my!slide'],
+            'question' => ['my?slide'],
+            'pipe' => ['my|slide'],
+            'backslash' => ['my\slide'],
+            'forward slash' => ['my/slide'],
+        ];
+    }
+
+    public function testValidateSlideNameIgnoresNullName(): void
+    {
+        $command = new TranslationTestWriteCommand('create', []);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->validateSlideName($event);
+
+        static::assertCount(0, $event->getExceptions()->getExceptions());
+    }
+
+    public function testValidateSlideNameSkipsDeleteCommand(): void
+    {
+        $command = new TranslationTestWriteCommand('delete', ['name' => 'invalid!name']);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->validateSlideName($event);
+
+        static::assertCount(0, $event->getExceptions()->getExceptions());
+    }
+
+    public function testValidateSlideNameSkipsOtherEntities(): void
+    {
+        $command = new class('create', ['name' => 'invalid!name']) extends TestWriteCommand {
+            public function getEntityName(): string { return 'product'; }
+        };
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->validateSlideName($event);
+
+        static::assertCount(0, $event->getExceptions()->getExceptions());
+    }
+
+    public function testValidateSlideNameViolationContainsCorrectMetadata(): void
+    {
+        $command = new TranslationTestWriteCommand('create', ['name' => 'invalid@name']);
+        $event = $this->createEvent([$command]);
+
+        $this->subscriber->validateSlideName($event);
+
+        $exceptions = $event->getExceptions()->getExceptions();
+        static::assertCount(1, $exceptions);
+
+        $exception = $exceptions[0];
+        static::assertInstanceOf(WriteConstraintViolationException::class, $exception);
+
+        $violations = $exception->getViolations();
+        static::assertCount(1, $violations);
+
+        $violation = $violations[0];
+        static::assertSame('/name', $violation->getPropertyPath());
+        static::assertSame('SLIDE_NAME_INVALID_FORMAT', $violation->getCode());
+        static::assertSame('invalid@name', $violation->getInvalidValue());
+    }
+
+    // =====================================================
+    // Time Control Validation Tests (existing)
     // =====================================================
 
     public function testCreateDoesNotFetchFromDatabase(): void
@@ -115,10 +306,6 @@ class TimeControlValidationSubscriberTest extends TestCase
 
         static::assertCount(0, $event->getExceptions()->getExceptions());
     }
-
-    // =====================================================
-    // Happy Path - Update Operations
-    // =====================================================
 
     public function testValidatesUpdateWithValidDates(): void
     {
@@ -213,10 +400,6 @@ class TimeControlValidationSubscriberTest extends TestCase
         static::assertCount(0, $event->getExceptions()->getExceptions());
     }
 
-    // =====================================================
-    // Validation Failures
-    // =====================================================
-
     #[DataProvider('invalidDateRangeProvider')]
     public function testThrowsViolationOnInvalidDateRange(string $activeFrom, string $activeUntil): void
     {
@@ -290,10 +473,6 @@ class TimeControlValidationSubscriberTest extends TestCase
         static::assertSame('TIME_CONTROL_INVALID_RANGE', $violation->getCode());
         static::assertSame('The "activeFrom" date must be before the "activeUntil" date.', $violation->getMessage());
     }
-
-    // =====================================================
-    // Edge Cases
-    // =====================================================
 
     public function testSilentlyIgnoresInvalidDateFormat(): void
     {
@@ -437,5 +616,58 @@ class TestWriteCommand extends WriteCommand
     public function getPrivilege(): ?string
     {
         return $this->privilegeType;
+    }
+
+    public function addPayload(string $key, mixed $value): void
+    {
+        $this->payload[$key] = $value;
+    }
+}
+
+/**
+ * @internal
+ */
+class TranslationTestWriteCommand extends WriteCommand
+{
+    private string $privilegeType;
+    protected array $payload;
+    protected array $primaryKey;
+    protected string $entityName;
+    protected EntityExistence $existence;
+    protected string $path;
+
+    public function __construct(string $privilegeType, array $payload, string $id = '')
+    {
+        $this->privilegeType = $privilegeType;
+        $this->payload = $payload;
+        $this->primaryKey = ['id' => $id ?: Uuid::randomHex()];
+        $this->entityName = ElysiumSlidesTranslationDefinition::ENTITY_NAME;
+        $this->existence = new EntityExistence(ElysiumSlidesTranslationDefinition::ENTITY_NAME, [], false, false, false, []);
+        $this->path = '';
+    }
+
+    public function getEntityName(): string
+    {
+        return $this->entityName;
+    }
+
+    public function getPayload(): array
+    {
+        return $this->payload;
+    }
+
+    public function getPrimaryKey(): array
+    {
+        return $this->primaryKey;
+    }
+
+    public function getPrivilege(): ?string
+    {
+        return $this->privilegeType;
+    }
+
+    public function addPayload(string $key, mixed $value): void
+    {
+        $this->payload[$key] = $value;
     }
 }

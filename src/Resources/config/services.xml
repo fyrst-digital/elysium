@@ -66,7 +66,7 @@
             <tag name="kernel.event_subscriber"/>
         </service>
 
-        <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlValidationSubscriber">
+        <service id="Blur\BlurElysiumSlider\Subscriber\SlideValidationSubscriber">
             <argument type="service" id="Doctrine\DBAL\Connection"/>
             <tag name="kernel.event_subscriber"/>
         </service>

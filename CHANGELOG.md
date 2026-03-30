@@ -1,8 +1,9 @@
 # 4.7.0
 
 **Changelog**
-- Added time-controlled slides feature (technical preview). Slides can now be scheduled with start and end dates to automatically appear and disappear from the storefront
-- **Note** To ensure that time control works reliably in conjunction with an active HTTP cache, CLI workers must be configured correctly in Shopware. Using admin workers—which should not be used in production systems—can cause issues. You can find more information about [CLI and admin workers here](https://docs.shopware.com/en/shopware-6-en/tutorials-and-faq/message-queue-and-scheduled-tasks#disable-admin-worker-set-up-cli-worker)
+- Added time-controlled slides feature (technical preview). Slides can now be scheduled with start and end dates to automatically appear and disappear from the storefront  
+  **Note** To ensure that time control works reliably in conjunction with an active HTTP cache, CLI workers must be configured correctly in Shopware. Using admin workers—which should not be used in production systems—can cause issues. You can find more information about [CLI and admin workers here](https://docs.shopware.com/en/shopware-6-en/tutorials-and-faq/message-queue-and-scheduled-tasks#disable-admin-worker-set-up-cli-worker)
+- Added slide name validation. Slide names now only allow letters, numbers, spaces, and dashes. Leading/trailing whitespace is automatically trimmed
 
 # 4.6.1
 

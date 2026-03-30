@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Subscriber;
 
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
@@ -14,9 +15,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 
-class TimeControlValidationSubscriber implements EventSubscriberInterface
+class SlideValidationSubscriber implements EventSubscriberInterface
 {
-    private const VIOLATION_CODE = 'TIME_CONTROL_INVALID_RANGE';
+    private const VIOLATION_CODE_TIME_CONTROL = 'TIME_CONTROL_INVALID_RANGE';
+    private const VIOLATION_CODE_NAME = 'SLIDE_NAME_INVALID_FORMAT';
+
+    private const NAME_PATTERN = '/^[A-Za-z0-9][A-Za-z0-9\s-]*[A-Za-z0-9]$|^[A-Za-z0-9]$/';
 
     public function __construct(
         private readonly Connection $connection
@@ -25,8 +29,72 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            PreWriteValidationEvent::class => 'validateTimeControl',
+            PreWriteValidationEvent::class => [
+                ['sanitizeSlideName', 1000],
+                ['validateSlideName', 500],
+                ['validateTimeControl', 500],
+            ],
         ];
+    }
+
+    public function sanitizeSlideName(PreWriteValidationEvent $event): void
+    {
+        foreach ($event->getCommands() as $command) {
+            if ($command->getEntityName() !== ElysiumSlidesTranslationDefinition::ENTITY_NAME) {
+                continue;
+            }
+
+            $payload = $command->getPayload();
+
+            if (isset($payload['name']) && is_string($payload['name'])) {
+                $sanitized = trim($payload['name']);
+                if ($sanitized !== $payload['name']) {
+                    $command->addPayload('name', $sanitized);
+                }
+            }
+        }
+    }
+
+    public function validateSlideName(PreWriteValidationEvent $event): void
+    {
+        $violations = new ConstraintViolationList();
+
+        foreach ($event->getCommands() as $command) {
+            if ($command->getEntityName() !== ElysiumSlidesTranslationDefinition::ENTITY_NAME) {
+                continue;
+            }
+
+            $privilege = $command->getPrivilege();
+            if ($privilege === 'delete') {
+                continue;
+            }
+
+            $payload = $command->getPayload();
+            $name = $payload['name'] ?? null;
+
+            if ($name === null) {
+                continue;
+            }
+
+            if (!preg_match(self::NAME_PATTERN, $name)) {
+                $violations->add(
+                    new ConstraintViolation(
+                        'Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace.',
+                        'Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace.',
+                        [],
+                        null,
+                        '/name',
+                        $name,
+                        null,
+                        self::VIOLATION_CODE_NAME
+                    )
+                );
+            }
+        }
+
+        if (\count($violations) > 0) {
+            $event->getExceptions()->add(new WriteConstraintViolationException($violations));
+        }
     }
 
     public function validateTimeControl(PreWriteValidationEvent $event): void
@@ -107,7 +175,7 @@ class TimeControlValidationSubscriber implements EventSubscriberInterface
                     '/activeFrom',
                     $activeFrom,
                     null,
-                    self::VIOLATION_CODE
+                    self::VIOLATION_CODE_TIME_CONTROL
                 )
             );
         }

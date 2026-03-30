@@ -38,6 +38,12 @@ export default Component.wrapComponentConfig({
     methods: {
         useError (property: string) {
             return this.error.getApiError(this.slide, property);
+        },
+
+        trimSlideName(): void {
+            if (this.slide.name) {
+                this.slide.name = this.slide.name.trim();
+            }
         }
     },
 

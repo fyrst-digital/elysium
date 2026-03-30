@@ -7,3 +7,5 @@ node_modules/**/*
 # administration build files
 src/Resources/public/administration/.vite
 src/Resources/public/administration/assets
+# storefront build files
+src/Resources/app/storefront/dist/storefront/js

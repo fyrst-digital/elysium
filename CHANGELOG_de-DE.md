@@ -1,8 +1,9 @@
 # 4.7.0
 
 **Changelog**
-- Zeitsteuerung für Slides hinzugefügt (Technische Vorschau). Slides können nun mit Start- und Enddatum geplant werden, um automatisch im Storefront angezeigt und ausgeblendet zu werden
-- **Hinweis** Damit die Zeitsteuerung in Verbindung mit aktivem HTTP Cache Zuverlässing funktioniert, sollten CLI-Worker in Shopware korrekt eingerichtet sein. Mit Admin Wokern, welche in Produktiven systemen nicht verwendet werden sollen, kommt es zu Problemen. Mehr informationen zu [CLI- und Admin-Wokern findest du hier](https://docs.shopware.com/de/shopware-6-de/tutorials-und-faq/message-queue-und-scheduled-tasks#admin-worker-deaktivieren-und-cli-worker-einrichten)
+- Zeitsteuerung für Slides hinzugefügt (Technische Vorschau). Slides können nun mit Start- und Enddatum geplant werden, um automatisch im Storefront angezeigt und ausgeblendet zu werden  
+  **Hinweis** Damit die Zeitsteuerung in Verbindung mit aktivem HTTP Cache Zuverlässing funktioniert, sollten CLI-Worker in Shopware korrekt eingerichtet sein. Mit Admin Wokern, welche in Produktiven systemen nicht verwendet werden sollen, kommt es zu Problemen. Mehr informationen zu [CLI- und Admin-Wokern findest du hier](https://docs.shopware.com/de/shopware-6-de/tutorials-und-faq/message-queue-und-scheduled-tasks#admin-worker-deaktivieren-und-cli-worker-einrichten)
+- Slide-Name Validierung hinzugefügt. Slide-Namen erlauben nur Buchstaben, Zahlen, Leerzeichen und Bindestriche. Führende/nachfolgende Leerzeichen werden automatisch entfernt 
 
 # 4.6.1
 

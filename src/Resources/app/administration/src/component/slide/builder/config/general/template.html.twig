@@ -15,7 +15,8 @@
             :placeholder="$tc('blurElysiumSlides.forms.slideName.placeholder')"
             :required="true"
             :error="useError('name')"
-            v-model="slide.name" />
+            v-model="slide.name"
+            @blur="trimSlideName" />
     </blur-column>
 
     <blur-column>
