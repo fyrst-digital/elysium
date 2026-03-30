@@ -49,73 +49,8 @@ class SlideValidationSubscriberTest extends TestCase
         static::assertIsArray($eventListeners);
 
         $listenerMethods = array_column($eventListeners, 0);
-        static::assertContains('sanitizeSlideName', $listenerMethods);
         static::assertContains('validateSlideName', $listenerMethods);
         static::assertContains('validateTimeControl', $listenerMethods);
-    }
-
-    // =====================================================
-    // Slide Name Sanitization Tests
-    // =====================================================
-
-    public function testSanitizeSlideNameTrimsLeadingWhitespace(): void
-    {
-        $command = new TranslationTestWriteCommand('create', ['name' => '  my-slide']);
-        $event = $this->createEvent([$command]);
-
-        $this->subscriber->sanitizeSlideName($event);
-
-        static::assertSame('my-slide', $command->getPayload()['name']);
-    }
-
-    public function testSanitizeSlideNameTrimsTrailingWhitespace(): void
-    {
-        $command = new TranslationTestWriteCommand('create', ['name' => 'my-slide  ']);
-        $event = $this->createEvent([$command]);
-
-        $this->subscriber->sanitizeSlideName($event);
-
-        static::assertSame('my-slide', $command->getPayload()['name']);
-    }
-
-    public function testSanitizeSlideNameTrimsBothLeadingAndTrailingWhitespace(): void
-    {
-        $command = new TranslationTestWriteCommand('create', ['name' => '  my-slide  ']);
-        $event = $this->createEvent([$command]);
-
-        $this->subscriber->sanitizeSlideName($event);
-
-        static::assertSame('my-slide', $command->getPayload()['name']);
-    }
-
-    public function testSanitizeSlideNameDoesNotTrimMiddleSpaces(): void
-    {
-        $command = new TranslationTestWriteCommand('create', ['name' => 'my slide name']);
-        $event = $this->createEvent([$command]);
-
-        $this->subscriber->sanitizeSlideName($event);
-
-        static::assertSame('my slide name', $command->getPayload()['name']);
-    }
-
-    public function testSanitizeSlideNameIgnoresNullName(): void
-    {
-        $command = new TranslationTestWriteCommand('create', []);
-        $event = $this->createEvent([$command]);
-
-        $this->subscriber->sanitizeSlideName($event);
-
-        static::assertArrayNotHasKey('name', $command->getPayload());
-    }
-
-    public function testSanitizeSlideNameIgnoresNonTranslationEntities(): void
-    {
-        $command = new TestWriteCommand('create', ['name' => '  my-slide  ']);
-        $event = $this->createEvent([$command]);
-
-        $this->subscriber->sanitizeSlideName($event);
-
-        static::assertSame('  my-slide  ', $command->getPayload()['name']);
     }
 
     // =====================================================
@@ -243,7 +178,7 @@ class SlideValidationSubscriberTest extends TestCase
     }
 
     // =====================================================
-    // Time Control Validation Tests (existing)
+    // Time Control Validation Tests
     // =====================================================
 
     public function testCreateDoesNotFetchFromDatabase(): void
@@ -621,11 +556,6 @@ class TestWriteCommand extends WriteCommand
     {
         return $this->privilegeType;
     }
-
-    public function addPayload(string $key, mixed $value): void
-    {
-        $this->payload[$key] = $value;
-    }
 }
 
 /**
@@ -668,10 +598,5 @@ class TranslationTestWriteCommand extends WriteCommand
     public function getPrivilege(): ?string
     {
         return $this->privilegeType;
-    }
-
-    public function addPayload(string $key, mixed $value): void
-    {
-        $this->payload[$key] = $value;
     }
 }

@@ -30,29 +30,10 @@ class SlideValidationSubscriber implements EventSubscriberInterface
     {
         return [
             PreWriteValidationEvent::class => [
-                ['sanitizeSlideName', 1000],
                 ['validateSlideName', 500],
                 ['validateTimeControl', 500],
             ],
         ];
-    }
-
-    public function sanitizeSlideName(PreWriteValidationEvent $event): void
-    {
-        foreach ($event->getCommands() as $command) {
-            if ($command->getEntityName() !== ElysiumSlidesTranslationDefinition::ENTITY_NAME) {
-                continue;
-            }
-
-            $payload = $command->getPayload();
-
-            if (isset($payload['name']) && is_string($payload['name'])) {
-                $sanitized = trim($payload['name']);
-                if ($sanitized !== $payload['name']) {
-                    $command->addPayload('name', $sanitized);
-                }
-            }
-        }
     }
 
     public function validateSlideName(PreWriteValidationEvent $event): void

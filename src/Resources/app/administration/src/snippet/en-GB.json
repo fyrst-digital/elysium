@@ -175,7 +175,7 @@
         },
         "violations": {
             "TIME_CONTROL_INVALID_RANGE": "The <b>Active from</b> date must be before the <b>Active until</b> date.",
-            "SLIDE_NAME_INVALID_FORMAT": "The name is invalid. Only letters, numbers, spaces and dashes are allowed. The name cannot start or end with spaces or dashes."
+            "SLIDE_NAME_INVALID_FORMAT": "The name is invalid. Only letters, numbers, spaces and dashes are allowed. The name must not start or end with whitespace or dashes."
         },
         "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
         "actions": {
