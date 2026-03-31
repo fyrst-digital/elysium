@@ -6,17 +6,19 @@ Shopware 6.7 plugin. Version 4.6.x.
 
 ```bash
 # Build (from Shopware root)
-symfony run bin/build-administration.sh
-symfony run bin/build-storefront.sh
-symfony console cache:clear
-symfony console bundle:dump
+docker compose exec web bin/build-administration.sh
+docker compose exec web bin/build-storefront.sh
+docker compose exec web bin/console cache:clear
+docker compose exec web bin/console bundle:dump
 
-# Lint (from plugin root)
-npm run lint:administration
-npm run lint:storefront
+# Lint (from Shopware root)
+docker compose exec -w /var/www/html/custom/static-plugins/BlurElysiumSlider web npm install // before running lint you have to install packages first to ensure the packages are iinstalled. This is because shopware remove de dependecies of the plugin when you build the administration and storefront. So you have to install the dependencies again before running the lint command.
+docker compose exec -w /var/www/html/custom/static-plugins/BlurElysiumSlider web npm run lint:administration
+docker compose exec -w /var/www/html/custom/static-plugins/BlurElysiumSlider web npm run lint:storefront
 
 # Tests (from Shopware root)
-./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider/phpunit.xml"
+docker compose exec -e APP_ENV=test web ./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider/phpunit.xml"
+
 ```
 
 ## Testing
