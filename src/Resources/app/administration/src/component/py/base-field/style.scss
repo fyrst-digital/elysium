@@ -9,6 +9,15 @@
         --py-field-label-m-block: 0px;
     }
 
+    .mt-field__error {
+        color: var(--color-red-700) !important;
+        font-size: 13px;
+        line-height: 1.5;
+        > .mt-icon  {
+            display: none !important;
+        }
+    }
+
     .mt-field {
         margin-inline: var(--py-field-m-inline, 0px);
         margin-block: var(--py-field-m-block, 0px);

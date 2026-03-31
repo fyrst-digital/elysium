@@ -174,8 +174,14 @@
             "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten."
         },
         "violations": {
-            "TIME_CONTROL_INVALID_RANGE": "The <b>Active from</b> date must be before the <b>Active until</b> date.",
-            "SLIDE_NAME_INVALID_FORMAT": "The name is invalid. Only letters, numbers, spaces and dashes are allowed. The name must not start or end with whitespace or dashes."
+            "SLIDE_NAME_INVALID_FORMAT": {
+                "title": "Invalid slide name format",
+                "message": "Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace."
+            },
+            "TIME_CONTROL_INVALID_RANGE": {
+                "title": "Invalid date range",
+                "message": "The \"activeFrom\" date must be before the \"activeUntil\" date. ++"
+            }
         },
         "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
         "actions": {

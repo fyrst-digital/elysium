@@ -2,8 +2,9 @@ import { defaultSlideSettings, defaultContentSettings } from '@elysium/component
 import template from './template.html.twig';
 import { ElysiumSlide, SlideError } from '@elysium/types/slide';
 
-const { Component, Context, Mixin, Data, Utils, Store } = Shopware;
+const { Component, Context, Mixin, Data, Utils, Store , Classes } = Shopware;
 const { Criteria } = Data;
+const { ShopwareError } = Classes;
 
 export default Component.wrapComponentConfig({
     template,
@@ -84,6 +85,10 @@ export default Component.wrapComponentConfig({
 
         slide() {
             return this.elysiumSlide.slide;
+        },
+
+        error() {
+            return Store.get('error');
         },
 
         contentRoute() {
@@ -239,16 +244,6 @@ export default Component.wrapComponentConfig({
             this.slidesRepository
                 .get(this.slideId, Context.api, criteria)
                 .then((slide) => {
-                    // const mergedSlideSettings = Utils.object.deepMergeObject(
-                    //     this.defaultSlideSettings,
-                    //     slide.slideSettings
-                    // );
-                    // slide.slideSettings = mergedSlideSettings;
-                    // const mergedContentSettings = Utils.object.deepMergeObject(
-                    //     this.defaultContentSettings,
-                    //     slide.contentSettings
-                    // );
-                    // slide.contentSettings = mergedContentSettings;
                     const mergedSlide = this._mergeSettings(slide, {
                         slideSettings: this.defaultSlideSettings,
                         contentSettings: this.defaultContentSettings,
@@ -340,34 +335,60 @@ export default Component.wrapComponentConfig({
                 })
                 .catch((reason) => {
                     const errors: SlideError[] | null = reason.response?.data?.errors || null
-                    let errorTitle = this.$tc('blurElysiumSlides.messages.slideSaveErrorTitle')
-                    let errorMessage = this.$tc('blurElysiumSlides.messages.slideSaveError')
-                    if (
-                        this.slide.name === undefined ||
-                        this.slide.name === null ||
-                        this.slide.name === ''
-                    ) {
-                        errorTitle = this.$tc('blurElysiumSlides.messages.emptySlideNameErrorTitle')
-                        errorMessage = this.$tc('blurElysiumSlides.messages.emptySlideNameError')
-                    } 
 
-                    if (errors?.length > 0) {
+                    if (!this.hasSlideName(this.slide?.name)) {
+                        this.addNotificationError(
+                            this.$tc('blurElysiumSlides.messages.emptySlideNameErrorTitle'),
+                            this.$tc('blurElysiumSlides.messages.emptySlideNameError')
+                        )
+                    } else if (errors !== null && errors.length > 0) {
                         errors.forEach((error) => {
-                            this.createNotificationError({
-                                title: errorTitle,
-                                message: this.$tc(`blurElysiumSlides.violations.${error.code}`),
-                            })
+                            this.sendError(error)
                         })
                     } else {
                         this.createNotificationError({
-                            title: errorTitle,
-                            message: errorMessage,
+                            title: this.$tc('blurElysiumSlides.messages.slideSaveErrorTitle'),
+                            message: this.$tc('blurElysiumSlides.messages.slideSaveError'),
                         });
                     }
 
-                    console.error(errors);
-                    this.isLoading = false;
+
+                    console.error(errors)
+                    this.isLoading = false
                 });
+        },
+
+        hasSlideName(name: String | undefined | null): boolean {
+            return Boolean(name)
+        },
+
+        sendError(error: SlideError, sendNotification = true) {
+            this.sendApiError(error)
+            if (sendNotification) {
+                this.sendNotificationError(
+                    this.$t(`blurElysiumSlides.violations.${error.code}.title`),
+                    this.$t(`blurElysiumSlides.violations.${error.code}.message`)
+                )
+            }
+        },
+
+        sendNotificationError(title: string, message: string) {
+            this.createNotificationError({
+                title,
+                message,
+            });
+        },
+
+        sendApiError(error: SlideError) {
+            const property = error.source.pointer.replace(/^\/|\/+$/g, '').replace(/\/+/g, '.')
+            this.error.addApiError({
+                expression: `blur_elysium_slides.${this.slide.id}.${property}`,
+                error: new ShopwareError({
+                    code: error.code,
+                    detail: this.$t(`blurElysiumSlides.violations.${error.code}.message`),
+                    meta: error.meta,
+                })
+            });
         },
 
         cancelAction() {

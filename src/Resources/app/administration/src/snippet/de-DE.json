@@ -174,8 +174,14 @@
             "customTemplateFileDefinedNotice": "Du hast eine eigene Template Datei festgelegt. Einige Einstellungen könnten überschrieben werden."
         },
         "violations": {
-            "TIME_CONTROL_INVALID_RANGE": "Das Datum <b>Aktiv ab</b> muss vor dem Datum <b>Aktiv bis</b> liegen.",
-            "SLIDE_NAME_INVALID_FORMAT": "Der Name ist ungültig. Nur Buchstaben, Zahlen, Leerzeichen und Bindestriche sind erlaubt. Der Name darf nicht mit Leerzeichen oder Bindestrichen beginnen oder enden."
+            "SLIDE_NAME_INVALID_FORMAT": {
+                "title": "Ungültiges Zeichen im Namen",
+                "message": "Der \"Name\" enthält ungültige Zeichen. Nur Buchstaben, Zahlen, Leerzeichen und Bindestriche sind erlaubt. Der Name darf nicht mit Leerzeichen oder Bindestrichen beginnen oder enden."
+            },
+            "TIME_CONTROL_INVALID_RANGE": {
+                "title": "Ungültiger Zeitbereich",
+                "message": "Das Datum \"Aktiv ab\" muss vor dem Datum \"Aktiv bis\" liegen."
+            }
         },
         "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
         "actions": {

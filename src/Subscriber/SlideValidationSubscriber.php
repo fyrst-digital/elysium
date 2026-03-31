@@ -14,16 +14,18 @@ use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SlideValidationSubscriber implements EventSubscriberInterface
 {
     private const VIOLATION_CODE_TIME_CONTROL = 'TIME_CONTROL_INVALID_RANGE';
-    private const VIOLATION_CODE_NAME = 'SLIDE_NAME_INVALID_FORMAT';
+    private const VIOLATION_CODE_NAME_FORMAT = 'SLIDE_NAME_INVALID_FORMAT';
 
     private const NAME_PATTERN = '/^[A-Za-z0-9][A-Za-z0-9\s-]*[A-Za-z0-9]$|^[A-Za-z0-9]$/';
 
     public function __construct(
-        private readonly Connection $connection
+        private readonly Connection $connection,
+        private readonly TranslatorInterface $translator
     ) {}
 
     public static function getSubscribedEvents(): array
@@ -60,14 +62,19 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             if (!preg_match(self::NAME_PATTERN, $name)) {
                 $violations->add(
                     new ConstraintViolation(
-                        'Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace.',
-                        'Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace.',
-                        [],
+                        $this->translator->trans(
+                            sprintf("blurElysiumSlides.violations.%s.message", self::VIOLATION_CODE_NAME_FORMAT)
+                        ),
+                        'Slide {{ field }} contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace.',
+                        [
+                            '{{ field }}' => 'name',
+                            'title' => $this->translator->trans(sprintf("blurElysiumSlides.violations.%s.title", self::VIOLATION_CODE_NAME_FORMAT)),
+                        ],
                         null,
                         '/name',
                         $name,
                         null,
-                        self::VIOLATION_CODE_NAME
+                        self::VIOLATION_CODE_NAME_FORMAT
                     )
                 );
             }
@@ -146,11 +153,20 @@ class SlideValidationSubscriber implements EventSubscriberInterface
         if ($fromTimestamp >= $untilTimestamp) {
             $violations->add(
                 new ConstraintViolation(
-                    'The "activeFrom" date must be before the "activeUntil" date.',
+                    //'The "activeFrom" date must be before the "activeUntil" date.',
+                    $this->translator->trans(
+                        sprintf("blurElysiumSlides.violations.%s.message", self::VIOLATION_CODE_TIME_CONTROL)
+                    ),
                     'The "{{ field1 }}" date must be before the "{{ field2 }}" date.',
                     [
                         '{{ field1 }}' => 'activeFrom',
                         '{{ field2 }}' => 'activeUntil',
+                        'title' => $this->translator->trans(
+                            sprintf("blurElysiumSlides.violations.%s.title", self::VIOLATION_CODE_TIME_CONTROL),
+                            [],
+                            null,
+                            'de'
+                        ),
                     ],
                     null,
                     '/activeFrom',

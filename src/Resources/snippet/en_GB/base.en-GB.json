@@ -12,6 +12,16 @@
     "blurElysiumSlides": {
         "buttonLabel": "Learn more",
         "buttonLabelProduct": "See Product",
-        "noSlides": "No slides found"
+        "noSlides": "No slides found",
+        "violations": {
+            "SLIDE_NAME_INVALID_FORMAT": {
+                "title": "Invalid slide name format",
+                "message": "Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace."
+            },
+            "TIME_CONTROL_INVALID_RANGE": {
+                "title": "Invalid date range",
+                "message": "The \"activeFrom\" date must be before the \"activeUntil\" date. ++"
+            }
+        }
     }
 }
