@@ -358,7 +358,7 @@ export default Component.wrapComponentConfig({
                 });
         },
 
-        hasSlideName(name: String | undefined | null): boolean {
+        hasSlideName(name: string | undefined | null): boolean {
             return Boolean(name)
         },
 
