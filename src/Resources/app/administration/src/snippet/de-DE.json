@@ -524,6 +524,19 @@
                     "description": "Lege für diese Sektion abweichende Breakpoints fest. Die Größen orientieren sich an den Theme Einstellungen",
                     "tabletHelptext": "Definiert ab welcher Bildschirmgröße die Tablet Ansicht greifen soll",
                     "desktopHelptext": "Definiert ab welcher Bildschirmgröße die Desktop Ansicht greifen soll"
+                },
+                "timeControl": {
+                    "label": "Zeitsteuerung",
+                    "activeFrom": {
+                        "label": "Aktiv ab",
+                        "placeholder": "Startdatum und -zeit auswählen",
+                        "helpText": "Sektion wird ab diesem Zeitpunkt angezeigt. Leer lassen für keine Startbeschränkung."
+                    },
+                    "activeUntil": {
+                        "label": "Aktiv bis",
+                        "placeholder": "Enddatum und -zeit auswählen",
+                        "helpText": "Sektion wird bis zu diesem Zeitpunkt angezeigt. Leer lassen für keine Endbeschränkung."
+                    }
                 }
             },
             "blockSettingsTitle": "Elysium Block Einstellungen",

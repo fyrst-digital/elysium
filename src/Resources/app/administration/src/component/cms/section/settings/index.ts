@@ -5,6 +5,8 @@ const { Component, Store, Mixin } = Shopware;
 export default Component.wrapComponentConfig({
     template,
 
+    inject: ['feature'],
+
     mixins: [Mixin.getByName('blur-device-utilities')],
 
     props: ['settings'],
@@ -28,13 +30,16 @@ export default Component.wrapComponentConfig({
 
         optionsBreakpoints() {
             return [
-                // { value: 'xs', label: 'xs' },
                 { value: 'sm', label: 'sm' },
                 { value: 'md', label: 'md' },
                 { value: 'lg', label: 'lg' },
                 { value: 'xl', label: 'xl' },
                 { value: 'xxl', label: 'xxl' },
             ];
+        },
+
+        isTimeControlActive(): boolean {
+            return this.feature.isActive('elysium_preview_time_control');
         },
     },
 

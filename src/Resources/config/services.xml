@@ -64,6 +64,12 @@
       <tag name="kernel.event_subscriber"/>
     </service>
 
+    <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlSectionCacheInvalidationSubscriber">
+      <argument type="service" id="messenger.default_bus"/>
+      <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
+      <tag name="kernel.event_subscriber"/>
+    </service>
+
     <service id="Blur\BlurElysiumSlider\Subscriber\SlideValidationSubscriber">
       <argument type="service" id="Doctrine\DBAL\Connection"/>
       <argument type="service" id="translator"/>
@@ -71,6 +77,12 @@
     </service>
 
     <service id="Blur\BlurElysiumSlider\MessageHandler\TimeControlCacheInvalidationHandler">
+      <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheInvalidator"/>
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup"/>
+      <tag name="messenger.message_handler"/>
+    </service>
+
+    <service id="Blur\BlurElysiumSlider\MessageHandler\TimeControlSectionCacheInvalidationHandler">
       <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheInvalidator"/>
       <argument type="service" id="Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup"/>
       <tag name="messenger.message_handler"/>

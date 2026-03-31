@@ -80,3 +80,28 @@
         />
     </blur-column>
 </blur-section>
+<blur-section
+    v-if="isTimeControlActive"
+    padding
+    gap
+    :title="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.label')"
+>
+    <blur-column :cols-tablet="6">
+        <py-datepicker
+            :label="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.label')"
+            :placeholder="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.placeholder')"
+            :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.helpText')"
+            :model-value="settings.activeFrom"
+            @update:model-value="settings.activeFrom = $event"
+        />
+    </blur-column>
+    <blur-column :cols-tablet="6">
+        <py-datepicker
+            :label="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.label')"
+            :placeholder="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.placeholder')"
+            :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.helpText')"
+            :model-value="settings.activeUntil"
+            @update:model-value="settings.activeUntil = $event"
+        />
+    </blur-column>
+</blur-section>

@@ -85,6 +85,8 @@ final class Defaults
                         'paddingX' => 0,
                     ],
                 ],
+                'activeFrom' => null,
+                'activeUntil' => null,
             ],
         ];
     }
