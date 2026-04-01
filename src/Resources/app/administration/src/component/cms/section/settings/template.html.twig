@@ -86,7 +86,7 @@
     gap
     :title="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.label')"
 >
-    <blur-column :cols-tablet="6">
+    <blur-column>
         <py-datepicker
             :label="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.label')"
             :placeholder="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.placeholder')"
@@ -95,7 +95,7 @@
             @update:model-value="settings.activeFrom = $event"
         />
     </blur-column>
-    <blur-column :cols-tablet="6">
+    <blur-column>
         <py-datepicker
             :label="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.label')"
             :placeholder="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.placeholder')"

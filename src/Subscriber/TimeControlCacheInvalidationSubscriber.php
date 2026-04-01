@@ -56,6 +56,12 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
             return;
         }
 
+        /**
+         * @todo the double call of scheduleInvalidation method is bad.
+         * - Refractor the logic similar to TimeControlSectionCacheInvalidationSubscriber where just a sendInvalidation method is called. Copy that logic.
+         * - Maybe we can even merge both subscribers to one TimeControlCacheInvalidationSubscriber which handles both section and slide time-controll. We can then use a common method to schedule the invalidation based on the payload and the id.
+         */
+
         // At this point the datetimes from the payload are UTC!
         $this->scheduleInvalidation($slideId, 'activeFrom', $payload);
         $this->scheduleInvalidation($slideId, 'activeUntil', $payload);

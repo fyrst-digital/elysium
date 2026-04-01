@@ -16,6 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DelayStamp;
+use Shopware\Core\Framework\Uuid\Uuid;
 
 class TimeControlSectionCacheInvalidationSubscriber implements EventSubscriberInterface
 {
@@ -51,55 +52,53 @@ class TimeControlSectionCacheInvalidationSubscriber implements EventSubscriberIn
     private function handleWriteResult(EntityWriteResult $writeResult): void
     {
         $payload = $writeResult->getPayload();
-        $sectionId = $writeResult->getProperty('id');
+        $cmsPageId = $writeResult->getProperty('pageId');
 
-        if ($sectionId === null) {
-            return;
+        if ($cmsPageId && Uuid::isValid($cmsPageId)) {
+            $this->sendInvalidation($cmsPageId, $payload);
         }
 
-        $this->scheduleInvalidation($sectionId, 'activeFrom', $payload);
-        $this->scheduleInvalidation($sectionId, 'activeUntil', $payload);
     }
 
-    private function scheduleInvalidation(string $sectionId, string $fieldName, array $payload): void
-    {
-        if (!isset($payload['custom_fields'][Defaults::CMS_SECTION_SETTINGS_KEY][$fieldName])) {
-            return;
-        }
+    private function sendInvalidation(string $cmsPageId, array $payload): void {
 
-        $value = $payload['custom_fields'][Defaults::CMS_SECTION_SETTINGS_KEY][$fieldName];
+        $activeTimes = [
+            'activeFrom' => $payload['customFields'][Defaults::CMS_SECTION_SETTINGS_KEY]['activeFrom'] ?? null,
+            'activeUntil' => $payload['customFields'][Defaults::CMS_SECTION_SETTINGS_KEY]['activeUntil'] ?? null,
+        ];
 
-        if ($value === null) {
-            return;
-        }
+        foreach ($activeTimes as $fieldName => $value) {
 
-        if ($value instanceof \DateTimeInterface) {
-            $datetime = \DateTimeImmutable::createFromInterface($value);
-        } else {
-            $datetime = \DateTimeImmutable::createFromFormat(
-                'Y-m-d H:i:s',
-                $value
-            );
-        }
+            if ($value === null) {
+                continue;
+            }
+                
+            if ($value instanceof \DateTimeInterface) {
+                $datetime = \DateTimeImmutable::createFromInterface($value);
+            } else {
+                $datetime = new \DateTimeImmutable($value);
+            }
 
-        if ($datetime === false) {
-            return;
-        }
+            if ($datetime === false) {
+                continue;
+            }
 
-        $now = $this->clock->now();
-        $delaySeconds = $datetime->getTimestamp() - $now->getTimestamp();
+            
+            $now = $this->clock->now();
+            $delaySeconds = $datetime->getTimestamp() - $now->getTimestamp();
 
-        if ($delaySeconds <= 0) {
+            if ($delaySeconds <= 0) {
+                $this->messageBus->dispatch(
+                    new TimeControlSectionCacheInvalidationMessage($cmsPageId, $datetime)
+                );
+                return;
+            }
+
             $this->messageBus->dispatch(
-                new TimeControlSectionCacheInvalidationMessage($sectionId, $datetime)
+                (new Envelope(
+                    new TimeControlSectionCacheInvalidationMessage($cmsPageId, $datetime)
+                ))->with(new DelayStamp($delaySeconds * 1000))
             );
-            return;
         }
-
-        $this->messageBus->dispatch(
-            (new Envelope(
-                new TimeControlSectionCacheInvalidationMessage($sectionId, $datetime)
-            ))->with(new DelayStamp($delaySeconds * 1000))
-        );
     }
 }
