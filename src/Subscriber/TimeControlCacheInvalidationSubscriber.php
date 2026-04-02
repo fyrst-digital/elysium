@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Subscriber;
 
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Service\TimeControlCacheInvalidationScheduler;
-use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
 use Shopware\Core\Framework\Feature;
@@ -31,10 +29,11 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $entities = [
-            ElysiumSlidesDefinition::ENTITY_NAME,
-            CmsSectionDefinition::ENTITY_NAME,
-        ];
+        $entities = array_keys(TimeControlCacheInvalidationScheduler::entityConfig());
+
+        if (empty($entities)) {
+            return;
+        }
 
         foreach ($entities as $entityName) {
             $this->handleEntity($event, $entityName);

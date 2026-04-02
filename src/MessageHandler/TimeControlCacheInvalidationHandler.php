@@ -11,6 +11,7 @@ use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
 use Shopware\Core\Framework\Adapter\Cache\CacheInvalidator;
 use Shopware\Core\Framework\Feature;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator;
 
 #[AsMessageHandler]
 class TimeControlCacheInvalidationHandler
@@ -29,8 +30,9 @@ class TimeControlCacheInvalidationHandler
         $entityId = $message->getEntityId();
 
         $tags = match ($message->getEntityName()) {
-            ElysiumSlidesDefinition::ENTITY_NAME => $this->cmsPageLookup->getCmsCacheTagsBySlideIds([$entityId]),
-            CmsSectionDefinition::ENTITY_NAME => $this->cmsPageLookup->getCmsCacheTagsBySectionIds([$entityId]),
+        ElysiumSlidesDefinition::ENTITY_NAME => $this->cmsPageLookup->getCmsCacheTagsBySlideIds([$entityId]), // lookup needed to find affected CMS pages based on slide ID
+            CmsSectionDefinition::ENTITY_NAME => [EntityCacheKeyGenerator::buildCmsTag($entityId)], // the cms page id gets passed as entityId, so we can directly generate the tag without a lookup
+            default => [],
         };
 
         if (!empty($tags)) {

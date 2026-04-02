@@ -17,6 +17,22 @@ use Symfony\Component\Messenger\Stamp\DelayStamp;
 
 class TimeControlCacheInvalidationScheduler
 {
+    public static function entityConfig(): array
+    {
+        return [
+            ElysiumSlidesDefinition::ENTITY_NAME => [
+                'id_field' => 'id',
+                'active_from' => 'activeFrom',
+                'active_until' => 'activeUntil',
+            ],
+            CmsSectionDefinition::ENTITY_NAME => [
+                'id_field' => 'pageId',
+                'active_from' => 'customFields.' . Defaults::CMS_SECTION_SETTINGS_KEY . '.activeFrom',
+                'active_until' => 'customFields.' . Defaults::CMS_SECTION_SETTINGS_KEY . '.activeUntil',
+            ],
+        ];
+    }
+
     public function __construct(
         private readonly MessageBusInterface $messageBus,
         private readonly ClockInterface $clock
@@ -44,53 +60,55 @@ class TimeControlCacheInvalidationScheduler
                 $datetime = new \DateTimeImmutable($value);
             }
 
-            if ($datetime === false) {
-                continue;
-            }
-
             $now = $this->clock->now();
             $delaySeconds = $datetime->getTimestamp() - $now->getTimestamp();
 
             $message = new TimeControlCacheInvalidationMessage($id, $entityName, $datetime);
 
-            if ($delaySeconds <= 0) {
+            # dd($id, $entityName, $datetime, $delaySeconds);
+
+            if ($delaySeconds > 0) {
+                $this->messageBus->dispatch(
+                    (new Envelope($message))->with(new DelayStamp($delaySeconds * 1000))
+                );
+            } else {
                 $this->messageBus->dispatch($message);
-                return;
             }
 
-            $this->messageBus->dispatch(
-                (new Envelope($message))->with(new DelayStamp($delaySeconds * 1000))
-            );
         }
     }
 
     private function extractId(EntityWriteResult $writeResult, string $entityName): ?string
     {
-        if ($entityName === ElysiumSlidesDefinition::ENTITY_NAME) {
-            return $writeResult->getProperty('id');
+        $config = self::entityConfig()[$entityName];
+        $id = $writeResult->getProperty($config['id_field']);
+
+        if ($id && Uuid::isValid($id)) {
+            return $id;
         }
-
-        $id = $writeResult->getProperty('pageId');
-
-        if ($id !== null && !Uuid::isValid($id)) {
-            return null;
-        }
-
-        return $id;
+        
+        return null;
     }
 
     private function extractActiveTimes(array $payload, string $entityName): array
     {
-        if ($entityName === ElysiumSlidesDefinition::ENTITY_NAME) {
-            return [
-                'activeFrom' => $payload['activeFrom'] ?? null,
-                'activeUntil' => $payload['activeUntil'] ?? null,
-            ];
-        }
+        $config = self::entityConfig()[$entityName];
 
         return [
-            'activeFrom' => $payload['customFields'][Defaults::CMS_SECTION_SETTINGS_KEY]['activeFrom'] ?? null,
-            'activeUntil' => $payload['customFields'][Defaults::CMS_SECTION_SETTINGS_KEY]['activeUntil'] ?? null,
+            'activeFrom' => $this->resolvePath($payload, $config['active_from']),
+            'activeUntil' => $this->resolvePath($payload, $config['active_until']),
         ];
+    }
+
+    private function resolvePath(array $data, string $path): mixed
+    {
+        $keys = explode('.', $path);
+        foreach ($keys as $key) {
+            if (!isset($data[$key])) {
+                return null;
+            }
+            $data = $data[$key];
+        }
+        return $data;
     }
 }
