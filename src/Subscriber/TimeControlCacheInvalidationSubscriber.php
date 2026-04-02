@@ -5,105 +5,52 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
-use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
+use Blur\BlurElysiumSlider\Service\TimeControlCacheInvalidationScheduler;
+use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
 use Shopware\Core\Framework\Feature;
-use Symfony\Component\Clock\ClockInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Messenger\Envelope;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\DelayStamp;
 
 class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly MessageBusInterface $messageBus,
-        private readonly ClockInterface $clock
+        private readonly TimeControlCacheInvalidationScheduler $scheduler
     ) {}
 
     public static function getSubscribedEvents(): array
     {
         return [
-            EntityWrittenContainerEvent::class => 'onSlideWritten',
+            EntityWrittenContainerEvent::class => 'onEntityWritten',
         ];
     }
 
-    public function onSlideWritten(EntityWrittenContainerEvent $event): void
+    public function onEntityWritten(EntityWrittenContainerEvent $event): void
     {
         if (!Feature::isActive('elysium_preview_time_control')) {
             return;
         }
 
-        $slideEvent = $event->getEventByEntityName(ElysiumSlidesDefinition::ENTITY_NAME);
+        $entities = [
+            ElysiumSlidesDefinition::ENTITY_NAME,
+            CmsSectionDefinition::ENTITY_NAME,
+        ];
 
-        if (!$slideEvent instanceof EntityWrittenEvent) {
-            return;
-        }
-
-        foreach ($slideEvent->getWriteResults() as $writeResult) {
-            $this->handleWriteResult($writeResult);
+        foreach ($entities as $entityName) {
+            $this->handleEntity($event, $entityName);
         }
     }
 
-    private function handleWriteResult(EntityWriteResult $writeResult): void
+    private function handleEntity(EntityWrittenContainerEvent $event, string $entityName): void
     {
-        $payload = $writeResult->getPayload();
-        $slideId = $writeResult->getProperty('id');
+        $entityEvent = $event->getEventByEntityName($entityName);
 
-        if ($slideId === null) {
+        if (!$entityEvent instanceof EntityWrittenEvent) {
             return;
         }
 
-        /**
-         * @todo #1337 the double call of scheduleInvalidation method is bad.
-         * - Refractor the logic similar to TimeControlSectionCacheInvalidationSubscriber where just a sendInvalidation method is called. Copy that logic.
-         * - Maybe we can even merge both subscribers to one TimeControlCacheInvalidationSubscriber which handles both section and slide time-controll. We can then use a common method to schedule the invalidation based on the payload and the id.
-         */
-
-        // At this point the datetimes from the payload are UTC!
-        $this->scheduleInvalidation($slideId, 'activeFrom', $payload);
-        $this->scheduleInvalidation($slideId, 'activeUntil', $payload);
-    }
-
-    private function scheduleInvalidation(string $slideId, string $fieldName, array $payload): void
-    {
-        if (!isset($payload[$fieldName])) {
-            return;
+        foreach ($entityEvent->getWriteResults() as $writeResult) {
+            $this->scheduler->schedule($writeResult, $entityName);
         }
-
-        $value = $payload[$fieldName];
-
-
-
-        if ($value instanceof \DateTimeInterface) {
-            $datetime = \DateTimeImmutable::createFromInterface($value);
-        } else {
-            $datetime = \DateTimeImmutable::createFromFormat(
-                'Y-m-d H:i:s',
-                $value
-            );
-        }
-
-        if ($datetime === false) {
-            return;
-        }
-
-        $now = $this->clock->now();
-        $delaySeconds = $datetime->getTimestamp() - $now->getTimestamp();
-
-        if ($delaySeconds <= 0) {
-            $this->messageBus->dispatch(
-                new TimeControlCacheInvalidationMessage($slideId, $datetime)
-            );
-            return;
-        }
-
-        $this->messageBus->dispatch(
-            (new Envelope(
-                new TimeControlCacheInvalidationMessage($slideId, $datetime)
-            ))->with(new DelayStamp($delaySeconds * 1000))
-        );
     }
 }
