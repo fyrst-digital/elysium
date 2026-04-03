@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Subscriber;
 
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumCmsSlidesCriteriaEvent;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesCriteriaEvent;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
@@ -20,19 +19,14 @@ class TimeControlSubscriber implements EventSubscriberInterface
         private readonly ClockInterface $clock
     ) {}
 
-    /**
-     * @todo #1337 the call of ElysiumCmsSlidesCriteriaEvent might be not nessecary here because ElysiumSlidesCriteriaEvent will handle that anyways on the store API level?
-     * - Please check if the ElysiumCmsSlidesCriteriaEvent event call is really needed, if not we can remove it and the related event class
-     */
     public static function getSubscribedEvents(): array
     {
         return [
             ElysiumSlidesCriteriaEvent::class => 'onSlidesCriteria',
-            ElysiumCmsSlidesCriteriaEvent::class => 'onSlidesCriteria',
         ];
     }
 
-    public function onSlidesCriteria(ElysiumSlidesCriteriaEvent|ElysiumCmsSlidesCriteriaEvent $event): void
+    public function onSlidesCriteria(ElysiumSlidesCriteriaEvent $event): void
     {
         if (!Feature::isActive('elysium_preview_time_control')) {
             return;
