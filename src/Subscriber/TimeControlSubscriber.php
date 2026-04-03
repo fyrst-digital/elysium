@@ -21,7 +21,8 @@ class TimeControlSubscriber implements EventSubscriberInterface
     ) {}
 
     /**
-     * @todo the call of ElysiumCmsSlidesCriteriaEvent might be not nessecary here because ElysiumSlidesCriteriaEvent will handle that anyways on the store API level?
+     * @todo #1337 the call of ElysiumCmsSlidesCriteriaEvent might be not nessecary here because ElysiumSlidesCriteriaEvent will handle that anyways on the store API level?
+     * - Please check if the ElysiumCmsSlidesCriteriaEvent event call is really needed, if not we can remove it and the related event class
      */
     public static function getSubscribedEvents(): array
     {
