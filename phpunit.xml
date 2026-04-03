@@ -22,6 +22,9 @@
         <testsuite name="subscriber">
             <directory>tests/Subscriber</directory>
         </testsuite>
+        <testsuite name="service">
+            <directory>tests/Service</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
