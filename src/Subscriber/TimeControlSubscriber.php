@@ -20,6 +20,9 @@ class TimeControlSubscriber implements EventSubscriberInterface
         private readonly ClockInterface $clock
     ) {}
 
+    /**
+     * @todo the call of ElysiumCmsSlidesCriteriaEvent might be not nessecary here because ElysiumSlidesCriteriaEvent will handle that anyways on the store API level?
+     */
     public static function getSubscribedEvents(): array
     {
         return [

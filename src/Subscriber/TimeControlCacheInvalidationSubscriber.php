@@ -44,6 +44,10 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
     {
         $entityEvent = $event->getEventByEntityName($entityName);
 
+        /**
+         * @todo the schedule method gets executed on **every** CMS section, it ignores the cms section type right now.
+         * - It should only be executed if the type of a cms section entity is 'blur-elysium-section'
+         */
         if (!$entityEvent instanceof EntityWrittenEvent) {
             return;
         }

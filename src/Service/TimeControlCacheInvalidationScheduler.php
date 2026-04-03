@@ -65,13 +65,15 @@ class TimeControlCacheInvalidationScheduler
 
             $message = new TimeControlCacheInvalidationMessage($id, $entityName, $datetime);
 
-            # dd($id, $entityName, $datetime, $delaySeconds);
-
             if ($delaySeconds > 0) {
                 $this->messageBus->dispatch(
                     (new Envelope($message))->with(new DelayStamp($delaySeconds * 1000))
                 );
             } else {
+                /**
+                 * @todo we dont need that validation on cms page related context like cms sections or blocks.
+                 * - Maybe we can check if its a cms page context in the $writeResult object
+                 */
                 $this->messageBus->dispatch($message);
             }
 
