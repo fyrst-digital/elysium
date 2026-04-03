@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Subscriber;
 
+use Blur\BlurElysiumSlider\Defaults;
 use Blur\BlurElysiumSlider\Service\TimeControlCacheInvalidationScheduler;
+use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
 use Shopware\Core\Framework\Feature;
@@ -44,15 +46,16 @@ class TimeControlCacheInvalidationSubscriber implements EventSubscriberInterface
     {
         $entityEvent = $event->getEventByEntityName($entityName);
 
-        /**
-         * @todo the schedule method gets executed on **every** CMS section, it ignores the cms section type right now.
-         * - It should only be executed if the type of a cms section entity is 'blur-elysium-section'
-         */
         if (!$entityEvent instanceof EntityWrittenEvent) {
             return;
         }
-
+        
         foreach ($entityEvent->getWriteResults() as $writeResult) {
+            $changeSet = $writeResult->getChangeSet();
+            if ($entityName === CmsSectionDefinition::ENTITY_NAME && $changeSet?->getBefore('type') !== Defaults::CMS_SECTION_NAME) {
+                // Skip if a cms section type is not 'blur-elysium-section'
+                continue;
+            }
             $this->scheduler->schedule($writeResult, $entityName);
         }
     }
