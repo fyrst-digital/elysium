@@ -6,10 +6,12 @@ namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWriteEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\UpdateCommand;
 use Blur\BlurElysiumSlider\Defaults;
 
 class EntitySubscriber implements EventSubscriberInterface
@@ -22,8 +24,20 @@ class EntitySubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            EntityWriteEvent::class => 'requestChangeSet',
             EntityWrittenContainerEvent::class => 'onEntityWritten',
         ];
+    }
+
+    public function requestChangeSet(EntityWriteEvent $event): void
+    {
+        $commands = $event->getCommandsForEntity(CmsSectionDefinition::ENTITY_NAME);
+
+        foreach ($commands as $command) {
+            if ($command instanceof UpdateCommand) {
+                $command->requestChangeSet();
+            }
+        }
     }
 
     public function onEntityWritten(EntityWrittenContainerEvent $event): void

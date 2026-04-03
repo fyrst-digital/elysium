@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\MessageHandler;
 
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
 use Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup;
+use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
 use Shopware\Core\Framework\Adapter\Cache\CacheInvalidator;
 use Shopware\Core\Framework\Feature;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator;
 
 #[AsMessageHandler]
 class TimeControlCacheInvalidationHandler
@@ -24,9 +27,13 @@ class TimeControlCacheInvalidationHandler
             return;
         }
 
-        $slideId = $message->getSlideId();
+        $entityId = $message->getEntityId();
 
-        $tags = $this->cmsPageLookup->getCmsCacheTagsBySlideIds([$slideId]);
+        $tags = match ($message->getEntityName()) {
+        ElysiumSlidesDefinition::ENTITY_NAME => $this->cmsPageLookup->getCmsCacheTagsBySlideIds([$entityId]), // lookup needed to find affected CMS pages based on slide ID
+            CmsSectionDefinition::ENTITY_NAME => [EntityCacheKeyGenerator::buildCmsTag($entityId)], // the cms page id gets passed as entityId, so we can directly generate the tag without a lookup
+            default => [],
+        };
 
         if (!empty($tags)) {
             $this->cacheInvalidator->invalidate($tags, true);

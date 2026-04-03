@@ -60,6 +60,9 @@
     gap
     :title="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.title')"
     :description="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.description')"
+    :style="{
+        borderBottom: '1px solid #d1d9e0',
+    }"
 >
     <blur-column :cols-tablet="6">
         <blur-select-input
@@ -77,6 +80,31 @@
             :placeholder="'xl'"
             :options="optionsBreakpoints"
             v-model:value="settings.breakpoints.desktop"
+        />
+    </blur-column>
+</blur-section>
+<blur-section
+    v-if="isTimeControlActive"
+    padding
+    gap
+    :title="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.label')"
+>
+    <blur-column>
+        <py-datepicker
+            :label="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.label')"
+            :placeholder="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.placeholder')"
+            :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.helpText')"
+            :model-value="settings.activeFrom"
+            @update:model-value="settings.activeFrom = $event"
+        />
+    </blur-column>
+    <blur-column>
+        <py-datepicker
+            :label="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.label')"
+            :placeholder="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.placeholder')"
+            :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.helpText')"
+            :model-value="settings.activeUntil"
+            @update:model-value="settings.activeUntil = $event"
         />
     </blur-column>
 </blur-section>

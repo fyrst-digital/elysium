@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Subscriber;
 
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumCmsSlidesCriteriaEvent;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesCriteriaEvent;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
@@ -24,11 +23,10 @@ class TimeControlSubscriber implements EventSubscriberInterface
     {
         return [
             ElysiumSlidesCriteriaEvent::class => 'onSlidesCriteria',
-            ElysiumCmsSlidesCriteriaEvent::class => 'onSlidesCriteria',
         ];
     }
 
-    public function onSlidesCriteria(ElysiumSlidesCriteriaEvent|ElysiumCmsSlidesCriteriaEvent $event): void
+    public function onSlidesCriteria(ElysiumSlidesCriteriaEvent $event): void
     {
         if (!Feature::isActive('elysium_preview_time_control')) {
             return;

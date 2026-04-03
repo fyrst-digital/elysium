@@ -58,9 +58,13 @@
       <tag name="kernel.event_subscriber"/>
     </service>
 
-    <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlCacheInvalidationSubscriber">
+    <service id="Blur\BlurElysiumSlider\Service\TimeControlCacheInvalidationScheduler">
       <argument type="service" id="messenger.default_bus"/>
       <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
+    </service>
+
+    <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlCacheInvalidationSubscriber">
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\TimeControlCacheInvalidationScheduler"/>
       <tag name="kernel.event_subscriber"/>
     </service>
 
@@ -95,6 +99,12 @@
     <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideRoute" public="true">
       <argument type="service" id="blur_elysium_slides.repository"/>
       <argument type="service" id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface"/>
+    </service>
+
+    <!-- Section Time Control -->
+    <service id="Blur\BlurElysiumSlider\Subscriber\SectionTimeControlSubscriber">
+      <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
+      <tag name="kernel.event_subscriber"/>
     </service>
 
   </services>

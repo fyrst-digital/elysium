@@ -60,4 +60,31 @@ class ElysiumCmsPageLookup
 
         return array_map(EntityCacheKeyGenerator::buildCmsTag(...), $cmsPageIds);
     }
+
+    /**
+     * @param string[] $sectionIds Multiple section IDs (hex)
+     * @return string[] Cache tags for CMS pages
+     */
+    public function getCmsCacheTagsBySectionIds(array $sectionIds): array
+    {
+        if (empty($sectionIds)) {
+            return [];
+        }
+
+        $cmsPageIds = $this->connection->fetchFirstColumn(
+            "SELECT DISTINCT LOWER(HEX(cms_section.cms_page_id)) AS cms_page_id
+            FROM cms_section
+            WHERE cms_section.id IN (:sectionIds)",
+            ['sectionIds' => $sectionIds],
+            ['sectionIds' => ArrayParameterType::STRING]
+        );
+
+        $cmsPageIds = array_unique($cmsPageIds);
+
+        if (empty($cmsPageIds)) {
+            return [];
+        }
+
+        return array_map(EntityCacheKeyGenerator::buildCmsTag(...), $cmsPageIds);
+    }
 }

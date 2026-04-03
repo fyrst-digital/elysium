@@ -6,5 +6,13 @@
     {
       "url": "https://models.dev/model-schema.json"
     }
-  ]
+  ],
+  "editor.formatOnSave": false,
+  "files.associations": {
+    "*.twig": "html"
+  },
+  "[twig]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.formatOnSave": true
+  }
 }
