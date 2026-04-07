@@ -1,4 +1,5 @@
 import { useComponentRegister } from '@elysium/composables/components'
+import { defineBlockConfig } from '@elysium/component/cms/blocks/config'
 import type { ComponentConfig } from 'src/core/factory/async-component.factory'
 
 const { Service } = Shopware;
@@ -14,13 +15,7 @@ Service('cmsService').registerCmsBlock({
     label: 'blurElysiumBanner.label',
     component: 'sw-cms-block-blur-elysium-banner',
     previewComponent: 'sw-cms-block-blur-elysium-banner-preview',
-    defaultConfig: {
-        marginBottom: '',
-        marginTop: '',
-        marginLeft: '',
-        marginRight: '',
-        sizingMode: 'boxed',
-    },
+    defaultConfig: defineBlockConfig(),
     slots: {
         main: 'blur-elysium-banner',
     },
