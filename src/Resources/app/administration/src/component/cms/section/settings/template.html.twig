@@ -2,7 +2,9 @@
   padding
   gap
   :style="{
-    borderBottom: '1px solid #d1d9e0',
+    '--py-section-gap-y': '8px',
+    '--container-gap-y': '12px',
+    'border-bottom': '1px solid var(--color-border-secondary-default)',
   }"
 >
   <py-column>
@@ -49,12 +51,14 @@
   :title="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.title')"
   :description="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.description')"
   :style="{
-    borderBottom: '1px solid #d1d9e0',
+    '--py-section-gap-y': '8px',
+    '--container-gap-y': '12px',
+    'border-bottom': '1px solid var(--color-border-secondary-default)',
   }"
 >
   <py-column>
     <py-select-field
-      :helpText="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.tabletHelptext')"
+      :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.tabletHelptext')"
       :label="'Tablet'"
       :placeholder="'md'"
       :options="optionsBreakpoints"
@@ -63,7 +67,7 @@
   </py-column>
   <py-column>
     <py-select-field
-      :helpText="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.desktopHelptext')"
+      :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.desktopHelptext')"
       :label="'Desktop'"
       :placeholder="'xl'"
       :options="optionsBreakpoints"
