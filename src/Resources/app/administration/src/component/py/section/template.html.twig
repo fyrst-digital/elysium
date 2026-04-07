@@ -1,0 +1,35 @@
+<div
+    :class="[
+        'py-section',
+        padding === true ? 'has-padding' : null,
+        gap === true ? 'has-gap' : null,
+        gapY === true ? 'has-gap-y' : null,
+        gapX === true ? 'has-gap-x' : null
+    ]"
+>
+    <div
+        :class="['py-section-header']"
+        v-if="title || description"
+    >
+        <div
+            :class="['py-section-title']"
+            v-if="title"
+        >
+            <py-icon
+                v-if="titleIcon"
+                :name="titleIcon"
+                :size="16"
+                color="#189eff"
+            />
+            <span v-html="title"/>
+        </div>
+        <div
+            :class="['py-section-description']"
+            v-if="description"
+            v-html="description"
+        />
+    </div>
+    <div :class="['py-section-content']">
+        <slot/>
+    </div>
+</div>

@@ -1,110 +1,107 @@
-<blur-section
-    padding
-    gap
-    :style="{
-        borderBottom: '1px solid #d1d9e0',
-    }"
+<py-section
+  padding
+  gap
+  :style="{
+    '--py-section-gap-y': '8px',
+    '--container-gap-y': '12px',
+    'border-bottom': '1px solid var(--color-border-secondary-default)',
+  }"
 >
-    <blur-column :cols-tablet="6">
-        <blur-select-input
-            :label="$tc('blurElysium.general.blockAlignment')"
-            :placeholder="viewportsPlaceholder('alignItems', 'stretch', 'blurElysium.general.alignItems')"
-            :options="[
-                { value: 'stretch', label: $tc('blurElysium.general.alignItems.stretch') },
-                { value: 'flex-start', label: $tc('blurElysium.general.alignItems.flexStart') },
-                { value: 'center', label: $tc('blurElysium.general.alignItems.center') },
-                { value: 'flex-end', label: $tc('blurElysium.general.flexEnd') },
-            ]"
-            :device="device"
-            :show-device="true"
-            @on-device="cmsDeviceSwitch"
-            v-model:value="currentViewportSettings.alignItems"
-        />
-    </blur-column>
-    <blur-column :cols-tablet="6">
-        <blur-number-input
-            :label="$tc('blurElysium.general.gap')"
-            :placeholder="viewportsPlaceholder('gridGap', 20)"
-            :show-device="true"
-            :device="device"
-            @on-device="cmsDeviceSwitch"
-            :model-value="currentViewportSettings.gridGap"
-            @update-value="value => currentViewportSettings.gridGap = value"
-        />
-    </blur-column>
-    <blur-column :cols-tablet="6">
-        <blur-number-input
-            :label="$tc('blurElysium.general.paddingY')"
-            :placeholder="viewportsPlaceholder('paddingY', 0)"
-            :show-device="true"
-            :device="device"
-            @on-device="cmsDeviceSwitch"
-            :model-value="currentViewportSettings.paddingY"
-            @update-value="value => currentViewportSettings.paddingY = value"
-        />
-    </blur-column>
-    <blur-column :cols-tablet="6">
-        <blur-number-input
-            :label="$tc('blurElysium.general.paddingX')"
-            :placeholder="viewportsPlaceholder('paddingX', 0)"
-            :show-device="true"
-            :device="device"
-            @on-device="cmsDeviceSwitch"
-            :model-value="currentViewportSettings.paddingX"
-            @update-value="value => currentViewportSettings.paddingX = value"
-        />
-    </blur-column>
-</blur-section>
-<blur-section
-    padding
-    gap
-    :title="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.title')"
-    :description="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.description')"
-    :style="{
-        borderBottom: '1px solid #d1d9e0',
-    }"
+  <py-column>
+    <py-select-field
+      :label="$tc('blurElysium.general.blockAlignment')"
+      :placeholder="viewportsPlaceholder('alignItems', 'stretch', 'blurElysium.general.alignItems')"
+      :options="[
+        { value: 'stretch', label: $tc('blurElysium.general.alignItems.stretch') },
+        { value: 'flex-start', label: $tc('blurElysium.general.alignItems.flexStart') },
+        { value: 'center', label: $tc('blurElysium.general.alignItems.center') },
+        { value: 'flex-end', label: $tc('blurElysium.general.flexEnd') },
+      ]"
+      v-model="currentViewportSettings.alignItems"
+    />
+  </py-column>
+  <py-column>
+    <py-number-field
+      :label="$tc('blurElysium.general.gap')"
+      :placeholder="viewportsPlaceholder('gridGap', 20)"
+      v-model="currentViewportSettings.gridGap"
+      @update:model-value="value => currentViewportSettings.gridGap = value"
+    />
+  </py-column>
+  <py-column>
+    <py-number-field
+      :label="$tc('blurElysium.general.paddingY')"
+      :placeholder="viewportsPlaceholder('paddingY', 0)"
+      v-model="currentViewportSettings.paddingY"
+      @update:model-value="value => currentViewportSettings.paddingY = value"
+    />
+  </py-column>
+  <py-column>
+    <py-number-field
+      :label="$tc('blurElysium.general.paddingX')"
+      :placeholder="viewportsPlaceholder('paddingX', 0)"
+      v-model="currentViewportSettings.paddingX"
+      @update:model-value="value => currentViewportSettings.paddingX = value"
+    />
+  </py-column>
+</py-section>
+<py-section
+  padding
+  gap
+  :title="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.title')"
+  :description="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.description')"
+  :style="{
+    '--py-section-gap-y': '8px',
+    '--container-gap-y': '12px',
+    'border-bottom': '1px solid var(--color-border-secondary-default)',
+  }"
 >
-    <blur-column :cols-tablet="6">
-        <blur-select-input
-            :helpText="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.tabletHelptext')"
-            :label="'Tablet'"
-            :placeholder="'md'"
-            :options="optionsBreakpoints"
-            v-model:value="settings.breakpoints.tablet"
-        />
-    </blur-column>
-    <blur-column :cols-tablet="6">
-        <blur-select-input
-            :helpText="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.desktopHelptext')"
-            :label="'Desktop'"
-            :placeholder="'xl'"
-            :options="optionsBreakpoints"
-            v-model:value="settings.breakpoints.desktop"
-        />
-    </blur-column>
-</blur-section>
-<blur-section
-    v-if="isTimeControlActive"
-    padding
-    gap
-    :title="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.label')"
+  <py-column>
+    <py-select-field
+      :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.tabletHelptext')"
+      :label="'Tablet'"
+      :placeholder="'md'"
+      :options="optionsBreakpoints"
+      v-model="settings.breakpoints.tablet"
+    />
+  </py-column>
+  <py-column>
+    <py-select-field
+      :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.breakpoints.desktopHelptext')"
+      :label="'Desktop'"
+      :placeholder="'xl'"
+      :options="optionsBreakpoints"
+      v-model="settings.breakpoints.desktop"
+    />
+  </py-column>
+</py-section>
+<py-section
+  v-if="isTimeControlActive"
+  padding
+  gap
+  :title="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.label')"
+  :style="{
+    '--py-section-gap-y': '8px',
+    '--container-gap-y': '12px',
+    'border-bottom': '1px solid var(--color-border-secondary-default)',
+  }"
 >
-    <blur-column>
-        <py-datepicker
-            :label="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.label')"
-            :placeholder="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.placeholder')"
-            :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.helpText')"
-            :model-value="settings.activeFrom"
-            @update:model-value="settings.activeFrom = $event"
-        />
-    </blur-column>
-    <blur-column>
-        <py-datepicker
-            :label="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.label')"
-            :placeholder="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.placeholder')"
-            :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.helpText')"
-            :model-value="settings.activeUntil"
-            @update:model-value="settings.activeUntil = $event"
-        />
-    </blur-column>
-</blur-section>
+  <py-column>
+    <py-datepicker
+      :label="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.label')"
+      :placeholder="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.placeholder')"
+      :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeFrom.helpText')"
+      :model-value="settings.activeFrom"
+      @update:model-value="settings.activeFrom = $event"
+    />
+  </py-column>
+  <py-column>
+    <py-datepicker
+      :label="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.label')"
+      :placeholder="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.placeholder')"
+      :tooltip="$tc('blurElysiumSection.sidebar.sectionSettings.timeControl.activeUntil.helpText')"
+      :model-value="settings.activeUntil"
+      @update:model-value="settings.activeUntil = $event"
+    />
+  </py-column>
+</py-section>

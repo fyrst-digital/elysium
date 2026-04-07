@@ -16,11 +16,13 @@
         <label 
             v-if="label"
             v-html="label" 
+            :title="label"
             class="py-label"
             :style="{
                 fontSize: '14px',
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
+                whiteSpace: 'nowrap',
             }" />
         <span 
             v-if="required"
