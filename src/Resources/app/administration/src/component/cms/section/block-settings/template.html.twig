@@ -1,35 +1,34 @@
-<blur-section
-    padding
-    gap
+<py-section
+  padding
+  gap
+  :style="{
+    '--py-section-gap-y': '8px',
+    '--container-gap-y': '12px',
+    'border-bottom': '1px solid var(--color-border-secondary-default)',
+  }"
 >
-    <blur-column :cols-tablet="6">
-        <blur-number-input
-            :label="$tc('blurElysiumSection.sidebar.blockSettings.order')"
-            :placeholder="viewportsPlaceholder('order', 'auto')"
-            :show-device="true"
-            :min="1"
-            :step="1"
-            :max="100"
-            :unit="false"
-            :device="device"
-            @on-device="cmsDeviceSwitch"
-            :model-value="currentViewportSettings.order"
-            @update-value="value => currentViewportSettings.order = value"
-        />
-    </blur-column>
-    <blur-column :cols-tablet="6">
-        <blur-number-input
-            :label="$tc('blurElysiumSection.sidebar.blockSettings.rows')"
-            :placeholder="viewportsPlaceholder('rowEnd', 'auto')"
-            :show-device="true"
-            :min="1"
-            :step="1"
-            :max="100"
-            :unit="false"
-            :device="device"
-            @on-device="cmsDeviceSwitch"
-            :model-value="currentViewportSettings.rowEnd"
-            @update-value="value => currentViewportSettings.rowEnd = value"
-        />
-    </blur-column>
-</blur-section>
+  <py-column>
+    <py-number-field
+      :label="$tc('blurElysiumSection.sidebar.blockSettings.order')"
+      :placeholder="viewportsPlaceholder('order', 'auto')"
+      :min="1"
+      :step="1"
+      :max="100"
+      :allow-empty="true"
+      v-model="currentViewportSettings.order"
+      @update:model-value="value => currentViewportSettings.order = value"
+    />
+  </py-column>
+  <py-column>
+    <py-number-field
+      :label="$tc('blurElysiumSection.sidebar.blockSettings.rows')"
+      :placeholder="viewportsPlaceholder('rowEnd', 'auto')"
+      :min="1"
+      :step="1"
+      :max="100"
+      :allow-empty="true"
+      v-model="currentViewportSettings.rowEnd"
+      @update:model-value="value => currentViewportSettings.rowEnd = value"
+    />
+  </py-column>
+</py-section>
