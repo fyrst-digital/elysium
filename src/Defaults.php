@@ -37,6 +37,8 @@ final class Defaults
 
     public const CMS_SECTION_SETTINGS_KEY = 'elysiumSectionSettings';
 
+    public const CMS_BLOCK_ADVANCED_KEY = 'elysiumBlockAdvanced';
+
     public const FEATURES = [
         'elysium_preview_elasticsearch' => [
             'description' => 'Enables Elasticsearch compatibility in the Admin',

@@ -5,7 +5,7 @@ namespace Blur\BlurElysiumSlider\Tests\Service;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Defaults;
 use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
-use Blur\BlurElysiumSlider\Service\TimeControlCacheInvalidationScheduler;
+use Blur\BlurElysiumSlider\Service\CacheInvalidationScheduler;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
@@ -16,19 +16,19 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DelayStamp;
 
-class TimeControlCacheInvalidationSchedulerTest extends TestCase
+class CacheInvalidationSchedulerTest extends TestCase
 {
     private SpyMessageBus $messageBus;
 
     private MockClock $clock;
 
-    private TimeControlCacheInvalidationScheduler $scheduler;
+    private CacheInvalidationScheduler $scheduler;
 
     protected function setUp(): void
     {
         $this->messageBus = new SpyMessageBus();
         $this->clock = new MockClock('2025-06-15 12:00:00');
-        $this->scheduler = new TimeControlCacheInvalidationScheduler($this->messageBus, $this->clock);
+        $this->scheduler = new CacheInvalidationScheduler($this->messageBus, $this->clock);
     }
 
     // =====================================================
@@ -37,7 +37,7 @@ class TimeControlCacheInvalidationSchedulerTest extends TestCase
 
     public function testEntityConfigContainsElysiumSlides(): void
     {
-        $config = TimeControlCacheInvalidationScheduler::entityConfig();
+        $config = CacheInvalidationScheduler::entityConfig();
 
         static::assertArrayHasKey(ElysiumSlidesDefinition::ENTITY_NAME, $config);
         static::assertSame('id', $config[ElysiumSlidesDefinition::ENTITY_NAME]['id_field']);
@@ -47,7 +47,7 @@ class TimeControlCacheInvalidationSchedulerTest extends TestCase
 
     public function testEntityConfigContainsCmsSection(): void
     {
-        $config = TimeControlCacheInvalidationScheduler::entityConfig();
+        $config = CacheInvalidationScheduler::entityConfig();
 
         static::assertArrayHasKey(CmsSectionDefinition::ENTITY_NAME, $config);
         static::assertSame('pageId', $config[CmsSectionDefinition::ENTITY_NAME]['id_field']);

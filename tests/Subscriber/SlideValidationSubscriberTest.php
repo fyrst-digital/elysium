@@ -5,7 +5,6 @@ namespace Blur\BlurElysiumSlider\Tests\Subscriber;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Subscriber\SlideValidationSubscriber;
-use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -17,7 +16,6 @@ use Shopware\Core\Framework\DataAbstractionLayer\Write\WriteContext;
 use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
 use Shopware\Core\Framework\Uuid\Uuid;
-use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SlideValidationSubscriberTest extends TestCase
