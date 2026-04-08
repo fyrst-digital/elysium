@@ -133,3 +133,53 @@ useComponentOverride([
 ])
 
 Component.extend('elysium-cms-sidebar-navigation-item', 'sw-sidebar-navigation-item', () => import('@elysium/extension/sidebar-navigation-item'));
+
+/**
+ * Intercept 400 responses containing constraint violations and show them as notifications.
+ * Shopware's global interceptor silently ignores regular 400 errors (non-sync),
+ * so constraint violations from CMS page saves would otherwise display as generic axios errors.
+ *
+ * A notification transformer suppresses the duplicate generic "Request failed with status code 400"
+ * notification that sw-cms-detail's .catch() handler would otherwise create.
+ */
+let hasHandledConstraintViolation = false;
+
+const httpClient = Shopware.Application.getContainer('init').httpClient;
+
+httpClient.interceptors.response.use(
+    (response) => response,
+    (error: { response?: { status?: number; data?: { errors?: Array<{ detail?: string; code?: string }> } } }) => {
+        const errors = error.response?.data?.errors;
+
+        if (error.response?.status === 400 && Array.isArray(errors) && errors.length > 0) {
+            hasHandledConstraintViolation = true;
+
+            errors.forEach((singleError) => {
+                if (singleError.detail) {
+                    Shopware.Store.get('notification').createNotification({
+                        variant: 'error',
+                        title: singleError.code ?? 'Validation error',
+                        message: singleError.detail,
+                    });
+                }
+            });
+
+            setTimeout(() => {
+                hasHandledConstraintViolation = false;
+            }, 100);
+        }
+
+        return Promise.reject(error);
+    },
+);
+
+Shopware.Store.get('notification').registerTransformer(
+    'Request failed with status code 400',
+    (notification) => {
+        if (hasHandledConstraintViolation) {
+            return { ...notification, variant: 'positive', growl: false };
+        }
+
+        return notification;
+    },
+);

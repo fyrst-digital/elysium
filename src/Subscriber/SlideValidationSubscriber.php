@@ -6,6 +6,7 @@ namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
+use Blur\BlurElysiumSlider\Defaults;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Validation\PreWriteValidationEvent;
@@ -23,6 +24,11 @@ class SlideValidationSubscriber implements EventSubscriberInterface
 
     private const NAME_PATTERN = '/^[A-Za-z0-9][A-Za-z0-9\s-]*[A-Za-z0-9]$|^[A-Za-z0-9]$/';
 
+    private const ELYSIUM_BLOCK_TYPES = [
+        'blur-elysium-banner',
+        'blur-elysium-slider',
+    ];
+
     public function __construct(
         private readonly Connection $connection,
         private readonly TranslatorInterface $translator
@@ -34,6 +40,8 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             PreWriteValidationEvent::class => [
                 ['validateSlideName', 500],
                 ['validateTimeControl', 500],
+                ['validateCmsSectionTimeControl', 500],
+                ['validateCmsBlockTimeControl', 500],
             ],
         ];
     }
@@ -196,6 +204,196 @@ class SlideValidationSubscriber implements EventSubscriberInterface
                 'active_from' => $row['active_from'] ?? null,
                 'active_until' => $row['active_until'] ?? null,
             ];
+        }
+
+        return $data;
+    }
+
+    public function validateCmsSectionTimeControl(PreWriteValidationEvent $event): void
+    {
+        if (!Feature::isActive('elysium_preview_time_control')) {
+            return;
+        }
+
+        $violations = new ConstraintViolationList();
+
+        $primaryKeys = $event->getPrimaryKeys('cms_section');
+        $ids = array_column($primaryKeys, 'id');
+        $existingData = empty($ids) ? [] : $this->fetchExistingCustomFieldsBulk('cms_section', $ids);
+
+        foreach ($event->getCommands() as $command) {
+            if ($command->getEntityName() !== 'cms_section') {
+                continue;
+            }
+
+            $privilege = $command->getPrivilege();
+            if ($privilege === 'delete') {
+                continue;
+            }
+
+            $payload = $command->getPayload();
+            $settingsKey = Defaults::CMS_SECTION_SETTINGS_KEY;
+
+            if (($payload['type'] ?? null) !== Defaults::CMS_SECTION_NAME && !\array_key_exists($settingsKey, $payload)) {
+                continue;
+            }
+
+            $payloadSettings = $this->extractSettingsPayload($payload, $settingsKey);
+
+            if ($payloadSettings === null) {
+                continue;
+            }
+
+            $activeFrom = $payloadSettings['activeFrom'] ?? null;
+            $activeUntil = $payloadSettings['activeUntil'] ?? null;
+
+            if ($privilege === 'create') {
+                $this->validateDates($activeFrom, $activeUntil, $violations);
+                continue;
+            }
+
+            $primaryKey = $command->getPrimaryKey();
+            $id = $primaryKey['id'] ?? null;
+
+            if ($id !== null) {
+                $existing = $existingData[$id] ?? [];
+                $existingSettings = $existing[$settingsKey] ?? [];
+
+                if (!\array_key_exists('activeFrom', $payloadSettings)) {
+                    $activeFrom = $existingSettings['activeFrom'] ?? null;
+                }
+                if (!\array_key_exists('activeUntil', $payloadSettings)) {
+                    $activeUntil = $existingSettings['activeUntil'] ?? null;
+                }
+            }
+
+            $this->validateDates($activeFrom, $activeUntil, $violations);
+        }
+
+        if (\count($violations) > 0) {
+            $event->getExceptions()->add(new WriteConstraintViolationException($violations));
+        }
+    }
+
+    public function validateCmsBlockTimeControl(PreWriteValidationEvent $event): void
+    {
+        if (!Feature::isActive('elysium_preview_time_control')) {
+            return;
+        }
+
+        $violations = new ConstraintViolationList();
+
+        $primaryKeys = $event->getPrimaryKeys('cms_block');
+        $ids = array_column($primaryKeys, 'id');
+        $existingData = empty($ids) ? [] : $this->fetchExistingCustomFieldsBulk('cms_block', $ids);
+
+        foreach ($event->getCommands() as $command) {
+            if ($command->getEntityName() !== 'cms_block') {
+                continue;
+            }
+
+            $privilege = $command->getPrivilege();
+            if ($privilege === 'delete') {
+                continue;
+            }
+
+            $payload = $command->getPayload();
+
+            if (($payload['type'] ?? null) !== null && !\in_array($payload['type'], self::ELYSIUM_BLOCK_TYPES, true)) {
+                continue;
+            }
+
+            $settingsKey = Defaults::CMS_BLOCK_ADVANCED_KEY;
+            $payloadSettings = $this->extractSettingsPayload($payload, $settingsKey);
+
+            if ($payloadSettings === null) {
+                continue;
+            }
+
+            $activeFrom = $payloadSettings['activeFrom'] ?? null;
+            $activeUntil = $payloadSettings['activeUntil'] ?? null;
+
+            if ($privilege === 'create') {
+                $this->validateDates($activeFrom, $activeUntil, $violations);
+                continue;
+            }
+
+            $primaryKey = $command->getPrimaryKey();
+            $id = $primaryKey['id'] ?? null;
+
+            if ($id !== null) {
+                $existing = $existingData[$id] ?? [];
+                $existingSettings = $existing[$settingsKey] ?? [];
+
+                if (!\array_key_exists('activeFrom', $payloadSettings)) {
+                    $activeFrom = $existingSettings['activeFrom'] ?? null;
+                }
+                if (!\array_key_exists('activeUntil', $payloadSettings)) {
+                    $activeUntil = $existingSettings['activeUntil'] ?? null;
+                }
+            }
+
+            $this->validateDates($activeFrom, $activeUntil, $violations);
+        }
+
+        if (\count($violations) > 0) {
+            $event->getExceptions()->add(new WriteConstraintViolationException($violations));
+        }
+    }
+
+    /**
+     * Extracts Elysium settings from a WriteCommand payload.
+     *
+     * Handles two payload formats:
+     * - INSERT: `custom_fields` key contains a JSON-encoded string
+     * - UPDATE (JsonUpdateCommand): settings key is present directly in the decoded payload
+     *
+     * Returns null if no relevant settings are found (command should be skipped).
+     *
+     * @return array<string, mixed>|null
+     */
+    private function extractSettingsPayload(array $payload, string $settingsKey): ?array
+    {
+        // INSERT command: custom_fields contains a JSON-encoded string
+        if (\array_key_exists('custom_fields', $payload)) {
+            $customFields = \is_string($payload['custom_fields'])
+                ? \json_decode($payload['custom_fields'], true)
+                : $payload['custom_fields'];
+
+            if (!\is_array($customFields) || !\array_key_exists($settingsKey, $customFields)) {
+                return null;
+            }
+
+            return $customFields[$settingsKey];
+        }
+
+        // UPDATE via JsonUpdateCommand: settings key is directly in decoded payload
+        if (\array_key_exists($settingsKey, $payload)) {
+            return $payload[$settingsKey];
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array<string, array<string, mixed>>
+     */
+    private function fetchExistingCustomFieldsBulk(string $tableName, array $ids): array
+    {
+        if (empty($ids)) {
+            return [];
+        }
+
+        $results = $this->connection->fetchAllAssociative(
+            \sprintf('SELECT HEX(id) as id, custom_fields FROM %s WHERE id IN (:ids)', $tableName),
+            ['ids' => $ids],
+            ['ids' => ArrayParameterType::BINARY]
+        );
+
+        $data = [];
+        foreach ($results as $row) {
+            $customFields = $row['custom_fields'] !== null ? \json_decode($row['custom_fields'], true) : [];
+            $data[$row['id']] = $customFields;
         }
 
         return $data;
