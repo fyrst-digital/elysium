@@ -12,6 +12,10 @@ export default Mixin.register(
 
         computed: {
             currentViewportIndex() {
+                if (!this.viewportsSettings) {
+                    return -1;
+                }
+
                 return Object.entries(this.viewportsSettings).findIndex(
                     (element) => element[0] === this.device
                 );
@@ -35,6 +39,17 @@ export default Mixin.register(
                 snippetPrefix: string | null = null,
                 viewportsSettings: object = this.viewportsSettings
             ) {
+                if (!viewportsSettings) {
+                    if (
+                        typeof snippetPrefix === 'string' &&
+                        typeof fallback === 'string'
+                    ) {
+                        return this.$t([snippetPrefix, fallback].join('.'));
+                    }
+
+                    return fallback;
+                }
+
                 const kebabToCamelCase = (string: string) => {
                     return string
                         .split('-')

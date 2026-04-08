@@ -21,7 +21,8 @@ export default Component.wrapComponentConfig({
 
         elysiumSectionSettingsActive() {
             return Object.hasOwn(this.selectedSection?.customFields ?? {}, 'elysiumSectionSettings') ||
-                Object.hasOwn(this.selectedBlock?.customFields ?? {}, 'elysiumBlockSettings');
-        }
+                Object.hasOwn(this.selectedBlock?.customFields ?? {}, 'elysiumBlockSettings') ||
+                Object.hasOwn(this.selectedBlock?.customFields ?? {}, 'elysiumBlockAdvanced');
+        },
     },
 });

@@ -1,6 +1,7 @@
 <py-section
   padding
   gap
+  v-if="settings && inElysiumSection"
   :style="{
     '--py-section-gap-y': '8px',
     '--container-gap-y': '12px',
@@ -29,6 +30,37 @@
       :allow-empty="true"
       v-model="currentViewportSettings.rowEnd"
       @update:model-value="value => currentViewportSettings.rowEnd = value"
+    />
+  </py-column>
+</py-section>
+
+<py-section
+  v-if="advanced && cmsPage.selectedBlock.type.startsWith('blur-elysium-')"
+  padding
+  gap
+  :title="$tc('blurElysium.general.timeControl.label')"
+  :style="{
+    '--py-section-gap-y': '8px',
+    '--container-gap-y': '12px',
+    'border-bottom': '1px solid var(--color-border-secondary-default)',
+  }"
+>
+  <py-column>
+    <py-datepicker
+      :label="$tc('blurElysium.general.timeControl.activeFrom.label')"
+      :placeholder="$tc('blurElysium.general.timeControl.activeFrom.placeholder')"
+      :tooltip="$tc('blurElysiumSection.sidebar.blockSettings.timeControl.activeFrom.helpText')"
+      :model-value="advanced.activeFrom"
+      @update:model-value="advanced.activeFrom = $event"
+    />
+  </py-column>
+  <py-column>
+    <py-datepicker
+      :label="$tc('blurElysium.general.timeControl.activeUntil.label')"
+      :placeholder="$tc('blurElysium.general.timeControl.activeUntil.placeholder')"
+      :tooltip="$tc('blurElysiumSection.sidebar.blockSettings.timeControl.activeUntil.helpText')"
+      :model-value="advanced.activeUntil"
+      @update:model-value="advanced.activeUntil = $event"
     />
   </py-column>
 </py-section>

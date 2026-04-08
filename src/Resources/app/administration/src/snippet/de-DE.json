@@ -137,7 +137,18 @@
             "contain": "Beibehalten",
             "ratio": "Verhältnis",
             "blockAlignment": "Block Ausrichtung",
-            "noViewportConfigAvailable": "In der Formularansicht stehen keine geräteabhängige Einstellungen zur Verfügung. Wechsle in eine Geräteansicht um diese Einstellungen zu bearbeiten."
+            "noViewportConfigAvailable": "In der Formularansicht stehen keine geräteabhängige Einstellungen zur Verfügung. Wechsle in eine Geräteansicht um diese Einstellungen zu bearbeiten.",
+            "timeControl": {
+                "label": "Zeitsteuerung",
+                "activeFrom": {
+                    "label": "Aktiv ab",
+                    "placeholder": "Startdatum und -zeit auswählen"
+                },
+                "activeUntil": {
+                    "label": "Aktiv bis",
+                    "placeholder": "Enddatum und -zeit auswählen"
+                }
+            }
         },
         "action": {
             "cancel": "Abbrechen",
@@ -225,15 +236,10 @@
                 "helpText": "Gib eine oder mehrere CSS-Klassen, getrennt durch ein Leerzeichen, an."
             },
             "slideTimeControl": {
-                "label": "Zeitsteuerung",
                 "activeFrom": {
-                    "label": "Aktiv ab",
-                    "placeholder": "Startdatum und -zeit auswählen",
                     "helpText": "Slide wird ab diesem Zeitpunkt angezeigt. Leer lassen für keine Startbeschränkung."
                 },
                 "activeUntil": {
-                    "label": "Aktiv bis",
-                    "placeholder": "Enddatum und -zeit auswählen",
                     "helpText": "Slide wird bis zu diesem Zeitpunkt angezeigt. Leer lassen für keine Endbeschränkung."
                 }
             },
@@ -526,15 +532,10 @@
                     "desktopHelptext": "Definiert ab welcher Bildschirmgröße die Desktop Ansicht greifen soll"
                 },
                 "timeControl": {
-                    "label": "Zeitsteuerung",
                     "activeFrom": {
-                        "label": "Aktiv ab",
-                        "placeholder": "Startdatum und -zeit auswählen",
                         "helpText": "Sektion wird ab diesem Zeitpunkt angezeigt. Leer lassen für keine Startbeschränkung."
                     },
                     "activeUntil": {
-                        "label": "Aktiv bis",
-                        "placeholder": "Enddatum und -zeit auswählen",
                         "helpText": "Sektion wird bis zu diesem Zeitpunkt angezeigt. Leer lassen für keine Endbeschränkung."
                     }
                 }
@@ -542,7 +543,15 @@
             "blockSettingsTitle": "Elysium Block Einstellungen",
             "blockSettings": {
                 "order": "Reihenfolge",
-                "rows": "Zeilen"
+                "rows": "Zeilen",
+                "timeControl": {
+                    "activeFrom": {
+                        "helpText": "Block wird ab diesem Zeitpunkt angezeigt. Leer lassen für keine Startbeschränkung."
+                    },
+                    "activeUntil": {
+                        "helpText": "Block wird bis zu diesem Zeitpunkt angezeigt. Leer lassen für keine Endbeschränkung."
+                    }
+                }
             },
             "blockRemovalNotification": "Dieser Block wird in Version 4.0.0 entfernt<br/>Verwende stattdessen die Elysium Sektion, um Blöcke anzuordnen",
             "elysiumSectionNotification": "Verwende die neue <b>Elysium Sektion</b>, um Blöcke zu platzieren und zu layouten. Du findest sie direkt in der Sektion Auswahl."
