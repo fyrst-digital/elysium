@@ -1,4 +1,5 @@
 import { useComponentRegister } from '@elysium/composables/components'
+import { defineBlockConfig } from '@elysium/component/cms/blocks/config'
 
 const { Service } = Shopware;
 
@@ -13,13 +14,7 @@ Service('cmsService').registerCmsBlock({
     label: 'blurElysiumSlider.label',
     component: 'sw-cms-block-blur-elysium-slider',
     previewComponent: 'sw-cms-block-blur-elysium-slider-preview',
-    defaultConfig: {
-        marginBottom: '',
-        marginTop: '',
-        marginLeft: '',
-        marginRight: '',
-        sizingMode: 'boxed',
-    },
+    defaultConfig: defineBlockConfig(),
     slots: {
         main: 'blur-elysium-slider',
     },

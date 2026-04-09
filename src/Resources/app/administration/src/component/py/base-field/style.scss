@@ -160,11 +160,11 @@
 
 .sw-text-editor-toolbar {
     height: auto !important;
-}
 
-.sw-text-editor-toolbar .sw-text-editor-buttons {
-    display: flex;
-    flex-wrap: wrap;
+    .sw-text-editor-buttons {
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
 }
 
 .py-field {

@@ -1,5 +1,9 @@
 {
     "global": {
+        "error-codes": {
+            "24c1a406-ed22-4e82-bda2-5bc2df52977f": "Der \"Name\" enthält ungültige Zeichen. Nur Buchstaben, Zahlen, Leerzeichen und Bindestriche sind erlaubt. Der Name darf nicht mit Leerzeichen oder Bindestrichen beginnen oder enden.",
+            "3e6eacf6-013c-48ab-a557-c218aa64aaa1": "Das Datum \"Aktiv ab\" muss vor dem Datum \"Aktiv bis\" liegen."
+        },
         "entities": {
             "blur_elysium_slides": "Elysium Slides"
         }
@@ -137,7 +141,18 @@
             "contain": "Beibehalten",
             "ratio": "Verhältnis",
             "blockAlignment": "Block Ausrichtung",
-            "noViewportConfigAvailable": "In der Formularansicht stehen keine geräteabhängige Einstellungen zur Verfügung. Wechsle in eine Geräteansicht um diese Einstellungen zu bearbeiten."
+            "noViewportConfigAvailable": "In der Formularansicht stehen keine geräteabhängige Einstellungen zur Verfügung. Wechsle in eine Geräteansicht um diese Einstellungen zu bearbeiten.",
+            "timeControl": {
+                "label": "Zeitsteuerung",
+                "activeFrom": {
+                    "label": "Aktiv ab",
+                    "placeholder": "Startdatum und -zeit auswählen"
+                },
+                "activeUntil": {
+                    "label": "Aktiv bis",
+                    "placeholder": "Enddatum und -zeit auswählen"
+                }
+            }
         },
         "action": {
             "cancel": "Abbrechen",
@@ -172,16 +187,6 @@
             "slideSaveError": " Der Slide konnte nicht gespeichert werden",
             "productLinkingMissingEntity": "Bitte wähle ein Produkt welches du verknüpfen möchtest",
             "customTemplateFileDefinedNotice": "Du hast eine eigene Template Datei festgelegt. Einige Einstellungen könnten überschrieben werden."
-        },
-        "violations": {
-            "SLIDE_NAME_INVALID_FORMAT": {
-                "title": "Ungültiges Zeichen im Namen",
-                "message": "Der \"Name\" enthält ungültige Zeichen. Nur Buchstaben, Zahlen, Leerzeichen und Bindestriche sind erlaubt. Der Name darf nicht mit Leerzeichen oder Bindestrichen beginnen oder enden."
-            },
-            "TIME_CONTROL_INVALID_RANGE": {
-                "title": "Ungültiger Zeitbereich",
-                "message": "Das Datum \"Aktiv ab\" muss vor dem Datum \"Aktiv bis\" liegen."
-            }
         },
         "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
         "actions": {
@@ -225,15 +230,10 @@
                 "helpText": "Gib eine oder mehrere CSS-Klassen, getrennt durch ein Leerzeichen, an."
             },
             "slideTimeControl": {
-                "label": "Zeitsteuerung",
                 "activeFrom": {
-                    "label": "Aktiv ab",
-                    "placeholder": "Startdatum und -zeit auswählen",
                     "helpText": "Slide wird ab diesem Zeitpunkt angezeigt. Leer lassen für keine Startbeschränkung."
                 },
                 "activeUntil": {
-                    "label": "Aktiv bis",
-                    "placeholder": "Enddatum und -zeit auswählen",
                     "helpText": "Slide wird bis zu diesem Zeitpunkt angezeigt. Leer lassen für keine Endbeschränkung."
                 }
             },
@@ -526,15 +526,10 @@
                     "desktopHelptext": "Definiert ab welcher Bildschirmgröße die Desktop Ansicht greifen soll"
                 },
                 "timeControl": {
-                    "label": "Zeitsteuerung",
                     "activeFrom": {
-                        "label": "Aktiv ab",
-                        "placeholder": "Startdatum und -zeit auswählen",
                         "helpText": "Sektion wird ab diesem Zeitpunkt angezeigt. Leer lassen für keine Startbeschränkung."
                     },
                     "activeUntil": {
-                        "label": "Aktiv bis",
-                        "placeholder": "Enddatum und -zeit auswählen",
                         "helpText": "Sektion wird bis zu diesem Zeitpunkt angezeigt. Leer lassen für keine Endbeschränkung."
                     }
                 }
@@ -542,7 +537,15 @@
             "blockSettingsTitle": "Elysium Block Einstellungen",
             "blockSettings": {
                 "order": "Reihenfolge",
-                "rows": "Zeilen"
+                "rows": "Zeilen",
+                "timeControl": {
+                    "activeFrom": {
+                        "helpText": "Block wird ab diesem Zeitpunkt angezeigt. Leer lassen für keine Startbeschränkung."
+                    },
+                    "activeUntil": {
+                        "helpText": "Block wird bis zu diesem Zeitpunkt angezeigt. Leer lassen für keine Endbeschränkung."
+                    }
+                }
             },
             "blockRemovalNotification": "Dieser Block wird in Version 4.0.0 entfernt<br/>Verwende stattdessen die Elysium Sektion, um Blöcke anzuordnen",
             "elysiumSectionNotification": "Verwende die neue <b>Elysium Sektion</b>, um Blöcke zu platzieren und zu layouten. Du findest sie direkt in der Sektion Auswahl."

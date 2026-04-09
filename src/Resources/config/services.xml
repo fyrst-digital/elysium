@@ -33,19 +33,21 @@
       <tag name="shopware.entity.definition" entity="blur_elysium_slides_translation"/>
     </service>
 
-    <service id="Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup">
+    <service id="Blur\BlurElysiumSlider\Service\CmsPageLookup">
       <argument type="service" id="Doctrine\DBAL\Connection"/>
     </service>
 
     <service id="Blur\BlurElysiumSlider\Subscriber\CacheInvalidationSubscriber">
       <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheInvalidator"/>
-      <argument type="service" id="Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup"/>
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\CmsPageLookup"/>
       <tag name="kernel.event_listener" event="Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent" method="invalidateCmsPageIds" priority="2001"/>
     </service>
 
-    <!-- subscriber -->
-    <service id="Blur\BlurElysiumSlider\Subscriber\EntitySubscriber">
+    <!-- CMS Subscriber (time control filtering + section write logic + cache invalidation scheduling) -->
+    <service id="Blur\BlurElysiumSlider\Subscriber\CmsSubscriber">
+      <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
       <argument type="service" id="cms_section.repository"/>
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\CacheInvalidationScheduler"/>
       <tag name="kernel.event_subscriber"/>
     </service>
 
@@ -53,30 +55,25 @@
       <tag name="kernel.event_subscriber"/>
     </service>
 
-    <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlSubscriber">
+    <service id="Blur\BlurElysiumSlider\Subscriber\SlideSubscriber">
       <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\CacheInvalidationScheduler"/>
       <tag name="kernel.event_subscriber"/>
     </service>
 
-    <service id="Blur\BlurElysiumSlider\Service\TimeControlCacheInvalidationScheduler">
+    <service id="Blur\BlurElysiumSlider\Service\CacheInvalidationScheduler">
       <argument type="service" id="messenger.default_bus"/>
       <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
     </service>
 
-    <service id="Blur\BlurElysiumSlider\Subscriber\TimeControlCacheInvalidationSubscriber">
-      <argument type="service" id="Blur\BlurElysiumSlider\Service\TimeControlCacheInvalidationScheduler"/>
-      <tag name="kernel.event_subscriber"/>
-    </service>
-
     <service id="Blur\BlurElysiumSlider\Subscriber\SlideValidationSubscriber">
       <argument type="service" id="Doctrine\DBAL\Connection"/>
-      <argument type="service" id="translator"/>
       <tag name="kernel.event_subscriber"/>
     </service>
 
     <service id="Blur\BlurElysiumSlider\MessageHandler\TimeControlCacheInvalidationHandler">
       <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheInvalidator"/>
-      <argument type="service" id="Blur\BlurElysiumSlider\Service\ElysiumCmsPageLookup"/>
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\CmsPageLookup"/>
       <tag name="messenger.message_handler"/>
     </service>
 
@@ -99,12 +96,6 @@
     <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideRoute" public="true">
       <argument type="service" id="blur_elysium_slides.repository"/>
       <argument type="service" id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface"/>
-    </service>
-
-    <!-- Section Time Control -->
-    <service id="Blur\BlurElysiumSlider\Subscriber\SectionTimeControlSubscriber">
-      <argument type="service" id="Symfony\Component\Clock\ClockInterface"/>
-      <tag name="kernel.event_subscriber"/>
     </service>
 
   </services>

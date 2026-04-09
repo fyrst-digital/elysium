@@ -14,6 +14,10 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
+        slide() {
+            return Store.get('elysiumSlide').slide;
+        },
+
         elysiumUI() {
             return Store.get('elysiumUI');
         },
@@ -27,6 +31,7 @@ export default Component.wrapComponentConfig({
                 {
                     label: this.$tc('blurElysiumSlides.forms.contentLabel'),
                     name: 'content',
+                    hasError: this.contentError,
                 },
                 {
                     label: this.$tc(
@@ -37,6 +42,13 @@ export default Component.wrapComponentConfig({
             ];
         },
 
+        slideErrors() {
+            return Store.get('error').getErrorsForEntity(
+                'blur_elysium_slides',
+                this.slide.id
+            );
+        },
+
         activeTabMeta() {
             return this.tabs.find((tab) => tab.name === this.activeTab);
         },
@@ -44,5 +56,9 @@ export default Component.wrapComponentConfig({
         cardTitle() {
             return this.$tc('blurElysiumSlides.forms.generalTitle');
         },
+
+        contentError() {
+            return Object.hasOwn(this.slideErrors, 'name') || Object.hasOwn(this.slideErrors, 'activeFrom');
+        }
     },
 });

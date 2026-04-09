@@ -5,6 +5,10 @@ export function useViewportProp(
         viewportsSettings: object,
         // snippetPrefix: string | null = null
 ) {
+    if (!viewportsSettings) {
+        return null;
+    }
+
     let result = null
 
     const currentViewportIndex = (deviceViewport, viewportsSettings) => {

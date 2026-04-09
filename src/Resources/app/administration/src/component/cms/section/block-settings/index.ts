@@ -7,7 +7,7 @@ export default Component.wrapComponentConfig({
 
     mixins: [Mixin.getByName('blur-device-utilities')],
 
-    props: ['settings'],
+    props: ['settings', 'advanced'],
 
     computed: {
         cmsPage() {
@@ -23,7 +23,13 @@ export default Component.wrapComponentConfig({
         },
 
         currentViewportSettings() {
-            return this.settings.viewports[this.device];
+            return this.settings?.viewports[this.device] || null;
+        },
+
+        inElysiumSection() {
+            const sectionId = this.cmsPage.selectedBlock.sectionId
+            const section = this.cmsPage.currentPage?.sections?.find((s) => s.id === sectionId)
+            return section.type === 'blur-elysium-section'
         },
     },
 
@@ -37,17 +43,24 @@ export default Component.wrapComponentConfig({
                 this.cmsPage.setCurrentCmsDeviceView('desktop');
             }
         },
+
+        getAdvancedError(property: string) {
+            return Shopware.Store.get('error').getApiError(
+                this.cmsPage.selectedBlock,
+                `customFields.elysiumBlockAdvanced.${property}`,
+            )
+        }
     },
 
     watch: {
         settings: {
             handler() {
-                this.viewportsSettings = this.settings.viewports;
+                this.viewportsSettings = this.settings?.viewports || null;
             },
         },
     },
 
     created() {
-        this.viewportsSettings = this.settings.viewports;
+        this.viewportsSettings = this.settings?.viewports || null;
     },
 });

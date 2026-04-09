@@ -8,7 +8,7 @@ use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator;
 
-class ElysiumCmsPageLookup
+class CmsPageLookup
 {
     public function __construct(
         private readonly Connection $connection

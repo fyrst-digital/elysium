@@ -7,6 +7,7 @@ namespace Blur\BlurElysiumSlider\Service;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Defaults;
 use Blur\BlurElysiumSlider\Message\TimeControlCacheInvalidationMessage;
+use Shopware\Core\Content\Cms\Aggregate\CmsBlock\CmsBlockDefinition;
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
 use Shopware\Core\Framework\Uuid\Uuid;
@@ -15,7 +16,7 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DelayStamp;
 
-class TimeControlCacheInvalidationScheduler
+class CacheInvalidationScheduler
 {
     public static function entityConfig(): array
     {
@@ -29,6 +30,11 @@ class TimeControlCacheInvalidationScheduler
                 'id_field' => 'pageId',
                 'active_from' => 'customFields.' . Defaults::CMS_SECTION_SETTINGS_KEY . '.activeFrom',
                 'active_until' => 'customFields.' . Defaults::CMS_SECTION_SETTINGS_KEY . '.activeUntil',
+            ],
+            CmsBlockDefinition::ENTITY_NAME => [
+                'id_field' => 'pageId',
+                'active_from' => 'customFields.' . Defaults::CMS_BLOCK_ADVANCED_KEY . '.activeFrom',
+                'active_until' => 'customFields.' . Defaults::CMS_BLOCK_ADVANCED_KEY . '.activeUntil',
             ],
         ];
     }
@@ -80,6 +86,11 @@ class TimeControlCacheInvalidationScheduler
     {
         $config = self::entityConfig()[$entityName];
         $id = $writeResult->getProperty($config['id_field']);
+
+        // Fallback: read from payload (e.g., CMS block has pageId in payload, not as entity property)
+        if ($id === null) {
+            $id = $this->resolvePath($writeResult->getPayload(), $config['id_field']);
+        }
 
         if ($id && Uuid::isValid($id)) {
             return $id;

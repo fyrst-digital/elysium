@@ -1,5 +1,9 @@
 {
     "global": {
+        "error-codes": {
+            "24c1a406-ed22-4e82-bda2-5bc2df52977f": "Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace.",
+            "3e6eacf6-013c-48ab-a557-c218aa64aaa1": "The \"activeFrom\" date must be before the \"activeUntil\" date."
+        },
         "entities": {
             "blur_elysium_slides": "Elysium Slides"
         }
@@ -137,7 +141,18 @@
             "contain": "Contain",
             "ratio": "Ratio",
             "blockAlignment": "Block alignment",
-            "noViewportConfigAvailable": "Device-specific settings are not available in the form view. Switch to a device view to edit these settings."
+            "noViewportConfigAvailable": "Device-specific settings are not available in the form view. Switch to a device view to edit these settings.",
+            "timeControl": {
+                "label": "Time Control",
+                "activeFrom": {
+                    "label": "Active from",
+                    "placeholder": "Select start date and time"
+                },
+                "activeUntil": {
+                    "label": "Active until",
+                    "placeholder": "Select end date and time"
+                }
+            }
         },
         "action": {
             "cancel": "Cancel",
@@ -172,16 +187,6 @@
             "slideSaveError": "The Slide couldn't be saved",
             "productLinkingMissingEntity": "Please select a product you would like to link",
             "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten."
-        },
-        "violations": {
-            "SLIDE_NAME_INVALID_FORMAT": {
-                "title": "Invalid slide name format",
-                "message": "Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace."
-            },
-            "TIME_CONTROL_INVALID_RANGE": {
-                "title": "Invalid date range",
-                "message": "The \"activeFrom\" date must be before the \"activeUntil\" date. ++"
-            }
         },
         "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
         "actions": {
@@ -225,15 +230,10 @@
                 "helpText": "Specify one or more CSS classes for the slide, separated by a space"
             },
             "slideTimeControl": {
-                "label": "Time Control",
                 "activeFrom": {
-                    "label": "Active from",
-                    "placeholder": "Select start date and time",
                     "helpText": "Slide will be displayed from this datetime onwards. Leave empty for no start restriction."
                 },
                 "activeUntil": {
-                    "label": "Active until",
-                    "placeholder": "Select end date and time",
                     "helpText": "Slide will be displayed until this datetime. Leave empty for no end restriction."
                 }
             },
@@ -526,15 +526,10 @@
                     "desktopHelptext": "Defines the screen size at which the desktop view should take effect"
                 },
                 "timeControl": {
-                    "label": "Time Control",
                     "activeFrom": {
-                        "label": "Active from",
-                        "placeholder": "Select start date and time",
                         "helpText": "Section will be displayed from this datetime onwards. Leave empty for no start restriction."
                     },
                     "activeUntil": {
-                        "label": "Active until",
-                        "placeholder": "Select end date and time",
                         "helpText": "Section will be displayed until this datetime. Leave empty for no end restriction."
                     }
                 }
@@ -542,7 +537,15 @@
             "blockSettingsTitle": "Elysium Block settings",
             "blockSettings": {
                 "order": "Order",
-                "rows": "Rows"
+                "rows": "Rows",
+                "timeControl": {
+                    "activeFrom": {
+                        "helpText": "Block will be displayed from this datetime onwards. Leave empty for no start restriction."
+                    },
+                    "activeUntil": {
+                        "helpText": "Block will be displayed until this datetime. Leave empty for no end restriction."
+                    }
+                }
             },
             "blockRemovalNotification": "Will be removed in Version 4.0.0<br/>Use the Elysium Section instead to layout your blocks",
             "elysiumSectionNotification": "Use the new <b>Elysium Section</b> to place and layout your blocks. You can find it right in the Section selection."

@@ -15,11 +15,11 @@
   </blur-column>
 
   <blur-column v-if="isTimeControlActive">
-    <py-datepicker :label="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.label')" :placeholder="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.placeholder')" :tooltip="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.helpText')" :model-value="slide.activeFrom" :error="useError('activeFrom')" @update:model-value="slide.activeFrom = $event"/>
+    <py-datepicker :label="$tc('blurElysium.general.timeControl.activeFrom.label')" :placeholder="$tc('blurElysium.general.timeControl.activeFrom.placeholder')" :tooltip="$tc('blurElysiumSlides.forms.slideTimeControl.activeFrom.helpText')" :model-value="slide.activeFrom" :error="useError('activeFrom')" @update:model-value="slide.activeFrom = $event"/>
   </blur-column>
 
   <blur-column v-if="isTimeControlActive">
-    <py-datepicker :label="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.label')" :placeholder="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.placeholder')" :tooltip="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.helpText')" :model-value="slide.activeUntil" @update:model-value="slide.activeUntil = $event"/>
+    <py-datepicker :label="$tc('blurElysium.general.timeControl.activeUntil.label')" :placeholder="$tc('blurElysium.general.timeControl.activeUntil.placeholder')" :tooltip="$tc('blurElysiumSlides.forms.slideTimeControl.activeUntil.helpText')" :model-value="slide.activeUntil" @update:model-value="slide.activeUntil = $event"/>
   </blur-column>
 
 </blur-section>

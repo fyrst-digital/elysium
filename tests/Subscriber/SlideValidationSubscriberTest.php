@@ -4,8 +4,8 @@ namespace Blur\BlurElysiumSlider\Tests\Subscriber;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
+use Blur\BlurElysiumSlider\Defaults;
 use Blur\BlurElysiumSlider\Subscriber\SlideValidationSubscriber;
-use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -17,8 +17,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Write\WriteContext;
 use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
 use Shopware\Core\Framework\Uuid\Uuid;
-use Symfony\Component\Validator\ConstraintViolation;
-use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 class SlideValidationSubscriberTest extends TestCase
 {
@@ -33,18 +32,7 @@ class SlideValidationSubscriberTest extends TestCase
         ]);
 
         $this->connection = $this->createMock(Connection::class);
-        $translator = $this->createMock(TranslatorInterface::class);
-        $translator->method('trans')
-            ->willReturnCallback(function (string $key) {
-                return match ($key) {
-                    'blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.message' => 'The "activeFrom" date must be before the "activeUntil" date.',
-                    'blurElysiumSlides.violations.SLIDE_NAME_INVALID_FORMAT.message' => 'The slide name contains invalid characters.',
-                    'blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.title' => 'Invalid time range',
-                    'blurElysiumSlides.violations.SLIDE_NAME_INVALID_FORMAT.title' => 'Invalid name format',
-                    default => $key,
-                };
-            });
-        $this->subscriber = new SlideValidationSubscriber($this->connection, $translator);
+        $this->subscriber = new SlideValidationSubscriber($this->connection);
     }
 
     protected function tearDown(): void
@@ -185,7 +173,7 @@ class SlideValidationSubscriberTest extends TestCase
 
         $violation = $violations[0];
         static::assertSame('/name', $violation->getPropertyPath());
-        static::assertSame('SLIDE_NAME_INVALID_FORMAT', $violation->getCode());
+        static::assertSame(Defaults::ERROR_CODE_NAME_FORMAT, $violation->getCode());
         static::assertSame('invalid@name', $violation->getInvalidValue());
     }
 
@@ -421,7 +409,7 @@ class SlideValidationSubscriberTest extends TestCase
 
         $violation = $violations[0];
         static::assertSame('/activeFrom', $violation->getPropertyPath());
-        static::assertSame('TIME_CONTROL_INVALID_RANGE', $violation->getCode());
+        static::assertSame(Defaults::ERROR_CODE_TIME_CONTROL, $violation->getCode());
         static::assertSame('The "activeFrom" date must be before the "activeUntil" date.', $violation->getMessage());
     }
 
@@ -509,7 +497,7 @@ class SlideValidationSubscriberTest extends TestCase
         return new PreWriteValidationEvent($writeContext, $commands);
     }
 
-    private function assertViolationThrown(PreWriteValidationEvent $event, string $expectedInvalidValue): void
+    private function assertViolationThrown(PreWriteValidationEvent $event, string $expectedInvalidValue, string $expectedPropertyPath = '/activeFrom'): void
     {
         $exceptions = $event->getExceptions()->getExceptions();
         static::assertCount(1, $exceptions);
@@ -521,8 +509,8 @@ class SlideValidationSubscriberTest extends TestCase
         static::assertCount(1, $violations);
 
         $violation = $violations[0];
-        static::assertSame('/activeFrom', $violation->getPropertyPath());
-        static::assertSame('TIME_CONTROL_INVALID_RANGE', $violation->getCode());
+        static::assertSame($expectedPropertyPath, $violation->getPropertyPath());
+        static::assertSame(Defaults::ERROR_CODE_TIME_CONTROL, $violation->getCode());
         static::assertSame($expectedInvalidValue, $violation->getInvalidValue());
     }
 }

@@ -15,12 +15,14 @@
                 :settings="selectedSection.customFields.elysiumSectionSettings"
             />
             <blur-elysium-cms-section-block-settings
-                v-if="selectedBlock !== null && selectedBlock?.customFields?.hasOwnProperty('elysiumBlockSettings')"
+                v-if="selectedBlock !== null && (selectedBlock?.customFields?.hasOwnProperty('elysiumBlockSettings') || selectedBlock?.customFields?.hasOwnProperty('elysiumBlockAdvanced'))"
                 :settings="selectedBlock.customFields.elysiumBlockSettings"
+                :advanced="selectedBlock.customFields.elysiumBlockAdvanced"
             />
         </sw-sidebar-item>
     {% endblock %}
 {% endblock %}
+
 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
 {% block sw_cms_sidebar_block_overview_preview %}
     <div

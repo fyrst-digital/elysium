@@ -335,23 +335,11 @@ export default Component.wrapComponentConfig({
                 })
                 .catch((reason) => {
                     const errors: SlideError[] | null = reason.response?.data?.errors || null
-
-                    if (!this.hasSlideName(this.slide?.name)) {
-                        this.addNotificationError(
-                            this.$tc('blurElysiumSlides.messages.emptySlideNameErrorTitle'),
-                            this.$tc('blurElysiumSlides.messages.emptySlideNameError')
-                        )
-                    } else if (errors !== null && errors.length > 0) {
-                        errors.forEach((error) => {
-                            this.sendError(error)
-                        })
-                    } else {
-                        this.createNotificationError({
-                            title: this.$tc('blurElysiumSlides.messages.slideSaveErrorTitle'),
-                            message: this.$tc('blurElysiumSlides.messages.slideSaveError'),
-                        });
-                    }
-
+                    
+                    this.createNotificationError({
+                        title: this.$tc('blurElysiumSlides.messages.slideSaveErrorTitle'),
+                        message: this.$tc('blurElysiumSlides.messages.slideSaveError'),
+                    });
 
                     console.error(errors)
                     this.isLoading = false
