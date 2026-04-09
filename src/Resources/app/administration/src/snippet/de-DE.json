@@ -1,5 +1,9 @@
 {
     "global": {
+        "error-codes": {
+            "24c1a406-ed22-4e82-bda2-5bc2df52977f": "Der \"Name\" enthält ungültige Zeichen. Nur Buchstaben, Zahlen, Leerzeichen und Bindestriche sind erlaubt. Der Name darf nicht mit Leerzeichen oder Bindestrichen beginnen oder enden.",
+            "3e6eacf6-013c-48ab-a557-c218aa64aaa1": "Das Datum \"Aktiv ab\" muss vor dem Datum \"Aktiv bis\" liegen."
+        },
         "entities": {
             "blur_elysium_slides": "Elysium Slides"
         }
@@ -183,16 +187,6 @@
             "slideSaveError": " Der Slide konnte nicht gespeichert werden",
             "productLinkingMissingEntity": "Bitte wähle ein Produkt welches du verknüpfen möchtest",
             "customTemplateFileDefinedNotice": "Du hast eine eigene Template Datei festgelegt. Einige Einstellungen könnten überschrieben werden."
-        },
-        "violations": {
-            "SLIDE_NAME_INVALID_FORMAT": {
-                "title": "Ungültiges Zeichen im Namen",
-                "message": "Der \"Name\" enthält ungültige Zeichen. Nur Buchstaben, Zahlen, Leerzeichen und Bindestriche sind erlaubt. Der Name darf nicht mit Leerzeichen oder Bindestrichen beginnen oder enden."
-            },
-            "TIME_CONTROL_INVALID_RANGE": {
-                "title": "Ungültiger Zeitbereich",
-                "message": "Das Datum \"Aktiv ab\" muss vor dem Datum \"Aktiv bis\" liegen."
-            }
         },
         "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
         "actions": {

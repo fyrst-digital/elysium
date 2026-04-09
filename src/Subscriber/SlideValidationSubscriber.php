@@ -9,6 +9,8 @@ use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Defaults;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
+use Shopware\Core\Content\Cms\Aggregate\CmsBlock\CmsBlockDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\JsonUpdateCommand;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Validation\PreWriteValidationEvent;
 use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
@@ -18,11 +20,7 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SlideValidationSubscriber implements EventSubscriberInterface
-{
-    private const VIOLATION_CODE_TIME_CONTROL = 'TIME_CONTROL_INVALID_RANGE';
-    private const VIOLATION_CODE_NAME_FORMAT = 'SLIDE_NAME_INVALID_FORMAT';
-
-    private const NAME_PATTERN = '/^[A-Za-z0-9][A-Za-z0-9\s-]*[A-Za-z0-9]$|^[A-Za-z0-9]$/';
+{    private const NAME_PATTERN = '/^[A-Za-z0-9][A-Za-z0-9\s-]*[A-Za-z0-9]$|^[A-Za-z0-9]$/';
 
     private const ELYSIUM_BLOCK_TYPES = [
         'blur-elysium-banner',
@@ -31,6 +29,9 @@ class SlideValidationSubscriber implements EventSubscriberInterface
 
     public function __construct(
         private readonly Connection $connection,
+        /**
+         * @todo Remove translator dependency
+         */
         private readonly TranslatorInterface $translator
     ) {}
 
@@ -40,11 +41,12 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             PreWriteValidationEvent::class => [
                 ['validateSlideName', 500],
                 ['validateTimeControl', 500],
-                ['validateCmsSectionTimeControl', 500],
-                ['validateCmsBlockTimeControl', 500],
+                //['validateCmsSectionTimeControl', 400],
+                //['validateCmsBlock', 600],
             ],
         ];
     }
+
 
     public function validateSlideName(PreWriteValidationEvent $event): void
     {
@@ -70,26 +72,23 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             if (!preg_match(self::NAME_PATTERN, $name)) {
                 $violations->add(
                     new ConstraintViolation(
-                        $this->translator->trans(
-                            sprintf("blurElysiumSlides.violations.%s.message", self::VIOLATION_CODE_NAME_FORMAT)
-                        ),
+                        "Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace.",
                         'Slide {{ field }} contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace.',
                         [
                             '{{ field }}' => 'name',
-                            'title' => $this->translator->trans(sprintf("blurElysiumSlides.violations.%s.title", self::VIOLATION_CODE_NAME_FORMAT)),
                         ],
                         null,
                         '/name',
                         $name,
                         null,
-                        self::VIOLATION_CODE_NAME_FORMAT
+                        Defaults::ERROR_CODE_NAME_FORMAT
                     )
                 );
             }
-        }
 
-        if (\count($violations) > 0) {
-            $event->getExceptions()->add(new WriteConstraintViolationException($violations));
+            if (\count($violations) > 0) {
+                $event->getExceptions()->add(new WriteConstraintViolationException($violations, $command->getPath()));
+            }
         }
     }
 
@@ -135,11 +134,12 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             }
 
             $this->validateDates($activeFrom, $activeUntil, $violations, '/activeFrom');
+
+            if (\count($violations) > 0) {
+                $event->getExceptions()->add(new WriteConstraintViolationException($violations, $command->getPath()));
+            }
         }
 
-        if (\count($violations) > 0) {
-            $event->getExceptions()->add(new WriteConstraintViolationException($violations));
-        }
     }
 
     private function validateDates(
@@ -162,26 +162,17 @@ class SlideValidationSubscriber implements EventSubscriberInterface
         if ($fromTimestamp >= $untilTimestamp) {
             $violations->add(
                 new ConstraintViolation(
-                    //'The "activeFrom" date must be before the "activeUntil" date.',
-                    $this->translator->trans(
-                        sprintf("blurElysiumSlides.violations.%s.message", self::VIOLATION_CODE_TIME_CONTROL)
-                    ),
+                    "The \"activeFrom\" date must be before the \"activeUntil\" date.",
                     'The "{{ field1 }}" date must be before the "{{ field2 }}" date.',
                     [
                         '{{ field1 }}' => 'activeFrom',
                         '{{ field2 }}' => 'activeUntil',
-                        'title' => $this->translator->trans(
-                            sprintf("blurElysiumSlides.violations.%s.title", self::VIOLATION_CODE_TIME_CONTROL),
-                            [],
-                            null,
-                            'de'
-                        ),
                     ],
                     null,
                     $propertyPath,
                     $activeFrom,
                     null,
-                    self::VIOLATION_CODE_TIME_CONTROL
+                    Defaults::ERROR_CODE_TIME_CONTROL
                 )
             );
         }
@@ -280,7 +271,7 @@ class SlideValidationSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function validateCmsBlockTimeControl(PreWriteValidationEvent $event): void
+    public function validateCmsBlock(PreWriteValidationEvent $event): void
     {
         if (!Feature::isActive('elysium_preview_time_control')) {
             return;
@@ -288,12 +279,16 @@ class SlideValidationSubscriber implements EventSubscriberInterface
 
         $violations = new ConstraintViolationList();
 
-        $primaryKeys = $event->getPrimaryKeys('cms_block');
+        $primaryKeys = $event->getPrimaryKeys(CmsBlockDefinition::ENTITY_NAME);
         $ids = array_column($primaryKeys, 'id');
-        $existingData = empty($ids) ? [] : $this->fetchExistingCustomFieldsBulk('cms_block', $ids);
+        $existingData = empty($ids) ? [] : $this->fetchExistingCustomFieldsBulk(CmsBlockDefinition::ENTITY_NAME, $ids);
 
         foreach ($event->getCommands() as $command) {
-            if ($command->getEntityName() !== 'cms_block') {
+            if ($command->getEntityName() !== CmsBlockDefinition::ENTITY_NAME) {
+                continue;
+            }
+
+            if (!$command instanceof JsonUpdateCommand) {
                 continue;
             }
 
@@ -318,10 +313,9 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             $activeFrom = $payloadSettings['activeFrom'] ?? null;
             $activeUntil = $payloadSettings['activeUntil'] ?? null;
 
-            $basePath = \array_key_exists('custom_fields', $payload)
-                ? '/customFields/' . $settingsKey
-                : '/' . $settingsKey;
-
+            #$basePath = "/cms_block/{$command->getDecodedPrimaryKey()["id"]}/customFields/{$settingsKey}";
+            $basePath = "/customFields/{$settingsKey}";
+            
             if ($privilege === 'create') {
                 $this->validateDates($activeFrom, $activeUntil, $violations, $basePath . '/activeFrom');
                 continue;
@@ -343,11 +337,12 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             }
 
             $this->validateDates($activeFrom, $activeUntil, $violations, $basePath . '/activeFrom');
+
+            if (\count($violations) > 0) {
+                $event->getExceptions()->add(new WriteConstraintViolationException($violations, $command->getPath()));
+            }
         }
 
-        if (\count($violations) > 0) {
-            $event->getExceptions()->add(new WriteConstraintViolationException($violations));
-        }
     }
 
     /**

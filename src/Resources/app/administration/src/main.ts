@@ -15,6 +15,7 @@ import '@elysium/component/cms/elements/blur-elysium-banner';
 // cms blocks
 import '@elysium/component/cms/blocks/blur-elysium-slider';
 import '@elysium/component/cms/blocks/blur-elysium-banner';
+import { title } from 'process';
 
 const { Locale, Application, Component, Store, Service } = Shopware;
 
@@ -124,7 +125,7 @@ useComponentRegister([
  * Override components
  */
 useComponentOverride([
-    { name: 'sw-cms-detail', path: () => import('@elysium/extension/sw-cms-detail') },
+    // { name: 'sw-cms-detail', path: () => import('@elysium/extension/sw-cms-detail') },
     { name: 'sw-cms-section', path: () => import('@elysium/extension/sw-cms-section') },
     { name: 'sw-cms-sidebar', path: () => import('@elysium/extension/sw-cms-sidebar') },
     { name: 'sw-cms-stage-section-selection', path: () => import('@elysium/extension/sw-cms-stage-section-selection') },
@@ -136,51 +137,18 @@ useComponentOverride([
 Component.extend('elysium-cms-sidebar-navigation-item', 'sw-sidebar-navigation-item', () => import('@elysium/extension/sidebar-navigation-item'));
 
 /**
- * Intercept 400 responses containing constraint violations and show them as notifications.
- * Shopware's global interceptor silently ignores regular 400 errors (non-sync),
- * so constraint violations from CMS page saves would otherwise display as generic axios errors.
- *
- * A notification transformer suppresses the duplicate generic "Request failed with status code 400"
- * notification that sw-cms-detail's .catch() handler would otherwise create.
+ * Register notification transformer
  */
-let hasHandledConstraintViolation = false;
+Shopware.Store.get('notification').registerTransformer(
+    "TIME_CONTROL_INVALID_RANGE",
+    (notification) => {
+        console.log("Transforming notification:", notification);
+        const root = Shopware.Application.getApplicationRoot()
 
-const httpClient = Shopware.Application.getContainer('init').httpClient;
-
-// httpClient.interceptors.response.use(
-//     (response) => response,
-//     (error: { response?: { status?: number; data?: { errors?: Array<{ detail?: string; code?: string }> } } }) => {
-//         const errors = error.response?.data?.errors;
-
-//         if (error.response?.status === 400 && Array.isArray(errors) && errors.length > 0) {
-//             hasHandledConstraintViolation = true;
-
-//             errors.forEach((singleError) => {
-//                 if (singleError.detail) {
-//                     Shopware.Store.get('notification').createNotification({
-//                         variant: 'error',
-//                         title: singleError.code ?? 'Validation error',
-//                         message: singleError.detail,
-//                     });
-//                 }
-//             });
-
-//             setTimeout(() => {
-//                 hasHandledConstraintViolation = false;
-//             }, 100);
-//         }
-
-//         return Promise.reject(error);
-//     },
-// );
-
-// Shopware.Store.get('notification').registerTransformer(
-//     'Request failed with status code 400',
-//     (notification) => {
-//         if (hasHandledConstraintViolation) {
-//             return { ...notification, variant: 'positive', growl: false };
-//         }
-
-//         return notification;
-//     },
-// );
+        return {
+            ...notification,
+            title: root.$t('blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.title'),
+            message: root.$t('blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.message'),
+        }
+    },
+);

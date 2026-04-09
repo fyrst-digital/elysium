@@ -20,6 +20,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\NotEqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\NotEqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\JsonUpdateCommand;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\UpdateCommand;
 use Shopware\Core\Framework\Feature;
 use Symfony\Component\Clock\ClockInterface;
@@ -42,7 +43,10 @@ class CmsSubscriber implements EventSubscriberInterface
     {
         return [
             CmsPageLoaderCriteriaEvent::class => 'cmsTimeControlFiltering',
-            EntityWriteEvent::class => 'requestSectionChangeSet',
+            EntityWriteEvent::class => [
+                ['requestSectionChangeSet', 0],
+                ['requestBlockChangeSet', 0],
+            ],
             EntityWrittenContainerEvent::class => [
                 ['onSectionWritten', 0],
                 ['scheduleCacheInvalidation', 0],
@@ -66,6 +70,20 @@ class CmsSubscriber implements EventSubscriberInterface
 
         foreach ($commands as $command) {
             if ($command instanceof UpdateCommand) {
+                $command->requestChangeSet();
+            }
+        }
+    }
+
+    public function requestBlockChangeSet(EntityWriteEvent $event): void
+    {
+        $commands = $event->getCommandsForEntity(CmsBlockDefinition::ENTITY_NAME);
+
+        foreach ($commands as $command) {
+            if ($command instanceof UpdateCommand) {
+                $command->requestChangeSet();
+            }
+            if ($command instanceof JsonUpdateCommand) {
                 $command->requestChangeSet();
             }
         }

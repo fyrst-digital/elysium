@@ -30,7 +30,7 @@ export default Component.wrapComponentConfig({
             const sectionId = this.cmsPage.selectedBlock.sectionId
             const section = this.cmsPage.currentPage?.sections?.find((s) => s.id === sectionId)
             return section.type === 'blur-elysium-section'
-        }
+        },
     },
 
     methods: {
@@ -43,6 +43,13 @@ export default Component.wrapComponentConfig({
                 this.cmsPage.setCurrentCmsDeviceView('desktop');
             }
         },
+
+        getAdvancedError(property: string) {
+            return Shopware.Store.get('error').getApiError(
+                this.cmsPage.selectedBlock,
+                `customFields.elysiumBlockAdvanced.${property}`,
+            )
+        }
     },
 
     watch: {

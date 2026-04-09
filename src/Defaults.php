@@ -39,6 +39,9 @@ final class Defaults
 
     public const CMS_BLOCK_ADVANCED_KEY = 'elysiumBlockAdvanced';
 
+    public const ERROR_CODE_NAME_FORMAT = '24c1a406-ed22-4e82-bda2-5bc2df52977f';
+    public const ERROR_CODE_TIME_CONTROL = '3e6eacf6-013c-48ab-a557-c218aa64aaa1';
+
     public const FEATURES = [
         'elysium_preview_elasticsearch' => [
             'description' => 'Enables Elasticsearch compatibility in the Admin',

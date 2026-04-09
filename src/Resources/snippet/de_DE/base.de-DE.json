@@ -16,16 +16,6 @@
         },
         "buttonLabel": "Mehr Erfahren",
         "buttonLabelProduct": "Zum Produkt",
-        "noSlides": "Keine Slides gefunden",
-        "violations": {
-            "SLIDE_NAME_INVALID_FORMAT": {
-                "title": "Ungültiges Zeichen im Namen",
-                "message": "Der \"Name\" enthält ungültige Zeichen. Nur Buchstaben, Zahlen, Leerzeichen und Bindestriche sind erlaubt. Der Name darf nicht mit Leerzeichen oder Bindestrichen beginnen oder enden."
-            },
-            "TIME_CONTROL_INVALID_RANGE": {
-                "title": "Ungültiger Zeitbereich",
-                "message": "Das Datum \"Aktiv ab\" muss vor dem Datum \"Aktiv bis\" liegen."
-            }
-        }
+        "noSlides": "Keine Slides gefunden"
     }
 }

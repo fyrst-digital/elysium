@@ -1,3 +1,5 @@
+import ShopwareError from "src/core/data/ShopwareError";
+
 const { Component } = Shopware;
 
 /**
@@ -23,14 +25,35 @@ export default Component.wrapComponentConfig({
                     return this.loadPage(this.page.id);
                 })
                 .catch((exception) => {
+                    const errors = exception.response?.data?.errors || [];
                     this.isLoading = false;
 
-                    this.createNotificationError({
-                        message: exception.message,
-                    });
+                    if (errors.length > 0) {
+                        this.gracefulErrorHandling(errors);
+                    } else {
+                        this.createNotificationError({
+                            message: exception.message,
+                        });
+                    }
+
 
                     return Promise.reject(exception);
                 });
+        },
+
+        gracefulErrorHandling(errors: ShopwareError[]) {
+
+            if (errors.length <= 0) {
+                return;
+            }
+
+            console.log("Handling errors gracefully:", errors);
+
+            errors.forEach(error => {
+                this.createNotificationError({
+                    message: error.code,
+                });
+            });
         },
     },
 });
