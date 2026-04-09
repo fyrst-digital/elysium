@@ -15,7 +15,6 @@ import '@elysium/component/cms/elements/blur-elysium-banner';
 // cms blocks
 import '@elysium/component/cms/blocks/blur-elysium-slider';
 import '@elysium/component/cms/blocks/blur-elysium-banner';
-import { title } from 'process';
 
 const { Locale, Application, Component, Store, Service } = Shopware;
 

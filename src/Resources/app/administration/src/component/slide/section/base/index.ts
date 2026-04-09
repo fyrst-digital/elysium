@@ -58,8 +58,7 @@ export default Component.wrapComponentConfig({
         },
 
         contentError() {
-            console.log(this.slideErrors?.hasOwnProperty('name'));
-            return Boolean(this.slideErrors?.hasOwnProperty('name')) || Boolean(this.slideErrors?.hasOwnProperty('activeFrom'));
+            return Object.hasOwn(this.slideErrors, 'name') || Object.hasOwn(this.slideErrors, 'activeFrom');
         }
     },
 });
