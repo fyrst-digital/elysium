@@ -124,7 +124,6 @@ useComponentRegister([
  * Override components
  */
 useComponentOverride([
-    // { name: 'sw-cms-detail', path: () => import('@elysium/extension/sw-cms-detail') },
     { name: 'sw-cms-section', path: () => import('@elysium/extension/sw-cms-section') },
     { name: 'sw-cms-sidebar', path: () => import('@elysium/extension/sw-cms-sidebar') },
     { name: 'sw-cms-stage-section-selection', path: () => import('@elysium/extension/sw-cms-stage-section-selection') },
@@ -138,16 +137,16 @@ Component.extend('elysium-cms-sidebar-navigation-item', 'sw-sidebar-navigation-i
 /**
  * Register notification transformer
  */
-Shopware.Store.get('notification').registerTransformer(
-    "TIME_CONTROL_INVALID_RANGE",
-    (notification) => {
-        console.log("Transforming notification:", notification);
-        const root = Shopware.Application.getApplicationRoot()
+// Shopware.Store.get('notification').registerTransformer(
+//     "TIME_CONTROL_INVALID_RANGE",
+//     (notification) => {
+//         console.log("Transforming notification:", notification);
+//         const root = Shopware.Application.getApplicationRoot()
 
-        return {
-            ...notification,
-            title: root.$t('blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.title'),
-            message: root.$t('blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.message'),
-        }
-    },
-);
+//         return {
+//             ...notification,
+//             title: root.$t('blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.title'),
+//             message: root.$t('blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.message'),
+//         }
+//     },
+// );
