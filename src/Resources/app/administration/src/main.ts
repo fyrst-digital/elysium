@@ -124,6 +124,7 @@ useComponentRegister([
  * Override components
  */
 useComponentOverride([
+    { name: 'sw-cms-detail', path: () => import('@elysium/extension/sw-cms-detail') },
     { name: 'sw-cms-section', path: () => import('@elysium/extension/sw-cms-section') },
     { name: 'sw-cms-sidebar', path: () => import('@elysium/extension/sw-cms-sidebar') },
     { name: 'sw-cms-stage-section-selection', path: () => import('@elysium/extension/sw-cms-stage-section-selection') },
