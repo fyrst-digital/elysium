@@ -1,4 +1,5 @@
 import template from './template.html.twig';
+import { hasProperty } from '@elysium/utils/has-property';
 
 const { Component, Mixin, Store } = Shopware;
 
@@ -58,7 +59,8 @@ export default Component.wrapComponentConfig({
         },
 
         contentError() {
-            return Object.hasOwn(this.slideErrors, 'name') || Object.hasOwn(this.slideErrors, 'activeFrom');
+            const errorFields = ['name', 'activeFrom'];
+            return errorFields.some(field => hasProperty(this.slideErrors, field));
         }
     },
 });

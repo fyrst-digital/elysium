@@ -130,11 +130,12 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             }
 
             $this->validateDates($activeFrom, $activeUntil, $violations, '/activeFrom');
+
+            if (\count($violations) > 0) {
+                $event->getExceptions()->add(new WriteConstraintViolationException($violations, $command->getPath()));
+            }
         }
 
-        if (\count($violations) > 0) {
-            $event->getExceptions()->add(new WriteConstraintViolationException($violations));
-        }
     }
 
     private function validateDates(
