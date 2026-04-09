@@ -124,7 +124,7 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             $activeUntil = $payload['active_until'] ?? null;
 
             if ($privilege === 'create') {
-                $this->validateDates($activeFrom, $activeUntil, $violations);
+                $this->validateDates($activeFrom, $activeUntil, $violations, '/activeFrom');
                 continue;
             }
 
@@ -134,7 +134,7 @@ class SlideValidationSubscriber implements EventSubscriberInterface
                 $activeUntil = array_key_exists('active_until', $payload) ? $activeUntil : ($existing['active_until'] ?? null);
             }
 
-            $this->validateDates($activeFrom, $activeUntil, $violations);
+            $this->validateDates($activeFrom, $activeUntil, $violations, '/activeFrom');
         }
 
         if (\count($violations) > 0) {
@@ -145,7 +145,8 @@ class SlideValidationSubscriber implements EventSubscriberInterface
     private function validateDates(
         ?string $activeFrom,
         ?string $activeUntil,
-        ConstraintViolationList $violations
+        ConstraintViolationList $violations,
+        string $propertyPath
     ): void {
         if ($activeFrom === null || $activeUntil === null) {
             return;
@@ -177,7 +178,7 @@ class SlideValidationSubscriber implements EventSubscriberInterface
                         ),
                     ],
                     null,
-                    '/activeFrom',
+                    $propertyPath,
                     $activeFrom,
                     null,
                     self::VIOLATION_CODE_TIME_CONTROL
@@ -247,8 +248,12 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             $activeFrom = $payloadSettings['activeFrom'] ?? null;
             $activeUntil = $payloadSettings['activeUntil'] ?? null;
 
+            $basePath = \array_key_exists('custom_fields', $payload)
+                ? '/customFields/' . $settingsKey
+                : '/' . $settingsKey;
+
             if ($privilege === 'create') {
-                $this->validateDates($activeFrom, $activeUntil, $violations);
+                $this->validateDates($activeFrom, $activeUntil, $violations, $basePath . '/activeFrom');
                 continue;
             }
 
@@ -267,7 +272,7 @@ class SlideValidationSubscriber implements EventSubscriberInterface
                 }
             }
 
-            $this->validateDates($activeFrom, $activeUntil, $violations);
+            $this->validateDates($activeFrom, $activeUntil, $violations, $basePath . '/activeFrom');
         }
 
         if (\count($violations) > 0) {
@@ -313,8 +318,12 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             $activeFrom = $payloadSettings['activeFrom'] ?? null;
             $activeUntil = $payloadSettings['activeUntil'] ?? null;
 
+            $basePath = \array_key_exists('custom_fields', $payload)
+                ? '/customFields/' . $settingsKey
+                : '/' . $settingsKey;
+
             if ($privilege === 'create') {
-                $this->validateDates($activeFrom, $activeUntil, $violations);
+                $this->validateDates($activeFrom, $activeUntil, $violations, $basePath . '/activeFrom');
                 continue;
             }
 
@@ -333,7 +342,7 @@ class SlideValidationSubscriber implements EventSubscriberInterface
                 }
             }
 
-            $this->validateDates($activeFrom, $activeUntil, $violations);
+            $this->validateDates($activeFrom, $activeUntil, $violations, $basePath . '/activeFrom');
         }
 
         if (\count($violations) > 0) {

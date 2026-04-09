@@ -551,7 +551,7 @@ class SlideValidationSubscriberTest extends TestCase
 
         $this->subscriber->validateCmsSectionTimeControl($event);
 
-        $this->assertViolationThrown($event, $activeFrom);
+        $this->assertViolationThrown($event, $activeFrom, '/customFields/' . Defaults::CMS_SECTION_SETTINGS_KEY . '/activeFrom');
     }
 
     public function testCmsSectionAllowsOnlyActiveFrom(): void
@@ -654,7 +654,7 @@ class SlideValidationSubscriberTest extends TestCase
 
         $this->subscriber->validateCmsSectionTimeControl($event);
 
-        $this->assertViolationThrown($event, '2025-12-31 23:59:59');
+        $this->assertViolationThrown($event, '2025-12-31 23:59:59', '/' . Defaults::CMS_SECTION_SETTINGS_KEY . '/activeFrom');
     }
 
     public function testCmsSectionUpdateSkipsWhenNoSettingsKey(): void
@@ -754,7 +754,7 @@ class SlideValidationSubscriberTest extends TestCase
 
         $this->subscriber->validateCmsBlockTimeControl($event);
 
-        $this->assertViolationThrown($event, '2025-12-31 23:59:59');
+        $this->assertViolationThrown($event, '2025-12-31 23:59:59', '/customFields/' . Defaults::CMS_BLOCK_ADVANCED_KEY . '/activeFrom');
     }
 
     public function testCmsBlockAllowsOnlyActiveFrom(): void
@@ -857,7 +857,7 @@ class SlideValidationSubscriberTest extends TestCase
 
         $this->subscriber->validateCmsBlockTimeControl($event);
 
-        $this->assertViolationThrown($event, '2025-12-31 23:59:59');
+        $this->assertViolationThrown($event, '2025-12-31 23:59:59', '/' . Defaults::CMS_BLOCK_ADVANCED_KEY . '/activeFrom');
     }
 
     public function testCmsBlockFeatureFlagDisabledSkipsValidation(): void
@@ -909,7 +909,7 @@ class SlideValidationSubscriberTest extends TestCase
         return new PreWriteValidationEvent($writeContext, $commands);
     }
 
-    private function assertViolationThrown(PreWriteValidationEvent $event, string $expectedInvalidValue): void
+    private function assertViolationThrown(PreWriteValidationEvent $event, string $expectedInvalidValue, string $expectedPropertyPath = '/activeFrom'): void
     {
         $exceptions = $event->getExceptions()->getExceptions();
         static::assertCount(1, $exceptions);
@@ -921,7 +921,7 @@ class SlideValidationSubscriberTest extends TestCase
         static::assertCount(1, $violations);
 
         $violation = $violations[0];
-        static::assertSame('/activeFrom', $violation->getPropertyPath());
+        static::assertSame($expectedPropertyPath, $violation->getPropertyPath());
         static::assertSame('TIME_CONTROL_INVALID_RANGE', $violation->getCode());
         static::assertSame($expectedInvalidValue, $violation->getInvalidValue());
     }
