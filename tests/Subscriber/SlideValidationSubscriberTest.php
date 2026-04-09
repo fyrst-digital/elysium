@@ -17,7 +17,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Write\WriteContext;
 use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
 use Shopware\Core\Framework\Uuid\Uuid;
-use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 class SlideValidationSubscriberTest extends TestCase
 {
@@ -32,18 +32,7 @@ class SlideValidationSubscriberTest extends TestCase
         ]);
 
         $this->connection = $this->createMock(Connection::class);
-        $translator = $this->createMock(TranslatorInterface::class);
-        $translator->method('trans')
-            ->willReturnCallback(function (string $key) {
-                return match ($key) {
-                    'blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.message' => 'The "activeFrom" date must be before the "activeUntil" date.',
-                    'blurElysiumSlides.violations.SLIDE_NAME_INVALID_FORMAT.message' => 'The slide name contains invalid characters.',
-                    'blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.title' => 'Invalid time range',
-                    'blurElysiumSlides.violations.SLIDE_NAME_INVALID_FORMAT.title' => 'Invalid name format',
-                    default => $key,
-                };
-            });
-        $this->subscriber = new SlideValidationSubscriber($this->connection, $translator);
+        $this->subscriber = new SlideValidationSubscriber($this->connection);
     }
 
     protected function tearDown(): void

@@ -17,7 +17,7 @@ use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 class SlideValidationSubscriber implements EventSubscriberInterface
 {    private const NAME_PATTERN = '/^[A-Za-z0-9][A-Za-z0-9\s-]*[A-Za-z0-9]$|^[A-Za-z0-9]$/';
@@ -28,11 +28,7 @@ class SlideValidationSubscriber implements EventSubscriberInterface
     ];
 
     public function __construct(
-        private readonly Connection $connection,
-        /**
-         * @todo Remove translator dependency
-         */
-        private readonly TranslatorInterface $translator
+        private readonly Connection $connection
     ) {}
 
     public static function getSubscribedEvents(): array
