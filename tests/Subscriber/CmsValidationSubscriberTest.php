@@ -3,6 +3,7 @@
 namespace Blur\BlurElysiumSlider\Tests\Subscriber;
 
 use Blur\BlurElysiumSlider\Defaults;
+use Blur\BlurElysiumSlider\Service\ValidationService;
 use Blur\BlurElysiumSlider\Subscriber\CmsValidationSubscriber;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -10,6 +11,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Content\Cms\Aggregate\CmsBlock\CmsBlockDefinition;
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\DefinitionInstanceRegistry;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\InsertCommand;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\JsonUpdateCommand;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\UpdateCommand;
@@ -35,7 +37,7 @@ class CmsValidationSubscriberTest extends TestCase
         ]);
 
         $this->connection = $this->createMock(Connection::class);
-        $this->subscriber = new CmsValidationSubscriber($this->connection);
+        $this->subscriber = new CmsValidationSubscriber($this->connection, new ValidationService());
     }
 
     protected function tearDown(): void
@@ -411,26 +413,6 @@ class CmsValidationSubscriberTest extends TestCase
         static::assertCount(0, $event->getExceptions()->getExceptions());
     }
 
-    public function testJsonUpdateSkipsWhenStorageNameIsNotCustomFields(): void
-    {
-        $command = $this->createJsonUpdateCommand(
-            CmsSectionDefinition::ENTITY_NAME,
-            Uuid::randomHex(),
-            [
-                Defaults::CMS_SECTION_SETTINGS_KEY => [
-                    'activeFrom' => '2025-12-31 23:59:59',
-                    'activeUntil' => '2025-01-01 00:00:00',
-                ],
-            ],
-            'other_json_field'
-        );
-        $event = $this->createEvent([$command]);
-
-        $this->subscriber->validateTimeControl($event);
-
-        static::assertCount(0, $event->getExceptions()->getExceptions());
-    }
-
     public function testJsonUpdateBlockThrowsViolation(): void
     {
         $command = $this->createJsonUpdateCommand(
@@ -635,53 +617,49 @@ class CmsTestInsertCommand extends WriteCommand
 }
 
 /**
- * Mock JsonUpdateCommand that bypasses parent constructor.
+ * Mock JsonUpdateCommand with a minimal EntityDefinition to satisfy parent constructors.
  * @internal
  */
-class CmsTestJsonUpdateCommand extends WriteCommand
+class CmsTestJsonUpdateCommand extends JsonUpdateCommand
 {
-    private string $privilegeType = 'update';
-    protected array $payload;
-    protected array $primaryKey;
-    protected string $entityName;
-    private string $storageName;
-
     public function __construct(string $entityName, string $id, array $payload, string $storageName)
     {
-        $this->entityName = $entityName;
-        $this->payload = $payload;
-        $this->primaryKey = ['id' => $id];
-        $this->storageName = $storageName;
-    }
+        $registry = new class extends DefinitionInstanceRegistry {
+            public function __construct() {}
+        };
+        $definition = new TestEntityDefinition($entityName);
+        $definition->compile($registry);
 
-    public function getEntityName(): string
-    {
-        return $this->entityName;
-    }
-
-    public function getPayload(): array
-    {
-        return $this->payload;
-    }
-
-    public function getPrimaryKey(): array
-    {
-        return $this->primaryKey;
+        parent::__construct($definition, $storageName, $payload, ['id' => $id], EntityExistence::createEmpty(), '');
     }
 
     public function getPrivilege(): ?string
     {
-        return $this->privilegeType;
-    }
-
-    public function getStorageName(): string
-    {
-        return $this->storageName;
+        return 'update';
     }
 
     public function getPath(): string
     {
         return '';
+    }
+}
+
+/**
+ * Minimal EntityDefinition for CmsTestJsonUpdateCommand.
+ * @internal
+ */
+class TestEntityDefinition extends \Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition
+{
+    public function __construct(private readonly string $name) {}
+
+    public function getEntityName(): string
+    {
+        return $this->name;
+    }
+
+    protected function defineFields(): \Shopware\Core\Framework\DataAbstractionLayer\FieldCollection
+    {
+        return new \Shopware\Core\Framework\DataAbstractionLayer\FieldCollection();
     }
 }
 

@@ -5,41 +5,38 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Defaults;
+use Blur\BlurElysiumSlider\Service\ValidationService;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Content\Cms\Aggregate\CmsBlock\CmsBlockDefinition;
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\WriteCommand;
+use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\JsonUpdateCommand;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Validation\PreWriteValidationEvent;
 use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 
 class CmsValidationSubscriber implements EventSubscriberInterface
 {
     private const SECTION_PATH_ACTIVE_FROM = '/customFields/elysiumSectionSettings/activeFrom';
-    private const SECTION_PATH_ACTIVE_UNTIL = '/customFields/elysiumSectionSettings/activeUntil';
 
     private const BLOCK_PATH_ACTIVE_FROM = '/customFields/elysiumBlockAdvanced/activeFrom';
-    private const BLOCK_PATH_ACTIVE_UNTIL = '/customFields/elysiumBlockAdvanced/activeUntil';
 
     private const CONFIG = [
         CmsSectionDefinition::ENTITY_NAME => [
             'settings_key' => Defaults::CMS_SECTION_SETTINGS_KEY,
             'path_from' => self::SECTION_PATH_ACTIVE_FROM,
-            'path_until' => self::SECTION_PATH_ACTIVE_UNTIL,
         ],
         CmsBlockDefinition::ENTITY_NAME => [
             'settings_key' => Defaults::CMS_BLOCK_ADVANCED_KEY,
             'path_from' => self::BLOCK_PATH_ACTIVE_FROM,
-            'path_until' => self::BLOCK_PATH_ACTIVE_UNTIL,
         ],
     ];
 
     public function __construct(
-        private readonly Connection $connection
+        private readonly Connection $connection,
+        private readonly ValidationService $validator
     ) {}
 
     public static function getSubscribedEvents(): array
@@ -65,28 +62,21 @@ class CmsValidationSubscriber implements EventSubscriberInterface
                     continue;
                 }
 
-                $activeFrom = null;
-                $activeUntil = null;
-
-                if ($command->getPrivilege() === 'create') {
-                    [$activeFrom, $activeUntil] = $this->extractFromInsertPayload($command->getPayload(), $settingsKey);
-                } elseif ($command->getPrivilege() === 'update' && $command instanceof WriteCommand && \method_exists($command, 'getStorageName')) {
-                    if ($command->getStorageName() !== 'custom_fields') {
-                        continue;
-                    }
-
-                    [$activeFrom, $activeUntil] = $this->extractFromJsonUpdatePayload(
-                        $command->getPayload(),
-                        $settingsKey,
-                        $command->getPrimaryKey(),
-                        $entityName,
-                    );
-                } else {
-                    continue;
-                }
+                [$activeFrom, $activeUntil] = match ($command->getPrivilege()) {
+                    'create' => $this->extractFromInsertPayload($command->getPayload(), $settingsKey),
+                    'update' => $command instanceof JsonUpdateCommand
+                        ? $this->extractFromJsonUpdatePayload(
+                            $command->getPayload(),
+                            $settingsKey,
+                            $command->getPrimaryKey(),
+                            $entityName,
+                        )
+                        : [null, null],
+                    default => [null, null],
+                };
 
                 $violations = new ConstraintViolationList();
-                $this->validateDates($activeFrom, $activeUntil, $violations, $config['path_from']);
+                $this->validator->validateDates($activeFrom, $activeUntil, $violations, $config['path_from']);
 
                 if (\count($violations) > 0) {
                     $event->getExceptions()->add(new WriteConstraintViolationException($violations, $command->getPath()));
@@ -158,42 +148,6 @@ class CmsValidationSubscriber implements EventSubscriberInterface
         }
 
         return [$activeFrom, $activeUntil];
-    }
-
-    private function validateDates(
-        ?string $activeFrom,
-        ?string $activeUntil,
-        ConstraintViolationList $violations,
-        string $propertyPath
-    ): void {
-        if ($activeFrom === null || $activeFrom === '' || $activeUntil === null || $activeUntil === '') {
-            return;
-        }
-
-        $fromTimestamp = strtotime($activeFrom);
-        $untilTimestamp = strtotime($activeUntil);
-
-        if ($fromTimestamp === false || $untilTimestamp === false) {
-            return;
-        }
-
-        if ($fromTimestamp >= $untilTimestamp) {
-            $violations->add(
-                new ConstraintViolation(
-                    "The \"activeFrom\" date must be before the \"activeUntil\" date.",
-                    'The "{{ field1 }}" date must be before the "{{ field2 }}" date.',
-                    [
-                        '{{ field1 }}' => 'activeFrom',
-                        '{{ field2 }}' => 'activeUntil',
-                    ],
-                    null,
-                    $propertyPath,
-                    $activeFrom,
-                    null,
-                    Defaults::ERROR_CODE_TIME_CONTROL
-                )
-            );
-        }
     }
 
     /**

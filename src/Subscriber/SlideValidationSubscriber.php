@@ -7,10 +7,9 @@ namespace Blur\BlurElysiumSlider\Subscriber;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Defaults;
+use Blur\BlurElysiumSlider\Service\ValidationService;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
-use Shopware\Core\Content\Cms\Aggregate\CmsBlock\CmsBlockDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\JsonUpdateCommand;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Validation\PreWriteValidationEvent;
 use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
@@ -24,7 +23,8 @@ class SlideValidationSubscriber implements EventSubscriberInterface
     private const NAME_PATTERN = '/^[A-Za-z0-9][A-Za-z0-9\s-]*[A-Za-z0-9]$|^[A-Za-z0-9]$/';
 
     public function __construct(
-        private readonly Connection $connection
+        private readonly Connection $connection,
+        private readonly ValidationService $validator
     ) {}
 
     public static function getSubscribedEvents(): array
@@ -113,7 +113,7 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             $activeUntil = $payload['active_until'] ?? null;
 
             if ($privilege === 'create') {
-                $this->validateDates($activeFrom, $activeUntil, $violations, '/activeFrom');
+                $this->validator->validateDates($activeFrom, $activeUntil, $violations, '/activeFrom');
                 continue;
             }
 
@@ -123,49 +123,13 @@ class SlideValidationSubscriber implements EventSubscriberInterface
                 $activeUntil = array_key_exists('active_until', $payload) ? $activeUntil : ($existing['active_until'] ?? null);
             }
 
-            $this->validateDates($activeFrom, $activeUntil, $violations, '/activeFrom');
+            $this->validator->validateDates($activeFrom, $activeUntil, $violations, '/activeFrom');
 
             if (\count($violations) > 0) {
                 $event->getExceptions()->add(new WriteConstraintViolationException($violations, $command->getPath()));
             }
         }
 
-    }
-
-    private function validateDates(
-        ?string $activeFrom,
-        ?string $activeUntil,
-        ConstraintViolationList $violations,
-        string $propertyPath
-    ): void {
-        if ($activeFrom === null || $activeUntil === null) {
-            return;
-        }
-
-        $fromTimestamp = strtotime($activeFrom);
-        $untilTimestamp = strtotime($activeUntil);
-
-        if ($fromTimestamp === false || $untilTimestamp === false) {
-            return;
-        }
-
-        if ($fromTimestamp >= $untilTimestamp) {
-            $violations->add(
-                new ConstraintViolation(
-                    "The \"activeFrom\" date must be before the \"activeUntil\" date.",
-                    'The "{{ field1 }}" date must be before the "{{ field2 }}" date.',
-                    [
-                        '{{ field1 }}' => 'activeFrom',
-                        '{{ field2 }}' => 'activeUntil',
-                    ],
-                    null,
-                    $propertyPath,
-                    $activeFrom,
-                    null,
-                    Defaults::ERROR_CODE_TIME_CONTROL
-                )
-            );
-        }
     }
 
     private function fetchExistingValuesBulk(array $ids): array
