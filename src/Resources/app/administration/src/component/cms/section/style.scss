@@ -68,6 +68,15 @@
     margin-left: auto;
     margin-right: auto;
     position: relative;
+    outline-width: 2px;
+    outline-style: solid;
+    outline-offset: -2px;
+    outline-color: var(--section-outline-color, transparent);
+
+    &.has-error {
+        background-color: rgb(from var(--color-interaction-critical-default) r g b / 10%);
+        --section-outline-color: var(--color-interaction-critical-default);
+    }
 }
 
 .sw-cms-section.is--blur-elysium-section {
