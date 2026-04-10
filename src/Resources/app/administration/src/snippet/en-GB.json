@@ -186,7 +186,8 @@
             "slideSaveErrorTitle": "Something went wrong",
             "slideSaveError": "The Slide couldn't be saved",
             "productLinkingMissingEntity": "Please select a product you would like to link",
-            "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten."
+            "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten.",
+            "copyErrorUnsavedChanges": "Please save your changes before copying a slide."
         },
         "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
         "actions": {

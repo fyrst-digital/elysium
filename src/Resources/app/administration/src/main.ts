@@ -135,18 +135,38 @@ useComponentOverride([
 Component.extend('elysium-cms-sidebar-navigation-item', 'sw-sidebar-navigation-item', () => import('@elysium/extension/sidebar-navigation-item'));
 
 /**
- * Register notification transformer
+ * Register notification transformers for Elysium validation error codes.
+ * Transform notifications whose message matches a known error code snippet key.
  */
-// Shopware.Store.get('notification').registerTransformer(
-//     "TIME_CONTROL_INVALID_RANGE",
-//     (notification) => {
-//         console.log("Transforming notification:", notification);
-//         const root = Shopware.Application.getApplicationRoot()
+// const errorCodes = [
+//     '24c1a406-ed22-4e82-bda2-5bc2df52977f',
+//     '3e6eacf6-013c-48ab-a557-c218aa64aaa1',
+// ];
 
+// errorCodes.forEach((code) => {
+//     const messageKey = `global.error-codes.${code}`;
+//     const translatedMessage = Shopware.Application.getApplicationRoot()?.$t(messageKey);
+
+//     if (translatedMessage && translatedMessage !== messageKey) {
+//         Store.get('notification').registerTransformer(
+//             translatedMessage,
+//             (notification) => ({
+//                 ...notification,
+//                 title: notification.title ?? Shopware.Application.getApplicationRoot()?.$t('blurElysiumSlides.messages.slideSaveErrorTitle'),
+//                 message: translatedMessage,
+//             }),
+//         );
+//     }
+// });
+
+// Store.get('notification').registerTransformer(
+//     'Request failed with status code 400',
+//     (notification) => {
+//         console.log(notification)
 //         return {
 //             ...notification,
-//             title: root.$t('blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.title'),
-//             message: root.$t('blurElysiumSlides.violations.TIME_CONTROL_INVALID_RANGE.message'),
+//             title: notification.title ?? Shopware.Application.getApplicationRoot()?.$t('blurElysiumSlides.messages.slideSaveErrorTitle'),
+//             message: translatedMessage,
 //         }
-//     },
+//     }
 // );
