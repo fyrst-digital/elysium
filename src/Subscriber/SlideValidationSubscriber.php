@@ -40,9 +40,9 @@ class SlideValidationSubscriber implements EventSubscriberInterface
 
     public function validateSlideName(PreWriteValidationEvent $event): void
     {
-        $violations = new ConstraintViolationList();
-
         foreach ($event->getCommands() as $command) {
+            $violations = new ConstraintViolationList();
+
             if ($command->getEntityName() !== ElysiumSlidesTranslationDefinition::ENTITY_NAME) {
                 continue;
             }
@@ -88,13 +88,13 @@ class SlideValidationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $violations = new ConstraintViolationList();
-
         $primaryKeys = $event->getPrimaryKeys(ElysiumSlidesDefinition::ENTITY_NAME);
         $ids = array_column($primaryKeys, 'id');
         $existingSlidesData = empty($ids) ? [] : $this->fetchExistingValuesBulk($ids);
 
         foreach ($event->getCommands() as $command) {
+            $violations = new ConstraintViolationList();
+
             $entityName = $command->getEntityName();
             if ($entityName !== ElysiumSlidesDefinition::ENTITY_NAME) {
                 continue;
