@@ -2,9 +2,8 @@ import { defaultSlideSettings, defaultContentSettings } from '@elysium/component
 import template from './template.html.twig';
 import { ElysiumSlide, SlideError } from '@elysium/types/slide';
 
-const { Component, Context, Mixin, Data, Utils, Store , Classes } = Shopware;
+const { Component, Context, Mixin, Data, Utils, Store } = Shopware;
 const { Criteria } = Data;
-const { ShopwareError } = Classes;
 
 export default Component.wrapComponentConfig({
     template,
@@ -348,35 +347,6 @@ export default Component.wrapComponentConfig({
 
         hasSlideName(name: string | undefined | null): boolean {
             return Boolean(name)
-        },
-
-        sendError(error: SlideError, sendNotification = true) {
-            this.sendApiError(error)
-            if (sendNotification) {
-                this.sendNotificationError(
-                    this.$t(`blurElysiumSlides.violations.${error.code}.title`),
-                    this.$t(`blurElysiumSlides.violations.${error.code}.message`)
-                )
-            }
-        },
-
-        sendNotificationError(title: string, message: string) {
-            this.createNotificationError({
-                title,
-                message,
-            });
-        },
-
-        sendApiError(error: SlideError) {
-            const property = error.source.pointer.replace(/^\/|\/+$/g, '').replace(/\/+/g, '.')
-            this.error.addApiError({
-                expression: `blur_elysium_slides.${this.slide.id}.${property}`,
-                error: new ShopwareError({
-                    code: error.code,
-                    detail: this.$t(`blurElysiumSlides.violations.${error.code}.message`),
-                    meta: error.meta,
-                })
-            });
         },
 
         cancelAction() {

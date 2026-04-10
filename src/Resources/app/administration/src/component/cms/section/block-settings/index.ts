@@ -45,11 +45,16 @@ export default Component.wrapComponentConfig({
         },
 
         getAdvancedError(property: string) {
+            const block = this.cmsPage.selectedBlock;
+            if (!block) {
+                return null;
+            }
+
             return Shopware.Store.get('error').getApiError(
-                this.cmsPage.selectedBlock,
+                block,
                 `customFields.elysiumBlockAdvanced.${property}`,
-            )
-        }
+            );
+        },
     },
 
     watch: {

@@ -7,6 +7,19 @@
     }
 }
 
+/** CMS block **/
+.cms-block-elysium {
+    border-radius: 5px;
+    outline-width: 2px;
+    outline-style: solid;
+    outline-offset: 3px;
+    outline-color: var(--block-outline-color, transparent);
+    
+    &.has-error {
+        --block-outline-color: var(--color-interaction-critical-default);
+    }
+}
+
 /** Common input styles */
 .blur-text-input,
 .blur-number-input,

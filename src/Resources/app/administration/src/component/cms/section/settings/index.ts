@@ -53,6 +53,20 @@ export default Component.wrapComponentConfig({
                 this.cmsPage.setCurrentCmsDeviceView('desktop');
             }
         },
+
+        getSettingsError(property: string) {
+            const section = this.cmsPage.currentPage?.sections?.find(
+                (s) => s.id === this.cmsPage.selectedSection?.id
+            );
+            if (!section) {
+                return null;
+            }
+
+            return Shopware.Store.get('error').getApiError(
+                section,
+                `customFields.elysiumSectionSettings.${property}`,
+            );
+        },
     },
 
     created() {

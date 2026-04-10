@@ -62,6 +62,21 @@ export default Component.wrapComponentConfig({
             return this.cmsPage.currentCmsDeviceView;
         },
 
+        sectionErrors() {
+            return Store.get('error').getErrorsForEntity(
+                'cms_section',
+                this.section.id
+            );
+        },
+
+        sectionClassess() {
+            const classes = {
+                'blur-elysium-cms-section-wrapper': true,
+                'has-error': Boolean(this.sectionErrors)
+            }
+            return classes
+        },
+
         gridStyle() {
             const gridStyle: Partial<CSSStyleDeclaration> = {
                 display: 'grid',

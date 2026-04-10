@@ -186,7 +186,8 @@
             "slideSaveErrorTitle": "Etwas ist schief gelaufen",
             "slideSaveError": " Der Slide konnte nicht gespeichert werden",
             "productLinkingMissingEntity": "Bitte wähle ein Produkt welches du verknüpfen möchtest",
-            "customTemplateFileDefinedNotice": "Du hast eine eigene Template Datei festgelegt. Einige Einstellungen könnten überschrieben werden."
+            "customTemplateFileDefinedNotice": "Du hast eine eigene Template Datei festgelegt. Einige Einstellungen könnten überschrieben werden.",
+            "copyErrorUnsavedChanges": "Bitte speichere deine Änderungen, bevor du eine Folie kopierst."
         },
         "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
         "actions": {

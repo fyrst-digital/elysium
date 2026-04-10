@@ -68,8 +68,17 @@
 
     <service id="Blur\BlurElysiumSlider\Subscriber\SlideValidationSubscriber">
       <argument type="service" id="Doctrine\DBAL\Connection"/>
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\ValidationService"/>
       <tag name="kernel.event_subscriber"/>
     </service>
+
+    <service id="Blur\BlurElysiumSlider\Subscriber\CmsValidationSubscriber">
+      <argument type="service" id="Doctrine\DBAL\Connection"/>
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\ValidationService"/>
+      <tag name="kernel.event_subscriber"/>
+    </service>
+
+    <service id="Blur\BlurElysiumSlider\Service\ValidationService"/>
 
     <service id="Blur\BlurElysiumSlider\MessageHandler\TimeControlCacheInvalidationHandler">
       <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheInvalidator"/>

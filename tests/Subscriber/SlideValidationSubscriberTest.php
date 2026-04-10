@@ -5,6 +5,7 @@ namespace Blur\BlurElysiumSlider\Tests\Subscriber;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Defaults;
+use Blur\BlurElysiumSlider\Service\ValidationService;
 use Blur\BlurElysiumSlider\Subscriber\SlideValidationSubscriber;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -32,7 +33,7 @@ class SlideValidationSubscriberTest extends TestCase
         ]);
 
         $this->connection = $this->createMock(Connection::class);
-        $this->subscriber = new SlideValidationSubscriber($this->connection);
+        $this->subscriber = new SlideValidationSubscriber($this->connection, new ValidationService());
     }
 
     protected function tearDown(): void

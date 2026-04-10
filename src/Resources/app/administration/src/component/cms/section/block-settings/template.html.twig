@@ -51,6 +51,7 @@
       :placeholder="$tc('blurElysium.general.timeControl.activeFrom.placeholder')"
       :tooltip="$tc('blurElysiumSection.sidebar.blockSettings.timeControl.activeFrom.helpText')"
       :model-value="advanced.activeFrom"
+      :error="getAdvancedError('activeFrom')"
       @update:model-value="advanced.activeFrom = $event"
     />
   </py-column>
@@ -60,6 +61,7 @@
       :placeholder="$tc('blurElysium.general.timeControl.activeUntil.placeholder')"
       :tooltip="$tc('blurElysiumSection.sidebar.blockSettings.timeControl.activeUntil.helpText')"
       :model-value="advanced.activeUntil"
+      :error="getAdvancedError('activeUntil')"
       @update:model-value="advanced.activeUntil = $event"
     />
   </py-column>
