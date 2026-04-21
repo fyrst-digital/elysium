@@ -2,6 +2,10 @@
 
 Shopware 6.7 plugin. Version 4.6.x.
 
+## Working with github
+- On any github related prompts, **always use this repository as reference**. And **always use the GitHub CLI (gh)**. If the GiotHub CLI should not be installed, give the user according feedback.
+
+
 ## Commands
 
 ```bash
