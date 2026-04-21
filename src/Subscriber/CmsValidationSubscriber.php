@@ -6,8 +6,8 @@ namespace Blur\BlurElysiumSlider\Subscriber;
 
 use Blur\BlurElysiumSlider\Defaults;
 use Blur\BlurElysiumSlider\Service\ValidationService;
-use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
 use Shopware\Core\Content\Cms\Aggregate\CmsBlock\CmsBlockDefinition;
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\JsonUpdateCommand;
@@ -158,7 +158,7 @@ class CmsValidationSubscriber implements EventSubscriberInterface
         $result = $this->connection->fetchAssociative(
             \sprintf('SELECT custom_fields FROM %s WHERE id = :id', $entityName),
             ['id' => $id],
-            ['id' => ArrayParameterType::BINARY]
+            ['id' => ParameterType::BINARY]
         );
 
         if (!$result) {
