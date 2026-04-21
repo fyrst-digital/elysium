@@ -8,6 +8,7 @@ use Blur\BlurElysiumSlider\Defaults;
 use Blur\BlurElysiumSlider\Service\CacheInvalidationScheduler;
 use Shopware\Core\Content\Cms\Aggregate\CmsBlock\CmsBlockDefinition;
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
+use Shopware\Core\Content\Cms\CmsPageDefinition;
 use Shopware\Core\Content\Cms\Events\CmsPageLoaderCriteriaEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
@@ -48,7 +49,7 @@ class CmsSubscriber implements EventSubscriberInterface
                 ['requestBlockChangeSet', 0],
             ],
             EntityWrittenContainerEvent::class => [
-                ['onSectionWritten', 0],
+                ['initSectionSettings', 0],
                 ['scheduleCacheInvalidation', 0],
             ],
         ];
@@ -89,7 +90,7 @@ class CmsSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function onSectionWritten(EntityWrittenContainerEvent $event): void
+    public function initSectionSettings(EntityWrittenContainerEvent $event): void
     {
         /** @var ?EntityWrittenEvent $events */
         $events = $event->getEventByEntityName(CmsSectionDefinition::ENTITY_NAME);
@@ -127,29 +128,61 @@ class CmsSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->scheduleForEntityType($event, CmsSectionDefinition::ENTITY_NAME, function (EntityWriteResult $writeResult): bool {
-            return $writeResult->getChangeSet()?->getBefore('type') === Defaults::CMS_SECTION_NAME;
-        });
-
-        $this->scheduleForEntityType($event, CmsBlockDefinition::ENTITY_NAME, function (EntityWriteResult $writeResult): bool {
-            return \in_array($writeResult->getChangeSet()?->getBefore('type'), self::ELYSIUM_BLOCK_TYPES, true);
-        });
+        // handle cms sections first to get the affected page ids, then handle blocks with the page ids from the sections
+        $pageIds = $this->handleCmsSection($event->getEventByEntityName(CmsSectionDefinition::ENTITY_NAME));
+        $this->handleCmsBlock($event->getEventByEntityName(CmsBlockDefinition::ENTITY_NAME), $pageIds);
     }
 
-    private function scheduleForEntityType(EntityWrittenContainerEvent $event, string $entityName, callable $filter): void
+    private function handleCmsSection(?EntityWrittenEvent $cmsSectionWrittenEvent): array
     {
-        $entityEvent = $event->getEventByEntityName($entityName);
+        $pageIds = [];
 
-        if (!$entityEvent instanceof EntityWrittenEvent) {
-            return;
+        if (!$cmsSectionWrittenEvent instanceof EntityWrittenEvent) {
+            return $pageIds;
         }
 
-        foreach ($entityEvent->getWriteResults() as $writeResult) {
-            if (!$filter($writeResult)) {
+        foreach ($cmsSectionWrittenEvent->getWriteResults() as $writeResult) {
+            $changeSet = $writeResult->getChangeSet();
+            $payload = $writeResult->getPayload();
+            $entityName = $writeResult->getEntityName();
+
+            if ($changeSet === null || $changeSet->getBefore('type') !== Defaults::CMS_SECTION_NAME) {
                 continue;
             }
 
-            $this->scheduler->schedule($writeResult, $entityName);
+            if (isset($payload['pageId'])) {
+                $pageIds[] = $payload['pageId'];
+            }
+
+            $this->scheduler->schedule(
+                $payload, 
+                $entityName, 
+                isset($payload['pageId']) ? [$payload['pageId']] : []
+            );
+        }
+        return $pageIds;
+    }
+
+    private function handleCmsBlock(?EntityWrittenEvent $cmsBlockWrittenEvent, array $pageIds): void
+    {
+        if (!$cmsBlockWrittenEvent instanceof EntityWrittenEvent) {
+            return;
+        }
+
+        foreach ($cmsBlockWrittenEvent->getWriteResults() as $writeResult) {
+            $changeSet = $writeResult->getChangeSet();
+            $payload = $writeResult->getPayload();
+            $entityName = $writeResult->getEntityName();
+
+            if ($changeSet === null || !in_array($changeSet->getBefore('type'), ['blur-elysium-slider', 'blur-elysium-block'])) {
+                continue;
+            }
+
+            $this->scheduler->schedule(
+                $payload, 
+                $entityName, 
+                $pageIds
+            );
         }
     }
 

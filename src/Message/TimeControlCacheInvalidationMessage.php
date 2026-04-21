@@ -9,14 +9,14 @@ use Shopware\Core\Framework\MessageQueue\AsyncMessageInterface;
 class TimeControlCacheInvalidationMessage implements AsyncMessageInterface
 {
     public function __construct(
-        private readonly string $entityId,
+        private readonly array $entityIds,
         private readonly string $entityName,
         private readonly \DateTimeInterface $invalidationTime
     ) {}
 
-    public function getEntityId(): string
+    public function getEntityIds(): array
     {
-        return $this->entityId;
+        return $this->entityIds;
     }
 
     public function getEntityName(): string

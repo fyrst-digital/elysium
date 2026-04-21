@@ -9,7 +9,6 @@ use Blur\BlurElysiumSlider\Service\CacheInvalidationScheduler;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Content\Cms\Aggregate\CmsSection\CmsSectionDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityWriteResult;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Symfony\Component\Clock\MockClock;
 use Symfony\Component\Messenger\Envelope;
@@ -62,23 +61,12 @@ class CacheInvalidationSchedulerTest extends TestCase
     }
 
     // =====================================================
-    // Null / Invalid ID Tests
+    // Empty IDs Tests
     // =====================================================
 
-    public function testScheduleReturnsEarlyWhenIdIsNull(): void
+    public function testScheduleReturnsEarlyWhenIdsAreEmpty(): void
     {
-        $writeResult = $this->createWriteResult(null, ['activeFrom' => '2025-06-16 00:00:00']);
-
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
-
-        static::assertCount(0, $this->messageBus->getDispatched());
-    }
-
-    public function testScheduleReturnsEarlyWhenIdIsInvalidUuid(): void
-    {
-        $writeResult = $this->createWriteResult('not-a-valid-uuid', ['activeFrom' => '2025-06-16 00:00:00']);
-
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule(['activeFrom' => '2025-06-16 00:00:00'], ElysiumSlidesDefinition::ENTITY_NAME, []);
 
         static::assertCount(0, $this->messageBus->getDispatched());
     }
@@ -91,9 +79,9 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $futureTime = '2025-06-16 12:00:00';
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => $futureTime, 'activeUntil' => null]);
+        $payload = ['activeFrom' => $futureTime, 'activeUntil' => null];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
@@ -103,7 +91,7 @@ class CacheInvalidationSchedulerTest extends TestCase
 
         $message = $envelope->getMessage();
         static::assertInstanceOf(TimeControlCacheInvalidationMessage::class, $message);
-        static::assertSame($id, $message->getEntityId());
+        static::assertSame([$id], $message->getEntityIds());
         static::assertSame(ElysiumSlidesDefinition::ENTITY_NAME, $message->getEntityName());
         static::assertEquals(new \DateTimeImmutable($futureTime), $message->getInvalidationTime());
 
@@ -116,9 +104,9 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $futureTime = '2025-06-17 12:00:00';
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => null, 'activeUntil' => $futureTime]);
+        $payload = ['activeFrom' => null, 'activeUntil' => $futureTime];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
@@ -134,12 +122,12 @@ class CacheInvalidationSchedulerTest extends TestCase
     public function testScheduleDispatchesTwoDelayedMessagesWhenBothTimesAreFuture(): void
     {
         $id = Uuid::randomHex();
-        $writeResult = $this->createWriteResult($id, [
+        $payload = [
             'activeFrom' => '2025-06-16 12:00:00',
             'activeUntil' => '2025-06-17 12:00:00',
-        ]);
+        ];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(2, $dispatched);
@@ -158,16 +146,16 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $pastTime = '2025-06-14 12:00:00';
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => $pastTime, 'activeUntil' => null]);
+        $payload = ['activeFrom' => $pastTime, 'activeUntil' => null];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
 
         $message = $dispatched[0];
         static::assertInstanceOf(TimeControlCacheInvalidationMessage::class, $message);
-        static::assertSame($id, $message->getEntityId());
+        static::assertSame([$id], $message->getEntityIds());
         static::assertSame(ElysiumSlidesDefinition::ENTITY_NAME, $message->getEntityName());
         static::assertEquals(new \DateTimeImmutable($pastTime), $message->getInvalidationTime());
     }
@@ -176,9 +164,9 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $pastTime = '2025-06-14 12:00:00';
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => null, 'activeUntil' => $pastTime]);
+        $payload = ['activeFrom' => null, 'activeUntil' => $pastTime];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
@@ -189,16 +177,16 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $pastTime = '2025-06-14 12:00:00';
-        $writeResult = $this->createWriteResult($id, [
+        $payload = [
             'customFields' => [
                 Defaults::CMS_SECTION_SETTINGS_KEY => [
                     'activeFrom' => $pastTime,
                     'activeUntil' => null,
                 ],
             ],
-        ]);
+        ];
 
-        $this->scheduler->schedule($writeResult, CmsSectionDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, CmsSectionDefinition::ENTITY_NAME, [$id]);
 
         static::assertCount(0, $this->messageBus->getDispatched());
     }
@@ -207,16 +195,16 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $pastTime = '2025-06-14 12:00:00';
-        $writeResult = $this->createWriteResult($id, [
+        $payload = [
             'customFields' => [
                 Defaults::CMS_SECTION_SETTINGS_KEY => [
                     'activeFrom' => null,
                     'activeUntil' => $pastTime,
                 ],
             ],
-        ]);
+        ];
 
-        $this->scheduler->schedule($writeResult, CmsSectionDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, CmsSectionDefinition::ENTITY_NAME, [$id]);
 
         static::assertCount(0, $this->messageBus->getDispatched());
     }
@@ -229,9 +217,9 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $futureTime = '2025-06-16 12:00:00';
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => null, 'activeUntil' => $futureTime]);
+        $payload = ['activeFrom' => null, 'activeUntil' => $futureTime];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
@@ -245,9 +233,9 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $futureTime = '2025-06-16 12:00:00';
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => $futureTime, 'activeUntil' => null]);
+        $payload = ['activeFrom' => $futureTime, 'activeUntil' => null];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
@@ -260,9 +248,9 @@ class CacheInvalidationSchedulerTest extends TestCase
     public function testScheduleDoesNothingWhenBothTimesAreNull(): void
     {
         $id = Uuid::randomHex();
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => null, 'activeUntil' => null]);
+        $payload = ['activeFrom' => null, 'activeUntil' => null];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         static::assertCount(0, $this->messageBus->getDispatched());
     }
@@ -275,9 +263,9 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $futureDateTime = new \DateTimeImmutable('2025-06-16 12:00:00');
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => $futureDateTime, 'activeUntil' => null]);
+        $payload = ['activeFrom' => $futureDateTime, 'activeUntil' => null];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
@@ -294,9 +282,9 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $pastDateTime = new \DateTimeImmutable('2025-06-14 12:00:00');
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => null, 'activeUntil' => $pastDateTime]);
+        $payload = ['activeFrom' => null, 'activeUntil' => $pastDateTime];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
@@ -311,16 +299,16 @@ class CacheInvalidationSchedulerTest extends TestCase
     {
         $id = Uuid::randomHex();
         $futureTime = '2025-06-16 12:00:00';
-        $writeResult = $this->createWriteResult($id, [
+        $payload = [
             'customFields' => [
                 Defaults::CMS_SECTION_SETTINGS_KEY => [
                     'activeFrom' => $futureTime,
                     'activeUntil' => null,
                 ],
             ],
-        ]);
+        ];
 
-        $this->scheduler->schedule($writeResult, CmsSectionDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, CmsSectionDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
@@ -330,7 +318,7 @@ class CacheInvalidationSchedulerTest extends TestCase
 
         $message = $envelope->getMessage();
         static::assertInstanceOf(TimeControlCacheInvalidationMessage::class, $message);
-        static::assertSame($id, $message->getEntityId());
+        static::assertSame([$id], $message->getEntityIds());
         static::assertSame(CmsSectionDefinition::ENTITY_NAME, $message->getEntityName());
 
         $delayStamps = $envelope->all(DelayStamp::class);
@@ -341,9 +329,9 @@ class CacheInvalidationSchedulerTest extends TestCase
     public function testScheduleHandlesCmsSectionWithMissingNestedCustomFields(): void
     {
         $id = Uuid::randomHex();
-        $writeResult = $this->createWriteResult($id, ['customFields' => []]);
+        $payload = ['customFields' => []];
 
-        $this->scheduler->schedule($writeResult, CmsSectionDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, CmsSectionDefinition::ENTITY_NAME, [$id]);
 
         static::assertCount(0, $this->messageBus->getDispatched());
     }
@@ -356,9 +344,9 @@ class CacheInvalidationSchedulerTest extends TestCase
     public function testScheduleCalculatesCorrectDelaySeconds(string $futureTime, int $expectedDelayMs): void
     {
         $id = Uuid::randomHex();
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => $futureTime, 'activeUntil' => null]);
+        $payload = ['activeFrom' => $futureTime, 'activeUntil' => null];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
@@ -388,32 +376,13 @@ class CacheInvalidationSchedulerTest extends TestCase
     public function testScheduleDispatchesImmediatelyWhenTimeIsExactlyNow(): void
     {
         $id = Uuid::randomHex();
-        $writeResult = $this->createWriteResult($id, ['activeFrom' => '2025-06-15 12:00:00', 'activeUntil' => null]);
+        $payload = ['activeFrom' => '2025-06-15 12:00:00', 'activeUntil' => null];
 
-        $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+        $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
         $dispatched = $this->messageBus->getDispatched();
         static::assertCount(1, $dispatched);
         static::assertInstanceOf(TimeControlCacheInvalidationMessage::class, $dispatched[0]);
-    }
-
-    // =====================================================
-    // Helper Methods
-    // =====================================================
-
-    private function createWriteResult(?string $id, array $payload): EntityWriteResult
-    {
-        $writeResult = $this->createMock(EntityWriteResult::class);
-        $writeResult->method('getProperty')->willReturnCallback(function (string $property) use ($id) {
-            if ($property === 'id' || $property === 'pageId') {
-                return $id;
-            }
-
-            return null;
-        });
-        $writeResult->method('getPayload')->willReturn($payload);
-
-        return $writeResult;
     }
 }
 

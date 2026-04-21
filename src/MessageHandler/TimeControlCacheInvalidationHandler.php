@@ -28,12 +28,12 @@ class TimeControlCacheInvalidationHandler
             return;
         }
 
-        $entityId = $message->getEntityId();
+        $entityIds = $message->getEntityIds();
 
         $tags = match ($message->getEntityName()) {
-            ElysiumSlidesDefinition::ENTITY_NAME => $this->cmsPageLookup->getCmsCacheTagsBySlideIds([$entityId]), // lookup needed to find affected CMS pages based on slide ID
-            CmsSectionDefinition::ENTITY_NAME => [EntityCacheKeyGenerator::buildCmsTag($entityId)], // the cms page id gets passed as entityId, so we can directly generate the tag without a lookup
-            CmsBlockDefinition::ENTITY_NAME => [EntityCacheKeyGenerator::buildCmsTag($entityId)], // the cms page id from block payload
+            ElysiumSlidesDefinition::ENTITY_NAME => $this->cmsPageLookup->getCmsCacheTagsBySlideIds($entityIds), // lookup needed to find affected CMS pages based on slide ID
+            CmsSectionDefinition::ENTITY_NAME => array_map(EntityCacheKeyGenerator::buildCmsTag(...), $entityIds), // the cms page id gets passed as entityId, so we can directly generate the tag without a lookup
+            CmsBlockDefinition::ENTITY_NAME => array_map(EntityCacheKeyGenerator::buildCmsTag(...), $entityIds), // the cms page id from block payload
             default => [],
         };
 

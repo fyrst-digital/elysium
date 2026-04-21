@@ -44,15 +44,12 @@ class CacheInvalidationScheduler
         private readonly ClockInterface $clock
     ) {}
 
-    public function schedule(EntityWriteResult $writeResult, string $entityName): void
+    public function schedule(array $payload, string $entityName, array $ids): void
     {
-        $id = $this->extractId($writeResult, $entityName);
-
-        if ($id === null) {
+        if (empty($ids)) {
             return;
         }
 
-        $payload = $writeResult->getPayload();
         $activeTimes = $this->extractActiveTimes($payload, $entityName);
 
         foreach ($activeTimes as $value) {
@@ -69,7 +66,7 @@ class CacheInvalidationScheduler
             $now = $this->clock->now();
             $delaySeconds = $datetime->getTimestamp() - $now->getTimestamp();
 
-            $message = new TimeControlCacheInvalidationMessage($id, $entityName, $datetime);
+            $message = new TimeControlCacheInvalidationMessage($ids, $entityName, $datetime);
 
             if ($delaySeconds > 0) {
                 $this->messageBus->dispatch(
@@ -80,23 +77,6 @@ class CacheInvalidationScheduler
             }
 
         }
-    }
-
-    private function extractId(EntityWriteResult $writeResult, string $entityName): ?string
-    {
-        $config = self::entityConfig()[$entityName];
-        $id = $writeResult->getProperty($config['id_field']);
-
-        // Fallback: read from payload (e.g., CMS block has pageId in payload, not as entity property)
-        if ($id === null) {
-            $id = $this->resolvePath($writeResult->getPayload(), $config['id_field']);
-        }
-
-        if ($id && Uuid::isValid($id)) {
-            return $id;
-        }
-        
-        return null;
     }
 
     private function extractActiveTimes(array $payload, string $entityName): array

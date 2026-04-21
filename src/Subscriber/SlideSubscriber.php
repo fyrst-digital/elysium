@@ -80,7 +80,8 @@ class SlideSubscriber implements EventSubscriberInterface
         }
 
         foreach ($entityEvent->getWriteResults() as $writeResult) {
-            $this->scheduler->schedule($writeResult, ElysiumSlidesDefinition::ENTITY_NAME);
+            $payload = $writeResult->getPayload();
+            $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$payload['id']]);
         }
     }
 }
