@@ -146,17 +146,17 @@ class CmsSubscriber implements EventSubscriberInterface
             $payload = $writeResult->getPayload();
             $entityName = $writeResult->getEntityName();
 
-            if ($changeSet === null || $changeSet->getBefore('type') !== Defaults::CMS_SECTION_NAME) {
-                continue;
-            }
-
             if (isset($payload['pageId'])) {
                 $pageIds[] = $payload['pageId'];
             }
 
+            if ($changeSet === null || $changeSet->getBefore('type') !== Defaults::CMS_SECTION_NAME) {
+                continue;
+            }
+
             $this->scheduler->schedule(
-                $payload, 
-                $entityName, 
+                $payload,
+                $entityName,
                 isset($payload['pageId']) ? [$payload['pageId']] : []
             );
         }
@@ -174,13 +174,17 @@ class CmsSubscriber implements EventSubscriberInterface
             $payload = $writeResult->getPayload();
             $entityName = $writeResult->getEntityName();
 
-            if ($changeSet === null || !in_array($changeSet->getBefore('type'), ['blur-elysium-slider', 'blur-elysium-block'])) {
+            $type = $changeSet !== null
+                ? $changeSet->getBefore('type')
+                : ($payload['type'] ?? null);
+
+            if ($type === null || !in_array($type, self::ELYSIUM_BLOCK_TYPES, true)) {
                 continue;
             }
 
             $this->scheduler->schedule(
-                $payload, 
-                $entityName, 
+                $payload,
+                $entityName,
                 $pageIds
             );
         }
