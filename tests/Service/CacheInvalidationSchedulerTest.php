@@ -142,7 +142,7 @@ class CacheInvalidationSchedulerTest extends TestCase
     // Past Time Tests (Immediate vs No Dispatch)
     // =====================================================
 
-    public function testScheduleDispatchesImmediatelyForPastActiveFromOnSlides(): void
+    public function testScheduleDoesNotDispatchForPastActiveFromOnSlides(): void
     {
         $id = Uuid::randomHex();
         $pastTime = '2025-06-14 12:00:00';
@@ -150,17 +150,10 @@ class CacheInvalidationSchedulerTest extends TestCase
 
         $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
-        $dispatched = $this->messageBus->getDispatched();
-        static::assertCount(1, $dispatched);
-
-        $message = $dispatched[0];
-        static::assertInstanceOf(TimeControlCacheInvalidationMessage::class, $message);
-        static::assertSame([$id], $message->getEntityIds());
-        static::assertSame(ElysiumSlidesDefinition::ENTITY_NAME, $message->getEntityName());
-        static::assertEquals(new \DateTimeImmutable($pastTime), $message->getInvalidationTime());
+        static::assertCount(0, $this->messageBus->getDispatched());
     }
 
-    public function testScheduleDispatchesImmediatelyForPastActiveUntilOnSlides(): void
+    public function testScheduleDoesNotDispatchForPastActiveUntilOnSlides(): void
     {
         $id = Uuid::randomHex();
         $pastTime = '2025-06-14 12:00:00';
@@ -168,9 +161,7 @@ class CacheInvalidationSchedulerTest extends TestCase
 
         $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
-        $dispatched = $this->messageBus->getDispatched();
-        static::assertCount(1, $dispatched);
-        static::assertInstanceOf(TimeControlCacheInvalidationMessage::class, $dispatched[0]);
+        static::assertCount(0, $this->messageBus->getDispatched());
     }
 
     public function testScheduleDoesNotDispatchForPastActiveFromOnCmsSection(): void
@@ -278,7 +269,7 @@ class CacheInvalidationSchedulerTest extends TestCase
         static::assertSame(86400 * 1000, $delayStamps[0]->getDelay());
     }
 
-    public function testScheduleHandlesDateTimeInterfaceForActiveUntil(): void
+    public function testScheduleDoesNotDispatchForPastDateTimeInterfaceActiveUntil(): void
     {
         $id = Uuid::randomHex();
         $pastDateTime = new \DateTimeImmutable('2025-06-14 12:00:00');
@@ -286,9 +277,7 @@ class CacheInvalidationSchedulerTest extends TestCase
 
         $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
-        $dispatched = $this->messageBus->getDispatched();
-        static::assertCount(1, $dispatched);
-        static::assertInstanceOf(TimeControlCacheInvalidationMessage::class, $dispatched[0]);
+        static::assertCount(0, $this->messageBus->getDispatched());
     }
 
     // =====================================================
@@ -373,16 +362,14 @@ class CacheInvalidationSchedulerTest extends TestCase
     // Edge Case: Exact Now Timestamp
     // =====================================================
 
-    public function testScheduleDispatchesImmediatelyWhenTimeIsExactlyNow(): void
+    public function testScheduleDoesNotDispatchWhenTimeIsExactlyNow(): void
     {
         $id = Uuid::randomHex();
         $payload = ['activeFrom' => '2025-06-15 12:00:00', 'activeUntil' => null];
 
         $this->scheduler->schedule($payload, ElysiumSlidesDefinition::ENTITY_NAME, [$id]);
 
-        $dispatched = $this->messageBus->getDispatched();
-        static::assertCount(1, $dispatched);
-        static::assertInstanceOf(TimeControlCacheInvalidationMessage::class, $dispatched[0]);
+        static::assertCount(0, $this->messageBus->getDispatched());
     }
 }
 

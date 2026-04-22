@@ -72,8 +72,6 @@ class CacheInvalidationScheduler
                 $this->messageBus->dispatch(
                     (new Envelope($message))->with(new DelayStamp($delaySeconds * 1000))
                 );
-            } else if ($entityName === ElysiumSlidesDefinition::ENTITY_NAME) {
-                $this->messageBus->dispatch($message);
             }
 
         }
