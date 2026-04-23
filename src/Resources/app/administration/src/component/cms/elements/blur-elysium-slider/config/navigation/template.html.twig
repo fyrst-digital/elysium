@@ -5,7 +5,7 @@
 >
     <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
 </mt-banner>
-<blur-section
+<py-section
     gap
     padding
 >
@@ -21,7 +21,7 @@
             @change="navigationConfig.active = $event"
         />
     </div>
-    <blur-select-input
+    <py-select-field
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 6' },
@@ -30,7 +30,7 @@
         :options="positions"
         v-model:value="navigationConfig.position"
     />
-    <blur-select-input
+    <py-select-field
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 6' },
@@ -39,13 +39,13 @@
         :options="aligns"
         v-model:value="navigationConfig.align"
     />
-</blur-section>
-<blur-section
+</py-section>
+<py-section
     :title="$tc('blurElysium.general.appearance')"
     gap
     padding
 >
-    <blur-select-input
+    <py-select-field
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 6' },
@@ -54,7 +54,7 @@
         :options="shapes"
         v-model:value="navigationConfig.shape"
     />
-    <blur-select-input
+    <py-select-field
         v-if="navigationViewportConfig"
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
@@ -63,26 +63,20 @@
         :label="$tc('blurElysiumSlider.config.navigation.size.label')"
         :placeholder="viewportsPlaceholder('navigation.size', 'md', 'blurElysium.general')"
         :options="sizes"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
         v-model:value="navigationViewportConfig.size"
     />
-    <blur-number-input
+    <py-number-field
         v-if="navigationViewportConfig"
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
         })"
         :model-value="navigationViewportConfig.gap"
-        @update-value="value => navigationViewportConfig.gap = value"
+        @update:model-value="value => navigationViewportConfig.gap = value"
         :label="$tc('blurElysiumSlider.config.navigation.navPadding.label')"
         :placeholder="viewportsPlaceholder('navigation.gap', 16)"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
     />
-    <blur-colorpicker
+    <py-colorpicker-field
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
@@ -95,7 +89,7 @@
         :colorLabels="true"
         :zIndex="1010"
     />
-    <blur-colorpicker
+    <py-colorpicker-field
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             desktop: { gridColumnEnd: 'span 4' },
@@ -108,4 +102,4 @@
         :colorLabels="true"
         :zIndex="1010"
     />
-</blur-section>
+</py-section>

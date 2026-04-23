@@ -21,10 +21,7 @@
 }
 
 /** Common input styles */
-.blur-text-input,
-.blur-number-input,
-.blur-select-input,
-.blur-colorpicker {
+.py-field {
     .mt-block-field__block {
         padding: var(--blur-input-block-padding-y, 0px) var(--blur-input-block-padding-x, 8px) !important;
         border-radius: var(--blur-input-block-radius, 8px) !important;
@@ -71,7 +68,7 @@
 }
 
 /** Text input styling **/
-.blur-text-input {
+.mt-text-field.py-field {
     input {
         // padding-top: 8px;
         // padding-bottom: 8px;
@@ -84,7 +81,7 @@
 }
 
 /** Number input styling */
-.blur-number-input {
+.mt-number-field.py-field {
     .mt-field__controls {
         width: auto;
 
@@ -120,12 +117,8 @@
 }
 
 /** Select input styling */
-.blur-select-input {
+.mt-select.py-field {
     --field-block-columns: minmax(0, 1fr);
-
-    &.has-device-indicator {
-        --field-block-columns: auto minmax(0, 1fr);
-    }
 
     .mt-label {
         padding: var(--blur-input-field-padding-y, 6px) var(--blur-input-field-padding-x, 8px) !important;
@@ -186,7 +179,7 @@
 }
 
 /** Colorpicker styling */
-.blur-colorpicker {
+.mt-colorpicker.py-field {
     .mt-colorpicker__input {
         // padding: 8px;
         line-height: 1.5;

@@ -5,7 +5,7 @@
 >
     <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
 </mt-banner>
-<blur-section
+<py-section
     gap
     padding
 >
@@ -21,13 +21,13 @@
             @change="arrowsConfig.active = $event"
         />
     </div>
-</blur-section>
-<blur-section
+</py-section>
+<py-section
     :title="$tc('blurElysium.general.appearance')"
     gap
     padding
 >
-    <blur-select-input
+    <py-select-field
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
@@ -37,35 +37,29 @@
         :options="icons"
         v-model:value="arrowsConfig.icon.default"
     />
-    <blur-number-input
+    <py-number-field
         v-if="arrowsViewportConfig"
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 6' },
             tablet: { gridColumnEnd: 'span 3' },
         })"
         :model-value="arrowsViewportConfig.iconSize"
-        @update-value="value => arrowsViewportConfig.iconSize = value"
+        @update:model-value="value => arrowsViewportConfig.iconSize = value"
         :placeholder="viewportsPlaceholder('arrows.iconSize', 24)"
         :label="$tc('blurElysiumSlider.config.arrows.size.label')"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
     />
-    <blur-number-input
+    <py-number-field
         v-if="arrowsViewportConfig"
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 6' },
             tablet: { gridColumnEnd: 'span 3' },
         })"
         :model-value="arrowsViewportConfig.offsetPadding"
-        @update-value="value => arrowsViewportConfig.offsetPadding = value"
+        @update:model-value="value => arrowsViewportConfig.offsetPadding = value"
         :placeholder="viewportsPlaceholder('arrows.offsetPadding', 24)"
         :label="$tc('blurElysiumSlider.config.arrows.offsetPadding.label')"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
     />
-    <blur-colorpicker
+    <py-colorpicker-field
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
@@ -79,7 +73,7 @@
         :colorLabels="true"
         :zIndex="1010"
     />
-    <blur-colorpicker
+    <py-colorpicker-field
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
@@ -93,7 +87,7 @@
         :colorLabels="true"
         :zIndex="1010"
     />
-    <blur-colorpicker
+    <py-colorpicker-field
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
@@ -107,7 +101,7 @@
         :colorLabels="true"
         :zIndex="1010"
     />
-    <blur-colorpicker
+    <py-colorpicker-field
         :style="viewStyle({
             mobile: { gridColumnEnd: 'span 12' },
             tablet: { gridColumnEnd: 'span 6' },
@@ -121,4 +115,4 @@
         :colorLabels="true"
         :zIndex="1010"
     />
-</blur-section>
+</py-section>

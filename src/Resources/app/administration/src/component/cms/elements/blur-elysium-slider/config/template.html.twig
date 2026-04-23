@@ -30,25 +30,25 @@
     </template>
 
     <template v-if="activeTab === 'content'">
-        <blur-section
+        <py-section
             gap
             padding
             :title="$tc('blurElysiumSlider.config.settings.general')"
         >
-            <blur-column
+            <py-column
                 :cols="8">
 
-                <blur-text-input
+                <py-text-field
                     :label="$tc('blurElysiumSlider.config.content.sliderTitle')"
                     :model-value="element.config.content.value.title"
-                    @update-value="value => element.config.content.value.title = value"
+                    @update:model-value="value => element.config.content.value.title = value"
                 />
-            </blur-column>
+            </py-column>
 
-            <blur-column
+            <py-column
                 :cols="4">
 
-                <blur-select-input
+                <py-select-field
                     :options="[
                         { value: 'div', label: 'DIV' },
                         { value: 'h1', label: 'H1' },
@@ -63,9 +63,9 @@
                     :helpText="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')"
                     v-model:value="element.config.content.value.titleTag"
                 />
-            </blur-column>
+            </py-column>
 
-            <blur-column
+            <py-column
                 :cols="12">
 
                 <mt-switch
@@ -75,15 +75,15 @@
                     :checked="element.config.content.value.titleSrOnly"
                     @change="element.config.content.value.titleSrOnly = $event"
                 />
-            </blur-column>
-        </blur-section>
+            </py-column>
+        </py-section>
 
-        <blur-section
+        <py-section
             gap
             padding
             :title="$tc('blurElysiumSlides.slideSelection.listLabel')"
         >
-            <blur-column>
+            <py-column>
                 <elysium-slide-selection
                     :selected-slides="selectedSlides"
                     @drag-slide-drop="dragSlideDrop"
@@ -92,8 +92,8 @@
                     @position-up="moveUpSlide"
                     @position-down="moveDownSlide"
                 />
-            </blur-column>
-        </blur-section>
+            </py-column>
+        </py-section>
     </template>
     <blur-elysium-slider-config-settings
         v-if="activeTab === 'settings'"

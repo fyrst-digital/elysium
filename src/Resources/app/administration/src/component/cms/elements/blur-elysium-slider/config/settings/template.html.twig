@@ -5,13 +5,13 @@
 >
     <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
 </mt-banner>
-<blur-section
+<py-section
     gap
     padding
     :title="$tc('blurElysiumSlider.config.settings.general')"
 >
     {% block blur_cms_config_elysium_slider_rewind %}
-        <blur-column
+        <py-column
             :cols="12">
 
             <mt-switch
@@ -20,11 +20,11 @@
                 :checked="settingsConfig.rewind"
                 @change="settingsConfig.rewind = $event"
             />
-        </blur-column>
+        </py-column>
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_overlay %}
-        <blur-column
+        <py-column
             :cols="12">
 
             <mt-switch
@@ -33,11 +33,11 @@
                 :checked="settingsConfig.overlay"
                 @change="settingsConfig.overlay = $event"
             />
-        </blur-column>
+        </py-column>
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_justifySlideHeight %}
-        <blur-column
+        <py-column
             :cols="12">
             
             <mt-switch
@@ -46,11 +46,11 @@
                 :checked="settingsConfig.justifySlideHeight"
                 @change="settingsConfig.justifySlideHeight = $event"
             />
-        </blur-column>
+        </py-column>
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_slides_per_page %}
-    <blur-number-input
+    <py-number-field
         v-if="settingsViewportConfig"
         :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
@@ -59,17 +59,13 @@
         :label="$tc('blurElysiumSlider.config.settings.slidesPerPage.label')"
         :placeholder="viewportsPlaceholder('settings.slidesPerPage', 1)"
         :min="1"
-        :show-device="true"
-        :device="device"
-        :unit="false"
-        @on-device="cmsDeviceSwitch"
         :model-value="settingsViewportConfig.slidesPerPage"
-        @update-value="value => settingsViewportConfig.slidesPerPage = value"
+        @update:model-value="value => settingsViewportConfig.slidesPerPage = value"
     />
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_speed %}
-    <blur-number-input
+    <py-number-field
         numberType="int"
         :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
@@ -81,14 +77,13 @@
         :max="null"
         :digits="null"
         :allowEmpty="false"
-        unit="ms"
         :model-value="settingsConfig.speed"
-        @update-value="value => settingsConfig.speed = value"
+        @update:model-value="value => settingsConfig.speed = value"
     />
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_container_width %}
-    <blur-select-input
+    <py-select-field
         v-model:value="settingsConfig.containerWidth"
         :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
@@ -104,7 +99,7 @@
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_slide_effect %}
-    <blur-select-input
+    <py-select-field
         v-model:value="settingsConfig.slideEffect"
         :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
@@ -119,17 +114,17 @@
     />
     {% endblock %}
 
-    <blur-column
+    <py-column
         :cols-tablet="6">
 
-        <blur-text-input
+        <py-text-field
             :label="$tc('blurElysium.general.cssClasses.label')"
             :placeholder="$tc('blurElysium.general.cssClasses.placeholder')"
             :helpText="$tc('blurElysium.general.cssClasses.helpText')"
             v-model="settingsConfig.cssClasses" />
-    </blur-column>
-</blur-section>
-<blur-section
+    </py-column>
+</py-section>
+<py-section
     gap
     padding
     :title="$tc('blurElysiumSlider.config.settings.autoplay.label')"
@@ -167,7 +162,7 @@
     {% endblock %}
 
     {% block blur_cms_config_elysium_slider_autoplay_timeout %}
-    <blur-number-input
+    <py-number-field
         numberType="int"
         :style="viewStyle({
                 mobile: { gridColumnEnd: 'span 12' },
@@ -180,9 +175,8 @@
         :max="null"
         :digits="null"
         :allowEmpty="false"
-        unit="ms"
         :model-value="settingsConfig.autoplay.interval"
-        @update-value="value => settingsConfig.autoplay.interval = value"
+        @update:model-value="value => settingsConfig.autoplay.interval = value"
     />
     {% endblock %}
-</blur-section>
+</py-section>

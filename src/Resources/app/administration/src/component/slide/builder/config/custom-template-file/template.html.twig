@@ -1,4 +1,4 @@
-<blur-section
+<py-section
     padding
     gap
     :title="$tc('blurElysiumSlides.forms.customTemplateFile.label')"
@@ -7,7 +7,7 @@
         borderBottom: '1px solid var(--color-border-secondary-default)',
     }">
 
-    <blur-column
+    <py-column
         :style="{
             display: 'flex',
             flexDirection: 'column',
@@ -32,5 +32,5 @@
                 v-html="$t('blurElysiumSlides.forms.customTemplateFile.pathInfo', { file: slide.slideSettings.customTemplateFile })"
             />
         </mt-banner>
-    </blur-column>
-</blur-section>
+    </py-column>
+</py-section>
