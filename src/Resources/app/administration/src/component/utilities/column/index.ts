@@ -8,6 +8,9 @@ interface StyleViewports {
     desktop?: Partial<CSSStyleDeclaration>;
 }
 
+/**
+ * @deprecated Use `py-column` instead. Will be removed in a future version.
+ */
 export default Component.wrapComponentConfig({
     template,
 

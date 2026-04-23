@@ -2,6 +2,9 @@ import template from './template.html.twig';
 
 const { Component } = Shopware;
 
+/**
+ * @deprecated Use `py-text-field` instead. Will be removed in a future version.
+ */
 export default Component.wrapComponentConfig({
     template,
 

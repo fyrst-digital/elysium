@@ -76,7 +76,6 @@ useComponentRegister([
     { name: 'py-column', path: () => import('./component/py/column') },
     { name: 'blur-section', path: () => import('@elysium/component/utilities/section') },
     { name: 'blur-column', path: () => import('@elysium/component/utilities/column') },
-    { name: 'blur-card-title', path: () => import('@elysium/component/utilities/card-title') },
     { name: 'blur-device-switch', path: () => import('@elysium/component/device/switch') },
     { name: 'blur-text-input', path: () => import('@elysium/component/form/text-input') },
     { name: 'blur-number-input', path: () => import('@elysium/component/form/number-input') },
