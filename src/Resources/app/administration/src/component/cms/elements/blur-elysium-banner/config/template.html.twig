@@ -20,93 +20,112 @@
             }"
         />
     </template>
-    <mt-banner
-        v-if="viewportConfig === null"
-        :style="{ margin: '20px' }"
-        :variant="'attention'"
-    >
-        <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
-    </mt-banner>
-    <py-section
-        gap
-        padding
-    >
-        <py-column>
-            <sw-entity-single-select
-                :label="$tc('blurElysiumBanner.config.selectSlide')"
-                entity="blur_elysium_slides"
-                v-model:value="selectedSlide"
-            />
-        </py-column>
-        <py-column>
-            <mt-switch
-                class="blur-switch-input"
-                :label="$tc('blurElysiumBanner.config.lazyLoading')"
-                :checked="config.lazyLoading.value"
-                @change="config.lazyLoading.value = $event"
-            />
-        </py-column>
-        <py-column
-            :cols-tablet="6">
 
-            <py-text-field
-                :label="$tc('blurElysium.general.cssClasses.label')"
-                :placeholder="$tc('blurElysium.general.cssClasses.placeholder')"
-                :helpText="$tc('blurElysium.general.cssClasses.helpText')"
-                v-model="config.cssClasses.value" />
-        </py-column>
-    </py-section>
-    <py-section
-        v-if="viewportConfig"
-        gap
-        padding
-        :title="'Sizing'"
-    >
-        <py-column>
-            <mt-switch
-                class="blur-switch-input"
-                :label="$tc('blurElysiumBanner.config.autoSizing')"
-                :checked="viewportConfig.aspectRatio.auto"
-                @change="viewportConfig.aspectRatio.auto = $event"
-            />
-        </py-column>
-        <py-column
-            :cols-tablet="6"
-            :cols-desktop="3"
+    <template #tabs>
+        <mt-tabs
+            :defaultItem="activeTab"
+            :items="tabs"
+            @new-item-active="activeTab = $event"
+        />
+    </template>
+
+    <template v-if="activeTab === 'content'">
+        <py-section
+            gap
+            padding
+            :title="$tc('blurElysiumBanner.config.settings.general')"
         >
-            <py-number-field
-                :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
-                :placeholder="viewportsPlaceholder('aspectRatio.width', 4)"
-                :allow-empty="true"
-                :disabled="viewportConfig.aspectRatio.auto === true"
-                :model-value="viewportConfig.aspectRatio.width"
-                @update:model-value="value => viewportConfig.aspectRatio.width = value"
-            />
-        </py-column>
-        <py-column
-            :cols-tablet="6"
-            :cols-desktop="3"
+            <py-column :cols="12">
+                <sw-entity-single-select
+                    :label="$tc('blurElysiumBanner.config.selectSlide')"
+                    entity="blur_elysium_slides"
+                    v-model:value="selectedSlide"
+                />
+            </py-column>
+            <py-column :cols="12">
+                <mt-switch
+                    class="blur-switch-input"
+                    :label="$tc('blurElysiumBanner.config.lazyLoading')"
+                    :checked="config.lazyLoading.value"
+                    @change="config.lazyLoading.value = $event"
+                />
+            </py-column>
+            <py-column :cols="12">
+                <py-text-field
+                    :label="$tc('blurElysium.general.cssClasses.label')"
+                    :placeholder="$tc('blurElysium.general.cssClasses.placeholder')"
+                    :tooltip="$tc('blurElysium.general.cssClasses.helpText')"
+                    layout="row"
+                    v-model="config.cssClasses.value"
+                />
+            </py-column>
+        </py-section>
+    </template>
+
+    <template v-if="activeTab === 'sizing'">
+        <mt-banner
+            v-if="viewportConfig === null"
+            :style="{ margin: '20px' }"
+            :variant="'attention'"
         >
-            <py-number-field
-                :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
-                :placeholder="viewportsPlaceholder('aspectRatio.height', 3)"
-                :allow-empty="true"
-                :disabled="viewportConfig.aspectRatio.auto === true"
-                :model-value="viewportConfig.aspectRatio.height"
-                @update:model-value="value => viewportConfig.aspectRatio.height = value"
-            />
-        </py-column>
-        <py-column
-            :cols-tablet="6"
-            :cols-desktop="3"
+            <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
+        </mt-banner>
+
+        <py-section
+            v-if="viewportConfig"
+            gap
+            padding
+            :title="$tc('blurElysiumSlider.config.sizing.aspectRatio.label')"
         >
-            <py-number-field
-                :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
-                :placeholder="viewportsPlaceholder('maxHeight', 'noLimit', 'blurElysium.general')"
-                :allow-empty="true"
-                :model-value="viewportConfig.maxHeight"
-                @update:model-value="value => viewportConfig.maxHeight = value"
-            />
-        </py-column>
-    </py-section>
+            <py-column :cols="12">
+                <mt-switch
+                    class="blur-switch-input"
+                    :label="$tc('blurElysiumBanner.config.autoSizing')"
+                    :checked="viewportConfig.aspectRatio.auto"
+                    @change="viewportConfig.aspectRatio.auto = $event"
+                />
+            </py-column>
+            <py-column
+                :cols-tablet="6"
+                :cols-desktop="4"
+            >
+                <py-number-field
+                    layout="row"
+                    :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
+                    :placeholder="viewportsPlaceholder('aspectRatio.width', 4)"
+                    :allow-empty="true"
+                    :disabled="viewportConfig.aspectRatio.auto === true"
+                    :model-value="viewportConfig.aspectRatio.width"
+                    @update:model-value="value => viewportConfig.aspectRatio.width = value"
+                />
+            </py-column>
+            <py-column
+                :cols-tablet="6"
+                :cols-desktop="4"
+            >
+                <py-number-field
+                    layout="row"
+                    :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
+                    :placeholder="viewportsPlaceholder('aspectRatio.height', 3)"
+                    :allow-empty="true"
+                    :disabled="viewportConfig.aspectRatio.auto === true"
+                    :model-value="viewportConfig.aspectRatio.height"
+                    @update:model-value="value => viewportConfig.aspectRatio.height = value"
+                />
+            </py-column>
+            <py-column
+                :cols-tablet="6"
+                :cols-desktop="4"
+            >
+                <py-number-field
+                    layout="row"
+                    :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
+                    :placeholder="viewportsPlaceholder('maxHeight', 'noLimit', 'blurElysium.general')"
+                    :allow-empty="true"
+                    :model-value="viewportConfig.maxHeight"
+                    @update:model-value="value => viewportConfig.maxHeight = value"
+                />
+            </py-column>
+        </py-section>
+    </template>
 </mt-card>

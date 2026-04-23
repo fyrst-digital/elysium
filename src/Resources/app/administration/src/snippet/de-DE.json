@@ -494,9 +494,14 @@
     "blurElysiumBanner": {
         "label": "Elysium Banner",
         "config": {
+            "contentLabel": "Inhalt",
+            "sizingLabel": "Größen",
             "selectSlide": "Slide wählen",
             "autoSizing": "Automatische Größe",
-            "lazyLoading": "Lazy loading"
+            "lazyLoading": "Lazy loading",
+            "settings": {
+                "general": "Allgemein"
+            }
         },
         "messages": {
             "cmsDescription": "Wähle in den Element Einstellungen einen Slide und lege weitere Banner Einstellungen, wie zum Beispiel die Größe, fest."
