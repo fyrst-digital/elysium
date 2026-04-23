@@ -14,6 +14,12 @@ export default Component.wrapComponentConfig({
             default: undefined,
         },
 
+        layout: {
+            type: String as () => 'row' | 'column',
+            required: false,
+            default: 'column',
+        },
+
         value: {
             type: String,
             required: false,

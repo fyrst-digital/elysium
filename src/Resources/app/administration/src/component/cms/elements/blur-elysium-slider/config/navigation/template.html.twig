@@ -1,6 +1,5 @@
 <mt-banner
     v-if="navigationViewportConfig === null"
-    :style="{ margin: '20px' }"
     :variant="'attention'"
 >
     <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
@@ -9,97 +8,89 @@
     gap
     padding
 >
-    <div
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-        })"
-    >
+    <py-column :cols="12">
         <mt-switch
             class="blur-switch-input"
             :checked="navigationConfig.active"
             :label="$tc('blurElysiumSlider.config.navigation.active')"
             @change="navigationConfig.active = $event"
         />
-    </div>
-    <py-select-field
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 6' },
-        })"
-        :label="$tc('blurElysiumSlider.config.navigation.position.label')"
-        :options="positions"
-        v-model:value="navigationConfig.position"
-    />
-    <py-select-field
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 6' },
-        })"
-        :label="$tc('blurElysiumSlider.config.navigation.align.label')"
-        :options="aligns"
-        v-model:value="navigationConfig.align"
-    />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6">
+        <py-select-field
+            layout="row"
+            :label="$tc('blurElysiumSlider.config.navigation.position.label')"
+            :options="positions"
+            v-model="navigationConfig.position"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6">
+        <py-select-field
+            layout="row"
+            :label="$tc('blurElysiumSlider.config.navigation.align.label')"
+            :options="aligns"
+            v-model="navigationConfig.align"
+        />
+    </py-column>
 </py-section>
 <py-section
     :title="$tc('blurElysium.general.appearance')"
     gap
     padding
 >
-    <py-select-field
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 6' },
-        })"
-        :label="$tc('blurElysiumSlider.config.navigation.shape.label')"
-        :options="shapes"
-        v-model:value="navigationConfig.shape"
-    />
-    <py-select-field
-        v-if="navigationViewportConfig"
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 6' },
-        })"
-        :label="$tc('blurElysiumSlider.config.navigation.size.label')"
-        :placeholder="viewportsPlaceholder('navigation.size', 'md', 'blurElysium.general')"
-        :options="sizes"
-        v-model:value="navigationViewportConfig.size"
-    />
-    <py-number-field
-        v-if="navigationViewportConfig"
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 4' },
-        })"
-        :model-value="navigationViewportConfig.gap"
-        @update:model-value="value => navigationViewportConfig.gap = value"
-        :label="$tc('blurElysiumSlider.config.navigation.navPadding.label')"
-        :placeholder="viewportsPlaceholder('navigation.gap', 16)"
-    />
-    <py-colorpicker-field
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 4' },
-        })"
-        :label="$tc('blurElysium.general.color')"
-        v-model:value="navigationConfig.colors.default"
-        colorOutput="auto"
-        :alpha="true"
-        :disabled="false"
-        :colorLabels="true"
-        :zIndex="1010"
-    />
-    <py-colorpicker-field
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 4' },
-        })"
-        :label="$tc('blurElysium.general.colorActive')"
-        v-model:value="navigationConfig.colors.active"
-        colorOutput="auto"
-        :alpha="true"
-        :disabled="false"
-        :colorLabels="true"
-        :zIndex="1010"
-    />
+    <py-column :cols="12" :cols-tablet="6">
+        <py-select-field
+            layout="row"
+            :label="$tc('blurElysiumSlider.config.navigation.shape.label')"
+            :options="shapes"
+            v-model="navigationConfig.shape"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6">
+        <py-select-field
+            v-if="navigationViewportConfig"
+            layout="row"
+            :label="$tc('blurElysiumSlider.config.navigation.size.label')"
+            :placeholder="viewportsPlaceholder('navigation.size', 'md', 'blurElysium.general')"
+            :options="sizes"
+            v-model="navigationViewportConfig.size"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6">
+        <py-number-field
+            v-if="navigationViewportConfig"
+            layout="row"
+            :step="1"
+            :min="0"
+            :allow-empty="true"
+            :model-value="navigationViewportConfig.gap"
+            @update:model-value="value => navigationViewportConfig.gap = value"
+            :label="$tc('blurElysiumSlider.config.navigation.navPadding.label')"
+            :placeholder="viewportsPlaceholder('navigation.gap', 16)"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6">
+        <py-colorpicker-field
+            layout="row"
+            :label="$tc('blurElysium.general.color')"
+            v-model:value="navigationConfig.colors.default"
+            colorOutput="auto"
+            :alpha="true"
+            :disabled="false"
+            :colorLabels="true"
+            :zIndex="1010"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6">
+        <py-colorpicker-field
+            layout="row"
+            :label="$tc('blurElysium.general.colorActive')"
+            v-model:value="navigationConfig.colors.active"
+            colorOutput="auto"
+            :alpha="true"
+            :disabled="false"
+            :colorLabels="true"
+            :zIndex="1010"
+        />
+    </py-column>
 </py-section>

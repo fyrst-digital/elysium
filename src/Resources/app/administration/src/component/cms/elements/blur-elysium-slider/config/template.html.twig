@@ -10,13 +10,8 @@
             :device="device"
             @change-device="changeDevice"
             :style="{
-                padding: '0',
-                width: '100%',
-                justifyContent: 'center',
                 '--container-gap': '12px',
                 '--icon-padding': '6px',
-                '--icon-bg-color': '#ffffff',
-                '--icon-hover-bg-color': 'var(--color-gray-100)',
             }"
         />
     </template>
@@ -39,6 +34,7 @@
                 :cols="8">
 
                 <py-text-field
+                    layout="row"
                     :label="$tc('blurElysiumSlider.config.content.sliderTitle')"
                     :model-value="element.config.content.value.title"
                     @update:model-value="value => element.config.content.value.title = value"
@@ -49,6 +45,7 @@
                 :cols="4">
 
                 <py-select-field
+                    layout="row"
                     :options="[
                         { value: 'div', label: 'DIV' },
                         { value: 'h1', label: 'H1' },
@@ -60,8 +57,8 @@
                     ]"
                     placeholder="H2"
                     :label="$tc('blurElysiumSlides.forms.slideHeadlineElement.label')"
-                    :helpText="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')"
-                    v-model:value="element.config.content.value.titleTag"
+                    :tooltip="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')"
+                    v-model="element.config.content.value.titleTag"
                 />
             </py-column>
 
