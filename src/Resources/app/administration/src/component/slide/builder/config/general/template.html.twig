@@ -53,7 +53,7 @@
   </py-column>
 
   <py-column :cols="12">
-    <py-number-field :label="$tc('blurElysium.general.fontSize')" :placeholder="viewportsPlaceholder('headline.fontSize', 20)" :step="1" :digits="0" v-model="slideViewportSettings.headline.fontSize"/>
+    <py-number-field :label="$tc('blurElysium.general.fontSize')" :placeholder="viewportsPlaceholder('headline.fontSize', 20)" :min="0" :step="1" :allow-empty="true" :digits="0" v-model="slideViewportSettings.headline.fontSize"/>
   </py-column>
 </py-section>
 
@@ -68,7 +68,7 @@
   </py-column>
 
   <py-column :cols="12">
-    <py-number-field :label="$tc('blurElysium.general.fontSize')" :placeholder="viewportsPlaceholder('description.fontSize', 14)" :step="1" :digits="0" v-model="slideViewportSettings.description.fontSize"/>
+    <py-number-field :label="$tc('blurElysium.general.fontSize')" :placeholder="viewportsPlaceholder('description.fontSize', 14)" :min="0" :step="1" :allow-empty="true" :digits="0" v-model="slideViewportSettings.description.fontSize"/>
   </py-column>
 
   <py-column :cols="12">

@@ -91,10 +91,11 @@
             "top": "Top",
             "bottom": "Bottom",
             "spacing": "Spacing",
-            "gap": "Gap spacing",
+            "gap": "Gap",
             "paddingX": "Vertical spacing",
             "paddingY": "Horizontal spacing",
             "borderRadius": "Border radius",
+            "order": "Order",
             "switchDevice": "Switch to {device}",
             "alignment": "Alignment",
             "alignX": {
