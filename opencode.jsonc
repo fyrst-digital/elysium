@@ -23,10 +23,12 @@
     "chrome-devtools": {
       "type": "local",
       "command": [
-        "npx",
+        "bunx",
+        "--bun",
         "-y",
         "chrome-devtools-mcp@latest",
-        "--headless"
+        "--headless",
+        "--isolated"
       ],
       "enabled": true
     }

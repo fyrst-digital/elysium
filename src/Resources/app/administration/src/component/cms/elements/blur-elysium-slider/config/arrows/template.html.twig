@@ -1,124 +1,108 @@
 <mt-banner
     v-if="arrowsViewportConfig === null"
-    :style="{ margin: '20px' }"
     :variant="'attention'"
 >
     <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
 </mt-banner>
-<blur-section
+<py-section
     gap
     padding
 >
-    <div
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-        })"
-    >
+    <py-column :cols="12">
         <mt-switch
             class="blur-switch-input"
             :checked="arrowsConfig.active"
             :label="$tc('blurElysiumSlider.config.arrows.active')"
             @change="arrowsConfig.active = $event"
         />
-    </div>
-</blur-section>
-<blur-section
+    </py-column>
+</py-section>
+<py-section
     :title="$tc('blurElysium.general.appearance')"
     gap
     padding
 >
-    <blur-select-input
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            tablet: { gridColumnEnd: 'span 6' },
-        })"
-        :label="$tc('blurElysiumSlider.config.arrows.icons.label')"
-        :placeholder="$tc('blurElysiumSlider.config.arrows.icons.chevron')"
-        :options="icons"
-        v-model:value="arrowsConfig.icon.default"
-    />
-    <blur-number-input
-        v-if="arrowsViewportConfig"
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 6' },
-            tablet: { gridColumnEnd: 'span 3' },
-        })"
-        :model-value="arrowsViewportConfig.iconSize"
-        @update-value="value => arrowsViewportConfig.iconSize = value"
-        :placeholder="viewportsPlaceholder('arrows.iconSize', 24)"
-        :label="$tc('blurElysiumSlider.config.arrows.size.label')"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
-    />
-    <blur-number-input
-        v-if="arrowsViewportConfig"
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 6' },
-            tablet: { gridColumnEnd: 'span 3' },
-        })"
-        :model-value="arrowsViewportConfig.offsetPadding"
-        @update-value="value => arrowsViewportConfig.offsetPadding = value"
-        :placeholder="viewportsPlaceholder('arrows.offsetPadding', 24)"
-        :label="$tc('blurElysiumSlider.config.arrows.offsetPadding.label')"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
-    />
-    <blur-colorpicker
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            tablet: { gridColumnEnd: 'span 6' },
-            desktop: { gridColumnEnd: 'span 3' },
-        })"
-        :label="$tc('blurElysium.general.iconColor')"
-        v-model:value="arrowsConfig.colors.default"
-        colorOutput="auto"
-        :alpha="true"
-        :disabled="false"
-        :colorLabels="true"
-        :zIndex="1010"
-    />
-    <blur-colorpicker
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            tablet: { gridColumnEnd: 'span 6' },
-            desktop: { gridColumnEnd: 'span 3' },
-        })"
-        :label="$tc('blurElysium.general.iconColorActive')"
-        v-model:value="arrowsConfig.colors.active"
-        colorOutput="auto"
-        :alpha="true"
-        :disabled="false"
-        :colorLabels="true"
-        :zIndex="1010"
-    />
-    <blur-colorpicker
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            tablet: { gridColumnEnd: 'span 6' },
-            desktop: { gridColumnEnd: 'span 3' },
-        })"
-        :label="$tc('blurElysium.general.bgColor')"
-        v-model:value="arrowsConfig.bgColors.default"
-        colorOutput="auto"
-        :alpha="true"
-        :disabled="false"
-        :colorLabels="true"
-        :zIndex="1010"
-    />
-    <blur-colorpicker
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            tablet: { gridColumnEnd: 'span 6' },
-            desktop: { gridColumnEnd: 'span 3' },
-        })"
-        :label="$tc('blurElysium.general.bgColorActive')"
-        v-model:value="arrowsConfig.bgColors.active"
-        colorOutput="auto"
-        :alpha="true"
-        :disabled="false"
-        :colorLabels="true"
-        :zIndex="1010"
-    />
-</blur-section>
+    <py-column :cols="12" :cols-tablet="6">
+        <py-select-field
+            layout="row"
+            :label="$tc('blurElysiumSlider.config.arrows.icons.label')"
+            :placeholder="$tc('blurElysiumSlider.config.arrows.icons.chevron')"
+            :options="icons"
+            v-model="arrowsConfig.icon.default"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="6">
+        <py-number-field
+            v-if="arrowsViewportConfig"
+            layout="row"
+            :step="1"
+            :min="0"
+            :allow-empty="true"
+            :model-value="arrowsViewportConfig.iconSize"
+            @update:model-value="value => arrowsViewportConfig.iconSize = value"
+            :placeholder="viewportsPlaceholder('arrows.iconSize', 24)"
+            :label="$tc('blurElysiumSlider.config.arrows.size.label')"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="6">
+        <py-number-field
+            v-if="arrowsViewportConfig"
+            layout="row"
+            :step="1"
+            :min="0"
+            :allow-empty="true"
+            :model-value="arrowsViewportConfig.offsetPadding"
+            @update:model-value="value => arrowsViewportConfig.offsetPadding = value"
+            :placeholder="viewportsPlaceholder('arrows.offsetPadding', 24)"
+            :label="$tc('blurElysiumSlider.config.arrows.offsetPadding.label')"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="6">
+        <py-colorpicker-field
+            layout="row"
+            :label="$tc('blurElysium.general.iconColor')"
+            v-model:value="arrowsConfig.colors.default"
+            colorOutput="auto"
+            :alpha="true"
+            :disabled="false"
+            :colorLabels="true"
+            :zIndex="1010"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="6">
+        <py-colorpicker-field
+            layout="row"
+            :label="$tc('blurElysium.general.iconColorActive')"
+            v-model:value="arrowsConfig.colors.active"
+            colorOutput="auto"
+            :alpha="true"
+            :disabled="false"
+            :colorLabels="true"
+            :zIndex="1010"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="6">
+        <py-colorpicker-field
+            layout="row"
+            :label="$tc('blurElysium.general.bgColor')"
+            v-model:value="arrowsConfig.bgColors.default"
+            colorOutput="auto"
+            :alpha="true"
+            :disabled="false"
+            :colorLabels="true"
+            :zIndex="1010"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="6">
+        <py-colorpicker-field
+            layout="row"
+            :label="$tc('blurElysium.general.bgColorActive')"
+            v-model:value="arrowsConfig.bgColors.active"
+            colorOutput="auto"
+            :alpha="true"
+            :disabled="false"
+            :colorLabels="true"
+            :zIndex="1010"
+        />
+    </py-column>
+</py-section>

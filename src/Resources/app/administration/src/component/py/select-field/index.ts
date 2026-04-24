@@ -17,7 +17,12 @@ export default Component.wrapComponentConfig({
             type: String,
             required: false,
             default: 'column',
-        }
+        },
+        tooltip: {
+            type: String,
+            required: false,
+            default: undefined,
+        },
     },
 
     methods: {

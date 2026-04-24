@@ -1,103 +1,93 @@
 <mt-banner
     v-if="sizingViewportConfig === null"
-    :style="{ margin: '20px' }"
     :variant="'attention'"
 >
     <div v-html="$tc('blurElysium.general.noViewportConfigAvailable')"/>
 </mt-banner>
-<blur-section
+<py-section
     v-if="sizingViewportConfig"
     gap
     padding
     :title="$tc('blurElysiumSlider.config.sizing.aspectRatio.label')"
     :description="$tc('blurElysiumSlider.config.sizing.aspectRatio.description')"
 >
-    <blur-number-input
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 4' },
-        })"
-        :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
-        :placeholder="viewportsPlaceholder('sizing.aspectRatio.width', 4)"
-        unit="Ratio"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
-        :model-value="sizingViewportConfig.aspectRatio.width"
-        @update-value="value => sizingViewportConfig.aspectRatio.width = value"
-    />
-    <blur-number-input
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 4' },
-        })"
-        :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
-        :placeholder="viewportsPlaceholder('sizing.aspectRatio.height', 3)"
-        unit="Ratio"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
-        :model-value="sizingViewportConfig.aspectRatio.height"
-        @update-value="value => sizingViewportConfig.aspectRatio.height = value"
-    />
-    <blur-number-input
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 4' },
-        })"
-        :allow-empty="true"
-        :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
-        :placeholder="viewportsPlaceholder('sizing.maxHeight', 'noLimit', 'blurElysium.general')"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
-        :model-value="sizingViewportConfig.maxHeight"
-        @update-value="value => sizingViewportConfig.maxHeight = value"
-    />
-</blur-section>
-<blur-section
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="4">
+        <py-number-field
+            layout="row"
+            :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.width')"
+            :placeholder="viewportsPlaceholder('sizing.aspectRatio.width', 4)"
+            :model-value="sizingViewportConfig.aspectRatio.width"
+            :step="1"
+            :min="0"
+            :allow-empty="true"
+            @update:model-value="value => sizingViewportConfig.aspectRatio.width = value"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="4">
+        <py-number-field
+            layout="row"
+            :label="$tc('blurElysiumSlider.config.sizing.aspectRatio.height')"
+            :placeholder="viewportsPlaceholder('sizing.aspectRatio.height', 3)"
+            :model-value="sizingViewportConfig.aspectRatio.height"
+            :step="1"
+            :min="0"
+            :allow-empty="true"
+            @update:model-value="value => sizingViewportConfig.aspectRatio.height = value"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="4">
+        <py-number-field
+            layout="row"
+            :label="$tc('blurElysiumSlider.config.sizing.maxHeight.label')"
+            :placeholder="viewportsPlaceholder('sizing.maxHeight', 'noLimit', 'blurElysium.general')"
+            :model-value="sizingViewportConfig.maxHeight"
+            :allow-empty="true"
+            :step="1"
+            :min="0"
+            @update:model-value="value => sizingViewportConfig.maxHeight = value"
+        />
+    </py-column>
+</py-section>
+<py-section
     v-if="sizingViewportConfig"
     gap
     padding
     :title="$tc('blurElysiumSlider.config.sizing.spacing.label')"
 >
-    <blur-number-input
-        :label="$tc('blurElysiumSlider.config.sizing.spacing.slidesGap.label')"
-        :placeholder="viewportsPlaceholder('sizing.slidesGap', 0)"
-        :allow-empty="true"
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 4' },
-        })"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
-        :model-value="sizingViewportConfig.slidesGap"
-        @update-value="value => sizingViewportConfig.slidesGap = value"
-    />
-    <blur-number-input
-        :label="$tc('blurElysium.general.paddingY')"
-        :placeholder="viewportsPlaceholder('sizing.paddingY', 24)"
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 4' },
-        })"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
-        :model-value="sizingViewportConfig.paddingY"
-        @update-value="value => sizingViewportConfig.paddingY = value"
-    />
-    <blur-number-input
-        :label="$tc('blurElysium.general.paddingX')"
-        :placeholder="viewportsPlaceholder('sizing.paddingY', 24)"
-        :style="viewStyle({
-            mobile: { gridColumnEnd: 'span 12' },
-            desktop: { gridColumnEnd: 'span 4' },
-        })"
-        :show-device="true"
-        :device="device"
-        @on-device="cmsDeviceSwitch"
-        :model-value="sizingViewportConfig.paddingX"
-        @update-value="value => sizingViewportConfig.paddingX = value"
-    />
-</blur-section>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="4">
+        <py-number-field
+            layout="row"
+            :label="$tc('blurElysiumSlider.config.sizing.spacing.slidesGap.label')"
+            :placeholder="viewportsPlaceholder('sizing.slidesGap', 0)"
+            :allow-empty="true"
+            :step="1"
+            :min="0"
+            :model-value="sizingViewportConfig.slidesGap"
+            @update:model-value="value => sizingViewportConfig.slidesGap = value"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="4">
+        <py-number-field
+            layout="row"
+            :label="$tc('blurElysium.general.paddingY')"
+            :placeholder="viewportsPlaceholder('sizing.paddingY', 24)"
+            :step="1"
+            :min="0"
+            :allow-empty="true"
+            :model-value="sizingViewportConfig.paddingY"
+            @update:model-value="value => sizingViewportConfig.paddingY = value"
+        />
+    </py-column>
+    <py-column :cols="12" :cols-tablet="6" :cols-desktop="4">
+        <py-number-field
+            layout="row"
+            :label="$tc('blurElysium.general.paddingX')"
+            :placeholder="viewportsPlaceholder('sizing.paddingX', 24)"
+            :step="1"
+            :min="0"
+            :allow-empty="true"
+            :model-value="sizingViewportConfig.paddingX"
+            @update:model-value="value => sizingViewportConfig.paddingX = value"
+        />
+    </py-column>
+</py-section>

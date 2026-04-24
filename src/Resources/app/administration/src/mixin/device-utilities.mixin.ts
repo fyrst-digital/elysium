@@ -86,7 +86,7 @@ export default Mixin.register(
                     return this.$t(snippet.join('.'));
                 }
 
-                return placeholder;
+                return String(placeholder);
             },
         },
     })

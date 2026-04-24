@@ -1,14 +1,14 @@
-<blur-section
+<py-section
     gap
     padding
     :style="viewStyle({
         mobile: {
-            '--blur-section-gap-y': '8px',
+            '--py-section-gap-y': '8px',
             '--container-gap-y': '12px'
         },
     })"
 >
-    <blur-column :cols="12">
+    <py-column :cols="12">
         <py-select-field 
             :options="[
                 { value: 'custom', label: $tc('blurElysiumSlides.forms.slideLinking.typeCustom') },
@@ -18,9 +18,9 @@
             :label="$tc('blurElysiumSlides.forms.slideLinking.typeLabel')"
             v-model="slide.slideSettings.slide.linking.type"
             />
-    </blur-column>
+    </py-column>
 
-    <blur-column
+    <py-column
         v-if="slide.slideSettings.slide?.linking?.type === 'custom'"
         :cols="12"
     >
@@ -31,9 +31,9 @@
             :placeholder="$tc('blurElysiumSlides.forms.slideLinking.customUrlPlaceholder')"
             :tooltip="$tc('blurElysiumSlides.forms.slideLinking.customUrlHelpText')"
             />
-    </blur-column>
+    </py-column>
 
-    <blur-column
+    <py-column
         v-if="slide.slideSettings.slide?.linking?.type === 'product'"
         :cols="12"
     >
@@ -43,9 +43,9 @@
             :error="validateProduct"
             v-model:value="slide.productId"
             />
-    </blur-column>
+    </py-column>
 
-    <blur-column :cols="12">
+    <py-column :cols="12">
         <py-text-field 
             v-model="slide.buttonLabel"
             :label="$tc('blurElysiumSlides.forms.slideButtonLabel.label')"
@@ -53,9 +53,9 @@
             :tooltip="$tc('blurElysiumSlides.forms.slideButtonLabel.helpText')"
             :disabled="slide.slideSettings.slide.linking.overlay === true"
             />
-    </blur-column>
+    </py-column>
 
-    <blur-column :cols="12">
+    <py-column :cols="12">
         <py-select-field 
             :label="$tc('blurElysiumSlides.forms.slideButtonAppearance.label')"
             :tooltip="$tc('blurElysiumSlides.forms.slideButtonAppearance.helpText')"
@@ -64,9 +64,9 @@
             :options="buttonColors"
             v-model="slide.slideSettings.slide.linking.buttonAppearance"
             />
-    </blur-column>
+    </py-column>
 
-    <blur-column :cols="12">
+    <py-column :cols="12">
         <py-select-field 
             :label="$tc('blurElysiumSlides.forms.slideButtonSize.label')"
             :tooltip="$tc('blurElysiumSlides.forms.slideButtonSize.helpText')"
@@ -75,9 +75,9 @@
             :options="buttonSizes"
             v-model="slide.slideSettings.slide.linking.buttonSize"
             />
-    </blur-column>
+    </py-column>
 
-    <blur-column 
+    <py-column 
         :cols="12"
         :style="viewStyle({
             mobile: {
@@ -121,5 +121,5 @@
             :helpText="$tc('blurElysiumSlides.forms.slideLinkingOverlay.helpText')"
             :label="$tc('blurElysiumSlides.forms.slideLinkingOverlay.label')"
         />
-    </blur-column>
-</blur-section>
+    </py-column>
+</py-section>

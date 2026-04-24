@@ -11,6 +11,12 @@ export default Component.wrapComponentConfig({
         Mixin.getByName('blur-device-utilities'),
     ],
 
+    data() {
+        return {
+            activeTab: 'content',
+        };
+    },
+
     computed: {
         cmsPage() {
             return Store.get('cmsPage');
@@ -41,6 +47,19 @@ export default Component.wrapComponentConfig({
 
         viewportConfig() {
             return this.config.viewports.value[this.device] || null;
+        },
+
+        tabs() {
+            return [
+                {
+                    label: this.$tc('blurElysiumBanner.config.contentLabel'),
+                    name: 'content',
+                },
+                {
+                    label: this.$tc('blurElysiumBanner.config.sizingLabel'),
+                    name: 'sizing',
+                },
+            ];
         },
     },
 

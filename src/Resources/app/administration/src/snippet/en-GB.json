@@ -91,10 +91,11 @@
             "top": "Top",
             "bottom": "Bottom",
             "spacing": "Spacing",
-            "gap": "Gap spacing",
+            "gap": "Gap",
             "paddingX": "Vertical spacing",
             "paddingY": "Horizontal spacing",
             "borderRadius": "Border radius",
+            "order": "Order",
             "switchDevice": "Switch to {device}",
             "alignment": "Alignment",
             "alignX": {
@@ -494,9 +495,14 @@
     "blurElysiumBanner": {
         "label": "Elysium Banner",
         "config": {
+            "contentLabel": "Content",
+            "sizingLabel": "Sizing",
             "selectSlide": "Choose a Slide",
             "autoSizing": "Auto sizing",
-            "lazyLoading": "Lazy loading"
+            "lazyLoading": "Lazy loading",
+            "settings": {
+                "general": "General"
+            }
         },
         "messages": {
             "cmsDescription": "Select a Slide in the element settings and define further banner settings like the size."

@@ -1,4 +1,4 @@
-<blur-section
+<py-section
     gap
     padding
     :title="$tc('blurElysiumSlides.forms.slideFocusImage.label')"
@@ -6,12 +6,12 @@
     :style="viewStyle({
         mobile: { 
             borderBottom: '1px solid var(--color-border-secondary-default)',
-            '--blur-section-gap-y': '8px',
+            '--py-section-gap-y': '8px',
             '--container-gap-y': '12px' 
         }
     })">
 
-    <blur-column>
+    <py-column>
         <sw-upload-listener
             upload-tag="blur-elysium-slide-focus-image"
             auto-upload
@@ -29,8 +29,8 @@
             @media-upload-remove-image="removeFocusImage"
             @media-upload-sidebar-open="mediaModal.open = true"
         />
-    </blur-column>
-</blur-section>
+    </py-column>
+</py-section>
 
 <sw-media-modal-v2
     v-if="mediaModal.open"
@@ -40,26 +40,27 @@
     @modal-close="closeMediaModal"
 />
 
-<blur-section 
+<py-section 
     gap
     padding
     :style="viewStyle({
         mobile: { 
-            '--blur-section-gap-y': '8px',
+            '--py-section-gap-y': '8px',
             '--container-gap-y': '12px'
         }
     })">
     
-    <blur-column>
+    <py-column>
         <py-number-field 
             :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
             :placeholder="viewportsPlaceholder('image.maxWidth', $t('blurElysium.general.noLimit'))"
+            :min="0"
             :step="1"
             :allow-empty="true"
             v-model="slideViewportSettings.image.maxWidth"
             />
-    </blur-column>
-    <blur-column>
+    </py-column>
+    <py-column>
         <py-select-field 
             :label="$tc('blurElysium.general.jusitifyContent')"
             :placeholder="viewportsPlaceholder('image.justifyContent', 'center', 'blurElysium.general')"
@@ -70,5 +71,5 @@
             ]"
             v-model="slideViewportSettings.image.justifyContent"
             />
-    </blur-column>
-</blur-section>
+    </py-column>
+</py-section>

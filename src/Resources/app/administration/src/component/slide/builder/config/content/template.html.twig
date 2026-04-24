@@ -1,25 +1,26 @@
-<blur-section
+<py-section
     gap
     padding
     :style="viewStyle({
         mobile: { 
             borderBottom: '1px solid var(--color-border-secondary-default)',
-            '--blur-section-gap-y': '8px',
+            '--py-section-gap-y': '8px',
             '--container-gap-y': '12px'
         },
     })">
-    <blur-column>
+    <py-column>
         <py-number-field
             :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
             :placeholder="viewportsPlaceholder('content.maxWidth', $t('blurElysium.general.noLimit'))"
+            :min="0"
             :step="1"
             :allow-empty="true"
             v-model="slideViewportSettings.content.maxWidth"
         />
-    </blur-column>
-</blur-section>
+    </py-column>
+</py-section>
 
-<blur-section
+<py-section
     gap
     padding
     :title="$tc('blurElysium.general.spacing')"
@@ -27,44 +28,46 @@
     :style="viewStyle({
         mobile: { 
             borderBottom: '1px solid var(--color-border-secondary-default)',
-            '--blur-section-gap-y': '8px',
+            '--py-section-gap-y': '8px',
             '--container-gap-y': '12px'
         },
     })">
-    <blur-column>
+    <py-column>
         <py-number-field
             :label="$tc('blurElysium.general.horizontal')"
             :placeholder="viewportsPlaceholder('content.paddingX', 15)"
+            :min="0"
             :step="1"
             :allow-empty="true"
             v-model="slideViewportSettings.content.paddingX"
         />
-    </blur-column>
-    <blur-column>
+    </py-column>
+    <py-column>
         <py-number-field
             :label="$tc('blurElysium.general.vertical')"
             :placeholder="viewportsPlaceholder('content.paddingY', 0)"
+            :min="0"
             :step="1"
             :allow-empty="true"
             v-model="slideViewportSettings.content.paddingY"
         />
-    </blur-column>
-</blur-section>
+    </py-column>
+</py-section>
 
-<blur-section
+<py-section
     gap
     padding
     :style="viewStyle({
         mobile: { 
             borderBottom: '1px solid var(--color-border-secondary-default)',
-            '--blur-section-gap-y': '8px',
+            '--py-section-gap-y': '8px',
             '--container-gap-y': '12px'
         },
     })"
     :title="$tc('blurElysium.general.alignment')"
     title-icon="arrows-out-line-horizontal-bold">
     
-    <blur-column>
+    <py-column>
         <py-select-field
             :label="$tc('blurElysium.general.textAlign')"
             :placeholder="viewportsPlaceholder('content.textAlign', 'left', 'blurElysium.general')"
@@ -75,5 +78,5 @@
             ]"
             v-model="slideViewportSettings.content.textAlign"
         />
-    </blur-column>
-</blur-section>
+    </py-column>
+</py-section>

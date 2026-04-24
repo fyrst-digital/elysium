@@ -1,10 +1,10 @@
-<blur-section 
+<py-section 
     padding
     gap
     :title="$tc('blurElysiumSlides.forms.customFields.label')"
     >
 
-    <blur-column v-if="customFieldSet && slide._isNew !== true">
+    <py-column v-if="customFieldSet && slide._isNew !== true">
         <sw-custom-field-set-renderer
             v-if="hasCustomFields"
             :entity="slide"
@@ -17,13 +17,13 @@
         >
             {{ $tc('blurElysiumSlides.forms.customFields.emptyFieldSet') }}
         </mt-banner>
-    </blur-column>
-    <blur-column v-else>
+    </py-column>
+    <py-column v-else>
         <mt-banner
             variant="info"
             :closable="false"
         >
             {{ $tc('blurElysiumSlides.forms.customFields.newSlide') }}
         </mt-banner>
-    </blur-column>
-</blur-section>
+    </py-column>
+</py-section>

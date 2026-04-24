@@ -23,6 +23,7 @@
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
+                flex: '1 0%'
             }" />
         <span 
             v-if="required"
@@ -41,7 +42,7 @@
                 cursor: 'pointer'
             }"
             name="info-bold"
-            :size="14"
+            size="14"
             color="var(--color-interaction-primary-default)" />
     </div>
     <slot />

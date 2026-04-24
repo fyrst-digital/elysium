@@ -60,7 +60,6 @@ CustomFieldDataProviderService.addEntityName('blur_elysium_slides');
 /**
  * Register components
  * @todo change the name of elysium related components from `blur-elysium-*` to `elysium-*`
- * @todo change the name of general ui related components from `blur-*` to `py-*` and place them under `packages/pyra`
  */
 useComponentRegister([
     { name: 'py-base-field', path: () => import('./component/py/base-field') },
@@ -74,14 +73,7 @@ useComponentRegister([
     { name: 'py-datepicker', path: () => import('./component/py/datepicker') },
     { name: 'py-section', path: () => import('./component/py/section') },
     { name: 'py-column', path: () => import('./component/py/column') },
-    { name: 'blur-section', path: () => import('@elysium/component/utilities/section') },
-    { name: 'blur-column', path: () => import('@elysium/component/utilities/column') },
-    { name: 'blur-card-title', path: () => import('@elysium/component/utilities/card-title') },
     { name: 'blur-device-switch', path: () => import('@elysium/component/device/switch') },
-    { name: 'blur-text-input', path: () => import('@elysium/component/form/text-input') },
-    { name: 'blur-number-input', path: () => import('@elysium/component/form/number-input') },
-    { name: 'blur-select-input', path: () => import('@elysium/component/form/select-input') },
-    { name: 'blur-colorpicker', path: () => import('@elysium/component/form/colorpicker') },
     { name: 'elysium-iap-subscription-card', path: () => import('@elysium/component/iap/subscription-card') },
     { name: 'elysium-icon', path: () => import('@elysium/component/utilities/icon') },
     { name: 'elysium-settings', path: () => import('@elysium/component/settings') },
