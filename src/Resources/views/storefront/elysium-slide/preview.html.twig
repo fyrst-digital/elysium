@@ -36,4 +36,183 @@
             lazyLoading: false
         } %}
     </div>
+
+    <script>
+        (function () {
+            // TODO: adjust origin validation for production / multi-domain setups
+            var ALLOWED_ORIGIN = 'http://localhost:8000';
+            var SLIDE_ID = '{{ slideData.id|escape('js') }}';
+
+            function getSlideElement() {
+                return document.querySelector('[data-elysium-slide-id="' + SLIDE_ID + '"]');
+            }
+
+            function updateBaseStyles(slide, element) {
+                if (!slide.slideSettings || !slide.slideSettings.slide) {
+                    return;
+                }
+
+                var settings = slide.slideSettings.slide;
+                var styles = {};
+
+                if (settings.bgColor) {
+                    styles['--slide-bg-color'] = settings.bgColor;
+                }
+                if (settings.bgGradient) {
+                    if (settings.bgGradient.startColor) {
+                        styles['--slide-gradient-color-start'] = settings.bgGradient.startColor;
+                    }
+                    if (settings.bgGradient.endColor) {
+                        styles['--slide-gradient-color-end'] = settings.bgGradient.endColor;
+                    }
+                    if (settings.bgGradient.gradientDeg) {
+                        styles['--slide-gradient-deg'] = settings.bgGradient.gradientDeg + 'deg';
+                    }
+                }
+                if (settings.headline && settings.headline.color) {
+                    styles['--headline-color'] = settings.headline.color;
+                }
+                if (settings.description && settings.description.color) {
+                    styles['--description-color'] = settings.description.color;
+                }
+                if (settings.container && settings.container.bgColor) {
+                    styles['--container-bg-color'] = settings.container.bgColor;
+                }
+
+                Object.keys(styles).forEach(function (prop) {
+                    element.style.setProperty(prop, styles[prop]);
+                });
+            }
+
+            function updateViewportStyles(slide, device, element) {
+                if (!slide.slideSettings || !slide.slideSettings.viewports || !slide.slideSettings.viewports[device]) {
+                    return;
+                }
+
+                var options = slide.slideSettings.viewports[device];
+                var styles = {};
+
+                if (options.slide) {
+                    if (options.slide.paddingX) {
+                        styles['--slide-padding-x'] = options.slide.paddingX + 'px';
+                    }
+                    if (options.slide.paddingY) {
+                        styles['--slide-padding-y'] = options.slide.paddingY + 'px';
+                    }
+                    if (options.slide.alignItems) {
+                        styles['--slide-align-items'] = options.slide.alignItems;
+                    }
+                    if (options.slide.justifyContent) {
+                        styles['--slide-justify-content'] = options.slide.justifyContent;
+                    }
+                    if (options.slide.borderRadius) {
+                        styles['--slide-border-radius'] = options.slide.borderRadius + 'px';
+                    }
+                }
+
+                if (options.container) {
+                    if (options.container.gap) {
+                        styles['--container-gap'] = options.container.gap + 'px';
+                    }
+                    if (options.container.paddingX) {
+                        styles['--container-padding-x'] = options.container.paddingX + 'px';
+                    }
+                    if (options.container.paddingY) {
+                        styles['--container-padding-y'] = options.container.paddingY + 'px';
+                    }
+                    if (options.container.borderRadius) {
+                        styles['--container-border-radius'] = options.container.borderRadius + 'px';
+                    }
+                    if (options.container.alignItems) {
+                        styles['--container-align-items'] = options.container.alignItems;
+                    }
+                    if (options.container.justifyContent) {
+                        styles['--container-justify-content'] = options.container.justifyContent;
+                    }
+                    if (options.container.columnWrap === true) {
+                        styles['--container-direction'] = 'column';
+                    } else if (options.container.columnWrap === false) {
+                        styles['--container-direction'] = 'row';
+                    }
+                }
+
+                if (options.headline && options.headline.fontSize) {
+                    styles['--headline-font-size'] = options.headline.fontSize + 'px';
+                }
+
+                if (options.description && options.description.fontSize) {
+                    styles['--description-font-size'] = options.description.fontSize + 'px';
+                }
+
+                if (options.content) {
+                    if (options.content.textAlign) {
+                        styles['--content-text-align'] = options.content.textAlign;
+                    }
+                    if (options.content.paddingX) {
+                        styles['--content-padding-x'] = options.content.paddingX + 'px';
+                    }
+                    if (options.content.paddingY) {
+                        styles['--content-padding-y'] = options.content.paddingY + 'px';
+                    }
+                }
+
+                Object.keys(styles).forEach(function (prop) {
+                    element.style.setProperty(prop, styles[prop]);
+                });
+            }
+
+            function updateTextContent(slide) {
+                var translated = slide.translated || {};
+
+                var headlineEl = document.querySelector('.blur-elysium-slide-headline');
+                if (headlineEl && translated.title !== undefined) {
+                    headlineEl.innerHTML = translated.title;
+                }
+
+                var descriptionEl = document.querySelector('.blur-elysium-slide-description');
+                if (descriptionEl && translated.description !== undefined) {
+                    descriptionEl.innerHTML = translated.description;
+                }
+
+                var btnEl = document.querySelector('.blur-elysium-slide-main-btn');
+                if (btnEl) {
+                    if (translated.buttonLabel !== undefined) {
+                        btnEl.textContent = translated.buttonLabel;
+                    }
+                    if (translated.url !== undefined) {
+                        btnEl.setAttribute('href', translated.url);
+                    }
+                }
+
+                var overlayEl = document.querySelector('.blur-elysium-slide-link-overlay');
+                if (overlayEl && translated.url !== undefined) {
+                    overlayEl.setAttribute('href', translated.url);
+                }
+            }
+
+            function updateSlide(data) {
+                var slide = data.slide;
+                var device = data.device || 'desktop';
+                var element = getSlideElement();
+
+                if (!element || !slide) {
+                    return;
+                }
+
+                updateBaseStyles(slide, element);
+                updateViewportStyles(slide, device, element);
+                updateTextContent(slide);
+            }
+
+            window.addEventListener('message', function (event) {
+                if (event.origin !== ALLOWED_ORIGIN) {
+                    return;
+                }
+
+                if (event.data && event.data.type === 'elysium-slide-update') {
+                    updateSlide(event.data);
+                }
+            });
+        })();
+    </script>
 {% endblock %}

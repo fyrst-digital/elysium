@@ -10,6 +10,14 @@ export default Component.wrapComponentConfig({
             type: String,
             required: true,
         },
+        slide: {
+            type: Object,
+            required: true,
+        },
+        device: {
+            type: String,
+            default: 'desktop',
+        },
         aspectRatioX: {
             type: Number,
             default: 16,
@@ -28,6 +36,12 @@ export default Component.wrapComponentConfig({
         },
     },
 
+    data() {
+        return {
+            postMessageTimeout: null,
+        };
+    },
+
     computed: {
         previewUrl(): string {
             return `http://localhost:8000/elysium-slide/preview/${this.slideId}`;
@@ -42,6 +56,38 @@ export default Component.wrapComponentConfig({
                 aspectRatio: `${this.aspectRatioX} / ${this.aspectRatioY}`,
                 overflow: 'hidden',
             };
+        },
+    },
+
+    watch: {
+        slide: {
+            deep: true,
+            handler() {
+                this.sendSlideUpdate();
+            },
+        },
+        device() {
+            this.sendSlideUpdate();
+        },
+    },
+
+    methods: {
+        sendSlideUpdate(): void {
+            clearTimeout(this.postMessageTimeout);
+
+            this.postMessageTimeout = setTimeout(() => {
+                const iframe = this.$refs.iframe as HTMLIFrameElement | undefined;
+
+                if (!iframe || !iframe.contentWindow) {
+                    return;
+                }
+
+                iframe.contentWindow.postMessage({
+                    type: 'elysium-slide-update',
+                    device: this.device,
+                    slide: JSON.parse(JSON.stringify(this.slide)),
+                }, 'http://localhost:8000');
+            }, 300);
         },
     },
 });

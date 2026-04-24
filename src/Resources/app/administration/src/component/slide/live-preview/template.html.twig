@@ -1,9 +1,12 @@
-<iframe
-    :src="previewUrl"
-    style="
-        width: 100%;
-        height: 100%;
-        border: none;
-    "
-    title="Slide Live Preview"
-/>
+<div :style="previewStyles">
+    <iframe
+        ref="iframe"
+        :src="previewUrl"
+        style="
+            width: 100%;
+            height: 100%;
+            border: none;
+        "
+        title="Slide Live Preview"
+    />
+</div>
