@@ -1,6 +1,7 @@
 import template from './template.html.twig'
 
 const { Component } = Shopware;
+const { debounce } = Shopware.Utils;
 
 export default Component.wrapComponentConfig({
     template,
@@ -36,12 +37,6 @@ export default Component.wrapComponentConfig({
         },
     },
 
-    data() {
-        return {
-            postMessageTimeout: null,
-        };
-    },
-
     computed: {
         previewUrl(): string {
             return `http://localhost:8000/elysium-slide/preview/${this.slideId}`;
@@ -72,22 +67,18 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        sendSlideUpdate(): void {
-            clearTimeout(this.postMessageTimeout);
+        sendSlideUpdate: debounce(function (this: any) {
+            const iframe = this.$refs.iframe as HTMLIFrameElement | undefined;
 
-            this.postMessageTimeout = setTimeout(() => {
-                const iframe = this.$refs.iframe as HTMLIFrameElement | undefined;
+            if (!iframe || !iframe.contentWindow) {
+                return;
+            }
 
-                if (!iframe || !iframe.contentWindow) {
-                    return;
-                }
-
-                iframe.contentWindow.postMessage({
-                    type: 'elysium-slide-update',
-                    device: this.device,
-                    slide: JSON.parse(JSON.stringify(this.slide)),
-                }, 'http://localhost:8000');
-            }, 300);
-        },
+            iframe.contentWindow.postMessage({
+                type: 'elysium-slide-update',
+                device: this.device,
+                slide: JSON.parse(JSON.stringify(this.slide)),
+            }, 'http://localhost:8000');
+        }, 300),
     },
 });
