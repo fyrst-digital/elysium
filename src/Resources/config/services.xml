@@ -107,5 +107,13 @@
       <argument type="service" id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface"/>
     </service>
 
+    <!-- Elysium Slide Preview Controller -->
+    <service id="Blur\BlurElysiumSlider\Storefront\Controller\ElysiumSlidePreviewController" public="true">
+      <argument type="service" id="blur_elysium_slides.repository"/>
+      <call method="setContainer">
+        <argument type="service" id="service_container"/>
+      </call>
+    </service>
+
   </services>
 </container>
