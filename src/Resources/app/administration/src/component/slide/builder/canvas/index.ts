@@ -33,10 +33,9 @@ export default Component.wrapComponentConfig({
                         'flex-wrap': 'wrap',
                         'justify-content': 'center',
                         'align-items': 'center',
-                        'padding': '40px',
                         'margin': '0 auto',
                         'width': '100%',
-                        'max-width': '1120px',
+                        'height': '100%',
                     }
                 }
             }

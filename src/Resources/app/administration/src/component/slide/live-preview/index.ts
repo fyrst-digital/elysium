@@ -1,0 +1,47 @@
+import template from './template.html.twig'
+
+const { Component } = Shopware;
+
+export default Component.wrapComponentConfig({
+    template,
+
+    props: {
+        slideId: {
+            type: String,
+            required: true,
+        },
+        aspectRatioX: {
+            type: Number,
+            default: 16,
+        },
+        aspectRatioY: {
+            type: Number,
+            default: 9,
+        },
+        maxHeight: {
+            type: String,
+            default: 'none',
+        },
+        maxWidth: {
+            type: [Number, null],
+            default: null,
+        },
+    },
+
+    computed: {
+        previewUrl(): string {
+            return `http://localhost:8000/elysium-slide/preview/${this.slideId}`;
+        },
+
+        previewStyles(): Record<string, string> {
+            return {
+                display: 'flex',
+                width: '100%',
+                maxWidth: this.maxWidth ? `${this.maxWidth}px` : 'none',
+                maxHeight: this.maxHeight,
+                aspectRatio: `${this.aspectRatioX} / ${this.aspectRatioY}`,
+                overflow: 'hidden',
+            };
+        },
+    },
+});

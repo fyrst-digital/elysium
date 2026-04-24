@@ -41,8 +41,12 @@ class ElysiumSlidePreviewController extends StorefrontController
             throw new NotFoundHttpException('Slide not found');
         }
 
-        return $this->render('@Storefront/storefront/elysium-slide/preview.html.twig', [
+        $response = $this->render('@Storefront/storefront/elysium-slide/preview.html.twig', [
             'slideData' => $slide,
         ]);
+
+        $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
+
+        return $response;
     }
 }

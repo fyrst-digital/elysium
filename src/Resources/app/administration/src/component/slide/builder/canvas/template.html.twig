@@ -103,11 +103,9 @@
 
 
     <div :style="viewStyle(styles.canvas)">
-        <elysium-slide-preview 
+        <elysium-slide-live-preview
             v-if="slide"
-            :slide="slide"
-            :device-view="device"
-            :show-preview-notice="false"
+            :slide-id="slide.id"
             :aspect-ratio-x="aspectRatioX"
             :aspect-ratio-y="aspectRatioY"
             :max-height="'none'"
