@@ -162,31 +162,29 @@
             }
 
             function updateTextContent(slide) {
-                var translated = slide.translated || {};
-
                 var headlineEl = document.querySelector('.blur-elysium-slide-headline');
-                if (headlineEl && translated.title !== undefined) {
-                    headlineEl.innerHTML = translated.title;
+                if (headlineEl && slide.title !== undefined) {
+                    headlineEl.innerHTML = slide.title;
                 }
 
                 var descriptionEl = document.querySelector('.blur-elysium-slide-description');
-                if (descriptionEl && translated.description !== undefined) {
-                    descriptionEl.innerHTML = translated.description;
+                if (descriptionEl && slide.description !== undefined) {
+                    descriptionEl.innerHTML = slide.description;
                 }
 
                 var btnEl = document.querySelector('.blur-elysium-slide-main-btn');
                 if (btnEl) {
-                    if (translated.buttonLabel !== undefined) {
-                        btnEl.textContent = translated.buttonLabel;
+                    if (slide.buttonLabel !== undefined) {
+                        btnEl.textContent = slide.buttonLabel;
                     }
-                    if (translated.url !== undefined) {
-                        btnEl.setAttribute('href', translated.url);
+                    if (slide.url !== undefined) {
+                        btnEl.setAttribute('href', slide.url);
                     }
                 }
 
                 var overlayEl = document.querySelector('.blur-elysium-slide-link-overlay');
-                if (overlayEl && translated.url !== undefined) {
-                    overlayEl.setAttribute('href', translated.url);
+                if (overlayEl && slide.url !== undefined) {
+                    overlayEl.setAttribute('href', slide.url);
                 }
             }
 
