@@ -162,17 +162,17 @@
             }
 
             function updateTextContent(slide) {
-                var headlineEl = document.querySelector('.blur-elysium-slide-headline');
+                var headlineEl = document.querySelector('[data-elysium-slide-headline]');
                 if (headlineEl && slide.title !== undefined) {
                     headlineEl.innerHTML = slide.title;
                 }
 
-                var descriptionEl = document.querySelector('.blur-elysium-slide-description');
+                var descriptionEl = document.querySelector('[data-elysium-slide-description]');
                 if (descriptionEl && slide.description !== undefined) {
                     descriptionEl.innerHTML = slide.description;
                 }
 
-                var btnEl = document.querySelector('.blur-elysium-slide-main-btn');
+                var btnEl = document.querySelector('[data-elysium-slide-button]');
                 if (btnEl) {
                     if (slide.buttonLabel !== undefined) {
                         btnEl.textContent = slide.buttonLabel;
@@ -182,7 +182,7 @@
                     }
                 }
 
-                var overlayEl = document.querySelector('.blur-elysium-slide-link-overlay');
+                var overlayEl = document.querySelector('[data-elysium-slide-link-overlay]');
                 if (overlayEl && slide.url !== undefined) {
                     overlayEl.setAttribute('href', slide.url);
                 }
