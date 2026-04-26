@@ -47,41 +47,149 @@
                 return document.querySelector('[data-elysium-slide-id="' + SLIDE_ID + '"]');
             }
 
-            function updateBaseStyles(slide, element) {
-                if (!slide.slideSettings || !slide.slideSettings.slide) {
+            function applyStyleMap(source, mapper, styles) {
+                if (!source || typeof source !== 'object') {
                     return;
                 }
 
-                var settings = slide.slideSettings.slide;
+                Object.keys(mapper).forEach(function (key) {
+                    var value = source[key];
+                    if (value === undefined || value === null) {
+                        return;
+                    }
+
+                    var mapping = mapper[key];
+
+                    // Nested mapper object (no cssProp/unit/transform) → recurse
+                    if (typeof mapping === 'object' && !mapping.cssProp && !mapping.unit && !mapping.transform) {
+                        applyStyleMap(value, mapping, styles);
+                        return;
+                    }
+
+                    // Custom transform callback
+                    if (mapping.transform) {
+                        var result = mapping.transform(value, styles);
+                        if (result !== undefined && mapping.cssProp) {
+                            styles[mapping.cssProp] = result;
+                        }
+                        return;
+                    }
+
+                    // Unit suffix + CSS property name
+                    var cssValue = value;
+                    if (mapping.unit) {
+                        cssValue = value + mapping.unit;
+                    }
+                    if (mapping.cssProp) {
+                        styles[mapping.cssProp] = cssValue;
+                    }
+                });
+            }
+
+            function applyStyles(source, mapper, element) {
                 var styles = {};
-
-                if (settings.bgColor) {
-                    styles['--slide-bg-color'] = settings.bgColor;
-                }
-                if (settings.bgGradient) {
-                    if (settings.bgGradient.startColor) {
-                        styles['--slide-gradient-color-start'] = settings.bgGradient.startColor;
-                    }
-                    if (settings.bgGradient.endColor) {
-                        styles['--slide-gradient-color-end'] = settings.bgGradient.endColor;
-                    }
-                    if (settings.bgGradient.gradientDeg) {
-                        styles['--slide-gradient-deg'] = settings.bgGradient.gradientDeg + 'deg';
-                    }
-                }
-                if (settings.headline && settings.headline.color) {
-                    styles['--headline-color'] = settings.headline.color;
-                }
-                if (settings.description && settings.description.color) {
-                    styles['--description-color'] = settings.description.color;
-                }
-                if (settings.container && settings.container.bgColor) {
-                    styles['--container-bg-color'] = settings.container.bgColor;
-                }
-
+                applyStyleMap(source, mapper, styles);
                 Object.keys(styles).forEach(function (prop) {
                     element.style.setProperty(prop, styles[prop]);
                 });
+            }
+
+            var BASE_STYLE_MAP = {
+                slideSettings: {
+                    slide: {
+                        bgColor: { cssProp: '--slide-bg-color' },
+                        bgGradient: {
+                            startColor: { cssProp: '--slide-gradient-color-start' },
+                            endColor: { cssProp: '--slide-gradient-color-end' },
+                            gradientDeg: {
+                                cssProp: '--slide-gradient-deg',
+                                transform: function (v) { return v + 'deg'; }
+                            }
+                        },
+                        headline: { color: { cssProp: '--headline-color' } },
+                        description: { color: { cssProp: '--description-color' } }
+                    },
+                    container: {
+                        bgColor: { cssProp: '--container-bg-color' }
+                    }
+                }
+            };
+
+            var VIEWPORT_STYLE_MAP = {
+                slide: {
+                    paddingX: { cssProp: '--slide-padding-x', unit: 'px' },
+                    paddingY: { cssProp: '--slide-padding-y', unit: 'px' },
+                    alignItems: { cssProp: '--slide-align-items' },
+                    justifyContent: { cssProp: '--slide-justify-content' },
+                    borderRadius: { cssProp: '--slide-border-radius', unit: 'px' }
+                },
+                container: {
+                    gap: { cssProp: '--container-gap', unit: 'px' },
+                    paddingX: { cssProp: '--container-padding-x', unit: 'px' },
+                    paddingY: { cssProp: '--container-padding-y', unit: 'px' },
+                    borderRadius: { cssProp: '--container-border-radius', unit: 'px' },
+                    alignItems: { cssProp: '--container-align-items' },
+                    justifyContent: { cssProp: '--container-justify-content' },
+                    maxWidth: {
+                        cssProp: '--container-max-width',
+                        transform: function (v) { return v === 0 ? 'auto' : v + 'px'; }
+                    },
+                    columnWrap: {
+                        cssProp: '--container-direction',
+                        transform: function (v) { return v === true ? 'column' : 'row'; }
+                    },
+                    order: {
+                        transform: function (v, styles) {
+                            if (v === 'reverse') {
+                                styles['--image-order'] = '1';
+                                styles['--content-order'] = '2';
+                            } else if (v === 'default') {
+                                styles['--image-order'] = '2';
+                                styles['--content-order'] = '1';
+                            }
+                        }
+                    }
+                },
+                image: {
+                    maxWidth: {
+                        cssProp: '--image-max-w',
+                        transform: function (v) { return v === 0 ? 'auto' : v + 'px'; }
+                    },
+                    justifyContent: { cssProp: '--image-justify-content' }
+                },
+                headline: {
+                    fontSize: { cssProp: '--headline-font-size', unit: 'px' }
+                },
+                description: {
+                    fontSize: { cssProp: '--description-font-size', unit: 'px' }
+                },
+                content: {
+                    textAlign: { cssProp: '--content-text-align' },
+                    paddingX: { cssProp: '--content-padding-x', unit: 'px' },
+                    paddingY: { cssProp: '--content-padding-y', unit: 'px' },
+                    maxWidth: {
+                        transform: function (v, styles) {
+                            if (v === 0) {
+                                styles['--content-flex-basis'] = '0%';
+                                styles['--content-max-w'] = 'auto';
+                                styles['--content-flex-grow'] = '1';
+                            } else {
+                                styles['--content-flex-basis'] = v + 'px';
+                                styles['--content-max-w'] = v + 'px';
+                                styles['--content-flex-grow'] = '0';
+                            }
+                        }
+                    }
+                },
+                coverMedia: {
+                    objectFit: { cssProp: '--cover-object-fit' },
+                    objectPosX: { cssProp: '--cover-object-pos-x' },
+                    objectPosY: { cssProp: '--cover-object-pos-y' }
+                }
+            };
+
+            function updateBaseStyles(slide, element) {
+                applyStyles(slide, BASE_STYLE_MAP, element);
             }
 
             function updateViewportStyles(slide, device, element) {
@@ -89,123 +197,7 @@
                     return;
                 }
 
-                var options = slide.slideSettings.viewports[device];
-                var styles = {};
-
-                if (options.slide) {
-                    if (options.slide.paddingX) {
-                        styles['--slide-padding-x'] = options.slide.paddingX + 'px';
-                    }
-                    if (options.slide.paddingY) {
-                        styles['--slide-padding-y'] = options.slide.paddingY + 'px';
-                    }
-                    if (options.slide.alignItems) {
-                        styles['--slide-align-items'] = options.slide.alignItems;
-                    }
-                    if (options.slide.justifyContent) {
-                        styles['--slide-justify-content'] = options.slide.justifyContent;
-                    }
-                    if (options.slide.borderRadius) {
-                        styles['--slide-border-radius'] = options.slide.borderRadius + 'px';
-                    }
-                }
-
-                if (options.container) {
-                    if (options.container.gap) {
-                        styles['--container-gap'] = options.container.gap + 'px';
-                    }
-                    if (options.container.paddingX) {
-                        styles['--container-padding-x'] = options.container.paddingX + 'px';
-                    }
-                    if (options.container.paddingY) {
-                        styles['--container-padding-y'] = options.container.paddingY + 'px';
-                    }
-                    if (options.container.borderRadius) {
-                        styles['--container-border-radius'] = options.container.borderRadius + 'px';
-                    }
-                    if (options.container.alignItems) {
-                        styles['--container-align-items'] = options.container.alignItems;
-                    }
-                    if (options.container.justifyContent) {
-                        styles['--container-justify-content'] = options.container.justifyContent;
-                    }
-                    if (options.container.columnWrap === true) {
-                        styles['--container-direction'] = 'column';
-                    } else if (options.container.columnWrap === false) {
-                        styles['--container-direction'] = 'row';
-                    }
-                }
-
-                if (options.headline && options.headline.fontSize) {
-                    styles['--headline-font-size'] = options.headline.fontSize + 'px';
-                }
-
-                if (options.description && options.description.fontSize) {
-                    styles['--description-font-size'] = options.description.fontSize + 'px';
-                }
-
-                if (options.container) {
-                    if (options.container.maxWidth === 0) {
-                        styles['--container-max-width'] = 'auto';
-                    } else if (options.container.maxWidth) {
-                        styles['--container-max-width'] = options.container.maxWidth + 'px';
-                    }
-                    if (options.container.order === 'reverse') {
-                        styles['--image-order'] = '1';
-                        styles['--content-order'] = '2';
-                    } else if (options.container.order === 'default') {
-                        styles['--image-order'] = '2';
-                        styles['--content-order'] = '1';
-                    }
-                }
-
-                if (options.image) {
-                    if (options.image.maxWidth === 0) {
-                        styles['--image-max-w'] = 'auto';
-                    } else if (options.image.maxWidth) {
-                        styles['--image-max-w'] = options.image.maxWidth + 'px';
-                    }
-                    if (options.image.justifyContent) {
-                        styles['--image-justify-content'] = options.image.justifyContent;
-                    }
-                }
-
-                if (options.content) {
-                    if (options.content.textAlign) {
-                        styles['--content-text-align'] = options.content.textAlign;
-                    }
-                    if (options.content.paddingX) {
-                        styles['--content-padding-x'] = options.content.paddingX + 'px';
-                    }
-                    if (options.content.paddingY) {
-                        styles['--content-padding-y'] = options.content.paddingY + 'px';
-                    }
-                    if (options.content.maxWidth === 0) {
-                        styles['--content-flex-basis'] = '0%';
-                        styles['--content-max-w'] = 'auto';
-                        styles['--content-flex-grow'] = '1';
-                    } else if (options.content.maxWidth) {
-                        styles['--content-flex-basis'] = options.content.maxWidth + 'px';
-                        styles['--content-max-w'] = options.content.maxWidth + 'px';
-                        styles['--content-flex-grow'] = '0';
-                    }
-                }
-
-                if (options.coverMedia) {
-                    if (options.coverMedia.objectFit) {
-                        styles['--cover-object-fit'] = options.coverMedia.objectFit;
-                    }
-                    if (options.coverMedia.objectPosX) {
-                        styles['--cover-object-pos-x'] = options.coverMedia.objectPosX;
-                    }
-                    if (options.coverMedia.objectPosY) {
-                        styles['--cover-object-pos-y'] = options.coverMedia.objectPosY;
-                    }
-                }
-
-                Object.keys(styles).forEach(function (prop) {
-                    element.style.setProperty(prop, styles[prop]);
-                });
+                applyStyles(slide.slideSettings.viewports[device], VIEWPORT_STYLE_MAP, element);
             }
 
             function updateTextContent(slide) {
