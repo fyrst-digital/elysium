@@ -7,7 +7,8 @@
     ] %}
 
     {% block blur_elysium_slide_container_element %}
-        <div class="{{ containerClasses|join(' ') }}">
+        <div class="{{ containerClasses|join(' ') }}"
+            data-elysium-slide-container="{{ slideData.id }}">
             {{ block('blur_elysium_slide_content') }}
             {{ block('blur_elysium_slide_image') }}
         </div>
