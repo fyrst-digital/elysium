@@ -39,7 +39,7 @@ export default Component.wrapComponentConfig({
 
     computed: {
         previewUrl(): string {
-            return `http://localhost:8000/elysium-slide/preview/${this.slideId}`;
+            return `http://localhost:8000/elysium-slide/preview/${this.slideId}?device=${this.device}`;
         },
 
         previewStyles(): Record<string, string> {

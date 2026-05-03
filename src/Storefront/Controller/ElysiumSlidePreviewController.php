@@ -10,6 +10,7 @@ use Shopware\Storefront\Framework\Routing\StorefrontRouteScope;
 use Shopware\Core\PlatformRequest;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,7 +23,7 @@ class ElysiumSlidePreviewController extends StorefrontController
     ) {}
 
     #[Route(path: '/elysium-slide/preview/{slideId}', name: 'frontend.elysium-slide.preview', methods: ['GET'])]
-    public function preview(string $slideId, SalesChannelContext $context): Response
+    public function preview(string $slideId, SalesChannelContext $context, Request $request): Response
     {
         $criteria = new Criteria([$slideId]);
         $criteria->addAssociation('slideCover');
@@ -41,8 +42,11 @@ class ElysiumSlidePreviewController extends StorefrontController
             throw new NotFoundHttpException('Slide not found');
         }
 
+        $device = $request->query->get('device', 'desktop');
+
         $response = $this->render('@Storefront/storefront/elysium-slide/preview.html.twig', [
             'slideData' => $slide,
+            'device' => $device,
         ]);
 
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');

@@ -33,7 +33,8 @@
     <div class="blur-elysium-slide-preview-wrapper p-4">
         {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/slide.html.twig' with {
             slideData: slideData,
-            lazyLoading: false
+            lazyLoading: false,
+            device: device
         } %}
     </div>
 
@@ -45,6 +46,22 @@
 
             function getSlideElement() {
                 return document.querySelector('[data-elysium-slide-id="' + SLIDE_ID + '"]');
+            }
+
+            function clearManagedStyles(element) {
+                var styleAttr = element.getAttribute('style') || '';
+                var prefixes = ['--slide-', '--container-', '--image-', '--content-', '--headline-', '--description-', '--cover-'];
+                var regex = /(--[\w-]+)\s*:/g;
+                var match;
+                while ((match = regex.exec(styleAttr)) !== null) {
+                    var prop = match[1];
+                    for (var j = 0; j < prefixes.length; j++) {
+                        if (prop.indexOf(prefixes[j]) === 0) {
+                            element.style.removeProperty(prop);
+                            break;
+                        }
+                    }
+                }
             }
 
             function applyStyleMap(source, mapper, styles) {
@@ -193,11 +210,25 @@
             }
 
             function updateViewportStyles(slide, device, element) {
-                if (!slide.slideSettings || !slide.slideSettings.viewports || !slide.slideSettings.viewports[device]) {
+                var viewports = slide.slideSettings && slide.slideSettings.viewports;
+                if (!viewports) {
                     return;
                 }
 
-                applyStyles(slide.slideSettings.viewports[device], VIEWPORT_STYLE_MAP, element);
+                // Mobile base layer
+                if (viewports.mobile) {
+                    applyStyles(viewports.mobile, VIEWPORT_STYLE_MAP, element);
+                }
+
+                // Tablet override layer
+                if (device !== 'mobile' && viewports.tablet) {
+                    applyStyles(viewports.tablet, VIEWPORT_STYLE_MAP, element);
+                }
+
+                // Desktop override layer
+                if (device === 'desktop' && viewports.desktop) {
+                    applyStyles(viewports.desktop, VIEWPORT_STYLE_MAP, element);
+                }
             }
 
             function updateTextContent(slide) {
@@ -329,6 +360,7 @@
                     return;
                 }
 
+                clearManagedStyles(element);
                 updateBaseStyles(slide, element);
                 updateViewportStyles(slide, device, element);
                 updateTextContent(slide);

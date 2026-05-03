@@ -1,3 +1,108 @@
+{% macro outputViewportVars(options) %}
+    {% if options.slide.paddingX %}
+        --slide-padding-x: {{ options.slide.paddingX ~ 'px' }};
+    {% endif %}
+    {% if options.slide.paddingY %}
+        --slide-padding-y: {{ options.slide.paddingY ~ 'px' }};
+    {% endif %}
+    {% if options.slide.alignItems %}
+        --slide-align-items: {{ options.slide.alignItems }};
+    {% endif %}
+    {% if options.slide.justifyContent %}
+        --slide-justify-content: {{ options.slide.justifyContent }};
+    {% endif %}
+    {% if options.slide.borderRadius %}
+        --slide-border-radius: {{ options.slide.borderRadius ~ 'px' }};
+    {% endif %}
+
+    {# Slide container vars #}
+    {% if options.container.columnWrap is same as(true) %}
+        --container-direction: column;
+    {% elseif options.container.columnWrap is same as(false) %}
+        --container-direction: row;
+    {% endif %}
+    {% if options.container.gap %}
+        --container-gap: {{ options.container.gap ~ 'px' }};
+    {% endif %}
+    {% if options.container.paddingY %}
+        --container-padding-y: {{ options.container.paddingY ~ 'px' }};
+    {% endif %}
+    {% if options.container.paddingX %}
+        --container-padding-x: {{ options.container.paddingX ~ 'px' }};
+    {% endif %}
+    {% if options.container.borderRadius %}
+        --container-border-radius: {{ options.container.borderRadius ~ 'px' }};
+    {% endif %}
+    {% if options.container.maxWidth is same as(0) %}
+        --container-max-width: auto;
+    {% elseif options.container.maxWidth %}
+        --container-max-width: {{ options.container.maxWidth ~ 'px' }};
+    {% endif %}
+    {% if options.container.alignItems %}
+        --container-align-items: {{ options.container.alignItems }};
+    {% endif %}
+    {% if options.container.justifyContent %}
+        --container-justify-content: {{ options.container.justifyContent }};
+    {% endif %}
+
+    {# Slide image vars #}
+    {% if options.image.maxWidth is same as(0) %}
+        --image-max-w: auto;
+    {% elseif options.image.maxWidth %}
+        --image-max-w: {{ options.image.maxWidth ~ 'px' }};
+    {% endif %}
+    {% if options.container.order is same as('reverse') %}
+        --image-order: 1;
+    {% elseif options.container.order is same as('default') %}
+        --image-order: 2;
+    {% endif %}
+    {% if options.image.justifyContent is defined %}
+        --image-justify-content: {{ options.image.justifyContent }};
+    {% endif %}
+
+    {# Slide content vars #}
+    {% if options.content.maxWidth is same as(0) %}
+        --content-flex-basis: 0%;
+        --content-max-w: auto;
+        --content-flex-grow: 1;
+    {% elseif options.content.maxWidth %}
+        --content-flex-basis: {{ options.content.maxWidth ~ 'px' }};
+        --content-max-w: {{ options.content.maxWidth ~ 'px' }};
+        --content-flex-grow: 0;
+    {% endif %}
+    {% if options.container.order is same as('reverse') %}
+        --content-order: 2;
+    {% elseif options.container.order is same as('default') %}
+        --content-order: 1;
+    {% endif %}
+    {% if options.content.textAlign %}
+        --content-text-align: {{ options.content.textAlign }};
+    {% endif %}
+    {% if options.content.paddingX %}
+        --content-padding-x: {{ options.content.paddingX ~ 'px' }};
+    {% endif %}
+    {% if options.content.paddingY %}
+        --content-padding-y: {{ options.content.paddingY ~ 'px' }};
+    {% endif %}
+
+    {# Slide headline vars #}
+    {% if options.headline.fontSize %}
+        --headline-font-size: {{ options.headline.fontSize ~ 'px' }};
+    {% endif %}
+
+    {# Slide description vars #}
+    {% if options.description.fontSize %}
+        --description-font-size: {{ options.description.fontSize ~ 'px' }};
+    {% endif %}
+
+    {# Slide cover vars #}
+    {% if options.coverMedia %}
+        {% for key, value in options.coverMedia|filter(v => v is not empty) %}
+            {{ '--cover-' ~ camel_to_kebab_case(key) }}: {{ value }};
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
 {% if selectorClass is not defined %}
     {% set selectorClass = '.blur-elysium-slide' %}
 {% endif %}
@@ -43,116 +148,36 @@
 
             {# Slide viewport dependent vars #}
             {% if slideViewportStyles is not null %}
-                {% for device, options in slideViewportStyles %}
-                    @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
-                        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
-                            {% if options.slide.paddingX %}
-                                --slide-padding-x: {{ options.slide.paddingX ~ 'px' }};
-                            {% endif %}
-                            {% if options.slide.paddingY %}
-                                --slide-padding-y: {{ options.slide.paddingY ~ 'px' }};
-                            {% endif %}
-                            {% if options.slide.alignItems %}
-                                --slide-align-items: {{ options.slide.alignItems }};
-                            {% endif %}
-                            {% if options.slide.justifyContent %}  
-                                --slide-justify-content: {{ options.slide.justifyContent }};
-                            {% endif %}
-                            {% if options.slide.borderRadius %}
-                                --slide-border-radius: {{ options.slide.borderRadius ~ 'px' }};
-                            {% endif %}
+                {% if device is defined %}
+                    {# Preview mode: cumulative mobile-first output #}
+                    {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
+                        {# Mobile base layer #}
+                        {% if slideViewportStyles.mobile is defined %}
+                            {{ _self.outputViewportVars(slideViewportStyles.mobile) }}
+                        {% endif %}
 
-                            {# Slide container vars #}
-                            {% if options.container.columnWrap is same as(true) %}
-                                --container-direction: column;
-                            {% else %}
-                                --container-direction: row;
-                            {% endif %}
-                            {% if options.container.gap %}
-                                --container-gap: {{ options.container.gap ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.paddingY %} 
-                                --container-padding-y: {{ options.container.paddingY ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.paddingX %}
-                                --container-padding-x: {{ options.container.paddingX ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.borderRadius %}
-                                --container-border-radius: {{ options.container.borderRadius ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.maxWidth is same as(0) %}
-                                --container-max-width: auto;
-                            {% elseif options.container.maxWidth %}
-                                --container-max-width: {{ options.container.maxWidth ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.alignItems %} 
-                                --container-align-items: {{ options.container.alignItems }};
-                            {% endif %}
-                            {% if options.container.justifyContent %} 
-                                --container-justify-content: {{ options.container.justifyContent }};
-                            {% endif %}
+                        {# Tablet override layer #}
+                        {% if device in ['tablet', 'desktop'] and slideViewportStyles.tablet is defined %}
+                            {{ _self.outputViewportVars(slideViewportStyles.tablet) }}
+                        {% endif %}
 
-                            {# Slide image vars #}
-                            {% if options.image.maxWidth is same as(0) %}
-                                --image-max-w: auto;
-                            {% elseif options.image.maxWidth %}
-                                --image-max-w: {{ options.image.maxWidth ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.order is same as('reverse') %}
-                                --image-order: 1;
-                            {% elseif options.container.order is same as('default') %}
-                                --image-order: 2;
-                            {% endif %}
-                            {% if options.image.justifyContent is defined %}
-                                --image-justify-content: {{ options.image.justifyContent }};
-                            {% endif %}
-
-                            {# Slide content vars #}
-                            {% if options.content.maxWidth is same as(0) %}
-                                --content-flex-basis: 0%;
-                                --content-max-w: auto;
-                                --content-flex-grow: 1;
-                            {% elseif options.content.maxWidth %}
-                                --content-flex-basis: {{ options.content.maxWidth ~ 'px' }};
-                                --content-max-w: {{ options.content.maxWidth ~ 'px' }};
-                                --content-flex-grow: 0;
-                            {% endif %}
-                            {% if options.container.order is same as('reverse') %}
-                                --content-order: 2;
-                            {% elseif options.container.order is same as('default') %}
-                                --content-order: 1;
-                            {% endif %}
-                            {% if options.content.textAlign %}
-                                --content-text-align: {{ options.content.textAlign }};
-                            {% endif %}
-                            {% if options.content.paddingX %}
-                                --content-padding-x: {{ options.content.paddingX ~ 'px' }};
-                            {% endif %}
-                            {% if options.content.paddingY %}
-                                --content-padding-y: {{ options.content.paddingY ~ 'px' }};
-                            {% endif %}
-
-                            {# Slide headline vars #}
-                            {% if options.headline.fontSize %}
-                                --headline-font-size: {{ options.headline.fontSize ~ 'px' }};
-                            {% endif %}
-
-                            {# Slide description vars #}
-                            {% if options.description.fontSize %}
-                                --description-font-size: {{ options.description.fontSize ~ 'px' }};
-                            {% endif %}
-
-                            {# Slide cover vars #}
-                            {% if options.coverMedia %}
-                                {% for key, value in options.coverMedia|filter(v => v is not empty) %}
-                                    {{ '--cover-' ~ camel_to_kebab_case(key) }}: {{ value }};
-                                {% endfor %}
-                            {% endif %}
-
-                            {% block blur_elysium_slide_style_viewport_append %}{% endblock %}
-                        }
+                        {# Desktop override layer #}
+                        {% if device == 'desktop' and slideViewportStyles.desktop is defined %}
+                            {{ _self.outputViewportVars(slideViewportStyles.desktop) }}
+                        {% endif %}
                     }
-                {% endfor %}
+                {% else %}
+                    {# Storefront mode: @media queries for all devices #}
+                    {% for deviceBreakpoint, options in slideViewportStyles %}
+                        @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[deviceBreakpoint])~'px' }}) {
+                            {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
+                                {{ _self.outputViewportVars(options) }}
+
+                                {% block blur_elysium_slide_style_viewport_append %}{% endblock %}
+                            }
+                        }
+                    {% endfor %}
+                {% endif %}
             {% endif %}
 
             {% block blur_elysium_slide_style_append %}{% endblock %}
