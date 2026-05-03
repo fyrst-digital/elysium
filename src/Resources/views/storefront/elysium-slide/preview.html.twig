@@ -47,48 +47,13 @@
 
             var STYLE_MAPS = {
                 base: [
-                    { path: 'slide.paddingX', prop: '--slide-padding-x', unit: 'px' },
-                    { path: 'slide.paddingY', prop: '--slide-padding-y', unit: 'px' },
-                    { path: 'slide.alignItems', prop: '--slide-align-items' },
-                    { path: 'slide.justifyContent', prop: '--slide-justify-content' },
-                    { path: 'slide.borderRadius', prop: '--slide-border-radius', unit: 'px' },
-                    { path: 'container.gap', prop: '--container-gap', unit: 'px' },
-                    { path: 'container.paddingX', prop: '--container-padding-x', unit: 'px' },
-                    { path: 'container.paddingY', prop: '--container-padding-y', unit: 'px' },
-                    { path: 'container.borderRadius', prop: '--container-border-radius', unit: 'px' },
-                    { path: 'container.alignItems', prop: '--container-align-items' },
-                    { path: 'container.justifyContent', prop: '--container-justify-content' },
-                    { path: 'container.maxWidth', prop: '--container-max-width', unit: 'px', zeroValue: 'auto' },
-                    { path: 'container.columnWrap', prop: '--container-direction', transform: function (v) { return v === true ? 'column' : 'row'; } },
-                    { path: 'container.order', transform: function (v, styles) {
-                        if (v === 'reverse') {
-                            styles['--image-order'] = '1';
-                            styles['--content-order'] = '2';
-                        } else if (v === 'default') {
-                            styles['--image-order'] = '2';
-                            styles['--content-order'] = '1';
-                        }
-                    }},
-                    { path: 'image.maxWidth', prop: '--image-max-w', unit: 'px', zeroValue: 'auto' },
-                    { path: 'image.justifyContent', prop: '--image-justify-content' },
-                    { path: 'content.textAlign', prop: '--content-text-align' },
-                    { path: 'content.paddingX', prop: '--content-padding-x', unit: 'px' },
-                    { path: 'content.paddingY', prop: '--content-padding-y', unit: 'px' },
-                    { path: 'content.maxWidth', prop: '--content-max-w', unit: 'px', zeroValue: 'auto' },
-                    { path: 'content.maxWidth', transform: function (v, styles) {
-                        if (v === 0) {
-                            styles['--content-flex-basis'] = '0%';
-                            styles['--content-max-w'] = 'auto';
-                            styles['--content-flex-grow'] = '1';
-                        } else {
-                            styles['--content-flex-basis'] = v + 'px';
-                            styles['--content-max-w'] = v + 'px';
-                            styles['--content-flex-grow'] = '0';
-                        }
-                    }},
-                    { path: 'headline.fontSize', prop: '--headline-font-size', unit: 'px' },
-                    { path: 'description.fontSize', prop: '--description-font-size', unit: 'px' },
-                    { path: 'coverMedia', wildcard: true, prefix: '--cover-' }
+                    { path: 'slideSettings.slide.bgColor', prop: '--slide-bg-color' },
+                    { path: 'slideSettings.slide.bgGradient.startColor', prop: '--slide-gradient-color-start', transform: function (v) { return v || 'transparent'; } },
+                    { path: 'slideSettings.slide.bgGradient.endColor', prop: '--slide-gradient-color-end', transform: function (v) { return v || 'transparent'; } },
+                    { path: 'slideSettings.slide.bgGradient.gradientDeg', prop: '--slide-gradient-deg', transform: function (v) { return v !== null && v !== undefined ? v + 'deg' : undefined; } },
+                    { path: 'slideSettings.container.bgColor', prop: '--container-bg-color' },
+                    { path: 'slideSettings.slide.headline.color', prop: '--headline-color' },
+                    { path: 'slideSettings.slide.description.color', prop: '--description-color' }
                 ],
                 viewport: [
                     { path: 'slide.paddingX', prop: '--slide-padding-x', unit: 'px' },

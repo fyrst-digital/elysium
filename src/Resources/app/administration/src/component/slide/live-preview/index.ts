@@ -37,11 +37,13 @@ export default Component.wrapComponentConfig({
         },
     },
 
-    computed: {
-        previewUrl(): string {
-            return `http://localhost:8000/elysium-slide/preview/${this.slideId}?device=${this.device}`;
-        },
+    data() {
+        return {
+            iframeSrc: '',
+        };
+    },
 
+    computed: {
         previewStyles(): Record<string, string> {
             return {
                 display: 'flex',
@@ -55,6 +57,12 @@ export default Component.wrapComponentConfig({
     },
 
     watch: {
+        slideId: {
+            immediate: true,
+            handler() {
+                this.iframeSrc = `http://localhost:8000/elysium-slide/preview/${this.slideId}?device=${this.device}`;
+            },
+        },
         slide: {
             deep: true,
             handler() {
@@ -67,7 +75,11 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        sendSlideUpdate: debounce(function (this: any) {
+        onIframeLoad() {
+            this.sendSlideUpdateImmediate();
+        },
+
+        sendSlideUpdateImmediate() {
             const iframe = this.$refs.iframe as HTMLIFrameElement | undefined;
 
             if (!iframe || !iframe.contentWindow) {
@@ -79,6 +91,10 @@ export default Component.wrapComponentConfig({
                 device: this.device,
                 slide: JSON.parse(JSON.stringify(this.slide)),
             }, 'http://localhost:8000');
+        },
+
+        sendSlideUpdate: debounce(function (this: any) {
+            this.sendSlideUpdateImmediate();
         }, 300),
     },
 });
