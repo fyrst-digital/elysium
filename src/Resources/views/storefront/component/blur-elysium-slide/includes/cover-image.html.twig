@@ -51,7 +51,7 @@
                     {% endfor %}
                 {% endif %}
 
-                <img 
+                <img
                     src="{{slideCoverDefault.url}}"
                     {% if slideCoverDefault.thumbnails|length > 0 %}
                         srcset="{{create_srcset(slideCoverDefault.thumbnails)}}"
@@ -67,7 +67,8 @@
                     {% if slideCoverLabel %}
                         aria-label="{{ slideCoverLabel }}"
                     {% endif %}
-                    class="blur-elysium-slide-cover-image" 
+                    class="blur-elysium-slide-cover-image"
+                    data-elysium-slide-cover-image="{{ slideData.id }}"
                     style="border-radius: var(--slide-border-radius, 0px);"
                     {% if lazyLoading is same as(true) %}
                         loading="lazy"

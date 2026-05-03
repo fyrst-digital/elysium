@@ -2,6 +2,7 @@
     {% if slideData.slideCoverVideo %}
         <video autoplay muted loop
             class="blur-elysium-slide-cover-video"
+            data-elysium-slide-cover-video="{{ slideData.id }}"
             style="border-radius: var(--slide-border-radius, 0px);">
             <source src="{{slideData.slideCoverVideo.url}}" type="{{slideData.slideCoverVideo.mimeType}}">
         </video>

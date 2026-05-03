@@ -1,0 +1,350 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_body_skip_to_content %}{% endblock %}
+{% block base_esi_header %}{% endblock %}
+{% block base_navigation_styling %}{% endblock %}
+{% block base_flashbags %}{% endblock %}
+{% block base_add_to_cart_alert_template %}{% endblock %}
+{% block base_breadcrumb %}{% endblock %}
+{% block base_esi_footer %}{% endblock %}
+{% block base_scroll_up %}{% endblock %}
+{% block base_cookie_permission %}{% endblock %}
+{% block base_pseudo_modal %}{% endblock %}
+{% block base_speculation_rules %}{% endblock %}
+
+{% block base_body %}
+    <style>
+        html, body {
+                background-color: transparent !important;
+        }
+    </style>
+    {% set blurElysiumBreakpoints = {
+        mobile: 'xs',
+        tablet: 'md',
+        desktop: 'xl'
+    } %}
+
+    {% if config('BlurElysiumSlider.breakpoints') %}
+        {% set blurElysiumBreakpoints = blurElysiumBreakpoints|merge(
+            config('BlurElysiumSlider.breakpoints')
+        ) %}
+    {% endif %}
+
+    <div class="blur-elysium-slide-preview-wrapper p-4">
+        {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/slide.html.twig' with {
+            slideData: slideData,
+            lazyLoading: false
+        } %}
+    </div>
+
+    <script>
+        (function () {
+            // TODO: adjust origin validation for production / multi-domain setups
+            var ALLOWED_ORIGIN = 'http://localhost:8000';
+            var SLIDE_ID = '{{ slideData.id|escape('js') }}';
+
+            function getSlideElement() {
+                return document.querySelector('[data-elysium-slide-id="' + SLIDE_ID + '"]');
+            }
+
+            function applyStyleMap(source, mapper, styles) {
+                if (!source || typeof source !== 'object') {
+                    return;
+                }
+
+                Object.keys(mapper).forEach(function (key) {
+                    var value = source[key];
+                    if (value === undefined || value === null) {
+                        return;
+                    }
+
+                    var mapping = mapper[key];
+
+                    // Nested mapper object (no cssProp/unit/transform) → recurse
+                    if (typeof mapping === 'object' && !mapping.cssProp && !mapping.unit && !mapping.transform) {
+                        applyStyleMap(value, mapping, styles);
+                        return;
+                    }
+
+                    // Custom transform callback
+                    if (mapping.transform) {
+                        var result = mapping.transform(value, styles);
+                        if (result !== undefined && mapping.cssProp) {
+                            styles[mapping.cssProp] = result;
+                        }
+                        return;
+                    }
+
+                    // Unit suffix + CSS property name
+                    var cssValue = value;
+                    if (mapping.unit) {
+                        cssValue = value + mapping.unit;
+                    }
+                    if (mapping.cssProp) {
+                        styles[mapping.cssProp] = cssValue;
+                    }
+                });
+            }
+
+            function applyStyles(source, mapper, element) {
+                var styles = {};
+                applyStyleMap(source, mapper, styles);
+                Object.keys(styles).forEach(function (prop) {
+                    element.style.setProperty(prop, styles[prop]);
+                });
+            }
+
+            var BASE_STYLE_MAP = {
+                slideSettings: {
+                    slide: {
+                        bgColor: { cssProp: '--slide-bg-color' },
+                        bgGradient: {
+                            startColor: { cssProp: '--slide-gradient-color-start' },
+                            endColor: { cssProp: '--slide-gradient-color-end' },
+                            gradientDeg: {
+                                cssProp: '--slide-gradient-deg',
+                                transform: function (v) { return v + 'deg'; }
+                            }
+                        },
+                        headline: { color: { cssProp: '--headline-color' } },
+                        description: { color: { cssProp: '--description-color' } }
+                    },
+                    container: {
+                        bgColor: { cssProp: '--container-bg-color' }
+                    }
+                }
+            };
+
+            var VIEWPORT_STYLE_MAP = {
+                slide: {
+                    paddingX: { cssProp: '--slide-padding-x', unit: 'px' },
+                    paddingY: { cssProp: '--slide-padding-y', unit: 'px' },
+                    alignItems: { cssProp: '--slide-align-items' },
+                    justifyContent: { cssProp: '--slide-justify-content' },
+                    borderRadius: { cssProp: '--slide-border-radius', unit: 'px' }
+                },
+                container: {
+                    gap: { cssProp: '--container-gap', unit: 'px' },
+                    paddingX: { cssProp: '--container-padding-x', unit: 'px' },
+                    paddingY: { cssProp: '--container-padding-y', unit: 'px' },
+                    borderRadius: { cssProp: '--container-border-radius', unit: 'px' },
+                    alignItems: { cssProp: '--container-align-items' },
+                    justifyContent: { cssProp: '--container-justify-content' },
+                    maxWidth: {
+                        cssProp: '--container-max-width',
+                        transform: function (v) { return v === 0 ? 'auto' : v + 'px'; }
+                    },
+                    columnWrap: {
+                        cssProp: '--container-direction',
+                        transform: function (v) { return v === true ? 'column' : 'row'; }
+                    },
+                    order: {
+                        transform: function (v, styles) {
+                            if (v === 'reverse') {
+                                styles['--image-order'] = '1';
+                                styles['--content-order'] = '2';
+                            } else if (v === 'default') {
+                                styles['--image-order'] = '2';
+                                styles['--content-order'] = '1';
+                            }
+                        }
+                    }
+                },
+                image: {
+                    maxWidth: {
+                        cssProp: '--image-max-w',
+                        transform: function (v) { return v === 0 ? 'auto' : v + 'px'; }
+                    },
+                    justifyContent: { cssProp: '--image-justify-content' }
+                },
+                headline: {
+                    fontSize: { cssProp: '--headline-font-size', unit: 'px' }
+                },
+                description: {
+                    fontSize: { cssProp: '--description-font-size', unit: 'px' }
+                },
+                content: {
+                    textAlign: { cssProp: '--content-text-align' },
+                    paddingX: { cssProp: '--content-padding-x', unit: 'px' },
+                    paddingY: { cssProp: '--content-padding-y', unit: 'px' },
+                    maxWidth: {
+                        transform: function (v, styles) {
+                            if (v === 0) {
+                                styles['--content-flex-basis'] = '0%';
+                                styles['--content-max-w'] = 'auto';
+                                styles['--content-flex-grow'] = '1';
+                            } else {
+                                styles['--content-flex-basis'] = v + 'px';
+                                styles['--content-max-w'] = v + 'px';
+                                styles['--content-flex-grow'] = '0';
+                            }
+                        }
+                    }
+                },
+                coverMedia: {
+                    objectFit: { cssProp: '--cover-object-fit' },
+                    objectPosX: { cssProp: '--cover-object-pos-x' },
+                    objectPosY: { cssProp: '--cover-object-pos-y' }
+                }
+            };
+
+            function updateBaseStyles(slide, element) {
+                applyStyles(slide, BASE_STYLE_MAP, element);
+            }
+
+            function updateViewportStyles(slide, device, element) {
+                if (!slide.slideSettings || !slide.slideSettings.viewports || !slide.slideSettings.viewports[device]) {
+                    return;
+                }
+
+                applyStyles(slide.slideSettings.viewports[device], VIEWPORT_STYLE_MAP, element);
+            }
+
+            function updateTextContent(slide) {
+                var headlineEl = document.querySelector('[data-elysium-slide-headline]');
+                if (headlineEl && slide.title !== undefined) {
+                    headlineEl.innerHTML = slide.title;
+                }
+
+                var descriptionEl = document.querySelector('[data-elysium-slide-description]');
+                if (descriptionEl && slide.description !== undefined) {
+                    descriptionEl.innerHTML = slide.description;
+                }
+
+                var btnEl = document.querySelector('[data-elysium-slide-button]');
+                if (btnEl) {
+                    if (slide.buttonLabel !== undefined) {
+                        btnEl.textContent = slide.buttonLabel;
+                    }
+                    if (slide.url !== undefined) {
+                        btnEl.setAttribute('href', slide.url);
+                    }
+                }
+
+                var overlayEl = document.querySelector('[data-elysium-slide-link-overlay]');
+                if (overlayEl && slide.url !== undefined) {
+                    overlayEl.setAttribute('href', slide.url);
+                }
+            }
+
+            function updateCoverMedia(slide, element) {
+                var existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
+                var existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
+
+                if (existingPicture) {
+                    existingPicture.remove();
+                }
+                if (existingVideo) {
+                    existingVideo.remove();
+                }
+
+                var video = slide.slideCoverVideo;
+                if (video && video.url) {
+                    var videoEl = document.createElement('video');
+                    videoEl.setAttribute('autoplay', '');
+                    videoEl.setAttribute('muted', '');
+                    videoEl.setAttribute('loop', '');
+                    videoEl.className = 'blur-elysium-slide-cover-video';
+                    videoEl.setAttribute('data-elysium-slide-cover-video', SLIDE_ID);
+                    videoEl.style.borderRadius = 'var(--slide-border-radius, 0px)';
+
+                    var sourceEl = document.createElement('source');
+                    sourceEl.setAttribute('src', video.url);
+                    sourceEl.setAttribute('type', video.mimeType || 'video/mp4');
+                    videoEl.appendChild(sourceEl);
+
+                    element.insertBefore(videoEl, element.firstChild);
+                    return;
+                }
+
+                var covers = [];
+                if (slide.slideCoverMobile && slide.slideCoverMobile.url) {
+                    covers.push({ viewport: 'mobile', media: slide.slideCoverMobile });
+                }
+                if (slide.slideCoverTablet && slide.slideCoverTablet.url) {
+                    covers.push({ viewport: 'tablet', media: slide.slideCoverTablet });
+                }
+                if (slide.slideCover && slide.slideCover.url) {
+                    covers.push({ viewport: 'desktop', media: slide.slideCover });
+                }
+
+                if (covers.length === 0) {
+                    return;
+                }
+
+                var pictureEl = document.createElement('picture');
+                pictureEl.className = 'blur-elysium-slide-cover-picture';
+
+                covers.forEach(function (cover, index) {
+                    if (index < covers.length - 1) {
+                        var sourceEl = document.createElement('source');
+                        sourceEl.setAttribute('srcset', cover.media.url);
+                        sourceEl.setAttribute('media', 'screen and (min-width:1px)');
+                        pictureEl.appendChild(sourceEl);
+                    }
+                });
+
+                var defaultCover = covers[covers.length - 1].media;
+                var imgEl = document.createElement('img');
+                imgEl.setAttribute('src', defaultCover.url);
+                imgEl.setAttribute('width', '100%');
+                imgEl.setAttribute('height', '100%');
+                imgEl.className = 'blur-elysium-slide-cover-image';
+                imgEl.setAttribute('data-elysium-slide-cover-image', SLIDE_ID);
+                imgEl.style.borderRadius = 'var(--slide-border-radius, 0px)';
+
+                pictureEl.appendChild(imgEl);
+                element.insertBefore(pictureEl, element.firstChild);
+            }
+
+            function updateFocusImage(slide) {
+                var wrapper = document.querySelector('[data-elysium-slide-focus-image="' + SLIDE_ID + '"]');
+                var media = slide.presentationMedia;
+
+                if (media && media.url) {
+                    if (!wrapper) {
+                        var container = document.querySelector('[data-elysium-slide-container]');
+                        if (!container) {
+                            return;
+                        }
+
+                        wrapper = document.createElement('div');
+                        wrapper.className = 'blur-elysium-slide-image';
+                        wrapper.setAttribute('data-elysium-slide-focus-image', SLIDE_ID);
+                        container.appendChild(wrapper);
+                    }
+
+                    wrapper.innerHTML = '<img src="' + media.url + '" class="d-block img-fluid" style="width: var(--slide-focus-image-w, 100%);">';
+                } else if (wrapper) {
+                    wrapper.remove();
+                }
+            }
+
+            function updateSlide(data) {
+                var slide = data.slide;
+                var device = data.device || 'desktop';
+                var element = getSlideElement();
+
+                if (!element || !slide) {
+                    return;
+                }
+
+                updateBaseStyles(slide, element);
+                updateViewportStyles(slide, device, element);
+                updateTextContent(slide);
+                updateCoverMedia(slide, element);
+                updateFocusImage(slide);
+            }
+
+            window.addEventListener('message', function (event) {
+                if (event.origin !== ALLOWED_ORIGIN) {
+                    return;
+                }
+
+                if (event.data && event.data.type === 'elysium-slide-update') {
+                    updateSlide(event.data);
+                }
+            });
+        })();
+    </script>
+{% endblock %}

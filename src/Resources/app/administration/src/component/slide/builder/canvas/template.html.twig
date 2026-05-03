@@ -23,7 +23,8 @@
                     fontSize: '12px',
                     fontWeight: '500',
                     marginBottom: '4px',
-                }">
+                }"
+            >
                 Seitenverhaeltnis
             </div>
 
@@ -33,7 +34,8 @@
                     alignItems: 'center',
                     gap: '8px',
                     flexWrap: 'wrap'
-                }">
+                }"
+            >
 
                 <py-number-field
                     layout="row"
@@ -58,7 +60,8 @@
                         mobile: {
                             maxWidth: '120px',
                         }
-                    })"/>
+                    })"
+                />
             </div>
         </div>
 
@@ -70,7 +73,8 @@
                     fontSize: '12px',
                     fontWeight: '500',
                     marginBottom: '4px',
-                }">
+                }"
+            >
                 Breite
             </div>
 
@@ -80,7 +84,8 @@
                     alignItems: 'center',
                     gap: '8px',
                     flexWrap: 'wrap'
-                }">
+                }"
+            >
 
                 <py-number-field
                     layout="row"
@@ -100,14 +105,12 @@
 
     </div>
 
-
-
     <div :style="viewStyle(styles.canvas)">
-        <elysium-slide-preview 
+        <elysium-slide-live-preview
             v-if="slide"
+            :slide-id="slide.id"
             :slide="slide"
-            :device-view="device"
-            :show-preview-notice="false"
+            :device="device"
             :aspect-ratio-x="aspectRatioX"
             :aspect-ratio-y="aspectRatioY"
             :max-height="'none'"
