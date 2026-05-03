@@ -46,9 +46,9 @@ export default Component.wrapComponentConfig({
             return {
                 display: 'flex',
                 width: '100%',
+                height: '100%',
                 maxWidth: this.maxWidth ? `${this.maxWidth}px` : 'none',
                 maxHeight: this.maxHeight,
-                aspectRatio: `${this.aspectRatioX} / ${this.aspectRatioY}`,
                 overflow: 'hidden',
             };
         },
