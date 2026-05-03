@@ -501,6 +501,25 @@
                 }
             };
 
+            ElysiumSlidePreview.prototype.updateCssClass = function (slide) {
+                var element = this.getSlideElement();
+                if (!element) return;
+
+                var cssClass = slide.slideSettings && slide.slideSettings.slide && slide.slideSettings.slide.cssClass;
+                var newClasses = (cssClass || '').trim().split(/\s+/).filter(function (c) { return c.length > 0; });
+                var previousClasses = this._appliedCssClasses || [];
+
+                previousClasses.forEach(function (cls) {
+                    element.classList.remove(cls);
+                });
+
+                newClasses.forEach(function (cls) {
+                    element.classList.add(cls);
+                });
+
+                this._appliedCssClasses = newClasses;
+            };
+
             ElysiumSlidePreview.prototype.updateSlide = function (data) {
                 var slide = data.slide;
                 var device = data.device || 'desktop';
@@ -513,6 +532,7 @@
                 this.clearManagedStyles(element);
                 this.updateBaseStyles(slide, element);
                 this.updateViewportStyles(slide, device, element);
+                this.updateCssClass(slide);
                 this.updateHeadline(slide);
                 this.updateTextContent(slide);
                 this.updateButton(slide);
