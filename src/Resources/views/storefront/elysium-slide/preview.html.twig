@@ -253,20 +253,126 @@
                 if (descriptionEl && slide.description !== undefined) {
                     descriptionEl.innerHTML = slide.description;
                 }
+            };
 
-                var btnEl = document.querySelector('[data-elysium-slide-button]');
-                if (btnEl) {
-                    if (slide.buttonLabel !== undefined) {
-                        btnEl.textContent = slide.buttonLabel;
-                    }
-                    if (slide.url !== undefined) {
-                        btnEl.setAttribute('href', slide.url);
-                    }
-                }
+            ElysiumSlidePreview.prototype.updateButton = function (slide) {
+                var linking = slide.slideSettings && slide.slideSettings.slide && slide.slideSettings.slide.linking;
+                var overlay = linking && linking.overlay === true;
+                var url = slide.url;
+                var buttonLabel = slide.buttonLabel;
+                var slideEl = this.getSlideElement();
+                if (!slideEl) return;
 
-                var overlayEl = document.querySelector('[data-elysium-slide-link-overlay]');
-                if (overlayEl && slide.url !== undefined) {
-                    overlayEl.setAttribute('href', slide.url);
+                var existingOverlay = slideEl.querySelector('[data-elysium-slide-link-overlay]');
+                var existingActions = slideEl.querySelector('.blur-elysium-slide-actions');
+
+                if (overlay && url) {
+                    if (existingActions) existingActions.remove();
+
+                    if (!existingOverlay) {
+                        var overlayEl = document.createElement('a');
+                        overlayEl.className = 'blur-elysium-slide-link-overlay';
+                        overlayEl.setAttribute('data-elysium-slide-link-overlay', this.slideId);
+                        overlayEl.setAttribute('href', url);
+
+                        var headlineEl = document.querySelector('[data-elysium-slide-headline]');
+                        overlayEl.setAttribute('aria-label', headlineEl ? headlineEl.textContent || '' : '');
+
+                        if (linking.openExternal) {
+                            overlayEl.setAttribute('target', '_blank');
+                            overlayEl.setAttribute('rel', 'noopener');
+                        }
+
+                        var container = slideEl.querySelector('[data-elysium-slide-container]');
+                        if (container && container.nextSibling) {
+                            slideEl.insertBefore(overlayEl, container.nextSibling);
+                        } else if (container) {
+                            slideEl.appendChild(overlayEl);
+                        } else {
+                            slideEl.appendChild(overlayEl);
+                        }
+                    } else {
+                        existingOverlay.setAttribute('href', url);
+                        if (linking.openExternal) {
+                            existingOverlay.setAttribute('target', '_blank');
+                            existingOverlay.setAttribute('rel', 'noopener');
+                        } else {
+                            existingOverlay.removeAttribute('target');
+                            existingOverlay.removeAttribute('rel');
+                        }
+                    }
+                } else {
+                    if (existingOverlay) existingOverlay.remove();
+
+                    if (url && buttonLabel) {
+                        if (!existingActions) {
+                            var actionsEl = document.createElement('div');
+                            actionsEl.className = 'blur-elysium-slide-actions';
+
+                            var btnEl = document.createElement('a');
+                            btnEl.className = 'blur-elysium-slide-main-btn btn';
+                            btnEl.setAttribute('data-elysium-slide-button', this.slideId);
+                            btnEl.setAttribute('href', url);
+                            btnEl.setAttribute('title', buttonLabel);
+                            btnEl.textContent = buttonLabel;
+
+                            var appearance = (linking && linking.buttonAppearance) || 'primary';
+                            if (appearance) {
+                                btnEl.classList.add('btn-' + appearance);
+                            }
+
+                            var size = (linking && linking.buttonSize) || null;
+                            if (size && size !== 'md') {
+                                btnEl.classList.add('btn-' + size);
+                            }
+
+                            if (linking && linking.openExternal) {
+                                btnEl.setAttribute('target', '_blank');
+                                btnEl.setAttribute('rel', 'noopener');
+                            }
+
+                            actionsEl.appendChild(btnEl);
+
+                            var contentEl = slideEl.querySelector('.blur-elysium-slide-content');
+                            if (contentEl) {
+                                contentEl.appendChild(actionsEl);
+                            }
+                        } else {
+                            var btn = existingActions.querySelector('[data-elysium-slide-button]');
+                            if (btn) {
+                                btn.setAttribute('href', url);
+                                btn.setAttribute('title', buttonLabel);
+                                btn.textContent = buttonLabel;
+
+                                var classes = Array.from(btn.classList);
+                                classes.forEach(function (cls) {
+                                    if (cls !== 'btn' && cls !== 'blur-elysium-slide-main-btn' && cls.indexOf('btn-') === 0) {
+                                        btn.classList.remove(cls);
+                                    }
+                                });
+
+                                var appearance = (linking && linking.buttonAppearance) || 'primary';
+                                if (appearance) {
+                                    btn.classList.add('btn-' + appearance);
+                                }
+
+                                var size = (linking && linking.buttonSize) || null;
+                                if (size && size !== 'md') {
+                                    btn.classList.add('btn-' + size);
+                                }
+
+                                if (linking && linking.openExternal) {
+                                    btn.setAttribute('target', '_blank');
+                                    btn.setAttribute('rel', 'noopener');
+                                } else {
+                                    btn.removeAttribute('target');
+                                    btn.removeAttribute('rel');
+                                }
+                            }
+                        }
+                    } else {
+                        if (existingActions) existingActions.remove();
+                    }
                 }
             };
 
@@ -382,6 +488,7 @@
                 this.updateBaseStyles(slide, element);
                 this.updateViewportStyles(slide, device, element);
                 this.updateTextContent(slide);
+                this.updateButton(slide);
                 this.updateCoverMedia(slide, element);
                 this.updateFocusImage(slide);
             };
