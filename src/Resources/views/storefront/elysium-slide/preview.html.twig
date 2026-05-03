@@ -244,14 +244,40 @@
             };
 
             ElysiumSlidePreview.prototype.updateTextContent = function (slide) {
-                var headlineEl = document.querySelector('[data-elysium-slide-headline]');
-                if (headlineEl && slide.title !== undefined) {
-                    headlineEl.innerHTML = slide.title;
-                }
-
                 var descriptionEl = document.querySelector('[data-elysium-slide-description]');
                 if (descriptionEl && slide.description !== undefined) {
                     descriptionEl.innerHTML = slide.description;
+                }
+            };
+
+            ElysiumSlidePreview.prototype.updateHeadline = function (slide) {
+                var headlineElement = (slide.slideSettings && slide.slideSettings.slide && slide.slideSettings.slide.headline && slide.slideSettings.slide.headline.element) || 'div';
+                var title = slide.title || '';
+                var existingEl = document.querySelector('[data-elysium-slide-headline]');
+                var contentEl = document.querySelector('.blur-elysium-slide-content');
+
+                if (!title) {
+                    if (existingEl) existingEl.remove();
+                    return;
+                }
+
+                if (existingEl) {
+                    if (existingEl.tagName.toLowerCase() === headlineElement) {
+                        existingEl.innerHTML = title;
+                        return;
+                    }
+
+                    var newEl = document.createElement(headlineElement);
+                    newEl.className = existingEl.className;
+                    newEl.setAttribute('data-elysium-slide-headline', this.slideId);
+                    newEl.innerHTML = title;
+                    existingEl.parentNode.replaceChild(newEl, existingEl);
+                } else if (contentEl) {
+                    var el = document.createElement(headlineElement);
+                    el.className = 'blur-elysium-slide-headline';
+                    el.setAttribute('data-elysium-slide-headline', this.slideId);
+                    el.innerHTML = title;
+                    contentEl.insertBefore(el, contentEl.firstChild);
                 }
             };
 
@@ -487,6 +513,7 @@
                 this.clearManagedStyles(element);
                 this.updateBaseStyles(slide, element);
                 this.updateViewportStyles(slide, device, element);
+                this.updateHeadline(slide);
                 this.updateTextContent(slide);
                 this.updateButton(slide);
                 this.updateCoverMedia(slide, element);
