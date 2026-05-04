@@ -185,232 +185,93 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
     }
 
-    updateHeadline(slide) {
-        const headlineElement = slide.slideSettings?.slide?.headline?.element ?? 'div';
-        const title = slide.title ?? '';
-        const existingEl = document.querySelector('[data-elysium-slide-headline]');
-        const contentEl = document.querySelector('.blur-elysium-slide-content');
-
-        if (!title) {
-            if (existingEl) existingEl.remove();
-            return;
-        }
-
-        if (existingEl) {
-            if (existingEl.tagName.toLowerCase() === headlineElement) {
-                existingEl.innerHTML = title;
-                return;
-            }
-
-            const newEl = document.createElement(headlineElement);
-            newEl.className = existingEl.className;
-            newEl.setAttribute('data-elysium-slide-headline', this.slideId);
-            newEl.innerHTML = title;
-            existingEl.parentNode.replaceChild(newEl, existingEl);
-        } else if (contentEl) {
-            const el = document.createElement(headlineElement);
-            el.className = 'blur-elysium-slide-headline';
-            el.setAttribute('data-elysium-slide-headline', this.slideId);
-            el.innerHTML = title;
-            contentEl.insertBefore(el, contentEl.firstChild);
-        }
-    }
-
-    updateButton(slide) {
-        const linking = slide.slideSettings?.slide?.linking;
-        const overlay = linking?.overlay === true;
-        const url = slide.url;
-        const buttonLabel = slide.buttonLabel;
-        const slideEl = this.el;
-        if (!slideEl) return;
-
-        const existingOverlay = slideEl.querySelector('[data-elysium-slide-link-overlay]');
-        const existingActions = slideEl.querySelector('.blur-elysium-slide-actions');
-
-        if (overlay && url) {
-            if (existingActions) existingActions.remove();
-
-            if (!existingOverlay) {
-                const overlayEl = document.createElement('a');
-                overlayEl.className = 'blur-elysium-slide-link-overlay';
-                overlayEl.setAttribute('data-elysium-slide-link-overlay', this.slideId);
-                overlayEl.setAttribute('href', url);
-
-                const headlineEl = document.querySelector('[data-elysium-slide-headline]');
-                overlayEl.setAttribute('aria-label', headlineEl?.textContent ?? '');
-
-                if (linking?.openExternal) {
-                    overlayEl.setAttribute('target', '_blank');
-                    overlayEl.setAttribute('rel', 'noopener');
-                }
-
-                const container = slideEl.querySelector('[data-elysium-slide-container]');
-                if (container && container.nextSibling) {
-                    slideEl.insertBefore(overlayEl, container.nextSibling);
-                } else if (container) {
-                    slideEl.appendChild(overlayEl);
-                } else {
-                    slideEl.appendChild(overlayEl);
-                }
-            } else {
-                existingOverlay.setAttribute('href', url);
-                if (linking?.openExternal) {
-                    existingOverlay.setAttribute('target', '_blank');
-                    existingOverlay.setAttribute('rel', 'noopener');
-                } else {
-                    existingOverlay.removeAttribute('target');
-                    existingOverlay.removeAttribute('rel');
-                }
-            }
-        } else {
-            if (existingOverlay) existingOverlay.remove();
-
-            if (url && buttonLabel) {
-                if (!existingActions) {
-                    const actionsEl = document.createElement('div');
-                    actionsEl.className = 'blur-elysium-slide-actions';
-
-                    const btnEl = document.createElement('a');
-                    btnEl.className = 'blur-elysium-slide-main-btn btn';
-                    btnEl.setAttribute('data-elysium-slide-button', this.slideId);
-                    btnEl.setAttribute('href', url);
-                    btnEl.setAttribute('title', buttonLabel);
-                    btnEl.textContent = buttonLabel;
-
-                    const appearance = linking?.buttonAppearance ?? 'primary';
-                    if (appearance) {
-                        btnEl.classList.add(`btn-${appearance}`);
-                    }
-
-                    const size = linking?.buttonSize ?? null;
-                    if (size && size !== 'md') {
-                        btnEl.classList.add(`btn-${size}`);
-                    }
-
-                    if (linking?.openExternal) {
-                        btnEl.setAttribute('target', '_blank');
-                        btnEl.setAttribute('rel', 'noopener');
-                    }
-
-                    actionsEl.appendChild(btnEl);
-
-                    const contentEl = slideEl.querySelector('.blur-elysium-slide-content');
-                    if (contentEl) {
-                        contentEl.appendChild(actionsEl);
-                    }
-                } else {
-                    const btn = existingActions.querySelector('[data-elysium-slide-button]');
-                    if (btn) {
-                        btn.setAttribute('href', url);
-                        btn.setAttribute('title', buttonLabel);
-                        btn.textContent = buttonLabel;
-
-                        Array.from(btn.classList).forEach((cls) => {
-                            if (cls !== 'btn' && cls !== 'blur-elysium-slide-main-btn' && cls.startsWith('btn-')) {
-                                btn.classList.remove(cls);
-                            }
-                        });
-
-                        const appearance = linking?.buttonAppearance ?? 'primary';
-                        if (appearance) {
-                            btn.classList.add(`btn-${appearance}`);
-                        }
-
-                        const size = linking?.buttonSize ?? null;
-                        if (size && size !== 'md') {
-                            btn.classList.add(`btn-${size}`);
-                        }
-
-                        if (linking?.openExternal) {
-                            btn.setAttribute('target', '_blank');
-                            btn.setAttribute('rel', 'noopener');
-                        } else {
-                            btn.removeAttribute('target');
-                            btn.removeAttribute('rel');
-                        }
-                    }
-                }
-            } else {
-                if (existingActions) existingActions.remove();
-            }
-        }
-    }
-
-    _removeExistingCoverMedia(element) {
-        const existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
-        const existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
-        if (existingPicture) existingPicture.remove();
-        if (existingVideo) existingVideo.remove();
-    }
-
-    _createVideoElement(video) {
-        const el = document.createElement('video');
-        el.setAttribute('autoplay', '');
-        el.setAttribute('muted', '');
-        el.setAttribute('loop', '');
-        el.className = 'blur-elysium-slide-cover-video';
-        el.setAttribute('data-elysium-slide-cover-video', this.slideId);
-        el.style.borderRadius = 'var(--slide-border-radius, 0px)';
-
-        const source = document.createElement('source');
-        source.setAttribute('src', video.url);
-        source.setAttribute('type', video.mimeType || 'video/mp4');
-        el.appendChild(source);
-
-        return el;
-    }
-
-    _createPictureElement(covers) {
-        const pictureEl = document.createElement('picture');
-        pictureEl.className = 'blur-elysium-slide-cover-picture';
-
-        covers.forEach((cover, index) => {
-            if (index < covers.length - 1) {
-                const sourceEl = document.createElement('source');
-                sourceEl.setAttribute('srcset', cover.media.url);
-                sourceEl.setAttribute('media', 'screen and (min-width:1px)');
-                pictureEl.appendChild(sourceEl);
-            }
+    async _fetchPartial(partial, slide) {
+        const url = `/elysium-slide/preview/${partial}/${this.slideId}`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ slide }),
         });
 
-        const defaultCover = covers[covers.length - 1].media;
-        const imgEl = document.createElement('img');
-        imgEl.setAttribute('src', defaultCover.url);
-        imgEl.setAttribute('width', '100%');
-        imgEl.setAttribute('height', '100%');
-        imgEl.className = 'blur-elysium-slide-cover-image';
-        imgEl.setAttribute('data-elysium-slide-cover-image', this.slideId);
-        imgEl.style.borderRadius = 'var(--slide-border-radius, 0px)';
-        pictureEl.appendChild(imgEl);
+        if (!response.ok) {
+            throw new Error(`Partial ${partial} failed: ${response.status}`);
+        }
 
-        return pictureEl;
+        return response.text();
     }
 
-    updateCoverMedia(slide, element) {
-        this._removeExistingCoverMedia(element);
+    _showError(message) {
+        const existing = this.el.querySelector('.blur-elysium-slide-preview-error');
+        if (existing) existing.remove();
 
-        const video = slide.slideCoverVideo;
-        if (video?.url) {
-            element.insertBefore(this._createVideoElement(video), element.firstChild);
-            return;
-        }
+        const errorEl = document.createElement('div');
+        errorEl.className = 'blur-elysium-slide-preview-error';
+        errorEl.textContent = message;
+        errorEl.style.cssText = 'position:absolute;top:8px;left:8px;right:8px;z-index:9999;padding:8px 12px;background:#dc3545;color:#fff;border-radius:4px;font-size:12px;font-family:sans-serif;';
+        this.el.prepend(errorEl);
+        setTimeout(() => errorEl.remove(), 5000);
+    }
 
-        const covers = [];
-        if (slide.slideCoverMobile?.url) {
-            covers.push({ viewport: 'mobile', media: slide.slideCoverMobile });
+    async updateHeadline(slide) {
+        try {
+            const html = await this._fetchPartial('headline', slide);
+            const existingEl = document.querySelector('[data-elysium-slide-headline]');
+            if (existingEl) {
+                if (html.trim()) {
+                    existingEl.outerHTML = html;
+                } else {
+                    existingEl.remove();
+                }
+            } else if (html.trim()) {
+                const contentEl = document.querySelector('.blur-elysium-slide-content');
+                if (contentEl) {
+                    contentEl.insertAdjacentHTML('afterbegin', html);
+                }
+            }
+        } catch (err) {
+            this._showError('Failed to update headline preview');
+            console.error(err);
         }
-        if (slide.slideCoverTablet?.url) {
-            covers.push({ viewport: 'tablet', media: slide.slideCoverTablet });
-        }
-        if (slide.slideCover?.url) {
-            covers.push({ viewport: 'desktop', media: slide.slideCover });
-        }
+    }
 
-        if (covers.length === 0) {
-            return;
+    async updateButton(slide) {
+        try {
+            const html = await this._fetchPartial('button', slide);
+            const existingActions = document.querySelector('.blur-elysium-slide-actions');
+            if (existingActions) {
+                if (html.trim()) {
+                    existingActions.outerHTML = html;
+                } else {
+                    existingActions.remove();
+                }
+            } else if (html.trim()) {
+                const contentEl = document.querySelector('.blur-elysium-slide-content');
+                if (contentEl) {
+                    contentEl.insertAdjacentHTML('beforeend', html);
+                }
+            }
+        } catch (err) {
+            this._showError('Failed to update button preview');
+            console.error(err);
         }
+    }
 
-        element.insertBefore(this._createPictureElement(covers), element.firstChild);
+    async updateCoverMedia(slide, element) {
+        try {
+            const html = await this._fetchPartial('cover', slide);
+            const existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
+            const existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
+
+            if (existingPicture) existingPicture.remove();
+            if (existingVideo) existingVideo.remove();
+
+            if (html.trim()) {
+                element.insertAdjacentHTML('afterbegin', html);
+            }
+        } catch (err) {
+            this._showError('Failed to update cover preview');
+            console.error(err);
+        }
     }
 
     updateFocusImage(slide) {
@@ -455,7 +316,7 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         this._appliedCssClasses = newClasses;
     }
 
-    updateSlide(data) {
+    async updateSlide(data) {
         const slide = data.slide;
         const device = data.device || 'desktop';
         const element = this.el;
@@ -468,19 +329,22 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         this.updateBaseStyles(slide, element);
         this.updateViewportStyles(slide, device, element);
         this.updateCssClass(slide);
-        this.updateHeadline(slide);
         this.updateTextContent(slide);
-        this.updateButton(slide);
-        this.updateCoverMedia(slide, element);
         this.updateFocusImage(slide);
+
+        await Promise.all([
+            this.updateHeadline(slide),
+            this.updateButton(slide),
+            this.updateCoverMedia(slide, element),
+        ]);
     }
 
-    _handleMessage(event) {
+    async _handleMessage(event) {
         if (!this.allowedOrigins.includes(event.origin)) {
             return;
         }
         if (event.data?.type === 'elysium-slide-update') {
-            this.updateSlide(event.data);
+            await this.updateSlide(event.data);
         }
     }
 }

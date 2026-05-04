@@ -1,0 +1,22 @@
+{% set linking = slideData.slideSettings.slide.linking %}
+{% set actionMainUrl = slideData.url|default('') %}
+{% set actionMainLabel = slideData.buttonLabel|default('') %}
+{% set showActions = actionMainUrl and linking.overlay is not same as(true) and actionMainLabel %}
+
+{% if showActions %}
+    {% set mainBtnClasses = [
+        'blur-elysium-slide-main-btn',
+        'btn',
+        linking.buttonAppearance ? 'btn-' ~ linking.buttonAppearance : null,
+        linking.buttonSize and linking.buttonSize != 'md' ? 'btn-' ~ linking.buttonSize : null
+    ] %}
+    <div class="blur-elysium-slide-actions">
+        <a href="{{ actionMainUrl }}"
+            title="{{ actionMainLabel }}"
+            class="{{ mainBtnClasses|join(' ') }}"
+            data-elysium-slide-button="{{ slideData.id }}"
+            {% if linking.openExternal is same as(true) %}target="_blank" rel="noopener"{% endif %}>
+            {{ actionMainLabel }}
+        </a>
+    </div>
+{% endif %}

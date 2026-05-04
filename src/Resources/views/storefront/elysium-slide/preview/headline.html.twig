@@ -1,0 +1,8 @@
+{% set headlineElement = slideData.slideSettings.slide.headline.element|default('div') %}
+{% set headlineContent = slideData.title|default('') %}
+
+{% if headlineContent %}
+    <{{headlineElement}} class="blur-elysium-slide-headline" data-elysium-slide-headline="{{ slideData.id }}">
+        {{ headlineContent|raw }}
+    </{{headlineElement}}>
+{% endif %}

@@ -1,0 +1,74 @@
+{% set blurElysiumBreakpoints = {
+    mobile: 'xs',
+    tablet: 'md',
+    desktop: 'xl'
+} %}
+
+{% if config('BlurElysiumSlider.breakpoints') %}
+    {% set blurElysiumBreakpoints = blurElysiumBreakpoints|merge(config('BlurElysiumSlider.breakpoints')) %}
+{% endif %}
+
+{% set slideCovers = {} %}
+
+{% if slideData.slideCoverMobile %}
+    {% set slideCovers = slideCovers|merge({mobile: slideData.slideCoverMobile}) %}
+{% endif %}
+
+{% if slideData.slideCoverTablet %}
+    {% set slideCovers = slideCovers|merge({tablet: slideData.slideCoverTablet}) %}
+{% endif %}
+
+{% if slideData.slideCover %}
+    {% set slideCovers = slideCovers|merge({desktop: slideData.slideCover}) %}
+{% endif %}
+
+{% if slideData.slideCoverVideo %}
+    <video autoplay muted loop
+        class="blur-elysium-slide-cover-video"
+        data-elysium-slide-cover-video="{{ slideData.id }}"
+        style="border-radius: var(--slide-border-radius, 0px);">
+        <source src="{{slideData.slideCoverVideo.url}}" type="{{slideData.slideCoverVideo.mimeType}}">
+    </video>
+{% elseif slideCovers|length > 0 %}
+    {% set slideCoverDefault = slideCovers|first %}
+    {% set slideCoverAlt = slideCoverDefault.alt|default(null) %}
+    {% set slideCoverTitle = slideCoverDefault.title|default(null) %}
+    {% set slideCoverLabel = slideCoverDefault.alt|default(null) %}
+
+    {% if slideData.contentSettings.slideCover.alt %}
+        {% set slideCoverAlt = slideData.contentSettings.slideCover.alt %}
+        {% set slideCoverLabel = slideData.contentSettings.slideCover.alt %}
+    {% endif %}
+
+    {% if slideData.contentSettings.slideCover.title %}
+        {% set slideCoverTitle = slideData.contentSettings.slideCover.title %}
+    {% endif %}
+
+    <picture class="blur-elysium-slide-cover-picture">
+        {% if slideCovers|length > 1 %}
+            {% for viewport, media in slideCovers|reverse %}
+                <source
+                    {% if media.thumbnails|length > 0 %}
+                        srcset="{{create_srcset(media.thumbnails)}}"
+                    {% else %}
+                        srcset="{{media.url}}"
+                    {% endif %}
+                    media="screen and (min-width:{{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[viewport])~'px' }})" />
+            {% endfor %}
+        {% endif %}
+
+        <img
+            src="{{slideCoverDefault.url}}"
+            {% if slideCoverDefault.thumbnails|length > 0 %}
+                srcset="{{create_srcset(slideCoverDefault.thumbnails)}}"
+            {% endif %}
+            width="100%"
+            height="100%"
+            {% if slideCoverAlt %}alt="{{ slideCoverAlt }}"{% endif %}
+            {% if slideCoverTitle %}title="{{ slideCoverTitle }}"{% endif %}
+            {% if slideCoverLabel %}aria-label="{{ slideCoverLabel }}"{% endif %}
+            class="blur-elysium-slide-cover-image"
+            data-elysium-slide-cover-image="{{ slideData.id }}"
+            style="border-radius: var(--slide-border-radius, 0px);" />
+    </picture>
+{% endif %}
