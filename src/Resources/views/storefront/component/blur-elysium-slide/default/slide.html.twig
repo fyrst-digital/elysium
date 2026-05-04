@@ -42,6 +42,7 @@
 
         <div class="{{ slideClasses|join(' ') }}{% if slideData.slideSettings.slide.cssClass %} {{ slideData.slideSettings.slide.cssClass }}{% endif %}"
             data-elysium-slide-id="{{ slideData.id }}"
+            {% if isPreviewMode is defined and isPreviewMode %}data-elysium-slide-preview data-elysium-slide-preview-allowed-origin="{{ adminOrigin|default('') }}"{% endif %}
             style="aspect-ratio: var(--slide-aspect-ratio, auto);">
 
             {% block blur_elysium_slide_prepend %}{% endblock %}

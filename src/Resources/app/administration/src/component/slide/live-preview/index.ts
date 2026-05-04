@@ -83,7 +83,8 @@ export default Component.wrapComponentConfig({
 
     methods: {
         buildIframeSrc(cacheBuster?: number) {
-            let src = `http://localhost:8000/elysium-slide/preview/${this.slideId}?device=${this.device}`;
+            const adminOrigin = encodeURIComponent(window.location.origin);
+            let src = `http://localhost:8000/elysium-slide/preview/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}`;
             if (cacheBuster) {
                 src += `&t=${cacheBuster}`;
             }
