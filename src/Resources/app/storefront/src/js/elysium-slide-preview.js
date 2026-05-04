@@ -2,76 +2,66 @@ const { PluginBaseClass } = window;
 
 export default class ElysiumSlidePreview extends PluginBaseClass {
     static options = {
-        allowedOrigin: null,
+        allowedOrigin: [],
     };
 
-    init() {
-        this.slideId = this.el.dataset.elysiumSlideId;
-        this.allowedOrigin = this.el.dataset.elysiumSlidePreviewAllowedOrigin || this.options.allowedOrigin || window.location.origin;
-        this._appliedCssClasses = [];
+    _styleMaps = {
+        base: [
+            { path: 'slideSettings.slide.bgColor', prop: '--slide-bg-color' },
+            { path: 'slideSettings.slide.bgGradient.startColor', prop: '--slide-gradient-color-start', transform: (v) => v ?? 'transparent' },
+            { path: 'slideSettings.slide.bgGradient.endColor', prop: '--slide-gradient-color-end', transform: (v) => v ?? 'transparent' },
+            { path: 'slideSettings.slide.bgGradient.gradientDeg', prop: '--slide-gradient-deg', transform: (v) => v != null ? `${v}deg` : undefined },
+            { path: 'slideSettings.container.bgColor', prop: '--container-bg-color' },
+            { path: 'slideSettings.slide.headline.color', prop: '--headline-color' },
+            { path: 'slideSettings.slide.description.color', prop: '--description-color' },
+        ],
+        viewport: [
+            { path: 'slide.paddingX', prop: '--slide-padding-x', unit: 'px' },
+            { path: 'slide.paddingY', prop: '--slide-padding-y', unit: 'px' },
+            { path: 'slide.alignItems', prop: '--slide-align-items' },
+            { path: 'slide.justifyContent', prop: '--slide-justify-content' },
+            { path: 'slide.borderRadius', prop: '--slide-border-radius', unit: 'px' },
+            { path: 'container.gap', prop: '--container-gap', unit: 'px' },
+            { path: 'container.paddingX', prop: '--container-padding-x', unit: 'px' },
+            { path: 'container.paddingY', prop: '--container-padding-y', unit: 'px' },
+            { path: 'container.borderRadius', prop: '--container-border-radius', unit: 'px' },
+            { path: 'container.alignItems', prop: '--container-align-items' },
+            { path: 'container.justifyContent', prop: '--container-justify-content' },
+            { path: 'container.maxWidth', prop: '--container-max-width', unit: 'px', zeroValue: 'auto' },
+            { path: 'container.columnWrap', prop: '--container-direction', transform: (v) => v === true ? 'column' : 'row' },
+            { path: 'container.order', transform: (v, styles) => {
+                if (v === 'reverse') {
+                    styles['--image-order'] = '1';
+                    styles['--content-order'] = '2';
+                } else if (v === 'default') {
+                    styles['--image-order'] = '2';
+                    styles['--content-order'] = '1';
+                }
+            }},
+            { path: 'image.maxWidth', prop: '--image-max-w', unit: 'px', zeroValue: 'auto' },
+            { path: 'image.justifyContent', prop: '--image-justify-content' },
+            { path: 'content.textAlign', prop: '--content-text-align' },
+            { path: 'content.paddingX', prop: '--content-padding-x', unit: 'px' },
+            { path: 'content.paddingY', prop: '--content-padding-y', unit: 'px' },
+            { path: 'content.maxWidth', prop: '--content-max-w', unit: 'px', zeroValue: 'auto' },
+            { path: 'content.maxWidth', transform: (v, styles) => {
+                if (v === 0) {
+                    styles['--content-flex-basis'] = '0%';
+                    styles['--content-max-w'] = 'auto';
+                    styles['--content-flex-grow'] = '1';
+                } else {
+                    styles['--content-flex-basis'] = `${v}px`;
+                    styles['--content-max-w'] = `${v}px`;
+                    styles['--content-flex-grow'] = '0';
+                }
+            }},
+            { path: 'headline.fontSize', prop: '--headline-font-size', unit: 'px' },
+            { path: 'description.fontSize', prop: '--description-font-size', unit: 'px' },
+            { path: 'coverMedia', wildcard: true, prefix: '--cover-' },
+        ],
+    };
 
-        this._styleMaps = {
-            base: [
-                { path: 'slideSettings.slide.bgColor', prop: '--slide-bg-color' },
-                { path: 'slideSettings.slide.bgGradient.startColor', prop: '--slide-gradient-color-start', transform: (v) => v || 'transparent' },
-                { path: 'slideSettings.slide.bgGradient.endColor', prop: '--slide-gradient-color-end', transform: (v) => v || 'transparent' },
-                { path: 'slideSettings.slide.bgGradient.gradientDeg', prop: '--slide-gradient-deg', transform: (v) => v !== null && v !== undefined ? `${v}deg` : undefined },
-                { path: 'slideSettings.container.bgColor', prop: '--container-bg-color' },
-                { path: 'slideSettings.slide.headline.color', prop: '--headline-color' },
-                { path: 'slideSettings.slide.description.color', prop: '--description-color' },
-            ],
-            viewport: [
-                { path: 'slide.paddingX', prop: '--slide-padding-x', unit: 'px' },
-                { path: 'slide.paddingY', prop: '--slide-padding-y', unit: 'px' },
-                { path: 'slide.alignItems', prop: '--slide-align-items' },
-                { path: 'slide.justifyContent', prop: '--slide-justify-content' },
-                { path: 'slide.borderRadius', prop: '--slide-border-radius', unit: 'px' },
-                { path: 'container.gap', prop: '--container-gap', unit: 'px' },
-                { path: 'container.paddingX', prop: '--container-padding-x', unit: 'px' },
-                { path: 'container.paddingY', prop: '--container-padding-y', unit: 'px' },
-                { path: 'container.borderRadius', prop: '--container-border-radius', unit: 'px' },
-                { path: 'container.alignItems', prop: '--container-align-items' },
-                { path: 'container.justifyContent', prop: '--container-justify-content' },
-                { path: 'container.maxWidth', prop: '--container-max-width', unit: 'px', zeroValue: 'auto' },
-                { path: 'container.columnWrap', prop: '--container-direction', transform: (v) => v === true ? 'column' : 'row' },
-                { path: 'container.order', transform: (v, styles) => {
-                    if (v === 'reverse') {
-                        styles['--image-order'] = '1';
-                        styles['--content-order'] = '2';
-                    } else if (v === 'default') {
-                        styles['--image-order'] = '2';
-                        styles['--content-order'] = '1';
-                    }
-                }},
-                { path: 'image.maxWidth', prop: '--image-max-w', unit: 'px', zeroValue: 'auto' },
-                { path: 'image.justifyContent', prop: '--image-justify-content' },
-                { path: 'content.textAlign', prop: '--content-text-align' },
-                { path: 'content.paddingX', prop: '--content-padding-x', unit: 'px' },
-                { path: 'content.paddingY', prop: '--content-padding-y', unit: 'px' },
-                { path: 'content.maxWidth', prop: '--content-max-w', unit: 'px', zeroValue: 'auto' },
-                { path: 'content.maxWidth', transform: (v, styles) => {
-                    if (v === 0) {
-                        styles['--content-flex-basis'] = '0%';
-                        styles['--content-max-w'] = 'auto';
-                        styles['--content-flex-grow'] = '1';
-                    } else {
-                        styles['--content-flex-basis'] = `${v}px`;
-                        styles['--content-max-w'] = `${v}px`;
-                        styles['--content-flex-grow'] = '0';
-                    }
-                }},
-                { path: 'headline.fontSize', prop: '--headline-font-size', unit: 'px' },
-                { path: 'description.fontSize', prop: '--description-font-size', unit: 'px' },
-                { path: 'coverMedia', wildcard: true, prefix: '--cover-' },
-            ],
-        };
-
-        this._managedProps = this._buildManagedProps();
-
-        window.addEventListener('message', this._handleMessage.bind(this));
-    }
-
-    _buildManagedProps() {
+    _managedProps = (() => {
         const props = new Set();
 
         const collect = (mappings) => {
@@ -87,16 +77,22 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         ['--image-order', '--content-order', '--content-flex-basis', '--content-max-w', '--content-flex-grow'].forEach((p) => props.add(p));
 
         return Array.from(props);
+    })();
+
+    _appliedCssClasses = [];
+
+    init() {
+        this.slideId = this.el.dataset.elysiumSlideId;
+        const origins = this.options.allowedOrigin;
+        this.allowedOrigins = Array.isArray(origins) && origins.length > 0
+            ? origins
+            : [window.location.origin];
+
+        window.addEventListener('message', this._handleMessage.bind(this));
     }
 
     _getPath(obj, path) {
-        const parts = path.split('.');
-        let current = obj;
-        for (let i = 0; i < parts.length; i++) {
-            if (current === null || current === undefined) return undefined;
-            current = current[parts[i]];
-        }
-        return current;
+        return path.split('.').reduce((current, part) => current?.[part], obj);
     }
 
     _camelToKebab(key) {
@@ -116,8 +112,7 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
 
             if (mapping.wildcard) {
                 if (typeof value !== 'object') return;
-                Object.keys(value).forEach((subKey) => {
-                    const subValue = value[subKey];
+                Object.entries(value).forEach(([subKey, subValue]) => {
                     if (subValue !== undefined && subValue !== null && subValue !== '') {
                         styles[mapping.prefix + this._camelToKebab(subKey)] = subValue;
                     }
@@ -157,8 +152,8 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
     _applyMappedStyles(source, mapper, element) {
         const styles = {};
         this._applyStyleMap(source, mapper, styles);
-        Object.keys(styles).forEach((prop) => {
-            element.style.setProperty(prop, styles[prop]);
+        Object.entries(styles).forEach(([prop, value]) => {
+            element.style.setProperty(prop, value);
         });
     }
 
@@ -167,7 +162,7 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
     }
 
     updateViewportStyles(slide, device, element) {
-        const viewports = slide.slideSettings && slide.slideSettings.viewports;
+        const viewports = slide.slideSettings?.viewports;
         if (!viewports) {
             return;
         }
@@ -191,8 +186,8 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
     }
 
     updateHeadline(slide) {
-        const headlineElement = (slide.slideSettings && slide.slideSettings.slide && slide.slideSettings.slide.headline && slide.slideSettings.slide.headline.element) || 'div';
-        const title = slide.title || '';
+        const headlineElement = slide.slideSettings?.slide?.headline?.element ?? 'div';
+        const title = slide.title ?? '';
         const existingEl = document.querySelector('[data-elysium-slide-headline]');
         const contentEl = document.querySelector('.blur-elysium-slide-content');
 
@@ -222,8 +217,8 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
     }
 
     updateButton(slide) {
-        const linking = slide.slideSettings && slide.slideSettings.slide && slide.slideSettings.slide.linking;
-        const overlay = linking && linking.overlay === true;
+        const linking = slide.slideSettings?.slide?.linking;
+        const overlay = linking?.overlay === true;
         const url = slide.url;
         const buttonLabel = slide.buttonLabel;
         const slideEl = this.el;
@@ -242,9 +237,9 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
                 overlayEl.setAttribute('href', url);
 
                 const headlineEl = document.querySelector('[data-elysium-slide-headline]');
-                overlayEl.setAttribute('aria-label', headlineEl ? headlineEl.textContent || '' : '');
+                overlayEl.setAttribute('aria-label', headlineEl?.textContent ?? '');
 
-                if (linking.openExternal) {
+                if (linking?.openExternal) {
                     overlayEl.setAttribute('target', '_blank');
                     overlayEl.setAttribute('rel', 'noopener');
                 }
@@ -259,7 +254,7 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
                 }
             } else {
                 existingOverlay.setAttribute('href', url);
-                if (linking.openExternal) {
+                if (linking?.openExternal) {
                     existingOverlay.setAttribute('target', '_blank');
                     existingOverlay.setAttribute('rel', 'noopener');
                 } else {
@@ -282,17 +277,17 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
                     btnEl.setAttribute('title', buttonLabel);
                     btnEl.textContent = buttonLabel;
 
-                    const appearance = (linking && linking.buttonAppearance) || 'primary';
+                    const appearance = linking?.buttonAppearance ?? 'primary';
                     if (appearance) {
                         btnEl.classList.add(`btn-${appearance}`);
                     }
 
-                    const size = (linking && linking.buttonSize) || null;
+                    const size = linking?.buttonSize ?? null;
                     if (size && size !== 'md') {
                         btnEl.classList.add(`btn-${size}`);
                     }
 
-                    if (linking && linking.openExternal) {
+                    if (linking?.openExternal) {
                         btnEl.setAttribute('target', '_blank');
                         btnEl.setAttribute('rel', 'noopener');
                     }
@@ -310,24 +305,23 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
                         btn.setAttribute('title', buttonLabel);
                         btn.textContent = buttonLabel;
 
-                        const classes = Array.from(btn.classList);
-                        classes.forEach((cls) => {
-                            if (cls !== 'btn' && cls !== 'blur-elysium-slide-main-btn' && cls.indexOf('btn-') === 0) {
+                        Array.from(btn.classList).forEach((cls) => {
+                            if (cls !== 'btn' && cls !== 'blur-elysium-slide-main-btn' && cls.startsWith('btn-')) {
                                 btn.classList.remove(cls);
                             }
                         });
 
-                        const appearance = (linking && linking.buttonAppearance) || 'primary';
+                        const appearance = linking?.buttonAppearance ?? 'primary';
                         if (appearance) {
                             btn.classList.add(`btn-${appearance}`);
                         }
 
-                        const size = (linking && linking.buttonSize) || null;
+                        const size = linking?.buttonSize ?? null;
                         if (size && size !== 'md') {
                             btn.classList.add(`btn-${size}`);
                         }
 
-                        if (linking && linking.openExternal) {
+                        if (linking?.openExternal) {
                             btn.setAttribute('target', '_blank');
                             btn.setAttribute('rel', 'noopener');
                         } else {
@@ -396,19 +390,19 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         this._removeExistingCoverMedia(element);
 
         const video = slide.slideCoverVideo;
-        if (video && video.url) {
+        if (video?.url) {
             element.insertBefore(this._createVideoElement(video), element.firstChild);
             return;
         }
 
         const covers = [];
-        if (slide.slideCoverMobile && slide.slideCoverMobile.url) {
+        if (slide.slideCoverMobile?.url) {
             covers.push({ viewport: 'mobile', media: slide.slideCoverMobile });
         }
-        if (slide.slideCoverTablet && slide.slideCoverTablet.url) {
+        if (slide.slideCoverTablet?.url) {
             covers.push({ viewport: 'tablet', media: slide.slideCoverTablet });
         }
-        if (slide.slideCover && slide.slideCover.url) {
+        if (slide.slideCover?.url) {
             covers.push({ viewport: 'desktop', media: slide.slideCover });
         }
 
@@ -423,7 +417,7 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         const wrapper = document.querySelector(`[data-elysium-slide-focus-image="${this.slideId}"]`);
         const media = slide.presentationMedia;
 
-        if (media && media.url) {
+        if (media?.url) {
             if (!wrapper) {
                 const container = document.querySelector('[data-elysium-slide-container]');
                 if (!container) {
@@ -446,9 +440,9 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         const element = this.el;
         if (!element) return;
 
-        const cssClass = slide.slideSettings && slide.slideSettings.slide && slide.slideSettings.slide.cssClass;
-        const newClasses = (cssClass || '').trim().split(/\s+/).filter((c) => c.length > 0);
-        const previousClasses = this._appliedCssClasses || [];
+        const cssClass = slide.slideSettings?.slide?.cssClass;
+        const newClasses = (cssClass ?? '').trim().split(/\s+/).filter((c) => c.length > 0);
+        const previousClasses = this._appliedCssClasses;
 
         previousClasses.forEach((cls) => {
             element.classList.remove(cls);
@@ -482,10 +476,10 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
     }
 
     _handleMessage(event) {
-        if (event.origin !== this.allowedOrigin) {
+        if (!this.allowedOrigins.includes(event.origin)) {
             return;
         }
-        if (event.data && event.data.type === 'elysium-slide-update') {
+        if (event.data?.type === 'elysium-slide-update') {
             this.updateSlide(event.data);
         }
     }

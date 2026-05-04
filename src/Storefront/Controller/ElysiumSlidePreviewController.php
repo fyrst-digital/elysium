@@ -22,6 +22,19 @@ class ElysiumSlidePreviewController extends StorefrontController
         private readonly EntityRepository $elysiumSlidesRepository,
     ) {}
 
+    /**
+     * @return string[]
+     */
+    private function parseAdminOrigin(string $raw): array
+    {
+        $decoded = json_decode($raw, true);
+        if (is_array($decoded)) {
+            return $decoded;
+        }
+
+        return [$raw];
+    }
+
     #[Route(path: '/elysium-slide/preview/{slideId}', name: 'frontend.elysium-slide.preview', methods: ['GET'])]
     public function preview(string $slideId, SalesChannelContext $context, Request $request): Response
     {
@@ -43,7 +56,7 @@ class ElysiumSlidePreviewController extends StorefrontController
         }
 
         $device = $request->query->get('device', 'desktop');
-        $adminOrigin = $request->query->get('adminOrigin', $request->getSchemeAndHttpHost());
+        $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
 
         $response = $this->render('@Storefront/storefront/elysium-slide/preview.html.twig', [
             'slideData' => $slide,
