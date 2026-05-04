@@ -71,6 +71,8 @@ export default Component.wrapComponentConfig({
         'elysiumSlide.refreshPreviewCounter'(counter) {
             this.buildIframeSrc(counter);
         },
+
+        // --- Direct field changes ---
         'slide.title'() {
             this.sendSlideUpdate(['title']);
         },
@@ -92,18 +94,71 @@ export default Component.wrapComponentConfig({
         'slide.productId'() {
             this.sendSlideUpdate(['productId']);
         },
-        'slide.slideSettings': {
-            deep: true,
-            handler() {
-                this.sendSlideUpdate(['slideSettings']);
-            },
-        },
         'slide.contentSettings': {
             deep: true,
             handler() {
                 this.sendSlideUpdate(['contentSettings']);
             },
         },
+
+        // --- Structural slideSettings changes (partials) ---
+        'slide.slideSettings.slide.headline.element'() {
+            this.sendSlideUpdate(['headlineElement']);
+        },
+        'slide.slideSettings.slide.linking.type'() {
+            this.sendSlideUpdate(['linkingType']);
+        },
+        'slide.slideSettings.slide.linking.showProductTitle'() {
+            this.sendSlideUpdate(['showProductTitle']);
+        },
+        'slide.slideSettings.slide.linking.showProductDescription'() {
+            this.sendSlideUpdate(['showProductDescription']);
+        },
+        'slide.slideSettings.slide.linking.showProductFocusImage'() {
+            this.sendSlideUpdate(['showProductFocusImage']);
+        },
+        'slide.slideSettings.slide.linking.buttonAppearance'() {
+            this.sendSlideUpdate(['buttonAppearance']);
+        },
+        'slide.slideSettings.slide.linking.buttonSize'() {
+            this.sendSlideUpdate(['buttonSize']);
+        },
+        'slide.slideSettings.slide.linking.overlay'() {
+            this.sendSlideUpdate(['linkingOverlay']);
+        },
+        'slide.slideSettings.slide.linking.openExternal'() {
+            this.sendSlideUpdate(['linkingOpenExternal']);
+        },
+        'slide.slideSettings.slide.cssClass'() {
+            this.sendSlideUpdate(['slideCssClass']);
+        },
+
+        // --- CSS-only slideSettings changes (styles, no partials) ---
+        'slide.slideSettings.slide.bgColor'() {
+            this.sendSlideUpdate(['slideBgColor']);
+        },
+        'slide.slideSettings.slide.bgGradient': {
+            deep: true,
+            handler() {
+                this.sendSlideUpdate(['slideBgGradient']);
+            },
+        },
+        'slide.slideSettings.slide.headline.color'() {
+            this.sendSlideUpdate(['headlineColor']);
+        },
+        'slide.slideSettings.slide.description.color'() {
+            this.sendSlideUpdate(['descriptionColor']);
+        },
+        'slide.slideSettings.container.bgColor'() {
+            this.sendSlideUpdate(['containerBgColor']);
+        },
+        'slide.slideSettings.viewports': {
+            deep: true,
+            handler() {
+                this.sendSlideUpdate(['viewports']);
+            },
+        },
+
         device() {
             this.sendSlideUpdate(['device']);
         },

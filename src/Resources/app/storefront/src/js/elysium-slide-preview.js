@@ -351,30 +351,67 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
 
         const partials = [];
 
-        if (hasField('slideSettings') || hasField('device') || hasField('slide')) {
+        // Styles: base colors, gradients, viewport sizing, device switch, cssClass
+        if (hasField('slideBgColor')
+            || hasField('slideBgGradient')
+            || hasField('headlineColor')
+            || hasField('descriptionColor')
+            || hasField('containerBgColor')
+            || hasField('viewports')
+            || hasField('device')
+            || hasField('slideCssClass')
+            || hasField('slide')) {
             this._clearManagedStyles(element);
             this.updateBaseStyles(slide, element);
             this.updateViewportStyles(slide, device, element);
             this.updateCssClass(slide);
         }
 
-        if (hasField('title') || hasField('slideSettings') || hasField('productId')) {
+        // Headline
+        if (hasField('title')
+            || hasField('headlineElement')
+            || hasField('showProductTitle')
+            || hasField('linkingType')
+            || hasField('productId')
+            || hasField('slide')) {
             partials.push(this.updateHeadline(slide));
         }
 
-        if (hasField('description') || hasField('slideSettings') || hasField('productId')) {
+        // Description
+        if (hasField('description')
+            || hasField('showProductDescription')
+            || hasField('linkingType')
+            || hasField('productId')
+            || hasField('slide')) {
             partials.push(this.updateDescription(slide));
         }
 
-        if (hasField('buttonLabel') || hasField('url') || hasField('slideSettings')) {
+        // Button
+        if (hasField('buttonLabel')
+            || hasField('url')
+            || hasField('buttonAppearance')
+            || hasField('buttonSize')
+            || hasField('linkingOverlay')
+            || hasField('linkingOpenExternal')
+            || hasField('linkingType')
+            || hasField('slide')) {
             partials.push(this.updateButton(slide));
         }
 
-        if (hasField('contentSettings') || hasField('slideSettings')) {
+        // Cover media
+        if (hasField('contentSettings')
+            || hasField('showProductFocusImage')
+            || hasField('linkingType')
+            || hasField('slide')) {
             partials.push(this.updateCoverMedia(slide, element));
         }
 
-        if (hasField('presentationMedia') || hasField('productId')) {
+        // Focus image
+        if (hasField('presentationMedia')
+            || hasField('showProductFocusImage')
+            || hasField('productId')
+            || hasField('linkingType')
+            || hasField('slide')) {
             partials.push(this.updateFocusImage(slide));
         }
 
