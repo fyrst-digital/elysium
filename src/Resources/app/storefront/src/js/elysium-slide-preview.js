@@ -177,10 +177,28 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
     }
 
-    updateTextContent(slide) {
-        const descriptionEl = document.querySelector('[data-elysium-slide-description]');
-        if (descriptionEl && slide.description !== undefined) {
-            descriptionEl.innerHTML = slide.description;
+    async updateDescription(slide) {
+        try {
+            const html = await this._fetchPartial('description', slide);
+            const existingEl = document.querySelector(
+                `[data-elysium-slide-description="${this.slideId}"]`
+            );
+
+            if (existingEl) {
+                if (html.trim()) {
+                    existingEl.outerHTML = html;
+                } else {
+                    existingEl.remove();
+                }
+            } else if (html.trim()) {
+                const contentEl = document.querySelector('.blur-elysium-slide-content');
+                if (contentEl) {
+                    contentEl.insertAdjacentHTML('beforeend', html);
+                }
+            }
+        } catch (err) {
+            this._showError('Failed to update description preview');
+            console.error(err);
         }
     }
 
@@ -332,10 +350,10 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         this.updateBaseStyles(slide, element);
         this.updateViewportStyles(slide, device, element);
         this.updateCssClass(slide);
-        this.updateTextContent(slide);
 
         await Promise.all([
             this.updateHeadline(slide),
+            this.updateDescription(slide),
             this.updateButton(slide),
             this.updateCoverMedia(slide, element),
             this.updateFocusImage(slide),

@@ -1,0 +1,13 @@
+{% if slideData.slideSettings.slide.linking.type is same as('product')
+      and slideData.slideSettings.slide.linking.showProductDescription is same as(true)
+      and slideData.product.translated.description %}
+    {% set descriptionContent = slideData.product.translated.description|raw %}
+{% else %}
+    {% set descriptionContent = slideData.description|default('') %}
+{% endif %}
+
+{% if descriptionContent %}
+    <div class="blur-elysium-slide-description" data-elysium-slide-description="{{ slideData.id }}">
+        {{ descriptionContent|raw }}
+    </div>
+{% endif %}

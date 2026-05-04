@@ -123,6 +123,22 @@ class ElysiumSlidePreviewController extends StorefrontController
         return $response;
     }
 
+    #[Route(path: '/elysium-slide/preview/description/{slideId}', name: 'frontend.elysium-slide.preview.description', methods: ['POST'])]
+    public function description(string $slideId, SalesChannelContext $context, Request $request): Response
+    {
+        $slide = $this->loadAndMergeSlide($slideId, $context, $request);
+        $device = $request->query->get('device', 'desktop');
+
+        $response = $this->render('@Storefront/storefront/elysium-slide/preview/description.html.twig', [
+            'slideData' => $slide,
+            'device' => $device,
+        ]);
+
+        $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
+
+        return $response;
+    }
+
     private function loadSlide(string $slideId, SalesChannelContext $context): ElysiumSlidesEntity
     {
         $criteria = new Criteria([$slideId]);
