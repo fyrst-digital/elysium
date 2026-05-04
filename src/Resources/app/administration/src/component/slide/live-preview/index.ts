@@ -1,6 +1,6 @@
 import template from './template.html.twig'
 
-const { Component } = Shopware;
+const { Component, Store } = Shopware;
 const { debounce } = Shopware.Utils;
 
 export default Component.wrapComponentConfig({
@@ -44,6 +44,10 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
+        elysiumSlide() {
+            return Store.get('elysiumSlide');
+        },
+
         previewStyles(): Record<string, string> {
             return {
                 display: 'flex',
@@ -60,8 +64,11 @@ export default Component.wrapComponentConfig({
         slideId: {
             immediate: true,
             handler() {
-                this.iframeSrc = `http://localhost:8000/elysium-slide/preview/${this.slideId}?device=${this.device}`;
+                this.buildIframeSrc();
             },
+        },
+        'elysiumSlide.refreshPreviewCounter'(counter) {
+            this.buildIframeSrc(counter);
         },
         slide: {
             deep: true,
@@ -75,6 +82,14 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
+        buildIframeSrc(cacheBuster?: number) {
+            let src = `http://localhost:8000/elysium-slide/preview/${this.slideId}?device=${this.device}`;
+            if (cacheBuster) {
+                src += `&t=${cacheBuster}`;
+            }
+            this.iframeSrc = src;
+        },
+
         onIframeLoad() {
             this.sendSlideUpdateImmediate();
         },

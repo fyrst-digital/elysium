@@ -331,6 +331,7 @@ export default Component.wrapComponentConfig({
                     }
 
                     this.loadSlide();
+                    this.elysiumSlide.refreshPreview();
                 })
                 .catch((reason) => {
                     const errors: SlideError[] | null = reason.response?.data?.errors || null
