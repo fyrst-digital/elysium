@@ -273,26 +273,30 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
     }
 
-    updateFocusImage(slide) {
-        const wrapper = document.querySelector(`[data-elysium-slide-focus-image="${this.slideId}"]`);
-        const media = slide.presentationMedia;
+    async updateFocusImage(slide) {
+        try {
+            const html = await this._fetchPartial('focus-image', slide);
+            const existingEl = document.querySelector(
+                `[data-elysium-slide-focus-image="${this.slideId}"]`
+            );
 
-        if (media?.url) {
-            if (!wrapper) {
-                const container = document.querySelector('[data-elysium-slide-container]');
-                if (!container) {
-                    return;
+            if (existingEl) {
+                if (html.trim()) {
+                    existingEl.outerHTML = html;
+                } else {
+                    existingEl.remove();
                 }
-                const newWrapper = document.createElement('div');
-                newWrapper.className = 'blur-elysium-slide-image';
-                newWrapper.setAttribute('data-elysium-slide-focus-image', this.slideId);
-                container.appendChild(newWrapper);
-                newWrapper.innerHTML = `<img src="${media.url}" class="d-block img-fluid" style="width: var(--slide-focus-image-w, 100%);">`;
-            } else {
-                wrapper.innerHTML = `<img src="${media.url}" class="d-block img-fluid" style="width: var(--slide-focus-image-w, 100%);">`;
+            } else if (html.trim()) {
+                const container = document.querySelector(
+                    `[data-elysium-slide-container="${this.slideId}"]`
+                );
+                if (container) {
+                    container.insertAdjacentHTML('beforeend', html);
+                }
             }
-        } else if (wrapper) {
-            wrapper.remove();
+        } catch (err) {
+            this._showError('Failed to update focus image preview');
+            console.error(err);
         }
     }
 
@@ -329,12 +333,12 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         this.updateViewportStyles(slide, device, element);
         this.updateCssClass(slide);
         this.updateTextContent(slide);
-        this.updateFocusImage(slide);
 
         await Promise.all([
             this.updateHeadline(slide),
             this.updateButton(slide),
             this.updateCoverMedia(slide, element),
+            this.updateFocusImage(slide),
         ]);
     }
 

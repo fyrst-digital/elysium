@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Storefront\Controller;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Shopware\Core\Content\Media\Aggregate\MediaThumbnail\MediaThumbnailCollection;
+use Shopware\Core\Content\Media\Aggregate\MediaThumbnail\MediaThumbnailEntity;
+use Shopware\Core\Content\Media\MediaEntity;
+use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Storefront\Framework\Routing\StorefrontRouteScope;
@@ -21,6 +25,7 @@ class ElysiumSlidePreviewController extends StorefrontController
 {
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository,
+        private readonly EntityRepository $productRepository,
     ) {}
 
     /**
@@ -102,6 +107,22 @@ class ElysiumSlidePreviewController extends StorefrontController
         return $response;
     }
 
+    #[Route(path: '/elysium-slide/preview/focus-image/{slideId}', name: 'frontend.elysium-slide.preview.focus-image', methods: ['POST'])]
+    public function focusImage(string $slideId, SalesChannelContext $context, Request $request): Response
+    {
+        $slide = $this->loadAndMergeSlide($slideId, $context, $request);
+        $device = $request->query->get('device', 'desktop');
+
+        $response = $this->render('@Storefront/storefront/elysium-slide/preview/focus-image.html.twig', [
+            'slideData' => $slide,
+            'device' => $device,
+        ]);
+
+        $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
+
+        return $response;
+    }
+
     private function loadSlide(string $slideId, SalesChannelContext $context): ElysiumSlidesEntity
     {
         $criteria = new Criteria([$slideId]);
@@ -131,13 +152,13 @@ class ElysiumSlidePreviewController extends StorefrontController
 
         $postData = json_decode($request->getContent(), true);
         if (isset($postData['slide']) && is_array($postData['slide'])) {
-            $slide = $this->mergeSlideData($slide, $postData['slide']);
+            $slide = $this->mergeSlideData($slide, $postData['slide'], $context);
         }
 
         return $slide;
     }
 
-    private function mergeSlideData(ElysiumSlidesEntity $entity, array $postData): ElysiumSlidesEntity
+    private function mergeSlideData(ElysiumSlidesEntity $entity, array $postData, SalesChannelContext $context): ElysiumSlidesEntity
     {
         if (isset($postData['title'])) {
             $entity->setTitle($postData['title']);
@@ -171,6 +192,110 @@ class ElysiumSlidePreviewController extends StorefrontController
             $entity->setContentSettings($mergedContentSettings);
         }
 
+        if (isset($postData['presentationMedia']) && is_array($postData['presentationMedia'])) {
+            $media = $this->createMediaEntityFromArray($postData['presentationMedia']);
+            $entity->setPresentationMedia($media);
+            $entity->setPresentationMediaId($media->getId());
+        } elseif (array_key_exists('presentationMedia', $postData) && $postData['presentationMedia'] === null) {
+            $entity->setPresentationMedia(null);
+            $entity->setPresentationMediaId(null);
+        }
+
+        if (array_key_exists('productId', $postData)) {
+            $newProductId = $postData['productId'] ?: null;
+            $entity->setProductId($newProductId);
+
+            if ($newProductId !== null) {
+                $product = $this->loadProduct($newProductId, $context);
+                $entity->setProduct($product);
+            } else {
+                $entity->setProduct(null);
+            }
+        }
+
         return $entity;
+    }
+
+    private function loadProduct(string $productId, SalesChannelContext $context): ?ProductEntity
+    {
+        $criteria = new Criteria([$productId]);
+        $criteria->addAssociation('cover');
+        $criteria->addAssociation('cover.media');
+
+        /** @var ProductEntity|null $product */
+        $product = $this->productRepository->search($criteria, $context->getContext())->first();
+
+        return $product;
+    }
+
+    private function createMediaEntityFromArray(array $data): MediaEntity
+    {
+        $media = new MediaEntity();
+        $media->setId($data['id'] ?? '');
+
+        if (isset($data['url'])) {
+            $media->setUrl($data['url']);
+        }
+
+        if (isset($data['mimeType'])) {
+            $media->setMimeType($data['mimeType']);
+        }
+
+        if (isset($data['fileExtension'])) {
+            $media->setFileExtension($data['fileExtension']);
+        }
+
+        if (isset($data['fileName'])) {
+            $media->setFileName($data['fileName']);
+        }
+
+        if (isset($data['path'])) {
+            $media->setPath($data['path']);
+        }
+
+        if (isset($data['metaData']) && is_array($data['metaData'])) {
+            $media->setMetaData($data['metaData']);
+        }
+
+        if (isset($data['alt'])) {
+            $media->setAlt($data['alt']);
+        }
+
+        if (isset($data['title'])) {
+            $media->setTitle($data['title']);
+        }
+
+        if (isset($data['thumbnails']) && is_array($data['thumbnails'])) {
+            $thumbnails = [];
+            foreach ($data['thumbnails'] as $thumbData) {
+                if (!is_array($thumbData) || !isset($thumbData['id'])) {
+                    continue;
+                }
+                $thumb = new MediaThumbnailEntity();
+                $thumb->setId($thumbData['id']);
+                $thumb->setUniqueIdentifier($thumbData['id']);
+
+                if (isset($thumbData['width'])) {
+                    $thumb->setWidth((int) $thumbData['width']);
+                }
+                if (isset($thumbData['height'])) {
+                    $thumb->setHeight((int) $thumbData['height']);
+                }
+                if (isset($thumbData['url'])) {
+                    $thumb->setUrl($thumbData['url']);
+                }
+                if (isset($thumbData['path'])) {
+                    $thumb->setPath($thumbData['path']);
+                }
+
+                $thumbnails[] = $thumb;
+            }
+
+            if ($thumbnails !== []) {
+                $media->setThumbnails(new MediaThumbnailCollection($thumbnails));
+            }
+        }
+
+        return $media;
     }
 }

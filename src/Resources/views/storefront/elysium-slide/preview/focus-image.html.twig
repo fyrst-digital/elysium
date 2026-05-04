@@ -1,0 +1,21 @@
+{% set imageMedia = slideData.presentationMedia %}
+
+{% if slideData.slideSettings.slide.linking.type is same as('product')
+      and slideData.product.cover.media is not null
+      and slideData.slideSettings.slide.linking.showProductFocusImage is same as(true) %}
+    {% set imageMedia = slideData.product.cover.media %}
+{% endif %}
+
+{% if imageMedia %}
+    <div class="blur-elysium-slide-image"
+         data-elysium-slide-focus-image="{{ slideData.id }}">
+        {% sw_thumbnails 'elysium-slide-focus-image' with {
+            media: imageMedia,
+            attributes: {
+                'loading': 'eager',
+                'class': 'd-block img-fluid',
+                'style': 'width: var(--slide-focus-image-w, 100%);'
+            }
+        } %}
+    </div>
+{% endif %}
