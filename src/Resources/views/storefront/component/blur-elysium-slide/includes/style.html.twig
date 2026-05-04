@@ -31,7 +31,9 @@
     {% endif %}
 
     {# Content flex sizing #}
-    {% if options.content.maxWidth is defined %}
+    {% if options.content.maxWidth is defined
+          and options.content.maxWidth is not null
+          and options.content.maxWidth is not same as('') %}
         {% if options.content.maxWidth is same as(0) %}
             --content-flex-basis: 0%;
             --content-max-w: auto;

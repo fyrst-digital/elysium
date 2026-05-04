@@ -43,7 +43,6 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
             { path: 'content.textAlign', prop: '--content-text-align' },
             { path: 'content.paddingX', prop: '--content-padding-x', unit: 'px' },
             { path: 'content.paddingY', prop: '--content-padding-y', unit: 'px' },
-            { path: 'content.maxWidth', prop: '--content-max-w', unit: 'px', zeroValue: 'auto' },
             { path: 'content.maxWidth', transform: (v, styles) => {
                 if (v === 0) {
                     styles['--content-flex-basis'] = '0%';
