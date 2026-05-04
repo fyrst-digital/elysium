@@ -40,6 +40,7 @@ export default Component.wrapComponentConfig({
     data() {
         return {
             iframeSrc: '',
+            pendingFields: new Set<string>(),
         };
     },
 
@@ -70,14 +71,41 @@ export default Component.wrapComponentConfig({
         'elysiumSlide.refreshPreviewCounter'(counter) {
             this.buildIframeSrc(counter);
         },
-        slide: {
+        'slide.title'() {
+            this.sendSlideUpdate(['title']);
+        },
+        'slide.description'() {
+            this.sendSlideUpdate(['description']);
+        },
+        'slide.buttonLabel'() {
+            this.sendSlideUpdate(['buttonLabel']);
+        },
+        'slide.url'() {
+            this.sendSlideUpdate(['url']);
+        },
+        'slide.presentationMedia': {
             deep: true,
             handler() {
-                this.sendSlideUpdate();
+                this.sendSlideUpdate(['presentationMedia']);
+            },
+        },
+        'slide.productId'() {
+            this.sendSlideUpdate(['productId']);
+        },
+        'slide.slideSettings': {
+            deep: true,
+            handler() {
+                this.sendSlideUpdate(['slideSettings']);
+            },
+        },
+        'slide.contentSettings': {
+            deep: true,
+            handler() {
+                this.sendSlideUpdate(['contentSettings']);
             },
         },
         device() {
-            this.sendSlideUpdate();
+            this.sendSlideUpdate(['device']);
         },
     },
 
@@ -95,7 +123,7 @@ export default Component.wrapComponentConfig({
             this.sendSlideUpdateImmediate();
         },
 
-        sendSlideUpdateImmediate() {
+        sendSlideUpdateImmediate(fields?: string[]) {
             const iframe = this.$refs.iframe as HTMLIFrameElement | undefined;
 
             if (!iframe || !iframe.contentWindow) {
@@ -106,11 +134,21 @@ export default Component.wrapComponentConfig({
                 type: 'elysium-slide-update',
                 device: this.device,
                 slide: JSON.parse(JSON.stringify(this.slide)),
+                fields: fields && fields.length > 0 ? fields : ['slide'],
             }, 'http://localhost:8000');
         },
 
-        sendSlideUpdate: debounce(function (this: any) {
-            this.sendSlideUpdateImmediate();
+        sendSlideUpdate(fields?: string[]) {
+            if (fields) {
+                fields.forEach((f) => this.pendingFields.add(f));
+            }
+            this._flushSlideUpdate();
+        },
+
+        _flushSlideUpdate: debounce(function (this: any) {
+            const fields = Array.from(this.pendingFields);
+            this.pendingFields.clear();
+            this.sendSlideUpdateImmediate(fields);
         }, 300),
     },
 });

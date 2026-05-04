@@ -340,24 +340,47 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
     async updateSlide(data) {
         const slide = data.slide;
         const device = data.device || 'desktop';
+        const fields = data.fields || ['slide'];
         const element = this.el;
 
         if (!element || !slide) {
             return;
         }
 
-        this._clearManagedStyles(element);
-        this.updateBaseStyles(slide, element);
-        this.updateViewportStyles(slide, device, element);
-        this.updateCssClass(slide);
+        const hasField = (name) => fields.includes('slide') || fields.includes(name);
 
-        await Promise.all([
-            this.updateHeadline(slide),
-            this.updateDescription(slide),
-            this.updateButton(slide),
-            this.updateCoverMedia(slide, element),
-            this.updateFocusImage(slide),
-        ]);
+        const partials = [];
+
+        if (hasField('slideSettings') || hasField('device') || hasField('slide')) {
+            this._clearManagedStyles(element);
+            this.updateBaseStyles(slide, element);
+            this.updateViewportStyles(slide, device, element);
+            this.updateCssClass(slide);
+        }
+
+        if (hasField('title') || hasField('slideSettings') || hasField('productId')) {
+            partials.push(this.updateHeadline(slide));
+        }
+
+        if (hasField('description') || hasField('slideSettings') || hasField('productId')) {
+            partials.push(this.updateDescription(slide));
+        }
+
+        if (hasField('buttonLabel') || hasField('url') || hasField('slideSettings')) {
+            partials.push(this.updateButton(slide));
+        }
+
+        if (hasField('contentSettings') || hasField('slideSettings')) {
+            partials.push(this.updateCoverMedia(slide, element));
+        }
+
+        if (hasField('presentationMedia') || hasField('productId')) {
+            partials.push(this.updateFocusImage(slide));
+        }
+
+        if (partials.length > 0) {
+            await Promise.all(partials);
+        }
     }
 
     async _handleMessage(event) {
