@@ -143,6 +143,11 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
     }
 
     _clearManagedStyles(element) {
+        const serverStyle = document.querySelector(`#style-${this.slideId}`);
+        if (serverStyle) {
+            serverStyle.remove();
+        }
+
         this._managedProps.forEach((prop) => {
             element.style.removeProperty(prop);
         });
