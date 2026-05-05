@@ -27,11 +27,11 @@ export default Component.wrapComponentConfig({
                 case 'desktop':
                     return this.slide.slideCover || this.slide.slideCoverTablet || this.slide.slideCoverMobile || null;
                 case 'tablet':
-                    return this.slide.slideCoverTablet || this.slide.slideCoverMobile || this.slide.slideCover || null;
+                    return this.slide.slideCoverTablet || this.slide.slideCoverMobile || null;
                 case 'mobile':
-                    return this.slide.slideCoverMobile || this.slide.slideCover || null;
+                    return this.slide.slideCoverMobile || null;
                 default:
-                    return this.slide.slideCover || null;
+                    return this.slide.slideCover || this.slide.slideCoverTablet || this.slide.slideCoverMobile || null;
             }
         },
 
