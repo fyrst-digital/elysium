@@ -337,6 +337,24 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         this._appliedCssClasses = newClasses;
     }
 
+    _updatePreviewSizing(data, element) {
+        if (!element) return;
+
+        if (data.previewAspectRatio) {
+            element.style.setProperty('--slide-aspect-ratio', `${data.previewAspectRatio.x} / ${data.previewAspectRatio.y}`);
+        } else {
+            element.style.removeProperty('--slide-aspect-ratio');
+        }
+
+        if (data.previewWidth) {
+            element.style.maxWidth = `${data.previewWidth}px`;
+            element.style.margin = '0 auto';
+        } else {
+            element.style.removeProperty('max-width');
+            element.style.removeProperty('margin');
+        }
+    }
+
     async updateSlide(data) {
         const slide = data.slide;
         const device = data.device || 'desktop';
@@ -365,6 +383,11 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
             this.updateBaseStyles(slide, element);
             this.updateViewportStyles(slide, device, element);
             this.updateCssClass(slide);
+        }
+
+        // Preview sizing (aspect ratio & width simulation)
+        if (hasField('previewSizing') || hasField('slide')) {
+            this._updatePreviewSizing(data, element);
         }
 
         // Headline

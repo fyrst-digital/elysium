@@ -162,6 +162,18 @@ export default Component.wrapComponentConfig({
         device() {
             this.sendSlideUpdate(['device']);
         },
+
+        aspectRatioX() {
+            this.sendSlideUpdate(['previewSizing']);
+        },
+
+        aspectRatioY() {
+            this.sendSlideUpdate(['previewSizing']);
+        },
+
+        maxWidth() {
+            this.sendSlideUpdate(['previewSizing']);
+        },
     },
 
     methods: {
@@ -190,6 +202,8 @@ export default Component.wrapComponentConfig({
                 device: this.device,
                 slide: JSON.parse(JSON.stringify(this.slide)),
                 fields: fields && fields.length > 0 ? fields : ['slide'],
+                previewAspectRatio: this.aspectRatioX && this.aspectRatioY ? { x: this.aspectRatioX, y: this.aspectRatioY } : null,
+                previewWidth: this.maxWidth,
             }, 'http://localhost:8000');
         },
 

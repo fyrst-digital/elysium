@@ -11,9 +11,6 @@ export default Component.wrapComponentConfig({
 
     data() {
         return {
-            width: null,
-            aspectRatioX: 4,
-            aspectRatioY: 3, 
             styles: {
                 container: {
                     mobile: {
@@ -58,6 +55,32 @@ export default Component.wrapComponentConfig({
 
         device() {
             return Store.get('elysiumUI').device;
+        },
+
+        aspectRatioX() {
+            return this.elysiumUI.previewSettings[this.device].aspectRatioX;
+        },
+
+        aspectRatioY() {
+            return this.elysiumUI.previewSettings[this.device].aspectRatioY;
+        },
+
+        width() {
+            return this.elysiumUI.previewSettings[this.device].width;
+        },
+    },
+
+    methods: {
+        onAspectRatioXChange(value: number) {
+            this.elysiumUI.setPreviewAspectRatioX(this.device, value);
+        },
+
+        onAspectRatioYChange(value: number) {
+            this.elysiumUI.setPreviewAspectRatioY(this.device, value);
+        },
+
+        onWidthChange(value: number | null) {
+            this.elysiumUI.setPreviewWidth(this.device, value);
         },
     }
 });

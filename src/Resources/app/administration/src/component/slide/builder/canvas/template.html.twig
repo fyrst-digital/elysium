@@ -39,7 +39,8 @@
 
                 <py-number-field
                     layout="row"
-                    v-model="aspectRatioX"
+                    :model-value="aspectRatioX"
+                    @update:model-value="onAspectRatioXChange"
                     :label="false"
                     :min="1" 
                     :step="1" 
@@ -52,7 +53,8 @@
 
                 <py-number-field
                     layout="row"
-                    v-model="aspectRatioY"
+                    :model-value="aspectRatioY"
+                    @update:model-value="onAspectRatioYChange"
                     :label="false"
                     :min="1" 
                     :step="1" 
@@ -89,7 +91,8 @@
 
                 <py-number-field
                     layout="row"
-                    v-model="width"
+                    :model-value="width"
+                    @update:model-value="onWidthChange"
                     placeholder="in Pixel"
                     :label="false"
                     :step="1" 
