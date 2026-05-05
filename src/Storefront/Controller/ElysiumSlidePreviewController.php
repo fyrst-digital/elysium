@@ -229,7 +229,30 @@ class ElysiumSlidePreviewController extends StorefrontController
             }
         }
 
+        $this->mergeCoverMedia($entity, $postData);
+
         return $entity;
+    }
+
+    private function mergeCoverMedia(ElysiumSlidesEntity $entity, array $postData): void
+    {
+        $mappings = [
+            'slideCover' => ['setSlideCover', 'setSlideCoverId'],
+            'slideCoverMobile' => ['setSlideCoverMobile', 'setSlideCoverMobileId'],
+            'slideCoverTablet' => ['setSlideCoverTablet', 'setSlideCoverTabletId'],
+            'slideCoverVideo' => ['setSlideCoverVideo', 'setSlideCoverVideoId'],
+        ];
+
+        foreach ($mappings as $key => [$setter, $idSetter]) {
+            if (isset($postData[$key]) && is_array($postData[$key])) {
+                $media = $this->createMediaEntityFromArray($postData[$key]);
+                $entity->$setter($media);
+                $entity->$idSetter($media->getId());
+            } elseif (array_key_exists($key, $postData) && $postData[$key] === null) {
+                $entity->$setter(null);
+                $entity->$idSetter(null);
+            }
+        }
     }
 
     private function loadProduct(string $productId, SalesChannelContext $context): ?ProductEntity

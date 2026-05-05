@@ -100,6 +100,30 @@ export default Component.wrapComponentConfig({
                 this.sendSlideUpdate(['contentSettings']);
             },
         },
+        'slide.slideCover': {
+            deep: true,
+            handler() {
+                this.sendSlideUpdate(['slideCover']);
+            },
+        },
+        'slide.slideCoverMobile': {
+            deep: true,
+            handler() {
+                this.sendSlideUpdate(['slideCoverMobile']);
+            },
+        },
+        'slide.slideCoverTablet': {
+            deep: true,
+            handler() {
+                this.sendSlideUpdate(['slideCoverTablet']);
+            },
+        },
+        'slide.slideCoverVideo': {
+            deep: true,
+            handler() {
+                this.sendSlideUpdate(['slideCoverVideo']);
+            },
+        },
 
         // --- Structural slideSettings changes (partials) ---
         'slide.slideSettings.slide.headline.element'() {

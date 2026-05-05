@@ -428,6 +428,10 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
 
         // Cover media
         if (hasField('contentSettings')
+            || hasField('slideCover')
+            || hasField('slideCoverMobile')
+            || hasField('slideCoverTablet')
+            || hasField('slideCoverVideo')
             || hasField('showProductFocusImage')
             || hasField('linkingType')
             || hasField('slide')) {
