@@ -31,16 +31,16 @@
     {% endif %}
 
     {# Content flex sizing #}
-    {% if options.content.maxWidth is defined
-          and options.content.maxWidth is not null
-          and options.content.maxWidth is not same as('') %}
-        {% if options.content.maxWidth is same as(0) %}
+    {% if options.content.basis is defined
+          and options.content.basis is not null
+          and options.content.basis is not same as('') %}
+        {% if options.content.basis is same as(0) %}
             --content-flex-basis: 0%;
             --content-max-w: auto;
             --content-flex-grow: 1;
         {% else %}
-            --content-flex-basis: {{ options.content.maxWidth }}px;
-            --content-max-w: {{ options.content.maxWidth }}px;
+            --content-flex-basis: {{ options.content.basis }}%;
+            --content-max-w: {{ options.content.basis }}%;
             --content-flex-grow: 0;
         {% endif %}
     {% endif %}
@@ -66,8 +66,8 @@
         { group: 'container',   key: 'borderRadius',   var: '--container-border-radius', unit: 'px' },
         { group: 'container',   key: 'alignItems',     var: '--container-align-items' },
         { group: 'container',   key: 'justifyContent', var: '--container-justify-content' },
-        { group: 'container',   key: 'maxWidth',       var: '--container-max-width', unit: 'px', zeroValue: 'auto' },
-        { group: 'image',       key: 'maxWidth',       var: '--image-max-w', unit: 'px', zeroValue: 'auto' },
+        { group: 'container',   key: 'basis',          var: '--container-max-width', unit: '%', zeroValue: 'auto' },
+        { group: 'image',       key: 'basis',          var: '--image-max-w', unit: '%', zeroValue: 'auto' },
         { group: 'image',       key: 'justifyContent', var: '--image-justify-content' },
         { group: 'content',     key: 'textAlign',      var: '--content-text-align' },
         { group: 'content',     key: 'paddingX',       var: '--content-padding-x', unit: 'px' },

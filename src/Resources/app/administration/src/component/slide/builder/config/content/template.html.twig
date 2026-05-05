@@ -9,13 +9,14 @@
         },
     })">
     <py-column>
-        <py-number-field
-            :label="$tc('blurElysiumSlides.forms.slideWidth.label')"
-            :placeholder="viewportsPlaceholder('content.maxWidth', $t('blurElysium.general.noLimit'))"
+        <py-slider-field
+            :label="$tc('blurElysiumSlides.forms.basis.label')"
+            :tooltip="$tc('blurElysiumSlides.forms.basis.tooltip')"
             :min="0"
+            :max="100"
             :step="1"
-            :allow-empty="true"
-            v-model="slideViewportSettings.content.maxWidth"
+            :mark-count="0"
+            v-model="slideViewportSettings.content.basis"
         />
     </py-column>
 </py-section>

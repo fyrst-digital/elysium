@@ -343,7 +343,12 @@
             },
             "slideWidth": {
                 "label": "Breitenbeschränkung",
-                "noMaxWidth": "Breite nicht beschränken"
+                "noMaxWidth": "Breite nicht beschränken",
+                "tooltip": "0% steht für automatische Breite"
+            },
+            "basis": {
+                "label": "Basis",
+                "tooltip": "0% steht für automatische Breite"
             },
             "customTemplateFile": {
                 "label": "Eigene Template Datei",

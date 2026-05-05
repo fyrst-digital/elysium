@@ -27,7 +27,7 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
             { path: 'container.borderRadius', prop: '--container-border-radius', unit: 'px' },
             { path: 'container.alignItems', prop: '--container-align-items' },
             { path: 'container.justifyContent', prop: '--container-justify-content' },
-            { path: 'container.maxWidth', prop: '--container-max-width', unit: 'px', zeroValue: 'auto' },
+            { path: 'container.basis', prop: '--container-max-width', unit: '%', zeroValue: 'auto' },
             { path: 'container.columnWrap', prop: '--container-direction', transform: (v) => v === true ? 'column' : 'row' },
             { path: 'container.order', transform: (v, styles) => {
                 if (v === 'reverse') {
@@ -38,19 +38,19 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
                     styles['--content-order'] = '1';
                 }
             }},
-            { path: 'image.maxWidth', prop: '--image-max-w', unit: 'px', zeroValue: 'auto' },
+            { path: 'image.basis', prop: '--image-max-w', unit: '%', zeroValue: 'auto' },
             { path: 'image.justifyContent', prop: '--image-justify-content' },
             { path: 'content.textAlign', prop: '--content-text-align' },
             { path: 'content.paddingX', prop: '--content-padding-x', unit: 'px' },
             { path: 'content.paddingY', prop: '--content-padding-y', unit: 'px' },
-            { path: 'content.maxWidth', transform: (v, styles) => {
+            { path: 'content.basis', transform: (v, styles) => {
                 if (v === 0) {
                     styles['--content-flex-basis'] = '0%';
                     styles['--content-max-w'] = 'auto';
                     styles['--content-flex-grow'] = '1';
                 } else {
-                    styles['--content-flex-basis'] = `${v}px`;
-                    styles['--content-max-w'] = `${v}px`;
+                    styles['--content-flex-basis'] = `${v}%`;
+                    styles['--content-max-w'] = `${v}%`;
                     styles['--content-flex-grow'] = '0';
                 }
             }},

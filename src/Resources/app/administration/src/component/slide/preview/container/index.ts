@@ -33,7 +33,7 @@ export default Component.wrapComponentConfig({
                 paddingBlock: this.getViewportProp('container.paddingY') ? `${this.getViewportProp('container.paddingY')}px` : '15px',
                 paddingInline: this.getViewportProp('container.paddingX') ? `${this.getViewportProp('container.paddingX')}px` : '15px',
                 borderRadius: this.getViewportProp('container.borderRadius') ? `${this.getViewportProp('container.borderRadius')}px` : '0px',
-                maxWidth: this.getViewportProp('container.maxWidth') ? `${this.getViewportProp('container.maxWidth')}px` : 'none'
+                maxWidth: this.getViewportProp('container.basis') ? `${this.getViewportProp('container.basis')}%` : 'none'
             }
 
             return styles

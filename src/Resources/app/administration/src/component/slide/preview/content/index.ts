@@ -41,7 +41,7 @@ export default Component.wrapComponentConfig({
         },
 
         contentStyles() {
-            const maxWidth = this.getViewportProp('content.maxWidth')
+            const basis = this.getViewportProp('content.basis')
             const paddingY = this.getViewportProp('content.paddingY')
             const paddingX = this.getViewportProp('content.paddingX')
             const textAlign = this.getViewportProp('content.textAlign')
@@ -50,7 +50,7 @@ export default Component.wrapComponentConfig({
                 flexDirection: 'column',
                 gap: '12px',
                 order: this.getViewportProp('container.order') === 'reverse' ? '2' : '1',
-                maxWidth: maxWidth ? `${maxWidth}px` : 'none',
+                maxWidth: basis ? `${basis}%` : 'none',
                 paddingInline: paddingX ? `${paddingX}px` : '0px',
                 paddingBlock: paddingY ? `${paddingY}px` : '0px',
                 textAlign: textAlign || 'left',

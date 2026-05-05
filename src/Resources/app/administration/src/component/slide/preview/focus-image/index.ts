@@ -49,10 +49,10 @@ export default Component.wrapComponentConfig({
         },
 
         focusImageStyles() {
-            const maxWidth = this.getViewportProp('image.maxWidth')
+            const basis = this.getViewportProp('image.basis')
             const styles = {
                 width: '100%',
-                maxWidth: maxWidth ? `${maxWidth}px` : '100%',
+                maxWidth: basis ? `${basis}%` : '100%',
             }
             return styles
         }

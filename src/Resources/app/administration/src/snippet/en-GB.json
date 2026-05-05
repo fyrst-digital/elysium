@@ -343,7 +343,12 @@
             },
             "slideWidth": {
                 "label": "Width limit",
-                "noMaxWidth": "No width limit"
+                "noMaxWidth": "No width limit",
+                "tooltip": "0% stands for auto width"
+            },
+            "basis": {
+                "label": "Base",
+                "tooltip": "0% stands for auto width"
             },
             "customTemplateFile": {
                 "label": "Custom template file",
