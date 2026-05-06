@@ -372,6 +372,10 @@
         },
         "slideSearch": {
             "noResult": "No Slides found"
+        },
+        "preview": {
+            "noDomainAvailableTitle": "No storefront domain available",
+            "noDomainAvailableDescription": "There is no sales channel domain configured that can be used for the live preview. Please configure at least one domain in your sales channels."
         }
     },
     "blurElysiumSlider": {

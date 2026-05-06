@@ -106,11 +106,36 @@
             </div>
         </div>
 
+        <div v-if="hasAvailableDomains">
+            <div 
+                :style="{
+                    lineHeight: '1',
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    marginBottom: '4px',
+                }"
+            >
+                Verkaufskanal
+            </div>
+
+            <py-select-field
+                layout="row"
+                :model-value="selectedSalesChannelId"
+                @update:model-value="onSalesChannelChange"
+                :options="salesChannels.map(channel => ({ value: channel.id, label: channel.name }))"
+                :style="viewStyle({
+                    mobile: {
+                        maxWidth: '200px',
+                    }
+                })"
+            />
+        </div>
+
     </div>
 
     <div :style="viewStyle(styles.canvas)">
         <elysium-slide-live-preview
-            v-if="slide"
+            v-if="slide && hasAvailableDomains && previewDomain"
             :slide-id="slide.id"
             :slide="slide"
             :device="device"
@@ -118,6 +143,12 @@
             :aspect-ratio-y="aspectRatioY"
             :max-height="'none'"
             :max-width="width"
+            :base-url="previewDomain"
+            :style="{ flex: '1 100%' }"
+        />
+
+        <elysium-slide-preview-unavailable
+            v-else-if="!hasAvailableDomains"
             :style="{ flex: '1 100%' }"
         />
     </div>

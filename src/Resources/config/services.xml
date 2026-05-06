@@ -111,6 +111,7 @@
     <service id="Blur\BlurElysiumSlider\Storefront\Controller\ElysiumSlidePreviewController" public="true">
       <argument type="service" id="blur_elysium_slides.repository"/>
       <argument type="service" id="product.repository"/>
+      <argument type="service" id="sales_channel.repository"/>
       <call method="setContainer">
         <argument type="service" id="service_container"/>
       </call>

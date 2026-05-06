@@ -372,6 +372,10 @@
         },
         "slideSearch": {
             "noResult": "Keine Slides gefunden"
+        },
+        "preview": {
+            "noDomainAvailableTitle": "Keine Storefront-Domain verfügbar",
+            "noDomainAvailableDescription": "Es ist keine Verkaufskanal-Domain konfiguriert, die für die Live-Vorschau verwendet werden kann. Bitte richte mindestens eine Domain in deinen Verkaufskanälen ein."
         }
     },
     "blurElysiumSlider": {

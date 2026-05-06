@@ -10,6 +10,9 @@ interface UIState {
     device: Device;
     mediaSidebar: HTMLElement | null;
     previewSettings: Record<Device, PreviewSettings>;
+    salesChannels: Entity<'sales_channel'>[];
+    selectedSalesChannelId: string | null;
+    previewDomain: string | null;
 }
 
 export default {
@@ -23,6 +26,9 @@ export default {
             tablet: { aspectRatioX: 4, aspectRatioY: 3, width: 768 },
             desktop: { aspectRatioX: 16, aspectRatioY: 9, width: 1400 },
         },
+        salesChannels: [],
+        selectedSalesChannelId: null,
+        previewDomain: null,
     }),
 
     actions: {
@@ -48,6 +54,18 @@ export default {
 
         setPreviewWidth(device: Device, value: number | null) {
             this.previewSettings[device].width = value;
+        },
+
+        setSalesChannels(channels: Entity<'sales_channel'>[]) {
+            this.salesChannels = channels;
+        },
+
+        setSelectedSalesChannelId(id: string | null) {
+            this.selectedSalesChannelId = id;
+        },
+
+        setPreviewDomain(domain: string | null) {
+            this.previewDomain = domain;
         },
     },
 };

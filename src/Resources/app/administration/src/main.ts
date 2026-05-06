@@ -100,6 +100,7 @@ useComponentRegister([
     { name: 'elysium-slide-preview-container', path: () => import('@elysium/component/slide/preview/container') },
     { name: 'elysium-slide-preview', path: () => import('@elysium/component/slide/preview') },
     { name: 'elysium-slide-live-preview', path: () => import('@elysium/component/slide/live-preview') },
+    { name: 'elysium-slide-preview-unavailable', path: () => import('@elysium/component/slide/preview-unavailable') },
     { name: 'elysium-slide-search', path: () => import('@elysium/component/slide/search') },
     { name: 'elysium-slide-selection', path: () => import('@elysium/component/slide/selection') },
     { name: 'elysium-slide-selection-item', path: () => import('@elysium/component/slide/selection/item') },

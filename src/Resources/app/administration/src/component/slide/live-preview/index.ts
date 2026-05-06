@@ -35,6 +35,10 @@ export default Component.wrapComponentConfig({
             type: [Number, null],
             default: null,
         },
+        baseUrl: {
+            type: String,
+            required: true,
+        },
     },
 
     data() {
@@ -198,12 +202,16 @@ export default Component.wrapComponentConfig({
         maxWidth() {
             this.sendSlideUpdate(['previewSizing']);
         },
+
+        baseUrl() {
+            this.buildIframeSrc();
+        },
     },
 
     methods: {
         buildIframeSrc(cacheBuster?: number) {
             const adminOrigin = encodeURIComponent(JSON.stringify([window.location.origin]));
-            let src = `http://localhost:8000/elysium-slide/preview/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}`;
+            let src = `${this.baseUrl}/elysium-slide/preview/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}`;
             if (cacheBuster) {
                 src += `&t=${cacheBuster}`;
             }
@@ -228,7 +236,7 @@ export default Component.wrapComponentConfig({
                 fields: fields && fields.length > 0 ? fields : ['slide'],
                 previewAspectRatio: this.aspectRatioX && this.aspectRatioY ? { x: this.aspectRatioX, y: this.aspectRatioY } : null,
                 previewWidth: this.maxWidth,
-            }, 'http://localhost:8000');
+            }, this.baseUrl);
         },
 
         sendSlideUpdate(fields?: string[]) {
@@ -238,7 +246,7 @@ export default Component.wrapComponentConfig({
             this._flushSlideUpdate();
         },
 
-        _flushSlideUpdate: debounce(function (this: any) {
+        _flushSlideUpdate: debounce(function (this: { pendingFields: Set<string>; sendSlideUpdateImmediate(fields: string[]): void }) {
             const fields = Array.from(this.pendingFields);
             this.pendingFields.clear();
             this.sendSlideUpdateImmediate(fields);
