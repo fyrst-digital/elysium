@@ -70,8 +70,6 @@ class ElysiumSlidePreviewController extends StorefrontController
 
     private function setPreviewHeaders(Response $response, SalesChannelContext $context, array $adminOrigin): Response
     {
-        $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
-
         $salesChannelDomains = $this->getAllSalesChannelDomains($context);
         $frameAncestors = array_merge(['\'self\''], $salesChannelDomains, $adminOrigin);
         $frameAncestors = array_unique(array_filter($frameAncestors));
