@@ -45,6 +45,7 @@ export default Component.wrapComponentConfig({
         return {
             iframeSrc: '',
             pendingFields: new Set<string>(),
+            isLoading: false,
         };
     },
 
@@ -210,6 +211,7 @@ export default Component.wrapComponentConfig({
 
     methods: {
         buildIframeSrc(cacheBuster?: number) {
+            this.isLoading = true;
             const adminOrigin = encodeURIComponent(JSON.stringify([window.location.origin]));
             let src = `${this.baseUrl}/elysium-slide/preview/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}`;
             if (cacheBuster) {
@@ -219,6 +221,7 @@ export default Component.wrapComponentConfig({
         },
 
         onIframeLoad() {
+            this.isLoading = false;
             this.sendSlideUpdateImmediate();
         },
 
