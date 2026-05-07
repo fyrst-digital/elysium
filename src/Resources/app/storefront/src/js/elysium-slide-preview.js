@@ -87,6 +87,14 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
             ? origins
             : [window.location.origin];
 
+        this.layout = this.options.layout || 'detail';
+
+        if (this.layout === 'cms') {
+            this.el.style.flex = '1 100%';
+            this.el.style.width = '100%';
+            this.el.style.height = '100%';
+        }
+
         window.addEventListener('message', this._handleMessage.bind(this));
     }
 
@@ -344,6 +352,13 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
 
     _updatePreviewSizing(data, element) {
         if (!element) return;
+
+        if (this.layout === 'cms') {
+            element.style.removeProperty('--slide-aspect-ratio');
+            element.style.removeProperty('max-width');
+            element.style.removeProperty('margin');
+            return;
+        }
 
         if (data.previewAspectRatio) {
             element.style.setProperty('--slide-aspect-ratio', `${data.previewAspectRatio.x} / ${data.previewAspectRatio.y}`);

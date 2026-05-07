@@ -57,8 +57,8 @@
         <div class="{{ slideClasses|join(' ') }}{% if slideData.slideSettings.slide.cssClass %} {{ slideData.slideSettings.slide.cssClass }}{% endif %}"
             data-elysium-slide-id="{{ slideData.id }}"
             {% if isPreviewMode is defined and isPreviewMode %}
-                data-elysium-slide-preview 
-                data-elysium-slide-preview-options="{{ {allowedOrigin: adminOrigin|default('')}|json_encode|escape('html_attr') }}"
+                data-elysium-slide-preview
+                data-elysium-slide-preview-options="{{ {allowedOrigin: adminOrigin|default(''), layout: layout|default('detail')}|json_encode|escape('html_attr') }}"
             {% endif %}
             style="aspect-ratio: var(--slide-aspect-ratio, auto);">
 

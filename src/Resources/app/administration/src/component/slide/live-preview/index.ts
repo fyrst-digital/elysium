@@ -43,6 +43,14 @@ export default Component.wrapComponentConfig({
             type: Boolean,
             default: false,
         },
+        framePadding: {
+            type: Number,
+            default: 0,
+        },
+        layout: {
+            type: String,
+            default: 'detail',
+        },
     },
 
     data() {
@@ -220,7 +228,7 @@ export default Component.wrapComponentConfig({
         buildIframeSrc(cacheBuster?: number) {
             this.isLoading = true;
             const adminOrigin = encodeURIComponent(JSON.stringify([window.location.origin]));
-            let src = `${this.baseUrl}/elysium-slide/preview/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}`;
+            let src = `${this.baseUrl}/elysium-slide/preview/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}&framePadding=${this.framePadding}&layout=${this.layout}`;
             if (cacheBuster) {
                 src += `&t=${cacheBuster}`;
             }
