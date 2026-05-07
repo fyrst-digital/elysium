@@ -30,6 +30,22 @@ export default Component.wrapComponentConfig({
             return Store.get('cmsPage');
         },
 
+        elysiumUI() {
+            return Store.get('elysiumUI');
+        },
+
+        previewDomain() {
+            return this.elysiumUI.previewDomain;
+        },
+
+        hasAvailableDomains() {
+            return this.elysiumUI.salesChannels.some((channel) => channel.domains && channel.domains.length > 0);
+        },
+
+        isLoadingSalesChannels() {
+            return this.elysiumUI.isLoadingSalesChannels;
+        },
+
         slidesRepository() {
             return this.repositoryFactory.create('blur_elysium_slides');
         },
@@ -49,6 +65,14 @@ export default Component.wrapComponentConfig({
 
         config() {
             return this.element?.config ?? null;
+        },
+
+        previewContainerStyles() {
+            return {
+                width: '100%',
+                aspectRatio: `${this.getViewportProp('aspectRatio.width')} / ${this.getViewportProp('aspectRatio.height')}`,
+                maxHeight: this.getViewportProp('aspectRatio.maxHeight') ? `${this.getViewportProp('aspectRatio.maxHeight')}px` : 'none',
+            };
         },
     },
 

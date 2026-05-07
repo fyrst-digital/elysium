@@ -13,6 +13,7 @@ interface UIState {
     salesChannels: Entity<'sales_channel'>[];
     selectedSalesChannelId: string | null;
     previewDomain: string | null;
+    isLoadingSalesChannels: boolean;
 }
 
 export default {
@@ -29,6 +30,7 @@ export default {
         salesChannels: [],
         selectedSalesChannelId: null,
         previewDomain: null,
+        isLoadingSalesChannels: false,
     }),
 
     actions: {
@@ -66,6 +68,10 @@ export default {
 
         setPreviewDomain(domain: string | null) {
             this.previewDomain = domain;
+        },
+
+        setLoadingSalesChannels(loading: boolean) {
+            this.isLoadingSalesChannels = loading;
         },
     },
 };

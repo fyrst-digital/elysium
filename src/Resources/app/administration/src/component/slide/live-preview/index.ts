@@ -39,6 +39,10 @@ export default Component.wrapComponentConfig({
             type: String,
             required: true,
         },
+        readOnly: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -74,6 +78,9 @@ export default Component.wrapComponentConfig({
             },
         },
         'elysiumSlide.refreshPreviewCounter'(counter) {
+            if (this.readOnly) {
+                return;
+            }
             this.buildIframeSrc(counter);
         },
 
@@ -222,10 +229,17 @@ export default Component.wrapComponentConfig({
 
         onIframeLoad() {
             this.isLoading = false;
+            if (this.readOnly) {
+                return;
+            }
             this.sendSlideUpdateImmediate();
         },
 
         sendSlideUpdateImmediate(fields?: string[]) {
+            if (this.readOnly) {
+                return;
+            }
+
             const iframe = this.$refs.iframe as HTMLIFrameElement | undefined;
 
             if (!iframe || !iframe.contentWindow) {
@@ -243,6 +257,10 @@ export default Component.wrapComponentConfig({
         },
 
         sendSlideUpdate(fields?: string[]) {
+            if (this.readOnly) {
+                return;
+            }
+
             if (fields) {
                 fields.forEach((f) => this.pendingFields.add(f));
             }
