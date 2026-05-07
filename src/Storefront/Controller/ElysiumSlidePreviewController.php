@@ -21,7 +21,6 @@ use Shopware\Storefront\Framework\Routing\StorefrontRouteScope;
 use Shopware\Core\PlatformRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(defaults: [PlatformRequest::ATTRIBUTE_ROUTE_SCOPE => [StorefrontRouteScope::ID]])]
@@ -187,7 +186,8 @@ class ElysiumSlidePreviewController extends StorefrontController
         $slide = $this->elysiumSlidesRepository->search($criteria, $context->getContext())->first();
 
         if ($slide === null) {
-            throw new NotFoundHttpException('Slide not found');
+            $slide = new ElysiumSlidesEntity();
+            $slide->setId($slideId);
         }
 
         return $slide;
@@ -261,6 +261,16 @@ class ElysiumSlidePreviewController extends StorefrontController
         }
 
         $this->mergeCoverMedia($entity, $postData);
+
+        $entity->setTranslated(array_merge(
+            $entity->getTranslated() ?? [],
+            [
+                'title' => $entity->getTitle(),
+                'description' => $entity->getDescription(),
+                'buttonLabel' => $entity->getButtonLabel(),
+                'url' => $entity->getUrl(),
+            ]
+        ));
 
         return $entity;
     }
