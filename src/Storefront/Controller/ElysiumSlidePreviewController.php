@@ -21,6 +21,7 @@ use Shopware\Storefront\Framework\Routing\StorefrontRouteScope;
 use Shopware\Core\PlatformRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(defaults: [PlatformRequest::ATTRIBUTE_ROUTE_SCOPE => [StorefrontRouteScope::ID]])]
@@ -43,6 +44,37 @@ class ElysiumSlidePreviewController extends StorefrontController
         }
 
         return [$raw];
+    }
+
+    private function validateIframeAccess(Request $request): void
+    {
+        $secFetchDest = $request->headers->get('Sec-Fetch-Dest');
+        if ($secFetchDest !== null && $secFetchDest !== 'iframe') {
+            throw new AccessDeniedHttpException('Preview must be loaded in an iframe.');
+        }
+
+        $referer = $request->headers->get('Referer');
+        if ($referer !== null) {
+            $allowedOrigins = $this->parseAdminOrigin($request->query->get('adminOrigin', ''));
+            $allowed = false;
+            foreach ($allowedOrigins as $origin) {
+                if (str_starts_with($referer, rtrim($origin, '/'))) {
+                    $allowed = true;
+                    break;
+                }
+            }
+            if (!$allowed) {
+                throw new AccessDeniedHttpException('Invalid referer.');
+            }
+        }
+    }
+
+    private function validateSameOriginFetch(Request $request): void
+    {
+        $secFetchSite = $request->headers->get('Sec-Fetch-Site');
+        if ($secFetchSite !== null && $secFetchSite !== 'same-origin') {
+            throw new AccessDeniedHttpException('Cross-site request not allowed.');
+        }
     }
 
     /**
@@ -74,6 +106,12 @@ class ElysiumSlidePreviewController extends StorefrontController
         $frameAncestors = array_unique(array_filter($frameAncestors));
 
         $response->headers->set('Content-Security-Policy', 'frame-ancestors ' . implode(' ', $frameAncestors));
+        $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
+        $response->headers->set('X-Content-Type-Options', 'nosniff');
+        $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
+        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
 
         return $response;
     }
@@ -81,6 +119,7 @@ class ElysiumSlidePreviewController extends StorefrontController
     #[Route(path: '/elysium-slide/preview/{slideId}', name: 'frontend.elysium-slide.preview', methods: ['GET'])]
     public function preview(string $slideId, SalesChannelContext $context, Request $request): Response
     {
+        $this->validateIframeAccess($request);
         $slide = $this->loadSlide($slideId, $context);
         $device = $request->query->get('device', 'desktop');
         $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
@@ -97,6 +136,7 @@ class ElysiumSlidePreviewController extends StorefrontController
     #[Route(path: '/elysium-slide/preview/headline/{slideId}', name: 'frontend.elysium-slide.preview.headline', methods: ['POST'])]
     public function headline(string $slideId, SalesChannelContext $context, Request $request): Response
     {
+        $this->validateSameOriginFetch($request);
         $slide = $this->loadAndMergeSlide($slideId, $context, $request);
         $device = $request->query->get('device', 'desktop');
         $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
@@ -112,6 +152,7 @@ class ElysiumSlidePreviewController extends StorefrontController
     #[Route(path: '/elysium-slide/preview/button/{slideId}', name: 'frontend.elysium-slide.preview.button', methods: ['POST'])]
     public function button(string $slideId, SalesChannelContext $context, Request $request): Response
     {
+        $this->validateSameOriginFetch($request);
         $slide = $this->loadAndMergeSlide($slideId, $context, $request);
         $device = $request->query->get('device', 'desktop');
         $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
@@ -127,6 +168,7 @@ class ElysiumSlidePreviewController extends StorefrontController
     #[Route(path: '/elysium-slide/preview/cover/{slideId}', name: 'frontend.elysium-slide.preview.cover', methods: ['POST'])]
     public function cover(string $slideId, SalesChannelContext $context, Request $request): Response
     {
+        $this->validateSameOriginFetch($request);
         $slide = $this->loadAndMergeSlide($slideId, $context, $request);
         $device = $request->query->get('device', 'desktop');
         $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
@@ -142,6 +184,7 @@ class ElysiumSlidePreviewController extends StorefrontController
     #[Route(path: '/elysium-slide/preview/focus-image/{slideId}', name: 'frontend.elysium-slide.preview.focus-image', methods: ['POST'])]
     public function focusImage(string $slideId, SalesChannelContext $context, Request $request): Response
     {
+        $this->validateSameOriginFetch($request);
         $slide = $this->loadAndMergeSlide($slideId, $context, $request);
         $device = $request->query->get('device', 'desktop');
         $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
@@ -157,6 +200,7 @@ class ElysiumSlidePreviewController extends StorefrontController
     #[Route(path: '/elysium-slide/preview/description/{slideId}', name: 'frontend.elysium-slide.preview.description', methods: ['POST'])]
     public function description(string $slideId, SalesChannelContext $context, Request $request): Response
     {
+        $this->validateSameOriginFetch($request);
         $slide = $this->loadAndMergeSlide($slideId, $context, $request);
         $device = $request->query->get('device', 'desktop');
         $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
