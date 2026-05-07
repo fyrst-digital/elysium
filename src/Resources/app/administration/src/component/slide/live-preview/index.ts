@@ -204,7 +204,11 @@ export default Component.wrapComponentConfig({
         },
 
         device() {
-            this.sendSlideUpdate(['device']);
+            if (this.readOnly) {
+                this.buildIframeSrc();
+            } else {
+                this.sendSlideUpdate(['device']);
+            }
         },
 
         aspectRatioX() {
