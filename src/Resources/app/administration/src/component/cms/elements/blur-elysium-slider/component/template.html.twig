@@ -1,39 +1,18 @@
 <div class="elysium-element-badge">
     {{ $tc('blurElysiumSlider.label') }}
 </div>
-
-<mt-loader
-    v-if="isLoadingSalesChannels"
-    size="48px"
+<elysium-slide-preview 
+    v-if="previewSlide"
+    :slide="previewSlide"
+    :device-view="activeViewport"
+    :show-preview-notice="false"
+    :aspect-ratio-x="getViewportProp('sizing.aspectRatio.width')"
+    :aspect-ratio-y="getViewportProp('sizing.aspectRatio.height')"
+    :max-height="getViewportProp('sizing.maxHeight') ? `${getViewportProp('sizing.maxHeight')}px` : 'none'"
 />
-
-<template v-else-if="previewSlide">
-    <div
-        v-if="previewDomain"
-        :style="previewContainerStyles"
-    >
-        <elysium-slide-live-preview
-            :read-only="true"
-            :slide-id="previewSlide.id"
-            :slide="previewSlide"
-            :device="activeViewport"
-            :aspect-ratio-x="getViewportProp('sizing.aspectRatio.width')"
-            :aspect-ratio-y="getViewportProp('sizing.aspectRatio.height')"
-            :max-height="getViewportProp('sizing.maxHeight') ? `${getViewportProp('sizing.maxHeight')}px` : 'none'"
-            :base-url="previewDomain"
-            layout="cms"
-        />
-    </div>
-
-    <elysium-slide-preview-unavailable
-        v-else-if="!hasAvailableDomains"
-        :style="previewContainerStyles"
-    />
-</template>
-
-<elysium-slide-skeleton
-    v-else
-    :title="$tc('blurElysiumSlider.label')"
+<elysium-slide-skeleton 
+    v-else 
+    :title="$tc('blurElysiumSlider.label')" 
     :description="$tc('blurElysiumSlider.messages.cmsDescription')"
     :aspect-ratio-x="getViewportProp('sizing.aspectRatio.width')"
     :aspect-ratio-y="getViewportProp('sizing.aspectRatio.height')"
