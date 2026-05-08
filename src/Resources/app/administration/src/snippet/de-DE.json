@@ -375,7 +375,8 @@
         },
         "preview": {
             "noDomainAvailableTitle": "Keine Storefront-Domain verfügbar",
-            "noDomainAvailableDescription": "Es ist keine Verkaufskanal-Domain konfiguriert, die für die Live-Vorschau verwendet werden kann. Bitte richte mindestens eine Domain in deinen Verkaufskanälen ein."
+            "noDomainAvailableDescription": "Es ist keine Verkaufskanal-Domain konfiguriert, die für die Live-Vorschau verwendet werden kann. Bitte richte mindestens eine Domain in deinen Verkaufskanälen ein.",
+            "notice": "Dies ist nur eine ungefähre Vorschau und kann von der tatsächlichen Darstellung im Storefront abweichen. Individuelle Theme-Styles, CSS Klassen und Twig-Templates werden in dieser Vorschau nicht berücksichtigt."
         }
     },
     "blurElysiumSlider": {
