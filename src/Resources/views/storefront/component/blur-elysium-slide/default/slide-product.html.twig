@@ -1,29 +1,6 @@
 {% sw_extends '@Storefront/storefront/component/blur-elysium-slide/default/slide.html.twig' %}
 
-{% block blur_elysium_slide_image_element %}
-    {# overwrite focus image #}
-    {% if slideData.product.cover and slideData.slideSettings.slide.linking.showProductFocusImage is same as(true) %}
-        {% set imageMedia = slideData.product.cover.media %}
-    {% endif %}
-
-    {{ parent() }}
-{% endblock %}
-
 {% block blur_elysium_slide %}
-    {# overwrite headline content #}
-    {% if slideData.slideSettings.slide.linking.showProductTitle is same as(true) and slideData.product.translated.name %}
-        {% set headlineContent = slideData.product.translated.name %}
-    {% elseif slideData.translated.title %}
-        {% set headlineContent = slideData.translated.title %}
-    {% endif %}
-    
-    {# overwrite description content #}
-    {% if slideData.slideSettings.slide.linking.showProductDescription is same as(true) and slideData.product.translated.description %}
-        {% set descriptionContent = slideData.product.translated.description|raw %}
-    {% elseif slideData.translated.description %}
-        {% set descriptionContent = slideData.translated.description|raw %}
-    {% endif %}
-
     {# overwrite actions #}
     {% if slideData.product.id %}
         {% set actionMainUrl = seoUrl('frontend.detail.page', {'productId': slideData.product.id}) %}

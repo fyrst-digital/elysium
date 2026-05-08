@@ -1,7 +1,7 @@
 .py-base-field {
     display: grid;
     gap: 4px 16px;
-    align-items: start;
+    align-items: center;
     grid-template-columns: var(--py-field-cols, minmax(0, 1fr) minmax(0, 2fr));
 
     &.layout-row {
@@ -137,6 +137,12 @@
 
     .mt-block-field__block {
         padding: 0 !important;
+    }
+
+    .mt-slider__marks {
+        &:empty {
+            display: none !important;
+        }
     }
 }
 

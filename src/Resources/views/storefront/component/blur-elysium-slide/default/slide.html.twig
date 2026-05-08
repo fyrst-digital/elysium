@@ -27,8 +27,22 @@
     {% set slideClasses = defaultSlideClasses %}
 {% endif %}
 
-{% set headlineContent = slideData.translated.title|striptags( headlineTagsWhitelist|join ) %}
-{% set descriptionContent = slideData.translated.description %}
+{% if slideData.slideSettings.slide.linking.type is same as('product')
+      and slideData.slideSettings.slide.linking.showProductTitle is same as(true)
+      and slideData.product.translated.name %}
+    {% set headlineContent = slideData.product.translated.name %}
+{% else %}
+    {% set headlineContent = slideData.translated.title|striptags( headlineTagsWhitelist|join ) %}
+{% endif %}
+
+{% if slideData.slideSettings.slide.linking.type is same as('product')
+      and slideData.slideSettings.slide.linking.showProductDescription is same as(true)
+      and slideData.product.translated.description %}
+    {% set descriptionContent = slideData.product.translated.description|raw %}
+{% else %}
+    {% set descriptionContent = slideData.translated.description %}
+{% endif %}
+
 {% set actionMainUrl = slideData.translated.url %}
 {% set showActions = actionMainUrl and slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
 {% set actionMainLabel = slideData.translated.buttonLabel ?? 'blurElysiumSlides.buttonLabel'|trans %}
@@ -42,6 +56,10 @@
 
         <div class="{{ slideClasses|join(' ') }}{% if slideData.slideSettings.slide.cssClass %} {{ slideData.slideSettings.slide.cssClass }}{% endif %}"
             data-elysium-slide-id="{{ slideData.id }}"
+            {% if isPreviewMode is defined and isPreviewMode %}
+                data-elysium-slide-preview
+                data-elysium-slide-preview-options="{{ {allowedOrigin: adminOrigin|default(''), layout: layout|default('detail')}|json_encode|escape('html_attr') }}"
+            {% endif %}
             style="aspect-ratio: var(--slide-aspect-ratio, auto);">
 
             {% block blur_elysium_slide_prepend %}{% endblock %}

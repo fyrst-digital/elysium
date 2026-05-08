@@ -30,7 +30,8 @@
 
                 {% if headlineContent %}
                     <{{headlineElement|raw}} 
-                        class="{{ headlineClasses|join(' ') }}">
+                        class="{{ headlineClasses|join(' ') }}"
+                        data-elysium-slide-headline="{{ slideData.id }}">
                         {{ headlineContent|raw }}
                     </{{headlineElement|raw}}>
                 {% endif %}
@@ -38,7 +39,8 @@
 
             {% block blur_elysium_slide_description %}
                 {% if descriptionContent %}
-                    <div class="{{ descriptionClasses|join(' ') }}">
+                    <div class="{{ descriptionClasses|join(' ') }}"
+                        data-elysium-slide-description="{{ slideData.id }}">
                         {{ descriptionContent|raw }}
                     </div>
                 {% endif %}
@@ -49,14 +51,15 @@
                     <div class="{{ actionsClasses|join(' ') }}">
                         
                         {% block blur_elysium_slide_action_main %}
-                            <a href="{{ actionMainUrl }}" 
-                                title="{{ actionMainLabel }}" 
+                            <a href="{{ actionMainUrl }}"
+                                title="{{ actionMainLabel }}"
                                 class="{{ mainBtnClasses|join(' ') }}"
+                                data-elysium-slide-button="{{ slideData.id }}"
                                 {% if slideData.slideSettings.slide.linking.openExternal is same as(true) %}
                                     target="_blank"
                                     rel="noopener"
                                 {% endif %}>
-                                
+
                                 {{ actionMainLabel }}
                             </a>
                         {% endblock %}

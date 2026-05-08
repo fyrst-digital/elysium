@@ -23,7 +23,8 @@
                     fontSize: '12px',
                     fontWeight: '500',
                     marginBottom: '4px',
-                }">
+                }"
+            >
                 Seitenverhaeltnis
             </div>
 
@@ -33,11 +34,13 @@
                     alignItems: 'center',
                     gap: '8px',
                     flexWrap: 'wrap'
-                }">
+                }"
+            >
 
                 <py-number-field
                     layout="row"
-                    v-model="aspectRatioX"
+                    :model-value="aspectRatioX"
+                    @update:model-value="onAspectRatioXChange"
                     :label="false"
                     :min="1" 
                     :step="1" 
@@ -50,7 +53,8 @@
 
                 <py-number-field
                     layout="row"
-                    v-model="aspectRatioY"
+                    :model-value="aspectRatioY"
+                    @update:model-value="onAspectRatioYChange"
                     :label="false"
                     :min="1" 
                     :step="1" 
@@ -58,7 +62,8 @@
                         mobile: {
                             maxWidth: '120px',
                         }
-                    })"/>
+                    })"
+                />
             </div>
         </div>
 
@@ -70,7 +75,8 @@
                     fontSize: '12px',
                     fontWeight: '500',
                     marginBottom: '4px',
-                }">
+                }"
+            >
                 Breite
             </div>
 
@@ -80,11 +86,13 @@
                     alignItems: 'center',
                     gap: '8px',
                     flexWrap: 'wrap'
-                }">
+                }"
+            >
 
                 <py-number-field
                     layout="row"
-                    v-model="width"
+                    :model-value="width"
+                    @update:model-value="onWidthChange"
                     placeholder="in Pixel"
                     :label="false"
                     :step="1" 
@@ -98,20 +106,51 @@
             </div>
         </div>
 
+        <div v-if="hasAvailableDomains">
+            <div 
+                :style="{
+                    lineHeight: '1',
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    marginBottom: '4px',
+                }"
+            >
+                Verkaufskanal
+            </div>
+
+            <py-select-field
+                layout="row"
+                :model-value="selectedSalesChannelId"
+                @update:model-value="onSalesChannelChange"
+                :options="salesChannels.map(channel => ({ value: channel.id, label: channel.name }))"
+                :style="viewStyle({
+                    mobile: {
+                        maxWidth: '200px',
+                    }
+                })"
+            />
+        </div>
+
     </div>
 
-
-
     <div :style="viewStyle(styles.canvas)">
-        <elysium-slide-preview 
-            v-if="slide"
+        <elysium-slide-live-preview
+            v-if="slide && hasAvailableDomains && previewDomain"
+            :slide-id="slide.id"
             :slide="slide"
-            :device-view="device"
-            :show-preview-notice="false"
+            :device="device"
             :aspect-ratio-x="aspectRatioX"
             :aspect-ratio-y="aspectRatioY"
             :max-height="'none'"
             :max-width="width"
+            :base-url="previewDomain"
+            :frame-padding="40"
+            layout="detail"
+            :style="{ flex: '1 100%' }"
+        />
+
+        <elysium-slide-preview-unavailable
+            v-else-if="!hasAvailableDomains"
             :style="{ flex: '1 100%' }"
         />
     </div>

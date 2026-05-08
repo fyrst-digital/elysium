@@ -1,0 +1,49 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_body_skip_to_content %}{% endblock %}
+{% block base_esi_header %}{% endblock %}
+{% block base_navigation_styling %}{% endblock %}
+{% block base_flashbags %}{% endblock %}
+{% block base_add_to_cart_alert_template %}{% endblock %}
+{% block base_breadcrumb %}{% endblock %}
+{% block base_esi_footer %}{% endblock %}
+{% block base_scroll_up %}{% endblock %}
+{% block base_cookie_permission %}{% endblock %}
+{% block base_pseudo_modal %}{% endblock %}
+{% block base_speculation_rules %}{% endblock %}
+
+{% block base_body %}
+    <style>
+        html, body {
+            background-color: transparent !important;
+        }
+        body {
+            justify-content: center !important;
+            --frame-padding: {{ framePadding }}px;
+            padding: var(--frame-padding, 0px);
+        }
+    </style>
+
+    {% set blurElysiumBreakpoints = {
+        mobile: 'xs',
+        tablet: 'md',
+        desktop: 'xl'
+    } %}
+
+    {% if config('BlurElysiumSlider.breakpoints') %}
+        {% set blurElysiumBreakpoints = blurElysiumBreakpoints|merge(
+            config('BlurElysiumSlider.breakpoints')
+        ) %}
+    {% endif %}
+
+    {% block base_body_elysium_slide_preview %}
+        {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/slide.html.twig' with {
+            slideData: slideData,
+            lazyLoading: false,
+            device: device,
+            isPreviewMode: true,
+            adminOrigin: adminOrigin,
+            layout: layout
+        } %}
+    {% endblock %}
+{% endblock %}

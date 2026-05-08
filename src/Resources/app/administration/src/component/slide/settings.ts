@@ -20,7 +20,8 @@ const viewportConfig: ViewportConfig = {
         paddingX: null,
         paddingY: null,
         borderRadius: null,
-        maxWidth: null,
+        maxWidth: 0,
+        basis: 0,
         gap: null,
         justifyContent: null,
         alignItems: null,
@@ -30,12 +31,14 @@ const viewportConfig: ViewportConfig = {
     content: {
         paddingX: null,
         paddingY: null,
-        maxWidth: null,
+        maxWidth: 0,
+        basis: 0,
         textAlign: null,
     },
     image: {
         justifyContent: null,
-        maxWidth: null,
+        maxWidth: 0,
+        basis: 0,
     },
     coverMedia: {
         objectPosX: null,

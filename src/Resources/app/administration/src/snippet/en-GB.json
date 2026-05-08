@@ -343,7 +343,12 @@
             },
             "slideWidth": {
                 "label": "Width limit",
-                "noMaxWidth": "No width limit"
+                "noMaxWidth": "No width limit",
+                "tooltip": "0% stands for auto width"
+            },
+            "basis": {
+                "label": "Base",
+                "tooltip": "0% stands for auto width"
             },
             "customTemplateFile": {
                 "label": "Custom template file",
@@ -367,6 +372,11 @@
         },
         "slideSearch": {
             "noResult": "No Slides found"
+        },
+        "preview": {
+            "noDomainAvailableTitle": "No storefront domain available",
+            "noDomainAvailableDescription": "There is no sales channel domain configured that can be used for the live preview. Please configure at least one domain in your sales channels.",
+            "notice": "This is only an approximate preview and may differ from the actual display in the storefront. Individual theme styles, CSS classes and Twig templates are not taken into account in this preview."
         }
     },
     "blurElysiumSlider": {
