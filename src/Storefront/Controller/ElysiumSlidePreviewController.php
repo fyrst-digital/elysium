@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Storefront\Controller;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry;
+use Blur\BlurElysiumSlider\Preview\Renderer\PreviewFragmentRenderer;
 use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Shopware\Core\System\SalesChannel\Aggregate\SalesChannelDomain\SalesChannelDomainEntity;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Shopware\Storefront\Controller\StorefrontController;
@@ -29,6 +30,8 @@ class ElysiumSlidePreviewController extends StorefrontController
         private readonly EntityRepository $elysiumSlidesRepository,
         private readonly EntityRepository $productRepository,
         private readonly EntityRepository $salesChannelRepository,
+        private readonly PreviewSchemaRegistry $schemaRegistry,
+        private readonly PreviewFragmentRenderer $fragmentRenderer,
     ) {}
 
     /**
@@ -70,7 +73,7 @@ class ElysiumSlidePreviewController extends StorefrontController
     private function validateSameOriginFetch(Request $request): void
     {
         $secFetchSite = $request->headers->get('Sec-Fetch-Site');
-        if ($secFetchSite !== null && $secFetchSite !== 'same-origin') {
+        if ($secFetchSite !== null && !in_array($secFetchSite, ['same-origin', 'same-site'], true)) {
             throw new AccessDeniedHttpException('Cross-site request not allowed.');
         }
     }
@@ -114,10 +117,15 @@ class ElysiumSlidePreviewController extends StorefrontController
         return $response;
     }
 
-    #[Route(path: '/elysium-slide/preview/{slideId}', name: 'frontend.elysium-slide.preview', methods: ['GET'])]
-    public function preview(string $slideId, SalesChannelContext $context, Request $request): Response
+    #[Route(path: '/elysium-preview/{elementType}/{slideId}', name: 'frontend.elysium-preview.preview', methods: ['GET'])]
+    public function preview(string $elementType, string $slideId, SalesChannelContext $context, Request $request): Response
     {
         $this->validateIframeAccess($request);
+
+        if (!$this->schemaRegistry->has($elementType)) {
+            throw $this->createNotFoundException(sprintf('Unknown preview element type "%s".', $elementType));
+        }
+
         $slide = $this->loadSlide($slideId, $context);
         $device = $request->query->get('device', 'desktop');
         $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
@@ -135,79 +143,33 @@ class ElysiumSlidePreviewController extends StorefrontController
         return $this->setPreviewHeaders($response, $context, $adminOrigin);
     }
 
-    #[Route(path: '/elysium-slide/preview/headline/{slideId}', name: 'frontend.elysium-slide.preview.headline', methods: ['POST'])]
-    public function headline(string $slideId, SalesChannelContext $context, Request $request): Response
+    #[Route(path: '/elysium-preview/{elementType}/fragment/{fragmentName}/{slideId}', name: 'frontend.elysium-preview.fragment', methods: ['POST'])]
+    public function fragment(string $elementType, string $fragmentName, string $slideId, SalesChannelContext $context, Request $request): Response
     {
         $this->validateSameOriginFetch($request);
+
+        $schema = $this->schemaRegistry->get($elementType);
+        if ($schema === null) {
+            throw $this->createNotFoundException(sprintf('Unknown preview element type "%s".', $elementType));
+        }
+
+        $fragment = null;
+        foreach ($schema->getFragments() as $f) {
+            if ($f->getName() === $fragmentName) {
+                $fragment = $f;
+                break;
+            }
+        }
+
+        if ($fragment === null) {
+            throw $this->createNotFoundException(sprintf('Unknown fragment "%s" for element type "%s".', $fragmentName, $elementType));
+        }
+
         $slide = $this->loadAndMergeSlide($slideId, $context, $request);
         $device = $request->query->get('device', 'desktop');
         $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
 
-        $response = $this->render('@Storefront/storefront/elysium-slide/preview/headline.html.twig', [
-            'slideData' => $slide,
-            'device' => $device,
-        ]);
-
-        return $this->setPreviewHeaders($response, $context, $adminOrigin);
-    }
-
-    #[Route(path: '/elysium-slide/preview/button/{slideId}', name: 'frontend.elysium-slide.preview.button', methods: ['POST'])]
-    public function button(string $slideId, SalesChannelContext $context, Request $request): Response
-    {
-        $this->validateSameOriginFetch($request);
-        $slide = $this->loadAndMergeSlide($slideId, $context, $request);
-        $device = $request->query->get('device', 'desktop');
-        $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
-
-        $response = $this->render('@Storefront/storefront/elysium-slide/preview/button.html.twig', [
-            'slideData' => $slide,
-            'device' => $device,
-        ]);
-
-        return $this->setPreviewHeaders($response, $context, $adminOrigin);
-    }
-
-    #[Route(path: '/elysium-slide/preview/cover/{slideId}', name: 'frontend.elysium-slide.preview.cover', methods: ['POST'])]
-    public function cover(string $slideId, SalesChannelContext $context, Request $request): Response
-    {
-        $this->validateSameOriginFetch($request);
-        $slide = $this->loadAndMergeSlide($slideId, $context, $request);
-        $device = $request->query->get('device', 'desktop');
-        $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
-
-        $response = $this->render('@Storefront/storefront/elysium-slide/preview/cover.html.twig', [
-            'slideData' => $slide,
-            'device' => $device,
-        ]);
-
-        return $this->setPreviewHeaders($response, $context, $adminOrigin);
-    }
-
-    #[Route(path: '/elysium-slide/preview/focus-image/{slideId}', name: 'frontend.elysium-slide.preview.focus-image', methods: ['POST'])]
-    public function focusImage(string $slideId, SalesChannelContext $context, Request $request): Response
-    {
-        $this->validateSameOriginFetch($request);
-        $slide = $this->loadAndMergeSlide($slideId, $context, $request);
-        $device = $request->query->get('device', 'desktop');
-        $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
-
-        $response = $this->render('@Storefront/storefront/elysium-slide/preview/focus-image.html.twig', [
-            'slideData' => $slide,
-            'device' => $device,
-        ]);
-
-        return $this->setPreviewHeaders($response, $context, $adminOrigin);
-    }
-
-    #[Route(path: '/elysium-slide/preview/description/{slideId}', name: 'frontend.elysium-slide.preview.description', methods: ['POST'])]
-    public function description(string $slideId, SalesChannelContext $context, Request $request): Response
-    {
-        $this->validateSameOriginFetch($request);
-        $slide = $this->loadAndMergeSlide($slideId, $context, $request);
-        $device = $request->query->get('device', 'desktop');
-        $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
-
-        $response = $this->render('@Storefront/storefront/elysium-slide/preview/description.html.twig', [
+        $response = $this->fragmentRenderer->render($fragment, [
             'slideData' => $slide,
             'device' => $device,
         ]);

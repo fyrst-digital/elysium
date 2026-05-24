@@ -1,4 +1,5 @@
 import template from './template.html.twig'
+import { previewSchema } from '@elysium/composables/preview-schema'
 
 const { Component, Store } = Shopware;
 const { debounce } = Shopware.Utils;
@@ -91,118 +92,6 @@ export default Component.wrapComponentConfig({
             }
             this.buildIframeSrc(counter);
         },
-
-        // --- Direct field changes ---
-        'slide.title'() {
-            this.sendSlideUpdate(['title']);
-        },
-        'slide.description'() {
-            this.sendSlideUpdate(['description']);
-        },
-        'slide.buttonLabel'() {
-            this.sendSlideUpdate(['buttonLabel']);
-        },
-        'slide.url'() {
-            this.sendSlideUpdate(['url']);
-        },
-        'slide.presentationMedia': {
-            deep: true,
-            handler() {
-                this.sendSlideUpdate(['presentationMedia']);
-            },
-        },
-        'slide.productId'() {
-            this.sendSlideUpdate(['productId']);
-        },
-        'slide.contentSettings': {
-            deep: true,
-            handler() {
-                this.sendSlideUpdate(['contentSettings']);
-            },
-        },
-        'slide.slideCover': {
-            deep: true,
-            handler() {
-                this.sendSlideUpdate(['slideCover']);
-            },
-        },
-        'slide.slideCoverMobile': {
-            deep: true,
-            handler() {
-                this.sendSlideUpdate(['slideCoverMobile']);
-            },
-        },
-        'slide.slideCoverTablet': {
-            deep: true,
-            handler() {
-                this.sendSlideUpdate(['slideCoverTablet']);
-            },
-        },
-        'slide.slideCoverVideo': {
-            deep: true,
-            handler() {
-                this.sendSlideUpdate(['slideCoverVideo']);
-            },
-        },
-
-        // --- Structural slideSettings changes (partials) ---
-        'slide.slideSettings.slide.headline.element'() {
-            this.sendSlideUpdate(['headlineElement']);
-        },
-        'slide.slideSettings.slide.linking.type'() {
-            this.sendSlideUpdate(['linkingType']);
-        },
-        'slide.slideSettings.slide.linking.showProductTitle'() {
-            this.sendSlideUpdate(['showProductTitle']);
-        },
-        'slide.slideSettings.slide.linking.showProductDescription'() {
-            this.sendSlideUpdate(['showProductDescription']);
-        },
-        'slide.slideSettings.slide.linking.showProductFocusImage'() {
-            this.sendSlideUpdate(['showProductFocusImage']);
-        },
-        'slide.slideSettings.slide.linking.buttonAppearance'() {
-            this.sendSlideUpdate(['buttonAppearance']);
-        },
-        'slide.slideSettings.slide.linking.buttonSize'() {
-            this.sendSlideUpdate(['buttonSize']);
-        },
-        'slide.slideSettings.slide.linking.overlay'() {
-            this.sendSlideUpdate(['linkingOverlay']);
-        },
-        'slide.slideSettings.slide.linking.openExternal'() {
-            this.sendSlideUpdate(['linkingOpenExternal']);
-        },
-        'slide.slideSettings.slide.cssClass'() {
-            this.sendSlideUpdate(['slideCssClass']);
-        },
-
-        // --- CSS-only slideSettings changes (styles, no partials) ---
-        'slide.slideSettings.slide.bgColor'() {
-            this.sendSlideUpdate(['slideBgColor']);
-        },
-        'slide.slideSettings.slide.bgGradient': {
-            deep: true,
-            handler() {
-                this.sendSlideUpdate(['slideBgGradient']);
-            },
-        },
-        'slide.slideSettings.slide.headline.color'() {
-            this.sendSlideUpdate(['headlineColor']);
-        },
-        'slide.slideSettings.slide.description.color'() {
-            this.sendSlideUpdate(['descriptionColor']);
-        },
-        'slide.slideSettings.container.bgColor'() {
-            this.sendSlideUpdate(['containerBgColor']);
-        },
-        'slide.slideSettings.viewports': {
-            deep: true,
-            handler() {
-                this.sendSlideUpdate(['viewports']);
-            },
-        },
-
         device() {
             if (this.readOnly) {
                 this.buildIframeSrc();
@@ -210,29 +99,34 @@ export default Component.wrapComponentConfig({
                 this.sendSlideUpdate(['device']);
             }
         },
-
         aspectRatioX() {
             this.sendSlideUpdate(['previewSizing']);
         },
-
         aspectRatioY() {
             this.sendSlideUpdate(['previewSizing']);
         },
-
         maxWidth() {
             this.sendSlideUpdate(['previewSizing']);
         },
-
         baseUrl() {
             this.buildIframeSrc();
         },
+    },
+
+    created() {
+        // Dynamically register watchers from the preview schema
+        previewSchema.fieldMappings.forEach((mapping) => {
+            this.$watch(mapping.path, () => {
+                this.sendSlideUpdate(mapping.fields);
+            }, { deep: mapping.deep ?? false });
+        });
     },
 
     methods: {
         buildIframeSrc(cacheBuster?: number) {
             this.isLoading = true;
             const adminOrigin = encodeURIComponent(JSON.stringify([window.location.origin]));
-            let src = `${this.baseUrl}/elysium-slide/preview/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}&framePadding=${this.framePadding}&layout=${this.layout}`;
+            let src = `${this.baseUrl}/elysium-preview/blur-elysium-slide/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}&framePadding=${this.framePadding}&layout=${this.layout}`;
             if (cacheBuster) {
                 src += `&t=${cacheBuster}`;
             }

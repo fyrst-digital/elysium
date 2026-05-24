@@ -1,3 +1,6 @@
+import { previewSchema, getFragmentsForFields } from './elysium-preview-schema-slide';
+import { createFragmentRenderers } from './elysium-preview-fragment-renderers';
+
 const { PluginBaseClass } = window;
 
 export default class ElysiumSlidePreview extends PluginBaseClass {
@@ -88,6 +91,8 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
             : [window.location.origin];
 
         this.layout = this.options.layout || 'detail';
+        this.schema = previewSchema;
+        this.fragmentRenderers = createFragmentRenderers();
 
         if (this.layout === 'cms') {
             this.el.style.flex = '1 100%';
@@ -190,148 +195,6 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
     }
 
-    async updateDescription(slide) {
-        try {
-            const html = await this._fetchPartial('description', slide);
-            const existingEl = document.querySelector(
-                `[data-elysium-slide-description="${this.slideId}"]`
-            );
-
-            if (existingEl) {
-                if (html.trim()) {
-                    existingEl.outerHTML = html;
-                } else {
-                    existingEl.remove();
-                }
-            } else if (html.trim()) {
-                const contentEl = document.querySelector('.blur-elysium-slide-content');
-                if (contentEl) {
-                    contentEl.insertAdjacentHTML('beforeend', html);
-                }
-            }
-        } catch (err) {
-            this._showError('Failed to update description preview');
-            console.error(err);
-        }
-    }
-
-    async _fetchPartial(partial, slide) {
-        const device = this.currentDevice || 'desktop';
-        const url = `/elysium-slide/preview/${partial}/${this.slideId}?device=${encodeURIComponent(device)}`;
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ slide }),
-        });
-
-        if (!response.ok) {
-            throw new Error(`Partial ${partial} failed: ${response.status}`);
-        }
-
-        return response.text();
-    }
-
-    _showError(message) {
-        const existing = this.el.querySelector('.blur-elysium-slide-preview-error');
-        if (existing) existing.remove();
-
-        const errorEl = document.createElement('div');
-        errorEl.className = 'blur-elysium-slide-preview-error';
-        errorEl.textContent = message;
-        errorEl.style.cssText = 'position:absolute;top:8px;left:8px;right:8px;z-index:9999;padding:8px 12px;background:#dc3545;color:#fff;border-radius:4px;font-size:12px;font-family:sans-serif;';
-        this.el.prepend(errorEl);
-        setTimeout(() => errorEl.remove(), 5000);
-    }
-
-    async updateHeadline(slide) {
-        try {
-            const html = await this._fetchPartial('headline', slide);
-            const existingEl = document.querySelector('[data-elysium-slide-headline]');
-            if (existingEl) {
-                if (html.trim()) {
-                    existingEl.outerHTML = html;
-                } else {
-                    existingEl.remove();
-                }
-            } else if (html.trim()) {
-                const contentEl = document.querySelector('.blur-elysium-slide-content');
-                if (contentEl) {
-                    contentEl.insertAdjacentHTML('afterbegin', html);
-                }
-            }
-        } catch (err) {
-            this._showError('Failed to update headline preview');
-            console.error(err);
-        }
-    }
-
-    async updateButton(slide) {
-        try {
-            const html = await this._fetchPartial('button', slide);
-            const existingActions = document.querySelector('.blur-elysium-slide-actions');
-            if (existingActions) {
-                if (html.trim()) {
-                    existingActions.outerHTML = html;
-                } else {
-                    existingActions.remove();
-                }
-            } else if (html.trim()) {
-                const contentEl = document.querySelector('.blur-elysium-slide-content');
-                if (contentEl) {
-                    contentEl.insertAdjacentHTML('beforeend', html);
-                }
-            }
-        } catch (err) {
-            this._showError('Failed to update button preview');
-            console.error(err);
-        }
-    }
-
-    async updateCoverMedia(slide, element) {
-        try {
-            const html = await this._fetchPartial('cover', slide);
-            const existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
-            const existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
-
-            if (existingPicture) existingPicture.remove();
-            if (existingVideo) existingVideo.remove();
-
-            if (html.trim()) {
-                element.insertAdjacentHTML('afterbegin', html);
-            }
-        } catch (err) {
-            this._showError('Failed to update cover preview');
-            console.error(err);
-        }
-    }
-
-    async updateFocusImage(slide) {
-        try {
-            const html = await this._fetchPartial('focus-image', slide);
-            const existingEl = document.querySelector(
-                `[data-elysium-slide-focus-image="${this.slideId}"]`
-            );
-
-            if (existingEl) {
-                if (html.trim()) {
-                    existingEl.outerHTML = html;
-                } else {
-                    existingEl.remove();
-                }
-            } else if (html.trim()) {
-                const container = document.querySelector(
-                    `[data-elysium-slide-container="${this.slideId}"]`
-                );
-                if (container) {
-                    container.insertAdjacentHTML('beforeend', html);
-                }
-            }
-        } catch (err) {
-            this._showError('Failed to update focus image preview');
-            console.error(err);
-        }
-    }
-
     updateCssClass(slide) {
         const element = this.el;
         if (!element) return;
@@ -376,6 +239,34 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
     }
 
+    async _fetchPartial(partial, slide) {
+        const device = this.currentDevice || 'desktop';
+        const url = `/elysium-preview/blur-elysium-slide/fragment/${partial}/${this.slideId}?device=${encodeURIComponent(device)}`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ slide }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Partial ${partial} failed: ${response.status}`);
+        }
+
+        return response.text();
+    }
+
+    _showError(message) {
+        const existing = this.el.querySelector('.blur-elysium-slide-preview-error');
+        if (existing) existing.remove();
+
+        const errorEl = document.createElement('div');
+        errorEl.className = 'blur-elysium-slide-preview-error';
+        errorEl.textContent = message;
+        errorEl.style.cssText = 'position:absolute;top:8px;left:8px;right:8px;z-index:9999;padding:8px 12px;background:#dc3545;color:#fff;border-radius:4px;font-size:12px;font-family:sans-serif;';
+        this.el.prepend(errorEl);
+        setTimeout(() => errorEl.remove(), 5000);
+    }
+
     async updateSlide(data) {
         const slide = data.slide;
         const device = data.device || 'desktop';
@@ -387,85 +278,29 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
             return;
         }
 
-        const hasField = (name) => fields.includes('slide') || fields.includes(name);
+        const fragments = getFragmentsForFields(fields);
+        const promises = [];
 
-        const partials = [];
+        for (const fragment of fragments) {
+            const renderer = this.fragmentRenderers.get(fragment.mode);
+            if (!renderer) {
+                console.warn(`No renderer found for fragment mode: ${fragment.mode}`);
+                continue;
+            }
 
-        // Styles: base colors, gradients, viewport sizing, device switch, cssClass
-        if (hasField('slideBgColor')
-            || hasField('slideBgGradient')
-            || hasField('headlineColor')
-            || hasField('descriptionColor')
-            || hasField('containerBgColor')
-            || hasField('viewports')
-            || hasField('device')
-            || hasField('slideCssClass')
-            || hasField('slide')) {
-            this._clearManagedStyles(element);
-            this.updateBaseStyles(slide, element);
-            this.updateViewportStyles(slide, device, element);
-            this.updateCssClass(slide);
+            try {
+                const result = renderer.render(fragment, data, element, this);
+                if (result instanceof Promise) {
+                    promises.push(result);
+                }
+            } catch (err) {
+                this._showError(`Failed to render fragment "${fragment.name}"`);
+                console.error(err);
+            }
         }
 
-        // Preview sizing (aspect ratio & width simulation)
-        if (hasField('previewSizing') || hasField('slide')) {
-            this._updatePreviewSizing(data, element);
-        }
-
-        // Headline
-        if (hasField('title')
-            || hasField('headlineElement')
-            || hasField('showProductTitle')
-            || hasField('linkingType')
-            || hasField('productId')
-            || hasField('slide')) {
-            partials.push(this.updateHeadline(slide));
-        }
-
-        // Description
-        if (hasField('description')
-            || hasField('showProductDescription')
-            || hasField('linkingType')
-            || hasField('productId')
-            || hasField('slide')) {
-            partials.push(this.updateDescription(slide));
-        }
-
-        // Button
-        if (hasField('buttonLabel')
-            || hasField('url')
-            || hasField('buttonAppearance')
-            || hasField('buttonSize')
-            || hasField('linkingOverlay')
-            || hasField('linkingOpenExternal')
-            || hasField('linkingType')
-            || hasField('slide')) {
-            partials.push(this.updateButton(slide));
-        }
-
-        // Cover media
-        if (hasField('contentSettings')
-            || hasField('slideCover')
-            || hasField('slideCoverMobile')
-            || hasField('slideCoverTablet')
-            || hasField('slideCoverVideo')
-            || hasField('showProductFocusImage')
-            || hasField('linkingType')
-            || hasField('slide')) {
-            partials.push(this.updateCoverMedia(slide, element));
-        }
-
-        // Focus image
-        if (hasField('presentationMedia')
-            || hasField('showProductFocusImage')
-            || hasField('productId')
-            || hasField('linkingType')
-            || hasField('slide')) {
-            partials.push(this.updateFocusImage(slide));
-        }
-
-        if (partials.length > 0) {
-            await Promise.all(partials);
+        if (promises.length > 0) {
+            await Promise.all(promises);
         }
     }
 
