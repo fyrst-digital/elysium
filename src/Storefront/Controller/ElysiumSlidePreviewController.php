@@ -12,13 +12,11 @@ use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Shopware\Core\System\SalesChannel\Context\AbstractSalesChannelContextFactory;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Shopware\Storefront\Controller\StorefrontController;
 use Shopware\Storefront\Framework\Routing\StorefrontRouteScope;
 use Shopware\Core\PlatformRequest;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -32,7 +30,6 @@ class ElysiumSlidePreviewController extends StorefrontController
         private readonly EntityRepository $productRepository,
         private readonly EntityRepository $salesChannelRepository,
         private readonly PreviewSchemaRegistry $schemaRegistry,
-        private readonly AbstractSalesChannelContextFactory $salesChannelContextFactory,
     ) {}
 
     private function sanitizeOrigin(?string $origin): ?string
@@ -194,48 +191,6 @@ class ElysiumSlidePreviewController extends StorefrontController
         ]);
 
         return $this->setPreviewHeaders($response, $context, $request);
-    }
-
-    #[Route(path: '/elysium-preview/resolve/{slideId}', name: 'frontend.elysium-preview.resolve', methods: ['POST'], requirements: ['slideId' => '[0-9a-f]{32}'])]
-    public function resolve(string $slideId, Request $request): Response
-    {
-        $this->validateSameOriginFetch($request);
-
-        $postData = json_decode($request->getContent(), true);
-        $salesChannelId = $postData['salesChannelId'] ?? null;
-
-        if (empty($salesChannelId) || !is_string($salesChannelId)) {
-            throw $this->createNotFoundException('salesChannelId required.');
-        }
-
-        $targetContext = $this->salesChannelContextFactory->create('', $salesChannelId);
-
-        $slide = $this->loadSlide($slideId, $targetContext);
-
-        if (isset($postData['slide']) && is_array($postData['slide'])) {
-            $slide = $this->mergeSlideData($slide, $postData['slide'], $targetContext);
-        }
-
-        $resolved = [];
-
-        $product = $slide->getProduct();
-        if ($product !== null) {
-            $resolved['product'] = [
-                'translated' => [
-                    'name' => $product->getTranslation('name') ?? $product->getName() ?? '',
-                    'description' => $product->getTranslation('description') ?? $product->getDescription() ?? '',
-                ],
-            ];
-
-            $cover = $product->getCover();
-            if ($cover !== null && $cover->getMedia() !== null) {
-                $resolved['product']['cover'] = [
-                    'media' => $this->serializeMedia($cover->getMedia()),
-                ];
-            }
-        }
-
-        return new JsonResponse($resolved);
     }
 
     private function loadSlide(string $slideId, SalesChannelContext $context): ElysiumSlidesEntity
@@ -412,30 +367,4 @@ class ElysiumSlidePreviewController extends StorefrontController
         return $media;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    private function serializeMedia(MediaEntity $media): array
-    {
-        $thumbnails = [];
-        foreach ($media->getThumbnails() ?? [] as $thumbnail) {
-            $thumbnails[] = [
-                'url' => $thumbnail->getUrl(),
-                'width' => $thumbnail->getWidth(),
-            ];
-        }
-
-        return [
-            'id' => $media->getId(),
-            'url' => $media->getUrl(),
-            'mimeType' => $media->getMimeType(),
-            'fileExtension' => $media->getFileExtension(),
-            'fileName' => $media->getFileName(),
-            'path' => $media->getPath(),
-            'metaData' => $media->getMetaData(),
-            'alt' => $media->getAlt(),
-            'title' => $media->getTitle(),
-            'thumbnails' => $thumbnails,
-        ];
-    }
 }

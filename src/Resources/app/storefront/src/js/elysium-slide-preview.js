@@ -305,21 +305,14 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
     }
 
-    _applySalesChannelUpdate(data) {
-        if (data.resolved?.product) {
-            data.slide.product = data.resolved.product;
-        }
-        this.updateSlide(data);
-    }
-
     async _handleMessage(event) {
         if (!this.allowedOrigins.includes(event.origin)) {
             return;
         }
         if (event.data?.type === 'elysium-slide-update') {
             await this.updateSlide(event.data);
-        } else if (event.data?.type === 'elysium-slide-sales-channel-update') {
-            this._applySalesChannelUpdate(event.data);
+            // Tell admin the values have been injected
+            window.parent.postMessage({ type: 'elysium-slide-update-ack' }, event.origin);
         }
     }
 }

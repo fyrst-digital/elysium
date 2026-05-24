@@ -116,7 +116,7 @@
       <argument type="service" id="product.repository"/>
       <argument type="service" id="sales_channel.repository"/>
       <argument type="service" id="Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry"/>
-      <argument type="service" id="Shopware\Core\System\SalesChannel\Context\SalesChannelContextFactory"/>
+
       <call method="setContainer">
         <argument type="service" id="service_container"/>
       </call>

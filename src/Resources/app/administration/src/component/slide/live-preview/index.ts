@@ -40,10 +40,6 @@ export default Component.wrapComponentConfig({
             type: String,
             required: true,
         },
-        salesChannelId: {
-            type: String,
-            default: null,
-        },
         readOnly: {
             type: Boolean,
             default: false,
@@ -63,6 +59,7 @@ export default Component.wrapComponentConfig({
             iframeSrc: '',
             pendingFields: new Set<string>(),
             isLoading: false,
+            iframeAckTimer: null as ReturnType<typeof setTimeout> | null,
         };
     },
 
@@ -114,11 +111,8 @@ export default Component.wrapComponentConfig({
         framePadding() {
             this.sendSlideUpdate(['previewSizing']);
         },
-        salesChannelId(newVal, oldVal) {
-            if (this.readOnly || !newVal || newVal === oldVal) {
-                return;
-            }
-            this.resolveAndUpdateSalesChannel();
+        baseUrl() {
+            this.buildIframeSrc();
         },
     },
 
@@ -129,6 +123,16 @@ export default Component.wrapComponentConfig({
                 this.sendSlideUpdate(mapping.fields);
             }, { deep: mapping.deep ?? false });
         });
+
+        window.addEventListener('message', this._handleIframeMessage.bind(this));
+    },
+
+    beforeDestroy() {
+        window.removeEventListener('message', this._handleIframeMessage.bind(this));
+        if (this.iframeAckTimer) {
+            clearTimeout(this.iframeAckTimer);
+            this.iframeAckTimer = null;
+        }
     },
 
     methods: {
@@ -142,11 +146,30 @@ export default Component.wrapComponentConfig({
         },
 
         onIframeLoad() {
-            this.isLoading = false;
             if (this.readOnly) {
+                this.isLoading = false;
                 return;
             }
             this.sendSlideUpdateImmediate();
+            // Wait for storefront JS to confirm values are injected before hiding loader
+            this.iframeAckTimer = setTimeout(() => {
+                this.isLoading = false;
+                this.iframeAckTimer = null;
+            }, 300);
+        },
+
+        _handleIframeMessage(event: MessageEvent) {
+            const iframe = this.$refs.iframe as HTMLIFrameElement | undefined;
+            if (!iframe || event.source !== iframe.contentWindow) {
+                return;
+            }
+            if (event.data?.type === 'elysium-slide-update-ack') {
+                this.isLoading = false;
+                if (this.iframeAckTimer) {
+                    clearTimeout(this.iframeAckTimer);
+                    this.iframeAckTimer = null;
+                }
+            }
         },
 
         sendSlideUpdateImmediate(fields?: string[]) {
@@ -169,47 +192,6 @@ export default Component.wrapComponentConfig({
                 previewWidth: this.maxWidth,
                 framePadding: this.framePadding,
             }, this.baseUrl);
-        },
-
-        async resolveAndUpdateSalesChannel() {
-            if (this.readOnly || !this.salesChannelId || !this.slideId) {
-                return;
-            }
-
-            try {
-                const response = await fetch(`${this.baseUrl}/elysium-preview/resolve/${this.slideId}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        salesChannelId: this.salesChannelId,
-                        slide: this.slide,
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Resolve failed: ${response.status}`);
-                }
-
-                const resolved = await response.json();
-                const iframe = this.$refs.iframe as HTMLIFrameElement | undefined;
-
-                if (!iframe || !iframe.contentWindow) {
-                    return;
-                }
-
-                iframe.contentWindow.postMessage({
-                    type: 'elysium-slide-sales-channel-update',
-                    device: this.device,
-                    slide: JSON.parse(JSON.stringify(this.slide)),
-                    fields: ['slide'],
-                    previewAspectRatio: this.aspectRatioX && this.aspectRatioY ? { x: this.aspectRatioX, y: this.aspectRatioY } : null,
-                    previewWidth: this.maxWidth,
-                    framePadding: this.framePadding,
-                    resolved: resolved,
-                }, this.baseUrl);
-            } catch (err) {
-                console.error('Failed to resolve sales channel data', err);
-            }
         },
 
         sendSlideUpdate(fields?: string[]) {
