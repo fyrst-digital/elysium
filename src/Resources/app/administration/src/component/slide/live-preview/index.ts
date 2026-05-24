@@ -72,7 +72,6 @@ export default Component.wrapComponentConfig({
                 display: 'flex',
                 width: '100%',
                 height: '100%',
-                maxWidth: this.maxWidth ? `${this.maxWidth}px` : 'none',
                 maxHeight: this.maxHeight,
                 overflow: 'hidden',
             };
@@ -108,6 +107,9 @@ export default Component.wrapComponentConfig({
         maxWidth() {
             this.sendSlideUpdate(['previewSizing']);
         },
+        framePadding() {
+            this.sendSlideUpdate(['previewSizing']);
+        },
         baseUrl() {
             this.buildIframeSrc();
         },
@@ -126,7 +128,7 @@ export default Component.wrapComponentConfig({
         buildIframeSrc(cacheBuster?: number) {
             this.isLoading = true;
             const adminOrigin = encodeURIComponent(JSON.stringify([window.location.origin]));
-            let src = `${this.baseUrl}/elysium-preview/blur-elysium-slide/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}&framePadding=${this.framePadding}&layout=${this.layout}`;
+            let src = `${this.baseUrl}/elysium-preview/blur-elysium-slide/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}&layout=${this.layout}`;
             if (cacheBuster) {
                 src += `&t=${cacheBuster}`;
             }
@@ -159,6 +161,7 @@ export default Component.wrapComponentConfig({
                 fields: fields && fields.length > 0 ? fields : ['slide'],
                 previewAspectRatio: this.aspectRatioX && this.aspectRatioY ? { x: this.aspectRatioX, y: this.aspectRatioY } : null,
                 previewWidth: this.maxWidth,
+                framePadding: this.framePadding,
             }, this.baseUrl);
         },
 

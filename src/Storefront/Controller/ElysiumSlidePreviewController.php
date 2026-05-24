@@ -127,14 +127,12 @@ class ElysiumSlidePreviewController extends StorefrontController
         $slide = $this->loadSlide($slideId, $context);
         $device = $request->query->get('device', 'desktop');
         $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
-        $framePadding = $request->query->getInt('framePadding', 0);
         $layout = $request->query->get('layout', 'detail');
 
         $response = $this->render('@Storefront/storefront/elysium-slide/preview.html.twig', [
             'slideData' => $slide,
             'device' => $device,
             'adminOrigin' => $adminOrigin,
-            'framePadding' => $framePadding,
             'layout' => $layout,
         ]);
 

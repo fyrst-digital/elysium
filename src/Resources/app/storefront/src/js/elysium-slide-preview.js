@@ -219,8 +219,9 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
 
         if (this.layout === 'cms') {
             element.style.removeProperty('--slide-aspect-ratio');
-            element.style.removeProperty('max-width');
-            element.style.removeProperty('margin');
+            document.body.style.removeProperty('--frame-max-w');
+            document.body.style.removeProperty('--frame-padding');
+            document.body.style.removeProperty('margin');
             return;
         }
 
@@ -231,11 +232,13 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
 
         if (data.previewWidth) {
-            element.style.maxWidth = `${data.previewWidth}px`;
-            element.style.margin = '0 auto';
+            document.body.style.setProperty('--frame-max-w', `${data.previewWidth}px`);
+            document.body.style.setProperty('--frame-padding', `${data.framePadding ?? 0}px`);
+            document.body.style.margin = '0 auto';
         } else {
-            element.style.removeProperty('max-width');
-            element.style.removeProperty('margin');
+            document.body.style.removeProperty('--frame-max-w');
+            document.body.style.removeProperty('--frame-padding');
+            document.body.style.removeProperty('margin');
         }
     }
 
