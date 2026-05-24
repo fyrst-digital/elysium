@@ -50,9 +50,10 @@
 
     <picture class="blur-elysium-slide-cover-picture">
         {% if slideData.slideCover %}
+            {% set coverThumbnails = slideData.slideCover.metaData._thumbnails|default(slideData.slideCover.thumbnails) %}
             <source
-                {% if slideData.slideCover.thumbnails|length > 0 %}
-                    srcset="{{ create_srcset(slideData.slideCover.thumbnails) }}"
+                {% if coverThumbnails|length > 0 %}
+                    srcset="{{ create_srcset(coverThumbnails) }}"
                 {% else %}
                     srcset="{{ slideData.slideCover.url }}"
                 {% endif %}
@@ -60,9 +61,10 @@
         {% endif %}
 
         {% if slideData.slideCoverTablet %}
+            {% set coverThumbnails = slideData.slideCoverTablet.metaData._thumbnails|default(slideData.slideCoverTablet.thumbnails) %}
             <source
-                {% if slideData.slideCoverTablet.thumbnails|length > 0 %}
-                    srcset="{{ create_srcset(slideData.slideCoverTablet.thumbnails) }}"
+                {% if coverThumbnails|length > 0 %}
+                    srcset="{{ create_srcset(coverThumbnails) }}"
                 {% else %}
                     srcset="{{ slideData.slideCoverTablet.url }}"
                 {% endif %}
@@ -70,10 +72,11 @@
         {% endif %}
 
         {% if slideData.slideCoverMobile %}
+            {% set coverThumbnails = slideData.slideCoverMobile.metaData._thumbnails|default(slideData.slideCoverMobile.thumbnails) %}
             <img
                 src="{{ slideData.slideCoverMobile.url }}"
-                {% if slideData.slideCoverMobile.thumbnails|length > 0 %}
-                    srcset="{{ create_srcset(slideData.slideCoverMobile.thumbnails) }}"
+                {% if coverThumbnails|length > 0 %}
+                    srcset="{{ create_srcset(coverThumbnails) }}"
                 {% endif %}
                 width="100%"
                 height="100%"

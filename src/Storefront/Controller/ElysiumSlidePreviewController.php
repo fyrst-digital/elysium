@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Storefront\Controller;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
-use Shopware\Core\Content\Media\Aggregate\MediaThumbnail\MediaThumbnailCollection;
-use Shopware\Core\Content\Media\Aggregate\MediaThumbnail\MediaThumbnailEntity;
 use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Defaults;
@@ -311,7 +309,7 @@ class ElysiumSlidePreviewController extends StorefrontController
         $this->mergeCoverMedia($entity, $postData);
 
         $entity->setTranslated(array_merge(
-            $entity->getTranslated() ?? [],
+            $entity->getTranslated(),
             [
                 'title' => $entity->getTitle(),
                 'description' => $entity->getDescription(),
@@ -394,34 +392,10 @@ class ElysiumSlidePreviewController extends StorefrontController
         }
 
         if (isset($data['thumbnails']) && is_array($data['thumbnails'])) {
-            $thumbnails = [];
-            foreach ($data['thumbnails'] as $thumbData) {
-                if (!is_array($thumbData) || !isset($thumbData['id'])) {
-                    continue;
-                }
-                $thumb = new MediaThumbnailEntity();
-                $thumb->setId($thumbData['id']);
-                $thumb->setUniqueIdentifier($thumbData['id']);
-
-                if (isset($thumbData['width'])) {
-                    $thumb->setWidth((int) $thumbData['width']);
-                }
-                if (isset($thumbData['height'])) {
-                    $thumb->setHeight((int) $thumbData['height']);
-                }
-                if (isset($thumbData['url'])) {
-                    $thumb->setUrl($thumbData['url']);
-                }
-                if (isset($thumbData['path'])) {
-                    $thumb->setPath($thumbData['path']);
-                }
-
-                $thumbnails[] = $thumb;
-            }
-
-            if ($thumbnails !== []) {
-                $media->setThumbnails(new MediaThumbnailCollection($thumbnails));
-            }
+            $media->setMetaData(array_merge(
+                $data['metaData'] ?? [],
+                ['_thumbnails' => $data['thumbnails']]
+            ));
         }
 
         return $media;

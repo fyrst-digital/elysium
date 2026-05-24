@@ -20,8 +20,13 @@ class CreateSrcset extends AbstractExtension
     {
         $srcset = [];
         foreach ($thumbnails as $thumbnail) {
-            $thumbWidth = (string) $thumbnail->getWidth();
-            $thumbUrl = $thumbnail->getUrl();
+            if (is_array($thumbnail)) {
+                $thumbWidth = (string) ($thumbnail['width'] ?? 0);
+                $thumbUrl = $thumbnail['url'] ?? '';
+            } else {
+                $thumbWidth = (string) $thumbnail->getWidth();
+                $thumbUrl = $thumbnail->getUrl();
+            }
             $srcset[] = "{$thumbUrl} {$thumbWidth}w";
         }
 
