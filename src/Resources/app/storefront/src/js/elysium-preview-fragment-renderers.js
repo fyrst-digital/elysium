@@ -57,7 +57,7 @@ function renderHeadline(slide, element) {
     const headline = slide.slideSettings?.slide?.headline || {};
     const headlineElement = headline.element || 'div';
 
-    let content = '';
+    let content;
     if (linking.type === 'product' && linking.showProductTitle && slide.product?.translated?.name) {
         content = slide.product.translated.name;
     } else {
@@ -91,7 +91,7 @@ function renderDescription(slide, element) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
 
-    let content = '';
+    let content;
     if (linking.type === 'product' && linking.showProductDescription && slide.product?.translated?.description) {
         content = slide.product.translated.description;
     } else {
@@ -211,7 +211,7 @@ function renderCover(slide, element) {
         sources += `<source ${srcset ? `srcset="${srcset}"` : `srcset="${covers.tablet.url}"`} media="screen and (min-width:${breakpoints.tablet}px)" />`;
     }
 
-    let imgHtml = '';
+    let imgHtml;
     if (covers.mobile) {
         const thumbs = covers.mobile.metaData?._thumbnails || covers.mobile.thumbnails || [];
         const srcset = createSrcset(thumbs);

@@ -48,7 +48,7 @@ class ElysiumSlidePreviewController extends StorefrontController
         }
 
         $parsed = parse_url($origin);
-        if (!$parsed || !isset($parsed['scheme'], $parsed['host'])) {
+        if (!is_array($parsed) || !isset($parsed['scheme'], $parsed['host'])) {
             return null;
         }
 
@@ -56,7 +56,7 @@ class ElysiumSlidePreviewController extends StorefrontController
             return null;
         }
 
-        $port = isset($parsed['port']) ? ':' . $parsed['port'] : '';
+        $port = isset($parsed['port']) ? ':' . (string) $parsed['port'] : '';
 
         return $parsed['scheme'] . '://' . $parsed['host'] . $port;
     }
@@ -257,18 +257,6 @@ class ElysiumSlidePreviewController extends StorefrontController
         if ($slide === null) {
             $slide = new ElysiumSlidesEntity();
             $slide->setId($slideId);
-        }
-
-        return $slide;
-    }
-
-    private function loadAndMergeSlide(string $slideId, SalesChannelContext $context, Request $request): ElysiumSlidesEntity
-    {
-        $slide = $this->loadSlide($slideId, $context);
-
-        $postData = json_decode($request->getContent(), true);
-        if (isset($postData['slide']) && is_array($postData['slide'])) {
-            $slide = $this->mergeSlideData($slide, $postData['slide'], $context);
         }
 
         return $slide;
