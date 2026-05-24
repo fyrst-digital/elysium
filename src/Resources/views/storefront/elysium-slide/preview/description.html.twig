@@ -6,6 +6,9 @@
     {% set descriptionContent = slideData.description|default('') %}
 {% endif %}
 
+{% set descriptionTagsWhitelist = '<p><br><span><i><b><u><strong><em><ul><ol><li><h1><h2><h3><h4><h5><h6><a><div><img><table><tr><td><th><tbody><thead>' %}
+{% set descriptionContent = descriptionContent|striptags(descriptionTagsWhitelist) %}
+
 {% if descriptionContent %}
     <div class="blur-elysium-slide-description" data-elysium-slide-description="{{ slideData.id }}">
         {{ descriptionContent|raw }}

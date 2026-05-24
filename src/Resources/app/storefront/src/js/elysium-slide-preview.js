@@ -216,7 +216,8 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
     }
 
     async _fetchPartial(partial, slide) {
-        const url = `/elysium-slide/preview/${partial}/${this.slideId}`;
+        const device = this.currentDevice || 'desktop';
+        const url = `/elysium-slide/preview/${partial}/${this.slideId}?device=${encodeURIComponent(device)}`;
         const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -378,6 +379,7 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
     async updateSlide(data) {
         const slide = data.slide;
         const device = data.device || 'desktop';
+        this.currentDevice = device;
         const fields = data.fields || ['slide'];
         const element = this.el;
 

@@ -25,7 +25,7 @@
                     marginBottom: '4px',
                 }"
             >
-                Seitenverhaeltnis
+                {{ $tc('blurElysiumSlides.preview.toolbar.aspectRatio') }}
             </div>
 
             <div :style="{
@@ -77,7 +77,7 @@
                     marginBottom: '4px',
                 }"
             >
-                Breite
+                {{ $tc('blurElysiumSlides.preview.toolbar.width') }}
             </div>
 
             <div :style="{
@@ -93,7 +93,7 @@
                     layout="row"
                     :model-value="width"
                     @update:model-value="onWidthChange"
-                    placeholder="in Pixel"
+                    :placeholder="$tc('blurElysiumSlides.preview.toolbar.placeholderWidth')"
                     :label="false"
                     :step="1" 
                     :allow-empty="true"
@@ -115,7 +115,7 @@
                     marginBottom: '4px',
                 }"
             >
-                Verkaufskanal
+                {{ $tc('blurElysiumSlides.preview.toolbar.salesChannel') }}
             </div>
 
             <py-select-field
