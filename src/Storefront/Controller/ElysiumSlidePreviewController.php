@@ -6,7 +6,6 @@ namespace Blur\BlurElysiumSlider\Storefront\Controller;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry;
-use Blur\BlurElysiumSlider\Preview\Renderer\PreviewFragmentRenderer;
 use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Defaults;
@@ -31,7 +30,6 @@ class ElysiumSlidePreviewController extends StorefrontController
         private readonly EntityRepository $productRepository,
         private readonly EntityRepository $salesChannelRepository,
         private readonly PreviewSchemaRegistry $schemaRegistry,
-        private readonly PreviewFragmentRenderer $fragmentRenderer,
     ) {}
 
     /**
@@ -169,7 +167,8 @@ class ElysiumSlidePreviewController extends StorefrontController
         $device = $request->query->get('device', 'desktop');
         $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
 
-        $response = $this->fragmentRenderer->render($fragment, [
+        $template = $fragment->getTemplate();
+        $response = $this->render($template, [
             'slideData' => $slide,
             'device' => $device,
         ]);
