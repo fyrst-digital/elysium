@@ -1,3 +1,8 @@
+# 4.7.1
+
+**Changelog**
+- Fixed an issue that prevented slides from being saved on MariaDB 10.11
+
 # 4.7.0
 
 **Changelog**

@@ -24,6 +24,8 @@ class CmsPageLookup
             return [];
         }
 
+        $slideIdsJson = json_encode($slideIds, JSON_THROW_ON_ERROR);
+
         $cmsPageIds = $this->connection->fetchFirstColumn(
             "SELECT DISTINCT LOWER(HEX(cms_section.cms_page_id)) AS cms_page_id
             FROM cms_slot
@@ -41,14 +43,11 @@ class CmsPageLookup
             JOIN cms_block ON cms_block.id = cms_slot.cms_block_id
             JOIN cms_section ON cms_section.id = cms_block.cms_section_id
             WHERE cms_slot.type = 'blur-elysium-slider'
-              AND EXISTS (
-                  SELECT 1 FROM JSON_TABLE(
-                      JSON_EXTRACT(cms_slot_translation.config, '$.elysiumSlideCollection.value'),
-                      '$[*]' COLUMNS (slide_id VARCHAR(32) PATH '$')
-                  ) AS jt
-                  WHERE jt.slide_id IN (:slideIds)
+              AND JSON_OVERLAPS(
+                  JSON_EXTRACT(cms_slot_translation.config, '$.elysiumSlideCollection.value'),
+                  :slideIdsJson
               )",
-            ['slideIds' => $slideIds],
+            ['slideIds' => $slideIds, 'slideIdsJson' => $slideIdsJson],
             ['slideIds' => ArrayParameterType::STRING]
         );
 
