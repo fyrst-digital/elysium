@@ -40,6 +40,10 @@ export default Component.wrapComponentConfig({
             type: String,
             required: true,
         },
+        salesChannelId: {
+            type: String,
+            default: null,
+        },
         readOnly: {
             type: Boolean,
             default: false,
@@ -110,8 +114,11 @@ export default Component.wrapComponentConfig({
         framePadding() {
             this.sendSlideUpdate(['previewSizing']);
         },
-        baseUrl() {
-            this.buildIframeSrc();
+        salesChannelId(newVal, oldVal) {
+            if (this.readOnly || !newVal || newVal === oldVal) {
+                return;
+            }
+            this.resolveAndUpdateSalesChannel();
         },
     },
 
@@ -127,8 +134,7 @@ export default Component.wrapComponentConfig({
     methods: {
         buildIframeSrc(cacheBuster?: number) {
             this.isLoading = true;
-            const adminOrigin = encodeURIComponent(JSON.stringify([window.location.origin]));
-            let src = `${this.baseUrl}/elysium-preview/blur-elysium-slide/${this.slideId}?device=${this.device}&adminOrigin=${adminOrigin}&layout=${this.layout}`;
+            let src = `${this.baseUrl}/elysium-preview/blur-elysium-slide/${this.slideId}?device=${this.device}&layout=${this.layout}`;
             if (cacheBuster) {
                 src += `&t=${cacheBuster}`;
             }
@@ -163,6 +169,47 @@ export default Component.wrapComponentConfig({
                 previewWidth: this.maxWidth,
                 framePadding: this.framePadding,
             }, this.baseUrl);
+        },
+
+        async resolveAndUpdateSalesChannel() {
+            if (this.readOnly || !this.salesChannelId || !this.slideId) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${this.baseUrl}/elysium-preview/resolve/${this.slideId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        salesChannelId: this.salesChannelId,
+                        slide: this.slide,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Resolve failed: ${response.status}`);
+                }
+
+                const resolved = await response.json();
+                const iframe = this.$refs.iframe as HTMLIFrameElement | undefined;
+
+                if (!iframe || !iframe.contentWindow) {
+                    return;
+                }
+
+                iframe.contentWindow.postMessage({
+                    type: 'elysium-slide-sales-channel-update',
+                    device: this.device,
+                    slide: JSON.parse(JSON.stringify(this.slide)),
+                    fields: ['slide'],
+                    previewAspectRatio: this.aspectRatioX && this.aspectRatioY ? { x: this.aspectRatioX, y: this.aspectRatioY } : null,
+                    previewWidth: this.maxWidth,
+                    framePadding: this.framePadding,
+                    resolved: resolved,
+                }, this.baseUrl);
+            } catch (err) {
+                console.error('Failed to resolve sales channel data', err);
+            }
         },
 
         sendSlideUpdate(fields?: string[]) {

@@ -12,11 +12,13 @@ use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\System\SalesChannel\Context\AbstractSalesChannelContextFactory;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 use Shopware\Storefront\Controller\StorefrontController;
 use Shopware\Storefront\Framework\Routing\StorefrontRouteScope;
 use Shopware\Core\PlatformRequest;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -30,49 +32,96 @@ class ElysiumSlidePreviewController extends StorefrontController
         private readonly EntityRepository $productRepository,
         private readonly EntityRepository $salesChannelRepository,
         private readonly PreviewSchemaRegistry $schemaRegistry,
+        private readonly AbstractSalesChannelContextFactory $salesChannelContextFactory,
     ) {}
+
+    private function sanitizeOrigin(?string $origin): ?string
+    {
+        if (empty($origin)) {
+            return null;
+        }
+
+        $origin = trim($origin);
+
+        if (!filter_var($origin, FILTER_VALIDATE_URL)) {
+            return null;
+        }
+
+        $parsed = parse_url($origin);
+        if (!$parsed || !isset($parsed['scheme'], $parsed['host'])) {
+            return null;
+        }
+
+        if (!in_array($parsed['scheme'], ['http', 'https'], true)) {
+            return null;
+        }
+
+        $port = isset($parsed['port']) ? ':' . $parsed['port'] : '';
+
+        return $parsed['scheme'] . '://' . $parsed['host'] . $port;
+    }
 
     /**
      * @return string[]
      */
-    private function parseAdminOrigin(string $raw): array
+    private function getKnownOrigins(Request $request, SalesChannelContext $context): array
     {
-        $decoded = json_decode($raw, true);
-        if (is_array($decoded)) {
-            return $decoded;
-        }
+        $origins = array_merge(
+            [$request->getSchemeAndHttpHost()],
+            $this->getAllSalesChannelDomains($context)
+        );
 
-        return [$raw];
+        return array_values(array_unique(array_filter($origins)));
     }
 
-    private function validateIframeAccess(Request $request): void
+    private function validateIframeAccess(Request $request, SalesChannelContext $context): void
     {
         $secFetchDest = $request->headers->get('Sec-Fetch-Dest');
-        if ($secFetchDest !== null && $secFetchDest !== 'iframe') {
-            throw new AccessDeniedHttpException('Preview must be loaded in an iframe.');
+
+        if ($secFetchDest !== null) {
+            if ($secFetchDest !== 'iframe') {
+                throw new AccessDeniedHttpException('Preview must be loaded in an iframe.');
+            }
+
+            return;
         }
 
         $referer = $request->headers->get('Referer');
-        if ($referer !== null) {
-            $allowedOrigins = $this->parseAdminOrigin($request->query->get('adminOrigin', ''));
-            $allowed = false;
-            foreach ($allowedOrigins as $origin) {
-                if (str_starts_with($referer, rtrim($origin, '/'))) {
-                    $allowed = true;
-                    break;
-                }
+        if ($referer === null) {
+            throw new AccessDeniedHttpException('Referer required.');
+        }
+
+        $knownOrigins = $this->getKnownOrigins($request, $context);
+        $allowed = false;
+        foreach ($knownOrigins as $origin) {
+            if (str_starts_with($referer, rtrim($origin, '/'))) {
+                $allowed = true;
+                break;
             }
-            if (!$allowed) {
-                throw new AccessDeniedHttpException('Invalid referer.');
-            }
+        }
+
+        if (!$allowed) {
+            throw new AccessDeniedHttpException('Invalid referer.');
         }
     }
 
     private function validateSameOriginFetch(Request $request): void
     {
         $secFetchSite = $request->headers->get('Sec-Fetch-Site');
-        if ($secFetchSite !== null && !in_array($secFetchSite, ['same-origin', 'same-site'], true)) {
-            throw new AccessDeniedHttpException('Cross-site request not allowed.');
+
+        if ($secFetchSite !== null) {
+            if (!in_array($secFetchSite, ['same-origin', 'same-site'], true)) {
+                throw new AccessDeniedHttpException('Cross-site request not allowed.');
+            }
+
+            return;
+        }
+
+        $origin = $request->headers->get('Origin');
+        $expectedOrigin = $request->getSchemeAndHttpHost();
+
+        if ($origin === null || $this->sanitizeOrigin($origin) !== $expectedOrigin) {
+            throw new AccessDeniedHttpException('Origin validation failed.');
         }
     }
 
@@ -98,10 +147,20 @@ class ElysiumSlidePreviewController extends StorefrontController
         return array_values(array_unique(array_filter($domains)));
     }
 
-    private function setPreviewHeaders(Response $response, SalesChannelContext $context, array $adminOrigin): Response
+    private function setPreviewHeaders(Response $response, SalesChannelContext $context, Request $request): Response
     {
         $salesChannelDomains = $this->getAllSalesChannelDomains($context);
-        $frameAncestors = array_merge(['\'self\''], $salesChannelDomains, $adminOrigin);
+
+        $adminOrigin = null;
+        $referer = $request->headers->get('Referer');
+        if ($referer !== null) {
+            $adminOrigin = $this->sanitizeOrigin($referer);
+        }
+
+        $frameAncestors = array_merge(['\'self\''], $salesChannelDomains);
+        if ($adminOrigin !== null) {
+            $frameAncestors[] = $adminOrigin;
+        }
         $frameAncestors = array_unique(array_filter($frameAncestors));
 
         $response->headers->set('Content-Security-Policy', 'frame-ancestors ' . implode(' ', $frameAncestors));
@@ -115,10 +174,10 @@ class ElysiumSlidePreviewController extends StorefrontController
         return $response;
     }
 
-    #[Route(path: '/elysium-preview/{elementType}/{slideId}', name: 'frontend.elysium-preview.preview', methods: ['GET'])]
+    #[Route(path: '/elysium-preview/{elementType}/{slideId}', name: 'frontend.elysium-preview.preview', methods: ['GET'], requirements: ['slideId' => '[0-9a-f]{32}'])]
     public function preview(string $elementType, string $slideId, SalesChannelContext $context, Request $request): Response
     {
-        $this->validateIframeAccess($request);
+        $this->validateIframeAccess($request, $context);
 
         if (!$this->schemaRegistry->has($elementType)) {
             throw $this->createNotFoundException(sprintf('Unknown preview element type "%s".', $elementType));
@@ -126,52 +185,57 @@ class ElysiumSlidePreviewController extends StorefrontController
 
         $slide = $this->loadSlide($slideId, $context);
         $device = $request->query->get('device', 'desktop');
-        $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
         $layout = $request->query->get('layout', 'detail');
 
         $response = $this->render('@Storefront/storefront/elysium-slide/preview.html.twig', [
             'slideData' => $slide,
             'device' => $device,
-            'adminOrigin' => $adminOrigin,
             'layout' => $layout,
         ]);
 
-        return $this->setPreviewHeaders($response, $context, $adminOrigin);
+        return $this->setPreviewHeaders($response, $context, $request);
     }
 
-    #[Route(path: '/elysium-preview/{elementType}/fragment/{fragmentName}/{slideId}', name: 'frontend.elysium-preview.fragment', methods: ['POST'])]
-    public function fragment(string $elementType, string $fragmentName, string $slideId, SalesChannelContext $context, Request $request): Response
+    #[Route(path: '/elysium-preview/resolve/{slideId}', name: 'frontend.elysium-preview.resolve', methods: ['POST'], requirements: ['slideId' => '[0-9a-f]{32}'])]
+    public function resolve(string $slideId, Request $request): Response
     {
         $this->validateSameOriginFetch($request);
 
-        $schema = $this->schemaRegistry->get($elementType);
-        if ($schema === null) {
-            throw $this->createNotFoundException(sprintf('Unknown preview element type "%s".', $elementType));
+        $postData = json_decode($request->getContent(), true);
+        $salesChannelId = $postData['salesChannelId'] ?? null;
+
+        if (empty($salesChannelId) || !is_string($salesChannelId)) {
+            throw $this->createNotFoundException('salesChannelId required.');
         }
 
-        $fragment = null;
-        foreach ($schema->getFragments() as $f) {
-            if ($f->getName() === $fragmentName) {
-                $fragment = $f;
-                break;
+        $targetContext = $this->salesChannelContextFactory->create('', $salesChannelId);
+
+        $slide = $this->loadSlide($slideId, $targetContext);
+
+        if (isset($postData['slide']) && is_array($postData['slide'])) {
+            $slide = $this->mergeSlideData($slide, $postData['slide'], $targetContext);
+        }
+
+        $resolved = [];
+
+        $product = $slide->getProduct();
+        if ($product !== null) {
+            $resolved['product'] = [
+                'translated' => [
+                    'name' => $product->getTranslation('name') ?? $product->getName() ?? '',
+                    'description' => $product->getTranslation('description') ?? $product->getDescription() ?? '',
+                ],
+            ];
+
+            $cover = $product->getCover();
+            if ($cover !== null && $cover->getMedia() !== null) {
+                $resolved['product']['cover'] = [
+                    'media' => $this->serializeMedia($cover->getMedia()),
+                ];
             }
         }
 
-        if ($fragment === null) {
-            throw $this->createNotFoundException(sprintf('Unknown fragment "%s" for element type "%s".', $fragmentName, $elementType));
-        }
-
-        $slide = $this->loadAndMergeSlide($slideId, $context, $request);
-        $device = $request->query->get('device', 'desktop');
-        $adminOrigin = $this->parseAdminOrigin($request->query->get('adminOrigin', $request->getSchemeAndHttpHost()));
-
-        $template = $fragment->getTemplate();
-        $response = $this->render($template, [
-            'slideData' => $slide,
-            'device' => $device,
-        ]);
-
-        return $this->setPreviewHeaders($response, $context, $adminOrigin);
+        return new JsonResponse($resolved);
     }
 
     private function loadSlide(string $slideId, SalesChannelContext $context): ElysiumSlidesEntity
@@ -358,5 +422,32 @@ class ElysiumSlidePreviewController extends StorefrontController
         }
 
         return $media;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function serializeMedia(MediaEntity $media): array
+    {
+        $thumbnails = [];
+        foreach ($media->getThumbnails() ?? [] as $thumbnail) {
+            $thumbnails[] = [
+                'url' => $thumbnail->getUrl(),
+                'width' => $thumbnail->getWidth(),
+            ];
+        }
+
+        return [
+            'id' => $media->getId(),
+            'url' => $media->getUrl(),
+            'mimeType' => $media->getMimeType(),
+            'fileExtension' => $media->getFileExtension(),
+            'fileName' => $media->getFileName(),
+            'path' => $media->getPath(),
+            'metaData' => $media->getMetaData(),
+            'alt' => $media->getAlt(),
+            'title' => $media->getTitle(),
+            'thumbnails' => $thumbnails,
+        ];
     }
 }

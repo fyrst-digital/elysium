@@ -101,6 +101,34 @@ export default Component.wrapComponentConfig({
             return matched?.url ?? channel.domains[0].url;
         },
 
+        fixedPreviewDomain() {
+            let bestDomain = null;
+            let bestScore = -1;
+
+            for (const channel of this.salesChannels) {
+                if (!channel.domains || channel.domains.length === 0) {
+                    continue;
+                }
+
+                for (const domain of channel.domains) {
+                    let score = 0;
+                    if (domain.currencyId === channel.currencyId) {
+                        score += 2;
+                    }
+                    if (domain.languageId === channel.languageId) {
+                        score += 2;
+                    }
+
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestDomain = domain.url;
+                    }
+                }
+            }
+
+            return bestDomain;
+        },
+
         hasAvailableDomains() {
             return this.salesChannels.some((channel) => channel.domains && channel.domains.length > 0);
         },

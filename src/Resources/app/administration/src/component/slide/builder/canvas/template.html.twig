@@ -135,7 +135,7 @@
 
     <div :style="viewStyle(styles.canvas)">
         <elysium-slide-live-preview
-            v-if="slide && hasAvailableDomains && previewDomain"
+            v-if="slide && hasAvailableDomains && fixedPreviewDomain"
             :slide-id="slide.id"
             :slide="slide"
             :device="device"
@@ -143,7 +143,8 @@
             :aspect-ratio-y="aspectRatioY"
             :max-height="'none'"
             :max-width="width"
-            :base-url="previewDomain"
+            :base-url="fixedPreviewDomain"
+            :sales-channel-id="selectedSalesChannelId"
             :frame-padding="40"
             layout="detail"
             :style="{ flex: '1 100%' }"

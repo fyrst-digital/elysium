@@ -85,10 +85,20 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
 
     init() {
         this.slideId = this.el.dataset.elysiumSlideId;
-        const origins = this.options.allowedOrigin;
-        this.allowedOrigins = Array.isArray(origins) && origins.length > 0
-            ? origins
-            : [window.location.origin];
+
+        // Derive allowed origins from the iframe's referrer (the parent document).
+        // This is set by the browser and cannot be spoofed by the child iframe.
+        const referrerOrigin = document.referrer ? new URL(document.referrer).origin : null;
+        const configuredOrigins = this.options.allowedOrigin || [];
+
+        this.allowedOrigins = [];
+        if (referrerOrigin) {
+            this.allowedOrigins.push(referrerOrigin);
+        }
+        if (Array.isArray(configuredOrigins) && configuredOrigins.length > 0) {
+            this.allowedOrigins.push(...configuredOrigins);
+        }
+        this.allowedOrigins = [...new Set(this.allowedOrigins)];
 
         this.layout = this.options.layout || 'detail';
         this.schema = previewSchema;
@@ -242,22 +252,6 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
     }
 
-    async _fetchPartial(partial, slide) {
-        const device = this.currentDevice || 'desktop';
-        const url = `/elysium-preview/blur-elysium-slide/fragment/${partial}/${this.slideId}?device=${encodeURIComponent(device)}`;
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ slide }),
-        });
-
-        if (!response.ok) {
-            throw new Error(`Partial ${partial} failed: ${response.status}`);
-        }
-
-        return response.text();
-    }
-
     _showError(message) {
         const existing = this.el.querySelector('.blur-elysium-slide-preview-error');
         if (existing) existing.remove();
@@ -282,29 +276,40 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
 
         const fragments = getFragmentsForFields(fields);
-        const promises = [];
 
         for (const fragment of fragments) {
             const renderer = this.fragmentRenderers.get(fragment.mode);
-            if (!renderer) {
-                console.warn(`No renderer found for fragment mode: ${fragment.mode}`);
+            if (renderer) {
+                // css-variable and preview-sizing renderers
+                try {
+                    renderer.render(fragment, data, element, this);
+                } catch (err) {
+                    this._showError(`Failed to render fragment "${fragment.name}"`);
+                    console.error(err);
+                }
                 continue;
             }
 
-            try {
-                const result = renderer.render(fragment, data, element, this);
-                if (result instanceof Promise) {
-                    promises.push(result);
+            const clientRenderer = this.fragmentRenderers.getClientRenderer(fragment.name);
+            if (clientRenderer) {
+                try {
+                    clientRenderer(slide, element);
+                } catch (err) {
+                    this._showError(`Failed to render fragment "${fragment.name}"`);
+                    console.error(err);
                 }
-            } catch (err) {
-                this._showError(`Failed to render fragment "${fragment.name}"`);
-                console.error(err);
+                continue;
             }
-        }
 
-        if (promises.length > 0) {
-            await Promise.all(promises);
+            console.warn(`No renderer found for fragment "${fragment.name}" (mode: ${fragment.mode})`);
         }
+    }
+
+    _applySalesChannelUpdate(data) {
+        if (data.resolved?.product) {
+            data.slide.product = data.resolved.product;
+        }
+        this.updateSlide(data);
     }
 
     async _handleMessage(event) {
@@ -313,6 +318,8 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
         if (event.data?.type === 'elysium-slide-update') {
             await this.updateSlide(event.data);
+        } else if (event.data?.type === 'elysium-slide-sales-channel-update') {
+            this._applySalesChannelUpdate(event.data);
         }
     }
 }
