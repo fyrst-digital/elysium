@@ -3,20 +3,52 @@
         display: 'flex',
         flexDirection: 'column',
         gap: '20px',
-    }">
-    
-    <div 
-        :style="slideStyles">
-        <elysium-slide-preview-cover />
-        <elysium-slide-preview-container />
+    }"
+>
+    <div :style="slideStyles">
+        <video
+            v-if="isVideo"
+            :style="coverStyles"
+            autoplay
+            loop
+            muted
+        >
+            <source :src="currentMedia.url" type="video/mp4" />
+        </video>
+        <img
+            v-else-if="currentMedia"
+            :src="currentMedia.url"
+            :style="coverStyles"
+        />
+
+        <div :style="overlayStyles">
+            <div
+                v-if="headline"
+                v-html="headline"
+                :style="headlineStyles"
+            />
+            <div
+                v-if="description"
+                v-html="description"
+                :style="descriptionStyles"
+            />
+            <mt-button
+                v-if="showButton"
+                size="default"
+            >
+                {{ slide.buttonLabel }}
+            </mt-button>
+        </div>
     </div>
-    <div 
+
+    <div
         v-if="showPreviewNotice"
         :style="{
             fontSize: '14px',
             lineHeight: '1.5',
-            textWrap: 'balance'
-        }">
-        Dies ist nur eine ungefähre Vorschau und kann von der tatsächlichen Darstellung im Storefront abweichen. Individuelle Theme-Styles, CSS Klassen und Twig-Templates werden in dieser Vorschau nicht berücksichtigt.
+            textWrap: 'balance',
+        }"
+    >
+        {{ $tc('blurElysiumSlides.preview.notice') }}
     </div>
 </div>

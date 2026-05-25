@@ -15,7 +15,7 @@ trait ContentSettingsTrait
     /**
      * @var array<mixed>|null
      */
-    protected ?array $contentSettings = null;
+    protected ?array $contentSettings = [];
 
     /**
      * Get the value of contentSettings

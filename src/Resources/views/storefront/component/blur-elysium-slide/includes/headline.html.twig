@@ -1,0 +1,18 @@
+{% set headlineElement = slideData.slideSettings.slide.headline.element|default('div') %}
+
+{% if slideData.slideSettings.slide.linking.type is same as('product')
+      and slideData.slideSettings.slide.linking.showProductTitle is same as(true)
+      and slideData.product.translated.name %}
+    {% set headlineContent = slideData.product.translated.name %}
+{% else %}
+    {% set headlineContent = slideData.title|default('') %}
+{% endif %}
+
+{% set headlineTagsWhitelist = ['<br>', '<i>', '<b>', '<u>', '<strong>', '<span>'] %}
+{% set headlineContent = headlineContent|striptags(headlineTagsWhitelist|join) %}
+
+{% if headlineContent %}
+    <{{ headlineElement }} class="blur-elysium-slide-headline" data-elysium-slide-headline="{{ slideData.id }}">
+        {{ headlineContent|raw }}
+    </{{ headlineElement }}>
+{% endif %}

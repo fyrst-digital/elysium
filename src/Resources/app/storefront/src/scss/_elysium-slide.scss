@@ -88,11 +88,13 @@
     color: var(--headline-color, inherit);
     font-size: var(--headline-font-size, 20px);
     margin: 0;
+    overflow-wrap: break-word;
 }
 
 .blur-elysium-slide-description {
     color: var(--description-color, inherit);
     font-size: var(--description-font-size, inherit);
+    overflow-wrap: break-word;
 }
 
 .blur-elysium-slide-link-overlay {

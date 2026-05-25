@@ -17,50 +17,50 @@ class ElysiumSlidesEntity extends Entity
     use EntityIdTrait;
     use ContentSettingsTrait;
 
-    protected ?string $productId;
+    protected ?string $productId = null;
 
-    protected ?ProductEntity $product;
+    protected ?ProductEntity $product = null;
 
-    protected ?string $slideCoverId;
+    protected ?string $slideCoverId = null;
 
-    protected ?MediaEntity $slideCover;
+    protected ?MediaEntity $slideCover = null;
 
-    protected ?string $slideCoverMobileId;
+    protected ?string $slideCoverMobileId = null;
 
-    protected ?MediaEntity $slideCoverMobile;
+    protected ?MediaEntity $slideCoverMobile = null;
 
-    protected ?string $slideCoverTabletId;
+    protected ?string $slideCoverTabletId = null;
 
-    protected ?MediaEntity $slideCoverTablet;
+    protected ?MediaEntity $slideCoverTablet = null;
 
-    protected ?string $slideCoverVideoId;
+    protected ?string $slideCoverVideoId = null;
 
-    protected ?MediaEntity $slideCoverVideo;
+    protected ?MediaEntity $slideCoverVideo = null;
 
-    protected ?string $presentationMediaId;
+    protected ?string $presentationMediaId = null;
 
-    protected ?MediaEntity $presentationMedia;
+    protected ?MediaEntity $presentationMedia = null;
 
-    protected ?\DateTimeInterface $activeFrom;
+    protected ?\DateTimeInterface $activeFrom = null;
 
-    protected ?\DateTimeInterface $activeUntil;
+    protected ?\DateTimeInterface $activeUntil = null;
 
     protected ?ElysiumSlidesTranslationCollection $translations = null;
 
     /**
      * @var mixed[]|null
      */
-    protected ?array $slideSettings;
+    protected ?array $slideSettings = [];
 
-    protected ?string $name;
+    protected ?string $name = null;
 
-    protected ?string $title;
+    protected ?string $title = null;
 
-    protected ?string $description;
+    protected ?string $description = null;
 
-    protected ?string $buttonLabel;
+    protected ?string $buttonLabel = null;
 
-    protected ?string $url;
+    protected ?string $url = null;
 
     /**
      * Get the value of productId

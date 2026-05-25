@@ -65,6 +65,7 @@ export interface ViewportContainerConfig {
     paddingY?: number | null;
     borderRadius?: number;
     maxWidth?: number | null;
+    basis?: number | null;
     gap?: number | null;
     justifyContent?: JustifyContent | null;
     alignItems?: AlignItems | null;
@@ -76,12 +77,14 @@ export interface ViewportContentConfig {
     paddingX?: number | null;
     paddingY?: number | null;
     maxWidth?: number | null;
+    basis?: number | null;
     textAlign?: TextAlign | null;
 }
 
 export interface ViewportImageConfig {
     justifyContent?: JustifyContent | null;
     maxWidth?: number | null;
+    basis?: number | null;
 }
 
 export interface ViewportSlideConfig {

@@ -1,0 +1,16 @@
+{% if slideData.slideSettings.slide.linking.type is same as('product')
+      and slideData.slideSettings.slide.linking.showProductDescription is same as(true)
+      and slideData.product.translated.description %}
+    {% set descriptionContent = slideData.product.translated.description|raw %}
+{% else %}
+    {% set descriptionContent = slideData.description|default('') %}
+{% endif %}
+
+{% set descriptionTagsWhitelist = '<p><br><span><i><b><u><strong><em><ul><ol><li><h1><h2><h3><h4><h5><h6><a><div><img><table><tr><td><th><tbody><thead>' %}
+{% set descriptionContent = descriptionContent|striptags(descriptionTagsWhitelist) %}
+
+{% if descriptionContent %}
+    <div class="blur-elysium-slide-description" data-elysium-slide-description="{{ slideData.id }}">
+        {{ descriptionContent|raw }}
+    </div>
+{% endif %}

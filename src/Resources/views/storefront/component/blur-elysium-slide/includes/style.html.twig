@@ -1,3 +1,82 @@
+{% macro outputViewportVars(options, mappings) %}
+    {# Simple value mappings (path → cssVar with optional unit) #}
+    {% for mapping in mappings.simple|default(mappings) %}
+        {% set group = attribute(options, mapping.group) %}
+        {% if group %}
+            {% set value = attribute(group, mapping.key) %}
+            {% if value is not null and value is not same as(false) and value is not same as('') %}
+                {% if mapping.zeroValue is defined and value is same as(0) %}
+                    {{ mapping.var }}: {{ mapping.zeroValue }};
+                {% else %}
+                    {{ mapping.var }}: {{ value }}{{ mapping.unit ? mapping.unit : '' }};
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {# Column wrap direction #}
+    {% if options.container.columnWrap is same as(true) %}
+        --container-direction: column;
+    {% elseif options.container.columnWrap is same as(false) %}
+        --container-direction: row;
+    {% endif %}
+
+    {# Image / content order swap #}
+    {% if options.container.order is same as('reverse') %}
+        --image-order: 1;
+        --content-order: 2;
+    {% elseif options.container.order is same as('default') %}
+        --image-order: 2;
+        --content-order: 1;
+    {% endif %}
+
+    {# Content flex sizing #}
+    {% if options.content.basis is defined
+          and options.content.basis is not null
+          and options.content.basis is not same as('') %}
+        {% if options.content.basis is same as(0) %}
+            --content-flex-basis: 0%;
+            --content-max-w: auto;
+            --content-flex-grow: 1;
+        {% else %}
+            --content-flex-basis: {{ options.content.basis }}%;
+            --content-max-w: {{ options.content.basis }}%;
+            --content-flex-grow: 0;
+        {% endif %}
+    {% endif %}
+
+    {# Cover media mappings (dynamic keys) #}
+    {% if options.coverMedia %}
+        {% for key, value in options.coverMedia|filter(v => v is not empty) %}
+            {{ '--cover-' ~ camel_to_kebab_case(key) }}: {{ value }};
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{% set viewportMappings = styleMappings|default({
+    simple: [
+        { group: 'slide',       key: 'paddingX',       var: '--slide-padding-x', unit: 'px' },
+        { group: 'slide',       key: 'paddingY',       var: '--slide-padding-y', unit: 'px' },
+        { group: 'slide',       key: 'alignItems',     var: '--slide-align-items' },
+        { group: 'slide',       key: 'justifyContent', var: '--slide-justify-content' },
+        { group: 'slide',       key: 'borderRadius',   var: '--slide-border-radius', unit: 'px' },
+        { group: 'container',   key: 'gap',            var: '--container-gap', unit: 'px' },
+        { group: 'container',   key: 'paddingX',       var: '--container-padding-x', unit: 'px' },
+        { group: 'container',   key: 'paddingY',       var: '--container-padding-y', unit: 'px' },
+        { group: 'container',   key: 'borderRadius',   var: '--container-border-radius', unit: 'px' },
+        { group: 'container',   key: 'alignItems',     var: '--container-align-items' },
+        { group: 'container',   key: 'justifyContent', var: '--container-justify-content' },
+        { group: 'container',   key: 'basis',          var: '--container-max-width', unit: '%', zeroValue: 'auto' },
+        { group: 'image',       key: 'basis',          var: '--image-max-w', unit: '%', zeroValue: 'auto' },
+        { group: 'image',       key: 'justifyContent', var: '--image-justify-content' },
+        { group: 'content',     key: 'textAlign',      var: '--content-text-align' },
+        { group: 'content',     key: 'paddingX',       var: '--content-padding-x', unit: 'px' },
+        { group: 'content',     key: 'paddingY',       var: '--content-padding-y', unit: 'px' },
+        { group: 'headline',    key: 'fontSize',       var: '--headline-font-size', unit: 'px' },
+        { group: 'description', key: 'fontSize',       var: '--description-font-size', unit: 'px' }
+    ]
+}) %}
+
 {% if selectorClass is not defined %}
     {% set selectorClass = '.blur-elysium-slide' %}
 {% endif %}
@@ -17,7 +96,6 @@
 {% set presentationMedia = slideData.presentationMedia %}
 
 {% if slideData.product is not same as(null) and slideData.slideSettings.slide.linking.type is same as('product') %}
-
     {% if slideData.product.cover and slideData.presentationMedia is null %}
         {% set presentationMedia = slideData.product.cover.media %}
     {% endif %}
@@ -30,7 +108,6 @@
 
             {% block blur_elysium_slide_style_slide %}
                 {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
-                    {# Slide vars #}
                     {% if slideStyles is not empty %}
                         {% for prop, value in slideStyles|filter(v => v !== null) %}
                             {{prop}}: {{value}};
@@ -41,118 +118,34 @@
                 }
             {% endblock %}
 
-            {# Slide viewport dependent vars #}
             {% if slideViewportStyles is not null %}
-                {% for device, options in slideViewportStyles %}
-                    @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
-                        {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
-                            {% if options.slide.paddingX %}
-                                --slide-padding-x: {{ options.slide.paddingX ~ 'px' }};
-                            {% endif %}
-                            {% if options.slide.paddingY %}
-                                --slide-padding-y: {{ options.slide.paddingY ~ 'px' }};
-                            {% endif %}
-                            {% if options.slide.alignItems %}
-                                --slide-align-items: {{ options.slide.alignItems }};
-                            {% endif %}
-                            {% if options.slide.justifyContent %}  
-                                --slide-justify-content: {{ options.slide.justifyContent }};
-                            {% endif %}
-                            {% if options.slide.borderRadius %}
-                                --slide-border-radius: {{ options.slide.borderRadius ~ 'px' }};
-                            {% endif %}
+                {% if device is defined %}
+                    {# Preview mode: cumulative mobile-first output #}
+                    {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
+                        {% if slideViewportStyles.mobile is defined %}
+                            {{ _self.outputViewportVars(slideViewportStyles.mobile, viewportMappings) }}
+                        {% endif %}
 
-                            {# Slide container vars #}
-                            {% if options.container.columnWrap is same as(true) %}
-                                --container-direction: column;
-                            {% else %}
-                                --container-direction: row;
-                            {% endif %}
-                            {% if options.container.gap %}
-                                --container-gap: {{ options.container.gap ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.paddingY %} 
-                                --container-padding-y: {{ options.container.paddingY ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.paddingX %}
-                                --container-padding-x: {{ options.container.paddingX ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.borderRadius %}
-                                --container-border-radius: {{ options.container.borderRadius ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.maxWidth is same as(0) %}
-                                --container-max-width: auto;
-                            {% elseif options.container.maxWidth %}
-                                --container-max-width: {{ options.container.maxWidth ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.alignItems %} 
-                                --container-align-items: {{ options.container.alignItems }};
-                            {% endif %}
-                            {% if options.container.justifyContent %} 
-                                --container-justify-content: {{ options.container.justifyContent }};
-                            {% endif %}
+                        {% if device in ['tablet', 'desktop'] and slideViewportStyles.tablet is defined %}
+                            {{ _self.outputViewportVars(slideViewportStyles.tablet, viewportMappings) }}
+                        {% endif %}
 
-                            {# Slide image vars #}
-                            {% if options.image.maxWidth is same as(0) %}
-                                --image-max-w: auto;
-                            {% elseif options.image.maxWidth %}
-                                --image-max-w: {{ options.image.maxWidth ~ 'px' }};
-                            {% endif %}
-                            {% if options.container.order is same as('reverse') %}
-                                --image-order: 1;
-                            {% elseif options.container.order is same as('default') %}
-                                --image-order: 2;
-                            {% endif %}
-                            {% if options.image.justifyContent is defined %}
-                                --image-justify-content: {{ options.image.justifyContent }};
-                            {% endif %}
-
-                            {# Slide content vars #}
-                            {% if options.content.maxWidth is same as(0) %}
-                                --content-flex-basis: 0%;
-                                --content-max-w: auto;
-                                --content-flex-grow: 1;
-                            {% elseif options.content.maxWidth %}
-                                --content-flex-basis: {{ options.content.maxWidth ~ 'px' }};
-                                --content-max-w: {{ options.content.maxWidth ~ 'px' }};
-                                --content-flex-grow: 0;
-                            {% endif %}
-                            {% if options.container.order is same as('reverse') %}
-                                --content-order: 2;
-                            {% elseif options.container.order is same as('default') %}
-                                --content-order: 1;
-                            {% endif %}
-                            {% if options.content.textAlign %}
-                                --content-text-align: {{ options.content.textAlign }};
-                            {% endif %}
-                            {% if options.content.paddingX %}
-                                --content-padding-x: {{ options.content.paddingX ~ 'px' }};
-                            {% endif %}
-                            {% if options.content.paddingY %}
-                                --content-padding-y: {{ options.content.paddingY ~ 'px' }};
-                            {% endif %}
-
-                            {# Slide headline vars #}
-                            {% if options.headline.fontSize %}
-                                --headline-font-size: {{ options.headline.fontSize ~ 'px' }};
-                            {% endif %}
-
-                            {# Slide description vars #}
-                            {% if options.description.fontSize %}
-                                --description-font-size: {{ options.description.fontSize ~ 'px' }};
-                            {% endif %}
-
-                            {# Slide cover vars #}
-                            {% if options.coverMedia %}
-                                {% for key, value in options.coverMedia|filter(v => v is not empty) %}
-                                    {{ '--cover-' ~ camel_to_kebab_case(key) }}: {{ value }};
-                                {% endfor %}
-                            {% endif %}
-
-                            {% block blur_elysium_slide_style_viewport_append %}{% endblock %}
-                        }
+                        {% if device == 'desktop' and slideViewportStyles.desktop is defined %}
+                            {{ _self.outputViewportVars(slideViewportStyles.desktop, viewportMappings) }}
+                        {% endif %}
                     }
-                {% endfor %}
+                {% else %}
+                    {# Storefront mode: @media queries for all devices #}
+                    {% for deviceBreakpoint, options in slideViewportStyles %}
+                        @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[deviceBreakpoint])~'px' }}) {
+                            {{ selectorClass|raw }}[data-elysium-slide-id="{{ slideData.id }}"] {
+                                {{ _self.outputViewportVars(options, viewportMappings) }}
+
+                                {% block blur_elysium_slide_style_viewport_append %}{% endblock %}
+                            }
+                        }
+                    {% endfor %}
+                {% endif %}
             {% endif %}
 
             {% block blur_elysium_slide_style_append %}{% endblock %}

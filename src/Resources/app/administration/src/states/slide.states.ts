@@ -3,6 +3,7 @@ import { SlideViewports, ElysiumSlide } from '@elysium/types/slide';
 interface SlideState {
     slide: ElysiumSlide | null;
     customFieldSet: Entity<'custom_field_set'> | null;
+    refreshPreviewCounter: number;
 }
 
 export default {
@@ -11,6 +12,7 @@ export default {
     state: (): SlideState => ({
         slide: null,
         customFieldSet: null,
+        refreshPreviewCounter: 0,
     }),
 
     getters: {
@@ -40,6 +42,10 @@ export default {
 
         clearCustomFieldSet(): void {
             this.customFieldSet = null;
+        },
+
+        refreshPreview(): void {
+            this.refreshPreviewCounter += 1;
         },
     },
 };

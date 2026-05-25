@@ -13,5 +13,10 @@ export default Component.wrapComponentConfig({
             required: false,
             default: undefined,
         },
+        tooltip: {
+            type: String,
+            required: false,
+            default: undefined,
+        },
     },
 });

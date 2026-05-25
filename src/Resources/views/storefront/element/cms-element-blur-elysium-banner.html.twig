@@ -37,10 +37,6 @@
             {% set slideTemplate = 'default' %}
             {% set slideFile = 'slide.html.twig' %}
 
-            {% if element.data.elysiumSlide.product is not same as(null) and element.data.elysiumSlide.slideSettings.slide.linking.type is same as('product') %}
-                {% set slideFile = 'slide-product.html.twig' %}
-            {% endif %}
-
             {% if element.data.elysiumSlide.slideSettings.customTemplateFile is not empty %}
                 {% set slideTemplate = 'custom' %}
                 {% set slideFile = element.data.elysiumSlide.slideSettings.customTemplateFile ~ '.html.twig' %}

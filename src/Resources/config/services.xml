@@ -107,5 +107,25 @@
       <argument type="service" id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface"/>
     </service>
 
+    <!-- Preview Schema Registry -->
+    <service id="Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry"/>
+
+    <!-- Commands -->
+    <service id="Blur\BlurElysiumSlider\Command\GeneratePreviewSchemaCommand">
+        <argument type="service" id="Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry"/>
+        <tag name="console.command"/>
+    </service>
+
+    <!-- Elysium Slide Preview Controller -->
+    <service id="Blur\BlurElysiumSlider\Storefront\Controller\ElysiumSlidePreviewController" public="true">
+      <argument type="service" id="blur_elysium_slides.repository"/>
+      <argument type="service" id="sales_channel.repository"/>
+      <argument type="service" id="Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry"/>
+
+      <call method="setContainer">
+        <argument type="service" id="service_container"/>
+      </call>
+    </service>
+
   </services>
 </container>

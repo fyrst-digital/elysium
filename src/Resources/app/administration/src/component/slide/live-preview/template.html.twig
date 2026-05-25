@@ -1,0 +1,30 @@
+<div :style="previewStyles">
+    <div style="position: relative; width: 100%; height: 100%;">
+        <mt-loader
+            v-if="isLoading"
+            size="48px"
+        />
+
+        <iframe
+            ref="iframe"
+            :key="iframeSrc"
+            :src="iframeSrc"
+            style="
+                width: 100%;
+                height: 100%;
+                border: none;
+                opacity: 1;
+                transition: opacity 200ms ease;
+            "
+            :style="{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                opacity: isLoading ? 0 : 1,
+                transition: 'opacity 200ms ease',
+            }"
+            title="Slide Live Preview"
+            @load="onIframeLoad"
+        />
+    </div>
+</div>
