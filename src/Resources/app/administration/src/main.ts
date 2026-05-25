@@ -73,7 +73,7 @@ useComponentRegister([
     { name: 'py-datepicker', path: () => import('./component/py/datepicker') },
     { name: 'py-section', path: () => import('./component/py/section') },
     { name: 'py-column', path: () => import('./component/py/column') },
-    { name: 'blur-device-switch', path: () => import('@elysium/component/device/switch') },
+    { name: 'py-device-switch', path: () => import('./component/py/device-switch') },
     { name: 'elysium-iap-subscription-card', path: () => import('@elysium/component/iap/subscription-card') },
     { name: 'elysium-icon', path: () => import('@elysium/component/utilities/icon') },
     { name: 'elysium-settings', path: () => import('@elysium/component/settings') },

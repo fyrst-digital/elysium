@@ -1,4 +1,4 @@
-.blur-device-switch {
+.py-device-switch {
     /** container vars */
     --container-gap: 16px;
     --container-direction: column;
@@ -33,7 +33,7 @@
     }
 }
 
-.blur-device-switch-item {
+.py-device-switch-item {
     display: flex;
     align-items: var(--item-align-items);
     gap: var(--item-gap);
@@ -48,7 +48,7 @@
     &.active {
         color: var(--item-active-color);
 
-        .blur-device-switch-icon {
+        .py-device-switch-icon {
             background-color: var(--icon-active-bg-color);
             color: var(--icon-active-color);
         }
@@ -60,7 +60,7 @@
     }
 }
 
-.blur-device-switch-icon {
+.py-device-switch-icon {
     display: inline-flex;
     position: relative;
     z-index: 10;
@@ -71,6 +71,6 @@
     transition: all 0.2s;
 }
 
-.blur-device-switch-label {
+.py-device-switch-label {
     display: var(--label-display);
 }

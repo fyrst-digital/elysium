@@ -7,7 +7,7 @@
 # 4.7.1
 
 **Changelog**
-- Ein Problem wurde behoben, das das Speichern von Slides unter MariaDB 10.11 verhinderte
+- Ein Problem wurde behoben, welches das Speichern von Slides unter MariaDB 10.11 verhinderte
 
 # 4.7.0
 

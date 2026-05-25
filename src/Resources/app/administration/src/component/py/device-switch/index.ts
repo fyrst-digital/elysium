@@ -3,9 +3,6 @@ import './style.scss';
 
 const { Component } = Shopware;
 
-/**
- * @deprecated Will be removed in a future version.
- */
 export default Component.wrapComponentConfig({
     template,
 
