@@ -186,6 +186,15 @@ export default Component.wrapComponentConfig({
                 return true;
             }
 
+            if (
+                this.slide.slideSettings.slide.linking.type === 'category' &&
+                (this.slide.categoryId === undefined ||
+                    this.slide.categoryId === null ||
+                    this.slide.categoryId === '')
+            ) {
+                return true;
+            }
+
             return false;
         },
 
@@ -239,6 +248,8 @@ export default Component.wrapComponentConfig({
             criteria.addAssociation('product');
             criteria.addAssociation('product.cover');
             criteria.addAssociation('product.cover.media');
+            criteria.addAssociation('category');
+            criteria.addAssociation('category.media');
 
             this.slidesRepository
                 .get(this.slideId, Context.api, criteria)
@@ -309,6 +320,19 @@ export default Component.wrapComponentConfig({
                 this.createNotificationError({
                     message: this.$t(
                         'blurElysiumSlides.messages.productLinkingMissingEntity'
+                    ),
+                });
+                this.isLoading = false;
+                return;
+            }
+
+            if (
+                this.slide.slideSettings.slide.linking.type === 'category' &&
+                [undefined, null, ''].includes(this.slide.categoryId)
+            ) {
+                this.createNotificationError({
+                    message: this.$t(
+                        'blurElysiumSlides.messages.categoryLinkingMissingEntity'
                     ),
                 });
                 this.isLoading = false;

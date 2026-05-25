@@ -15,6 +15,18 @@
     {% endif %}
 {% endif %}
 
+{% if slideData.slideSettings.slide.linking.type is same as('category') %}
+    {% if slideData.category.id %}
+        {% set actionMainUrl = seoUrl('frontend.navigation.page', {'navigationId': slideData.category.id}) %}
+    {% endif %}
+    {% if linking.overlay is not same as(true) %}
+        {% set showActions = true %}
+    {% endif %}
+    {% if actionMainLabel is empty %}
+        {% set actionMainLabel = 'blurElysiumSlides.buttonLabelCategory'|trans %}
+    {% endif %}
+{% endif %}
+
 {% if showActions %}
     {% set mainBtnClasses = [
         'blur-elysium-slide-main-btn',

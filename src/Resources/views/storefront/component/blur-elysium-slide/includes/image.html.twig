@@ -5,6 +5,10 @@
           and slideData.product.cover.media is not null
           and slideData.slideSettings.slide.linking.showProductFocusImage is same as(true) %}
         {% set imageMedia = slideData.product.cover.media %}
+    {% elseif slideData.slideSettings.slide.linking.type is same as('category')
+          and slideData.category.media is not null
+          and slideData.slideSettings.slide.linking.showCategoryFocusImage is same as(true) %}
+        {% set imageMedia = slideData.category.media %}
     {% endif %}
 
     {% if imageMedia %}

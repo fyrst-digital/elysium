@@ -6,6 +6,7 @@ namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
 use Shopware\Core\Content\Media\MediaDefinition;
+use Shopware\Core\Content\Category\CategoryDefinition;
 use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
@@ -51,6 +52,9 @@ class ElysiumSlidesDefinition extends EntityDefinition
             // product association
             (new FkField('product_id', 'productId', ProductDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('product', 'product_id', ProductDefinition::class, 'id', true))->addFlags(new ApiAware()),
+            // category association
+            (new FkField('category_id', 'categoryId', CategoryDefinition::class))->addFlags(new ApiAware()),
+            (new ManyToOneAssociationField('category', 'category_id', CategoryDefinition::class, 'id', true))->addFlags(new ApiAware()),
             // media associations
             // / slide cover
             (new FkField('slide_cover_id', 'slideCoverId', MediaDefinition::class))->addFlags(new ApiAware()),

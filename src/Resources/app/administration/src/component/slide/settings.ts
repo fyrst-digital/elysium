@@ -80,6 +80,9 @@ export const defaultSlideSettings: SlideSettings = {
             showProductFocusImage: true,
             showProductTitle: true,
             showProductDescription: true,
+            showCategoryFocusImage: true,
+            showCategoryTitle: true,
+            showCategoryDescription: true,
         },
         bgColor: '',
         bgGradient: {

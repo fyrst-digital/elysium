@@ -187,6 +187,7 @@
             "slideSaveErrorTitle": "Something went wrong",
             "slideSaveError": "The Slide couldn't be saved",
             "productLinkingMissingEntity": "Please select a product you would like to link",
+            "categoryLinkingMissingEntity": "Please select a category you would like to link",
             "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten.",
             "copyErrorUnsavedChanges": "Please save your changes before copying a slide."
         },
@@ -262,13 +263,18 @@
                 "typeLabel": "Linking type",
                 "typeCustom": "Custom",
                 "typeProduct": "Product",
+                "typeCategory": "Category",
                 "customUrl": "Custom URL",
                 "customUrlPlaceholder": "/my/url/path or https://example.com",
                 "customUrlHelpText": "Set the linking URL of the slide. This can be both an absolute or a relative URL.",
                 "selectProduct": "Select product",
+                "selectCategory": "Select category",
                 "showProductFocusImage": "Show product image",
                 "showProductTitle": "Show product title",
-                "showProductDescription": "Show product description"
+                "showProductDescription": "Show product description",
+                "showCategoryFocusImage": "Show category image",
+                "showCategoryTitle": "Show category title",
+                "showCategoryDescription": "Show category description"
             },
             "slideButtonLabel": {
                 "label": "Button label",

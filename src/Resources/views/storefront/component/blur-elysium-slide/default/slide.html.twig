@@ -32,6 +32,18 @@
     {% endif %}
 {% endif %}
 
+{% if slideData.slideSettings.slide.linking.type is same as('category') %}
+    {% if slideData.category.id %}
+        {% set actionMainUrl = seoUrl('frontend.navigation.page', {'navigationId': slideData.category.id}) %}
+    {% endif %}
+    {% if slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
+        {% set showActions = true %}
+    {% endif %}
+    {% if slideData.translated.buttonLabel is empty %}
+        {% set actionMainLabel = 'blurElysiumSlides.buttonLabelCategory'|trans %}
+    {% endif %}
+{% endif %}
+
 {% if slideData is null %}
     <div class="{{ slideClasses|join(' ') }}">
         No slide data

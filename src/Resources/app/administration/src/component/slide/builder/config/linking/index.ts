@@ -34,6 +34,21 @@ export default Component.wrapComponentConfig({
             return false;
         },
 
+        validateCategory() {
+            if (
+                this.slide.slideSettings.slide.linking.type === 'category' &&
+                [undefined, null, ''].includes(this.slide.categoryId)
+            ) {
+                return {
+                    detail: this.$t(
+                        'blurElysiumSlides.messages.categoryLinkingMissingEntity'
+                    ),
+                };
+            }
+
+            return false;
+        },
+
         buttonColors() {
             return buttonColors.map((color) => {
                 return {
