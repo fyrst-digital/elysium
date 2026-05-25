@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Preview;
 
+use Blur\BlurElysiumSlider\Preview\PreviewFragment;
+
 /**
  * Value object representing a preview schema for an element type.
  *
@@ -62,5 +64,17 @@ class PreviewSchema
         }
 
         return $triggered;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(): array
+    {
+        return [
+            'elementType' => $this->elementType,
+            'fieldMappings' => $this->fieldMappings,
+            'fragments' => array_map(static fn (PreviewFragment $f) => $f->toArray(), $this->fragments),
+        ];
     }
 }

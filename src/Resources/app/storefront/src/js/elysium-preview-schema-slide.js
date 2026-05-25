@@ -1,3 +1,6 @@
+// Re-export from generated single source of truth
+export { previewSchema } from './generated/preview-schema-slide';
+
 export const previewSchema = {
     elementType: 'blur-elysium-slide',
     fieldMappings: [

@@ -188,8 +188,7 @@ class ElysiumSlidePreviewController extends StorefrontController
         $slide = $this->elysiumSlidesRepository->search($criteria, $context->getContext())->first();
 
         if ($slide === null) {
-            $slide = new ElysiumSlidesEntity();
-            $slide->setId($slideId);
+            throw $this->createNotFoundException(sprintf('Slide "%s" not found for preview.', $slideId));
         }
 
         return $slide;

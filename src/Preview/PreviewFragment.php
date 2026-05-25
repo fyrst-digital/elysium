@@ -77,4 +77,21 @@ class PreviewFragment
     {
         return array_intersect($this->watchedFields, $changedFields) !== [];
     }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'mode' => $this->mode,
+            'watchedFields' => $this->watchedFields,
+            'template' => $this->template,
+            'domSelector' => $this->domSelector,
+            'insertStrategy' => $this->insertStrategy,
+            'fallbackContainer' => $this->fallbackContainer,
+            'fallbackPosition' => $this->fallbackPosition,
+        ];
+    }
 }
