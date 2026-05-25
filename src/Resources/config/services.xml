@@ -110,6 +110,12 @@
     <!-- Preview Schema Registry -->
     <service id="Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry"/>
 
+    <!-- Commands -->
+    <service id="Blur\BlurElysiumSlider\Command\GeneratePreviewSchemaCommand">
+        <argument type="service" id="Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry"/>
+        <tag name="console.command"/>
+    </service>
+
     <!-- Elysium Slide Preview Controller -->
     <service id="Blur\BlurElysiumSlider\Storefront\Controller\ElysiumSlidePreviewController" public="true">
       <argument type="service" id="blur_elysium_slides.repository"/>

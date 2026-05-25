@@ -138,7 +138,11 @@ export default Component.wrapComponentConfig({
     methods: {
         buildIframeSrc(cacheBuster?: number) {
             this.isLoading = true;
+            const isNew = this.slide?._isNew === true;
             let src = `${this.baseUrl}/elysium-preview/blur-elysium-slide/${this.slideId}?device=${this.device}&layout=${this.layout}`;
+            if (isNew) {
+                src += '&new=1';
+            }
             if (cacheBuster) {
                 src += `&t=${cacheBuster}`;
             }

@@ -49,14 +49,14 @@ class GeneratePreviewSchemaCommand extends Command
      */
     private function writeStorefrontSchema(array $data): void
     {
-        $content = '/* eslint-disable */\n';
-        $content .= '// This file is auto-generated. Do not edit manually.\n';
-        $content .= '// Run `bin/console elysium:preview-schema:generate` to regenerate.\n';
-        $content .= 'export const previewSchema = ' . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';\n';
+        $content = "/* eslint-disable */\n";
+        $content .= "// This file is auto-generated. Do not edit manually.\n";
+        $content .= "// Run `bin/console elysium:preview-schema:generate` to regenerate.\n";
+        $content .= "export const previewSchema = " . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ";\n";
 
-        $target = __DIR__ . '/../../Resources/app/storefront/src/js/generated/preview-schema-slide.js';
-        @mkdir(dirname($target), 0777, true);
-        file_put_contents($target, $content);
+        $target = __DIR__ . '/../../src/Resources/app/storefront/src/js/schema/slide-preview.js';
+        @mkdir(dirname($target), 0777, true); // @phpstan-ignore shopware.forbidLocalDiskWrite
+        file_put_contents($target, $content); // @phpstan-ignore shopware.forbidLocalDiskWrite
     }
 
     /**
@@ -64,14 +64,14 @@ class GeneratePreviewSchemaCommand extends Command
      */
     private function writeAdministrationSchema(array $data): void
     {
-        $content = '/* eslint-disable */\n';
-        $content .= '// This file is auto-generated. Do not edit manually.\n';
-        $content .= '// Run `bin/console elysium:preview-schema:generate` to regenerate.\n';
+        $content = "/* eslint-disable */\n";
+        $content .= "// This file is auto-generated. Do not edit manually.\n";
+        $content .= "// Run `bin/console elysium:preview-schema:generate` to regenerate.\n";
         $content .= "import type { PreviewSchema } from '../composables/preview-schema';\n\n";
-        $content .= 'export const previewSchema: PreviewSchema = ' . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ' as PreviewSchema;\n';
+        $content .= "export const previewSchema: PreviewSchema = " . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . " as PreviewSchema;\n";
 
-        $target = __DIR__ . '/../../Resources/app/administration/src/generated/preview-schema.ts';
-        @mkdir(dirname($target), 0777, true);
-        file_put_contents($target, $content);
+        $target = __DIR__ . '/../../src/Resources/app/administration/src/schema/slide-preview.ts';
+        @mkdir(dirname($target), 0777, true); // @phpstan-ignore shopware.forbidLocalDiskWrite
+        file_put_contents($target, $content); // @phpstan-ignore shopware.forbidLocalDiskWrite
     }
 }

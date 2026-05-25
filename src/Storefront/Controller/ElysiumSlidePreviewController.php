@@ -158,7 +158,11 @@ class ElysiumSlidePreviewController extends StorefrontController
             throw $this->createNotFoundException(sprintf('Unknown preview element type "%s".', $elementType));
         }
 
-        $slide = $this->loadSlide($slideId, $context);
+        $isNewSlide = $request->query->getBoolean('new');
+        $slide = $isNewSlide
+            ? $this->createEmptySlideForPreview($slideId)
+            : $this->loadSlide($slideId, $context);
+
         $device = $request->query->get('device', 'desktop');
         $layout = $request->query->get('layout', 'detail');
 
@@ -166,9 +170,18 @@ class ElysiumSlidePreviewController extends StorefrontController
             'slideData' => $slide,
             'device' => $device,
             'layout' => $layout,
+            'isNewSlide' => $isNewSlide,
         ]);
 
         return $this->setPreviewHeaders($response, $context, $request);
+    }
+
+    private function createEmptySlideForPreview(string $slideId): ElysiumSlidesEntity
+    {
+        $slide = new ElysiumSlidesEntity();
+        $slide->setId($slideId);
+
+        return $slide;
     }
 
     private function loadSlide(string $slideId, SalesChannelContext $context): ElysiumSlidesEntity
