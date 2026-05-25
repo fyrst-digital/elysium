@@ -12,7 +12,7 @@
 {% set headlineContent = headlineContent|striptags(headlineTagsWhitelist|join) %}
 
 {% if headlineContent %}
-    <{{headlineElement}} class="blur-elysium-slide-headline" data-elysium-slide-headline="{{ slideData.id }}">
+    <{{ headlineElement }} class="blur-elysium-slide-headline" data-elysium-slide-headline="{{ slideData.id }}">
         {{ headlineContent|raw }}
-    </{{headlineElement}}>
+    </{{ headlineElement }}>
 {% endif %}

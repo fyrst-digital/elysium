@@ -1,12 +1,5 @@
 {% block blur_elysium_slide_image %}
-    {% set containerClasses = [
-        'blur-elysium-slide-image'
-    ] %}
-    {% set lazyLoading = lazyLoading|default(false) %}
-
-    {% if imageMedia is not defined %}
-        {% set imageMedia = slideData.presentationMedia %}
-    {% endif %}
+    {% set imageMedia = slideData.presentationMedia %}
 
     {% if slideData.slideSettings.slide.linking.type is same as('product')
           and slideData.product.cover.media is not null
@@ -14,19 +7,17 @@
         {% set imageMedia = slideData.product.cover.media %}
     {% endif %}
 
-    {% block blur_elysium_slide_image_element %}
-        {% if imageMedia %}           
-            <div class="{{ containerClasses|join(' ') }}"
-                data-elysium-slide-focus-image="{{ slideData.id }}">
-                {% sw_thumbnails 'elysium-slide-focus-image' with {
-                    media: imageMedia,
-                    attributes: {
-                        'loading': lazyLoading === true ? 'lazy' : 'eager',
-                        'class': 'd-block img-fluid',
-                        'style': 'width: var(--slide-focus-image-w, 100%);'
-                    }
-                } %}
-            </div>
-        {% endif %}
-    {% endblock %}
+    {% if imageMedia %}
+        <div class="blur-elysium-slide-image"
+             data-elysium-slide-focus-image="{{ slideData.id }}">
+            {% sw_thumbnails 'elysium-slide-focus-image' with {
+                media: imageMedia,
+                attributes: {
+                    'loading': 'eager',
+                    'class': 'd-block img-fluid',
+                    'style': 'width: var(--slide-focus-image-w, 100%);'
+                }
+            } %}
+        </div>
+    {% endif %}
 {% endblock %}

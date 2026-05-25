@@ -1,74 +1,9 @@
 {% block blur_elysium_slide_content %}
-    {% set headlineClasses = [
-        'blur-elysium-slide-headline'
-    ] %}
-
-    {% set headlineElement = 'div' %}
-
-    {% if slideData.slideSettings.slide.headline.element %}
-        {% set headlineElement = slideData.slideSettings.slide.headline.element %}
-    {% endif %}
-
-    {% set descriptionClasses = [
-        'blur-elysium-slide-description'
-    ] %}
-
-    {% set actionsClasses = [
-        'blur-elysium-slide-actions'
-    ] %}
-
-    {% set mainBtnClasses = [
-        'blur-elysium-slide-main-btn',
-        'btn',
-        slideData.slideSettings.slide.linking.buttonAppearance ? 'btn-' ~ slideData.slideSettings.slide.linking.buttonAppearance : null,
-        slideData.slideSettings.slide.linking.buttonSize ? 'btn-' ~ slideData.slideSettings.slide.linking.buttonSize : null
-    ] %}
-
     {% block blur_elysium_slide_content_element %}
         <div class="blur-elysium-slide-content">
-            {% block blur_elysium_slide_headline %}
-
-                {% if headlineContent %}
-                    <{{headlineElement|raw}} 
-                        class="{{ headlineClasses|join(' ') }}"
-                        data-elysium-slide-headline="{{ slideData.id }}">
-                        {{ headlineContent|raw }}
-                    </{{headlineElement|raw}}>
-                {% endif %}
-            {% endblock %}
-
-            {% block blur_elysium_slide_description %}
-                {% if descriptionContent %}
-                    <div class="{{ descriptionClasses|join(' ') }}"
-                        data-elysium-slide-description="{{ slideData.id }}">
-                        {{ descriptionContent|raw }}
-                    </div>
-                {% endif %}
-            {% endblock %}
-
-            {% block blur_elysium_slide_actions %}
-                {% if showActions %}
-                    <div class="{{ actionsClasses|join(' ') }}">
-                        
-                        {% block blur_elysium_slide_action_main %}
-                            <a href="{{ isPreviewMode is defined and isPreviewMode ? '#' : actionMainUrl }}"
-                                title="{{ actionMainLabel }}"
-                                class="{{ mainBtnClasses|join(' ') }}"
-                                data-elysium-slide-button="{{ slideData.id }}"
-                                {% if isPreviewMode is defined and isPreviewMode %}
-                                    onclick="return false"
-                                {% endif %}
-                                {% if slideData.slideSettings.slide.linking.openExternal is same as(true) %}
-                                    target="_blank"
-                                    rel="noopener"
-                                {% endif %}>
-
-                                {{ actionMainLabel }}
-                            </a>
-                        {% endblock %}
-                    </div>
-                {% endif %}
-            {% endblock %}
+            {% sw_include '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/headline.html.twig' %}
+            {% sw_include '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/description.html.twig' %}
+            {% sw_include '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/button.html.twig' %}
         </div>
     {% endblock %}
 {% endblock %}

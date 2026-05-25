@@ -1,6 +1,4 @@
 {% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/container.html.twig' %}
-{% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/cover-image.html.twig' %}
-{% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/cover-video.html.twig' %}
 {% use '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/link-overlay.html.twig' %}
 
 {% set defaultSlideClasses = [
@@ -12,40 +10,27 @@
     {% set showContainerWrapper = false %}
 {% endif %}
 
-{% set headlineTagsWhitelist = [
-    '<br>',
-    '<i>',
-    '<b>',
-    '<u>',
-    '<strong>',
-    '<span>'
-] %}
-
 {% if slideClasses is defined %} 
     {% set slideClasses = defaultSlideClasses|merge(slideClasses) %}
 {% else %}
     {% set slideClasses = defaultSlideClasses %}
 {% endif %}
 
-{% if slideData.slideSettings.slide.linking.type is same as('product')
-      and slideData.slideSettings.slide.linking.showProductTitle is same as(true)
-      and slideData.product.translated.name %}
-    {% set headlineContent = slideData.product.translated.name %}
-{% else %}
-    {% set headlineContent = slideData.translated.title|striptags( headlineTagsWhitelist|join ) %}
-{% endif %}
-
-{% if slideData.slideSettings.slide.linking.type is same as('product')
-      and slideData.slideSettings.slide.linking.showProductDescription is same as(true)
-      and slideData.product.translated.description %}
-    {% set descriptionContent = slideData.product.translated.description|raw %}
-{% else %}
-    {% set descriptionContent = slideData.translated.description %}
-{% endif %}
-
 {% set actionMainUrl = slideData.translated.url %}
 {% set showActions = actionMainUrl and slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
 {% set actionMainLabel = slideData.translated.buttonLabel ?? 'blurElysiumSlides.buttonLabel'|trans %}
+
+{% if slideData.slideSettings.slide.linking.type is same as('product') %}
+    {% if slideData.product.id %}
+        {% set actionMainUrl = seoUrl('frontend.detail.page', {'productId': slideData.product.id}) %}
+    {% endif %}
+    {% if slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
+        {% set showActions = true %}
+    {% endif %}
+    {% if slideData.translated.buttonLabel is empty %}
+        {% set actionMainLabel = 'blurElysiumSlides.buttonLabelProduct'|trans %}
+    {% endif %}
+{% endif %}
 
 {% if slideData is null %}
     <div class="{{ slideClasses|join(' ') }}">
@@ -68,8 +53,7 @@
                 {% sw_include '@Storefront/storefront/component/blur-elysium-slide/includes/style.html.twig' %}
             {% endblock %}
 
-            {{ block('blur_elysium_slide_cover_image') }}
-            {{ block('blur_elysium_slide_cover_video') }}
+            {% sw_include '@BlurElysiumSlider/storefront/component/blur-elysium-slide/includes/cover.html.twig' %}
 
             {% block blur_elysium_slide_container_wrapper %}
                 {% if showContainerWrapper is same as(true) %}
