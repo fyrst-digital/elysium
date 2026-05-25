@@ -144,12 +144,17 @@ function renderButton(slide, element) {
         classes.push(`btn-${linking.buttonSize}`);
     }
 
+    const isPreview = element.hasAttribute('data-elysium-slide-preview');
+    const href = isPreview ? '#' : url;
     let attrs = '';
+    if (isPreview) {
+        attrs = ' onclick="return false"';
+    }
     if (linking.openExternal === true) {
-        attrs = ' target="_blank" rel="noopener"';
+        attrs += ' target="_blank" rel="noopener"';
     }
 
-    const html = `<div class="blur-elysium-slide-actions"><a href="${url}" title="${label}" class="${classes.join(' ')}" data-elysium-slide-button="${id}"${attrs}>${label}</a></div>`;
+    const html = `<div class="blur-elysium-slide-actions"><a href="${href}" title="${label}" class="${classes.join(' ')}" data-elysium-slide-button="${id}"${attrs}>${label}</a></div>`;
 
     if (existing) {
         existing.outerHTML = html;

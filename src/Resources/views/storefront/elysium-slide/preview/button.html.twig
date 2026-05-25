@@ -11,10 +11,11 @@
         linking.buttonSize and linking.buttonSize != 'md' ? 'btn-' ~ linking.buttonSize : null
     ] %}
     <div class="blur-elysium-slide-actions">
-        <a href="{{ actionMainUrl }}"
+        <a href="#"
             title="{{ actionMainLabel }}"
             class="{{ mainBtnClasses|join(' ') }}"
             data-elysium-slide-button="{{ slideData.id }}"
+            onclick="return false"
             {% if linking.openExternal is same as(true) %}target="_blank" rel="noopener"{% endif %}>
             {{ actionMainLabel }}
         </a>

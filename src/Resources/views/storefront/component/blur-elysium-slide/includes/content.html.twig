@@ -51,10 +51,13 @@
                     <div class="{{ actionsClasses|join(' ') }}">
                         
                         {% block blur_elysium_slide_action_main %}
-                            <a href="{{ actionMainUrl }}"
+                            <a href="{{ isPreviewMode is defined and isPreviewMode ? '#' : actionMainUrl }}"
                                 title="{{ actionMainLabel }}"
                                 class="{{ mainBtnClasses|join(' ') }}"
                                 data-elysium-slide-button="{{ slideData.id }}"
+                                {% if isPreviewMode is defined and isPreviewMode %}
+                                    onclick="return false"
+                                {% endif %}
                                 {% if slideData.slideSettings.slide.linking.openExternal is same as(true) %}
                                     target="_blank"
                                     rel="noopener"
