@@ -7,7 +7,6 @@ namespace Blur\BlurElysiumSlider\Storefront\Controller;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry;
 use Shopware\Core\Content\Media\MediaEntity;
-use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -27,7 +26,6 @@ class ElysiumSlidePreviewController extends StorefrontController
 {
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository,
-        private readonly EntityRepository $productRepository,
         private readonly EntityRepository $salesChannelRepository,
         private readonly PreviewSchemaRegistry $schemaRegistry,
     ) {}
@@ -99,26 +97,6 @@ class ElysiumSlidePreviewController extends StorefrontController
 
         if (!$allowed) {
             throw new AccessDeniedHttpException('Invalid referer.');
-        }
-    }
-
-    private function validateSameOriginFetch(Request $request): void
-    {
-        $secFetchSite = $request->headers->get('Sec-Fetch-Site');
-
-        if ($secFetchSite !== null) {
-            if (!in_array($secFetchSite, ['same-origin', 'same-site'], true)) {
-                throw new AccessDeniedHttpException('Cross-site request not allowed.');
-            }
-
-            return;
-        }
-
-        $origin = $request->headers->get('Origin');
-        $expectedOrigin = $request->getSchemeAndHttpHost();
-
-        if ($origin === null || $this->sanitizeOrigin($origin) !== $expectedOrigin) {
-            throw new AccessDeniedHttpException('Origin validation failed.');
         }
     }
 
@@ -215,156 +193,6 @@ class ElysiumSlidePreviewController extends StorefrontController
         }
 
         return $slide;
-    }
-
-    private function mergeSlideData(ElysiumSlidesEntity $entity, array $postData, SalesChannelContext $context): ElysiumSlidesEntity
-    {
-        if (isset($postData['title'])) {
-            $entity->setTitle($postData['title']);
-        }
-
-        if (isset($postData['description'])) {
-            $entity->setDescription($postData['description']);
-        }
-
-        if (isset($postData['buttonLabel'])) {
-            $entity->setButtonLabel($postData['buttonLabel']);
-        }
-
-        if (isset($postData['url'])) {
-            $entity->setUrl($postData['url']);
-        }
-
-        if (isset($postData['slideSettings']) && is_array($postData['slideSettings'])) {
-            $mergedSettings = array_replace_recursive(
-                $entity->getSlideSettings() ?? [],
-                $postData['slideSettings']
-            );
-            $entity->setSlideSettings($mergedSettings);
-        }
-
-        if (isset($postData['contentSettings']) && is_array($postData['contentSettings'])) {
-            $mergedContentSettings = array_replace_recursive(
-                $entity->getContentSettings() ?? [],
-                $postData['contentSettings']
-            );
-            $entity->setContentSettings($mergedContentSettings);
-        }
-
-        if (isset($postData['presentationMedia']) && is_array($postData['presentationMedia'])) {
-            $media = $this->createMediaEntityFromArray($postData['presentationMedia']);
-            $entity->setPresentationMedia($media);
-            $entity->setPresentationMediaId($media->getId());
-        } elseif (array_key_exists('presentationMedia', $postData) && $postData['presentationMedia'] === null) {
-            $entity->setPresentationMedia(null);
-            $entity->setPresentationMediaId(null);
-        }
-
-        if (array_key_exists('productId', $postData)) {
-            $newProductId = $postData['productId'] ?: null;
-            $entity->setProductId($newProductId);
-
-            if ($newProductId !== null) {
-                $product = $this->loadProduct($newProductId, $context);
-                $entity->setProduct($product);
-            } else {
-                $entity->setProduct(null);
-            }
-        }
-
-        $this->mergeCoverMedia($entity, $postData);
-
-        $entity->setTranslated(array_merge(
-            $entity->getTranslated(),
-            [
-                'title' => $entity->getTitle(),
-                'description' => $entity->getDescription(),
-                'buttonLabel' => $entity->getButtonLabel(),
-                'url' => $entity->getUrl(),
-            ]
-        ));
-
-        return $entity;
-    }
-
-    private function mergeCoverMedia(ElysiumSlidesEntity $entity, array $postData): void
-    {
-        $mappings = [
-            'slideCover' => ['setSlideCover', 'setSlideCoverId'],
-            'slideCoverMobile' => ['setSlideCoverMobile', 'setSlideCoverMobileId'],
-            'slideCoverTablet' => ['setSlideCoverTablet', 'setSlideCoverTabletId'],
-            'slideCoverVideo' => ['setSlideCoverVideo', 'setSlideCoverVideoId'],
-        ];
-
-        foreach ($mappings as $key => [$setter, $idSetter]) {
-            if (isset($postData[$key]) && is_array($postData[$key])) {
-                $media = $this->createMediaEntityFromArray($postData[$key]);
-                $entity->$setter($media);
-                $entity->$idSetter($media->getId());
-            } elseif (array_key_exists($key, $postData) && $postData[$key] === null) {
-                $entity->$setter(null);
-                $entity->$idSetter(null);
-            }
-        }
-    }
-
-    private function loadProduct(string $productId, SalesChannelContext $context): ?ProductEntity
-    {
-        $criteria = new Criteria([$productId]);
-        $criteria->addAssociation('cover');
-        $criteria->addAssociation('cover.media');
-
-        /** @var ProductEntity|null $product */
-        $product = $this->productRepository->search($criteria, $context->getContext())->first();
-
-        return $product;
-    }
-
-    private function createMediaEntityFromArray(array $data): MediaEntity
-    {
-        $media = new MediaEntity();
-        $media->setId($data['id'] ?? '');
-
-        if (isset($data['url'])) {
-            $media->setUrl($data['url']);
-        }
-
-        if (isset($data['mimeType'])) {
-            $media->setMimeType($data['mimeType']);
-        }
-
-        if (isset($data['fileExtension'])) {
-            $media->setFileExtension($data['fileExtension']);
-        }
-
-        if (isset($data['fileName'])) {
-            $media->setFileName($data['fileName']);
-        }
-
-        if (isset($data['path'])) {
-            $media->setPath($data['path']);
-        }
-
-        if (isset($data['metaData']) && is_array($data['metaData'])) {
-            $media->setMetaData($data['metaData']);
-        }
-
-        if (isset($data['alt'])) {
-            $media->setAlt($data['alt']);
-        }
-
-        if (isset($data['title'])) {
-            $media->setTitle($data['title']);
-        }
-
-        if (isset($data['thumbnails']) && is_array($data['thumbnails'])) {
-            $media->setMetaData(array_merge(
-                $data['metaData'] ?? [],
-                ['_thumbnails' => $data['thumbnails']]
-            ));
-        }
-
-        return $media;
     }
 
 }
