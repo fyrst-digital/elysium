@@ -1,3 +1,9 @@
+# 4.8.0
+
+**Changelog**
+- Live-Vorschau für Slides im Slide Builder Editor hinzugefügt. Änderungen an deinem Slide werden sofort in einer echten Storefront-Vorschau dargestellt
+- Breiteneinstellungen für Inhalte, Container und Fokusbild verwenden nun Prozentwerte für eine konsistente Darstellung auf verschiedenen Bildschirmgrößen
+
 # 4.7.1
 
 **Changelog**

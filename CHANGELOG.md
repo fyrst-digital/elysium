@@ -1,3 +1,9 @@
+# 4.8.0
+
+**Changelog**
+- Added live preview for slides in the Slide Builder editor. Changes to your slide are now instantly reflected in a real storefront preview
+- Content, COntainer and focus image width settings now use percentage values for more consistent sizing across different screen sizes
+
 # 4.7.1
 
 **Changelog**
