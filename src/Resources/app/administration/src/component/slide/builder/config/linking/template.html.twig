@@ -42,6 +42,7 @@
             entity="product"
             :label="$tc('blurElysiumSlides.forms.slideLinking.selectProduct')"
             :error="validateProduct"
+            :criteria="productCriteria"
             v-model:value="slide.productId"
             />
     </py-column>
