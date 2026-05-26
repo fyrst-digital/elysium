@@ -252,7 +252,7 @@ export default Component.wrapComponentConfig({
             criteria.addAssociation('category.media');
 
             this.slidesRepository
-                .get(this.slideId, Context.api, criteria)
+                .get(this.slideId, { ...Context.api, inheritance: true }, criteria)
                 .then((slide) => {
                     const mergedSlide = this._mergeSettings(slide, {
                         slideSettings: this.defaultSlideSettings,
@@ -485,7 +485,7 @@ export default Component.wrapComponentConfig({
                 const criteria = new Criteria();
                 criteria.addAssociation('cover');
                 criteria.addAssociation('cover.media');
-                productRepo.get(productId, Context.api, criteria).then((product) => {
+                productRepo.get(productId, { ...Context.api, inheritance: true }, criteria).then((product) => {
                     if (this.slide && this.slide.productId === productId) {
                         this.slide.product = product;
                     }

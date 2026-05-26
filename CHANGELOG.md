@@ -1,3 +1,8 @@
+# 4.8.1
+
+**Changelog**
+- Fixed product variants not showing in the slide editor live preview
+
 # 4.8.0
 
 **Changelog**
@@ -6,6 +11,7 @@
 - Slides can now be linked to a category in addition to custom URLs and products. Category name, description, and image can be displayed on the slide
 - Fixed the live preview not showing category or product data when a linking type is set for the first time on a new slide
 - The product selection in the slide linking settings now only shows active products
+- Fixed product variants not showing in the slide editor live preview
 
 # 4.7.1
 

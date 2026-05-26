@@ -1,11 +1,7 @@
 # 4.8.0
 
 **Changelog**
-- Live-Vorschau für Slides im Slide Builder Editor hinzugefügt. Änderungen an deinem Slide werden sofort in einer echten Storefront-Vorschau dargestellt
-- Breiteneinstellungen für Inhalte, Container und Fokusbild verwenden nun Prozentwerte für eine konsistente Darstellung auf verschiedenen Bildschirmgrößen
-- Slides können jetzt zusätzlich zu individuellen URLs und Produkten auch mit einer Kategorie verlinkt werden. Kategoriename, Beschreibung und Bild können auf dem Slide angezeigt werden
-- Fehler behoben, bei dem die Live-Vorschau keine Kategorie- oder Produktdaten anzeigte, wenn ein Verlinkungstyp beim ersten Mal auf einem neuen Slide gesetzt wurde
-- Die Produktauswahl in den Slide-Verlinkungseinstellungen zeigt nun nur noch aktive Produkte an
+- Fehler behoben, bei dem Produktvarianten in der Live-Vorschau des Slide-Editor nicht anzeigt wurden
 
 # 4.7.1
 
