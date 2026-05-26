@@ -60,6 +60,8 @@ function renderHeadline(slide, element) {
     let content;
     if (linking.type === 'product' && linking.showProductTitle && slide.product?.translated?.name) {
         content = slide.product.translated.name;
+    } else if (linking.type === 'category' && linking.showCategoryTitle && slide.category?.translated?.name) {
+        content = slide.category.translated.name;
     } else {
         content = slide.title || '';
     }
@@ -94,6 +96,8 @@ function renderDescription(slide, element) {
     let content;
     if (linking.type === 'product' && linking.showProductDescription && slide.product?.translated?.description) {
         content = slide.product.translated.description;
+    } else if (linking.type === 'category' && linking.showCategoryDescription && slide.category?.translated?.description) {
+        content = slide.category.translated.description;
     } else {
         content = slide.description || '';
     }
@@ -236,6 +240,8 @@ function renderFocusImage(slide, element) {
 
     if (linking.type === 'product' && slide.product?.cover?.media && linking.showProductFocusImage) {
         imageMedia = slide.product.cover.media;
+    } else if (linking.type === 'category' && slide.category?.media && linking.showCategoryFocusImage) {
+        imageMedia = slide.category.media;
     }
 
     const existing = element.querySelector('[data-elysium-slide-focus-image]');

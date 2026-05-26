@@ -44,6 +44,12 @@ export const previewSchema: PreviewSchema = {
             ]
         },
         {
+            "path": "slide.categoryId",
+            "fields": [
+                "categoryId"
+            ]
+        },
+        {
             "path": "slide.contentSettings",
             "fields": [
                 "contentSettings"
@@ -106,6 +112,24 @@ export const previewSchema: PreviewSchema = {
             "path": "slide.slideSettings.slide.linking.showProductFocusImage",
             "fields": [
                 "showProductFocusImage"
+            ]
+        },
+        {
+            "path": "slide.slideSettings.slide.linking.showCategoryTitle",
+            "fields": [
+                "showCategoryTitle"
+            ]
+        },
+        {
+            "path": "slide.slideSettings.slide.linking.showCategoryDescription",
+            "fields": [
+                "showCategoryDescription"
+            ]
+        },
+        {
+            "path": "slide.slideSettings.slide.linking.showCategoryFocusImage",
+            "fields": [
+                "showCategoryFocusImage"
             ]
         },
         {
@@ -240,8 +264,10 @@ export const previewSchema: PreviewSchema = {
                 "title",
                 "headlineElement",
                 "showProductTitle",
+                "showCategoryTitle",
                 "linkingType",
-                "productId"
+                "productId",
+                "categoryId"
             ],
             "template": "@Storefront/storefront/component/blur-elysium-slide/includes/headline.html.twig",
             "domSelector": "[data-elysium-slide-headline]",
@@ -255,8 +281,10 @@ export const previewSchema: PreviewSchema = {
             "watchedFields": [
                 "description",
                 "showProductDescription",
+                "showCategoryDescription",
                 "linkingType",
-                "productId"
+                "productId",
+                "categoryId"
             ],
             "template": "@Storefront/storefront/component/blur-elysium-slide/includes/description.html.twig",
             "domSelector": "[data-elysium-slide-description]",
@@ -292,6 +320,7 @@ export const previewSchema: PreviewSchema = {
                 "slideCoverTablet",
                 "slideCoverVideo",
                 "showProductFocusImage",
+                "showCategoryFocusImage",
                 "linkingType"
             ],
             "template": "@Storefront/storefront/component/blur-elysium-slide/includes/cover.html.twig",
@@ -306,7 +335,9 @@ export const previewSchema: PreviewSchema = {
             "watchedFields": [
                 "presentationMedia",
                 "showProductFocusImage",
+                "showCategoryFocusImage",
                 "productId",
+                "categoryId",
                 "linkingType"
             ],
             "template": "@Storefront/storefront/component/blur-elysium-slide/includes/image.html.twig",

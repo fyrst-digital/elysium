@@ -40,6 +40,9 @@ export type SlideLinking = {
     showProductFocusImage: boolean;
     showProductTitle: boolean;
     showProductDescription: boolean;
+    showCategoryFocusImage: boolean;
+    showCategoryTitle: boolean;
+    showCategoryDescription: boolean;
 };
 
 export type SlideTemplate = string | null | 'default';

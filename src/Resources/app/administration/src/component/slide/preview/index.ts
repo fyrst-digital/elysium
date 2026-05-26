@@ -118,6 +118,9 @@ export default Component.wrapComponentConfig({
             if (this.slide.slideSettings?.slide?.linking?.type === 'product' && this.slide.product?.name) {
                 return this.slide.product.name;
             }
+            if (this.slide.slideSettings?.slide?.linking?.type === 'category' && this.slide.category?.name) {
+                return this.slide.category.name;
+            }
             return this.slide.title || null;
         },
 
@@ -135,6 +138,9 @@ export default Component.wrapComponentConfig({
             if (this.slide.slideSettings?.slide?.linking?.type === 'product' && this.slide.product?.description) {
                 return this.slide.product.description;
             }
+            if (this.slide.slideSettings?.slide?.linking?.type === 'category' && this.slide.category?.description) {
+                return this.slide.category.description;
+            }
             return this.slide.description || null;
         },
 
@@ -147,7 +153,7 @@ export default Component.wrapComponentConfig({
         },
 
         showButton() {
-            const hasUrl = Boolean(this.slide.url) || Boolean(this.slide.productId);
+            const hasUrl = Boolean(this.slide.url) || Boolean(this.slide.productId) || Boolean(this.slide.categoryId);
             return hasUrl && Boolean(this.slide.buttonLabel);
         },
     },

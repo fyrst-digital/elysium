@@ -41,6 +41,7 @@ class PreviewSchemaRegistry
             ['path' => 'slide.url', 'fields' => ['url']],
             ['path' => 'slide.presentationMedia', 'fields' => ['presentationMedia'], 'deep' => true],
             ['path' => 'slide.productId', 'fields' => ['productId']],
+            ['path' => 'slide.categoryId', 'fields' => ['categoryId']],
             ['path' => 'slide.contentSettings', 'fields' => ['contentSettings'], 'deep' => true],
             ['path' => 'slide.slideCover', 'fields' => ['slideCover'], 'deep' => true],
             ['path' => 'slide.slideCoverMobile', 'fields' => ['slideCoverMobile'], 'deep' => true],
@@ -51,6 +52,9 @@ class PreviewSchemaRegistry
             ['path' => 'slide.slideSettings.slide.linking.showProductTitle', 'fields' => ['showProductTitle']],
             ['path' => 'slide.slideSettings.slide.linking.showProductDescription', 'fields' => ['showProductDescription']],
             ['path' => 'slide.slideSettings.slide.linking.showProductFocusImage', 'fields' => ['showProductFocusImage']],
+            ['path' => 'slide.slideSettings.slide.linking.showCategoryTitle', 'fields' => ['showCategoryTitle']],
+            ['path' => 'slide.slideSettings.slide.linking.showCategoryDescription', 'fields' => ['showCategoryDescription']],
+            ['path' => 'slide.slideSettings.slide.linking.showCategoryFocusImage', 'fields' => ['showCategoryFocusImage']],
             ['path' => 'slide.slideSettings.slide.linking.buttonAppearance', 'fields' => ['buttonAppearance']],
             ['path' => 'slide.slideSettings.slide.linking.buttonSize', 'fields' => ['buttonSize']],
             ['path' => 'slide.slideSettings.slide.linking.overlay', 'fields' => ['linkingOverlay']],
@@ -82,7 +86,7 @@ class PreviewSchemaRegistry
             new PreviewFragment(
                 'headline',
                 'partial',
-                ['title', 'headlineElement', 'showProductTitle', 'linkingType', 'productId'],
+                ['title', 'headlineElement', 'showProductTitle', 'showCategoryTitle', 'linkingType', 'productId', 'categoryId'],
                 '@Storefront/storefront/component/blur-elysium-slide/includes/headline.html.twig',
                 '[data-elysium-slide-headline]',
                 'replace',
@@ -92,7 +96,7 @@ class PreviewSchemaRegistry
             new PreviewFragment(
                 'description',
                 'partial',
-                ['description', 'showProductDescription', 'linkingType', 'productId'],
+                ['description', 'showProductDescription', 'showCategoryDescription', 'linkingType', 'productId', 'categoryId'],
                 '@Storefront/storefront/component/blur-elysium-slide/includes/description.html.twig',
                 '[data-elysium-slide-description]',
                 'replace',
@@ -112,7 +116,7 @@ class PreviewSchemaRegistry
             new PreviewFragment(
                 'cover',
                 'partial',
-                ['contentSettings', 'slideCover', 'slideCoverMobile', 'slideCoverTablet', 'slideCoverVideo', 'showProductFocusImage', 'linkingType'],
+                ['contentSettings', 'slideCover', 'slideCoverMobile', 'slideCoverTablet', 'slideCoverVideo', 'showProductFocusImage', 'showCategoryFocusImage', 'linkingType'],
                 '@Storefront/storefront/component/blur-elysium-slide/includes/cover.html.twig',
                 '.blur-elysium-slide-cover-picture, .blur-elysium-slide-cover-video',
                 'replace-inner',
@@ -122,7 +126,7 @@ class PreviewSchemaRegistry
             new PreviewFragment(
                 'focus-image',
                 'partial',
-                ['presentationMedia', 'showProductFocusImage', 'productId', 'linkingType'],
+                ['presentationMedia', 'showProductFocusImage', 'showCategoryFocusImage', 'productId', 'categoryId', 'linkingType'],
                 '@Storefront/storefront/component/blur-elysium-slide/includes/image.html.twig',
                 '[data-elysium-slide-focus-image]',
                 'replace',

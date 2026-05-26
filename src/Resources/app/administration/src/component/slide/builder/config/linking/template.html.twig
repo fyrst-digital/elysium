@@ -13,6 +13,7 @@
             :options="[
                 { value: 'custom', label: $tc('blurElysiumSlides.forms.slideLinking.typeCustom') },
                 { value: 'product', label: $tc('blurElysiumSlides.forms.slideLinking.typeProduct') },
+                { value: 'category', label: $tc('blurElysiumSlides.forms.slideLinking.typeCategory') },
             ]"
             :hideClearableButton="true"
             :label="$tc('blurElysiumSlides.forms.slideLinking.typeLabel')"
@@ -42,6 +43,18 @@
             :label="$tc('blurElysiumSlides.forms.slideLinking.selectProduct')"
             :error="validateProduct"
             v-model:value="slide.productId"
+            />
+    </py-column>
+
+    <py-column
+        v-if="slide.slideSettings.slide?.linking?.type === 'category'"
+        :cols="12"
+    >
+        <py-entity-field 
+            entity="category"
+            :label="$tc('blurElysiumSlides.forms.slideLinking.selectCategory')"
+            :error="validateCategory"
+            v-model:value="slide.categoryId"
             />
     </py-column>
 
@@ -107,6 +120,27 @@
             @change="slide.slideSettings.slide.linking.showProductDescription = $event"
             :checked="slide.slideSettings.slide.linking.showProductDescription"
             :label="$tc('blurElysiumSlides.forms.slideLinking.showProductDescription')"
+        />
+
+        <mt-switch
+            v-if="slide.slideSettings.slide?.linking?.type === 'category'"
+            @change="slide.slideSettings.slide.linking.showCategoryFocusImage = $event"
+            :checked="slide.slideSettings.slide.linking.showCategoryFocusImage"
+            :label="$tc('blurElysiumSlides.forms.slideLinking.showCategoryFocusImage')"
+        />
+
+        <mt-switch
+            v-if="slide.slideSettings.slide?.linking?.type === 'category'"
+            @change="slide.slideSettings.slide.linking.showCategoryTitle = $event"
+            :checked="slide.slideSettings.slide.linking.showCategoryTitle"
+            :label="$tc('blurElysiumSlides.forms.slideLinking.showCategoryTitle')"
+        />
+
+        <mt-switch
+            v-if="slide.slideSettings.slide?.linking?.type === 'category'"
+            @change="slide.slideSettings.slide.linking.showCategoryDescription = $event"
+            :checked="slide.slideSettings.slide.linking.showCategoryDescription"
+            :label="$tc('blurElysiumSlides.forms.slideLinking.showCategoryDescription')"
         />
 
         <mt-switch

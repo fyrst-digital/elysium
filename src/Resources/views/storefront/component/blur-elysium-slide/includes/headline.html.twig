@@ -4,6 +4,10 @@
       and slideData.slideSettings.slide.linking.showProductTitle is same as(true)
       and slideData.product.translated.name %}
     {% set headlineContent = slideData.product.translated.name %}
+{% elseif slideData.slideSettings.slide.linking.type is same as('category')
+      and slideData.slideSettings.slide.linking.showCategoryTitle is same as(true)
+      and slideData.category.translated.name %}
+    {% set headlineContent = slideData.category.translated.name %}
 {% else %}
     {% set headlineContent = slideData.title|default('') %}
 {% endif %}

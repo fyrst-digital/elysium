@@ -2,6 +2,10 @@
       and slideData.slideSettings.slide.linking.showProductDescription is same as(true)
       and slideData.product.translated.description %}
     {% set descriptionContent = slideData.product.translated.description|raw %}
+{% elseif slideData.slideSettings.slide.linking.type is same as('category')
+      and slideData.slideSettings.slide.linking.showCategoryDescription is same as(true)
+      and slideData.category.translated.description %}
+    {% set descriptionContent = slideData.category.translated.description|raw %}
 {% else %}
     {% set descriptionContent = slideData.description|default('') %}
 {% endif %}

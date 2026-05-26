@@ -101,6 +101,12 @@
     {% endif %}
 {% endif %}
 
+{% if slideData.category is not same as(null) and slideData.slideSettings.slide.linking.type is same as('category') %}
+    {% if slideData.category.media and slideData.presentationMedia is null %}
+        {% set presentationMedia = slideData.category.media %}
+    {% endif %}
+{% endif %}
+
 {% apply spaceless %}
     {% block blur_elysium_slide_style %}
         <style id="style-{{ slideData.id }}" style="display:none !important; visibility:hidden !important;">

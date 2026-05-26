@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
 
+use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
@@ -20,6 +21,10 @@ class ElysiumSlidesEntity extends Entity
     protected ?string $productId = null;
 
     protected ?ProductEntity $product = null;
+
+    protected ?string $categoryId = null;
+
+    protected ?CategoryEntity $category = null;
 
     protected ?string $slideCoverId = null;
 
@@ -92,6 +97,38 @@ class ElysiumSlidesEntity extends Entity
     public function setProduct(?ProductEntity $product): void
     {
         $this->product = $product;
+    }
+
+    /**
+     * Get the value of categoryId
+     */
+    public function getCategoryId(): ?string
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * Set the value of categoryId
+     */
+    public function setCategoryId(?string $categoryId): void
+    {
+        $this->categoryId = $categoryId;
+    }
+
+    /**
+     * Get the value of category
+     */
+    public function getCategory(): ?CategoryEntity
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set the value of category
+     */
+    public function setCategory(?CategoryEntity $category): void
+    {
+        $this->category = $category;
     }
 
     /**

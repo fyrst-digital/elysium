@@ -41,6 +41,8 @@ export default Component.wrapComponentConfig({
             criteria.addAssociation('product');
             criteria.addAssociation('product.cover');
             criteria.addAssociation('product.cover.media');
+            criteria.addAssociation('category');
+            criteria.addAssociation('category.media');
 
             return criteria;
         },

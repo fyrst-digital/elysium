@@ -12,6 +12,7 @@
     "blurElysiumSlides": {
         "buttonLabel": "Learn more",
         "buttonLabelProduct": "See Product",
+        "buttonLabelCategory": "View Category",
         "noSlides": "No slides found"
     }
 }

@@ -3,6 +3,7 @@
 **Changelog**
 - Added live preview for slides in the Slide Builder editor. Changes to your slide are now instantly reflected in a real storefront preview
 - Content, COntainer and focus image width settings now use percentage values for more consistent sizing across different screen sizes
+- Slides can now be linked to a category in addition to custom URLs and products. Category name, description, and image can be displayed on the slide
 
 # 4.7.1
 
