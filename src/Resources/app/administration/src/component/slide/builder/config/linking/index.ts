@@ -4,7 +4,8 @@ import {
     buttonSizes,
 } from '@elysium/component/utilities/settings/buttons';
 
-const { Component, Mixin, Store } = Shopware;
+const { Component, Mixin, Store, Data } = Shopware;
+const { Criteria } = Data;
 
 export default Component.wrapComponentConfig({
     template,
@@ -65,6 +66,12 @@ export default Component.wrapComponentConfig({
                     label: this.$tc(size.label),
                 };
             });
+        },
+
+        productCriteria() {
+            const criteria = new Criteria(1, 25);
+            criteria.addFilter(Criteria.equals('active', true));
+            return criteria;
         },
     },
 });

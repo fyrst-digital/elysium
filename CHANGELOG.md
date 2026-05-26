@@ -4,6 +4,8 @@
 - Added live preview for slides in the Slide Builder editor. Changes to your slide are now instantly reflected in a real storefront preview
 - Content, COntainer and focus image width settings now use percentage values for more consistent sizing across different screen sizes
 - Slides can now be linked to a category in addition to custom URLs and products. Category name, description, and image can be displayed on the slide
+- Fixed the live preview not showing category or product data when a linking type is set for the first time on a new slide
+- The product selection in the slide linking settings now only shows active products
 
 # 4.7.1
 

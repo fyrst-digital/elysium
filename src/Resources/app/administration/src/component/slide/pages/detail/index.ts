@@ -453,6 +453,45 @@ export default Component.wrapComponentConfig({
         } else {
             this.loadSlide();
         }
+
+        this.$watch(
+            () => this.slide?.categoryId,
+            (categoryId: string | null) => {
+                if (!this.slide) return;
+                if (!categoryId) {
+                    this.slide.category = null;
+                    return;
+                }
+                const categoryRepo = this.repositoryFactory.create('category');
+                const criteria = new Criteria();
+                criteria.addAssociation('media');
+                categoryRepo.get(categoryId, Context.api, criteria).then((category) => {
+                    if (this.slide && this.slide.categoryId === categoryId) {
+                        this.slide.category = category;
+                    }
+                });
+            },
+        );
+
+        this.$watch(
+            () => this.slide?.productId,
+            (productId: string | null) => {
+                if (!this.slide) return;
+                if (!productId) {
+                    this.slide.product = null;
+                    return;
+                }
+                const productRepo = this.repositoryFactory.create('product');
+                const criteria = new Criteria();
+                criteria.addAssociation('cover');
+                criteria.addAssociation('cover.media');
+                productRepo.get(productId, Context.api, criteria).then((product) => {
+                    if (this.slide && this.slide.productId === productId) {
+                        this.slide.product = product;
+                    }
+                });
+            },
+        );
     },
 
     unmounted() {
