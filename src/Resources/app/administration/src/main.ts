@@ -3,6 +3,7 @@ import deDE from '@elysium/snippet/de-DE.json';
 import slideStore from '@elysium/states/slide.states';
 import uiStore from '@elysium/states/ui.states';
 import cmsStore from '@elysium/states/cms.states';
+import mediaStore from '@elysium/states/media.states';
 import { useComponentRegister, useComponentOverride } from '@elysium/composables/components'
 import '@elysium/styles/mt-fixes.scss';
 import '@elysium/styles/components.scss';
@@ -24,6 +25,7 @@ const { Locale, Application, Component, Store, Service } = Shopware;
 Store.register(slideStore);
 Store.register(uiStore);
 Store.register(cmsStore);
+Store.register(mediaStore);
 
 /**
  * Register global snippets

@@ -1,12 +1,9 @@
 import template from './template.html.twig'
-import { Media } from '@elysium/types/slide';
 
-const { Component } = Shopware;
+const { Component, Store } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
-
-    inject: ['repositoryFactory'],
 
     props: {
         slide: {
@@ -43,64 +40,11 @@ export default Component.wrapComponentConfig({
         }
     },
 
-    data() {
-        return {
-            mediaCache: {} as Record<string, Media>,
-        };
-    },
-
-    watch: {
-        'slide.contentSettings': {
-            handler() {
-                this.loadMediaForSlide();
-            },
-            deep: true,
-        },
-    },
-
-    created() {
-        this.loadMediaForSlide();
-    },
-
-    methods: {
-        loadMediaForSlide() {
-            const contentCover = this.slide?.contentSettings?.slideCover ?? {};
-            const mediaIds = [
-                contentCover.mobileId,
-                contentCover.tabletId,
-                contentCover.desktopId,
-                contentCover.videoId,
-                this.slide?.contentSettings?.focusImageId,
-            ].filter((id): id is string => Boolean(id));
-
-            if (mediaIds.length === 0) return;
-
-            const uncachedIds = mediaIds.filter((id) => !this.mediaCache[id]);
-            if (uncachedIds.length === 0) return;
-
-            const mediaRepository = this.repositoryFactory.create('media');
-            const criteria = new Shopware.Data.Criteria();
-            criteria.setIds(uncachedIds);
-
-            mediaRepository
-                .search(criteria, Shopware.Context.api)
-                .then((result: { items: Media[] }) => {
-                    result.items.forEach((media: Media) => {
-                        this.mediaCache[media.id] = media;
-                    });
-                })
-                .catch((exception: Error) => {
-                    console.error(exception);
-                });
-        },
-
-        getMediaById(id: string | null | undefined): Media | null {
-            if (!id) return null;
-            return this.mediaCache[id] ?? null;
-        },
-    },
-
     computed: {
+        elysiumMedia() {
+            return Store.get('elysiumMedia');
+        },
+
         slideBgGradient() {
             const allowedGradientTypes = ['linear-gradient', 'radial-gradient'];
             const bgGradient = this.slide.slideSettings?.slide?.bgGradient || null;
@@ -132,24 +76,24 @@ export default Component.wrapComponentConfig({
         currentMedia() {
             const contentCover = this.slide?.contentSettings?.slideCover ?? {};
 
-            const videoMedia = this.getMediaById(contentCover.videoId);
+            const videoMedia = this.elysiumMedia.getMedia(contentCover.videoId);
             if (videoMedia) {
                 return videoMedia;
             }
 
             switch (this.deviceView) {
                 case 'mobile':
-                    return this.getMediaById(contentCover.mobileId)
-                        || this.getMediaById(contentCover.tabletId)
-                        || this.getMediaById(contentCover.desktopId);
+                    return this.elysiumMedia.getMedia(contentCover.mobileId)
+                        || this.elysiumMedia.getMedia(contentCover.tabletId)
+                        || this.elysiumMedia.getMedia(contentCover.desktopId);
                 case 'tablet':
-                    return this.getMediaById(contentCover.tabletId)
-                        || this.getMediaById(contentCover.mobileId)
-                        || this.getMediaById(contentCover.desktopId);
+                    return this.elysiumMedia.getMedia(contentCover.tabletId)
+                        || this.elysiumMedia.getMedia(contentCover.mobileId)
+                        || this.elysiumMedia.getMedia(contentCover.desktopId);
                 default:
-                    return this.getMediaById(contentCover.desktopId)
-                        || this.getMediaById(contentCover.tabletId)
-                        || this.getMediaById(contentCover.mobileId);
+                    return this.elysiumMedia.getMedia(contentCover.desktopId)
+                        || this.elysiumMedia.getMedia(contentCover.tabletId)
+                        || this.elysiumMedia.getMedia(contentCover.mobileId);
             }
         },
 

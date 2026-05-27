@@ -1,6 +1,6 @@
 import template from './template.html.twig';
 
-import { MediaItem } from '@elysium/types/media';
+import { Media } from '@elysium/types/slide';
 
 const { Component, Mixin, Store, Context } = Shopware;
 
@@ -17,8 +17,6 @@ export default Component.wrapComponentConfig({
 
     data() {
         return {
-            mediaLoading: false,
-            mediaCache: {} as Record<string, MediaItem>,
             mediaModal: {
                 open: false,
                 type: null as string | null,
@@ -31,16 +29,16 @@ export default Component.wrapComponentConfig({
             return Store.get('elysiumUI');
         },
 
+        elysiumMedia() {
+            return Store.get('elysiumMedia');
+        },
+
         slide() {
             return Store.get('elysiumSlide').slide;
         },
 
         device() {
             return this.elysiumUI.device;
-        },
-
-        mediaSidebar() {
-            return this.elysiumUI.mediaSidebar;
         },
 
         mediaRepository() {
@@ -55,10 +53,10 @@ export default Component.wrapComponentConfig({
             return this.slide.contentSettings?.focusImageId ?? null;
         },
 
-        focusImage(): MediaItem | null {
+        focusImage(): Media | null {
             const mediaId = this.focusImageMediaId;
             if (!mediaId) return null;
-            return this.mediaCache[mediaId] ?? null;
+            return this.elysiumMedia.getMedia(mediaId);
         },
 
         permissionView() {
@@ -79,47 +77,37 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        setFocusImage(media: MediaItem) {
-            this.mediaLoading = true;
-
+        setFocusImage(media: Media) {
             const mediaId = media?.id || media?.targetId || null;
 
             if (mediaId === null) {
                 console.error(
                     'mediaId is null. Focus image media can not be set.'
                 );
-                this.mediaLoading = false;
                 return;
             }
 
             this.slide.contentSettings.focusImageId = mediaId;
 
             if (media?.path) {
-                this.mediaCache[mediaId] = media;
-                this.mediaLoading = false;
+                this.elysiumMedia.setMedia(mediaId, media);
             } else {
                 this.mediaRepository
                     .get(mediaId, Context.api)
-                    .then((loadedMedia: MediaItem) => {
-                        this.mediaCache[mediaId] = loadedMedia;
-                        this.mediaLoading = false;
+                    .then((loadedMedia: Media) => {
+                        this.elysiumMedia.setMedia(mediaId, loadedMedia);
                     })
                     .catch((exception: Error) => {
                         console.error(exception);
-                        this.mediaLoading = false;
                     });
             }
         },
 
         removeFocusImage() {
-            const mediaId = this.slide.contentSettings?.focusImageId;
-            if (mediaId && this.mediaCache[mediaId]) {
-                delete this.mediaCache[mediaId];
-            }
             this.slide.contentSettings.focusImageId = null;
         },
 
-        onAddMediaModal(payload: MediaItem[]) {
+        onAddMediaModal(payload: Media[]) {
             this.setFocusImage(payload[0]);
         },
 
@@ -131,14 +119,16 @@ export default Component.wrapComponentConfig({
             const mediaId = this.slide.contentSettings?.focusImageId;
             if (!mediaId) return;
 
+            if (this.elysiumMedia.hasMedia(mediaId)) return;
+
             const criteria = new Shopware.Data.Criteria();
             criteria.setIds([mediaId]);
 
             this.mediaRepository
                 .search(criteria, Context.api)
-                .then((result: { items: MediaItem[] }) => {
-                    result.items.forEach((media: MediaItem) => {
-                        this.mediaCache[media.id] = media;
+                .then((result: Media[]) => {
+                    result.forEach((media: Media) => {
+                        this.elysiumMedia.setMedia(media.id, media);
                     });
                 })
                 .catch((exception: Error) => {

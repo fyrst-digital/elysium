@@ -64,13 +64,16 @@ export default Component.wrapComponentConfig({
             pendingFields: new Set<string>(),
             isLoading: false,
             iframeAckTimer: null as ReturnType<typeof setTimeout> | null,
-            mediaCache: {} as Record<string, Media>,
         };
     },
 
     computed: {
         elysiumSlide() {
             return Store.get('elysiumSlide');
+        },
+
+        elysiumMedia() {
+            return Store.get('elysiumMedia');
         },
 
         previewStyles(): Record<string, string> {
@@ -129,7 +132,7 @@ export default Component.wrapComponentConfig({
             }, { deep: mapping.deep ?? false });
         });
 
-        // Watch only media ID paths for media resolution
+        // Watch media ID paths — load media into shared store, then trigger update
         const mediaIdPaths = [
             'slide.contentSettings.slideCover.mobileId',
             'slide.contentSettings.slideCover.tabletId',
@@ -139,17 +142,20 @@ export default Component.wrapComponentConfig({
         ];
         mediaIdPaths.forEach((path) => {
             this.$watch(path, () => {
-                this.loadMediaForSlide();
+                this.loadMediaForSlide().then(() => {
+                    this.sendSlideUpdate(['contentSettings']);
+                });
             });
         });
 
         this.loadMediaForSlide();
 
-        window.addEventListener('message', this._handleIframeMessage.bind(this));
+        this._boundHandleIframeMessage = this._handleIframeMessage.bind(this);
+        window.addEventListener('message', this._boundHandleIframeMessage);
     },
 
     beforeDestroy() {
-        window.removeEventListener('message', this._handleIframeMessage.bind(this));
+        window.removeEventListener('message', this._boundHandleIframeMessage);
         if (this.iframeAckTimer) {
             clearTimeout(this.iframeAckTimer);
             this.iframeAckTimer = null;
@@ -157,7 +163,7 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        loadMediaForSlide() {
+        loadMediaForSlide(): Promise<void> {
             const contentCover = this.slide?.contentSettings?.slideCover ?? {};
             const mediaIds = [
                 contentCover.mobileId,
@@ -167,49 +173,27 @@ export default Component.wrapComponentConfig({
                 this.slide?.contentSettings?.focusImageId,
             ].filter((id): id is string => Boolean(id));
 
-            if (mediaIds.length === 0) return;
+            if (mediaIds.length === 0) return Promise.resolve();
 
-            const uncachedIds = mediaIds.filter((id) => !this.mediaCache[id]);
-            if (uncachedIds.length === 0) return;
+            const uncachedIds = this.elysiumMedia.getUncachedIds(mediaIds);
+            if (uncachedIds.length === 0) return Promise.resolve();
 
             const mediaRepository = this.repositoryFactory?.create('media');
-            if (!mediaRepository) return;
+            if (!mediaRepository) return Promise.resolve();
 
             const criteria = new Criteria();
             criteria.setIds(uncachedIds);
 
-            mediaRepository
+            return mediaRepository
                 .search(criteria, Context.api)
-                .then((result: { items: Media[] }) => {
-                    result.items.forEach((media: Media) => {
-                        this.mediaCache[media.id] = media;
+                .then((result: Media[]) => {
+                    result.forEach((media: Media) => {
+                        this.elysiumMedia.setMedia(media.id, media);
                     });
-                    // Trigger a follow-up update so the iframe gets the resolved media
-                    this.sendSlideUpdate(['contentSettings']);
                 })
                 .catch((exception: Error) => {
                     console.error(exception);
                 });
-        },
-
-        getResolvedMedia(): Record<string, Media> {
-            const resolved: Record<string, Media> = {};
-            const contentCover = this.slide?.contentSettings?.slideCover ?? {};
-            const ids = [
-                contentCover.mobileId,
-                contentCover.tabletId,
-                contentCover.desktopId,
-                contentCover.videoId,
-                this.slide?.contentSettings?.focusImageId,
-            ].filter(Boolean);
-
-            ids.forEach((id: string) => {
-                if (this.mediaCache[id]) {
-                    resolved[id] = this.mediaCache[id];
-                }
-            });
-
-            return resolved;
         },
 
         buildIframeSrc(cacheBuster?: number) {
@@ -230,12 +214,14 @@ export default Component.wrapComponentConfig({
                 this.isLoading = false;
                 return;
             }
-            this.sendSlideUpdateImmediate();
-            // Wait for storefront JS to confirm values are injected before hiding loader
-            this.iframeAckTimer = setTimeout(() => {
-                this.isLoading = false;
-                this.iframeAckTimer = null;
-            }, 300);
+            // Load media first, then send the initial update with resolved media
+            this.loadMediaForSlide().then(() => {
+                this.sendSlideUpdateImmediate();
+                this.iframeAckTimer = setTimeout(() => {
+                    this.isLoading = false;
+                    this.iframeAckTimer = null;
+                }, 300);
+            });
         },
 
         _handleIframeMessage(event: MessageEvent) {
@@ -267,7 +253,7 @@ export default Component.wrapComponentConfig({
                 type: 'elysium-slide-update',
                 device: this.device,
                 slide: JSON.parse(JSON.stringify(this.slide)),
-                resolvedMedia: this.getResolvedMedia(),
+                resolvedMedia: JSON.parse(JSON.stringify(this.elysiumMedia.getResolvedMedia(this.slide?.contentSettings))),
                 fields: fields && fields.length > 0 ? fields : ['slide'],
                 previewAspectRatio: this.aspectRatioX && this.aspectRatioY ? { x: this.aspectRatioX, y: this.aspectRatioY } : null,
                 previewWidth: this.maxWidth,

@@ -56,7 +56,7 @@ function createPreviewSizingRenderer() {
     };
 }
 
-function renderHeadline(slide, element, resolvedMedia) {
+function renderHeadline(slide, element, _resolvedMedia) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
     const headline = slide.slideSettings?.slide?.headline || {};
@@ -94,7 +94,7 @@ function renderHeadline(slide, element, resolvedMedia) {
     }
 }
 
-function renderDescription(slide, element, resolvedMedia) {
+function renderDescription(slide, element, _resolvedMedia) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
 
@@ -130,7 +130,7 @@ function renderDescription(slide, element, resolvedMedia) {
     }
 }
 
-function renderButton(slide, element, resolvedMedia) {
+function renderButton(slide, element, _resolvedMedia) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
     const url = slide.contentSettings?.url || '';
@@ -181,38 +181,45 @@ function renderCover(slide, element, resolvedMedia) {
     const style = `border-radius: var(--slide-border-radius, ${borderRadius}px);`;
     const contentCover = slide.contentSettings?.slideCover || {};
 
-    const existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
-    const existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
-    if (existingPicture) {
-        existingPicture.remove();
-    }
-    if (existingVideo) {
-        existingVideo.remove();
-    }
-
     const videoMedia = getMediaById(resolvedMedia, contentCover.videoId);
-    if (videoMedia) {
-        const html = `<video autoplay muted loop class="blur-elysium-slide-cover-video" data-elysium-slide-cover-video="${id}" style="${style}"><source src="${videoMedia.url}" type="${videoMedia.mimeType}"></video>`;
-        element.insertAdjacentHTML('afterbegin', html);
-        return;
-    }
 
     const covers = {};
     const mobileMedia = getMediaById(resolvedMedia, contentCover.mobileId);
     const tabletMedia = getMediaById(resolvedMedia, contentCover.tabletId);
     const desktopMedia = getMediaById(resolvedMedia, contentCover.desktopId);
 
-    if (mobileMedia) {
-        covers.mobile = mobileMedia;
-    }
-    if (tabletMedia) {
-        covers.tablet = tabletMedia;
-    }
-    if (desktopMedia) {
-        covers.desktop = desktopMedia;
+    if (mobileMedia) covers.mobile = mobileMedia;
+    if (tabletMedia) covers.tablet = tabletMedia;
+    if (desktopMedia) covers.desktop = desktopMedia;
+
+    // No cover IDs in contentSettings — covers were removed or never set
+    const hasAnyCoverId = Boolean(
+        contentCover.mobileId || contentCover.tabletId ||
+        contentCover.desktopId || contentCover.videoId
+    );
+
+    if (!hasAnyCoverId) {
+        const existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
+        const existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
+        if (existingPicture) existingPicture.remove();
+        if (existingVideo) existingVideo.remove();
+        return;
     }
 
-    if (Object.keys(covers).length === 0) {
+    // Cover IDs exist but media not loaded yet — preserve server-rendered
+    if (!videoMedia && Object.keys(covers).length === 0) {
+        return;
+    }
+
+    // Now safe to remove existing elements
+    const existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
+    const existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
+    if (existingPicture) existingPicture.remove();
+    if (existingVideo) existingVideo.remove();
+
+    if (videoMedia) {
+        const html = `<video autoplay muted loop class="blur-elysium-slide-cover-video" data-elysium-slide-cover-video="${id}" style="${style}"><source src="${videoMedia.url}" type="${videoMedia.mimeType}"></video>`;
+        element.insertAdjacentHTML('afterbegin', html);
         return;
     }
 
@@ -257,7 +264,13 @@ function renderFocusImage(slide, element, resolvedMedia) {
 
     const existing = element.querySelector('[data-elysium-slide-focus-image]');
     if (!imageMedia) {
-        if (existing) {
+        // Only remove existing element if there's definitely no focus image to show
+        // (no ID in contentSettings and no product/category fallback)
+        const hasFocusImageId = Boolean(slide.contentSettings?.focusImageId);
+        const hasProductFallback = linking.type === 'product' && slide.product?.cover?.media && linking.showProductFocusImage;
+        const hasCategoryFallback = linking.type === 'category' && slide.category?.media && linking.showCategoryFocusImage;
+
+        if (!hasFocusImageId && !hasProductFallback && !hasCategoryFallback && existing) {
             existing.remove();
         }
         return;

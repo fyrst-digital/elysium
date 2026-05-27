@@ -1,6 +1,6 @@
 import template from './template.html.twig';
 
-import { MediaItem } from '@elysium/types/media';
+import { Media } from '@elysium/types/slide';
 
 const { Component, Mixin, Store, Context } = Shopware;
 
@@ -22,8 +22,6 @@ export default Component.wrapComponentConfig({
                 tablet: 'tabletId',
                 desktop: 'desktopId',
             },
-            mediaLoading: false,
-            mediaCache: {} as Record<string, MediaItem>,
             mediaModal: {
                 open: false,
                 type: null as string | null,
@@ -36,16 +34,16 @@ export default Component.wrapComponentConfig({
             return Store.get('elysiumUI');
         },
 
+        elysiumMedia() {
+            return Store.get('elysiumMedia');
+        },
+
         slide() {
             return Store.get('elysiumSlide').slide;
         },
 
         device() {
             return this.elysiumUI.device;
-        },
-
-        mediaSidebar() {
-            return this.elysiumUI.mediaSidebar;
         },
 
         mediaRepository() {
@@ -74,16 +72,16 @@ export default Component.wrapComponentConfig({
             return this.slide.contentSettings?.slideCover?.[this.currentCoverIdKey] ?? null;
         },
 
-        slideCover(): MediaItem | null {
+        slideCover(): Media | null {
             const mediaId = this.currentCoverMediaId;
             if (!mediaId) return null;
-            return this.mediaCache[mediaId] ?? null;
+            return this.elysiumMedia.getMedia(mediaId);
         },
 
-        slideCoverVideo(): MediaItem | null {
+        slideCoverVideo(): Media | null {
             const mediaId = this.slide.contentSettings?.slideCover?.videoId ?? null;
             if (!mediaId) return null;
-            return this.mediaCache[mediaId] ?? null;
+            return this.elysiumMedia.getMedia(mediaId);
         },
 
         coverVideoUploadElement() {
@@ -108,16 +106,13 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
-        setSlideCover(media: MediaItem, isVideo: boolean = false) {
-            this.mediaLoading = true;
-
+        setSlideCover(media: Media, isVideo: boolean = false) {
             const mediaId = media?.id || media?.targetId || null;
 
             if (mediaId === null) {
                 console.error(
                     'mediaId is null. Slide cover media can not be set.'
                 );
-                this.mediaLoading = false;
                 return;
             }
 
@@ -129,29 +124,21 @@ export default Component.wrapComponentConfig({
             this.slide.contentSettings.slideCover[idKey] = mediaId;
 
             if (media?.path) {
-                this.mediaCache[mediaId] = media;
-                this.mediaLoading = false;
+                this.elysiumMedia.setMedia(mediaId, media);
             } else {
                 this.mediaRepository
                     .get(mediaId, Context.api)
-                    .then((loadedMedia: MediaItem) => {
-                        this.mediaCache[mediaId] = loadedMedia;
-                        this.mediaLoading = false;
+                    .then((loadedMedia: Media) => {
+                        this.elysiumMedia.setMedia(mediaId, loadedMedia);
                     })
                     .catch((exception: Error) => {
                         console.error(exception);
-                        this.mediaLoading = false;
                     });
             }
         },
 
         removeSlideCover(isVideo: boolean = false) {
             const idKey = isVideo ? 'videoId' : this.currentCoverIdKey;
-            const mediaId = this.slide.contentSettings?.slideCover?.[idKey];
-
-            if (mediaId && this.mediaCache[mediaId]) {
-                delete this.mediaCache[mediaId];
-            }
 
             if (this.slide.contentSettings?.slideCover) {
                 this.slide.contentSettings.slideCover[idKey] = null;
@@ -168,7 +155,7 @@ export default Component.wrapComponentConfig({
             this.mediaModal.type = null;
         },
 
-        onAddMediaModal(payload: MediaItem[]) {
+        onAddMediaModal(payload: Media[]) {
             if (payload.length > 0) {
                 if (this.mediaModal.type === 'slideCover') {
                     this.setSlideCover(payload[0]);
@@ -189,14 +176,17 @@ export default Component.wrapComponentConfig({
 
             if (mediaIds.length === 0) return;
 
+            const uncachedIds = this.elysiumMedia.getUncachedIds(mediaIds);
+            if (uncachedIds.length === 0) return;
+
             const criteria = new Shopware.Data.Criteria();
-            criteria.setIds(mediaIds);
+            criteria.setIds(uncachedIds);
 
             this.mediaRepository
                 .search(criteria, Context.api)
-                .then((result: { items: MediaItem[] }) => {
-                    result.items.forEach((media: MediaItem) => {
-                        this.mediaCache[media.id] = media;
+                .then((result: Media[]) => {
+                    result.forEach((media: Media) => {
+                        this.elysiumMedia.setMedia(media.id, media);
                     });
                 })
                 .catch((exception: Error) => {

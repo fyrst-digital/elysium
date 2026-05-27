@@ -5,37 +5,6 @@ export const previewSchema = {
     "elementType": "blur-elysium-slide",
     "fieldMappings": [
         {
-            "path": "slide.title",
-            "fields": [
-                "title"
-            ]
-        },
-        {
-            "path": "slide.description",
-            "fields": [
-                "description"
-            ]
-        },
-        {
-            "path": "slide.buttonLabel",
-            "fields": [
-                "buttonLabel"
-            ]
-        },
-        {
-            "path": "slide.url",
-            "fields": [
-                "url"
-            ]
-        },
-        {
-            "path": "slide.presentationMedia",
-            "fields": [
-                "presentationMedia"
-            ],
-            "deep": true
-        },
-        {
             "path": "slide.productId",
             "fields": [
                 "productId"
@@ -112,34 +81,6 @@ export const previewSchema = {
             "fields": [
                 "contentSettings"
             ]
-        },
-        {
-            "path": "slide.slideCover",
-            "fields": [
-                "slideCover"
-            ],
-            "deep": true
-        },
-        {
-            "path": "slide.slideCoverMobile",
-            "fields": [
-                "slideCoverMobile"
-            ],
-            "deep": true
-        },
-        {
-            "path": "slide.slideCoverTablet",
-            "fields": [
-                "slideCoverTablet"
-            ],
-            "deep": true
-        },
-        {
-            "path": "slide.slideCoverVideo",
-            "fields": [
-                "slideCoverVideo"
-            ],
-            "deep": true
         },
         {
             "path": "slide.slideSettings.slide.headline.element",
