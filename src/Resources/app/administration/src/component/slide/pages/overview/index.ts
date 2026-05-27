@@ -42,7 +42,7 @@ export default Component.wrapComponentConfig({
                     primary: true,
                 },
                 {
-                    property: 'title',
+                    property: 'contentSettings.title',
                     inlineEdit: 'string',
                     label: 'blurElysiumSlides.grid.headlineLabel',
                     routerLink: 'blur.elysium.slides.detail',

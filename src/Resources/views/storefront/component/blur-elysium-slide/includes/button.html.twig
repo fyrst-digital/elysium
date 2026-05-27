@@ -1,6 +1,6 @@
 {% set linking = slideData.slideSettings.slide.linking %}
-{% set actionMainUrl = slideData.url|default('') %}
-{% set actionMainLabel = slideData.buttonLabel|default('') %}
+{% set actionMainUrl = slideData.contentSettings.url|default('') %}
+{% set actionMainLabel = slideData.contentSettings.button.label|default('') %}
 {% set showActions = actionMainUrl and linking.overlay is not same as(true) and actionMainLabel %}
 
 {% if slideData.slideSettings.slide.linking.type is same as('product') %}

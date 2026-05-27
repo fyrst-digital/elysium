@@ -63,9 +63,6 @@ class ElysiumSlideRoute extends AbstractElysiumSlideRoute
 
     private function addAssociations(Criteria $criteria): void
     {
-        $criteria->addAssociation('media');
-        $criteria->addAssociation('media.mediaFolder');
-        $criteria->addAssociation('media.mediaFolder.configuration');
         $criteria->addAssociation('product');
         $criteria->addAssociation('product.media');
         $criteria->addAssociation('product.cover');

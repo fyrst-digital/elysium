@@ -7,37 +7,6 @@ export const previewSchema: PreviewSchema = {
     "elementType": "blur-elysium-slide",
     "fieldMappings": [
         {
-            "path": "slide.title",
-            "fields": [
-                "title"
-            ]
-        },
-        {
-            "path": "slide.description",
-            "fields": [
-                "description"
-            ]
-        },
-        {
-            "path": "slide.buttonLabel",
-            "fields": [
-                "buttonLabel"
-            ]
-        },
-        {
-            "path": "slide.url",
-            "fields": [
-                "url"
-            ]
-        },
-        {
-            "path": "slide.presentationMedia",
-            "fields": [
-                "presentationMedia"
-            ],
-            "deep": true
-        },
-        {
             "path": "slide.productId",
             "fields": [
                 "productId"
@@ -53,34 +22,6 @@ export const previewSchema: PreviewSchema = {
             "path": "slide.contentSettings",
             "fields": [
                 "contentSettings"
-            ],
-            "deep": true
-        },
-        {
-            "path": "slide.slideCover",
-            "fields": [
-                "slideCover"
-            ],
-            "deep": true
-        },
-        {
-            "path": "slide.slideCoverMobile",
-            "fields": [
-                "slideCoverMobile"
-            ],
-            "deep": true
-        },
-        {
-            "path": "slide.slideCoverTablet",
-            "fields": [
-                "slideCoverTablet"
-            ],
-            "deep": true
-        },
-        {
-            "path": "slide.slideCoverVideo",
-            "fields": [
-                "slideCoverVideo"
             ],
             "deep": true
         },
@@ -261,7 +202,7 @@ export const previewSchema: PreviewSchema = {
             "name": "headline",
             "mode": "partial",
             "watchedFields": [
-                "title",
+                "contentSettings",
                 "headlineElement",
                 "showProductTitle",
                 "showCategoryTitle",
@@ -279,7 +220,7 @@ export const previewSchema: PreviewSchema = {
             "name": "description",
             "mode": "partial",
             "watchedFields": [
-                "description",
+                "contentSettings",
                 "showProductDescription",
                 "showCategoryDescription",
                 "linkingType",
@@ -296,8 +237,7 @@ export const previewSchema: PreviewSchema = {
             "name": "button",
             "mode": "partial",
             "watchedFields": [
-                "buttonLabel",
-                "url",
+                "contentSettings",
                 "buttonAppearance",
                 "buttonSize",
                 "linkingOverlay",
@@ -315,10 +255,6 @@ export const previewSchema: PreviewSchema = {
             "mode": "partial",
             "watchedFields": [
                 "contentSettings",
-                "slideCover",
-                "slideCoverMobile",
-                "slideCoverTablet",
-                "slideCoverVideo",
                 "showProductFocusImage",
                 "showCategoryFocusImage",
                 "linkingType"
@@ -333,7 +269,7 @@ export const previewSchema: PreviewSchema = {
             "name": "focus-image",
             "mode": "partial",
             "watchedFields": [
-                "presentationMedia",
+                "contentSettings",
                 "showProductFocusImage",
                 "showCategoryFocusImage",
                 "productId",

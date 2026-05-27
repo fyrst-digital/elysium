@@ -18,9 +18,10 @@ export default Component.wrapComponentConfig({
     data() {
         return {
             mediaLoading: false,
+            mediaCache: {} as Record<string, MediaItem>,
             mediaModal: {
                 open: false,
-                type: null,
+                type: null as string | null,
             },
         };
     },
@@ -50,12 +51,14 @@ export default Component.wrapComponentConfig({
             return this.slide.slideSettings.viewports[this.device];
         },
 
-        focusImage() {
-            if (this.slide.presentationMedia) {
-                return this.slide.presentationMedia;
-            }
+        focusImageMediaId(): string | null {
+            return this.slide.contentSettings?.focusImageId ?? null;
+        },
 
-            return this.slide.presentationMedia || null;
+        focusImage(): MediaItem | null {
+            const mediaId = this.focusImageMediaId;
+            if (!mediaId) return null;
+            return this.mediaCache[mediaId] ?? null;
         },
 
         permissionView() {
@@ -83,45 +86,69 @@ export default Component.wrapComponentConfig({
 
             if (mediaId === null) {
                 console.error(
-                    'mediaId is null. Slide cover media can not be set.'
+                    'mediaId is null. Focus image media can not be set.'
                 );
                 this.mediaLoading = false;
-            } else {
-                this.slide.presentationMediaId = mediaId;
+                return;
+            }
 
-                if (media?.path) {
-                    this.slide.presentationMedia = media;
-                    this.mediaLoading = false;
-                } else {
-                    this.mediaRepository
-                        .get(mediaId, Context.api)
-                        .then((media) => {
-                            this.slide.presentationMedia = media;
-                            this.mediaLoading = false;
-                        })
-                        .catch((exception) => {
-                            console.error(exception);
-                            this.mediaLoading = false;
-                        });
-                }
+            this.slide.contentSettings.focusImageId = mediaId;
+
+            if (media?.path) {
+                this.mediaCache[mediaId] = media;
+                this.mediaLoading = false;
+            } else {
+                this.mediaRepository
+                    .get(mediaId, Context.api)
+                    .then((loadedMedia: MediaItem) => {
+                        this.mediaCache[mediaId] = loadedMedia;
+                        this.mediaLoading = false;
+                    })
+                    .catch((exception: Error) => {
+                        console.error(exception);
+                        this.mediaLoading = false;
+                    });
             }
         },
 
         removeFocusImage() {
-            this.slide.presentationMediaId = null;
-            this.slide.presentationMedia = null;
+            const mediaId = this.slide.contentSettings?.focusImageId;
+            if (mediaId && this.mediaCache[mediaId]) {
+                delete this.mediaCache[mediaId];
+            }
+            this.slide.contentSettings.focusImageId = null;
         },
 
-        onAddMediaModal(payload) {
+        onAddMediaModal(payload: MediaItem[]) {
             this.setFocusImage(payload[0]);
         },
 
         closeMediaModal() {
             this.mediaModal.open = false;
         },
+
+        loadMediaForCurrentSlide() {
+            const mediaId = this.slide.contentSettings?.focusImageId;
+            if (!mediaId) return;
+
+            const criteria = new Shopware.Data.Criteria();
+            criteria.setIds([mediaId]);
+
+            this.mediaRepository
+                .search(criteria, Context.api)
+                .then((result: { items: MediaItem[] }) => {
+                    result.items.forEach((media: MediaItem) => {
+                        this.mediaCache[media.id] = media;
+                    });
+                })
+                .catch((exception: Error) => {
+                    console.error(exception);
+                });
+        },
     },
 
     created() {
         this.viewportsSettings = this.slide.slideSettings.viewports;
+        this.loadMediaForCurrentSlide();
     },
 });

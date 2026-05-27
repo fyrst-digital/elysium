@@ -1,4 +1,5 @@
 import template from './template.html.twig'
+import { Media } from '@elysium/types/slide';
 
 const { Component } = Shopware;
 
@@ -42,6 +43,63 @@ export default Component.wrapComponentConfig({
         }
     },
 
+    data() {
+        return {
+            mediaCache: {} as Record<string, Media>,
+        };
+    },
+
+    watch: {
+        'slide.contentSettings': {
+            handler() {
+                this.loadMediaForSlide();
+            },
+            deep: true,
+        },
+    },
+
+    created() {
+        this.loadMediaForSlide();
+    },
+
+    methods: {
+        loadMediaForSlide() {
+            const contentCover = this.slide?.contentSettings?.slideCover ?? {};
+            const mediaIds = [
+                contentCover.mobileId,
+                contentCover.tabletId,
+                contentCover.desktopId,
+                contentCover.videoId,
+                this.slide?.contentSettings?.focusImageId,
+            ].filter((id): id is string => Boolean(id));
+
+            if (mediaIds.length === 0) return;
+
+            const uncachedIds = mediaIds.filter((id) => !this.mediaCache[id]);
+            if (uncachedIds.length === 0) return;
+
+            const mediaRepository = this.repositoryFactory.create('media');
+            const criteria = new Shopware.Data.Criteria();
+            criteria.setIds(uncachedIds);
+
+            mediaRepository
+                .search(criteria, Shopware.Context.api)
+                .then((result: { items: Media[] }) => {
+                    result.items.forEach((media: Media) => {
+                        this.mediaCache[media.id] = media;
+                    });
+                })
+                .catch((exception: Error) => {
+                    console.error(exception);
+                });
+        },
+
+        getMediaById(id: string | null | undefined): Media | null {
+            if (!id) return null;
+            return this.mediaCache[id] ?? null;
+        },
+    },
+
     computed: {
         slideBgGradient() {
             const allowedGradientTypes = ['linear-gradient', 'radial-gradient'];
@@ -72,17 +130,26 @@ export default Component.wrapComponentConfig({
         },
 
         currentMedia() {
-            if (this.slide.slideCoverVideo) {
-                return this.slide.slideCoverVideo;
+            const contentCover = this.slide?.contentSettings?.slideCover ?? {};
+
+            const videoMedia = this.getMediaById(contentCover.videoId);
+            if (videoMedia) {
+                return videoMedia;
             }
 
             switch (this.deviceView) {
                 case 'mobile':
-                    return this.slide.slideCoverMobile || this.slide.slideCoverTablet || this.slide.slideCover || null;
+                    return this.getMediaById(contentCover.mobileId)
+                        || this.getMediaById(contentCover.tabletId)
+                        || this.getMediaById(contentCover.desktopId);
                 case 'tablet':
-                    return this.slide.slideCoverTablet || this.slide.slideCoverMobile || this.slide.slideCover || null;
+                    return this.getMediaById(contentCover.tabletId)
+                        || this.getMediaById(contentCover.mobileId)
+                        || this.getMediaById(contentCover.desktopId);
                 default:
-                    return this.slide.slideCover || this.slide.slideCoverTablet || this.slide.slideCoverMobile || null;
+                    return this.getMediaById(contentCover.desktopId)
+                        || this.getMediaById(contentCover.tabletId)
+                        || this.getMediaById(contentCover.mobileId);
             }
         },
 
@@ -121,7 +188,7 @@ export default Component.wrapComponentConfig({
             if (this.slide.slideSettings?.slide?.linking?.type === 'category' && this.slide.category?.name) {
                 return this.slide.category.name;
             }
-            return this.slide.title || null;
+            return this.slide.contentSettings?.title || null;
         },
 
         headlineStyles() {
@@ -141,7 +208,7 @@ export default Component.wrapComponentConfig({
             if (this.slide.slideSettings?.slide?.linking?.type === 'category' && this.slide.category?.description) {
                 return this.slide.category.description;
             }
-            return this.slide.description || null;
+            return this.slide.contentSettings?.description || null;
         },
 
         descriptionStyles() {
@@ -153,8 +220,8 @@ export default Component.wrapComponentConfig({
         },
 
         showButton() {
-            const hasUrl = Boolean(this.slide.url) || Boolean(this.slide.productId) || Boolean(this.slide.categoryId);
-            return hasUrl && Boolean(this.slide.buttonLabel);
+            const hasUrl = Boolean(this.slide.contentSettings?.url) || Boolean(this.slide.productId) || Boolean(this.slide.categoryId);
+            return hasUrl && Boolean(this.slide.contentSettings?.button?.label);
         },
     },
 });

@@ -7,7 +7,10 @@ const { Criteria } = Data;
 
 /**
  * @todo
- * This component needs styling
+ * Media IDs are now stored in the contentSettings JSON field.
+ * DAL filtering on JSON sub-keys is not straightforward.
+ * This extension currently cannot efficiently find slides by media ID.
+ * Consider implementing a custom SQL-based approach or removing this extension.
  */
 
 export default {
@@ -24,16 +27,10 @@ export default {
             return this.repositoryFactory.create('blur_elysium_slides');
         },
         elysiumSlidesCriteria() {
+            // Media IDs are now in contentSettings JSON - cannot filter with simple equals
+            // Return empty criteria to avoid incorrect results
             const criteria = new Criteria();
-            criteria.addFilter(
-                Criteria.multi('or', [
-                    Criteria.equals('slideCoverId', this.item.id),
-                    Criteria.equals('slideCoverMobileId', this.item.id),
-                    Criteria.equals('slideCoverTabletId', this.item.id),
-                    Criteria.equals('slideCoverVideoId', this.item.id),
-                    Criteria.equals('presentationMediaId', this.item.id),
-                ])
-            );
+            criteria.setIds(['00000000000000000000000000000000']); // no results
             return criteria;
         },
         getElysiumSlidesUsages() {

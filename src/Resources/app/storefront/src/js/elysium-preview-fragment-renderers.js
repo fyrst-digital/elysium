@@ -24,6 +24,11 @@ function createSrcset(thumbnails) {
         .join(', ');
 }
 
+function getMediaById(resolvedMedia, id) {
+    if (!id || !resolvedMedia) return null;
+    return resolvedMedia[id] || null;
+}
+
 /**
  * CSS Variable Renderer
  * Applies inline styles based on style mappings.
@@ -51,7 +56,7 @@ function createPreviewSizingRenderer() {
     };
 }
 
-function renderHeadline(slide, element) {
+function renderHeadline(slide, element, resolvedMedia) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
     const headline = slide.slideSettings?.slide?.headline || {};
@@ -63,7 +68,7 @@ function renderHeadline(slide, element) {
     } else if (linking.type === 'category' && linking.showCategoryTitle && slide.category?.translated?.name) {
         content = slide.category.translated.name;
     } else {
-        content = slide.title || '';
+        content = slide.contentSettings?.title || '';
     }
 
     const whitelist = ['br', 'i', 'b', 'u', 'strong', 'span'];
@@ -89,7 +94,7 @@ function renderHeadline(slide, element) {
     }
 }
 
-function renderDescription(slide, element) {
+function renderDescription(slide, element, resolvedMedia) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
 
@@ -99,7 +104,7 @@ function renderDescription(slide, element) {
     } else if (linking.type === 'category' && linking.showCategoryDescription && slide.category?.translated?.description) {
         content = slide.category.translated.description;
     } else {
-        content = slide.description || '';
+        content = slide.contentSettings?.description || '';
     }
 
     const whitelist = ['p', 'br', 'span', 'i', 'b', 'u', 'strong', 'em', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'div', 'img', 'table', 'tr', 'td', 'th', 'tbody', 'thead'];
@@ -125,11 +130,11 @@ function renderDescription(slide, element) {
     }
 }
 
-function renderButton(slide, element) {
+function renderButton(slide, element, resolvedMedia) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
-    const url = slide.url || '';
-    const label = slide.buttonLabel || '';
+    const url = slide.contentSettings?.url || '';
+    const label = slide.contentSettings?.button?.label || '';
     const showActions = url && linking.overlay !== true && label;
 
     const existing = element.querySelector('.blur-elysium-slide-actions');
@@ -170,10 +175,11 @@ function renderButton(slide, element) {
     }
 }
 
-function renderCover(slide, element) {
+function renderCover(slide, element, resolvedMedia) {
     const id = slide.id;
     const borderRadius = slide.slideSettings?.slide?.borderRadius || 0;
     const style = `border-radius: var(--slide-border-radius, ${borderRadius}px);`;
+    const contentCover = slide.contentSettings?.slideCover || {};
 
     const existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
     const existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
@@ -184,21 +190,26 @@ function renderCover(slide, element) {
         existingVideo.remove();
     }
 
-    if (slide.slideCoverVideo) {
-        const html = `<video autoplay muted loop class="blur-elysium-slide-cover-video" data-elysium-slide-cover-video="${id}" style="${style}"><source src="${slide.slideCoverVideo.url}" type="${slide.slideCoverVideo.mimeType}"></video>`;
+    const videoMedia = getMediaById(resolvedMedia, contentCover.videoId);
+    if (videoMedia) {
+        const html = `<video autoplay muted loop class="blur-elysium-slide-cover-video" data-elysium-slide-cover-video="${id}" style="${style}"><source src="${videoMedia.url}" type="${videoMedia.mimeType}"></video>`;
         element.insertAdjacentHTML('afterbegin', html);
         return;
     }
 
     const covers = {};
-    if (slide.slideCoverMobile) {
-        covers.mobile = slide.slideCoverMobile;
+    const mobileMedia = getMediaById(resolvedMedia, contentCover.mobileId);
+    const tabletMedia = getMediaById(resolvedMedia, contentCover.tabletId);
+    const desktopMedia = getMediaById(resolvedMedia, contentCover.desktopId);
+
+    if (mobileMedia) {
+        covers.mobile = mobileMedia;
     }
-    if (slide.slideCoverTablet) {
-        covers.tablet = slide.slideCoverTablet;
+    if (tabletMedia) {
+        covers.tablet = tabletMedia;
     }
-    if (slide.slideCover) {
-        covers.desktop = slide.slideCover;
+    if (desktopMedia) {
+        covers.desktop = desktopMedia;
     }
 
     if (Object.keys(covers).length === 0) {
@@ -233,10 +244,10 @@ function renderCover(slide, element) {
     element.insertAdjacentHTML('afterbegin', html);
 }
 
-function renderFocusImage(slide, element) {
+function renderFocusImage(slide, element, resolvedMedia) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
-    let imageMedia = slide.presentationMedia;
+    let imageMedia = getMediaById(resolvedMedia, slide.contentSettings?.focusImageId);
 
     if (linking.type === 'product' && slide.product?.cover?.media && linking.showProductFocusImage) {
         imageMedia = slide.product.cover.media;

@@ -18,14 +18,15 @@ export default Component.wrapComponentConfig({
     data() {
         return {
             slideCoverMapping: {
-                mobile: 'slideCoverMobile',
-                tablet: 'slideCoverTablet',
-                desktop: 'slideCover',
+                mobile: 'mobileId',
+                tablet: 'tabletId',
+                desktop: 'desktopId',
             },
             mediaLoading: false,
+            mediaCache: {} as Record<string, MediaItem>,
             mediaModal: {
                 open: false,
-                type: null,
+                type: null as string | null,
             },
         };
     },
@@ -65,16 +66,24 @@ export default Component.wrapComponentConfig({
             return uploadTag[this.device];
         },
 
-        slideCover() {
-            return this.slide[this.slideCoverMapping[this.device]] ?? null;
-        },
-
-        slideCoverProp() {
+        currentCoverIdKey(): string {
             return this.slideCoverMapping[this.device];
         },
 
-        slideCoverVideo() {
-            return this.slide.slideCoverVideo ?? null;
+        currentCoverMediaId(): string | null {
+            return this.slide.contentSettings?.slideCover?.[this.currentCoverIdKey] ?? null;
+        },
+
+        slideCover(): MediaItem | null {
+            const mediaId = this.currentCoverMediaId;
+            if (!mediaId) return null;
+            return this.mediaCache[mediaId] ?? null;
+        },
+
+        slideCoverVideo(): MediaItem | null {
+            const mediaId = this.slide.contentSettings?.slideCover?.videoId ?? null;
+            if (!mediaId) return null;
+            return this.mediaCache[mediaId] ?? null;
         },
 
         coverVideoUploadElement() {
@@ -103,40 +112,50 @@ export default Component.wrapComponentConfig({
             this.mediaLoading = true;
 
             const mediaId = media?.id || media?.targetId || null;
-            const mediaProp =
-                isVideo === true ? 'slideCoverVideo' : this.slideCoverProp;
 
             if (mediaId === null) {
                 console.error(
                     'mediaId is null. Slide cover media can not be set.'
                 );
                 this.mediaLoading = false;
-            } else {
-                this.slide[`${mediaProp}Id`] = mediaId;
+                return;
+            }
 
-                if (media?.path) {
-                    this.slide[mediaProp] = media;
-                    this.mediaLoading = false;
-                } else {
-                    this.mediaRepository
-                        .get(mediaId, Context.api)
-                        .then((media) => {
-                            this.slide[mediaProp] = media;
-                            this.mediaLoading = false;
-                        })
-                        .catch((exception) => {
-                            console.error(exception);
-                            this.mediaLoading = false;
-                        });
-                }
+            if (!this.slide.contentSettings.slideCover) {
+                this.slide.contentSettings.slideCover = {};
+            }
+
+            const idKey = isVideo ? 'videoId' : this.currentCoverIdKey;
+            this.slide.contentSettings.slideCover[idKey] = mediaId;
+
+            if (media?.path) {
+                this.mediaCache[mediaId] = media;
+                this.mediaLoading = false;
+            } else {
+                this.mediaRepository
+                    .get(mediaId, Context.api)
+                    .then((loadedMedia: MediaItem) => {
+                        this.mediaCache[mediaId] = loadedMedia;
+                        this.mediaLoading = false;
+                    })
+                    .catch((exception: Error) => {
+                        console.error(exception);
+                        this.mediaLoading = false;
+                    });
             }
         },
 
         removeSlideCover(isVideo: boolean = false) {
-            const mediaProp =
-                isVideo === true ? 'slideCoverVideo' : this.slideCoverProp;
-            this.slide[`${mediaProp}Id`] = null;
-            this.slide[mediaProp] = null;
+            const idKey = isVideo ? 'videoId' : this.currentCoverIdKey;
+            const mediaId = this.slide.contentSettings?.slideCover?.[idKey];
+
+            if (mediaId && this.mediaCache[mediaId]) {
+                delete this.mediaCache[mediaId];
+            }
+
+            if (this.slide.contentSettings?.slideCover) {
+                this.slide.contentSettings.slideCover[idKey] = null;
+            }
         },
 
         openMediaModal(type: string = 'slideCover') {
@@ -149,7 +168,7 @@ export default Component.wrapComponentConfig({
             this.mediaModal.type = null;
         },
 
-        onAddMediaModal(payload) {
+        onAddMediaModal(payload: MediaItem[]) {
             if (payload.length > 0) {
                 if (this.mediaModal.type === 'slideCover') {
                     this.setSlideCover(payload[0]);
@@ -158,9 +177,36 @@ export default Component.wrapComponentConfig({
                 }
             }
         },
+
+        loadMediaForCurrentSlide() {
+            const cover = this.slide.contentSettings?.slideCover ?? {};
+            const mediaIds = [
+                cover.mobileId,
+                cover.tabletId,
+                cover.desktopId,
+                cover.videoId,
+            ].filter((id): id is string => id !== null && id !== undefined);
+
+            if (mediaIds.length === 0) return;
+
+            const criteria = new Shopware.Data.Criteria();
+            criteria.setIds(mediaIds);
+
+            this.mediaRepository
+                .search(criteria, Context.api)
+                .then((result: { items: MediaItem[] }) => {
+                    result.items.forEach((media: MediaItem) => {
+                        this.mediaCache[media.id] = media;
+                    });
+                })
+                .catch((exception: Error) => {
+                    console.error(exception);
+                });
+        },
     },
 
     created() {
         this.viewportsSettings = this.slide.slideSettings.viewports;
+        this.loadMediaForCurrentSlide();
     },
 });

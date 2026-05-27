@@ -4,33 +4,16 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Extension\Content\Media;
 
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Shopware\Core\Content\Media\MediaDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityExtension;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\SetNullOnDelete;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class MediaDefinitionExtension extends EntityExtension
 {
     public function extendFields(FieldCollection $collection): void
     {
-        $collection->add(
-            (new OneToManyAssociationField('blurElysiumSlides', ElysiumSlidesDefinition::class, 'slide_cover_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
-        );
-        $collection->add(
-            (new OneToManyAssociationField('blurElysiumSlides', ElysiumSlidesDefinition::class, 'slide_cover_mobile_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
-        );
-        $collection->add(
-            (new OneToManyAssociationField('blurElysiumSlides', ElysiumSlidesDefinition::class, 'slide_cover_tablet_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
-        );
-        $collection->add(
-            (new OneToManyAssociationField('blurElysiumSlides', ElysiumSlidesDefinition::class, 'slide_cover_video_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
-        );
-        $collection->add(
-            (new OneToManyAssociationField('blurElysiumSlides', ElysiumSlidesDefinition::class, 'presentation_media_id', 'id'))->addFlags(new ApiAware(), new SetNullOnDelete())
-        );
+        // Media IDs are now stored in the contentSettings JSON field.
+        // Reverse associations from Media -> Slides are no longer needed.
     }
 
     public function getDefinitionClass(): string

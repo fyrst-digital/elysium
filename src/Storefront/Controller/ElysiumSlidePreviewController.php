@@ -6,6 +6,7 @@ namespace Blur\BlurElysiumSlider\Storefront\Controller;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry;
+use Shopware\Core\Content\Media\MediaCollection;
 use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
@@ -26,6 +27,7 @@ class ElysiumSlidePreviewController extends StorefrontController
 {
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository,
+        private readonly EntityRepository $mediaRepository,
         private readonly EntityRepository $salesChannelRepository,
         private readonly PreviewSchemaRegistry $schemaRegistry,
     ) {}
@@ -166,8 +168,13 @@ class ElysiumSlidePreviewController extends StorefrontController
         $device = $request->query->get('device', 'desktop');
         $layout = $request->query->get('layout', 'detail');
 
+        $resolvedMedia = $isNewSlide
+            ? new MediaCollection([])
+            : $this->resolveMediaForSlide($slide, $context);
+
         $response = $this->render('@Storefront/storefront/elysium-slide/preview.html.twig', [
             'slideData' => $slide,
+            'resolvedMedia' => $resolvedMedia,
             'device' => $device,
             'layout' => $layout,
             'isNewSlide' => $isNewSlide,
@@ -187,11 +194,6 @@ class ElysiumSlidePreviewController extends StorefrontController
     private function loadSlide(string $slideId, SalesChannelContext $context): ElysiumSlidesEntity
     {
         $criteria = new Criteria([$slideId]);
-        $criteria->addAssociation('slideCover');
-        $criteria->addAssociation('slideCoverMobile');
-        $criteria->addAssociation('slideCoverTablet');
-        $criteria->addAssociation('slideCoverVideo');
-        $criteria->addAssociation('presentationMedia');
         $criteria->addAssociation('product');
         $criteria->addAssociation('product.cover');
         $criteria->addAssociation('product.cover.media');
@@ -207,4 +209,19 @@ class ElysiumSlidePreviewController extends StorefrontController
         return $slide;
     }
 
+    private function resolveMediaForSlide(ElysiumSlidesEntity $slide, SalesChannelContext $context): MediaCollection
+    {
+        $mediaIds = $slide->getContentMediaIds();
+
+        if (empty($mediaIds)) {
+            return new MediaCollection([]);
+        }
+
+        $criteria = new Criteria($mediaIds);
+        $criteria->addAssociation('mediaFolder');
+        $criteria->addAssociation('mediaFolder.configuration');
+        $criteria->addAssociation('thumbnails');
+
+        return $this->mediaRepository->search($criteria, $context->getContext())->getEntities();
+    }
 }

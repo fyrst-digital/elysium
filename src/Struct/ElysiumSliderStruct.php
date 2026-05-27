@@ -3,6 +3,7 @@
 namespace Blur\BlurElysiumSlider\Struct;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Shopware\Core\Content\Media\MediaCollection;
 use Shopware\Core\Framework\Struct\Struct;
 
 class ElysiumSliderStruct extends Struct
@@ -11,6 +12,8 @@ class ElysiumSliderStruct extends Struct
      * @var ElysiumSlidesEntity[]|null
      */
     protected $slideCollection;
+
+    protected ?MediaCollection $resolvedMedia = null;
 
     /**
      * @return ElysiumSlidesEntity[]|null
@@ -26,5 +29,15 @@ class ElysiumSliderStruct extends Struct
     public function setSlideCollection(array $slideCollection): void
     {
         $this->slideCollection = $slideCollection;
+    }
+
+    public function getResolvedMedia(): ?MediaCollection
+    {
+        return $this->resolvedMedia;
+    }
+
+    public function setResolvedMedia(MediaCollection $resolvedMedia): void
+    {
+        $this->resolvedMedia = $resolvedMedia;
     }
 }

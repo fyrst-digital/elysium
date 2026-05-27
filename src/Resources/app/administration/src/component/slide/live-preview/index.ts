@@ -1,11 +1,15 @@
 import template from './template.html.twig'
 import { previewSchema } from '@elysium/composables/preview-schema'
+import { Media } from '@elysium/types/slide';
 
-const { Component, Store } = Shopware;
+const { Component, Store, Data, Context } = Shopware;
 const { debounce } = Shopware.Utils;
+const { Criteria } = Data;
 
 export default Component.wrapComponentConfig({
     template,
+
+    inject: ['repositoryFactory'],
 
     props: {
         slideId: {
@@ -60,6 +64,7 @@ export default Component.wrapComponentConfig({
             pendingFields: new Set<string>(),
             isLoading: false,
             iframeAckTimer: null as ReturnType<typeof setTimeout> | null,
+            mediaCache: {} as Record<string, Media>,
         };
     },
 
@@ -124,6 +129,13 @@ export default Component.wrapComponentConfig({
             }, { deep: mapping.deep ?? false });
         });
 
+        // Watch contentSettings for media changes
+        this.$watch('slide.contentSettings', () => {
+            this.loadMediaForSlide();
+        }, { deep: true });
+
+        this.loadMediaForSlide();
+
         window.addEventListener('message', this._handleIframeMessage.bind(this));
     },
 
@@ -136,6 +148,59 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
+        loadMediaForSlide() {
+            const contentCover = this.slide?.contentSettings?.slideCover ?? {};
+            const mediaIds = [
+                contentCover.mobileId,
+                contentCover.tabletId,
+                contentCover.desktopId,
+                contentCover.videoId,
+                this.slide?.contentSettings?.focusImageId,
+            ].filter((id): id is string => Boolean(id));
+
+            if (mediaIds.length === 0) return;
+
+            const uncachedIds = mediaIds.filter((id) => !this.mediaCache[id]);
+            if (uncachedIds.length === 0) return;
+
+            const mediaRepository = this.repositoryFactory?.create('media');
+            if (!mediaRepository) return;
+
+            const criteria = new Criteria();
+            criteria.setIds(uncachedIds);
+
+            mediaRepository
+                .search(criteria, Context.api)
+                .then((result: { items: Media[] }) => {
+                    result.items.forEach((media: Media) => {
+                        this.mediaCache[media.id] = media;
+                    });
+                })
+                .catch((exception: Error) => {
+                    console.error(exception);
+                });
+        },
+
+        getResolvedMedia(): Record<string, Media> {
+            const resolved: Record<string, Media> = {};
+            const contentCover = this.slide?.contentSettings?.slideCover ?? {};
+            const ids = [
+                contentCover.mobileId,
+                contentCover.tabletId,
+                contentCover.desktopId,
+                contentCover.videoId,
+                this.slide?.contentSettings?.focusImageId,
+            ].filter(Boolean);
+
+            ids.forEach((id: string) => {
+                if (this.mediaCache[id]) {
+                    resolved[id] = this.mediaCache[id];
+                }
+            });
+
+            return resolved;
+        },
+
         buildIframeSrc(cacheBuster?: number) {
             this.isLoading = true;
             const isNew = this.slide?._isNew === true;
@@ -191,6 +256,7 @@ export default Component.wrapComponentConfig({
                 type: 'elysium-slide-update',
                 device: this.device,
                 slide: JSON.parse(JSON.stringify(this.slide)),
+                resolvedMedia: this.getResolvedMedia(),
                 fields: fields && fields.length > 0 ? fields : ['slide'],
                 previewAspectRatio: this.aspectRatioX && this.aspectRatioY ? { x: this.aspectRatioX, y: this.aspectRatioY } : null,
                 previewWidth: this.maxWidth,

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
-use Shopware\Core\Content\Media\MediaDefinition;
 use Shopware\Core\Content\Category\CategoryDefinition;
 use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
@@ -55,22 +54,6 @@ class ElysiumSlidesDefinition extends EntityDefinition
             // category association
             (new FkField('category_id', 'categoryId', CategoryDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('category', 'category_id', CategoryDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            // media associations
-            // / slide cover
-            (new FkField('slide_cover_id', 'slideCoverId', MediaDefinition::class))->addFlags(new ApiAware()),
-            (new ManyToOneAssociationField('slideCover', 'slide_cover_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            // / slide cover mobile
-            (new FkField('slide_cover_mobile_id', 'slideCoverMobileId', MediaDefinition::class))->addFlags(new ApiAware()),
-            (new ManyToOneAssociationField('slideCoverMobile', 'slide_cover_mobile_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            // / slide cover tablet
-            (new FkField('slide_cover_tablet_id', 'slideCoverTabletId', MediaDefinition::class))->addFlags(new ApiAware()),
-            (new ManyToOneAssociationField('slideCoverTablet', 'slide_cover_tablet_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            // / slide cover video
-            (new FkField('slide_cover_video_id', 'slideCoverVideoId', MediaDefinition::class))->addFlags(new ApiAware()),
-            (new ManyToOneAssociationField('slideCoverVideo', 'slide_cover_video_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            // / media presentation
-            (new FkField('presentation_media_id', 'presentationMediaId', MediaDefinition::class))->addFlags(new ApiAware()),
-            (new ManyToOneAssociationField('presentationMedia', 'presentation_media_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
             // time control
             (new DateTimeField('active_from', 'activeFrom'))->addFlags(new ApiAware()),
             (new DateTimeField('active_until', 'activeUntil'))->addFlags(new ApiAware()),
@@ -78,12 +61,8 @@ class ElysiumSlidesDefinition extends EntityDefinition
             (new JsonField('slide_settings', 'slideSettings'))->addFlags(new ApiAware()),
             // translation
             (new TranslatedField('name'))->addFlags(new ApiAware(), new Required(), new Inherited(), new SearchRanking(SearchRanking::HIGH_SEARCH_RANKING)),
-            (new TranslatedField('title'))->addFlags(new ApiAware(), new Inherited(), new SearchRanking(SearchRanking::MIDDLE_SEARCH_RANKING)),
-            (new TranslatedField('description'))->addFlags(new ApiAware(), new Inherited()),
-            (new TranslatedField('buttonLabel'))->addFlags(new ApiAware(), new Inherited()),
-            (new TranslatedField('url'))->addFlags(new ApiAware(), new Inherited()),
-            (new TranslatedField('customFields'))->addFlags(new ApiAware()),
             (new TranslatedField('contentSettings'))->addFlags(new ApiAware()),
+            (new TranslatedField('customFields'))->addFlags(new ApiAware()),
             (new TranslationsAssociationField(
                 ElysiumSlidesTranslationDefinition::class,
                 'blur_elysium_slides_id'

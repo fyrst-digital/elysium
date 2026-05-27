@@ -9,7 +9,7 @@
       and slideData.category.translated.name %}
     {% set headlineContent = slideData.category.translated.name %}
 {% else %}
-    {% set headlineContent = slideData.title|default('') %}
+    {% set headlineContent = slideData.contentSettings.title|default('') %}
 {% endif %}
 
 {% set headlineTagsWhitelist = ['<br>', '<i>', '<b>', '<u>', '<strong>', '<span>'] %}

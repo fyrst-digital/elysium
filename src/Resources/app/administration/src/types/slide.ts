@@ -140,11 +140,24 @@ export interface SlideSettings {
     customTemplateFile: CustomTemplateFile;
 }
 
+export interface ContentSettingsSlideCover {
+    mobileId?: string | null;
+    tabletId?: string | null;
+    desktopId?: string | null;
+    videoId?: string | null;
+    alt?: string | null;
+    title?: string | null;
+}
+
 export interface ContentSettings {
-    slideCover: {
-        alt: string | null;
-        title: string | null;
-    }
+    title?: string;
+    description?: string;
+    button: {
+        label?: string;
+    };
+    url?: string;
+    focusImageId?: string | null;
+    slideCover: ContentSettingsSlideCover;
 }
 
 export interface Product {
@@ -175,23 +188,13 @@ export interface ElysiumSlide {
     activeFrom: string | null;
     activeUntil: string | null;
     slideSettings: SlideSettings;
-    slideCover: Media | null;
-    slideCoverId: string | null;
-    slideCoverMobile: Media | null;
-    slideCoverMobileId: string | null;
-    slideCoverTablet: Media | null;
-    slideCoverTabletId: string | null;
-    slideCoverVideo: Media | null;
-    slideCoverVideoId: string | null;
+    contentSettings: ContentSettings;
     productId: string | null;
     product: Product | null;
     categoryId: string | null;
     category: Category | null;
-    url: string | null;
-    buttonLabel: string | null;
     translated: {
         name: string | null;
-        title: string | null;
     };
     customFields: Record<string, unknown>;
 }
