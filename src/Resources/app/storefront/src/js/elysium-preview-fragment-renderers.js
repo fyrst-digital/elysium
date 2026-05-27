@@ -56,7 +56,7 @@ function createPreviewSizingRenderer() {
     };
 }
 
-function renderHeadline(slide, element, _resolvedMedia) {
+function renderHeadline(slide, element, _resolvedMedia, _device) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
     const headline = slide.slideSettings?.slide?.headline || {};
@@ -94,7 +94,7 @@ function renderHeadline(slide, element, _resolvedMedia) {
     }
 }
 
-function renderDescription(slide, element, _resolvedMedia) {
+function renderDescription(slide, element, _resolvedMedia, _device) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
 
@@ -130,7 +130,7 @@ function renderDescription(slide, element, _resolvedMedia) {
     }
 }
 
-function renderButton(slide, element, _resolvedMedia) {
+function renderButton(slide, element, _resolvedMedia, _device) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
     const url = slide.contentSettings?.url || '';
@@ -175,7 +175,7 @@ function renderButton(slide, element, _resolvedMedia) {
     }
 }
 
-function renderCover(slide, element, resolvedMedia) {
+function renderCover(slide, element, resolvedMedia, device) {
     const id = slide.id;
     const borderRadius = slide.slideSettings?.slide?.borderRadius || 0;
     const style = `border-radius: var(--slide-border-radius, ${borderRadius}px);`;
@@ -223,35 +223,31 @@ function renderCover(slide, element, resolvedMedia) {
         return;
     }
 
-    let sources = '';
-    const breakpoints = { desktop: 1200, tablet: 768 };
-
-    if (covers.desktop) {
-        const thumbs = covers.desktop.metaData?._thumbnails || covers.desktop.thumbnails || [];
-        const srcset = createSrcset(thumbs);
-        sources += `<source ${srcset ? `srcset="${srcset}"` : `srcset="${covers.desktop.url}"`} media="screen and (min-width:${breakpoints.desktop}px)" />`;
+    // Mobile-first fallback: select cover for the current device
+    let selectedCover = null;
+    switch (device) {
+        case 'mobile':
+            selectedCover = covers.mobile || null;
+            break;
+        case 'tablet':
+            selectedCover = covers.tablet || covers.mobile || null;
+            break;
+        default: // desktop
+            selectedCover = covers.desktop || covers.tablet || covers.mobile || null;
     }
 
-    if (covers.tablet) {
-        const thumbs = covers.tablet.metaData?._thumbnails || covers.tablet.thumbnails || [];
-        const srcset = createSrcset(thumbs);
-        sources += `<source ${srcset ? `srcset="${srcset}"` : `srcset="${covers.tablet.url}"`} media="screen and (min-width:${breakpoints.tablet}px)" />`;
+    if (!selectedCover) {
+        return;
     }
 
-    let imgHtml;
-    if (covers.mobile) {
-        const thumbs = covers.mobile.metaData?._thumbnails || covers.mobile.thumbnails || [];
-        const srcset = createSrcset(thumbs);
-        imgHtml = `<img src="${covers.mobile.url}" ${srcset ? `srcset="${srcset}"` : ''} class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
-    } else {
-        imgHtml = `<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
-    }
-
-    const html = `<picture class="blur-elysium-slide-cover-picture">${sources}${imgHtml}</picture>`;
+    const thumbs = selectedCover.metaData?._thumbnails || selectedCover.thumbnails || [];
+    const srcset = createSrcset(thumbs);
+    const imgHtml = `<img src="${selectedCover.url}" ${srcset ? `srcset="${srcset}"` : ''} class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
+    const html = `<picture class="blur-elysium-slide-cover-picture">${imgHtml}</picture>`;
     element.insertAdjacentHTML('afterbegin', html);
 }
 
-function renderFocusImage(slide, element, resolvedMedia) {
+function renderFocusImage(slide, element, resolvedMedia, _device) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
     let imageMedia = getMediaById(resolvedMedia, slide.contentSettings?.focusImageId);

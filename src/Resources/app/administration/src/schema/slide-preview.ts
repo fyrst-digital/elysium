@@ -314,6 +314,7 @@ export const previewSchema: PreviewSchema = {
             "mode": "partial",
             "watchedFields": [
                 "contentSettings",
+                "device",
                 "showProductFocusImage",
                 "showCategoryFocusImage",
                 "linkingType"

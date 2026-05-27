@@ -81,15 +81,13 @@ export default Component.wrapComponentConfig({
                 return videoMedia;
             }
 
+            // Mobile-first fallback: device only falls back to smaller viewports
             switch (this.deviceView) {
                 case 'mobile':
-                    return this.elysiumMedia.getMedia(contentCover.mobileId)
-                        || this.elysiumMedia.getMedia(contentCover.tabletId)
-                        || this.elysiumMedia.getMedia(contentCover.desktopId);
+                    return this.elysiumMedia.getMedia(contentCover.mobileId);
                 case 'tablet':
                     return this.elysiumMedia.getMedia(contentCover.tabletId)
-                        || this.elysiumMedia.getMedia(contentCover.mobileId)
-                        || this.elysiumMedia.getMedia(contentCover.desktopId);
+                        || this.elysiumMedia.getMedia(contentCover.mobileId);
                 default:
                     return this.elysiumMedia.getMedia(contentCover.desktopId)
                         || this.elysiumMedia.getMedia(contentCover.tabletId)
