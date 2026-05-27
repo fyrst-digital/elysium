@@ -129,10 +129,19 @@ export default Component.wrapComponentConfig({
             }, { deep: mapping.deep ?? false });
         });
 
-        // Watch contentSettings for media changes
-        this.$watch('slide.contentSettings', () => {
-            this.loadMediaForSlide();
-        }, { deep: true });
+        // Watch only media ID paths for media resolution
+        const mediaIdPaths = [
+            'slide.contentSettings.slideCover.mobileId',
+            'slide.contentSettings.slideCover.tabletId',
+            'slide.contentSettings.slideCover.desktopId',
+            'slide.contentSettings.slideCover.videoId',
+            'slide.contentSettings.focusImageId',
+        ];
+        mediaIdPaths.forEach((path) => {
+            this.$watch(path, () => {
+                this.loadMediaForSlide();
+            });
+        });
 
         this.loadMediaForSlide();
 
@@ -175,6 +184,8 @@ export default Component.wrapComponentConfig({
                     result.items.forEach((media: Media) => {
                         this.mediaCache[media.id] = media;
                     });
+                    // Trigger a follow-up update so the iframe gets the resolved media
+                    this.sendSlideUpdate(['contentSettings']);
                 })
                 .catch((exception: Error) => {
                     console.error(exception);

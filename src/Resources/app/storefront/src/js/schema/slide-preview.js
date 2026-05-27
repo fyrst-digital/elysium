@@ -48,11 +48,70 @@ export const previewSchema = {
             ]
         },
         {
-            "path": "slide.contentSettings",
+            "path": "slide.contentSettings.title",
             "fields": [
                 "contentSettings"
-            ],
-            "deep": true
+            ]
+        },
+        {
+            "path": "slide.contentSettings.description",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.button.label",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.url",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.mobileId",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.tabletId",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.desktopId",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.videoId",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.alt",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.title",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.focusImageId",
+            "fields": [
+                "contentSettings"
+            ]
         },
         {
             "path": "slide.slideCover",
@@ -259,7 +318,7 @@ export const previewSchema = {
             "name": "headline",
             "mode": "partial",
             "watchedFields": [
-                "title",
+                "contentSettings",
                 "headlineElement",
                 "showProductTitle",
                 "showCategoryTitle",
@@ -277,7 +336,7 @@ export const previewSchema = {
             "name": "description",
             "mode": "partial",
             "watchedFields": [
-                "description",
+                "contentSettings",
                 "showProductDescription",
                 "showCategoryDescription",
                 "linkingType",
@@ -294,8 +353,7 @@ export const previewSchema = {
             "name": "button",
             "mode": "partial",
             "watchedFields": [
-                "buttonLabel",
-                "url",
+                "contentSettings",
                 "buttonAppearance",
                 "buttonSize",
                 "linkingOverlay",
@@ -313,10 +371,6 @@ export const previewSchema = {
             "mode": "partial",
             "watchedFields": [
                 "contentSettings",
-                "slideCover",
-                "slideCoverMobile",
-                "slideCoverTablet",
-                "slideCoverVideo",
                 "showProductFocusImage",
                 "showCategoryFocusImage",
                 "linkingType"
@@ -331,7 +385,7 @@ export const previewSchema = {
             "name": "focus-image",
             "mode": "partial",
             "watchedFields": [
-                "presentationMedia",
+                "contentSettings",
                 "showProductFocusImage",
                 "showCategoryFocusImage",
                 "productId",

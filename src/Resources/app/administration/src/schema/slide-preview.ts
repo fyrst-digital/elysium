@@ -19,11 +19,70 @@ export const previewSchema: PreviewSchema = {
             ]
         },
         {
-            "path": "slide.contentSettings",
+            "path": "slide.contentSettings.title",
             "fields": [
                 "contentSettings"
-            ],
-            "deep": true
+            ]
+        },
+        {
+            "path": "slide.contentSettings.description",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.button.label",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.url",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.mobileId",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.tabletId",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.desktopId",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.videoId",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.alt",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.slideCover.title",
+            "fields": [
+                "contentSettings"
+            ]
+        },
+        {
+            "path": "slide.contentSettings.focusImageId",
+            "fields": [
+                "contentSettings"
+            ]
         },
         {
             "path": "slide.slideSettings.slide.headline.element",
