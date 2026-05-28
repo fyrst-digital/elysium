@@ -7,8 +7,12 @@ namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
 /**
  * Trait for handling content settings in entities.
  *
- * Provides methods for getting, setting, and manipulating content settings
- * similar to the EntityCustomFieldsTrait for custom fields.
+ * Provides methods for getting, setting, and manipulating content settings.
+ *
+ * Translation fallback for contentSettings is handled at hydration time by
+ * {@see ElysiumSlidesHydrator}, which deep-merges the JSON blob across the
+ * language chain. Therefore accessors in this trait read directly from the
+ * already-merged `$this->contentSettings`.
  *
  * ContentSettings schema:
  * {
@@ -18,10 +22,10 @@ namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
  *   "url": "/some-path",
  *   "focusImageId": "uuid...",
  *   "slideCover": {
- *     "mobileId": "uuid...",    // primary / fallback base
- *     "tabletId": "uuid...",    // optional, falls back to mobile
- *     "desktopId": "uuid...",   // optional, falls back to tablet -> mobile
- *     "videoId": "uuid...",     // optional, overrides image when present
+ *     "mobileId": "uuid...",
+ *     "tabletId": "uuid...",
+ *     "desktopId": "uuid...",
+ *     "videoId": "uuid...",
  *     "alt": "Alt text",
  *     "title": "Title text"
  *   }
@@ -47,8 +51,9 @@ trait ContentSettingsTrait
     /**
      * Get specific content settings values by keys.
      *
-     * Returns an array with the field names as keys and the values as values will be returned.
-     * If you pass multiple field names and one of the fields does not exist, the field will not be in the result.
+     * Returns an array with the field names as keys and the values as values.
+     * If you pass multiple field names and one of the fields does not exist,
+     * the field will not be in the result.
      *
      * @param string ...$fields
      * @return array<string, mixed>
@@ -69,17 +74,6 @@ trait ContentSettingsTrait
     public function getContentSettingsValue(string $field): mixed
     {
         return $this->contentSettings[$field] ?? null;
-    }
-
-    /**
-     * Get a translated content setting value by key.
-     *
-     * @param string $field
-     * @return mixed
-     */
-    public function getTranslatedContentSettingsValue(string $field): mixed
-    {
-        return $this->translated['contentSettings'][$field] ?? null;
     }
 
     /**
@@ -109,86 +103,59 @@ trait ContentSettingsTrait
 
     public function getContentTitle(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('title')
-            ?? $this->getContentSettingsValue('title');
+        return $this->getContentSettingsValue('title');
     }
 
     public function getContentDescription(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('description')
-            ?? $this->getContentSettingsValue('description');
+        return $this->getContentSettingsValue('description');
     }
 
     public function getContentButtonLabel(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('button')['label']
-            ?? $this->getContentSettingsValue('button')['label']
-            ?? null;
+        return $this->getContentSettingsValue('button')['label'] ?? null;
     }
 
     public function getContentUrl(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('url')
-            ?? $this->getContentSettingsValue('url');
+        return $this->getContentSettingsValue('url');
     }
 
     // --- Media ID accessors ---
 
-    /**
-     * Get the primary (mobile) cover image ID.
-     */
     public function getContentSlideCoverMobileId(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('slideCover')['mobileId']
-            ?? $this->getContentSettingsValue('slideCover')['mobileId']
-            ?? null;
+        return $this->getContentSettingsValue('slideCover')['mobileId'] ?? null;
     }
 
     public function getContentSlideCoverTabletId(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('slideCover')['tabletId']
-            ?? $this->getContentSettingsValue('slideCover')['tabletId']
-            ?? null;
+        return $this->getContentSettingsValue('slideCover')['tabletId'] ?? null;
     }
 
     public function getContentSlideCoverDesktopId(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('slideCover')['desktopId']
-            ?? $this->getContentSettingsValue('slideCover')['desktopId']
-            ?? null;
+        return $this->getContentSettingsValue('slideCover')['desktopId'] ?? null;
     }
 
     public function getContentSlideCoverVideoId(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('slideCover')['videoId']
-            ?? $this->getContentSettingsValue('slideCover')['videoId']
-            ?? null;
+        return $this->getContentSettingsValue('slideCover')['videoId'] ?? null;
     }
 
     public function getContentFocusImageId(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('focusImageId')
-            ?? $this->getContentSettingsValue('focusImageId');
+        return $this->getContentSettingsValue('focusImageId');
     }
 
-    /**
-     * Get the slide cover alt text from contentSettings.
-     */
     public function getContentSlideCoverAlt(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('slideCover')['alt']
-            ?? $this->getContentSettingsValue('slideCover')['alt']
-            ?? null;
+        return $this->getContentSettingsValue('slideCover')['alt'] ?? null;
     }
 
-    /**
-     * Get the slide cover title text from contentSettings.
-     */
     public function getContentSlideCoverTitle(): ?string
     {
-        return $this->getTranslatedContentSettingsValue('slideCover')['title']
-            ?? $this->getContentSettingsValue('slideCover')['title']
-            ?? null;
+        return $this->getContentSettingsValue('slideCover')['title'] ?? null;
     }
 
     /**

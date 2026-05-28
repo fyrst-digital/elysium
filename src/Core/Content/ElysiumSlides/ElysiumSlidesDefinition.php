@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationDefinition;
+use Blur\BlurElysiumSlider\Core\Framework\DataAbstractionLayer\Dbal\ElysiumSlidesHydrator;
 use Shopware\Core\Content\Category\CategoryDefinition;
 use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
@@ -39,6 +40,11 @@ class ElysiumSlidesDefinition extends EntityDefinition
     public function getCollectionClass(): string
     {
         return ElysiumSlidesCollection::class;
+    }
+
+    public function getHydratorClass(): string
+    {
+        return ElysiumSlidesHydrator::class;
     }
 
     protected function defineFields(): FieldCollection

@@ -24,6 +24,11 @@
       <tag name="shopware.entity.extension"/>
     </service>
 
+    <!-- Elysium Slides Entity Hydrator -->
+    <service id="Blur\BlurElysiumSlider\Core\Framework\DataAbstractionLayer\Dbal\ElysiumSlidesHydrator" public="true">
+      <argument type="service" id="service_container"/>
+    </service>
+
     <!-- Elysium Slides Entity Definition -->
     <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition">
       <tag name="shopware.entity.definition" entity="blur_elysium_slides"/>
