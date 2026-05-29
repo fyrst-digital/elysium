@@ -122,7 +122,7 @@
                 layout="row"
                 :model-value="selectedSalesChannelId"
                 @update:model-value="onSalesChannelChange"
-                :options="salesChannels.map(channel => ({ value: channel.id, label: channel.name }))"
+                :options="salesChannels.map(channel => ({ value: channel.id, label: channel.translated ? channel.translated.name : channel.name }))"
                 :style="viewStyle({
                     mobile: {
                         maxWidth: '200px',
