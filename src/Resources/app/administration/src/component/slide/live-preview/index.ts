@@ -217,7 +217,7 @@ export default Component.wrapComponentConfig({
             }
             // Load media first, then send the initial update with resolved media
             this.loadMediaForSlide().then(() => {
-                this.sendSlideUpdateImmediate();
+                this.sendSlideUpdate(undefined, true);
                 this.iframeAckTimer = setTimeout(() => {
                     this.isLoading = false;
                     this.iframeAckTimer = null;
@@ -239,8 +239,22 @@ export default Component.wrapComponentConfig({
             }
         },
 
-        sendSlideUpdateImmediate(fields?: string[]) {
+        /**
+         * Sends a slide update to the live preview iframe.
+         *
+         * @param fields - Which fields changed (for the iframe to selectively update)
+                 * @param immediate - If true, sends immediately. If false, debounces (300ms).
+         */
+        sendSlideUpdate(fields?: string[], immediate: boolean = false) {
             if (this.readOnly) {
+                return;
+            }
+
+            if (!immediate) {
+                if (fields) {
+                    fields.forEach((f) => this.pendingFields.add(f));
+                }
+                this._flushSlideUpdate();
                 return;
             }
 
@@ -252,7 +266,16 @@ export default Component.wrapComponentConfig({
 
             // Build a display copy with merged fallback values for the preview iframe
             const displaySlide = JSON.parse(JSON.stringify(this.slide));
-            displaySlide.contentSettings = JSON.parse(JSON.stringify(getDisplayContentSettings(this.slide)));
+            const displaySettings = JSON.parse(JSON.stringify(getDisplayContentSettings(this.slide)));
+
+            // Override media IDs with raw current-language values (no fallback for media).
+            // If the user removes an image in the current language, the preview should
+            // reflect that removal, not fall back to the default language's image.
+            const rawSettings = this.slide.contentSettings ?? {};
+            displaySettings.slideCover = JSON.parse(JSON.stringify(rawSettings.slideCover ?? {}));
+            displaySettings.focusImageId = rawSettings.focusImageId ?? null;
+
+            displaySlide.contentSettings = displaySettings;
 
             iframe.contentWindow.postMessage({
                 type: 'elysium-slide-update',
@@ -266,21 +289,10 @@ export default Component.wrapComponentConfig({
             }, this.baseUrl);
         },
 
-        sendSlideUpdate(fields?: string[]) {
-            if (this.readOnly) {
-                return;
-            }
-
-            if (fields) {
-                fields.forEach((f) => this.pendingFields.add(f));
-            }
-            this._flushSlideUpdate();
-        },
-
-        _flushSlideUpdate: debounce(function (this: { pendingFields: Set<string>; sendSlideUpdateImmediate(fields: string[]): void }) {
+        _flushSlideUpdate: debounce(function (this: { pendingFields: Set<string>; sendSlideUpdate(fields: string[], immediate: boolean): void }) {
             const fields = Array.from(this.pendingFields);
             this.pendingFields.clear();
-            this.sendSlideUpdateImmediate(fields);
+            this.sendSlideUpdate(fields, true);
         }, 300),
     },
 });
