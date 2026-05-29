@@ -23,14 +23,6 @@ class ElysiumSlidesTranslationEntity extends TranslationEntity
 
     protected ?string $name;
 
-    protected ?string $title;
-
-    protected ?string $description;
-
-    protected ?string $buttonLabel;
-
-    protected ?string $url;
-
     /**
      * @var array<mixed>|null
      */
@@ -84,45 +76,5 @@ class ElysiumSlidesTranslationEntity extends TranslationEntity
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
-    public function getButtonLabel(): ?string
-    {
-        return $this->buttonLabel;
-    }
-
-    public function setButtonLabel(string $buttonLabel): void
-    {
-        $this->buttonLabel = $buttonLabel;
-    }
-
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    public function setUrl(string $url): void
-    {
-        $this->url = $url;
     }
 }
