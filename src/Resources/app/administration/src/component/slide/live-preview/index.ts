@@ -1,5 +1,6 @@
 import template from './template.html.twig'
 import { previewSchema } from '@elysium/composables/preview-schema'
+import { getDisplayContentSettings } from '@elysium/composables/content-settings-display'
 import { Media } from '@elysium/types/slide';
 
 const { Component, Store, Data, Context } = Shopware;
@@ -249,11 +250,15 @@ export default Component.wrapComponentConfig({
                 return;
             }
 
+            // Build a display copy with merged fallback values for the preview iframe
+            const displaySlide = JSON.parse(JSON.stringify(this.slide));
+            displaySlide.contentSettings = getDisplayContentSettings(this.slide);
+
             iframe.contentWindow.postMessage({
                 type: 'elysium-slide-update',
                 device: this.device,
-                slide: JSON.parse(JSON.stringify(this.slide)),
-                resolvedMedia: JSON.parse(JSON.stringify(this.elysiumMedia.getResolvedMedia(this.slide?.contentSettings))),
+                slide: displaySlide,
+                resolvedMedia: JSON.parse(JSON.stringify(this.elysiumMedia.getResolvedMedia(displaySlide.contentSettings))),
                 fields: fields && fields.length > 0 ? fields : ['slide'],
                 previewAspectRatio: this.aspectRatioX && this.aspectRatioY ? { x: this.aspectRatioX, y: this.aspectRatioY } : null,
                 previewWidth: this.maxWidth,

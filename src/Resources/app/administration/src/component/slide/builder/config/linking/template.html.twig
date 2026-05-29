@@ -29,7 +29,7 @@
         <py-text-field 
             v-model="slide.contentSettings.url"
             :label="$tc('blurElysiumSlides.forms.slideLinking.customUrl')"
-            :placeholder="$tc('blurElysiumSlides.forms.slideLinking.customUrlPlaceholder')"
+            :placeholder="contentSettingsPlaceholder('url', $tc('blurElysiumSlides.forms.slideLinking.customUrlPlaceholder'))"
             :tooltip="$tc('blurElysiumSlides.forms.slideLinking.customUrlHelpText')"
             />
     </py-column>
@@ -63,7 +63,7 @@
         <py-text-field 
             v-model="slide.contentSettings.button.label"
             :label="$tc('blurElysiumSlides.forms.slideButtonLabel.label')"
-            :placeholder="$tc('blurElysiumSlides.forms.slideButtonLabel.placeholder')"
+            :placeholder="contentSettingsPlaceholder('button.label', $tc('blurElysiumSlides.forms.slideButtonLabel.placeholder'))"
             :tooltip="$tc('blurElysiumSlides.forms.slideButtonLabel.helpText')"
             :disabled="slide.slideSettings.slide.linking.overlay === true"
             />

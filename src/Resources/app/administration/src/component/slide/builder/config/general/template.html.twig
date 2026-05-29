@@ -44,8 +44,8 @@
             ]" placeholder="DIV" :label="$tc('blurElysiumSlides.forms.slideHeadlineElement.label')" :tooltip="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')" v-model="slide.slideSettings.slide.headline.element"/>
   </py-column>
 
-  <py-column :cols="12">
-    <py-text-field :label="$tc('blurElysium.general.text')" :placeholder="placeholder(slide, 'title', $tc('blurElysiumSlides.forms.slideHeadline.placeholder'))" v-model="slide.contentSettings.title"/>
+    <py-column :cols="12">
+    <py-text-field :label="$tc('blurElysium.general.text')" :placeholder="contentSettingsPlaceholder('title', $tc('blurElysiumSlides.forms.slideHeadline.placeholder'))" v-model="slide.contentSettings.title"/>
   </py-column>
 
   <py-column :cols="12">

@@ -1,4 +1,5 @@
 import template from './template.html.twig';
+import { getContentSettingsPlaceholder } from '@elysium/composables/content-settings-display';
 import {
     buttonColors,
     buttonSizes,
@@ -73,5 +74,11 @@ export default Component.wrapComponentConfig({
             criteria.addFilter(Criteria.equals('active', true));
             return criteria;
         },
+    },
+
+    methods: {
+        contentSettingsPlaceholder(path: string, fallback?: string): string {
+            return getContentSettingsPlaceholder(this.slide, path, fallback);
+        }
     },
 });

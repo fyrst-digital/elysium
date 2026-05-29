@@ -1,4 +1,5 @@
 import template from './template.html.twig'
+import { getDisplayContentSettings } from '@elysium/composables/content-settings-display'
 
 const { Component, Store } = Shopware;
 
@@ -130,7 +131,8 @@ export default Component.wrapComponentConfig({
             if (this.slide.slideSettings?.slide?.linking?.type === 'category' && this.slide.category?.name) {
                 return this.slide.category.name;
             }
-            return this.slide.contentSettings?.title || null;
+            const displaySettings = getDisplayContentSettings(this.slide);
+            return displaySettings.title || null;
         },
 
         headlineStyles() {
@@ -150,7 +152,8 @@ export default Component.wrapComponentConfig({
             if (this.slide.slideSettings?.slide?.linking?.type === 'category' && this.slide.category?.description) {
                 return this.slide.category.description;
             }
-            return this.slide.contentSettings?.description || null;
+            const displaySettings = getDisplayContentSettings(this.slide);
+            return displaySettings.description || null;
         },
 
         descriptionStyles() {
@@ -162,8 +165,9 @@ export default Component.wrapComponentConfig({
         },
 
         showButton() {
-            const hasUrl = Boolean(this.slide.contentSettings?.url) || Boolean(this.slide.productId) || Boolean(this.slide.categoryId);
-            return hasUrl && Boolean(this.slide.contentSettings?.button?.label);
+            const displaySettings = getDisplayContentSettings(this.slide);
+            const hasUrl = Boolean(displaySettings.url) || Boolean(this.slide.productId) || Boolean(this.slide.categoryId);
+            return hasUrl && Boolean(displaySettings.button?.label);
         },
     },
 });

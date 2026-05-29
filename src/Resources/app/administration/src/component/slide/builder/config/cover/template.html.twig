@@ -133,6 +133,7 @@
         <py-text-field
             v-model="slide.contentSettings.slideCover.alt"
             :label="$tc('blurElysiumSlides.forms.slideCoverMeta.alt.label')"
+            :placeholder="contentSettingsPlaceholder('slideCover.alt')"
         />
     </py-column>
 
@@ -140,6 +141,7 @@
         <py-text-field
             v-model="slide.contentSettings.slideCover.title"
             :label="$tc('blurElysiumSlides.forms.slideCoverMeta.title.label')"
+            :placeholder="contentSettingsPlaceholder('slideCover.title')"
         />
     </py-column>
 </py-section>
