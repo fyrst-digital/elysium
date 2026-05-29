@@ -24,7 +24,10 @@ class ElysiumSlidesHydrator extends EntityHydrator
             return $entity;
         }
 
-        // Admin API: keep raw current-language values in forms to prevent accidental fallback persistence
+        // Admin API: keep raw current-language values in forms to prevent accidental fallback persistence.
+        // This assumes that admin requests always carry an AdminApiSource. If a slide is ever loaded via
+        // CLI or message queue in an admin context, the merge will still run — which is acceptable because
+        // those paths are read-only and benefit from the resolved fallback values.
         if ($context->getSource() instanceof AdminApiSource) {
             return $entity;
         }
@@ -44,6 +47,11 @@ class ElysiumSlidesHydrator extends EntityHydrator
      *
      * Empty strings ("") are treated as missing values and fall back, matching the
      * plugin's editorial expectations.
+     *
+     * @warning This merge algorithm must stay in sync with the frontend fallback
+     * logic in {@see content-settings-display.ts}. Both use the same rules:
+     * null and empty-string are skipped (fall back), objects are deep-merged
+     * recursively, and all other non-empty values overwrite.
      *
      * @param array<mixed> $row
      */

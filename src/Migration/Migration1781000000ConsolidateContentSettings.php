@@ -8,6 +8,7 @@ use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 use Shopware\Core\Framework\Migration\MigrationStep;
+use Shopware\Core\Framework\Uuid\Uuid;
 
 class Migration1781000000ConsolidateContentSettings extends MigrationStep
 {
@@ -120,19 +121,19 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
                 $existing = json_decode($translation['content_settings'] ?? '{}', true) ?: [];
 
                 if (!empty($slide['slide_cover_id'])) {
-                    $existing['slideCover']['mobileId'] = $this->toHex($slide['slide_cover_id']);
+                    $existing['slideCover']['mobileId'] = Uuid::fromBytesToHex($slide['slide_cover_id']);
                 }
                 if (!empty($slide['slide_cover_mobile_id'])) {
-                    $existing['slideCover']['desktopId'] = $this->toHex($slide['slide_cover_mobile_id']);
+                    $existing['slideCover']['desktopId'] = Uuid::fromBytesToHex($slide['slide_cover_mobile_id']);
                 }
                 if (!empty($slide['slide_cover_tablet_id'])) {
-                    $existing['slideCover']['tabletId'] = $this->toHex($slide['slide_cover_tablet_id']);
+                    $existing['slideCover']['tabletId'] = Uuid::fromBytesToHex($slide['slide_cover_tablet_id']);
                 }
                 if (!empty($slide['slide_cover_video_id'])) {
-                    $existing['slideCover']['videoId'] = $this->toHex($slide['slide_cover_video_id']);
+                    $existing['slideCover']['videoId'] = Uuid::fromBytesToHex($slide['slide_cover_video_id']);
                 }
                 if (!empty($slide['presentation_media_id'])) {
-                    $existing['focusImageId'] = $this->toHex($slide['presentation_media_id']);
+                    $existing['focusImageId'] = Uuid::fromBytesToHex($slide['presentation_media_id']);
                 }
 
                 $connection->executeStatement(
@@ -150,11 +151,6 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
                 );
             }
         }
-    }
-
-    private function toHex(string $binary): string
-    {
-        return bin2hex($binary);
     }
 
     private function dropTranslationColumns(Connection $connection): void

@@ -14,6 +14,11 @@ function isEmptyValue(value: unknown): boolean {
  * Deep-merge source over target.
  * Only overwrites target keys where source has a non-empty value.
  * Mutates target in place.
+ *
+ * @warning This merge algorithm must stay in sync with the backend fallback
+ * logic in {@see ElysiumSlidesHydrator}. Both use the same rules:
+ * null and empty-string are skipped (fall back), objects are deep-merged
+ * recursively, and all other non-empty values overwrite.
  */
 function deepMerge(target: Record<string, unknown>, source: Record<string, unknown>): void {
     Object.entries(source).forEach(([key, value]) => {

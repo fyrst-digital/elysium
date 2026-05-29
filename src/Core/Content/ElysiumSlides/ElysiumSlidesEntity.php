@@ -126,7 +126,7 @@ class ElysiumSlidesEntity extends Entity
 
     public function getName(): ?string
     {
-        return $this->translated['name'] ?? $this->name;
+        return $this->name;
     }
 
     public function setName(?string $name): void
