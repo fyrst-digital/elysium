@@ -16,10 +16,10 @@
 {% set coverTabletId = contentCover.tabletId|default(null) %}
 {% set coverDesktopId = contentCover.desktopId|default(null) %}
 
-{% set slideCoverVideo = coverVideoId and resolvedMedia ? (resolvedMedia|first(m => m.id == coverVideoId))|default(null) : null %}
-{% set slideCoverMobile = coverMobileId and resolvedMedia ? (resolvedMedia|first(m => m.id == coverMobileId))|default(null) : null %}
-{% set slideCoverTablet = coverTabletId and resolvedMedia ? (resolvedMedia|first(m => m.id == coverTabletId))|default(null) : null %}
-{% set slideCoverDesktop = coverDesktopId and resolvedMedia ? (resolvedMedia|first(m => m.id == coverDesktopId))|default(null) : null %}
+{% set slideCoverVideo = coverVideoId and resolvedMedia ? (resolvedMedia|filter(m => m.id == coverVideoId)|first|default(null)) : null %}
+{% set slideCoverMobile = coverMobileId and resolvedMedia ? (resolvedMedia|filter(m => m.id == coverMobileId)|first|default(null)) : null %}
+{% set slideCoverTablet = coverTabletId and resolvedMedia ? (resolvedMedia|filter(m => m.id == coverTabletId)|first|default(null)) : null %}
+{% set slideCoverDesktop = coverDesktopId and resolvedMedia ? (resolvedMedia|filter(m => m.id == coverDesktopId)|first|default(null)) : null %}
 
 {% if slideCoverVideo %}
     <video autoplay muted loop

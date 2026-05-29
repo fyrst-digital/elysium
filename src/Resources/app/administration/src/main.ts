@@ -120,7 +120,6 @@ useComponentOverride([
     { name: 'sw-cms-sidebar', path: () => import('@elysium/extension/sw-cms-sidebar') },
     { name: 'sw-cms-stage-section-selection', path: () => import('@elysium/extension/sw-cms-stage-section-selection') },
     { name: 'sw-search-bar-item', path: () => import('@elysium/extension/sw-search-bar-item') },
-    { name: 'sw-media-quickinfo-usage', path: () => import('@elysium/extension/sw-media-quickinfo-usage') },
     { name: 'sw-sidebar', path: () => import('@elysium/extension/sw-sidebar') },
 ])
 

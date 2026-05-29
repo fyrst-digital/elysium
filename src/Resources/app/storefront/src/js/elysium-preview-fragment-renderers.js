@@ -8,10 +8,34 @@ function stripTags(html, allowedTags = []) {
     if (!html) {
         return '';
     }
+
     const allowed = new Set(allowedTags.map((t) => t.replace(/[<>]/g, '').toLowerCase()));
-    return html.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, (match, tag) => {
-        return allowed.has(tag.toLowerCase()) ? match : '';
-    });
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    function walk(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            return node.textContent;
+        }
+
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+            return '';
+        }
+
+        const tagName = node.tagName.toLowerCase();
+
+        if (allowed.has(tagName)) {
+            const attrs = Array.from(node.attributes)
+                .map((attr) => ` ${attr.name}="${attr.value.replace(/"/g, '&quot;')}"`)
+                .join('');
+            const children = Array.from(node.childNodes).map(walk).join('');
+            return `<${tagName}${attrs}>${children}</${tagName}>`;
+        }
+
+        return Array.from(node.childNodes).map(walk).join('');
+    }
+
+    return Array.from(doc.body.childNodes).map(walk).join('');
 }
 
 function createSrcset(thumbnails) {

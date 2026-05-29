@@ -94,7 +94,7 @@
 {% set slideViewportStyles = slideData.slideSettings.viewports %}
 
 {% set focusImageId = slideData.contentSettings.focusImageId|default(null) %}
-{% set presentationMedia = focusImageId and resolvedMedia ? (resolvedMedia|first(m => m.id == focusImageId))|default(null) : null %}
+{% set presentationMedia = focusImageId and resolvedMedia ? (resolvedMedia|filter(m => m.id == focusImageId)|first|default(null)) : null %}
 
 {% if slideData.product is not same as(null) and slideData.slideSettings.slide.linking.type is same as('product') %}
     {% if slideData.product.cover and presentationMedia is null %}
