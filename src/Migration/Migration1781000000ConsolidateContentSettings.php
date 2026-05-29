@@ -155,13 +155,18 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
 
     private function dropTranslationColumns(Connection $connection): void
     {
-        $connection->executeStatement(
-            'ALTER TABLE blur_elysium_slides_translation
-             DROP COLUMN title,
-             DROP COLUMN description,
-             DROP COLUMN button_label,
-             DROP COLUMN url'
-        );
+        $drops = [];
+        foreach (['title', 'description', 'button_label', 'url'] as $column) {
+            if ($this->hasColumn($connection, 'blur_elysium_slides_translation', $column)) {
+                $drops[] = 'DROP COLUMN `' . $column . '`';
+            }
+        }
+
+        if ($drops !== []) {
+            $connection->executeStatement(
+                'ALTER TABLE blur_elysium_slides_translation ' . implode(', ', $drops)
+            );
+        }
     }
 
     private function dropMainTableMediaColumns(Connection $connection): void
@@ -174,66 +179,48 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
             'presentation_media_id',
         ];
 
-        $mediaColumns = [
-            'media_id',
-            'media_portrait_id',
-        ];
-
-        $allColumns = array_merge($columns, $mediaColumns);
-
-        // Drop foreign key constraints for all possible column names
-        foreach ($allColumns as $column) {
-            $fkName = 'fk.blur_elysium_slides.' . $column;
-            try {
-                $connection->executeStatement(
-                    'ALTER TABLE blur_elysium_slides DROP FOREIGN KEY IF EXISTS `' . $fkName . '`'
-                );
-            } catch (\Exception $e) {
-                // Ignore if constraint doesn't exist
-            }
-        }
-
-        // Also find any remaining FK constraints referencing these columns
+        // Drop foreign key constraints that actually exist
         $fkConstraints = $connection->fetchAllAssociative(
-            "SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE
+            "SELECT CONSTRAINT_NAME
+             FROM information_schema.TABLE_CONSTRAINTS
              WHERE TABLE_SCHEMA = DATABASE()
              AND TABLE_NAME = 'blur_elysium_slides'
-             AND REFERENCED_TABLE_NAME IS NOT NULL
-             AND COLUMN_NAME IN (:columns)",
-            ['columns' => $allColumns],
-            ['columns' => ArrayParameterType::STRING]
+             AND CONSTRAINT_TYPE = 'FOREIGN KEY'"
         );
 
         foreach ($fkConstraints as $fk) {
-            try {
-                $connection->executeStatement(
-                    'ALTER TABLE blur_elysium_slides DROP FOREIGN KEY IF EXISTS `' . $fk['CONSTRAINT_NAME'] . '`'
-                );
-            } catch (\Exception $e) {
-                // Ignore
+            $connection->executeStatement(
+                'ALTER TABLE blur_elysium_slides DROP FOREIGN KEY `' . $fk['CONSTRAINT_NAME'] . '`'
+            );
+        }
+
+        // Drop indexes that actually exist for the target columns
+        $existingIndexes = $connection->fetchAllAssociative(
+            "SELECT INDEX_NAME, COLUMN_NAME
+             FROM information_schema.STATISTICS
+             WHERE TABLE_SCHEMA = DATABASE()
+             AND TABLE_NAME = 'blur_elysium_slides'"
+        );
+
+        $indexesToDrop = [];
+        foreach ($existingIndexes as $index) {
+            if ($index['INDEX_NAME'] !== 'PRIMARY' && \in_array($index['COLUMN_NAME'], $columns, true)) {
+                $indexesToDrop[] = $index['INDEX_NAME'];
             }
         }
 
-        // Now drop the indexes
-        foreach ($allColumns as $column) {
-            $indexName = 'fk.blur_elysium_slides.' . $column;
-            try {
-                $connection->executeStatement(
-                    'ALTER TABLE blur_elysium_slides DROP INDEX IF EXISTS `' . $indexName . '`'
-                );
-            } catch (\Exception $e) {
-                // Ignore if index doesn't exist
-            }
+        foreach (array_unique($indexesToDrop) as $indexName) {
+            $connection->executeStatement(
+                'ALTER TABLE blur_elysium_slides DROP INDEX `' . $indexName . '`'
+            );
         }
 
-        // Drop columns (use IF EXISTS for safety)
+        // Drop columns that still exist
         foreach ($columns as $column) {
-            try {
+            if ($this->hasColumn($connection, 'blur_elysium_slides', $column)) {
                 $connection->executeStatement(
-                    'ALTER TABLE blur_elysium_slides DROP COLUMN IF EXISTS `' . $column . '`'
+                    'ALTER TABLE blur_elysium_slides DROP COLUMN `' . $column . '`'
                 );
-            } catch (\Exception $e) {
-                // Column might already be dropped
             }
         }
     }
