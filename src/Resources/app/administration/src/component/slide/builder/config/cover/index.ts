@@ -193,12 +193,10 @@ export default Component.wrapComponentConfig({
                     console.error(exception);
                 });
         },
-    },
 
-    methods: {
         contentSettingsPlaceholder(path: string, fallback?: string): string {
             return getContentSettingsPlaceholder(this.slide, path, fallback);
-        }
+        },
     },
 
     created() {

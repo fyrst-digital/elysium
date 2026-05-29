@@ -252,7 +252,7 @@ export default Component.wrapComponentConfig({
 
             // Build a display copy with merged fallback values for the preview iframe
             const displaySlide = JSON.parse(JSON.stringify(this.slide));
-            displaySlide.contentSettings = getDisplayContentSettings(this.slide);
+            displaySlide.contentSettings = JSON.parse(JSON.stringify(getDisplayContentSettings(this.slide)));
 
             iframe.contentWindow.postMessage({
                 type: 'elysium-slide-update',

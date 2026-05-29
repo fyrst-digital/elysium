@@ -73,11 +73,11 @@ export function getDisplayContentSettings(slide: Record<string, unknown>): Conte
     const defaultSettings = getDefaultLanguageContentSettings(slide);
 
     if (!defaultSettings) {
-        return current;
+        return JSON.parse(JSON.stringify(current));
     }
 
     const merged = JSON.parse(JSON.stringify(defaultSettings)) as Record<string, unknown>;
-    deepMerge(merged, current as Record<string, unknown>);
+    deepMerge(merged, JSON.parse(JSON.stringify(current)) as Record<string, unknown>);
 
     return merged as ContentSettings;
 }

@@ -59,9 +59,9 @@
                         v-if="permissionView"
                         :to="{ name: 'blur.elysium.slides.detail', params: { id: item.id } }"
                     >
-                        {{ item.name }}
+                        {{ item.translated ? item.translated.name : item.name }}
                     </router-link>
-                    <template v-else>{{ item.name }}</template>
+                    <template v-else>{{ item.translated ? item.translated.name : item.name }}</template>
                     <py-icon 
                         v-if="getSlideHints(item).length > 0"
                         name="info-bold"
@@ -88,6 +88,9 @@
                         </template>
                     </mt-icon> #}
                 </div>
+            </template>
+            <template #column-contentSettings.title="{ item }">
+                {{ displayContentSettings(item).title || '' }}
             </template>
             <template #more-actions="{ item }">
                 <sw-context-menu-item

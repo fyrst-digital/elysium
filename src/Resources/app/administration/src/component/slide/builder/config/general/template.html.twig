@@ -7,7 +7,13 @@
     })">
 
   <py-column>
-    <py-text-field :label="$tc('blurElysiumSlides.forms.slideName.label')" :placeholder="$tc('blurElysiumSlides.forms.slideName.placeholder')" :required="true" :error="useError('name')" v-model="slide.name" @blur="trimSlideName"/>
+    <py-text-field 
+    :label="$tc('blurElysiumSlides.forms.slideName.label')" 
+    :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))" 
+    :required="true" 
+    :error="useError('name')" 
+    v-model="slide.name" 
+    @blur="trimSlideName"/>
   </py-column>
 
   <py-column>
