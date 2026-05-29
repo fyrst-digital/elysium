@@ -19,11 +19,6 @@
       <tag name="shopware.cms.data_resolver"/>
     </service>
 
-    <!-- Elysium Slides Entity Extension -->
-    <service id="Blur\BlurElysiumSlider\Extension\Content\Media\MediaDefinitionExtension">
-      <tag name="shopware.entity.extension"/>
-    </service>
-
     <!-- Elysium Slides Entity Hydrator -->
     <service id="Blur\BlurElysiumSlider\Core\Framework\DataAbstractionLayer\Dbal\ElysiumSlidesHydrator" public="true">
       <argument type="service" id="service_container"/>

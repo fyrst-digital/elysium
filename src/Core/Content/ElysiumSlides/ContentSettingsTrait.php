@@ -113,7 +113,9 @@ trait ContentSettingsTrait
 
     public function getContentButtonLabel(): ?string
     {
-        return $this->getContentSettingsValue('button')['label'] ?? null;
+        $button = $this->getContentSettingsValue('button');
+
+        return \is_array($button) ? ($button['label'] ?? null) : null;
     }
 
     public function getContentUrl(): ?string
@@ -125,22 +127,30 @@ trait ContentSettingsTrait
 
     public function getContentSlideCoverMobileId(): ?string
     {
-        return $this->getContentSettingsValue('slideCover')['mobileId'] ?? null;
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['mobileId'] ?? null) : null;
     }
 
     public function getContentSlideCoverTabletId(): ?string
     {
-        return $this->getContentSettingsValue('slideCover')['tabletId'] ?? null;
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['tabletId'] ?? null) : null;
     }
 
     public function getContentSlideCoverDesktopId(): ?string
     {
-        return $this->getContentSettingsValue('slideCover')['desktopId'] ?? null;
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['desktopId'] ?? null) : null;
     }
 
     public function getContentSlideCoverVideoId(): ?string
     {
-        return $this->getContentSettingsValue('slideCover')['videoId'] ?? null;
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['videoId'] ?? null) : null;
     }
 
     public function getContentFocusImageId(): ?string
@@ -150,12 +160,16 @@ trait ContentSettingsTrait
 
     public function getContentSlideCoverAlt(): ?string
     {
-        return $this->getContentSettingsValue('slideCover')['alt'] ?? null;
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['alt'] ?? null) : null;
     }
 
     public function getContentSlideCoverTitle(): ?string
     {
-        return $this->getContentSettingsValue('slideCover')['title'] ?? null;
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['title'] ?? null) : null;
     }
 
     /**

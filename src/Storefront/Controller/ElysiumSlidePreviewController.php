@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Storefront\Controller;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Blur\BlurElysiumSlider\DataResolver\MediaResolutionTrait;
 use Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry;
 use Shopware\Core\Content\Media\MediaCollection;
-use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -25,6 +25,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(defaults: [PlatformRequest::ATTRIBUTE_ROUTE_SCOPE => [StorefrontRouteScope::ID]])]
 class ElysiumSlidePreviewController extends StorefrontController
 {
+    use MediaResolutionTrait;
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository,
         private readonly EntityRepository $mediaRepository,
@@ -170,7 +171,7 @@ class ElysiumSlidePreviewController extends StorefrontController
 
         $resolvedMedia = $isNewSlide
             ? new MediaCollection([])
-            : $this->resolveMediaForSlide($slide, $context);
+            : $this->resolveMediaForSlides([$slide], $this->mediaRepository, $context);
 
         $response = $this->render('@Storefront/storefront/elysium-slide/preview.html.twig', [
             'slideData' => $slide,
@@ -209,19 +210,4 @@ class ElysiumSlidePreviewController extends StorefrontController
         return $slide;
     }
 
-    private function resolveMediaForSlide(ElysiumSlidesEntity $slide, SalesChannelContext $context): MediaCollection
-    {
-        $mediaIds = $slide->getContentMediaIds();
-
-        if (empty($mediaIds)) {
-            return new MediaCollection([]);
-        }
-
-        $criteria = new Criteria($mediaIds);
-        $criteria->addAssociation('mediaFolder');
-        $criteria->addAssociation('mediaFolder.configuration');
-        $criteria->addAssociation('thumbnails');
-
-        return $this->mediaRepository->search($criteria, $context->getContext())->getEntities();
-    }
 }
