@@ -248,7 +248,7 @@ function renderCover(slide, element, resolvedMedia, device) {
     }
 
     // Mobile-first fallback: select cover for the current device
-    let selectedCover = null;
+    let selectedCover;
     switch (device) {
         case 'mobile':
             selectedCover = covers.mobile || null;

@@ -35,6 +35,9 @@ trait MediaResolutionTrait
 
         $result = $mediaRepository->search($criteria, $context->getContext());
 
-        return $result->getEntities();
+        /** @var MediaCollection $mediaCollection */
+        $mediaCollection = $result->getEntities();
+
+        return $mediaCollection;
     }
 }
