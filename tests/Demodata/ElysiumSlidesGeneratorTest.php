@@ -4,7 +4,7 @@ namespace Blur\BlurElysiumSlider\Tests\Demodata;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Demodata\ElysiumSlidesGenerator;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
-use Blur\BlurElysiumSlider\Defaults;
+
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -54,14 +54,13 @@ class ElysiumSlidesGeneratorTest extends TestCase
         $reflection = new ReflectionClass(ElysiumSlidesGenerator::class);
         $params = $reflection->getConstructor()->getParameters();
 
-        static::assertCount(7, $params);
+        static::assertCount(6, $params);
         static::assertSame('writer', $params[0]->getName());
         static::assertSame('fileSaver', $params[1]->getName());
         static::assertSame('fileNameProvider', $params[2]->getName());
         static::assertSame('elysiumSlidesDefinition', $params[3]->getName());
         static::assertSame('mediaDefinition', $params[4]->getName());
         static::assertSame('connection', $params[5]->getName());
-        static::assertSame('projectDir', $params[6]->getName());
     }
 
     public function testEnsureDependenciesThrowsWhenImagesGeneratorMissing(): void
@@ -163,7 +162,6 @@ class ElysiumSlidesGeneratorTest extends TestCase
             $this->createStub(ElysiumSlidesDefinition::class),
             $this->createStub(MediaDefinition::class),
             $this->createStub(Connection::class),
-            '/tmp/elysium-test',
         );
     }
 

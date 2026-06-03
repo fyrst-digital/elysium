@@ -40,7 +40,6 @@ class ElysiumSlidesGenerator implements DemodataGeneratorInterface
         private readonly ElysiumSlidesDefinition $elysiumSlidesDefinition,
         private readonly MediaDefinition $mediaDefinition,
         private readonly Connection $connection,
-        private readonly string $projectDir,
     ) {
     }
 
@@ -96,9 +95,7 @@ class ElysiumSlidesGenerator implements DemodataGeneratorInterface
         $productId = $this->pickRandomId('product', $console, 'No products found. Slides will be created without product links.');
         $categoryId = $this->pickRandomId('category', $console, 'No categories found. Slides will be created without category links.');
 
-        if ($productId === null && $categoryId === null) {
-            $linkingType = 'url';
-        } elseif ($productId !== null) {
+        if ($productId !== null) {
             $linkingType = 'product';
         } elseif ($categoryId !== null) {
             $linkingType = 'category';
@@ -211,10 +208,6 @@ class ElysiumSlidesGenerator implements DemodataGeneratorInterface
             $mediaId,
             $context->getContext()
         );
-
-        if (is_file($imagePath)) {
-            @unlink($imagePath);
-        }
 
         return $mediaId;
     }

@@ -131,7 +131,6 @@
         <argument type="service" id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition"/>
         <argument type="service" id="Shopware\Core\Content\Media\MediaDefinition"/>
         <argument type="service" id="Doctrine\DBAL\Connection"/>
-        <argument>%kernel.project_dir%</argument>
         <tag name="shopware.demodata_generator" option-name="elysium-slides" option-default="0"/>
     </service>
 
