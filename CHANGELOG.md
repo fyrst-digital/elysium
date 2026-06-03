@@ -2,6 +2,7 @@
 
 **Changelog**
 - Fixed product variants not showing in the slide editor live preview
+- Updated slide cover image description to reflect mobile-first default behavior
 
 # 4.8.0
 

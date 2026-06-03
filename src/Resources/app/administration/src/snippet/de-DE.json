@@ -298,7 +298,7 @@
             },
             "slideCoverImage": {
                 "label": "Bild",
-                "description": "Füge ein Bild als Slide Hintergrund hinzu. Das Cover Bild kann für Smartphone-, Tablet- und Desktop-Ansicht definiert werden. Das Desktop Bild dient als Standard. Gültige Bildformate sind jpg, png, webp, svg, avif"
+                "description": "Füge ein Bild als Slide Hintergrund hinzu. Das Cover Bild kann für Smartphone-, Tablet- und Desktop-Ansicht definiert werden. Das Smartphone Bild dient als Standard. Gültige Bildformate sind jpg, png, webp, svg, avif"
             },
             "slideCoverVideo": {
                 "label": "Video",

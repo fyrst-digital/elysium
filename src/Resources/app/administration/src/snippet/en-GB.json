@@ -298,7 +298,7 @@
             },
             "slideCoverImage": {
                 "label": "Image",
-                "description": "Add an image as Slide background. The cover image can be defined for phone, tablet and desktop view. The desktop image serves as default. Valid image formats are jpg, png, webp, svg, avif"
+                "description": "Add an image as Slide background. The cover image can be defined for phone, tablet and desktop view. The mobile image serves as default. Valid image formats are jpg, png, webp, svg, avif"
             },
             "slideFocusImage": {
                 "label": "Focus image",
