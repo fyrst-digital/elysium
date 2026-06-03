@@ -116,6 +116,23 @@
         <tag name="console.command"/>
     </service>
 
+    <service id="Blur\BlurElysiumSlider\Command\ElysiumDemodataCommand">
+        <argument type="service" id="Shopware\Core\Framework\Demodata\DemodataService"/>
+        <argument type="service" id="event_dispatcher"/>
+        <argument>%kernel.environment%</argument>
+        <tag name="console.command"/>
+    </service>
+
+    <!-- Elysium Slides Demodata Generator (auto-registered with framework:demodata) -->
+    <service id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Demodata\ElysiumSlidesGenerator">
+        <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Write\EntityWriter"/>
+        <argument type="service" id="Shopware\Core\Content\Media\File\FileSaver"/>
+        <argument type="service" id="Shopware\Core\Content\Media\File\FileNameProvider"/>
+        <argument type="service" id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition"/>
+        <argument type="service" id="Shopware\Core\Content\Media\MediaDefinition"/>
+        <tag name="shopware.demodata_generator" option-name="elysium-slides" option-default="0"/>
+    </service>
+
     <!-- Elysium Slide Preview Controller -->
     <service id="Blur\BlurElysiumSlider\Storefront\Controller\ElysiumSlidePreviewController" public="true">
       <argument type="service" id="blur_elysium_slides.repository"/>
