@@ -6,7 +6,6 @@ namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Demodata;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Defaults;
-use Doctrine\DBAL\Connection;
 use Maltyxx\ImagesGenerator\ImagesGeneratorProvider;
 use Shopware\Core\Content\Media\File\FileNameProvider;
 use Shopware\Core\Content\Media\File\FileSaver;
@@ -39,7 +38,6 @@ class ElysiumSlidesGenerator implements DemodataGeneratorInterface
         private readonly FileNameProvider $fileNameProvider,
         private readonly ElysiumSlidesDefinition $elysiumSlidesDefinition,
         private readonly MediaDefinition $mediaDefinition,
-        private readonly Connection $connection,
     ) {
     }
 
@@ -70,11 +68,9 @@ class ElysiumSlidesGenerator implements DemodataGeneratorInterface
     }
 
     /**
-     * @internal
-     *
      * @return array<string, mixed>
      */
-    public function buildSlidePayload(DemodataContext $context, int $index): array
+    private function buildSlidePayload(DemodataContext $context, int $index): array
     {
         $coverMediaId = $this->createPlaceholderMedia($context, sprintf('Elysium Slide #%d', $index), 1920, 600);
         $mobileCoverMediaId = $this->createPlaceholderMedia($context, sprintf('Elysium Slide #%d (Mobile)', $index), 800, 1200);
@@ -90,10 +86,9 @@ class ElysiumSlidesGenerator implements DemodataGeneratorInterface
     public function assembleSlidePayload(DemodataContext $context, int $index, string $coverMediaId, string $mobileCoverMediaId): array
     {
         $faker = $context->getFaker();
-        $console = $context->getConsole();
 
-        $productId = $this->pickRandomId('product', $console, 'No products found. Slides will be created without product links.');
-        $categoryId = $this->pickRandomId('category', $console, 'No categories found. Slides will be created without category links.');
+        $productId = $context->getRandomId('product');
+        $categoryId = $context->getRandomId('category');
 
         if ($productId !== null) {
             $linkingType = 'product';
@@ -210,21 +205,6 @@ class ElysiumSlidesGenerator implements DemodataGeneratorInterface
         );
 
         return $mediaId;
-    }
-
-    private function pickRandomId(string $table, \Symfony\Component\Console\Style\SymfonyStyle $console, string $emptyMessage): ?string
-    {
-        $ids = $this->connection->fetchFirstColumn(
-            sprintf('SELECT LOWER(HEX(id)) FROM %s ORDER BY RAND() LIMIT 1', $table)
-        );
-
-        if ($ids === []) {
-            $console->warning($emptyMessage);
-
-            return null;
-        }
-
-        return (string) $ids[0];
     }
 
     private function ensureDependencies(): void
