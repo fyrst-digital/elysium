@@ -44,6 +44,8 @@ class ElysiumSliderStruct extends Struct
     public function setResolvedMedia(MediaCollection $resolvedMedia): void
     {
         $this->resolvedMedia = $resolvedMedia;
+    }
+
     /**
      * @return array<string, array<string, mixed>>|null
      */
