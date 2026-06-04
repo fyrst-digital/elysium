@@ -49,18 +49,9 @@
     speed: element.translated.config.settings.value.speed,
     pagination: element.translated.config.navigation.value.active ? paginationOptions : false,
     breakpoints: {
-        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): {
-            slidesPerView: element.config.viewports.value.mobile.settings.slidesPerPage ?? 1,
-            spaceBetween: element.config.viewports.value.mobile.sizing.slidesGap ?? 0
-        },
-        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)): {
-            slidesPerView: element.config.viewports.value.tablet.settings.slidesPerPage ?? 1,
-            spaceBetween: element.config.viewports.value.tablet.sizing.slidesGap ?? 0
-        },
-        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)): {
-            slidesPerView: element.config.viewports.value.desktop.settings.slidesPerPage ?? 1,
-            spaceBetween: element.config.viewports.value.desktop.sizing.slidesGap ?? 0
-        }
+        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): element.data.resolvedViewports.mobile,
+        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)): element.data.resolvedViewports.tablet,
+        (theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)): element.data.resolvedViewports.desktop,
     }
 } %}
 

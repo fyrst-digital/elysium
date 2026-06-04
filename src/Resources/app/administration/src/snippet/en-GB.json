@@ -1,594 +1,600 @@
 {
-    "global": {
-        "error-codes": {
-            "24c1a406-ed22-4e82-bda2-5bc2df52977f": "Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace.",
-            "3e6eacf6-013c-48ab-a557-c218aa64aaa1": "The \"activeFrom\" date must be before the \"activeUntil\" date."
-        },
-        "entities": {
-            "blur_elysium_slides": "Elysium Slides"
-        }
+  "global": {
+    "error-codes": {
+      "24c1a406-ed22-4e82-bda2-5bc2df52977f": "Slide name contains invalid characters. Only letters, numbers, spaces, and dashes are allowed. The name must not start or end with whitespace.",
+      "3e6eacf6-013c-48ab-a557-c218aa64aaa1": "The \"activeFrom\" date must be before the \"activeUntil\" date."
     },
-    "sw-profile": {
-        "tabSearchPreferences": {
-            "modules": {
-                "blur_elysium_slides": {
-                    "name": "Slide name",
-                    "title": "Slide title"
-                }
-            }
-        }
-    },
-    "sw-privileges": {
-        "permissions": {
-            "blur_elysium_slides": {
-                "label": "Elysium Slides"
-            }
-        }
-    },
-    "blurElysium": {
-        "settingsLabel": "Elysium settings",
-        "settings": {
-            "label": "Elysium settings",
-            "breakpointsDescription": "Elysium sliders, banners and slides use device settings for smartphone, tablet and desktop views. You can set the device sizes to be used in the frontend. The breakpoints of the default storefront theme are used here. The lower selection shows the default pixel values. <b>These may vary depending on the theme used or custom developments.</b>"
-        },
-        "cmsBlockGroup": "Elysium Blocks",
-        "general": {
-            "settings": "Settings",
-            "cssClasses": {
-                "label": "CSS Classes",
-                "helpText": "Here you can specify one or more CSS classes, separated by a space. These classes will be applied to the CMS element.",
-                "placeholder": "custom-class second-custom-class"
-            },
-            "placeholderSearchBar": "Search for Slide...",
-            "noHeadline": "No Headline",
-            "removeItem": "Remove",
-            "addItem": "Add",
-            "general": "General",
-            "appearance": "Appearance",
-            "text": "Text",
-            "content": "Content",
-            "copySuffix": "copy",
-            "backgroundColor": "Background color",
-            "fontSize": "Font size",
-            "textColor": "Text color",
-            "unitPx": "Px",
-            "color": "Color",
-            "colorActive": "Color: active",
-            "iconColor": "Icon color",
-            "iconColorActive": "Icon color: active",
-            "bgColor": "Background color",
-            "bgColorActive": "Background color: active",
-            "colorStates": {
-                "primary": "Primary",
-                "secondary": "Secondary",
-                "success": "Success",
-                "danger": "Danger",
-                "warning": "Warning",
-                "info": "Info",
-                "light": "Light",
-                "dark": "Dark",
-                "link": "Link",
-                "outlinePrimary": "Outline Primary",
-                "outlineSecondary": "Outline Secondary",
-                "outlineSuccess": "Outline Success",
-                "outlineDanger": "Outline Danger",
-                "outlineWarning": "Outline Warning",
-                "outlineInfo": "Outline Info",
-                "outlineLight": "Outline Light",
-                "outlineDark": "Outline Dark"
-            },
-            "auto": "Auto",
-            "sm": "Small",
-            "md": "Medium",
-            "lg": "Large",
-            "noLimit": "No limit",
-            "horizontal": "Horizontal",
-            "vertical": "Vertical",
-            "textAlign": "Text align",
-            "left": "Left",
-            "center": "Center",
-            "right": "Right",
-            "top": "Top",
-            "bottom": "Bottom",
-            "spacing": "Spacing",
-            "gap": "Gap",
-            "paddingX": "Vertical spacing",
-            "paddingY": "Horizontal spacing",
-            "borderRadius": "Border radius",
-            "order": "Order",
-            "switchDevice": "Switch to {device}",
-            "alignment": "Alignment",
-            "alignX": {
-                "label": "Alignment: horizontal",
-                "center": "Center",
-                "flexStart": "Left",
-                "flexEnd": "Right"
-            },
-            "alignY": {
-                "label": "Alignment: vertical",
-                "center": "Center",
-                "flexStart": "Top",
-                "flexEnd": "Bottom"
-            },
-            "jusitifyContent": "Justify content",
-            "jusitifyNormal": "Normal",
-            "jusitifyStart": "Start",
-            "jusitifyCenter": "Center",
-            "jusitifyEnd": "End",
-            "jusitifyStretch": "Stretch",
-            "jusitifyBetween": "Between",
-            "jusitifyAroud": "Around",
-            "alignItemsLabel": "Align items",
-            "alignItems": {
-                "stretch": "Stretch",
-                "flexStart": "Start",
-                "center": "Center",
-                "flexEnd": "End"
-            },
-            "alignStart": "Start",
-            "alignCenter": "Center",
-            "alignEnd": "End",
-            "flexStart": "Start",
-            "flexEnd": "End",
-            "normal": "Normal",
-            "spaceBetween": "Between",
-            "spaceAround": "Around",
-            "stretch": "Stretch",
-            "objectPosY": "Position: vertical",
-            "objectPosX": "Position: horizontal",
-            "objectPos": "Position",
-            "objectFit": "Fit",
-            "cover": "Cover",
-            "contain": "Contain",
-            "ratio": "Ratio",
-            "blockAlignment": "Block alignment",
-            "noViewportConfigAvailable": "Device-specific settings are not available in the form view. Switch to a device view to edit these settings.",
-            "timeControl": {
-                "label": "Time Control",
-                "activeFrom": {
-                    "label": "Active from",
-                    "placeholder": "Select start date and time"
-                },
-                "activeUntil": {
-                    "label": "Active until",
-                    "placeholder": "Select end date and time"
-                }
-            }
-        },
-        "action": {
-            "cancel": "Cancel",
-            "createSlide": "Create Slide",
-            "toOverview": "To overview"
-        },
-        "messages": {
-            "deviceSettingNote": "This setting is device aware. Current device: {device}"
-        },
-        "device": {
-            "phone": "Smartphone",
-            "tablet": "Tablet",
-            "desktop": "Desktop"
-        }
-    },
-    "blurElysiumSlides": {
-        "label": "Elysium Slides",
-        "slideBuilderLabel": "Slide Builder",
-        "slideOverviewLabel": "Slide Overview",
-        "description": "Here you can create Slides for Elysium Shopping Experiences elements.",
-        "emptySlidesTitle": "No Elysium Slides found",
-        "messages": {
-            "cancelSlideCreation": "Cancel Slide creation and return to overview",
-            "cancelSlideChanges": "Discard changes and reload the page",
-            "slideDeleteConfirm": "Do you really want to delete the slide?",
-            "slideDeleteSucces": "Slide has been deleted",
-            "slideDeleteError": "An error occurred while deleting the slide",
-            "slideSavedSuccess": "Slide <b>{slide}</b> has been saved",
-            "emptySlideNameErrorTitle": "No Slide name",
-            "emptySlideNameError": "Please provide a Slide name",
-            "slideSaveErrorTitle": "Something went wrong",
-            "slideSaveError": "The Slide couldn't be saved",
-            "productLinkingMissingEntity": "Please select a product you would like to link",
-            "categoryLinkingMissingEntity": "Please select a category you would like to link",
-            "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten.",
-            "copyErrorUnsavedChanges": "Please save your changes before copying a slide."
-        },
-        "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
-        "actions": {
-            "confirmAction": "Confirm action",
-            "newSlide": "New Slide",
-            "copySlide": "Copy Slide",
-            "editSlide": "Edit Slide",
-            "deleteSlide": "Delete Slide"
-        },
-        "grid": {
-            "nameLabel": "Name",
-            "headlineLabel": "Headline",
-            "hints": {
-                "hasCustomFields": "Has custom fields",
-                "hasActiveFrom": "Has active from date",
-                "hasActiveUntil": "Has active until date"
-            }
-        },
-        "settings": {
-            "baseLabel": "General",
-            "mediaLabel": "Media",
-            "displayLabel": "Display",
-            "advancedLabel": "Advanced"
-        },
-        "forms": {
-            "generalTitle": "General",
-            "contentLabel": "Content",
-            "useMediaAsSlideCover": "Use as Slide cover",
-            "useMediaAsFocusImage": "Use as Focus image",
-            "slideName": {
-                "label": "Name",
-                "placeholder": "my-slide"
-            },
-            "slideHeadline": {
-                "label": "Headline",
-                "placeholder": "My awesome Slide!"
-            },
-            "slideCssClass": {
-                "label": "CSS Classes",
-                "placeholder": "custom-class second-custom-class",
-                "helpText": "Specify one or more CSS classes for the slide, separated by a space"
-            },
-            "slideTimeControl": {
-                "activeFrom": {
-                    "helpText": "Slide will be displayed from this datetime onwards. Leave empty for no start restriction."
-                },
-                "activeUntil": {
-                    "helpText": "Slide will be displayed until this datetime. Leave empty for no end restriction."
-                }
-            },
-            "slideHeadlineElement": {
-                "label": "HTML Element",
-                "helpText": "Specify an HTML element for the heading. If no element is selected, a <b>div</b> element is used"
-            },
-            "slideDescription": {
-                "label": "Description"
-            },
-            "slideBackground": {
-                "label": "Background"
-            },
-            "slideGradient": {
-                "label": "Gradient",
-                "startColor": "Start color",
-                "endColor": "End color",
-                "gradientType": "Type",
-                "gradientTypeLinear": "Linear",
-                "gradientDeg": "Degree"
-            },
-            "slideLinking": {
-                "label": "Linking",
-                "typeLabel": "Linking type",
-                "typeCustom": "Custom",
-                "typeProduct": "Product",
-                "typeCategory": "Category",
-                "customUrl": "Custom URL",
-                "customUrlPlaceholder": "/my/url/path or https://example.com",
-                "customUrlHelpText": "Set the linking URL of the slide. This can be both an absolute or a relative URL.",
-                "selectProduct": "Select product",
-                "selectCategory": "Select category",
-                "showProductFocusImage": "Show product image",
-                "showProductTitle": "Show product title",
-                "showProductDescription": "Show product description",
-                "showCategoryFocusImage": "Show category image",
-                "showCategoryTitle": "Show category title",
-                "showCategoryDescription": "Show category description"
-            },
-            "slideButtonLabel": {
-                "label": "Button label",
-                "placeholder": "Learn more",
-                "helpText": "Set the button label. If there is no label, no button is displayed."
-            },
-            "slideButtonAppearance": {
-                "label": "Button color",
-                "helpText": "Sets the button appearance. The colors are based on the used theme"
-            },
-            "slideButtonSize": {
-                "label": "Button size"
-            },
-            "slideLinkingOpenExternal": "Open in new Tab",
-            "slideLinkingOverlay": {
-                "label": "Link overlay",
-                "helpText": "If this option is active, the entire slide is used as a link area. In this case, the button is hidden."
-            },
-            "slideCover": {
-                "label": "Cover"
-            },
-            "slideCoverImage": {
-                "label": "Image",
-                "description": "Add an image as Slide background. The cover image can be defined for phone, tablet and desktop view. The desktop image serves as default. Valid image formats are jpg, png, webp, svg, avif"
-            },
-            "slideFocusImage": {
-                "label": "Focus image",
-                "description": "The focus image is displayed as a separate image next to the content area."
-            },
-            "slideCoverVideo": {
-                "label": "Video",
-                "description": "Add a video as Slide background. The Cover video applies to all views. Valid video formats are mp4"
-            },
-            "slideCoverMeta": {
-                "label": "Meta data",
-                "description": "Add alternative alt and title texts. This is useful when you use more than one image as a cover. This way you have finer control over these texts.",
-                "alt": {
-                    "label": "Alt text"
-                },
-                "title": {
-                    "label": "Title"
-                }
-            },
-            "displaySlide": {
-                "label": "Slide",
-                "description": "These settings affect the slide itself.",
-                "alignmentDescription": "These settings determine the orientation of the inner container"
-            },
-            "displayContainer": {
-                "label": "Container",
-                "description": "These settings affect the slide container. The slide container encloses the content and the image element",
-                "alignmentDescription": "These settings affect the alignment of the inner container elements. If the elements displayed one below the other, these settings are reversed."
-            },
-            "displayContent": {
-                "label": "Content",
-                "description": "These settings affect the content container. The content container encloses the contents like headline, description and button"
-            },
-            "displayImage": {
-                "label": "Image element"
-            },
-            "focusImage": {
-                "fullWidth": "Stretch image to full width"
-            },
-            "slideDirectionColumn": {
-                "label": "Display elements one below the other"
-            },
-            "slideContentOrder": {
-                "label": "Layout order",
-                "default": "Default (Content - Image)",
-                "reverse": "Reverse (Image - Content)",
-                "helpText": "Defines the order of the container elements"
-            },
-            "slideWidth": {
-                "label": "Width limit",
-                "noMaxWidth": "No width limit",
-                "tooltip": "0% stands for auto width"
-            },
-            "basis": {
-                "label": "Base",
-                "tooltip": "0% stands for auto width"
-            },
-            "customTemplateFile": {
-                "label": "Custom template file",
-                "description": "Here you can define your own Twig template file. If you enter a Twig template file, you will need to add it to your theme or extension by yourself.",
-                "placeholder": "my-slide-template",
-                "pathInfoTitle": "The path to this file is:",
-                "pathInfo": "<code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code>",
-                "fileName": "File name"
-            },
-            "customFields": {
-                "label": "Custom fields",
-                "emptyFieldSet": "No custom fields have been created for Elysium Slides yet. A set for Elysium Slides can be created in the custom fields Settings",
-                "newSlide": "To use the Custom fields, save the Slide first."
-            }
-        },
-        "slideSelection": {
-            "noSlides": "Apparently there are no slides available yet. Slides can be created in the Elysium Slides module and then linked here",
-            "searchLabel": "Choose your Slides",
-            "listLabel": "Slide selection",
-            "listNoSelection": "Click in the search field and select your Slides. You will find your slides under <b>Contents → Elysium Slides</b>, where you can also create new slides."
-        },
-        "slideSearch": {
-            "noResult": "No Slides found"
-        },
-        "preview": {
-            "noDomainAvailableTitle": "No storefront domain available",
-            "noDomainAvailableDescription": "There is no sales channel domain configured that can be used for the live preview. Please configure at least one domain in your sales channels.",
-            "notice": "This is only an approximate preview and may differ from the actual display in the storefront. Individual theme styles, CSS classes and Twig templates are not taken into account in this preview.",
-            "toolbar": {
-                "aspectRatio": "Aspect ratio",
-                "width": "Width",
-                "salesChannel": "Sales channel",
-                "placeholderWidth": "in pixels"
-            }
-        }
-    },
-    "blurElysiumSlider": {
-        "label": "Elysium Slider",
-        "messages": {
-            "cmsDescription": "Select one or more slides in the element settings and define further slider settings."
-        },
-        "config": {
-            "contentLabel": "Content",
-            "content": {
-                "sliderTitle": "Slider title (optional)",
-                "slideCollectionTitle": "Slide collection"
-            },
-            "settingsLabel": "Settings",
-            "settings": {
-                "general": "General",
-                "titleSrOnly": {
-                    "label": "Visually hide text",
-                    "helpText": "Enable this option to visually hide the title. The title will still be recognized by screen readers"
-                },
-                "slidesPerPage": {
-                    "label": "Slides per view",
-                    "placeholder": "1"
-                },
-                "containerWidth": {
-                    "label": "Content Container width",
-                    "content": "Page Content width",
-                    "full": "Full width",
-                    "helpText": "Define the content container width. On <b>Page Content</b> the maximum width of the container follows the paqe content width. On <b>Full width</b> the content container is in full width"
-                },
-                "slideEffect": {
-                    "label": "Slide Effect",
-                    "helpText": "Choose the transition effect between slides. Slide effect provides a horizontal sliding animation, while Fade effect creates a smooth cross-fade transition.",
-                    "slide": "Slide",
-                    "fade": "Fade"
-                },
-                "rewind": "Rewind Slides",
-                "overlay": "Show Overlay",
-                "justifySlideHeight": "Justify slide heights",
-                "speed": {
-                    "label": "Slide Speed",
-                    "placeholder": "Time in Millisecond"
-                },
-                "autoplay": {
-                    "label": "Autoplay",
-                    "active": "Activate Autoplay",
-                    "interval": {
-                        "label": "Autoplay interval",
-                        "placeholder": "Time in Millisecond"
-                    },
-                    "pauseOnHover": "Pause Autoplay on Mouseover"
-                }
-            },
-            "sizingLabel": "Sizing",
-            "sizing": {
-                "label": "Sizing",
-                "selectViewport": {
-                    "label": "Viewport Size",
-                    "placeholder": "Select viewport"
-                },
-                "aspectRatio": {
-                    "label": "Aspect ratio",
-                    "width": "Width",
-                    "height": "Height",
-                    "description": "Defines the aspect ratio and therefore the size of the slider. The height can be limited to a maximum value."
-                },
-                "maxHeight": {
-                    "label": "Maximum height",
-                    "placeholder": "in pixel"
-                },
-                "emptyViewport": {
-                    "title": "Select viewport",
-                    "description": "Please choose a viewport size first"
-                },
-                "spacing": {
-                    "label": "Spacing",
-                    "slidesGap": {
-                        "label": "Gap between slides"
-                    }
-                }
-            },
-            "navigationLabel": "Navigation",
-            "navigation": {
-                "active": "Show Slider Navigation",
-                "position": {
-                    "label": "Position",
-                    "belowSlider": "Below the slider",
-                    "inSlider": "Inside the slider"
-                },
-                "align": {
-                    "label": "Alignment",
-                    "left": "Left",
-                    "center": "Center",
-                    "right": "Right"
-                },
-                "size": {
-                    "label": "Size"
-                },
-                "shape": {
-                    "label": "Shape",
-                    "circle": "Dot",
-                    "bar": "Bar"
-                },
-                "navPadding": {
-                    "label": "Padding"
-                }
-            },
-            "arrowsLabel": "Arrows",
-            "arrows": {
-                "label": "Arrows",
-                "active": "Show Slider Arrows",
-                "icons": {
-                    "label": "Icon",
-                    "arrow": "Arrow",
-                    "chevron": "Chevron"
-                },
-                "size": {
-                    "label": "Icon Size"
-                },
-                "offsetPadding": {
-                    "label": "Offset padding"
-                }
-            }
-        }
-    },
-    "blurElysiumBanner": {
-        "label": "Elysium Banner",
-        "config": {
-            "contentLabel": "Content",
-            "sizingLabel": "Sizing",
-            "selectSlide": "Choose a Slide",
-            "autoSizing": "Auto sizing",
-            "lazyLoading": "Lazy loading",
-            "settings": {
-                "general": "General"
-            }
-        },
-        "messages": {
-            "cmsDescription": "Select a Slide in the element settings and define further banner settings like the size."
-        }
-    },
-    "blurElysiumBlock": {
-        "settingLabel": "Settings",
-        "settings": {
-            "columnWidth": {
-                "colOneLabel": "Width: 1. Column",
-                "colTwoLabel": "Width: 2. Column"
-            },
-            "gridGapLabel": "Grid gap",
-            "columnWrapLabel": "Column wrap",
-            "columnStretchLabel": "Equal column height"
-        },
-        "blockTwoColLabel": "Elysium Block — 2 Columns"
-    },
-    "blurElysiumSection": {
-        "label": "Elysium Section",
-        "sidebar": {
-            "sectionSettingsTitle": "Elysium Section settings",
-            "sectionSettings": {
-                "breakpoints": {
-                    "title": "Breakpoints",
-                    "description": "Set different breakpoints for this section. The sizes are based on the theme settings",
-                    "tabletHelptext": "Defines the screen size at which the tablet view should take effect",
-                    "desktopHelptext": "Defines the screen size at which the desktop view should take effect"
-                },
-                "timeControl": {
-                    "activeFrom": {
-                        "helpText": "Section will be displayed from this datetime onwards. Leave empty for no start restriction."
-                    },
-                    "activeUntil": {
-                        "helpText": "Section will be displayed until this datetime. Leave empty for no end restriction."
-                    }
-                }
-            },
-            "blockSettingsTitle": "Elysium Block settings",
-            "blockSettings": {
-                "order": "Order",
-                "rows": "Rows",
-                "timeControl": {
-                    "activeFrom": {
-                        "helpText": "Block will be displayed from this datetime onwards. Leave empty for no start restriction."
-                    },
-                    "activeUntil": {
-                        "helpText": "Block will be displayed until this datetime. Leave empty for no end restriction."
-                    }
-                }
-            },
-            "blockRemovalNotification": "Will be removed in Version 4.0.0<br/>Use the Elysium Section instead to layout your blocks",
-            "elysiumSectionNotification": "Use the new <b>Elysium Section</b> to place and layout your blocks. You can find it right in the Section selection."
-        }
-    },
-    "apps": {
-        "sw-cms": {
-            "detail": {
-                "label": {
-                    "blockCategory": {
-                        "blur-elysium-blocks": "Elysium blocks"
-                    }
-                }
-            }
-        }
+    "entities": {
+      "blur_elysium_slides": "Elysium Slides"
     }
+  },
+  "sw-profile": {
+    "tabSearchPreferences": {
+      "modules": {
+        "blur_elysium_slides": {
+          "name": "Slide name",
+          "title": "Slide title"
+        }
+      }
+    }
+  },
+  "sw-privileges": {
+    "permissions": {
+      "blur_elysium_slides": {
+        "label": "Elysium Slides"
+      }
+    }
+  },
+  "blurElysium": {
+    "settingsLabel": "Elysium settings",
+    "settings": {
+      "label": "Elysium settings",
+      "breakpointsDescription": "Elysium sliders, banners and slides use device settings for smartphone, tablet and desktop views. You can set the device sizes to be used in the frontend. The breakpoints of the default storefront theme are used here. The lower selection shows the default pixel values. <b>These may vary depending on the theme used or custom developments.</b>"
+    },
+    "cmsBlockGroup": "Elysium Blocks",
+    "general": {
+      "settings": "Settings",
+      "cssClasses": {
+        "label": "CSS Classes",
+        "helpText": "Here you can specify one or more CSS classes, separated by a space. These classes will be applied to the CMS element.",
+        "placeholder": "custom-class second-custom-class"
+      },
+      "placeholderSearchBar": "Search for Slide...",
+      "noHeadline": "No Headline",
+      "removeItem": "Remove",
+      "addItem": "Add",
+      "general": "General",
+      "appearance": "Appearance",
+      "text": "Text",
+      "content": "Content",
+      "copySuffix": "copy",
+      "backgroundColor": "Background color",
+      "fontSize": "Font size",
+      "textColor": "Text color",
+      "unitPx": "Px",
+      "color": "Color",
+      "colorActive": "Color: active",
+      "iconColor": "Icon color",
+      "iconColorActive": "Icon color: active",
+      "bgColor": "Background color",
+      "bgColorActive": "Background color: active",
+      "colorStates": {
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "success": "Success",
+        "danger": "Danger",
+        "warning": "Warning",
+        "info": "Info",
+        "light": "Light",
+        "dark": "Dark",
+        "link": "Link",
+        "outlinePrimary": "Outline Primary",
+        "outlineSecondary": "Outline Secondary",
+        "outlineSuccess": "Outline Success",
+        "outlineDanger": "Outline Danger",
+        "outlineWarning": "Outline Warning",
+        "outlineInfo": "Outline Info",
+        "outlineLight": "Outline Light",
+        "outlineDark": "Outline Dark"
+      },
+      "auto": "Auto",
+      "sm": "Small",
+      "md": "Medium",
+      "lg": "Large",
+      "noLimit": "No limit",
+      "horizontal": "Horizontal",
+      "vertical": "Vertical",
+      "textAlign": "Text align",
+      "left": "Left",
+      "center": "Center",
+      "right": "Right",
+      "top": "Top",
+      "bottom": "Bottom",
+      "spacing": "Spacing",
+      "gap": "Gap",
+      "paddingX": "Vertical spacing",
+      "paddingY": "Horizontal spacing",
+      "borderRadius": "Border radius",
+      "order": "Order",
+      "switchDevice": "Switch to {device}",
+      "alignment": "Alignment",
+      "alignX": {
+        "label": "Alignment: horizontal",
+        "center": "Center",
+        "flexStart": "Left",
+        "flexEnd": "Right"
+      },
+      "alignY": {
+        "label": "Alignment: vertical",
+        "center": "Center",
+        "flexStart": "Top",
+        "flexEnd": "Bottom"
+      },
+      "jusitifyContent": "Justify content",
+      "jusitifyNormal": "Normal",
+      "jusitifyStart": "Start",
+      "jusitifyCenter": "Center",
+      "jusitifyEnd": "End",
+      "jusitifyStretch": "Stretch",
+      "jusitifyBetween": "Between",
+      "jusitifyAroud": "Around",
+      "alignItemsLabel": "Align items",
+      "alignItems": {
+        "stretch": "Stretch",
+        "flexStart": "Start",
+        "center": "Center",
+        "flexEnd": "End"
+      },
+      "alignStart": "Start",
+      "alignCenter": "Center",
+      "alignEnd": "End",
+      "flexStart": "Start",
+      "flexEnd": "End",
+      "normal": "Normal",
+      "spaceBetween": "Between",
+      "spaceAround": "Around",
+      "stretch": "Stretch",
+      "objectPosY": "Position: vertical",
+      "objectPosX": "Position: horizontal",
+      "objectPos": "Position",
+      "objectFit": "Fit",
+      "cover": "Cover",
+      "contain": "Contain",
+      "ratio": "Ratio",
+      "blockAlignment": "Block alignment",
+      "noViewportConfigAvailable": "Device-specific settings are not available in the form view. Switch to a device view to edit these settings.",
+      "timeControl": {
+        "label": "Time Control",
+        "activeFrom": {
+          "label": "Active from",
+          "placeholder": "Select start date and time"
+        },
+        "activeUntil": {
+          "label": "Active until",
+          "placeholder": "Select end date and time"
+        }
+      }
+    },
+    "action": {
+      "cancel": "Cancel",
+      "createSlide": "Create Slide",
+      "toOverview": "To overview"
+    },
+    "messages": {
+      "deviceSettingNote": "This setting is device aware. Current device: {device}"
+    },
+    "device": {
+      "phone": "Smartphone",
+      "tablet": "Tablet",
+      "desktop": "Desktop"
+    }
+  },
+  "blurElysiumSlides": {
+    "label": "Elysium Slides",
+    "slideBuilderLabel": "Slide Builder",
+    "slideOverviewLabel": "Slide Overview",
+    "description": "Here you can create Slides for Elysium Shopping Experiences elements.",
+    "emptySlidesTitle": "No Elysium Slides found",
+    "messages": {
+      "cancelSlideCreation": "Cancel Slide creation and return to overview",
+      "cancelSlideChanges": "Discard changes and reload the page",
+      "slideDeleteConfirm": "Do you really want to delete the slide?",
+      "slideDeleteSucces": "Slide has been deleted",
+      "slideDeleteError": "An error occurred while deleting the slide",
+      "slideSavedSuccess": "Slide <b>{slide}</b> has been saved",
+      "emptySlideNameErrorTitle": "No Slide name",
+      "emptySlideNameError": "Please provide a Slide name",
+      "slideSaveErrorTitle": "Something went wrong",
+      "slideSaveError": "The Slide couldn't be saved",
+      "productLinkingMissingEntity": "Please select a product you would like to link",
+      "categoryLinkingMissingEntity": "Please select a category you would like to link",
+      "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten.",
+      "copyErrorUnsavedChanges": "Please save your changes before copying a slide."
+    },
+    "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
+    "actions": {
+      "confirmAction": "Confirm action",
+      "newSlide": "New Slide",
+      "copySlide": "Copy Slide",
+      "editSlide": "Edit Slide",
+      "deleteSlide": "Delete Slide"
+    },
+    "grid": {
+      "nameLabel": "Name",
+      "headlineLabel": "Headline",
+      "hints": {
+        "hasCustomFields": "Has custom fields",
+        "hasActiveFrom": "Has active from date",
+        "hasActiveUntil": "Has active until date"
+      }
+    },
+    "settings": {
+      "baseLabel": "General",
+      "mediaLabel": "Media",
+      "displayLabel": "Display",
+      "advancedLabel": "Advanced"
+    },
+    "forms": {
+      "generalTitle": "General",
+      "contentLabel": "Content",
+      "useMediaAsSlideCover": "Use as Slide cover",
+      "useMediaAsFocusImage": "Use as Focus image",
+      "slideName": {
+        "label": "Name",
+        "placeholder": "my-slide"
+      },
+      "slideHeadline": {
+        "label": "Headline",
+        "placeholder": "My awesome Slide!"
+      },
+      "slideCssClass": {
+        "label": "CSS Classes",
+        "placeholder": "custom-class second-custom-class",
+        "helpText": "Specify one or more CSS classes for the slide, separated by a space"
+      },
+      "slideTimeControl": {
+        "activeFrom": {
+          "helpText": "Slide will be displayed from this datetime onwards. Leave empty for no start restriction."
+        },
+        "activeUntil": {
+          "helpText": "Slide will be displayed until this datetime. Leave empty for no end restriction."
+        }
+      },
+      "slideHeadlineElement": {
+        "label": "HTML Element",
+        "helpText": "Specify an HTML element for the heading. If no element is selected, a <b>div</b> element is used"
+      },
+      "slideDescription": {
+        "label": "Description"
+      },
+      "slideBackground": {
+        "label": "Background"
+      },
+      "slideGradient": {
+        "label": "Gradient",
+        "startColor": "Start color",
+        "endColor": "End color",
+        "gradientType": "Type",
+        "gradientTypeLinear": "Linear",
+        "gradientDeg": "Degree"
+      },
+      "slideLinking": {
+        "label": "Linking",
+        "typeLabel": "Linking type",
+        "typeCustom": "Custom",
+        "typeProduct": "Product",
+        "typeCategory": "Category",
+        "customUrl": "Custom URL",
+        "customUrlPlaceholder": "/my/url/path or https://example.com",
+        "customUrlHelpText": "Set the linking URL of the slide. This can be both an absolute or a relative URL.",
+        "selectProduct": "Select product",
+        "selectCategory": "Select category",
+        "showProductFocusImage": "Show product image",
+        "showProductTitle": "Show product title",
+        "showProductDescription": "Show product description",
+        "showCategoryFocusImage": "Show category image",
+        "showCategoryTitle": "Show category title",
+        "showCategoryDescription": "Show category description"
+      },
+      "slideButtonLabel": {
+        "label": "Button label",
+        "placeholder": "Learn more",
+        "helpText": "Set the button label. If there is no label, no button is displayed."
+      },
+      "slideButtonAppearance": {
+        "label": "Button color",
+        "helpText": "Sets the button appearance. The colors are based on the used theme"
+      },
+      "slideButtonSize": {
+        "label": "Button size"
+      },
+      "slideLinkingOpenExternal": "Open in new Tab",
+      "slideLinkingOverlay": {
+        "label": "Link overlay",
+        "helpText": "If this option is active, the entire slide is used as a link area. In this case, the button is hidden."
+      },
+      "slideCover": {
+        "label": "Cover"
+      },
+      "slideCoverImage": {
+        "label": "Image",
+        "description": "Add an image as Slide background. The cover image can be defined for phone, tablet and desktop view. The mobile image serves as default. Valid image formats are jpg, png, webp, svg, avif"
+      },
+      "slideFocusImage": {
+        "label": "Focus image",
+        "description": "The focus image is displayed as a separate image next to the content area."
+      },
+      "slideCoverVideo": {
+        "label": "Video",
+        "description": "Add a video as Slide background. The Cover video applies to all views. Valid video formats are mp4"
+      },
+      "slideCoverMeta": {
+        "label": "Meta data",
+        "description": "Add alternative alt and title texts. This is useful when you use more than one image as a cover. This way you have finer control over these texts.",
+        "alt": {
+          "label": "Alt text"
+        },
+        "title": {
+          "label": "Title"
+        }
+      },
+      "displaySlide": {
+        "label": "Slide",
+        "description": "These settings affect the slide itself.",
+        "alignmentDescription": "These settings determine the orientation of the inner container"
+      },
+      "displayContainer": {
+        "label": "Container",
+        "description": "These settings affect the slide container. The slide container encloses the content and the image element",
+        "alignmentDescription": "These settings affect the alignment of the inner container elements. If the elements displayed one below the other, these settings are reversed."
+      },
+      "displayContent": {
+        "label": "Content",
+        "description": "These settings affect the content container. The content container encloses the contents like headline, description and button"
+      },
+      "displayImage": {
+        "label": "Image element"
+      },
+      "focusImage": {
+        "fullWidth": "Stretch image to full width"
+      },
+      "slideDirectionColumn": {
+        "label": "Display elements one below the other"
+      },
+      "slideContentOrder": {
+        "label": "Layout order",
+        "default": "Default (Content - Image)",
+        "reverse": "Reverse (Image - Content)",
+        "helpText": "Defines the order of the container elements"
+      },
+      "slideWidth": {
+        "label": "Width limit",
+        "noMaxWidth": "No width limit",
+        "tooltip": "0% stands for auto width"
+      },
+      "basis": {
+        "label": "Base",
+        "tooltip": "0% stands for auto width"
+      },
+      "customTemplateFile": {
+        "label": "Custom template file",
+        "description": "Here you can define your own Twig template file. If you enter a Twig template file, you will need to add it to your theme or extension by yourself.",
+        "placeholder": "my-slide-template",
+        "pathInfoTitle": "The path to this file is:",
+        "pathInfo": "<code>/storefront/component/blur-elysium-slide/custom/{file}.html.twig</code>",
+        "fileName": "File name"
+      },
+      "customFields": {
+        "label": "Custom fields",
+        "emptyFieldSet": "No custom fields have been created for Elysium Slides yet. A set for Elysium Slides can be created in the custom fields Settings",
+        "newSlide": "To use the Custom fields, save the Slide first."
+      }
+    },
+    "slideSelection": {
+      "noSlides": "Apparently there are no slides available yet. Slides can be created in the Elysium Slides module and then linked here",
+      "searchLabel": "Choose your Slides",
+      "listLabel": "Slide selection",
+      "listNoSelection": "Click in the search field and select your Slides. You will find your slides under <b>Contents → Elysium Slides</b>, where you can also create new slides."
+    },
+    "slideSearch": {
+      "noResult": "No Slides found"
+    },
+    "preview": {
+      "noDomainAvailableTitle": "No storefront domain available",
+      "noDomainAvailableDescription": "There is no sales channel domain configured that can be used for the live preview. Please configure at least one domain in your sales channels.",
+      "notice": "This is only an approximate preview and may differ from the actual display in the storefront. Individual theme styles, CSS classes and Twig templates are not taken into account in this preview.",
+      "toolbar": {
+        "aspectRatio": "Aspect ratio",
+        "width": "Width",
+        "salesChannel": "Sales channel",
+        "placeholderWidth": "in pixels"
+      }
+    }
+  },
+  "blurElysiumSlider": {
+    "label": "Elysium Slider",
+    "messages": {
+      "cmsDescription": "Select one or more slides in the element settings and define further slider settings."
+    },
+    "config": {
+      "contentLabel": "Content",
+      "content": {
+        "sliderTitle": "Slider title (optional)",
+        "slideCollectionTitle": "Slide collection"
+      },
+      "settingsLabel": "Settings",
+      "settings": {
+        "general": "General",
+        "titleSrOnly": {
+          "label": "Visually hide text",
+          "helpText": "Enable this option to visually hide the title. The title will still be recognized by screen readers"
+        },
+        "slidesPerPage": {
+          "label": "Slides per view",
+          "placeholder": "1",
+          "helpText": "Number of slides visible at the same time."
+        },
+        "slidesPerGroup": {
+          "label": "Slides per group",
+          "placeholder": "1",
+          "helpText": "Number of slides to scroll per navigation step."
+        },
+        "containerWidth": {
+          "label": "Content Container width",
+          "content": "Page Content width",
+          "full": "Full width",
+          "helpText": "Define the content container width. On <b>Page Content</b> the maximum width of the container follows the paqe content width. On <b>Full width</b> the content container is in full width"
+        },
+        "slideEffect": {
+          "label": "Slide Effect",
+          "helpText": "Choose the transition effect between slides. Slide effect provides a horizontal sliding animation, while Fade effect creates a smooth cross-fade transition.",
+          "slide": "Slide",
+          "fade": "Fade"
+        },
+        "rewind": "Rewind Slides",
+        "overlay": "Show Overlay",
+        "justifySlideHeight": "Justify slide heights",
+        "speed": {
+          "label": "Slide Speed",
+          "placeholder": "Time in Millisecond"
+        },
+        "autoplay": {
+          "label": "Autoplay",
+          "active": "Activate Autoplay",
+          "interval": {
+            "label": "Autoplay interval",
+            "placeholder": "Time in Millisecond"
+          },
+          "pauseOnHover": "Pause Autoplay on Mouseover"
+        }
+      },
+      "sizingLabel": "Sizing",
+      "sizing": {
+        "label": "Sizing",
+        "selectViewport": {
+          "label": "Viewport Size",
+          "placeholder": "Select viewport"
+        },
+        "aspectRatio": {
+          "label": "Aspect ratio",
+          "width": "Width",
+          "height": "Height",
+          "description": "Defines the aspect ratio and therefore the size of the slider. The height can be limited to a maximum value."
+        },
+        "maxHeight": {
+          "label": "Maximum height",
+          "placeholder": "in pixel"
+        },
+        "emptyViewport": {
+          "title": "Select viewport",
+          "description": "Please choose a viewport size first"
+        },
+        "spacing": {
+          "label": "Spacing",
+          "slidesGap": {
+            "label": "Gap between slides"
+          }
+        }
+      },
+      "navigationLabel": "Navigation",
+      "navigation": {
+        "active": "Show Slider Navigation",
+        "position": {
+          "label": "Position",
+          "belowSlider": "Below the slider",
+          "inSlider": "Inside the slider"
+        },
+        "align": {
+          "label": "Alignment",
+          "left": "Left",
+          "center": "Center",
+          "right": "Right"
+        },
+        "size": {
+          "label": "Size"
+        },
+        "shape": {
+          "label": "Shape",
+          "circle": "Dot",
+          "bar": "Bar"
+        },
+        "navPadding": {
+          "label": "Padding"
+        }
+      },
+      "arrowsLabel": "Arrows",
+      "arrows": {
+        "label": "Arrows",
+        "active": "Show Slider Arrows",
+        "icons": {
+          "label": "Icon",
+          "arrow": "Arrow",
+          "chevron": "Chevron"
+        },
+        "size": {
+          "label": "Icon Size"
+        },
+        "offsetPadding": {
+          "label": "Offset padding"
+        }
+      }
+    }
+  },
+  "blurElysiumBanner": {
+    "label": "Elysium Banner",
+    "config": {
+      "contentLabel": "Content",
+      "sizingLabel": "Sizing",
+      "selectSlide": "Choose a Slide",
+      "autoSizing": "Auto sizing",
+      "lazyLoading": "Lazy loading",
+      "settings": {
+        "general": "General"
+      }
+    },
+    "messages": {
+      "cmsDescription": "Select a Slide in the element settings and define further banner settings like the size."
+    }
+  },
+  "blurElysiumBlock": {
+    "settingLabel": "Settings",
+    "settings": {
+      "columnWidth": {
+        "colOneLabel": "Width: 1. Column",
+        "colTwoLabel": "Width: 2. Column"
+      },
+      "gridGapLabel": "Grid gap",
+      "columnWrapLabel": "Column wrap",
+      "columnStretchLabel": "Equal column height"
+    },
+    "blockTwoColLabel": "Elysium Block — 2 Columns"
+  },
+  "blurElysiumSection": {
+    "label": "Elysium Section",
+    "sidebar": {
+      "sectionSettingsTitle": "Elysium Section settings",
+      "sectionSettings": {
+        "breakpoints": {
+          "title": "Breakpoints",
+          "description": "Set different breakpoints for this section. The sizes are based on the theme settings",
+          "tabletHelptext": "Defines the screen size at which the tablet view should take effect",
+          "desktopHelptext": "Defines the screen size at which the desktop view should take effect"
+        },
+        "timeControl": {
+          "activeFrom": {
+            "helpText": "Section will be displayed from this datetime onwards. Leave empty for no start restriction."
+          },
+          "activeUntil": {
+            "helpText": "Section will be displayed until this datetime. Leave empty for no end restriction."
+          }
+        }
+      },
+      "blockSettingsTitle": "Elysium Block settings",
+      "blockSettings": {
+        "order": "Order",
+        "rows": "Rows",
+        "timeControl": {
+          "activeFrom": {
+            "helpText": "Block will be displayed from this datetime onwards. Leave empty for no start restriction."
+          },
+          "activeUntil": {
+            "helpText": "Block will be displayed until this datetime. Leave empty for no end restriction."
+          }
+        }
+      },
+      "blockRemovalNotification": "Will be removed in Version 4.0.0<br/>Use the Elysium Section instead to layout your blocks",
+      "elysiumSectionNotification": "Use the new <b>Elysium Section</b> to place and layout your blocks. You can find it right in the Section selection."
+    }
+  },
+  "apps": {
+    "sw-cms": {
+      "detail": {
+        "label": {
+          "blockCategory": {
+            "blur-elysium-blocks": "Elysium blocks"
+          }
+        }
+      }
+    }
+  }
 }

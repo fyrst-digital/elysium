@@ -25,6 +25,9 @@
         "shopware/storefront": "^6.7",
         "shopware/elasticsearch": "^6.7"
     },
+    "require-dev": {
+        "shopware/dev-tools": "*"
+    },
     "extra": {
         "shopware-plugin-class": "Blur\\BlurElysiumSlider\\BlurElysiumSlider",
         "label": {

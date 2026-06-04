@@ -25,6 +25,9 @@
         <testsuite name="service">
             <directory>tests/Service</directory>
         </testsuite>
+        <testsuite name="demodata">
+            <directory>tests/Demodata</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>

@@ -90,6 +90,7 @@ export interface Arrows {
 
 export interface ViewportGeneral {
     slidesPerPage: number | null;
+    slidesPerGroup: number | null;
 }
 
 export interface ViewportNavigation {

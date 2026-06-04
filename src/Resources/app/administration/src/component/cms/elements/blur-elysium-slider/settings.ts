@@ -5,6 +5,7 @@ const { Utils } = Shopware;
 const viewportSettings: ViewportSettings = {
     settings: {
         slidesPerPage: null,
+        slidesPerGroup: null,
     },
     navigation: {
         size: null,
