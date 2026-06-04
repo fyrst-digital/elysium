@@ -1,29 +1,29 @@
-import template from './template.html.twig';
+import template from "./template.html.twig";
 
 const { Component } = Shopware;
 
 export default Component.wrapComponentConfig({
-    template,
+  template,
 
-    inheritAttrs: false,
+  inheritAttrs: false,
 
-    props: {
-        label: {
-            type: String,
-            required: false,
-            default: undefined,
-        },
-
-        layout: {
-            type: String as () => 'row' | 'column',
-            required: false,
-            default: 'column',
-        },
-
-        tooltip: {
-            type: String,
-            required: false,
-            default: undefined,
-        },
+  props: {
+    label: {
+      type: String,
+      required: false,
+      default: undefined,
     },
+
+    layout: {
+      type: String as () => "row" | "column",
+      required: false,
+      default: "column",
+    },
+
+    tooltip: {
+      type: String,
+      required: false,
+      default: undefined,
+    },
+  },
 });
