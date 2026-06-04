@@ -1,6 +1,7 @@
 # 4.8.1
 
 **Changelog**
+- Option "Slides pro Gruppe" zum Elysium Slider CMS Element hinzugefügt. Damit lässt sich konfigurieren, wie viele Slides bei jedem Navigationsschritt gescrollt werden
 - Fehler behoben, bei dem Produktvarianten in der Live-Vorschau des Slide-Editor nicht anzeigt wurden
 - Beschreibung des Slide-Cover-Bildes angepasst, um den Mobile-First-Standard abzubilden
 

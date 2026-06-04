@@ -13,6 +13,11 @@ class ElysiumSliderStruct extends Struct
     protected $slideCollection;
 
     /**
+     * @var array<string, array<string, mixed>>|null
+     */
+    protected $resolvedViewports;
+
+    /**
      * @return ElysiumSlidesEntity[]|null
      */
     public function getSlideCollection(): ?array
@@ -26,5 +31,21 @@ class ElysiumSliderStruct extends Struct
     public function setSlideCollection(array $slideCollection): void
     {
         $this->slideCollection = $slideCollection;
+    }
+
+    /**
+     * @return array<string, array<string, mixed>>|null
+     */
+    public function getResolvedViewports(): ?array
+    {
+        return $this->resolvedViewports;
+    }
+
+    /**
+     * @param array<string, array<string, mixed>> $resolvedViewports
+     */
+    public function setResolvedViewports(array $resolvedViewports): void
+    {
+        $this->resolvedViewports = $resolvedViewports;
     }
 }
