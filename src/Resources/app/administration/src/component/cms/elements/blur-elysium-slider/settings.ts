@@ -106,9 +106,6 @@ export default <SliderSettings>{
         source: 'static',
         value: {
             mobile: defineViewportConfig({
-                settings: {
-                    slidesPerGroup: 1,
-                },
                 navigation: {
                     size: 'sm',
                     gap: 16,
