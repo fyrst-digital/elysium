@@ -413,6 +413,9 @@
                     "label": "Slides per view",
                     "placeholder": "1"
                 },
+                "slidesPerGroup": {
+                    "label": "Slides per group"
+                },
                 "containerWidth": {
                     "label": "Content Container width",
                     "content": "Page Content width",

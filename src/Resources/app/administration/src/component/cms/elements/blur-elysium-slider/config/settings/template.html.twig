@@ -57,6 +57,21 @@
         </py-column>
     {% endblock %}
 
+    {% block blur_cms_config_elysium_slider_slides_per_group %}
+        <py-column :cols="12" :cols-tablet="6" :cols-desktop="6">
+            <py-number-field
+                v-if="settingsViewportConfig"
+                layout="row"
+                :label="$tc('blurElysiumSlider.config.settings.slidesPerGroup.label')"
+                :placeholder="viewportsPlaceholder('settings.slidesPerGroup', 1)"
+                :min="1"
+                :step="1"
+                :model-value="settingsViewportConfig.slidesPerGroup"
+                @update:model-value="value => settingsViewportConfig.slidesPerGroup = value"
+            />
+        </py-column>
+    {% endblock %}
+
     {% block blur_cms_config_elysium_slider_speed %}
         <py-column :cols="12" :cols-tablet="6" :cols-desktop="6">
             <py-number-field

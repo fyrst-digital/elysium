@@ -51,14 +51,17 @@
     breakpoints: {
         (theme_config('breakpoint.' ~ blurElysiumBreakpoints.mobile)): {
             slidesPerView: element.config.viewports.value.mobile.settings.slidesPerPage ?? 1,
+            slidesPerGroup: element.config.viewports.value.mobile.settings.slidesPerGroup ?? 1,
             spaceBetween: element.config.viewports.value.mobile.sizing.slidesGap ?? 0
         },
         (theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)): {
             slidesPerView: element.config.viewports.value.tablet.settings.slidesPerPage ?? 1,
+            slidesPerGroup: element.config.viewports.value.tablet.settings.slidesPerGroup ?? 1,
             spaceBetween: element.config.viewports.value.tablet.sizing.slidesGap ?? 0
         },
         (theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)): {
             slidesPerView: element.config.viewports.value.desktop.settings.slidesPerPage ?? 1,
+            slidesPerGroup: element.config.viewports.value.desktop.settings.slidesPerGroup ?? 1,
             spaceBetween: element.config.viewports.value.desktop.sizing.slidesGap ?? 0
         }
     }
