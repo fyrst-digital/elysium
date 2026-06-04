@@ -90,7 +90,7 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
         /** @var FieldConfig $viewportsConfig */
         $viewportsConfig = $fieldConfigCollection->get('viewports');
         /** @var array<string, array<string, mixed>> $viewports */
-        $viewports = $viewportsConfig?->getValue() ?? [];
+        $viewports = $viewportsConfig->getValue() ?? [];
 
         $defaults = $this->buildDefaultsFromConfig();
 
