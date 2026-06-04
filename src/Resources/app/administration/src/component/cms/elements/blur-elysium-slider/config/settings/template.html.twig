@@ -51,6 +51,7 @@
                 :placeholder="viewportsPlaceholder('settings.slidesPerPage', 1)"
                 :min="1"
                 :step="1"
+                :allow-empty="true"
                 :model-value="settingsViewportConfig.slidesPerPage"
                 @update:model-value="value => settingsViewportConfig.slidesPerPage = value"
             />
@@ -66,6 +67,7 @@
                 :placeholder="viewportsPlaceholder('settings.slidesPerGroup', 1)"
                 :min="1"
                 :step="1"
+                :allow-empty="true"
                 :model-value="settingsViewportConfig.slidesPerGroup"
                 @update:model-value="value => settingsViewportConfig.slidesPerGroup = value"
             />
