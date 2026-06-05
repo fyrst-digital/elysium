@@ -41,6 +41,37 @@ function deepMerge(target: Record<string, unknown>, source: Record<string, unkno
     });
 }
 
+function getTranslations(slide: Record<string, unknown>): Record<string, unknown>[] {
+    if (!slide.translations) {
+        return [];
+    }
+
+    return Array.isArray(slide.translations)
+        ? slide.translations
+        : Object.values(slide.translations as Record<string, unknown>);
+}
+
+/**
+ * Get the current language translation row from the slide's translations.
+ * Returns the raw translation object for the current UI language, or null.
+ */
+export function getCurrentLanguageTranslation(slide: Record<string, unknown>): Record<string, unknown> | null {
+    const context = Store.get('context');
+    const currentLanguageId = context.api.languageId;
+
+    if (!currentLanguageId || !slide.translations) {
+        return null;
+    }
+
+    const translations = getTranslations(slide);
+    const currentTranslation = translations.find((t: unknown) => {
+        const translation = t as Record<string, unknown>;
+        return translation.languageId === currentLanguageId;
+    }) as Record<string, unknown> | undefined;
+
+    return currentTranslation ?? null;
+}
+
 /**
  * Get the default language contentSettings from the slide's translations.
  */
@@ -52,10 +83,7 @@ export function getDefaultLanguageContentSettings(slide: Record<string, unknown>
         return null;
     }
 
-    const translations = Array.isArray(slide.translations)
-        ? slide.translations
-        : Object.values(slide.translations as Record<string, unknown>);
-
+    const translations = getTranslations(slide);
     const defaultTranslation = translations.find((t: unknown) => {
         const translation = t as Record<string, unknown>;
         return translation.languageId === systemLanguageId;
@@ -115,7 +143,8 @@ export function getCoverInheritanceSource(
     deviceKey: string,
     isDefaultLanguage: boolean,
 ): MediaInheritanceSource {
-    const currentCover = slide.contentSettings?.slideCover ?? {};
+    const currentTranslation = getCurrentLanguageTranslation(slide);
+    const currentCover = currentTranslation?.contentSettings?.slideCover ?? {};
     const defaultSettings = isDefaultLanguage ? null : getDefaultLanguageContentSettings(slide);
     const defaultCover = defaultSettings?.slideCover ?? {};
 
@@ -124,18 +153,21 @@ export function getCoverInheritanceSource(
         return { type: null, sourceKey: null };
     }
 
-    // 2. Exact match in default language
-    if (defaultCover[deviceKey]) {
-        return { type: 'language', sourceKey: deviceKey };
-    }
-
-    // 3. Cascade through smaller devices
+    // 2. Cascade through smaller devices in current language
     const cascade = deviceCascades[deviceKey] ?? [];
     for (const key of cascade) {
         if (currentCover[key]) {
             return { type: 'device', sourceKey: key };
         }
+    }
 
+    // 3. Exact match in default language
+    if (defaultCover[deviceKey]) {
+        return { type: 'language', sourceKey: deviceKey };
+    }
+
+    // 4. Cascade through smaller devices in default language
+    for (const key of cascade) {
         if (defaultCover[key]) {
             return { type: 'language', sourceKey: key };
         }
@@ -151,7 +183,8 @@ export function getVideoInheritanceSource(
     slide: Record<string, unknown>,
     isDefaultLanguage: boolean,
 ): MediaInheritanceSource {
-    const currentVideo = slide.contentSettings?.slideCover?.videoId ?? null;
+    const currentTranslation = getCurrentLanguageTranslation(slide);
+    const currentVideo = currentTranslation?.contentSettings?.slideCover?.videoId ?? null;
     const defaultVideo = isDefaultLanguage
         ? null
         : (getDefaultLanguageContentSettings(slide)?.slideCover?.videoId ?? null);
@@ -174,7 +207,8 @@ export function getFocusImageInheritanceSource(
     slide: Record<string, unknown>,
     isDefaultLanguage: boolean,
 ): MediaInheritanceSource {
-    const currentId = slide.contentSettings?.focusImageId ?? null;
+    const currentTranslation = getCurrentLanguageTranslation(slide);
+    const currentId = currentTranslation?.contentSettings?.focusImageId ?? null;
     const defaultId = isDefaultLanguage
         ? null
         : (getDefaultLanguageContentSettings(slide)?.focusImageId ?? null);
