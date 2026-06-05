@@ -11,13 +11,16 @@
         }
     })">
 
-    <py-column>
-        <div
+    <template #title-append>
+        <py-badge
             v-if="focusImageInheritanceSource.type === 'language'"
-            class="blur-elysium-inherited-indicator"
-        >
-            {{ $tc('blurElysiumSlides.messages.inheritedMedia') }}
-        </div>
+            color="warning"
+            :text="$tc('blurElysiumSlides.messages.inheritedMedia')"
+            icon="link-simple-bold"
+        />
+    </template>
+
+    <py-column>
         <sw-upload-listener
             upload-tag="blur-elysium-slide-focus-image"
             auto-upload
