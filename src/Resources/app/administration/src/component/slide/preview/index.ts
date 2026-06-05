@@ -75,7 +75,8 @@ export default Component.wrapComponentConfig({
         },
 
         currentMedia() {
-            const contentCover = this.slide?.contentSettings?.slideCover ?? {};
+            const displaySettings = getDisplayContentSettings(this.slide);
+            const contentCover = displaySettings?.slideCover ?? {};
 
             const videoMedia = this.elysiumMedia.getMedia(contentCover.videoId);
             if (videoMedia) {

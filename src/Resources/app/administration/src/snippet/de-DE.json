@@ -189,7 +189,9 @@
       "productLinkingMissingEntity": "Bitte wähle ein Produkt welches du verknüpfen möchtest",
       "categoryLinkingMissingEntity": "Bitte wähle eine Kategorie die du verknüpfen möchtest",
       "customTemplateFileDefinedNotice": "Du hast eine eigene Template Datei festgelegt. Einige Einstellungen könnten überschrieben werden.",
-      "copyErrorUnsavedChanges": "Bitte speichere deine Änderungen, bevor du eine Folie kopierst."
+      "copyErrorUnsavedChanges": "Bitte speichere deine Änderungen, bevor du eine Folie kopierst.",
+      "inheritedMedia": "Von Standardsprache übernommen",
+      "inheritedFromDevice": "Von {device} übernommen"
     },
     "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
     "actions": {

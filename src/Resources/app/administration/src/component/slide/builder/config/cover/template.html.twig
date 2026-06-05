@@ -2,7 +2,7 @@
     gap
     padding
     :style="viewStyle({
-        mobile: { 
+        mobile: {
             borderBottom: '1px solid var(--color-border-secondary-default)',
             '--py-section-gap-y': '8px',
             '--container-gap-y': '12px'
@@ -11,7 +11,34 @@
     :title="$tc('blurElysiumSlides.forms.slideCoverImage.label')"
     :description="$tc('blurElysiumSlides.forms.slideCoverImage.description')">
 
+    <template #title-append>
+        <span
+            v-if="currentCoverInheritanceSource.type === 'language'"
+            class="blur-elysium-inherited-indicator"
+        >
+            {{ $tc('blurElysiumSlides.messages.inheritedMedia') }}
+        </span>
+        <span
+            v-if="currentCoverInheritanceSource.type === 'device'"
+            class="blur-elysium-inherited-indicator"
+        >
+            {{ $t('blurElysiumSlides.messages.inheritedFromDevice', { device: deviceLabelFromKey(currentCoverInheritanceSource.sourceKey) }) }}
+        </span>
+    </template>
+
     <py-column>
+        <div
+            v-if="currentCoverInheritanceSource.type === 'language'"
+            class="blur-elysium-inherited-indicator"
+        >
+            {{ $tc('blurElysiumSlides.messages.inheritedMedia') }}
+        </div>
+        <div
+            v-if="currentCoverInheritanceSource.type === 'device'"
+            class="blur-elysium-inherited-indicator"
+        >
+            {{ $t('blurElysiumSlides.messages.inheritedFromDevice', { device: deviceLabelFromKey(currentCoverInheritanceSource.sourceKey) }) }}
+        </div>
         <sw-upload-listener
             :upload-tag="slideCoverUploadTag"
             auto-upload
@@ -36,7 +63,7 @@
     gap
     padding
     :style="viewStyle({
-        mobile: { 
+        mobile: {
             borderBottom: '1px solid var(--color-border-secondary-default)',
             '--py-section-gap-y': '8px',
             '--container-gap-y': '12px'
@@ -46,6 +73,12 @@
     :description="$tc('blurElysiumSlides.forms.slideCoverVideo.description')">
 
     <py-column>
+        <div
+            v-if="videoInheritanceSource.type === 'language'"
+            class="blur-elysium-inherited-indicator"
+        >
+            {{ $tc('blurElysiumSlides.messages.inheritedMedia') }}
+        </div>
         <sw-upload-listener
             upload-tag="blur-elysium-slide-cover-video"
             auto-upload
@@ -71,7 +104,7 @@
     gap
     padding
     :style="viewStyle({
-        mobile: { 
+        mobile: {
             borderBottom: '1px solid var(--color-border-secondary-default)',
             '--py-section-gap-y': '8px',
             '--container-gap-y': '12px'
@@ -90,7 +123,7 @@
             ]"
             v-model="slideViewportSettings.coverMedia.objectPosY" />
     </py-column>
-    
+
     <py-column>
         <py-select-field
             :label="$tc('blurElysium.general.objectPos')"
@@ -121,7 +154,7 @@
     padding
     :title="$tc('blurElysiumSlides.forms.slideCoverMeta.label')"
     :style="viewStyle({
-        mobile: { 
+        mobile: {
             borderBottom: '1px solid var(--color-border-secondary-default)',
             '--py-section-gap-y': '8px',
             '--container-gap-y': '12px'

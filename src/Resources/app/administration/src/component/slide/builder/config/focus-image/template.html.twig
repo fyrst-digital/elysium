@@ -4,14 +4,20 @@
     :title="$tc('blurElysiumSlides.forms.slideFocusImage.label')"
     :description="$tc('blurElysiumSlides.forms.slideFocusImage.description')"
     :style="viewStyle({
-        mobile: { 
+        mobile: {
             borderBottom: '1px solid var(--color-border-secondary-default)',
             '--py-section-gap-y': '8px',
-            '--container-gap-y': '12px' 
+            '--container-gap-y': '12px'
         }
     })">
 
     <py-column>
+        <div
+            v-if="focusImageInheritanceSource.type === 'language'"
+            class="blur-elysium-inherited-indicator"
+        >
+            {{ $tc('blurElysiumSlides.messages.inheritedMedia') }}
+        </div>
         <sw-upload-listener
             upload-tag="blur-elysium-slide-focus-image"
             auto-upload
@@ -40,16 +46,16 @@
     @modal-close="closeMediaModal"
 />
 
-<py-section 
+<py-section
     gap
     padding
     :style="viewStyle({
-        mobile: { 
+        mobile: {
             '--py-section-gap-y': '8px',
             '--container-gap-y': '12px'
         }
     })">
-    
+
     <py-column>
         <py-slider-field
             :label="$tc('blurElysiumSlides.forms.basis.label')"
@@ -62,7 +68,7 @@
             />
     </py-column>
     <py-column>
-        <py-select-field 
+        <py-select-field
             :label="$tc('blurElysium.general.jusitifyContent')"
             :placeholder="viewportsPlaceholder('image.justifyContent', 'center', 'blurElysium.general')"
             :options="[

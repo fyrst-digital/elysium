@@ -165,13 +165,21 @@ export default Component.wrapComponentConfig({
 
     methods: {
         loadMediaForSlide(): Promise<void> {
-            const contentCover = this.slide?.contentSettings?.slideCover ?? {};
+            const rawCover = this.slide?.contentSettings?.slideCover ?? {};
+            const displaySettings = getDisplayContentSettings(this.slide);
+            const displayCover = displaySettings?.slideCover ?? {};
+
             const mediaIds = [
-                contentCover.mobileId,
-                contentCover.tabletId,
-                contentCover.desktopId,
-                contentCover.videoId,
+                rawCover.mobileId,
+                rawCover.tabletId,
+                rawCover.desktopId,
+                rawCover.videoId,
                 this.slide?.contentSettings?.focusImageId,
+                displayCover.mobileId,
+                displayCover.tabletId,
+                displayCover.desktopId,
+                displayCover.videoId,
+                displaySettings?.focusImageId,
             ].filter((id): id is string => Boolean(id));
 
             if (mediaIds.length === 0) return Promise.resolve();
@@ -267,13 +275,6 @@ export default Component.wrapComponentConfig({
             // Build a display copy with merged fallback values for the preview iframe
             const displaySlide = JSON.parse(JSON.stringify(this.slide));
             const displaySettings = JSON.parse(JSON.stringify(getDisplayContentSettings(this.slide)));
-
-            // Override media IDs with raw current-language values (no fallback for media).
-            // If the user removes an image in the current language, the preview should
-            // reflect that removal, not fall back to the default language's image.
-            const rawSettings = this.slide.contentSettings ?? {};
-            displaySettings.slideCover = JSON.parse(JSON.stringify(rawSettings.slideCover ?? {}));
-            displaySettings.focusImageId = rawSettings.focusImageId ?? null;
 
             displaySlide.contentSettings = displaySettings;
 

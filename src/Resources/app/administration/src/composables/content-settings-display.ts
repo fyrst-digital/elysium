@@ -44,7 +44,7 @@ function deepMerge(target: Record<string, unknown>, source: Record<string, unkno
 /**
  * Get the default language contentSettings from the slide's translations.
  */
-function getDefaultLanguageContentSettings(slide: Record<string, unknown>): ContentSettings | null {
+export function getDefaultLanguageContentSettings(slide: Record<string, unknown>): ContentSettings | null {
     const context = Store.get('context');
     const systemLanguageId = context.api.systemLanguageId;
 
@@ -85,6 +85,109 @@ export function getDisplayContentSettings(slide: Record<string, unknown>): Conte
     deepMerge(merged, JSON.parse(JSON.stringify(current)) as Record<string, unknown>);
 
     return merged as ContentSettings;
+}
+
+/**
+ * Structured result indicating where a media value was inherited from.
+ */
+export interface MediaInheritanceSource {
+    type: 'language' | 'device' | null;
+    sourceKey: string | null;
+}
+
+const deviceCascades: Record<string, string[]> = {
+    tabletId: ['mobileId'],
+    desktopId: ['tabletId', 'mobileId'],
+};
+
+/**
+ * Determine the inheritance source for a slide cover media field.
+ *
+ * Checks the exact device first, then walks through smaller devices
+ * (mobile → tablet → desktop) in both the current and default language.
+ *
+ * @param slide - The slide entity
+ * @param deviceKey - The key for the current device (e.g. 'mobileId', 'tabletId', 'desktopId')
+ * @param isDefaultLanguage - Whether the current UI language is the default language
+ */
+export function getCoverInheritanceSource(
+    slide: Record<string, unknown>,
+    deviceKey: string,
+    isDefaultLanguage: boolean,
+): MediaInheritanceSource {
+    const currentCover = slide.contentSettings?.slideCover ?? {};
+    const defaultSettings = isDefaultLanguage ? null : getDefaultLanguageContentSettings(slide);
+    const defaultCover = defaultSettings?.slideCover ?? {};
+
+    // 1. Exact match in current language
+    if (currentCover[deviceKey]) {
+        return { type: null, sourceKey: null };
+    }
+
+    // 2. Exact match in default language
+    if (defaultCover[deviceKey]) {
+        return { type: 'language', sourceKey: deviceKey };
+    }
+
+    // 3. Cascade through smaller devices
+    const cascade = deviceCascades[deviceKey] ?? [];
+    for (const key of cascade) {
+        if (currentCover[key]) {
+            return { type: 'device', sourceKey: key };
+        }
+
+        if (defaultCover[key]) {
+            return { type: 'language', sourceKey: key };
+        }
+    }
+
+    return { type: null, sourceKey: null };
+}
+
+/**
+ * Determine the inheritance source for the slide cover video.
+ */
+export function getVideoInheritanceSource(
+    slide: Record<string, unknown>,
+    isDefaultLanguage: boolean,
+): MediaInheritanceSource {
+    const currentVideo = slide.contentSettings?.slideCover?.videoId ?? null;
+    const defaultVideo = isDefaultLanguage
+        ? null
+        : (getDefaultLanguageContentSettings(slide)?.slideCover?.videoId ?? null);
+
+    if (currentVideo) {
+        return { type: null, sourceKey: null };
+    }
+
+    if (defaultVideo) {
+        return { type: 'language', sourceKey: 'videoId' };
+    }
+
+    return { type: null, sourceKey: null };
+}
+
+/**
+ * Determine the inheritance source for the focus image.
+ */
+export function getFocusImageInheritanceSource(
+    slide: Record<string, unknown>,
+    isDefaultLanguage: boolean,
+): MediaInheritanceSource {
+    const currentId = slide.contentSettings?.focusImageId ?? null;
+    const defaultId = isDefaultLanguage
+        ? null
+        : (getDefaultLanguageContentSettings(slide)?.focusImageId ?? null);
+
+    if (currentId) {
+        return { type: null, sourceKey: null };
+    }
+
+    if (defaultId) {
+        return { type: 'language', sourceKey: 'focusImageId' };
+    }
+
+    return { type: null, sourceKey: null };
 }
 
 /**

@@ -1,5 +1,5 @@
 import template from './template.html.twig';
-
+import { getFocusImageInheritanceSource } from '@elysium/composables/content-settings-display';
 import { Media } from '@elysium/types/slide';
 
 const { Component, Mixin, Store, Context } = Shopware;
@@ -57,6 +57,15 @@ export default Component.wrapComponentConfig({
             const mediaId = this.focusImageMediaId;
             if (!mediaId) return null;
             return this.elysiumMedia.getMedia(mediaId);
+        },
+
+        isDefaultLanguage(): boolean {
+            const context = Store.get('context');
+            return context.api.languageId === context.api.systemLanguageId;
+        },
+
+        focusImageInheritanceSource() {
+            return getFocusImageInheritanceSource(this.slide, this.isDefaultLanguage);
         },
 
         permissionView() {

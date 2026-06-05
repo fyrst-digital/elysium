@@ -1,5 +1,5 @@
 import template from './template.html.twig';
-import { getContentSettingsPlaceholder } from '@elysium/composables/content-settings-display';
+import { getContentSettingsPlaceholder, getCoverInheritanceSource, getVideoInheritanceSource } from '@elysium/composables/content-settings-display';
 import { Media } from '@elysium/types/slide';
 
 const { Component, Mixin, Store, Context } = Shopware;
@@ -82,6 +82,19 @@ export default Component.wrapComponentConfig({
             const mediaId = this.slide.contentSettings?.slideCover?.videoId ?? null;
             if (!mediaId) return null;
             return this.elysiumMedia.getMedia(mediaId);
+        },
+
+        isDefaultLanguage(): boolean {
+            const context = Store.get('context');
+            return context.api.languageId === context.api.systemLanguageId;
+        },
+
+        currentCoverInheritanceSource() {
+            return getCoverInheritanceSource(this.slide, this.currentCoverIdKey, this.isDefaultLanguage);
+        },
+
+        videoInheritanceSource() {
+            return getVideoInheritanceSource(this.slide, this.isDefaultLanguage);
         },
 
         coverVideoUploadElement() {
@@ -192,6 +205,16 @@ export default Component.wrapComponentConfig({
                 .catch((exception: Error) => {
                     console.error(exception);
                 });
+        },
+
+        deviceLabelFromKey(key: string | null): string {
+            if (!key) return '';
+            const map: Record<string, string> = {
+                mobileId: 'phone',
+                tabletId: 'tablet',
+                desktopId: 'desktop',
+            };
+            return this.$tc('blurElysium.device.' + (map[key] || key));
         },
 
         contentSettingsPlaceholder(path: string, fallback?: string): string {

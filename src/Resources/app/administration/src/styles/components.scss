@@ -99,3 +99,17 @@
         --btn-border-color: var(--color-interaction-primary-default);
     }
 }
+
+.blur-elysium-inherited-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    background-color: var(--color-background-attention-default, #fff3cd);
+    color: var(--color-text-attention-default, #856404);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.25;
+}
