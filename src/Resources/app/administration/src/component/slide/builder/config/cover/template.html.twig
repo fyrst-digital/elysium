@@ -12,33 +12,21 @@
     :description="$tc('blurElysiumSlides.forms.slideCoverImage.description')">
 
     <template #title-append>
-        <span
+        <py-badge
             v-if="currentCoverInheritanceSource.type === 'language'"
-            class="blur-elysium-inherited-indicator"
-        >
-            {{ $tc('blurElysiumSlides.messages.inheritedMedia') }}
-        </span>
-        <span
+            color="warning"
+            :text="$tc('blurElysiumSlides.messages.inheritedMedia')"
+            icon="link-simple-bold"
+        />
+        <py-badge
             v-if="currentCoverInheritanceSource.type === 'device'"
-            class="blur-elysium-inherited-indicator"
-        >
-            {{ $t('blurElysiumSlides.messages.inheritedFromDevice', { device: deviceLabelFromKey(currentCoverInheritanceSource.sourceKey) }) }}
-        </span>
+            color="warning"
+            :text="$t('blurElysiumSlides.messages.inheritedFromDevice', { device: deviceLabelFromKey(currentCoverInheritanceSource.sourceKey) })"
+            icon="link-simple-bold"
+        />
     </template>
 
     <py-column>
-        <div
-            v-if="currentCoverInheritanceSource.type === 'language'"
-            class="blur-elysium-inherited-indicator"
-        >
-            {{ $tc('blurElysiumSlides.messages.inheritedMedia') }}
-        </div>
-        <div
-            v-if="currentCoverInheritanceSource.type === 'device'"
-            class="blur-elysium-inherited-indicator"
-        >
-            {{ $t('blurElysiumSlides.messages.inheritedFromDevice', { device: deviceLabelFromKey(currentCoverInheritanceSource.sourceKey) }) }}
-        </div>
         <sw-upload-listener
             :upload-tag="slideCoverUploadTag"
             auto-upload

@@ -76,6 +76,7 @@ useComponentRegister([
     { name: 'py-section', path: () => import('./component/py/section') },
     { name: 'py-column', path: () => import('./component/py/column') },
     { name: 'py-device-switch', path: () => import('./component/py/device-switch') },
+    { name: 'py-badge', path: () => import('./component/py/badge') },
     { name: 'elysium-iap-subscription-card', path: () => import('@elysium/component/iap/subscription-card') },
     { name: 'elysium-icon', path: () => import('@elysium/component/utilities/icon') },
     { name: 'elysium-settings', path: () => import('@elysium/component/settings') },

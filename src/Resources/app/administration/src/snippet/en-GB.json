@@ -190,8 +190,8 @@
       "categoryLinkingMissingEntity": "Please select a category you would like to link",
       "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten.",
       "copyErrorUnsavedChanges": "Please save your changes before copying a slide.",
-      "inheritedMedia": "Inherited from default language",
-      "inheritedFromDevice": "Inherited from {device}"
+      "inheritedMedia": "From default language",
+      "inheritedFromDevice": "From {device}"
     },
     "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
     "actions": {
