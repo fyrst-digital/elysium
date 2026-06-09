@@ -80,6 +80,32 @@
 
     <service id="Blur\BlurElysiumSlider\Service\ValidationService"/>
 
+    <service id="Blur\BlurElysiumSlider\Service\ImportExport\SlideExportService">
+      <argument type="service" id="blur_elysium_slides.repository"/>
+    </service>
+
+    <service id="Blur\BlurElysiumSlider\Service\ImportExport\SlideImportService">
+      <argument type="service" id="blur_elysium_slides.repository"/>
+    </service>
+
+    <service id="Blur\BlurElysiumSlider\Administration\Controller\SlideImportExportController" public="true">
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\ImportExport\SlideExportService"/>
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\ImportExport\SlideImportService"/>
+      <call method="setContainer">
+        <argument type="service" id="service_container"/>
+      </call>
+    </service>
+
+    <service id="Blur\BlurElysiumSlider\Command\SlideExportCommand">
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\ImportExport\SlideExportService"/>
+      <tag name="console.command"/>
+    </service>
+
+    <service id="Blur\BlurElysiumSlider\Command\SlideImportCommand">
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\ImportExport\SlideImportService"/>
+      <tag name="console.command"/>
+    </service>
+
     <service id="Blur\BlurElysiumSlider\MessageHandler\TimeControlCacheInvalidationHandler">
       <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheInvalidator"/>
       <argument type="service" id="Blur\BlurElysiumSlider\Service\CmsPageLookup"/>

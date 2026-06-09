@@ -15,18 +15,15 @@ interface Data {
     sortDirection: SortDirection;
     total: number | null;
     styles: object;
+    showImportModal: boolean;
+    importFile: File | null;
+    isImporting: boolean;
 }
 
 export default Component.wrapComponentConfig({
     template,
 
-    inject: ['repositoryFactory', 'acl'],
-
-    setup() {
-        return {
-            module,
-        };
-    },
+    inject: ['repositoryFactory', 'acl', 'feature'],
 
     data() {
         return <Data>{
@@ -61,6 +58,15 @@ export default Component.wrapComponentConfig({
                     alignItems: 'center',
                 },
             },
+            showImportModal: false,
+            importFile: null,
+            isImporting: false,
+        };
+    },
+
+    setup() {
+        return {
+            module,
         };
     },
 
@@ -114,6 +120,18 @@ export default Component.wrapComponentConfig({
 
         permissionDelete() {
             return this.acl.can('blur_elysium_slides.deleter');
+        },
+
+        permissionExport() {
+            return this.acl.can('blur_elysium_slides.exporter');
+        },
+
+        permissionImport() {
+            return this.acl.can('blur_elysium_slides.importer');
+        },
+
+        isImportExportEnabled() {
+            return this.feature.isActive('elysium_preview_import_export');
         },
 
         assetFilter() {
@@ -203,6 +221,97 @@ export default Component.wrapComponentConfig({
             });
             this.isLoading = false;
             this.getList();
+        },
+
+        onBulkExport(selection) {
+            if (!this.permissionExport || !this.isImportExportEnabled) {
+                return;
+            }
+
+            const ids = Object.values(selection).map((item: { id: string }) => item.id);
+
+            if (ids.length === 0) {
+                return;
+            }
+
+            this.$http.post('/api/_action/elysium-slides/export', { ids })
+                .then((response) => {
+                    const blob = new Blob([response.data], { type: 'application/jsonl' });
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    const filename = response.headers['content-disposition']?.match(/filename="(.+)"/)?.[1] || 'elysium-slides-export.jsonl';
+
+                    link.href = url;
+                    link.setAttribute('download', filename);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.createNotificationError({
+                        message: this.$tc('blurElysiumSlides.messages.exportError'),
+                    });
+                });
+        },
+
+        onImportSlides() {
+            if (!this.permissionImport || !this.isImportExportEnabled) {
+                return;
+            }
+
+            this.showImportModal = true;
+            this.importFile = null;
+        },
+
+        onCloseImportModal() {
+            this.showImportModal = false;
+            this.importFile = null;
+        },
+
+        onImportFileChange(file: File) {
+            this.importFile = file;
+        },
+
+        onSubmitImport() {
+            if (!this.importFile) {
+                return;
+            }
+
+            this.isImporting = true;
+
+            const formData = new FormData();
+            formData.append('file', this.importFile);
+
+            this.$http.post('/api/_action/elysium-slides/import', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then((response) => {
+                    this.isImporting = false;
+                    this.showImportModal = false;
+
+                    if (response.data.success) {
+                        this.createNotificationSuccess({
+                            message: this.$tc('blurElysiumSlides.messages.importSuccess', response.data.imported, { count: response.data.imported }),
+                        });
+                        this.getList();
+                    } else {
+                        const errors = response.data.errors?.join(', ') || this.$tc('blurElysiumSlides.messages.importError');
+                        this.createNotificationError({
+                            message: this.$tc('blurElysiumSlides.messages.importError', 0, { message: errors }),
+                        });
+                    }
+                })
+                .catch((error) => {
+                    this.isImporting = false;
+                    console.error(error);
+                    this.createNotificationError({
+                        message: this.$tc('blurElysiumSlides.messages.importError', 0, { message: error.message }),
+                    });
+                });
         },
     },
 
