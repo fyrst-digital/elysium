@@ -63,14 +63,16 @@
             @selection-change="onSelectionChange"
         >
             <template #bulk-additional="{ selectionCount }">
-                <mt-button
+                <a
                     v-if="selectionCount > 0 && isImportExportEnabled && permissionExport"
-                    variant="secondary"
-                    size="small"
+                    class="link link-primary"
+                    role="button"
+                    tabindex="0"
                     @click="onBulkExport"
+                    @keydown.enter="onBulkExport"
                 >
                     {{ $tc('blurElysiumSlides.actions.exportSlides') }}
-                </mt-button>
+                </a>
             </template>
             <template #column-name="{ item }">
                 <div :style="{ display: 'flex', alignItems: 'center', gap: '8px' }">
