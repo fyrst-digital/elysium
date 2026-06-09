@@ -18,6 +18,7 @@ interface Data {
     showImportModal: boolean;
     importFile: File | null;
     isImporting: boolean;
+    selection: Record<string, unknown>;
 }
 
 export default Component.wrapComponentConfig({
@@ -61,6 +62,7 @@ export default Component.wrapComponentConfig({
             showImportModal: false,
             importFile: null,
             isImporting: false,
+            selection: {},
         };
     },
 
@@ -223,24 +225,42 @@ export default Component.wrapComponentConfig({
             this.getList();
         },
 
-        onBulkExport(selection) {
+        onSelectionChange(selection) {
+            this.selection = selection;
+        },
+
+        onBulkExport() {
             if (!this.permissionExport || !this.isImportExportEnabled) {
                 return;
             }
 
-            const ids = Object.values(selection).map((item: { id: string }) => item.id);
+            const ids = Object.values(this.selection).map((item: { id: string }) => item.id);
 
             if (ids.length === 0) {
                 return;
             }
 
-            this.$http.post('/api/_action/elysium-slides/export', { ids })
+            const token = Shopware.Service('loginService').getToken();
+
+            fetch('/api/_action/elysium-slides/export', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({ ids }),
+            })
                 .then((response) => {
-                    const blob = new Blob([response.data], { type: 'application/jsonl' });
+                    if (!response.ok) {
+                        throw new Error('Export failed');
+                    }
+                    const contentDisposition = response.headers.get('content-disposition');
+                    const filename = contentDisposition?.match(/filename="(.+)"/)?.[1] || 'elysium-slides-export.jsonl';
+                    return response.blob().then((blob) => ({ blob, filename }));
+                })
+                .then(({ blob, filename }) => {
                     const url = window.URL.createObjectURL(blob);
                     const link = document.createElement('a');
-                    const filename = response.headers['content-disposition']?.match(/filename="(.+)"/)?.[1] || 'elysium-slides-export.jsonl';
-
                     link.href = url;
                     link.setAttribute('download', filename);
                     document.body.appendChild(link);
@@ -284,22 +304,32 @@ export default Component.wrapComponentConfig({
             const formData = new FormData();
             formData.append('file', this.importFile);
 
-            this.$http.post('/api/_action/elysium-slides/import', formData, {
+            const token = Shopware.Service('loginService').getToken();
+
+            fetch('/api/_action/elysium-slides/import', {
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`,
                 },
+                body: formData,
             })
                 .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Import failed');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
                     this.isImporting = false;
                     this.showImportModal = false;
 
-                    if (response.data.success) {
+                    if (data.success) {
                         this.createNotificationSuccess({
-                            message: this.$tc('blurElysiumSlides.messages.importSuccess', response.data.imported, { count: response.data.imported }),
+                            message: this.$tc('blurElysiumSlides.messages.importSuccess', data.imported, { count: data.imported }),
                         });
                         this.getList();
                     } else {
-                        const errors = response.data.errors?.join(', ') || this.$tc('blurElysiumSlides.messages.importError');
+                        const errors = data.errors?.join(', ') || this.$tc('blurElysiumSlides.messages.importError');
                         this.createNotificationError({
                             message: this.$tc('blurElysiumSlides.messages.importError', 0, { message: errors }),
                         });

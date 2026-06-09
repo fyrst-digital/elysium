@@ -60,13 +60,14 @@
             @column-sort="onColumnSort"
             @delete-item-finish="finishDeleteItems"
             @items-delete-finish="finishDeleteItems"
+            @selection-change="onSelectionChange"
         >
-            <template #bulk-actions="{ selection }">
+            <template #bulk-additional="{ selectionCount }">
                 <mt-button
-                    v-if="isImportExportEnabled && permissionExport"
+                    v-if="selectionCount > 0 && isImportExportEnabled && permissionExport"
                     variant="secondary"
                     size="small"
-                    @click="onBulkExport(selection)"
+                    @click="onBulkExport"
                 >
                     {{ $tc('blurElysiumSlides.actions.exportSlides') }}
                 </mt-button>
@@ -156,13 +157,9 @@
                 {{ $tc('blurElysiumSlides.importModal.overwriteWarning') }}
             </p>
 
-            <sw-upload-listener
-                @media-upload-add="onImportFileChange"
-            />
             <sw-file-input
                 :label="$tc('blurElysiumSlides.importModal.fileLabel')"
-                :accept="'application/jsonl'"
-                @change="onImportFileChange"
+                @update:value="onImportFileChange"
             />
 
             <template #modal-footer>
