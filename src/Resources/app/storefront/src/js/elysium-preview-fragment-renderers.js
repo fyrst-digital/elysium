@@ -66,7 +66,7 @@ function renderHeadline(slide, element) {
         content = slide.title || '';
     }
 
-    const whitelist = ['br', 'i', 'b', 'u', 'strong', 'span'];
+    const whitelist = ['br', 'wbr', 'i', 'b', 'u', 'strong', 'span'];
     content = stripTags(content, whitelist);
 
     const existing = element.querySelector('[data-elysium-slide-headline]');

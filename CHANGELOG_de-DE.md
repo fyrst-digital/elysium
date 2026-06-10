@@ -2,6 +2,7 @@
 
 **Changelog**
 - Slides Import/Export Funktion hinzugefügt (Technische Vorschau). Slides können über die Administration oder CLI-Befehle als JSONL-Dateien exportiert und wieder importiert werden
+- `<wbr>` HTML-Tag Unterstützung und `text-wrap: balance` CSS-Styling für Slide-Überschriften hinzugefügt
 
 # 4.8.1
 

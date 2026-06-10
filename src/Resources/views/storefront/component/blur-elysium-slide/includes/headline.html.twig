@@ -12,7 +12,7 @@
     {% set headlineContent = slideData.title|default('') %}
 {% endif %}
 
-{% set headlineTagsWhitelist = ['<br>', '<i>', '<b>', '<u>', '<strong>', '<span>'] %}
+{% set headlineTagsWhitelist = ['<br>', '<wbr>', '<i>', '<b>', '<u>', '<strong>', '<span>'] %}
 {% set headlineContent = headlineContent|striptags(headlineTagsWhitelist|join) %}
 
 {% if headlineContent %}
