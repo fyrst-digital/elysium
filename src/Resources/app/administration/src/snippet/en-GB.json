@@ -190,6 +190,8 @@
       "categoryLinkingMissingEntity": "Please select a category you would like to link",
       "customTemplateFileDefinedNotice": "You have defined a custom template file for this slide. Some settings may be overwritten.",
       "copyErrorUnsavedChanges": "Please save your changes before copying a slide.",
+      "inheritedMedia": "From default language",
+      "inheritedFromDevice": "From {device}"
       "importSuccess": "{count} slide(s) imported successfully",
       "importError": "Import failed: {message}",
       "exportError": "Export failed",

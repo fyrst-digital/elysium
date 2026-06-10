@@ -1,0 +1,30 @@
+.py-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.25;
+
+    &.is-warning {
+        background-color: var(--color-background-attention-default, #fff3cd);
+        color: var(--color-text-attention-default, #856404);
+    }
+
+    &.is-success {
+        background-color: var(--color-background-success-default, #d4edda);
+        color: var(--color-text-success-default, #155724);
+    }
+
+    &.is-danger {
+        background-color: var(--color-background-critical-default, #f8d7da);
+        color: var(--color-text-critical-default, #721c24);
+    }
+
+    &.is-info {
+        background-color: var(--color-background-info-default, #d1ecf1);
+        color: var(--color-text-info-default, #0c5460);
+    }
+}

@@ -17,10 +17,6 @@ Module.register('blur-elysium-slides', {
             _searchable: true,
             _score: 1000,
         },
-        title: {
-            _searchable: true,
-            _score: 800,
-        },
     },
 
     /** Module routes */

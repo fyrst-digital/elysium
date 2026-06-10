@@ -1,0 +1,6 @@
+{
+    "indexer.stub_paths": [
+        "/home/robjke/Projects/shopware/shopware-dev/vendor"
+    ],
+    "composer.autoloader_path": "/home/robjke/Projects/shopware/shopware-dev/vendor/autoload.php"
+}

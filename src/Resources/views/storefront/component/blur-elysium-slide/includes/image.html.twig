@@ -1,5 +1,6 @@
 {% block blur_elysium_slide_image %}
-    {% set imageMedia = slideData.presentationMedia %}
+    {% set focusImageId = slideData.contentSettings.focusImageId|default(null) %}
+    {% set imageMedia = focusImageId and resolvedMedia ? (resolvedMedia|filter(m => m.id == focusImageId)|first|default(null)) : null %}
 
     {% if slideData.slideSettings.slide.linking.type is same as('product')
           and slideData.product.cover.media is not null

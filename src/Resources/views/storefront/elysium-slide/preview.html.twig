@@ -42,6 +42,7 @@
         {% block base_body_elysium_slide_preview %}
             {% sw_include '@Storefront/storefront/component/blur-elysium-slide/default/slide.html.twig' with {
                 slideData: slideData,
+                resolvedMedia: resolvedMedia,
                 lazyLoading: false,
                 device: device,
                 isPreviewMode: true,

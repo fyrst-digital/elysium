@@ -7,6 +7,7 @@
     <service id="Blur\BlurElysiumSlider\DataResolver\ElysiumSliderCmsElementResolver">
       <argument type="service" id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader"/>
       <argument type="service" id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface"/>
+      <argument type="service" id="media.repository"/>
       <tag name="shopware.cms.data_resolver"/>
     </service>
 
@@ -14,12 +15,13 @@
     <service id="Blur\BlurElysiumSlider\DataResolver\ElysiumBannerCmsElementResolver">
       <argument type="service" id="Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel\ElysiumSlideLoader"/>
       <argument type="service" id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface"/>
+      <argument type="service" id="media.repository"/>
       <tag name="shopware.cms.data_resolver"/>
     </service>
 
-    <!-- Elysium Slides Entity Extension -->
-    <service id="Blur\BlurElysiumSlider\Extension\Content\Media\MediaDefinitionExtension">
-      <tag name="shopware.entity.extension"/>
+    <!-- Elysium Slides Entity Hydrator -->
+    <service id="Blur\BlurElysiumSlider\Core\Framework\DataAbstractionLayer\Dbal\ElysiumSlidesHydrator" public="true">
+      <argument type="service" id="service_container"/>
     </service>
 
     <!-- Elysium Slides Entity Definition -->
@@ -164,6 +166,7 @@
     <!-- Elysium Slide Preview Controller -->
     <service id="Blur\BlurElysiumSlider\Storefront\Controller\ElysiumSlidePreviewController" public="true">
       <argument type="service" id="blur_elysium_slides.repository"/>
+      <argument type="service" id="media.repository"/>
       <argument type="service" id="sales_channel.repository"/>
       <argument type="service" id="Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry"/>
 

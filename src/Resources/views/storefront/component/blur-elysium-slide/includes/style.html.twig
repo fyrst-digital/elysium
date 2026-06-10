@@ -93,16 +93,17 @@
 
 {% set slideViewportStyles = slideData.slideSettings.viewports %}
 
-{% set presentationMedia = slideData.presentationMedia %}
+{% set focusImageId = slideData.contentSettings.focusImageId|default(null) %}
+{% set presentationMedia = focusImageId and resolvedMedia ? (resolvedMedia|filter(m => m.id == focusImageId)|first|default(null)) : null %}
 
 {% if slideData.product is not same as(null) and slideData.slideSettings.slide.linking.type is same as('product') %}
-    {% if slideData.product.cover and slideData.presentationMedia is null %}
+    {% if slideData.product.cover and presentationMedia is null %}
         {% set presentationMedia = slideData.product.cover.media %}
     {% endif %}
 {% endif %}
 
 {% if slideData.category is not same as(null) and slideData.slideSettings.slide.linking.type is same as('category') %}
-    {% if slideData.category.media and slideData.presentationMedia is null %}
+    {% if slideData.category.media and presentationMedia is null %}
         {% set presentationMedia = slideData.category.media %}
     {% endif %}
 {% endif %}

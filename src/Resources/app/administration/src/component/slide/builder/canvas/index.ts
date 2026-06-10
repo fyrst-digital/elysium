@@ -44,6 +44,10 @@ export default Component.wrapComponentConfig({
 
     computed: {
 
+        context() {
+            return Store.get('context');
+        },
+
         elysiumSlide() {
             return Store.get('elysiumSlide');
         },
@@ -128,7 +132,7 @@ export default Component.wrapComponentConfig({
             criteria.addAssociation('domains');
             criteria.addFilter(Criteria.equals('typeId', Shopware.Defaults.storefrontSalesChannelTypeId));
 
-            this.salesChannelRepository.search(criteria, Context.api)
+            this.salesChannelRepository.search(criteria, { ...Context.api, inheritance: true })
                 .then((result) => {
                     const channels = result;
                     this.elysiumUI.setSalesChannels(channels);
@@ -154,6 +158,12 @@ export default Component.wrapComponentConfig({
 
         resolveAndSetDomain() {
             this.elysiumUI.setPreviewDomain(this.resolvedDomainUrl);
+        },
+    },
+
+    watch: {
+        'context.api.languageId'() {
+            this.loadSalesChannels();
         },
     },
 

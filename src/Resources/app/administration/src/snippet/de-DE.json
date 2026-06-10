@@ -190,6 +190,8 @@
       "categoryLinkingMissingEntity": "Bitte wähle eine Kategorie die du verknüpfen möchtest",
       "customTemplateFileDefinedNotice": "Du hast eine eigene Template Datei festgelegt. Einige Einstellungen könnten überschrieben werden.",
       "copyErrorUnsavedChanges": "Bitte speichere deine Änderungen, bevor du eine Folie kopierst.",
+      "inheritedMedia": "Von Standardsprache",
+      "inheritedFromDevice": "Von {device}"
       "importSuccess": "{count} Slide(s) erfolgreich importiert",
       "importError": "Import fehlgeschlagen: {message}",
       "exportError": "Export fehlgeschlagen",

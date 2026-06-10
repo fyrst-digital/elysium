@@ -10,74 +10,85 @@
 
 {% set lazyLoading = lazyLoading|default(false) %}
 
-{% if slideData.slideCoverVideo %}
+{% set contentCover = slideData.contentSettings.slideCover|default({}) %}
+{% set coverVideoId = contentCover.videoId|default(null) %}
+{% set coverMobileId = contentCover.mobileId|default(null) %}
+{% set coverTabletId = contentCover.tabletId|default(null) %}
+{% set coverDesktopId = contentCover.desktopId|default(null) %}
+
+{% set slideCoverVideo = coverVideoId and resolvedMedia ? (resolvedMedia|filter(m => m.id == coverVideoId)|first|default(null)) : null %}
+{% set slideCoverMobile = coverMobileId and resolvedMedia ? (resolvedMedia|filter(m => m.id == coverMobileId)|first|default(null)) : null %}
+{% set slideCoverTablet = coverTabletId and resolvedMedia ? (resolvedMedia|filter(m => m.id == coverTabletId)|first|default(null)) : null %}
+{% set slideCoverDesktop = coverDesktopId and resolvedMedia ? (resolvedMedia|filter(m => m.id == coverDesktopId)|first|default(null)) : null %}
+
+{% if slideCoverVideo %}
     <video autoplay muted loop
         class="blur-elysium-slide-cover-video"
         data-elysium-slide-cover-video="{{ slideData.id }}"
         style="border-radius: var(--slide-border-radius, 0px);">
-        <source src="{{ slideData.slideCoverVideo.url }}" type="{{ slideData.slideCoverVideo.mimeType }}">
+        <source src="{{ slideCoverVideo.url }}" type="{{ slideCoverVideo.mimeType }}">
     </video>
 {% else %}
     {% set slideCovers = {} %}
-    {% if slideData.slideCoverMobile %}
-        {% set slideCovers = slideCovers|merge({ mobile: slideData.slideCoverMobile }) %}
+    {% if slideCoverMobile %}
+        {% set slideCovers = slideCovers|merge({ mobile: slideCoverMobile }) %}
     {% endif %}
-    {% if slideData.slideCoverTablet %}
-        {% set slideCovers = slideCovers|merge({ tablet: slideData.slideCoverTablet }) %}
+    {% if slideCoverTablet %}
+        {% set slideCovers = slideCovers|merge({ tablet: slideCoverTablet }) %}
     {% endif %}
-    {% if slideData.slideCover %}
-        {% set slideCovers = slideCovers|merge({ desktop: slideData.slideCover }) %}
+    {% if slideCoverDesktop %}
+        {% set slideCovers = slideCovers|merge({ desktop: slideCoverDesktop }) %}
     {% endif %}
 
     {% if slideCovers|length > 0 %}
-        {% set slideCoverAlt = slideData.slideCoverMobile.alt|default(
-            slideData.slideCoverTablet.alt|default(
-                slideData.slideCover.alt|default(null)
+        {% set slideCoverAlt = slideCoverMobile.alt|default(
+            slideCoverTablet.alt|default(
+                slideCoverDesktop.alt|default(null)
             )
         ) %}
-        {% set slideCoverTitle = slideData.slideCoverMobile.title|default(
-            slideData.slideCoverTablet.title|default(
-                slideData.slideCover.title|default(null)
+        {% set slideCoverTitle = slideCoverMobile.title|default(
+            slideCoverTablet.title|default(
+                slideCoverDesktop.title|default(null)
             )
         ) %}
         {% set slideCoverLabel = slideCoverAlt %}
 
-        {% if slideData.contentSettings.slideCover.alt %}
-            {% set slideCoverAlt = slideData.contentSettings.slideCover.alt %}
-            {% set slideCoverLabel = slideData.contentSettings.slideCover.alt %}
+        {% if contentCover.alt %}
+            {% set slideCoverAlt = contentCover.alt %}
+            {% set slideCoverLabel = contentCover.alt %}
         {% endif %}
 
-        {% if slideData.contentSettings.slideCover.title %}
-            {% set slideCoverTitle = slideData.contentSettings.slideCover.title %}
+        {% if contentCover.title %}
+            {% set slideCoverTitle = contentCover.title %}
         {% endif %}
 
         <picture class="blur-elysium-slide-cover-picture">
-            {% if slideData.slideCover %}
-                {% set coverThumbnails = slideData.slideCover.metaData._thumbnails|default(slideData.slideCover.thumbnails) %}
+            {% if slideCoverDesktop %}
+                {% set coverThumbnails = slideCoverDesktop.metaData._thumbnails|default(slideCoverDesktop.thumbnails) %}
                 <source
                     {% if coverThumbnails|length > 0 %}
                         srcset="{{ create_srcset(coverThumbnails) }}"
                     {% else %}
-                        srcset="{{ slideData.slideCover.url }}"
+                        srcset="{{ slideCoverDesktop.url }}"
                     {% endif %}
                     media="screen and (min-width:{{ theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)~'px' }})" />
             {% endif %}
 
-            {% if slideData.slideCoverTablet %}
-                {% set coverThumbnails = slideData.slideCoverTablet.metaData._thumbnails|default(slideData.slideCoverTablet.thumbnails) %}
+            {% if slideCoverTablet %}
+                {% set coverThumbnails = slideCoverTablet.metaData._thumbnails|default(slideCoverTablet.thumbnails) %}
                 <source
                     {% if coverThumbnails|length > 0 %}
                         srcset="{{ create_srcset(coverThumbnails) }}"
                     {% else %}
-                        srcset="{{ slideData.slideCoverTablet.url }}"
+                        srcset="{{ slideCoverTablet.url }}"
                     {% endif %}
                     media="screen and (min-width:{{ theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)~'px' }})" />
             {% endif %}
 
-            {% if slideData.slideCoverMobile %}
-                {% set coverThumbnails = slideData.slideCoverMobile.metaData._thumbnails|default(slideData.slideCoverMobile.thumbnails) %}
+            {% if slideCoverMobile %}
+                {% set coverThumbnails = slideCoverMobile.metaData._thumbnails|default(slideCoverMobile.thumbnails) %}
                 <img
-                    src="{{ slideData.slideCoverMobile.url }}"
+                    src="{{ slideCoverMobile.url }}"
                     {% if coverThumbnails|length > 0 %}
                         srcset="{{ create_srcset(coverThumbnails) }}"
                     {% endif %}
