@@ -188,5 +188,17 @@ Service('privileges').addPrivilegeMappingEntry({
                 'blur_elysium_slides.editor',
             ],
         },
+        exporter: {
+            privileges: ['blur_elysium_slides:export'],
+            dependencies: [
+                'blur_elysium_slides.viewer',
+            ],
+        },
+        importer: {
+            privileges: ['blur_elysium_slides:import'],
+            dependencies: [
+                'blur_elysium_slides.viewer',
+            ],
+        },
     },
 });

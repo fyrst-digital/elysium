@@ -16,18 +16,16 @@ interface Data {
     sortDirection: SortDirection;
     total: number | null;
     styles: object;
+    showImportModal: boolean;
+    importFile: File | null;
+    isImporting: boolean;
+    selection: Record<string, unknown>;
 }
 
 export default Component.wrapComponentConfig({
     template,
 
-    inject: ['repositoryFactory', 'acl'],
-
-    setup() {
-        return {
-            module,
-        };
-    },
+    inject: ['repositoryFactory', 'acl', 'feature'],
 
     data() {
         return <Data>{
@@ -62,11 +60,21 @@ export default Component.wrapComponentConfig({
                     alignItems: 'center',
                 },
             },
+            showImportModal: false,
+            importFile: null,
+            isImporting: false,
+            selection: {},
+        };
+    },
+
+    setup() {
+        return {
+            module,
         };
     },
 
     mixins: [
-        Mixin.getByName('notification'), 
+        Mixin.getByName('notification'),
         Mixin.getByName('listing')
     ],
 
@@ -116,6 +124,18 @@ export default Component.wrapComponentConfig({
 
         permissionDelete() {
             return this.acl.can('blur_elysium_slides.deleter');
+        },
+
+        permissionExport() {
+            return this.acl.can('blur_elysium_slides.exporter');
+        },
+
+        permissionImport() {
+            return this.acl.can('blur_elysium_slides.importer');
+        },
+
+        isImportExportEnabled() {
+            return this.feature.isActive('elysium_preview_import_export');
         },
 
         assetFilter() {
@@ -209,6 +229,154 @@ export default Component.wrapComponentConfig({
             });
             this.isLoading = false;
             this.getList();
+        },
+
+        onSelectionChange(selection) {
+            this.selection = selection;
+        },
+
+        downloadBlob(blob: Blob, filename: string): void {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        },
+
+        generateExportFilename(): string {
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, '-');
+            return `elysium-slides-export-${timestamp}.jsonl`;
+        },
+
+        performExport(ids: string[]): Promise<void> {
+            const token = Shopware.Service('loginService').getToken();
+
+            return fetch('/api/_action/elysium-slides/export', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({ ids }),
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Export failed');
+                    }
+                    const filename = this.generateExportFilename();
+                    return response.blob().then((blob) => ({ blob, filename }));
+                })
+                .then(({ blob, filename }) => {
+                    this.downloadBlob(blob, filename);
+                    this.createNotificationSuccess({
+                        message: this.$t('blurElysiumSlides.messages.exportSuccess', { filename }),
+                    });
+                });
+        },
+
+        onBulkExport() {
+            if (!this.permissionExport || !this.isImportExportEnabled) {
+                return;
+            }
+
+            const ids = Object.values(this.selection).map((item: { id: string }) => item.id);
+
+            if (ids.length === 0) {
+                return;
+            }
+
+            this.performExport(ids)
+                .catch((error) => {
+                    console.error(error);
+                    this.createNotificationError({
+                        message: this.$t('blurElysiumSlides.messages.exportError'),
+                    });
+                });
+        },
+
+        onExportAll() {
+            if (!this.permissionExport || !this.isImportExportEnabled) {
+                return;
+            }
+
+            this.performExport([])
+                .catch((error) => {
+                    console.error(error);
+                    this.createNotificationError({
+                        message: this.$t('blurElysiumSlides.messages.exportError'),
+                    });
+                });
+        },
+
+        onImportSlides() {
+            if (!this.permissionImport || !this.isImportExportEnabled) {
+                return;
+            }
+
+            this.showImportModal = true;
+            this.importFile = null;
+        },
+
+        onCloseImportModal() {
+            this.showImportModal = false;
+            this.importFile = null;
+        },
+
+        onImportFileChange(file: File) {
+            this.importFile = file;
+        },
+
+        onSubmitImport() {
+            if (!this.importFile) {
+                return;
+            }
+
+            this.isImporting = true;
+
+            const formData = new FormData();
+            formData.append('file', this.importFile);
+
+            const token = Shopware.Service('loginService').getToken();
+
+            fetch('/api/_action/elysium-slides/import', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: formData,
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Import failed');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    this.isImporting = false;
+                    this.showImportModal = false;
+
+                    if (data.success) {
+                        this.createNotificationSuccess({
+                            message: this.$tc('blurElysiumSlides.messages.importSuccess', data.imported, { count: data.imported }),
+                        });
+                        this.getList();
+                    } else {
+                        const errors = (data.errors && data.errors.length > 0) ? data.errors.join(', ') : this.$t('blurElysiumSlides.messages.importError');
+                        this.createNotificationError({
+                            message: this.$t('blurElysiumSlides.messages.importError', { message: errors }),
+                        });
+                    }
+                })
+                .catch((error) => {
+                    this.isImporting = false;
+                    console.error(error);
+                    this.createNotificationError({
+                        message: this.$t('blurElysiumSlides.messages.importError', { message: error.message }),
+                    });
+                });
         },
     },
 

@@ -1,3 +1,9 @@
+# Unreleased
+
+**Changelog**
+- Added slides import/export feature (technical preview). Slides can be exported as JSONL files and imported back via administration UI or CLI commands
+- Added `<wbr>` HTML tag support and `text-wrap: balance` CSS styling for slide headlines
+
 # 4.8.1
 
 **Changelog**

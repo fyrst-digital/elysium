@@ -30,5 +30,20 @@ class ElysiumCompilerPass implements CompilerPassInterface
         if (Feature::isActive('elysium_preview_elasticsearch')) {
             $loader->load('elasticsearch.xml');
         }
+
+        $sets = $container->hasParameter('shopware.html_sanitizer.sets') ? $container->getParameter('shopware.html_sanitizer.sets') : [];
+        $sets['blur_elysium_headline'] = [
+            'tags' => ['br', 'wbr', 'i', 'b', 'u', 'strong', 'span'],
+            'attributes' => [],
+            'custom_attributes' => [],
+            'options' => [],
+        ];
+        $container->setParameter('shopware.html_sanitizer.sets', $sets);
+
+        $fields = $container->hasParameter('shopware.html_sanitizer.fields') ? $container->getParameter('shopware.html_sanitizer.fields') : [];
+        $fields['blur_elysium_slides_translation.title'] = [
+            'sets' => ['blur_elysium_headline'],
+        ];
+        $container->setParameter('shopware.html_sanitizer.fields', $fields);
     }
 }

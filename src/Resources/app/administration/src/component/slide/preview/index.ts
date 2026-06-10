@@ -143,6 +143,7 @@ export default Component.wrapComponentConfig({
                 fontWeight: '600',
                 fontSize: sizes[this.deviceView] || '20px',
                 color: this.slide.slideSettings?.slide?.headline?.color || '#222',
+                textWrap: 'balance',
             };
         },
 

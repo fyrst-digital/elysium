@@ -192,6 +192,10 @@
       "copyErrorUnsavedChanges": "Please save your changes before copying a slide.",
       "inheritedMedia": "From default language",
       "inheritedFromDevice": "From {device}"
+      "importSuccess": "{count} slide(s) imported successfully",
+      "importError": "Import failed: {message}",
+      "exportError": "Export failed",
+      "exportSuccess": "File '{filename}' has been downloaded"
     },
     "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
     "actions": {
@@ -199,7 +203,17 @@
       "newSlide": "New Slide",
       "copySlide": "Copy Slide",
       "editSlide": "Edit Slide",
-      "deleteSlide": "Delete Slide"
+      "deleteSlide": "Delete Slide",
+      "exportSlides": "Export slides",
+      "exportSlidesTooltip": "Export all slides as a JSONL file",
+      "importSlides": "Import slides"
+    },
+    "importModal": {
+      "title": "Import slides",
+      "description": "Upload a .jsonl file containing exported slides. Existing slides with the same ID will be overwritten.",
+      "fileLabel": "Select file",
+      "submit": "Import",
+      "overwriteWarning": "Warning: This will overwrite existing slides with matching IDs."
     },
     "grid": {
       "nameLabel": "Name",
