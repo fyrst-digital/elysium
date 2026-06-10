@@ -9,6 +9,7 @@ use Blur\BlurElysiumSlider\Service\ImportExport\ImportResult;
 use Blur\BlurElysiumSlider\Service\ImportExport\SlideImportService;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
+use Shopware\Core\Framework\Feature;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -37,7 +38,9 @@ class SlideImportCommandTest extends TestCase
         ]);
         $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+        $exitCode = Feature::fake(['elysium_preview_import_export'], function () use ($command, $input, $output) {
+            return $command->run($input, $output);
+        });
 
         $this->assertSame(0, $exitCode);
         $this->assertStringContainsString('Imported 2 slide(s)', $output->fetch());
@@ -69,7 +72,9 @@ class SlideImportCommandTest extends TestCase
         ]);
         $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+        $exitCode = Feature::fake(['elysium_preview_import_export'], function () use ($command, $input, $output) {
+            return $command->run($input, $output);
+        });
 
         $this->assertSame(0, $exitCode);
         $this->assertStringContainsString('Imported 2 slide(s)', $output->fetch());
@@ -95,7 +100,9 @@ class SlideImportCommandTest extends TestCase
         ]);
         $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+        $exitCode = Feature::fake(['elysium_preview_import_export'], function () use ($command, $input, $output) {
+            return $command->run($input, $output);
+        });
         $outputContent = $output->fetch();
 
         $this->assertSame(2, $exitCode);
@@ -127,7 +134,9 @@ class SlideImportCommandTest extends TestCase
         ]);
         $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+        $exitCode = Feature::fake(['elysium_preview_import_export'], function () use ($command, $input, $output) {
+            return $command->run($input, $output);
+        });
 
         $this->assertSame(1, $exitCode);
         $this->assertStringContainsString('Error: Invalid line', $output->fetch());

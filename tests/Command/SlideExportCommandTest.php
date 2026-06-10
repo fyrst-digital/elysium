@@ -8,6 +8,7 @@ use Blur\BlurElysiumSlider\Command\SlideExportCommand;
 use Blur\BlurElysiumSlider\Service\ImportExport\SlideExportService;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
+use Shopware\Core\Framework\Feature;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -37,7 +38,9 @@ class SlideExportCommandTest extends TestCase
         ]);
         $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+        $exitCode = Feature::fake(['elysium_preview_import_export'], function () use ($command, $input, $output) {
+            return $command->run($input, $output);
+        });
         $outputContent = $output->fetch();
 
         $this->assertSame(0, $exitCode);
@@ -67,7 +70,9 @@ class SlideExportCommandTest extends TestCase
         ]);
         $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+        $exitCode = Feature::fake(['elysium_preview_import_export'], function () use ($command, $input, $output) {
+            return $command->run($input, $output);
+        });
         $outputContent = $output->fetch();
 
         $this->assertSame(0, $exitCode);
@@ -93,7 +98,9 @@ class SlideExportCommandTest extends TestCase
         ]);
         $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+        $exitCode = Feature::fake(['elysium_preview_import_export'], function () use ($command, $input, $output) {
+            return $command->run($input, $output);
+        });
         $outputContent = $output->fetch();
 
         $this->assertSame(0, $exitCode);
@@ -119,7 +126,9 @@ class SlideExportCommandTest extends TestCase
         ]);
         $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+        $exitCode = Feature::fake(['elysium_preview_import_export'], function () use ($command, $input, $output) {
+            return $command->run($input, $output);
+        });
 
         $this->assertSame(2, $exitCode);
         $this->assertStringContainsString('Cannot use both --ids and --all', $output->fetch());
@@ -149,7 +158,9 @@ class SlideExportCommandTest extends TestCase
         $input = new ArrayInput([]);
         $output = new BufferedOutput();
 
-        $exitCode = $command->run($input, $output);
+        $exitCode = Feature::fake(['elysium_preview_import_export'], function () use ($command, $input, $output) {
+            return $command->run($input, $output);
+        });
         $outputContent = $output->fetch();
 
         $this->assertSame(0, $exitCode);
