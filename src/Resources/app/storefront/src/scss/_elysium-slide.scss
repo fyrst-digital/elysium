@@ -87,6 +87,7 @@
 .blur-elysium-slide-headline {
     color: var(--headline-color, inherit);
     font-size: var(--headline-font-size, 20px);
+    text-wrap: var(--headline-text-wrap, balance);
     margin: 0;
     overflow-wrap: break-word;
 }
