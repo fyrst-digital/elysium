@@ -46,7 +46,7 @@ class SlideImportCommand extends Command
         $content = null;
 
         // Try absolute path first
-        if (file_exists($filePath)) {
+        if (is_file($filePath)) {
             $content = file_get_contents($filePath);
             if ($content === false) {
                 $output->writeln('Failed to read the file.');

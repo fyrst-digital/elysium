@@ -29,6 +29,15 @@
 
     <template #smart-bar-actions>
         <mt-button
+            v-if="isImportExportEnabled && permissionExport"
+            variant="secondary"
+            size="default"
+            v-tooltip="{ message: $tc('blurElysiumSlides.actions.exportSlidesTooltip') }"
+            @click="onExportAll"
+        >
+            {{ $tc('blurElysiumSlides.actions.exportSlides') }}
+        </mt-button>
+        <mt-button
             v-if="isImportExportEnabled && permissionImport"
             variant="secondary"
             size="default"

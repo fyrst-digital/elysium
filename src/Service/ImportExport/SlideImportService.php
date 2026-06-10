@@ -97,18 +97,20 @@ class SlideImportService
         }
 
         // Check if at least one translation has a name
-        if (isset($payload['translations']) && !empty($payload['translations'])) {
-            $hasName = false;
-            foreach ($payload['translations'] as $translation) {
-                if (!empty($translation['name'])) {
-                    $hasName = true;
-                    break;
-                }
-            }
+        if (empty($payload['translations'])) {
+            return null;
+        }
 
-            if (!$hasName) {
-                return null;
+        $hasName = false;
+        foreach ($payload['translations'] as $translation) {
+            if (!empty($translation['name'])) {
+                $hasName = true;
+                break;
             }
+        }
+
+        if (!$hasName) {
+            return null;
         }
 
         return $payload;

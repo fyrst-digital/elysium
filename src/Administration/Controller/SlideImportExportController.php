@@ -7,7 +7,6 @@ namespace Blur\BlurElysiumSlider\Administration\Controller;
 use Blur\BlurElysiumSlider\Service\ImportExport\SlideExportService;
 use Blur\BlurElysiumSlider\Service\ImportExport\SlideImportService;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\Routing\Annotation\Since;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,11 +28,15 @@ class SlideImportExportController extends AbstractController
     {
         $ids = $request->request->all('ids');
 
-        if (!is_array($ids) || empty($ids)) {
+        if (!is_array($ids)) {
             throw RoutingException::missingRequestParameter('ids');
         }
 
-        $jsonl = $this->exportService->export($ids, $context);
+        if (empty($ids)) {
+            $jsonl = $this->exportService->exportAll($context);
+        } else {
+            $jsonl = $this->exportService->export($ids, $context);
+        }
 
         $filename = sprintf('elysium-slides-export-%s.jsonl', (new \DateTime())->format('Y-m-d-His'));
 

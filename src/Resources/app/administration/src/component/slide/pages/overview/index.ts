@@ -73,7 +73,7 @@ export default Component.wrapComponentConfig({
     },
 
     mixins: [
-        Mixin.getByName('notification'), 
+        Mixin.getByName('notification'),
         Mixin.getByName('listing')
     ],
 
@@ -229,20 +229,26 @@ export default Component.wrapComponentConfig({
             this.selection = selection;
         },
 
-        onBulkExport() {
-            if (!this.permissionExport || !this.isImportExportEnabled) {
-                return;
-            }
+        downloadBlob(blob: Blob, filename: string): void {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        },
 
-            const ids = Object.values(this.selection).map((item: { id: string }) => item.id);
+        generateExportFilename(): string {
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:T]/g, '-');
+            return `elysium-slides-export-${timestamp}.jsonl`;
+        },
 
-            if (ids.length === 0) {
-                return;
-            }
-
+        performExport(ids: string[]): Promise<void> {
             const token = Shopware.Service('loginService').getToken();
 
-            fetch('/api/_action/elysium-slides/export', {
+            return fetch('/api/_action/elysium-slides/export', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -254,24 +260,47 @@ export default Component.wrapComponentConfig({
                     if (!response.ok) {
                         throw new Error('Export failed');
                     }
-                    const contentDisposition = response.headers.get('content-disposition');
-                    const filename = contentDisposition?.match(/filename="(.+)"/)?.[1] || 'elysium-slides-export.jsonl';
+                    const filename = this.generateExportFilename();
                     return response.blob().then((blob) => ({ blob, filename }));
                 })
                 .then(({ blob, filename }) => {
-                    const url = window.URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', filename);
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    window.URL.revokeObjectURL(url);
-                })
+                    this.downloadBlob(blob, filename);
+                    this.createNotificationSuccess({
+                        message: this.$t('blurElysiumSlides.messages.exportSuccess', { filename }),
+                    });
+                });
+        },
+
+        onBulkExport() {
+            if (!this.permissionExport || !this.isImportExportEnabled) {
+                return;
+            }
+
+            const ids = Object.values(this.selection).map((item: { id: string }) => item.id);
+
+            if (ids.length === 0) {
+                return;
+            }
+
+            this.performExport(ids)
                 .catch((error) => {
                     console.error(error);
                     this.createNotificationError({
-                        message: this.$tc('blurElysiumSlides.messages.exportError'),
+                        message: this.$t('blurElysiumSlides.messages.exportError'),
+                    });
+                });
+        },
+
+        onExportAll() {
+            if (!this.permissionExport || !this.isImportExportEnabled) {
+                return;
+            }
+
+            this.performExport([])
+                .catch((error) => {
+                    console.error(error);
+                    this.createNotificationError({
+                        message: this.$t('blurElysiumSlides.messages.exportError'),
                     });
                 });
         },
@@ -329,9 +358,9 @@ export default Component.wrapComponentConfig({
                         });
                         this.getList();
                     } else {
-                        const errors = data.errors?.join(', ') || this.$tc('blurElysiumSlides.messages.importError');
+                        const errors = (data.errors && data.errors.length > 0) ? data.errors.join(', ') : this.$t('blurElysiumSlides.messages.importError');
                         this.createNotificationError({
-                            message: this.$tc('blurElysiumSlides.messages.importError', 0, { message: errors }),
+                            message: this.$t('blurElysiumSlides.messages.importError', { message: errors }),
                         });
                     }
                 })
@@ -339,7 +368,7 @@ export default Component.wrapComponentConfig({
                     this.isImporting = false;
                     console.error(error);
                     this.createNotificationError({
-                        message: this.$tc('blurElysiumSlides.messages.importError', 0, { message: error.message }),
+                        message: this.$t('blurElysiumSlides.messages.importError', { message: error.message }),
                     });
                 });
         },

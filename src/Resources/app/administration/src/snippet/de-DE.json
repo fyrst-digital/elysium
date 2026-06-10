@@ -192,7 +192,8 @@
       "copyErrorUnsavedChanges": "Bitte speichere deine Änderungen, bevor du eine Folie kopierst.",
       "importSuccess": "{count} Slide(s) erfolgreich importiert",
       "importError": "Import fehlgeschlagen: {message}",
-      "exportError": "Export fehlgeschlagen"
+      "exportError": "Export fehlgeschlagen",
+      "exportSuccess": "Datei '{filename}' wurde heruntergeladen"
     },
     "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
     "actions": {
@@ -202,6 +203,7 @@
       "editSlide": "Slide bearbeiten",
       "deleteSlide": "Slide löschen",
       "exportSlides": "Slides exportieren",
+      "exportSlidesTooltip": "Alle Slides als JSONL-Datei exportieren",
       "importSlides": "Slides importieren"
     },
     "importModal": {
