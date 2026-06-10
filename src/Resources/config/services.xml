@@ -98,11 +98,13 @@
 
     <service id="Blur\BlurElysiumSlider\Command\SlideExportCommand">
       <argument type="service" id="Blur\BlurElysiumSlider\Service\ImportExport\SlideExportService"/>
+      <argument type="service" id="shopware.filesystem.private"/>
       <tag name="console.command"/>
     </service>
 
     <service id="Blur\BlurElysiumSlider\Command\SlideImportCommand">
       <argument type="service" id="Blur\BlurElysiumSlider\Service\ImportExport\SlideImportService"/>
+      <argument type="service" id="shopware.filesystem.private"/>
       <tag name="console.command"/>
     </service>
 

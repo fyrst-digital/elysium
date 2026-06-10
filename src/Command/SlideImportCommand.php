@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Command;
 
 use Blur\BlurElysiumSlider\Service\ImportExport\SlideImportService;
+use League\Flysystem\FilesystemOperator;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Feature;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -15,19 +16,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'elysium:slides:import',
-    description: 'Imports Elysium slides from a JSONL file.',
+    description: 'Imports Elysium slides from a JSONL file. Supports absolute paths or relative paths from the default directory (elysium/).',
 )]
 class SlideImportCommand extends Command
 {
+    private const DEFAULT_IMPORT_PATH = 'elysium';
+
     public function __construct(
-        private readonly SlideImportService $importService
+        private readonly SlideImportService $importService,
+        private readonly FilesystemOperator $filesystem
     ) {
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this->addArgument('file', InputArgument::REQUIRED, 'Path to the .jsonl import file');
+        $this->addArgument('file', InputArgument::REQUIRED, 'Path to the .jsonl import file (absolute path or filename relative to elysium/)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -39,19 +43,24 @@ class SlideImportCommand extends Command
         }
 
         $filePath = $input->getArgument('file');
+        $content = null;
 
-        if (!file_exists($filePath)) {
-            $output->writeln(sprintf('File not found: %s', $filePath));
-
-            return self::INVALID;
-        }
-
-        $content = file_get_contents($filePath);
-
-        if ($content === false) {
-            $output->writeln('Failed to read the file.');
-
-            return self::FAILURE;
+        // Try absolute path first
+        if (file_exists($filePath)) {
+            $content = file_get_contents($filePath);
+            if ($content === false) {
+                $output->writeln('Failed to read the file.');
+                return self::FAILURE;
+            }
+        } else {
+            // Try relative path from default export directory
+            $relativePath = self::DEFAULT_IMPORT_PATH . '/' . $filePath;
+            if ($this->filesystem->fileExists($relativePath)) {
+                $content = $this->filesystem->read($relativePath);
+            } else {
+                $output->writeln(sprintf('File not found at "%s" or "%s"', $filePath, $relativePath));
+                return self::INVALID;
+            }
         }
 
         $context = Context::createCLIContext();
