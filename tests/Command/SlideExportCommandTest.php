@@ -82,14 +82,14 @@ class SlideExportCommandTest extends TestCase
             ->willReturn('jsonl-content');
 
         $filesystem = $this->createMock(FilesystemOperator::class);
-        $filesystem->expects($this->never())->method('write');
+        $filesystem->expects($this->once())
+            ->method('write')
+            ->with('/tmp/elysium-export-test.jsonl', 'jsonl-content');
 
         $command = new SlideExportCommand($exportService, $filesystem);
 
-        $tempFile = tempnam(sys_get_temp_dir(), 'elysium-export-test');
-
         $input = new ArrayInput([
-            '--output' => $tempFile,
+            '--output' => '/tmp/elysium-export-test.jsonl',
         ]);
         $output = new BufferedOutput();
 
@@ -97,10 +97,7 @@ class SlideExportCommandTest extends TestCase
         $outputContent = $output->fetch();
 
         $this->assertSame(0, $exitCode);
-        $this->assertStringContainsString($tempFile, $outputContent);
-        $this->assertSame('jsonl-content', file_get_contents($tempFile));
-
-        unlink($tempFile);
+        $this->assertStringContainsString('/tmp/elysium-export-test.jsonl', $outputContent);
     }
 
     public function testExecuteWithIdsAndAllReturnsError(): void

@@ -65,7 +65,7 @@ class SlideExportCommand extends Command
         $outputPath = $input->getOption('output');
 
         if ($outputPath !== null) {
-            file_put_contents($outputPath, $jsonl);
+            $this->filesystem->write($outputPath, $jsonl);
             $output->writeln(sprintf('Exported slides to %s', $outputPath));
         } else {
             $timestamp = (new \DateTime())->format('Y-m-d-His');

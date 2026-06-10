@@ -28,10 +28,6 @@ class SlideImportExportController extends AbstractController
     {
         $ids = $request->request->all('ids');
 
-        if (!is_array($ids)) {
-            throw RoutingException::missingRequestParameter('ids');
-        }
-
         if (empty($ids)) {
             $jsonl = $this->exportService->exportAll($context);
         } else {
