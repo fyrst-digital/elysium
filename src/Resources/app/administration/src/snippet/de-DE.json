@@ -189,7 +189,11 @@
       "productLinkingMissingEntity": "Bitte wähle ein Produkt welches du verknüpfen möchtest",
       "categoryLinkingMissingEntity": "Bitte wähle eine Kategorie die du verknüpfen möchtest",
       "customTemplateFileDefinedNotice": "Du hast eine eigene Template Datei festgelegt. Einige Einstellungen könnten überschrieben werden.",
-      "copyErrorUnsavedChanges": "Bitte speichere deine Änderungen, bevor du eine Folie kopierst."
+      "copyErrorUnsavedChanges": "Bitte speichere deine Änderungen, bevor du eine Folie kopierst.",
+      "importSuccess": "{count} Slide(s) erfolgreich importiert",
+      "importError": "Import fehlgeschlagen: {message}",
+      "exportError": "Export fehlgeschlagen",
+      "exportSuccess": "Datei '{filename}' wurde heruntergeladen"
     },
     "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
     "actions": {
@@ -197,7 +201,17 @@
       "newSlide": "Slide erstellen",
       "copySlide": "Slide kopieren",
       "editSlide": "Slide bearbeiten",
-      "deleteSlide": "Slide löschen"
+      "deleteSlide": "Slide löschen",
+      "exportSlides": "Slides exportieren",
+      "exportSlidesTooltip": "Alle Slides als JSONL-Datei exportieren",
+      "importSlides": "Slides importieren"
+    },
+    "importModal": {
+      "title": "Slides importieren",
+      "description": "Lade eine .jsonl-Datei mit exportierten Slides hoch. Vorhandene Slides mit derselben ID werden überschrieben.",
+      "fileLabel": "Datei auswählen",
+      "submit": "Importieren",
+      "overwriteWarning": "Warnung: Dies überschreibt vorhandene Slides mit übereinstimmenden IDs."
     },
     "grid": {
       "nameLabel": "Name",

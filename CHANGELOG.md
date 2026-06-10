@@ -1,3 +1,8 @@
+# Unreleased
+
+**Changelog**
+- Added slides import/export feature (technical preview). Slides can be exported as JSONL files and imported back via administration UI or CLI commands
+
 # 4.8.1
 
 **Changelog**

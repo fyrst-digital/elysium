@@ -50,6 +50,10 @@ final class Defaults
         'elysium_preview_time_control' => [
             'description' => 'Enables time-controlled slides scheduling',
             'default' => true
+        ],
+        'elysium_preview_import_export' => [
+            'description' => 'Enables import and export functionality for Elysium slides',
+            'default' => true
         ]
     ];
 

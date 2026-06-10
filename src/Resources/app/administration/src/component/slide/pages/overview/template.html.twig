@@ -29,6 +29,23 @@
 
     <template #smart-bar-actions>
         <mt-button
+            v-if="isImportExportEnabled && permissionExport"
+            variant="secondary"
+            size="default"
+            v-tooltip="{ message: $tc('blurElysiumSlides.actions.exportSlidesTooltip') }"
+            @click="onExportAll"
+        >
+            {{ $tc('blurElysiumSlides.actions.exportSlides') }}
+        </mt-button>
+        <mt-button
+            v-if="isImportExportEnabled && permissionImport"
+            variant="secondary"
+            size="default"
+            @click="onImportSlides"
+        >
+            {{ $tc('blurElysiumSlides.actions.importSlides') }}
+        </mt-button>
+        <mt-button
             variant="primary"
             size="default"
             :disabled="!permissionCreate"
@@ -52,7 +69,20 @@
             @column-sort="onColumnSort"
             @delete-item-finish="finishDeleteItems"
             @items-delete-finish="finishDeleteItems"
+            @selection-change="onSelectionChange"
         >
+            <template #bulk-additional="{ selectionCount }">
+                <a
+                    v-if="selectionCount > 0 && isImportExportEnabled && permissionExport"
+                    class="link link-primary"
+                    role="button"
+                    tabindex="0"
+                    @click="onBulkExport"
+                    @keydown.enter="onBulkExport"
+                >
+                    {{ $tc('blurElysiumSlides.actions.exportSlides') }}
+                </a>
+            </template>
             <template #column-name="{ item }">
                 <div :style="{ display: 'flex', alignItems: 'center', gap: '8px' }">
                     <router-link
@@ -73,20 +103,6 @@
                         v-tooltip="{
                             message: getSlideHints(item).join('<br/>'),
                         }" />
-                    {# <mt-icon
-                        v-if="getSlideHints(item).length > 0"
-                        name="default-info-circle"
-                        size="16px"
-                        :style="{ color: '#3498db', cursor: 'help' }"
-                    >
-                        <template #tooltip>
-                            <div :style="{ display: 'flex', flexDirection: 'column', gap: '4px' }">
-                                <div v-for="hint in getSlideHints(item)" :key="hint">
-                                    {{ hint }}
-                                </div>
-                            </div>
-                        </template>
-                    </mt-icon> #}
                 </div>
             </template>
             <template #more-actions="{ item }">
@@ -132,5 +148,48 @@
                 </template>
             </sw-empty-state>
         </template>
+
+        <sw-modal
+            v-if="showImportModal"
+            :title="$tc('blurElysiumSlides.importModal.title')"
+            @modal-close="onCloseImportModal"
+        >
+            <p :style="{ marginBottom: '16px' }">
+                {{ $tc('blurElysiumSlides.importModal.description') }}
+            </p>
+            <p
+                v-if="$tc('blurElysiumSlides.importModal.overwriteWarning')"
+                :style="{
+                    marginBottom: '16px',
+                    color: 'var(--color-text-warning)',
+                    fontWeight: 'bold'
+                }"
+            >
+                {{ $tc('blurElysiumSlides.importModal.overwriteWarning') }}
+            </p>
+
+            <sw-file-input
+                :label="$tc('blurElysiumSlides.importModal.fileLabel')"
+                @update:value="onImportFileChange"
+            />
+
+            <template #modal-footer>
+                <mt-button
+                    variant="secondary"
+                    size="default"
+                    @click="onCloseImportModal"
+                >
+                    {{ $tc('blurElysium.action.cancel') }}
+                </mt-button>
+                <mt-button
+                    variant="primary"
+                    size="default"
+                    :disabled="!importFile || isImporting"
+                    @click="onSubmitImport"
+                >
+                    {{ $tc('blurElysiumSlides.importModal.submit') }}
+                </mt-button>
+            </template>
+        </sw-modal>
     </template>
 </sw-page>
