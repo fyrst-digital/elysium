@@ -18,6 +18,8 @@ interface Data {
     showImportModal: boolean;
     importFile: File | null;
     isImporting: boolean;
+    showSwitchCoverImagesModal: boolean;
+    isSwitchingCoverImages: boolean;
     selection: Record<string, unknown>;
 }
 
@@ -62,6 +64,8 @@ export default Component.wrapComponentConfig({
             showImportModal: false,
             importFile: null,
             isImporting: false,
+            showSwitchCoverImagesModal: false,
+            isSwitchingCoverImages: false,
             selection: {},
         };
     },
@@ -369,6 +373,57 @@ export default Component.wrapComponentConfig({
                     console.error(error);
                     this.createNotificationError({
                         message: this.$t('blurElysiumSlides.messages.importError', { message: error.message }),
+                    });
+                });
+        },
+
+        onSwitchCoverImages() {
+            if (!this.permissionEdit) {
+                return;
+            }
+
+            this.showSwitchCoverImagesModal = true;
+        },
+
+        onCloseSwitchCoverImagesModal() {
+            this.showSwitchCoverImagesModal = false;
+        },
+
+        onConfirmSwitchCoverImages() {
+            if (!this.permissionEdit || this.isSwitchingCoverImages) {
+                return;
+            }
+
+            this.isSwitchingCoverImages = true;
+
+            const token = Shopware.Service('loginService').getToken();
+
+            fetch('/api/_action/elysium-slides/switch-cover-images', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Switch cover images failed');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    this.isSwitchingCoverImages = false;
+                    this.showSwitchCoverImagesModal = false;
+
+                    this.createNotificationSuccess({
+                        message: this.$tc('blurElysiumSlides.messages.switchCoverImagesSuccess', data.affected, { count: data.affected }),
+                    });
+                    this.getList();
+                })
+                .catch((error) => {
+                    this.isSwitchingCoverImages = false;
+                    console.error(error);
+                    this.createNotificationError({
+                        message: this.$t('blurElysiumSlides.messages.switchCoverImagesError'),
                     });
                 });
         },

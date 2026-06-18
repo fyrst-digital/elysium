@@ -46,6 +46,14 @@
             {{ $tc('blurElysiumSlides.actions.importSlides') }}
         </mt-button>
         <mt-button
+            v-if="permissionEdit"
+            variant="secondary"
+            size="default"
+            @click="onSwitchCoverImages"
+        >
+            {{ $tc('blurElysiumSlides.actions.switchCoverImages') }}
+        </mt-button>
+        <mt-button
             variant="primary"
             size="default"
             :disabled="!permissionCreate"
@@ -188,6 +196,35 @@
                     @click="onSubmitImport"
                 >
                     {{ $tc('blurElysiumSlides.importModal.submit') }}
+                </mt-button>
+            </template>
+        </sw-modal>
+
+        <sw-modal
+            v-if="showSwitchCoverImagesModal"
+            :title="$tc('blurElysiumSlides.switchCoverImagesModal.title')"
+            @modal-close="onCloseSwitchCoverImagesModal"
+        >
+            <p :style="{ marginBottom: '16px' }">
+                {{ $tc('blurElysiumSlides.switchCoverImagesModal.description') }}
+            </p>
+
+            <template #modal-footer>
+                <mt-button
+                    variant="secondary"
+                    size="default"
+                    @click="onCloseSwitchCoverImagesModal"
+                >
+                    {{ $tc('blurElysium.action.cancel') }}
+                </mt-button>
+                <mt-button
+                    variant="primary"
+                    size="default"
+                    :is-loading="isSwitchingCoverImages"
+                    :disabled="isSwitchingCoverImages"
+                    @click="onConfirmSwitchCoverImages"
+                >
+                    {{ $tc('blurElysiumSlides.actions.confirmAction') }}
                 </mt-button>
             </template>
         </sw-modal>
