@@ -60,6 +60,12 @@ export default Component.wrapComponentConfig({
                     gap: '16px',
                     alignItems: 'center',
                 },
+                contextItem: <CSSStyleDeclaration>{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    gap: '8px',
+                },
             },
             showImportModal: false,
             importFile: null,

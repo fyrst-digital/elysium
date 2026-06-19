@@ -54,22 +54,34 @@
 
                 <sw-context-menu-item
                     v-if="isImportExportEnabled && permissionExport"
+                    :style="styles.contextItem"
                     @click="onExportAll"
                 >
+                    <template #icon>
+                        <py-icon name="arrow-square-out-bold" :size="16" />
+                    </template>
                     {{ $tc('blurElysiumSlides.actions.exportSlides') }}
                 </sw-context-menu-item>
 
                 <sw-context-menu-item
                     v-if="isImportExportEnabled && permissionImport"
+                    :style="styles.contextItem"
                     @click="onImportSlides"
                 >
+                    <template #icon>
+                        <py-icon name="arrow-square-in-bold" :size="16" />
+                    </template>
                     {{ $tc('blurElysiumSlides.actions.importSlides') }}
                 </sw-context-menu-item>
 
                 <sw-context-menu-item
                     v-if="permissionEdit"
+                    :style="styles.contextItem"
                     @click="onSwitchCoverImages"
                 >
+                    <template #icon>
+                        <py-icon name="arrows-left-right-bold" :size="16" />
+                    </template>
                     {{ $tc('blurElysiumSlides.actions.switchCoverImages') }}
                 </sw-context-menu-item>
             </sw-context-button>
