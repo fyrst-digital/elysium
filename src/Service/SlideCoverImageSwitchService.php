@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Service;
 
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -35,8 +37,12 @@ class SlideCoverImageSwitchService
             return 0;
         }
 
+        /** @var ElysiumSlidesCollection $entities */
+        $entities = $result->getEntities();
+
         $payload = [];
-        foreach ($result->getEntities() as $slide) {
+        foreach ($entities as $slide) {
+            /** @var ElysiumSlidesEntity $slide */
             $payload[] = [
                 'id' => $slide->getId(),
                 'slideCoverMobileId' => $slide->getSlideCoverId(),
