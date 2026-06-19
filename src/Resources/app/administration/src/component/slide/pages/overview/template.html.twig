@@ -28,31 +28,64 @@
     </template>
 
     <template #smart-bar-actions>
-        <mt-button
-            v-if="isImportExportEnabled && permissionExport"
-            variant="secondary"
-            size="default"
-            v-tooltip="{ message: $tc('blurElysiumSlides.actions.exportSlidesTooltip') }"
-            @click="onExportAll"
-        >
-            {{ $tc('blurElysiumSlides.actions.exportSlides') }}
-        </mt-button>
-        <mt-button
-            v-if="isImportExportEnabled && permissionImport"
-            variant="secondary"
-            size="default"
-            @click="onImportSlides"
-        >
-            {{ $tc('blurElysiumSlides.actions.importSlides') }}
-        </mt-button>
-        <mt-button
-            variant="primary"
-            size="default"
-            :disabled="!permissionCreate"
-            @click="$router.push({ name: 'blur.elysium.slides.create' })"
-        >
-            {{ $tc('blurElysium.action.createSlide') }}
-        </mt-button>
+        <sw-button-group :split-button="true">
+            <mt-button
+                variant="primary"
+                size="default"
+                :disabled="!permissionCreate"
+                @click="$router.push({ name: 'blur.elysium.slides.create' })"
+            >
+                {{ $tc('blurElysium.action.createSlide') }}
+            </mt-button>
+
+            <sw-context-button v-if="hasAdditionalActions">
+                <template #button>
+                    <mt-button
+                        variant="primary"
+                        size="default"
+                        square
+                    >
+                        <py-icon
+                            name="caret-down-bold"
+                            size="16"
+                        />
+                    </mt-button>
+                </template>
+
+                <sw-context-menu-item
+                    v-if="isImportExportEnabled && permissionExport"
+                    :style="styles.contextItem"
+                    @click="onExportAll"
+                >
+                    <template #icon>
+                        <py-icon name="arrow-square-out-bold" :size="16" />
+                    </template>
+                    {{ $tc('blurElysiumSlides.actions.exportSlides') }}
+                </sw-context-menu-item>
+
+                <sw-context-menu-item
+                    v-if="isImportExportEnabled && permissionImport"
+                    :style="styles.contextItem"
+                    @click="onImportSlides"
+                >
+                    <template #icon>
+                        <py-icon name="arrow-square-in-bold" :size="16" />
+                    </template>
+                    {{ $tc('blurElysiumSlides.actions.importSlides') }}
+                </sw-context-menu-item>
+
+                <sw-context-menu-item
+                    v-if="permissionEdit"
+                    :style="styles.contextItem"
+                    @click="onSwitchCoverImages"
+                >
+                    <template #icon>
+                        <py-icon name="arrows-left-right-bold" :size="16" />
+                    </template>
+                    {{ $tc('blurElysiumSlides.actions.switchCoverImages') }}
+                </sw-context-menu-item>
+            </sw-context-button>
+        </sw-button-group>
     </template>
 
     <template #content>
@@ -188,6 +221,35 @@
                     @click="onSubmitImport"
                 >
                     {{ $tc('blurElysiumSlides.importModal.submit') }}
+                </mt-button>
+            </template>
+        </sw-modal>
+
+        <sw-modal
+            v-if="showSwitchCoverImagesModal"
+            :title="$tc('blurElysiumSlides.switchCoverImagesModal.title')"
+            @modal-close="onCloseSwitchCoverImagesModal"
+        >
+            <p :style="{ marginBottom: '16px' }">
+                {{ $tc('blurElysiumSlides.switchCoverImagesModal.description') }}
+            </p>
+
+            <template #modal-footer>
+                <mt-button
+                    variant="secondary"
+                    size="default"
+                    @click="onCloseSwitchCoverImagesModal"
+                >
+                    {{ $tc('blurElysium.action.cancel') }}
+                </mt-button>
+                <mt-button
+                    variant="primary"
+                    size="default"
+                    :is-loading="isSwitchingCoverImages"
+                    :disabled="isSwitchingCoverImages"
+                    @click="onConfirmSwitchCoverImages"
+                >
+                    {{ $tc('blurElysiumSlides.actions.confirmAction') }}
                 </mt-button>
             </template>
         </sw-modal>

@@ -3,6 +3,7 @@
 **Changelog**
 - Added slides import/export feature (technical preview). Slides can be exported as JSONL files and imported back via administration UI or CLI commands
 - Added `<wbr>` HTML tag support and `text-wrap: balance` CSS styling for slide headlines
+- Added slide cover image switch service, CLI command (`elysium:slides:switch-cover-images`) and administration UI action. For all slides that have a desktop cover image but no mobile cover image, the desktop image is moved to the mobile cover and the desktop cover is cleared
 
 # 4.8.1
 
