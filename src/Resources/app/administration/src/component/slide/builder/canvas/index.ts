@@ -10,6 +10,7 @@ export default Component.wrapComponentConfig({
 
     mixins: [
         Mixin.getByName('blur-style-utilities'),
+        Mixin.getByName('placeholder'),
     ],
 
     data() {
@@ -108,6 +109,13 @@ export default Component.wrapComponentConfig({
         salesChannelRepository() {
             return this.repositoryFactory.create('sales_channel');
         },
+
+        salesChannelOptions() {
+            return this.salesChannels.map((channel) => ({
+                value: channel.id,
+                label: this.placeholder(channel, 'name', channel.id),
+            }));
+        },
     },
 
     methods: {
@@ -126,6 +134,7 @@ export default Component.wrapComponentConfig({
         loadSalesChannels() {
             const criteria = new Criteria();
             criteria.addAssociation('domains');
+            criteria.addAssociation('translations');
             criteria.addFilter(Criteria.equals('typeId', Shopware.Defaults.storefrontSalesChannelTypeId));
 
             this.salesChannelRepository.search(criteria, Context.api)
