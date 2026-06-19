@@ -110,6 +110,22 @@
       <tag name="console.command"/>
     </service>
 
+    <service id="Blur\BlurElysiumSlider\Service\SlideCoverImageSwitchService">
+      <argument type="service" id="blur_elysium_slides.repository"/>
+    </service>
+
+    <service id="Blur\BlurElysiumSlider\Command\SlideCoverImageSwitchCommand">
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\SlideCoverImageSwitchService"/>
+      <tag name="console.command"/>
+    </service>
+
+    <service id="Blur\BlurElysiumSlider\Administration\Controller\SlideCoverImageController" public="true">
+      <argument type="service" id="Blur\BlurElysiumSlider\Service\SlideCoverImageSwitchService"/>
+      <call method="setContainer">
+        <argument type="service" id="service_container"/>
+      </call>
+    </service>
+
     <service id="Blur\BlurElysiumSlider\MessageHandler\TimeControlCacheInvalidationHandler">
       <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheInvalidator"/>
       <argument type="service" id="Blur\BlurElysiumSlider\Service\CmsPageLookup"/>

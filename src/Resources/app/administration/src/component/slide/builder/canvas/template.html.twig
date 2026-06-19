@@ -122,7 +122,8 @@
                 layout="row"
                 :model-value="selectedSalesChannelId"
                 @update:model-value="onSalesChannelChange"
-                :options="salesChannels.map(channel => ({ value: channel.id, label: channel.translated ? channel.translated.name : channel.name }))"
+                :options="salesChannelOptions"
+                hide-clearable-button
                 :style="viewStyle({
                     mobile: {
                         maxWidth: '200px',

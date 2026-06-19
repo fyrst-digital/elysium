@@ -195,7 +195,9 @@
       "importSuccess": "{count} slide(s) imported successfully",
       "importError": "Import failed: {message}",
       "exportError": "Export failed",
-      "exportSuccess": "File '{filename}' has been downloaded"
+      "exportSuccess": "File '{filename}' has been downloaded",
+      "switchCoverImagesSuccess": "{count} slide(s) cover images switched successfully",
+      "switchCoverImagesError": "Switching cover images failed"
     },
     "emptySlidesSubline": "Seems you haven't created any Slides yet. Create your first Slide.",
     "actions": {
@@ -206,7 +208,8 @@
       "deleteSlide": "Delete Slide",
       "exportSlides": "Export slides",
       "exportSlidesTooltip": "Export all slides as a JSONL file",
-      "importSlides": "Import slides"
+      "importSlides": "Import slides",
+      "switchCoverImages": "Switch cover images"
     },
     "importModal": {
       "title": "Import slides",
@@ -214,6 +217,10 @@
       "fileLabel": "Select file",
       "submit": "Import",
       "overwriteWarning": "Warning: This will overwrite existing slides with matching IDs."
+    },
+    "switchCoverImagesModal": {
+      "title": "Switch cover images",
+      "description": "For all slides that have a desktop cover image but no mobile cover image, the desktop image will be moved to the mobile cover. The desktop cover will be removed. Existing mobile cover images will not be changed."
     },
     "grid": {
       "nameLabel": "Name",

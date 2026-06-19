@@ -195,7 +195,9 @@
       "importSuccess": "{count} Slide(s) erfolgreich importiert",
       "importError": "Import fehlgeschlagen: {message}",
       "exportError": "Export fehlgeschlagen",
-      "exportSuccess": "Datei '{filename}' wurde heruntergeladen"
+      "exportSuccess": "Datei '{filename}' wurde heruntergeladen",
+      "switchCoverImagesSuccess": "Cover-Bilder von {count} Slide(s) erfolgreich gewechselt",
+      "switchCoverImagesError": "Cover-Bilder konnten nicht gewechselt werden"
     },
     "emptySlidesSubline": "Es sind noch keine Slides vorhanden. Erstelle deinen ersten Slide.",
     "actions": {
@@ -206,7 +208,8 @@
       "deleteSlide": "Slide löschen",
       "exportSlides": "Slides exportieren",
       "exportSlidesTooltip": "Alle Slides als JSONL-Datei exportieren",
-      "importSlides": "Slides importieren"
+      "importSlides": "Slides importieren",
+      "switchCoverImages": "Cover-Bilder wechseln"
     },
     "importModal": {
       "title": "Slides importieren",
@@ -214,6 +217,10 @@
       "fileLabel": "Datei auswählen",
       "submit": "Importieren",
       "overwriteWarning": "Warnung: Dies überschreibt vorhandene Slides mit übereinstimmenden IDs."
+    },
+    "switchCoverImagesModal": {
+      "title": "Cover-Bilder wechseln",
+      "description": "Bei allen Slides, die ein Desktop-Cover-Bild, aber kein Mobile-Cover-Bild haben, wird das Desktop-Bild zum Mobile-Cover verschoben. Das Desktop-Cover wird entfernt. Vorhandene Mobile-Cover-Bilder bleiben unverändert."
     },
     "grid": {
       "nameLabel": "Name",

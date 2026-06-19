@@ -3,6 +3,7 @@
 **Changelog**
 - Slides Import/Export Funktion hinzugefügt (Technische Vorschau). Slides können über die Administration oder CLI-Befehle als JSONL-Dateien exportiert und wieder importiert werden
 - `<wbr>` HTML-Tag Unterstützung und `text-wrap: balance` CSS-Styling für Slide-Überschriften hinzugefügt
+- Service zum Wechseln von Slide-Cover-Bildern, CLI-Befehl (`elysium:slides:switch-cover-images`) und Administrations-Aktion hinzugefügt. Bei allen Slides, die ein Desktop-Cover-Bild, aber kein Mobile-Cover-Bild haben, wird das Desktop-Bild zum Mobile-Cover verschoben und das Desktop-Cover entfernt
 
 # 4.8.1
 
