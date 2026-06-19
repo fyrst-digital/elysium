@@ -28,39 +28,52 @@
     </template>
 
     <template #smart-bar-actions>
-        <mt-button
-            v-if="isImportExportEnabled && permissionExport"
-            variant="secondary"
-            size="default"
-            v-tooltip="{ message: $tc('blurElysiumSlides.actions.exportSlidesTooltip') }"
-            @click="onExportAll"
-        >
-            {{ $tc('blurElysiumSlides.actions.exportSlides') }}
-        </mt-button>
-        <mt-button
-            v-if="isImportExportEnabled && permissionImport"
-            variant="secondary"
-            size="default"
-            @click="onImportSlides"
-        >
-            {{ $tc('blurElysiumSlides.actions.importSlides') }}
-        </mt-button>
-        <mt-button
-            v-if="permissionEdit"
-            variant="secondary"
-            size="default"
-            @click="onSwitchCoverImages"
-        >
-            {{ $tc('blurElysiumSlides.actions.switchCoverImages') }}
-        </mt-button>
-        <mt-button
-            variant="primary"
-            size="default"
-            :disabled="!permissionCreate"
-            @click="$router.push({ name: 'blur.elysium.slides.create' })"
-        >
-            {{ $tc('blurElysium.action.createSlide') }}
-        </mt-button>
+        <sw-button-group :split-button="true">
+            <mt-button
+                variant="primary"
+                size="default"
+                :disabled="!permissionCreate"
+                @click="$router.push({ name: 'blur.elysium.slides.create' })"
+            >
+                {{ $tc('blurElysium.action.createSlide') }}
+            </mt-button>
+
+            <sw-context-button v-if="hasAdditionalActions">
+                <template #button>
+                    <mt-button
+                        variant="primary"
+                        size="default"
+                        square
+                    >
+                        <py-icon
+                            name="caret-down-bold"
+                            size="16"
+                        />
+                    </mt-button>
+                </template>
+
+                <sw-context-menu-item
+                    v-if="isImportExportEnabled && permissionExport"
+                    @click="onExportAll"
+                >
+                    {{ $tc('blurElysiumSlides.actions.exportSlides') }}
+                </sw-context-menu-item>
+
+                <sw-context-menu-item
+                    v-if="isImportExportEnabled && permissionImport"
+                    @click="onImportSlides"
+                >
+                    {{ $tc('blurElysiumSlides.actions.importSlides') }}
+                </sw-context-menu-item>
+
+                <sw-context-menu-item
+                    v-if="permissionEdit"
+                    @click="onSwitchCoverImages"
+                >
+                    {{ $tc('blurElysiumSlides.actions.switchCoverImages') }}
+                </sw-context-menu-item>
+            </sw-context-button>
+        </sw-button-group>
     </template>
 
     <template #content>

@@ -140,6 +140,11 @@ export default Component.wrapComponentConfig({
             return this.feature.isActive('elysium_preview_import_export');
         },
 
+        hasAdditionalActions() {
+            return (this.isImportExportEnabled && (this.permissionExport || this.permissionImport))
+                || this.permissionEdit;
+        },
+
         assetFilter() {
             return Filter.getByName('asset');
         },
