@@ -3,6 +3,7 @@ import deDE from '@elysium/snippet/de-DE.json';
 import slideStore from '@elysium/states/slide.states';
 import uiStore from '@elysium/states/ui.states';
 import cmsStore from '@elysium/states/cms.states';
+import mediaStore from '@elysium/states/media.states';
 import { useComponentRegister, useComponentOverride } from '@elysium/composables/components'
 import '@elysium/styles/mt-fixes.scss';
 import '@elysium/styles/components.scss';
@@ -24,6 +25,7 @@ const { Locale, Application, Component, Store, Service } = Shopware;
 Store.register(slideStore);
 Store.register(uiStore);
 Store.register(cmsStore);
+Store.register(mediaStore);
 
 /**
  * Register global snippets
@@ -74,6 +76,7 @@ useComponentRegister([
     { name: 'py-section', path: () => import('./component/py/section') },
     { name: 'py-column', path: () => import('./component/py/column') },
     { name: 'py-device-switch', path: () => import('./component/py/device-switch') },
+    { name: 'py-badge', path: () => import('./component/py/badge') },
     { name: 'elysium-iap-subscription-card', path: () => import('@elysium/component/iap/subscription-card') },
     { name: 'elysium-icon', path: () => import('@elysium/component/utilities/icon') },
     { name: 'elysium-settings', path: () => import('@elysium/component/settings') },
@@ -118,7 +121,6 @@ useComponentOverride([
     { name: 'sw-cms-sidebar', path: () => import('@elysium/extension/sw-cms-sidebar') },
     { name: 'sw-cms-stage-section-selection', path: () => import('@elysium/extension/sw-cms-stage-section-selection') },
     { name: 'sw-search-bar-item', path: () => import('@elysium/extension/sw-search-bar-item') },
-    { name: 'sw-media-quickinfo-usage', path: () => import('@elysium/extension/sw-media-quickinfo-usage') },
     { name: 'sw-sidebar', path: () => import('@elysium/extension/sw-sidebar') },
 ])
 

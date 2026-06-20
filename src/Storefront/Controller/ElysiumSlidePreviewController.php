@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Storefront\Controller;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Blur\BlurElysiumSlider\DataResolver\MediaResolutionTrait;
 use Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry;
-use Shopware\Core\Content\Media\MediaEntity;
+use Shopware\Core\Content\Media\MediaCollection;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -24,8 +25,10 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(defaults: [PlatformRequest::ATTRIBUTE_ROUTE_SCOPE => [StorefrontRouteScope::ID]])]
 class ElysiumSlidePreviewController extends StorefrontController
 {
+    use MediaResolutionTrait;
     public function __construct(
         private readonly EntityRepository $elysiumSlidesRepository,
+        private readonly EntityRepository $mediaRepository,
         private readonly EntityRepository $salesChannelRepository,
         private readonly PreviewSchemaRegistry $schemaRegistry,
     ) {}
@@ -166,8 +169,13 @@ class ElysiumSlidePreviewController extends StorefrontController
         $device = $request->query->get('device', 'desktop');
         $layout = $request->query->get('layout', 'detail');
 
+        $resolvedMedia = $isNewSlide
+            ? new MediaCollection([])
+            : $this->resolveMediaForSlides([$slide], $this->mediaRepository, $context);
+
         $response = $this->render('@Storefront/storefront/elysium-slide/preview.html.twig', [
             'slideData' => $slide,
+            'resolvedMedia' => $resolvedMedia,
             'device' => $device,
             'layout' => $layout,
             'isNewSlide' => $isNewSlide,
@@ -187,11 +195,6 @@ class ElysiumSlidePreviewController extends StorefrontController
     private function loadSlide(string $slideId, SalesChannelContext $context): ElysiumSlidesEntity
     {
         $criteria = new Criteria([$slideId]);
-        $criteria->addAssociation('slideCover');
-        $criteria->addAssociation('slideCoverMobile');
-        $criteria->addAssociation('slideCoverTablet');
-        $criteria->addAssociation('slideCoverVideo');
-        $criteria->addAssociation('presentationMedia');
         $criteria->addAssociation('product');
         $criteria->addAssociation('product.cover');
         $criteria->addAssociation('product.cover.media');

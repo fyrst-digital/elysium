@@ -250,6 +250,7 @@ export default Component.wrapComponentConfig({
             criteria.addAssociation('product.cover.media');
             criteria.addAssociation('category');
             criteria.addAssociation('category.media');
+            criteria.addAssociation('translations');
 
             this.slidesRepository
                 .get(this.slideId, { ...Context.api, inheritance: true }, criteria)

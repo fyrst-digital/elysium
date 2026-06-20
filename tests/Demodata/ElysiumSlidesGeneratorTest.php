@@ -112,7 +112,7 @@ class ElysiumSlidesGeneratorTest extends TestCase
         }
     }
 
-    public function testTitleIsPlainTextWithoutHtmlTags(): void
+    public function testContentSettingsTitleIsPlainTextWithoutHtmlTags(): void
     {
         $generator = $this->createGenerator();
         $context = $this->createDemodataContext();
@@ -125,9 +125,67 @@ class ElysiumSlidesGeneratorTest extends TestCase
                 str_repeat('b', 32),
             );
 
-            static::assertArrayHasKey('title', $payload);
-            static::assertDoesNotMatchRegularExpression('/<\\/?[a-z][^>]*>/i', $payload['title'], sprintf('Slide title "%s" must not contain HTML tags', $payload['title']));
+            static::assertArrayHasKey('contentSettings', $payload);
+            static::assertIsArray($payload['contentSettings']);
+            static::assertArrayHasKey('title', $payload['contentSettings']);
+            static::assertDoesNotMatchRegularExpression('/<\/?[a-z][^>]*>/i', $payload['contentSettings']['title'], sprintf('Slide title "%s" must not contain HTML tags', $payload['contentSettings']['title']));
         }
+    }
+
+    public function testContentSettingsStructureIsCorrect(): void
+    {
+        $generator = $this->createGenerator();
+        $context = $this->createDemodataContext();
+
+        $payload = $generator->assembleSlidePayload(
+            $context,
+            1,
+            str_repeat('a', 32),
+            str_repeat('b', 32),
+        );
+
+        static::assertArrayHasKey('contentSettings', $payload);
+        $contentSettings = $payload['contentSettings'];
+        static::assertIsArray($contentSettings);
+
+        static::assertArrayHasKey('title', $contentSettings);
+        static::assertArrayHasKey('description', $contentSettings);
+        static::assertArrayHasKey('button', $contentSettings);
+        static::assertIsArray($contentSettings['button']);
+        static::assertArrayHasKey('label', $contentSettings['button']);
+        static::assertArrayHasKey('url', $contentSettings);
+        static::assertArrayHasKey('slideCover', $contentSettings);
+        static::assertIsArray($contentSettings['slideCover']);
+        static::assertArrayHasKey('mobileId', $contentSettings['slideCover']);
+        static::assertArrayHasKey('tabletId', $contentSettings['slideCover']);
+        static::assertArrayHasKey('desktopId', $contentSettings['slideCover']);
+        static::assertArrayHasKey('videoId', $contentSettings['slideCover']);
+        static::assertArrayHasKey('alt', $contentSettings['slideCover']);
+        static::assertArrayHasKey('title', $contentSettings['slideCover']);
+        static::assertArrayHasKey('focusImageId', $contentSettings);
+    }
+
+    public function testContentSettingsSlideCoverMediaIdsAreMappedCorrectly(): void
+    {
+        $generator = $this->createGenerator();
+        $context = $this->createDemodataContext();
+
+        $coverMediaId = str_repeat('a', 32);
+        $mobileCoverMediaId = str_repeat('b', 32);
+
+        $payload = $generator->assembleSlidePayload(
+            $context,
+            1,
+            $coverMediaId,
+            $mobileCoverMediaId,
+        );
+
+        $slideCover = $payload['contentSettings']['slideCover'];
+        static::assertSame($coverMediaId, $slideCover['mobileId']);
+        static::assertSame($coverMediaId, $slideCover['tabletId']);
+        static::assertSame($mobileCoverMediaId, $slideCover['desktopId']);
+        static::assertNull($slideCover['videoId']);
+        static::assertNull($payload['contentSettings']['focusImageId']);
     }
 
     public function testSlideSettingsHeadlineHasSupportedElement(): void

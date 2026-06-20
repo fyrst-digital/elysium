@@ -123,6 +123,7 @@
                                         {% block cms_element_blur_elysium_slider_slide %}
                                             {% sw_include '@Storefront/storefront/component/blur-elysium-slide/' ~ slideTemplate ~ '/' ~ slideFile ignore missing with {
                                                 slideData: slide,
+                                                resolvedMedia: element.data.resolvedMedia,
                                                 showContainerWrapper: showContainerWrapper
                                             } %}
                                         {% endblock %}

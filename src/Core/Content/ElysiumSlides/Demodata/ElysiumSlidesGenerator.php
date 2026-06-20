@@ -101,20 +101,26 @@ class ElysiumSlidesGenerator implements DemodataGeneratorInterface
         return [
             'id' => Uuid::randomHex(),
             'name' => sprintf('Demo Slide %d', $index),
-            'title' => $faker->words(5, true),
-            'description' => $faker->text(200),
-            'buttonLabel' => $faker->randomElement(self::BANNER_BUTTON_LABELS),
-            'url' => $faker->url(),
             'productId' => $productId,
             'categoryId' => $categoryId,
-            'slideCoverId' => $coverMediaId,
-            'slideCoverMobileId' => $mobileCoverMediaId,
-            'slideCoverTabletId' => $coverMediaId,
-            'slideCoverVideoId' => null,
-            'presentationMediaId' => null,
             'activeFrom' => null,
             'activeUntil' => null,
             'slideSettings' => $this->buildSlideSettings($linkingType, $productId, $categoryId),
+            'contentSettings' => [
+                'title' => $faker->words(5, true),
+                'description' => $faker->text(200),
+                'button' => ['label' => $faker->randomElement(self::BANNER_BUTTON_LABELS)],
+                'url' => $faker->url(),
+                'slideCover' => [
+                    'mobileId' => $coverMediaId,
+                    'tabletId' => $coverMediaId,
+                    'desktopId' => $mobileCoverMediaId,
+                    'videoId' => null,
+                    'alt' => null,
+                    'title' => null,
+                ],
+                'focusImageId' => null,
+            ],
         ];
     }
 

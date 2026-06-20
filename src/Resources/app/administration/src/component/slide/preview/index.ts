@@ -1,11 +1,10 @@
 import template from './template.html.twig'
+import { getDisplayContentSettings } from '@elysium/composables/content-settings-display'
 
-const { Component } = Shopware;
+const { Component, Store } = Shopware;
 
 export default Component.wrapComponentConfig({
     template,
-
-    inject: ['repositoryFactory'],
 
     props: {
         slide: {
@@ -43,6 +42,10 @@ export default Component.wrapComponentConfig({
     },
 
     computed: {
+        elysiumMedia() {
+            return Store.get('elysiumMedia');
+        },
+
         slideBgGradient() {
             const allowedGradientTypes = ['linear-gradient', 'radial-gradient'];
             const bgGradient = this.slide.slideSettings?.slide?.bgGradient || null;
@@ -72,17 +75,25 @@ export default Component.wrapComponentConfig({
         },
 
         currentMedia() {
-            if (this.slide.slideCoverVideo) {
-                return this.slide.slideCoverVideo;
+            const displaySettings = getDisplayContentSettings(this.slide);
+            const contentCover = displaySettings?.slideCover ?? {};
+
+            const videoMedia = this.elysiumMedia.getMedia(contentCover.videoId);
+            if (videoMedia) {
+                return videoMedia;
             }
 
+            // Mobile-first fallback: device only falls back to smaller viewports
             switch (this.deviceView) {
                 case 'mobile':
-                    return this.slide.slideCoverMobile || this.slide.slideCoverTablet || this.slide.slideCover || null;
+                    return this.elysiumMedia.getMedia(contentCover.mobileId);
                 case 'tablet':
-                    return this.slide.slideCoverTablet || this.slide.slideCoverMobile || this.slide.slideCover || null;
+                    return this.elysiumMedia.getMedia(contentCover.tabletId)
+                        || this.elysiumMedia.getMedia(contentCover.mobileId);
                 default:
-                    return this.slide.slideCover || this.slide.slideCoverTablet || this.slide.slideCoverMobile || null;
+                    return this.elysiumMedia.getMedia(contentCover.desktopId)
+                        || this.elysiumMedia.getMedia(contentCover.tabletId)
+                        || this.elysiumMedia.getMedia(contentCover.mobileId);
             }
         },
 
@@ -121,7 +132,8 @@ export default Component.wrapComponentConfig({
             if (this.slide.slideSettings?.slide?.linking?.type === 'category' && this.slide.category?.name) {
                 return this.slide.category.name;
             }
-            return this.slide.title || null;
+            const displaySettings = getDisplayContentSettings(this.slide);
+            return displaySettings.title || null;
         },
 
         headlineStyles() {
@@ -142,7 +154,8 @@ export default Component.wrapComponentConfig({
             if (this.slide.slideSettings?.slide?.linking?.type === 'category' && this.slide.category?.description) {
                 return this.slide.category.description;
             }
-            return this.slide.description || null;
+            const displaySettings = getDisplayContentSettings(this.slide);
+            return displaySettings.description || null;
         },
 
         descriptionStyles() {
@@ -154,8 +167,9 @@ export default Component.wrapComponentConfig({
         },
 
         showButton() {
-            const hasUrl = Boolean(this.slide.url) || Boolean(this.slide.productId) || Boolean(this.slide.categoryId);
-            return hasUrl && Boolean(this.slide.buttonLabel);
+            const displaySettings = getDisplayContentSettings(this.slide);
+            const hasUrl = Boolean(displaySettings.url) || Boolean(this.slide.productId) || Boolean(this.slide.categoryId);
+            return hasUrl && Boolean(displaySettings.button?.label);
         },
     },
 });

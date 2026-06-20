@@ -1,4 +1,5 @@
 import template from './template.html.twig';
+import { getContentSettingsPlaceholder } from '@elysium/composables/content-settings-display';
 
 const { Component, Mixin, Store } = Shopware;
 
@@ -44,6 +45,10 @@ export default Component.wrapComponentConfig({
             if (this.slide.name) {
                 this.slide.name = this.slide.name.trim();
             }
+        },
+
+        contentSettingsPlaceholder(path: string, fallback?: string): string {
+            return getContentSettingsPlaceholder(this.slide, path, fallback);
         }
     },
 

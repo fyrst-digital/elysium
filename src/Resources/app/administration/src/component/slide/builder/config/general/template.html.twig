@@ -7,7 +7,13 @@
     })">
 
   <py-column>
-    <py-text-field :label="$tc('blurElysiumSlides.forms.slideName.label')" :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))" :required="true" :error="useError('name')" v-model="slide.name" @blur="trimSlideName"/>
+    <py-text-field 
+    :label="$tc('blurElysiumSlides.forms.slideName.label')" 
+    :placeholder="placeholder(slide, 'name', $tc('blurElysiumSlides.forms.slideName.placeholder'))" 
+    :required="true" 
+    :error="useError('name')" 
+    v-model="slide.name" 
+    @blur="trimSlideName"/>
   </py-column>
 
   <py-column>
@@ -44,8 +50,8 @@
             ]" placeholder="DIV" :label="$tc('blurElysiumSlides.forms.slideHeadlineElement.label')" :tooltip="$tc('blurElysiumSlides.forms.slideHeadlineElement.helpText')" v-model="slide.slideSettings.slide.headline.element"/>
   </py-column>
 
-  <py-column :cols="12">
-    <py-text-field :label="$tc('blurElysium.general.text')" :placeholder="placeholder(slide, 'title', $tc('blurElysiumSlides.forms.slideHeadline.placeholder'))" v-model="slide.title"/>
+    <py-column :cols="12">
+    <py-text-field :label="$tc('blurElysium.general.text')" :placeholder="contentSettingsPlaceholder('title', $tc('blurElysiumSlides.forms.slideHeadline.placeholder'))" v-model="slide.contentSettings.title"/>
   </py-column>
 
   <py-column :cols="12">
@@ -72,6 +78,6 @@
   </py-column>
 
   <py-column :cols="12">
-    <sw-text-editor v-model:value="slide.description" :label="$tc('blurElysium.general.content')"/>
+    <sw-text-editor v-model:value="slide.contentSettings.description" :label="$tc('blurElysium.general.content')"/>
   </py-column>
 </py-section>

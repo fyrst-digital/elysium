@@ -13,14 +13,19 @@ use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
 use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
 use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
 use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
+use Shopware\Core\Content\Media\MediaEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumCmsSlidesCriteriaEvent;
 
 class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
 {
+    use MediaResolutionTrait;
+
     public function __construct(
         private readonly ElysiumSlideLoader $slideLoader,
         private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly EntityRepository $mediaRepository,
     ) {}
 
     public function getType(): string
@@ -59,6 +64,11 @@ class ElysiumBannerCmsElementResolver extends AbstractCmsElementResolver
             $slide = $slides->get($elysiumSlideId);
 
             $elysiumBannerStruct->setElysiumSlide($slide);
+
+            if ($slide !== null) {
+                $resolvedMedia = $this->resolveMediaForSlides([$slide], $this->mediaRepository, $context);
+                $elysiumBannerStruct->setResolvedMedia($resolvedMedia);
+            }
 
             $slot->setData($elysiumBannerStruct);
         }
