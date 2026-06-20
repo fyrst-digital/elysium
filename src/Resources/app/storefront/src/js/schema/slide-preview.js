@@ -1,3 +1,4 @@
+/* eslint-disable */
 // This file is auto-generated. Do not edit manually.
 // Run `bin/console elysium:preview-schema:generate` to regenerate.
 export const previewSchema = {
