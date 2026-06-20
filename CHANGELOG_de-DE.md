@@ -1,4 +1,4 @@
-# Unreleased
+# 4.9.0
 
 **Changelog**
 - Slides Import/Export Funktion hinzugefügt (Technische Vorschau). Slides können über die Administration oder CLI-Befehle als JSONL-Dateien exportiert und wieder importiert werden
