@@ -5,6 +5,36 @@ Shopware 6.7 plugin. Version 4.6.x.
 ## Working with github
 - On any github related prompts, **always use this repository as reference**. And **always use the GitHub CLI (gh)**. If the GiotHub CLI should not be installed, give the user according feedback.
 
+## Cursor Cloud specific instructions
+
+The Cloud Agent environment is defined in `.cursor/` (`environment.json`, `Dockerfile`,
+`install.sh`, `start.sh`). It is a **native** setup (no `docker compose`): PHP 8.3, MariaDB,
+Composer, Node 20 and `shopware-cli` are installed directly, and a full Shopware `v6.7.8.2`
+checkout is cloned to `$HOME/shopware` with this repo symlinked into
+`$HOME/shopware/custom/plugins/BlurElysiumSlider`.
+
+Run commands natively (not via `docker compose exec web`):
+
+```bash
+# PHPUnit (test DB is bootstrapped by install.sh)
+cd "$HOME/shopware" && APP_ENV=test ./vendor/bin/phpunit \
+  --configuration custom/plugins/BlurElysiumSlider/phpunit.xml
+
+# Re-install/repair the Shopware test schema
+cd "$HOME/shopware" && FORCE_INSTALL=true APP_ENV=test ./vendor/bin/phpunit \
+  --configuration custom/plugins/BlurElysiumSlider/phpunit.xml --testsuite migration
+
+# Lint (run from the plugin repo root; deps already installed by install.sh)
+npm run lint:administration
+npm run lint:storefront
+
+# Validate the extension
+shopware-cli extension validate .
+```
+
+The MariaDB DSN is `mysql://app:app@127.0.0.1:3306/shopware` (tests use `shopware_test`).
+`start.sh` starts MariaDB on each boot.
+
 
 ## Commands
 
