@@ -676,17 +676,23 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
      */
     private function decodeContentSettings(mixed $raw): array
     {
-        if (!\is_string($raw) || $raw === '') {
+        if (\is_array($raw)) {
+            $decoded = $raw;
+        } elseif (!\is_string($raw) || $raw === '') {
+            return [];
+        } else {
+            try {
+                $decoded = json_decode($raw, true, 512, \JSON_THROW_ON_ERROR);
+            } catch (\JsonException) {
+                return [];
+            }
+        }
+
+        if (!\is_array($decoded) || array_is_list($decoded)) {
             return [];
         }
 
-        try {
-            $decoded = json_decode($raw, true, 512, \JSON_THROW_ON_ERROR);
-        } catch (\JsonException) {
-            return [];
-        }
-
-        return \is_array($decoded) ? $decoded : [];
+        return $decoded;
     }
 
     /**
