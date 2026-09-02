@@ -147,8 +147,8 @@ class SlideImportService
             ? $contentSettings['slideCover']
             : [];
 
-        $this->fillEmpty($slideCover, 'mobileId', $data['slideCoverId'] ?? null);
-        $this->fillEmpty($slideCover, 'desktopId', $data['slideCoverMobileId'] ?? null);
+        $this->fillEmpty($slideCover, 'desktopId', $data['slideCoverId'] ?? null);
+        $this->fillEmpty($slideCover, 'mobileId', $data['slideCoverMobileId'] ?? null);
         $this->fillEmpty($slideCover, 'tabletId', $data['slideCoverTabletId'] ?? null);
         $this->fillEmpty($slideCover, 'videoId', $data['slideCoverVideoId'] ?? null);
 

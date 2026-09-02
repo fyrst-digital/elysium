@@ -41,8 +41,12 @@ class ElysiumCompilerPass implements CompilerPassInterface
         $container->setParameter('shopware.html_sanitizer.sets', $sets);
 
         $fields = $container->hasParameter('shopware.html_sanitizer.fields') ? $container->getParameter('shopware.html_sanitizer.fields') : [];
-        $fields['blur_elysium_slides_translation.title'] = [
+        unset($fields['blur_elysium_slides_translation.title']);
+        $fields['blur_elysium_slides_translation.contentSettings.title'] = [
             'sets' => ['blur_elysium_headline'],
+        ];
+        $fields['blur_elysium_slides_translation.contentSettings.description'] = [
+            'sets' => ['basic', 'media', 'HTML5'],
         ];
         $container->setParameter('shopware.html_sanitizer.fields', $fields);
     }

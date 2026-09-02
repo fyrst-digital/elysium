@@ -171,5 +171,10 @@ export default Component.wrapComponentConfig({
             const hasUrl = Boolean(displaySettings.url) || Boolean(this.slide.productId) || Boolean(this.slide.categoryId);
             return hasUrl && Boolean(displaySettings.button?.label);
         },
+
+        buttonLabel() {
+            const displaySettings = getDisplayContentSettings(this.slide);
+            return displaySettings.button?.label || null;
+        },
     },
 });

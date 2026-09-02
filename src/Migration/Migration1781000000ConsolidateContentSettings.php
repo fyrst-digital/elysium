@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Migration;
 
-use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 use Shopware\Core\Framework\Migration\MigrationStep;
@@ -100,14 +99,31 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
 
     private function migrateMediaIds(Connection $connection): void
     {
+        $columnMap = [
+            'slide_cover_id' => ['slideCover', 'desktopId'],
+            'slide_cover_mobile_id' => ['slideCover', 'mobileId'],
+            'slide_cover_tablet_id' => ['slideCover', 'tabletId'],
+            'slide_cover_video_id' => ['slideCover', 'videoId'],
+            'presentation_media_id' => ['focusImageId'],
+        ];
+
+        $availableColumns = array_values(array_filter(
+            array_keys($columnMap),
+            fn (string $column): bool => $this->hasColumn($connection, 'blur_elysium_slides', $column)
+        ));
+
+        if ($availableColumns === []) {
+            return;
+        }
+
+        $selectColumns = implode(', ', array_merge(['id'], $availableColumns));
+        $where = implode(' OR ', array_map(
+            static fn (string $column): string => $column . ' IS NOT NULL',
+            $availableColumns
+        ));
+
         $slides = $connection->fetchAllAssociative(
-            'SELECT id, slide_cover_id, slide_cover_mobile_id, slide_cover_tablet_id, slide_cover_video_id, presentation_media_id
-             FROM blur_elysium_slides
-             WHERE slide_cover_id IS NOT NULL
-                OR slide_cover_mobile_id IS NOT NULL
-                OR slide_cover_tablet_id IS NOT NULL
-                OR slide_cover_video_id IS NOT NULL
-                OR presentation_media_id IS NOT NULL'
+            'SELECT ' . $selectColumns . ' FROM blur_elysium_slides WHERE ' . $where
         );
 
         foreach ($slides as $slide) {
@@ -120,20 +136,19 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
             foreach ($translations as $translation) {
                 $existing = json_decode($translation['content_settings'] ?? '{}', true) ?: [];
 
-                if (!empty($slide['slide_cover_id'])) {
-                    $existing['slideCover']['mobileId'] = Uuid::fromBytesToHex($slide['slide_cover_id']);
-                }
-                if (!empty($slide['slide_cover_mobile_id'])) {
-                    $existing['slideCover']['desktopId'] = Uuid::fromBytesToHex($slide['slide_cover_mobile_id']);
-                }
-                if (!empty($slide['slide_cover_tablet_id'])) {
-                    $existing['slideCover']['tabletId'] = Uuid::fromBytesToHex($slide['slide_cover_tablet_id']);
-                }
-                if (!empty($slide['slide_cover_video_id'])) {
-                    $existing['slideCover']['videoId'] = Uuid::fromBytesToHex($slide['slide_cover_video_id']);
-                }
-                if (!empty($slide['presentation_media_id'])) {
-                    $existing['focusImageId'] = Uuid::fromBytesToHex($slide['presentation_media_id']);
+                foreach ($availableColumns as $column) {
+                    if (empty($slide[$column])) {
+                        continue;
+                    }
+
+                    $hex = Uuid::fromBytesToHex($slide[$column]);
+                    $path = $columnMap[$column];
+
+                    if (\count($path) === 1) {
+                        $existing[$path[0]] = $hex;
+                    } else {
+                        $existing[$path[0]][$path[1]] = $hex;
+                    }
                 }
 
                 $connection->executeStatement(
@@ -179,18 +194,30 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
             'presentation_media_id',
         ];
 
-        // Drop foreign key constraints that actually exist
+        // Drop only foreign keys that reference the media columns being removed.
+        // Product/category FKs on this table must be preserved.
         $fkConstraints = $connection->fetchAllAssociative(
-            "SELECT CONSTRAINT_NAME
-             FROM information_schema.TABLE_CONSTRAINTS
-             WHERE TABLE_SCHEMA = DATABASE()
-             AND TABLE_NAME = 'blur_elysium_slides'
-             AND CONSTRAINT_TYPE = 'FOREIGN KEY'"
+            "SELECT tc.CONSTRAINT_NAME, kcu.COLUMN_NAME
+             FROM information_schema.TABLE_CONSTRAINTS tc
+             INNER JOIN information_schema.KEY_COLUMN_USAGE kcu
+                 ON tc.CONSTRAINT_SCHEMA = kcu.CONSTRAINT_SCHEMA
+                 AND tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME
+                 AND tc.TABLE_NAME = kcu.TABLE_NAME
+             WHERE tc.TABLE_SCHEMA = DATABASE()
+             AND tc.TABLE_NAME = 'blur_elysium_slides'
+             AND tc.CONSTRAINT_TYPE = 'FOREIGN KEY'"
         );
 
+        $fksToDrop = [];
         foreach ($fkConstraints as $fk) {
+            if (\in_array($fk['COLUMN_NAME'], $columns, true)) {
+                $fksToDrop[] = $fk['CONSTRAINT_NAME'];
+            }
+        }
+
+        foreach (array_unique($fksToDrop) as $fkName) {
             $connection->executeStatement(
-                'ALTER TABLE blur_elysium_slides DROP FOREIGN KEY `' . $fk['CONSTRAINT_NAME'] . '`'
+                'ALTER TABLE blur_elysium_slides DROP FOREIGN KEY `' . $fkName . '`'
             );
         }
 

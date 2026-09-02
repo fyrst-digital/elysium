@@ -112,9 +112,9 @@ class ElysiumSlidesGenerator implements DemodataGeneratorInterface
                 'button' => ['label' => $faker->randomElement(self::BANNER_BUTTON_LABELS)],
                 'url' => $faker->url(),
                 'slideCover' => [
-                    'mobileId' => $coverMediaId,
+                    'mobileId' => $mobileCoverMediaId,
                     'tabletId' => $coverMediaId,
-                    'desktopId' => $mobileCoverMediaId,
+                    'desktopId' => $coverMediaId,
                     'videoId' => null,
                     'alt' => null,
                     'title' => null,

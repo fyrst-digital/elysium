@@ -181,9 +181,9 @@ class ElysiumSlidesGeneratorTest extends TestCase
         );
 
         $slideCover = $payload['contentSettings']['slideCover'];
-        static::assertSame($coverMediaId, $slideCover['mobileId']);
+        static::assertSame($mobileCoverMediaId, $slideCover['mobileId']);
         static::assertSame($coverMediaId, $slideCover['tabletId']);
-        static::assertSame($mobileCoverMediaId, $slideCover['desktopId']);
+        static::assertSame($coverMediaId, $slideCover['desktopId']);
         static::assertNull($slideCover['videoId']);
         static::assertNull($payload['contentSettings']['focusImageId']);
     }

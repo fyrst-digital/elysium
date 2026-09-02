@@ -81,8 +81,8 @@ class SlideImportServiceTest extends TestCase
                     $this->assertSame('From column', $translation['contentSettings']['description']);
                     $this->assertSame('/path', $translation['contentSettings']['url']);
                     $this->assertSame('Click me', $translation['contentSettings']['button']['label']);
-                    $this->assertSame('desktop-cover', $translation['contentSettings']['slideCover']['mobileId']);
-                    $this->assertSame('mobile-cover', $translation['contentSettings']['slideCover']['desktopId']);
+                    $this->assertSame('desktop-cover', $translation['contentSettings']['slideCover']['desktopId']);
+                    $this->assertSame('mobile-cover', $translation['contentSettings']['slideCover']['mobileId']);
                     $this->assertSame('tablet-cover', $translation['contentSettings']['slideCover']['tabletId']);
                     $this->assertSame('video-id', $translation['contentSettings']['slideCover']['videoId']);
                     $this->assertSame('focus-id', $translation['contentSettings']['focusImageId']);

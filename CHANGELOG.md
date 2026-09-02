@@ -1,9 +1,13 @@
 # Unreleased
 
+# 4.9.0
+
 **Changelog**
+- Slide copy (title, description, button label, URL) and media IDs are now stored per language in `contentSettings`
 - Added slides import/export feature (technical preview). Slides can be exported as JSONL files and imported back via administration UI or CLI commands
 - Added `<wbr>` HTML tag support and `text-wrap: balance` CSS styling for slide headlines
 - Added slide cover image switch service, CLI command (`elysium:slides:switch-cover-images`) and administration UI action. For all slides that have a desktop cover image but no mobile cover image, the desktop image is moved to the mobile cover and the desktop cover is cleared
+- **Breaking** The Store API route `/store-api/elysium-slide` no longer returns hydrated cover media associations. Media IDs now live in the translated `contentSettings` JSON; Store API consumers must resolve media themselves
 
 # 4.8.1
 

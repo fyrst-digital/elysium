@@ -78,12 +78,18 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
         ]);
         $this->createFreshInstallTranslationTable();
 
+        $desktopCoverId = Uuid::randomBytes();
+        $mobileCoverId = Uuid::randomBytes();
+        $tabletCoverId = Uuid::randomBytes();
+        $videoCoverId = Uuid::randomBytes();
+        $focusImageId = Uuid::randomBytes();
+
         $slideId = $this->insertSlide([
-            'slide_cover_id' => Uuid::randomBytes(),
-            'slide_cover_mobile_id' => Uuid::randomBytes(),
-            'slide_cover_tablet_id' => Uuid::randomBytes(),
-            'slide_cover_video_id' => Uuid::randomBytes(),
-            'presentation_media_id' => Uuid::randomBytes(),
+            'slide_cover_id' => $desktopCoverId,
+            'slide_cover_mobile_id' => $mobileCoverId,
+            'slide_cover_tablet_id' => $tabletCoverId,
+            'slide_cover_video_id' => $videoCoverId,
+            'presentation_media_id' => $focusImageId,
         ]);
 
         $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
@@ -113,11 +119,26 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
         static::assertIsArray($decoded);
         static::assertArrayHasKey('slideCover', $decoded);
         static::assertArrayHasKey('focusImageId', $decoded);
-        static::assertTrue(Uuid::isValid($decoded['slideCover']['mobileId']));
-        static::assertTrue(Uuid::isValid($decoded['slideCover']['desktopId']));
-        static::assertTrue(Uuid::isValid($decoded['slideCover']['tabletId']));
-        static::assertTrue(Uuid::isValid($decoded['slideCover']['videoId']));
-        static::assertTrue(Uuid::isValid($decoded['focusImageId']));
+        static::assertSame(Uuid::fromBytesToHex($desktopCoverId), $decoded['slideCover']['desktopId']);
+        static::assertSame(Uuid::fromBytesToHex($mobileCoverId), $decoded['slideCover']['mobileId']);
+        static::assertSame(Uuid::fromBytesToHex($tabletCoverId), $decoded['slideCover']['tabletId']);
+        static::assertSame(Uuid::fromBytesToHex($videoCoverId), $decoded['slideCover']['videoId']);
+        static::assertSame(Uuid::fromBytesToHex($focusImageId), $decoded['focusImageId']);
+    }
+
+    public function testMigrationPreservesProductAndCategoryForeignKeys(): void
+    {
+        $this->createSlideTableWithProductCategoryAndMediaForeignKeys();
+        $this->createFreshInstallTranslationTable();
+
+        $migration = new Migration1781000000ConsolidateContentSettings();
+        $this->runMigration($migration);
+
+        $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_id');
+        $this->assertForeignKeyExists('blur_elysium_slides', 'fk.blur_elysium_slides.product_id');
+        $this->assertForeignKeyExists('blur_elysium_slides', 'fk.blur_elysium_slides.category_id');
+        $this->assertForeignKeyDoesNotExist('blur_elysium_slides', 'fk.blur_elysium_slides.slide_cover_id');
+        $this->assertForeignKeyDoesNotExist('blur_elysium_slides', 'fk.blur_elysium_slides.slide_cover_mobile_id');
     }
 
     public function testMigrationIsIdempotent(): void
@@ -161,6 +182,45 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
         );
 
         static::assertFalse($exists, $message ?: "Column '{$column}' should NOT exist in table '{$table}'");
+    }
+
+    protected function assertForeignKeyDoesNotExist(string $table, string $fkName, string $message = ''): void
+    {
+        $exists = $this->connection->fetchOne(
+            'SELECT 1 FROM information_schema.TABLE_CONSTRAINTS WHERE TABLE_NAME = ? AND CONSTRAINT_NAME = ? AND CONSTRAINT_TYPE = \'FOREIGN KEY\' AND TABLE_SCHEMA = DATABASE()',
+            [$table, $fkName]
+        );
+
+        static::assertFalse($exists, $message ?: "Foreign key '{$fkName}' should NOT exist in table '{$table}'");
+    }
+
+    private function createSlideTableWithProductCategoryAndMediaForeignKeys(): void
+    {
+        $this->dropTableIfExists('blur_elysium_slides_translation');
+        $this->dropTableIfExists('blur_elysium_slides');
+
+        $this->connection->executeStatement("
+            CREATE TABLE `blur_elysium_slides` (
+                `id` BINARY(16) NOT NULL,
+                `product_id` BINARY(16) NULL,
+                `product_version_id` BINARY(16) NULL,
+                `category_id` BINARY(16) NULL,
+                `category_version_id` BINARY(16) NULL,
+                `slide_cover_id` BINARY(16) NULL,
+                `slide_cover_mobile_id` BINARY(16) NULL,
+                `created_at` DATETIME(3) NOT NULL,
+                `updated_at` DATETIME(3) NULL,
+                PRIMARY KEY (`id`),
+                CONSTRAINT `fk.blur_elysium_slides.product_id` FOREIGN KEY (`product_id`, `product_version_id`)
+                    REFERENCES `product` (`id`, `version_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+                CONSTRAINT `fk.blur_elysium_slides.category_id` FOREIGN KEY (`category_id`, `category_version_id`)
+                    REFERENCES `category` (`id`, `version_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+                CONSTRAINT `fk.blur_elysium_slides.slide_cover_id` FOREIGN KEY (`slide_cover_id`)
+                    REFERENCES `media` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+                CONSTRAINT `fk.blur_elysium_slides.slide_cover_mobile_id` FOREIGN KEY (`slide_cover_mobile_id`)
+                    REFERENCES `media` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+        ");
     }
 
     private function createFreshInstallTranslationTable(): void
