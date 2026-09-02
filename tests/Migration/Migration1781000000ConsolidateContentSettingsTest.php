@@ -3,16 +3,12 @@
 namespace Blur\BlurElysiumSlider\Tests\Migration;
 
 use Blur\BlurElysiumSlider\Migration\Migration1781000000ConsolidateContentSettings;
+use Doctrine\DBAL\Connection;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Uuid\Uuid;
 
 class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigrationTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testMigrationRunsOnFreshInstall(): void
     {
         $this->createSlideTable();
@@ -34,15 +30,12 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
         $slideId = $this->insertSlide([]);
         $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
 
-        $this->connection->insert('blur_elysium_slides_translation', [
-            'blur_elysium_slides_id' => $slideId,
-            'language_id' => $languageId,
+        $this->insertTranslation($slideId, $languageId, [
             'name' => 'Test Slide',
             'title' => 'Test Title',
             'description' => '<p>Test Description</p>',
             'button_label' => 'Click Me',
             'url' => '/test-url',
-            'created_at' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
         ]);
 
         $migration = new Migration1781000000ConsolidateContentSettings();
@@ -53,14 +46,7 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
         $this->assertColumnDoesNotExist('blur_elysium_slides_translation', 'button_label');
         $this->assertColumnDoesNotExist('blur_elysium_slides_translation', 'url');
 
-        $contentSettings = $this->connection->fetchOne(
-            'SELECT content_settings FROM blur_elysium_slides_translation WHERE blur_elysium_slides_id = ? AND language_id = ?',
-            [$slideId, $languageId]
-        );
-
-        static::assertNotFalse($contentSettings);
-        $decoded = json_decode((string) $contentSettings, true);
-        static::assertIsArray($decoded);
+        $decoded = $this->fetchContentSettings($slideId, $languageId);
         static::assertSame('Test Title', $decoded['title']);
         static::assertSame('<p>Test Description</p>', $decoded['description']);
         static::assertSame('Click Me', $decoded['button']['label']);
@@ -69,13 +55,7 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
 
     public function testMigrationMigratesMediaIds(): void
     {
-        $this->createSlideTable([
-            '`slide_cover_id` BINARY(16) NULL',
-            '`slide_cover_mobile_id` BINARY(16) NULL',
-            '`slide_cover_tablet_id` BINARY(16) NULL',
-            '`slide_cover_video_id` BINARY(16) NULL',
-            '`presentation_media_id` BINARY(16) NULL',
-        ]);
+        $this->createSlideTableWithAllMediaColumns();
         $this->createFreshInstallTranslationTable();
 
         $desktopCoverId = Uuid::randomBytes();
@@ -93,37 +73,215 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
         ]);
 
         $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
-        $this->connection->insert('blur_elysium_slides_translation', [
-            'blur_elysium_slides_id' => $slideId,
-            'language_id' => $languageId,
-            'name' => 'Test Slide',
-            'created_at' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
-        ]);
+        $this->insertTranslation($slideId, $languageId, ['name' => 'Test Slide']);
 
         $migration = new Migration1781000000ConsolidateContentSettings();
         $this->runMigration($migration);
 
-        $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_id');
-        $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_mobile_id');
-        $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_tablet_id');
-        $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_video_id');
-        $this->assertColumnDoesNotExist('blur_elysium_slides', 'presentation_media_id');
+        $this->assertAllMediaColumnsDropped();
 
-        $contentSettings = $this->connection->fetchOne(
-            'SELECT content_settings FROM blur_elysium_slides_translation WHERE blur_elysium_slides_id = ? AND language_id = ?',
-            [$slideId, $languageId]
-        );
-
-        static::assertNotFalse($contentSettings);
-        $decoded = json_decode((string) $contentSettings, true);
-        static::assertIsArray($decoded);
-        static::assertArrayHasKey('slideCover', $decoded);
-        static::assertArrayHasKey('focusImageId', $decoded);
+        $decoded = $this->fetchContentSettings($slideId, $languageId);
         static::assertSame(Uuid::fromBytesToHex($desktopCoverId), $decoded['slideCover']['desktopId']);
         static::assertSame(Uuid::fromBytesToHex($mobileCoverId), $decoded['slideCover']['mobileId']);
         static::assertSame(Uuid::fromBytesToHex($tabletCoverId), $decoded['slideCover']['tabletId']);
         static::assertSame(Uuid::fromBytesToHex($videoCoverId), $decoded['slideCover']['videoId']);
         static::assertSame(Uuid::fromBytesToHex($focusImageId), $decoded['focusImageId']);
+    }
+
+    public function testMigrationMigratesCombinedTextAndMedia(): void
+    {
+        $this->createSlideTableWithAllMediaColumns();
+        $this->createUpgradeTranslationTable();
+
+        $desktopCoverId = Uuid::randomBytes();
+        $focusImageId = Uuid::randomBytes();
+        $slideId = $this->insertSlide([
+            'slide_cover_id' => $desktopCoverId,
+            'presentation_media_id' => $focusImageId,
+        ]);
+        $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
+
+        $this->insertTranslation($slideId, $languageId, [
+            'name' => 'Combined Slide',
+            'title' => 'Headline',
+            'description' => '<p>Body</p>',
+            'button_label' => 'Go',
+            'url' => '/go',
+        ]);
+
+        $migration = new Migration1781000000ConsolidateContentSettings();
+        $this->runMigration($migration);
+
+        $this->assertColumnDoesNotExist('blur_elysium_slides_translation', 'title');
+        $this->assertAllMediaColumnsDropped();
+
+        $decoded = $this->fetchContentSettings($slideId, $languageId);
+        static::assertSame('Headline', $decoded['title']);
+        static::assertSame('<p>Body</p>', $decoded['description']);
+        static::assertSame('Go', $decoded['button']['label']);
+        static::assertSame('/go', $decoded['url']);
+        static::assertSame(Uuid::fromBytesToHex($desktopCoverId), $decoded['slideCover']['desktopId']);
+        static::assertSame(Uuid::fromBytesToHex($focusImageId), $decoded['focusImageId']);
+    }
+
+    public function testMigrationCopiesMediaToEveryTranslationAndKeepsLanguageSpecificCopy(): void
+    {
+        $this->createSlideTableWithAllMediaColumns();
+        $this->createUpgradeTranslationTable();
+
+        $desktopCoverId = Uuid::randomBytes();
+        $slideId = $this->insertSlide([
+            'slide_cover_id' => $desktopCoverId,
+        ]);
+
+        $systemLanguageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
+        $otherLanguageId = Uuid::randomBytes();
+
+        $this->insertTranslation($slideId, $systemLanguageId, [
+            'name' => 'EN Slide',
+            'title' => 'English title',
+        ]);
+        $this->insertTranslation($slideId, $otherLanguageId, [
+            'name' => 'DE Slide',
+            'title' => 'German title',
+        ]);
+
+        $migration = new Migration1781000000ConsolidateContentSettings();
+        $this->runMigration($migration);
+
+        $coverHex = Uuid::fromBytesToHex($desktopCoverId);
+
+        $en = $this->fetchContentSettings($slideId, $systemLanguageId);
+        static::assertSame('English title', $en['title']);
+        static::assertSame($coverHex, $en['slideCover']['desktopId']);
+
+        $de = $this->fetchContentSettings($slideId, $otherLanguageId);
+        static::assertSame('German title', $de['title']);
+        static::assertSame($coverHex, $de['slideCover']['desktopId']);
+    }
+
+    public function testMigrationCreatesSystemLanguageTranslationWhenOnlyOtherLanguageExists(): void
+    {
+        $this->createSlideTableWithAllMediaColumns();
+        $this->createFreshInstallTranslationTable();
+
+        $desktopCoverId = Uuid::randomBytes();
+        $slideId = $this->insertSlide([
+            'slide_cover_id' => $desktopCoverId,
+        ]);
+
+        $otherLanguageId = Uuid::randomBytes();
+        $this->insertTranslation($slideId, $otherLanguageId, [
+            'name' => 'German only',
+        ]);
+
+        $migration = new Migration1781000000ConsolidateContentSettings();
+        $this->runMigration($migration);
+
+        $systemLanguageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
+        $coverHex = Uuid::fromBytesToHex($desktopCoverId);
+
+        $systemName = $this->connection->fetchOne(
+            'SELECT name FROM blur_elysium_slides_translation WHERE blur_elysium_slides_id = ? AND language_id = ?',
+            [$slideId, $systemLanguageId]
+        );
+        static::assertSame('German only', $systemName);
+
+        $systemSettings = $this->fetchContentSettings($slideId, $systemLanguageId);
+        static::assertSame($coverHex, $systemSettings['slideCover']['desktopId']);
+
+        $otherSettings = $this->fetchContentSettings($slideId, $otherLanguageId);
+        static::assertSame($coverHex, $otherSettings['slideCover']['desktopId']);
+        $this->assertAllMediaColumnsDropped();
+    }
+
+    public function testMigrationCreatesSystemLanguageTranslationWhenSlideHasNoTranslations(): void
+    {
+        $this->createSlideTableWithAllMediaColumns();
+        $this->createFreshInstallTranslationTable();
+
+        $desktopCoverId = Uuid::randomBytes();
+        $slideId = $this->insertSlide([
+            'slide_cover_id' => $desktopCoverId,
+        ]);
+
+        $migration = new Migration1781000000ConsolidateContentSettings();
+        $this->runMigration($migration);
+
+        $systemLanguageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
+        $name = $this->connection->fetchOne(
+            'SELECT name FROM blur_elysium_slides_translation WHERE blur_elysium_slides_id = ? AND language_id = ?',
+            [$slideId, $systemLanguageId]
+        );
+        static::assertSame(Uuid::fromBytesToHex($slideId), $name);
+
+        $decoded = $this->fetchContentSettings($slideId, $systemLanguageId);
+        static::assertSame(Uuid::fromBytesToHex($desktopCoverId), $decoded['slideCover']['desktopId']);
+        $this->assertAllMediaColumnsDropped();
+    }
+
+    public function testMigrationMigratesPresentationMediaWithoutSlideCoverColumn(): void
+    {
+        $this->createSlideTable([
+            '`presentation_media_id` BINARY(16) NULL',
+        ]);
+        $this->createFreshInstallTranslationTable();
+
+        $focusImageId = Uuid::randomBytes();
+        $slideId = $this->insertSlide([
+            'presentation_media_id' => $focusImageId,
+        ]);
+        $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
+        $this->insertTranslation($slideId, $languageId, ['name' => 'Focus only']);
+
+        $migration = new Migration1781000000ConsolidateContentSettings();
+        $this->runMigration($migration);
+
+        $this->assertColumnDoesNotExist('blur_elysium_slides', 'presentation_media_id');
+
+        $decoded = $this->fetchContentSettings($slideId, $languageId);
+        static::assertSame(Uuid::fromBytesToHex($focusImageId), $decoded['focusImageId']);
+    }
+
+    public function testMigrationKeepsExistingContentSettingsWhenLegacyTitleIsEmpty(): void
+    {
+        $this->createSlideTable();
+        $this->createUpgradeTranslationTable();
+
+        $slideId = $this->insertSlide([]);
+        $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
+
+        $this->insertTranslation($slideId, $languageId, [
+            'name' => 'Prefilled',
+            'title' => null,
+            'content_settings' => json_encode(['title' => 'Already in JSON'], \JSON_THROW_ON_ERROR),
+        ]);
+
+        $migration = new Migration1781000000ConsolidateContentSettings();
+        $this->runMigration($migration);
+
+        $decoded = $this->fetchContentSettings($slideId, $languageId);
+        static::assertSame('Already in JSON', $decoded['title']);
+    }
+
+    public function testMigrationMigratesZeroStringTitle(): void
+    {
+        $this->createSlideTable();
+        $this->createUpgradeTranslationTable();
+
+        $slideId = $this->insertSlide([]);
+        $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
+
+        $this->insertTranslation($slideId, $languageId, [
+            'name' => 'Zero title',
+            'title' => '0',
+        ]);
+
+        $migration = new Migration1781000000ConsolidateContentSettings();
+        $this->runMigration($migration);
+
+        $decoded = $this->fetchContentSettings($slideId, $languageId);
+        static::assertSame('0', $decoded['title']);
     }
 
     public function testMigrationPreservesProductAndCategoryForeignKeys(): void
@@ -143,13 +301,7 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
 
     public function testMigrationIsIdempotent(): void
     {
-        $this->createSlideTable([
-            '`slide_cover_id` BINARY(16) NULL',
-            '`slide_cover_mobile_id` BINARY(16) NULL',
-            '`slide_cover_tablet_id` BINARY(16) NULL',
-            '`slide_cover_video_id` BINARY(16) NULL',
-            '`presentation_media_id` BINARY(16) NULL',
-        ]);
+        $this->createSlideTableWithAllMediaColumns();
         $this->createUpgradeTranslationTable();
 
         $slideId = $this->insertSlide([
@@ -157,12 +309,9 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
         ]);
 
         $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
-        $this->connection->insert('blur_elysium_slides_translation', [
-            'blur_elysium_slides_id' => $slideId,
-            'language_id' => $languageId,
+        $this->insertTranslation($slideId, $languageId, [
             'name' => 'Test Slide',
             'title' => 'Test Title',
-            'created_at' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
         ]);
 
         $migration = new Migration1781000000ConsolidateContentSettings();
@@ -172,6 +321,82 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
 
         $this->assertColumnDoesNotExist('blur_elysium_slides_translation', 'title');
         $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_id');
+    }
+
+    public function testVerifyFailureDoesNotDropMediaColumns(): void
+    {
+        $this->createSlideTableWithAllMediaColumns();
+        $this->createFreshInstallTranslationTable();
+
+        $slideId = $this->insertSlide([
+            'slide_cover_id' => Uuid::randomBytes(),
+        ]);
+        $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
+        $this->insertTranslation($slideId, $languageId, ['name' => 'Unmigrated']);
+
+        $migration = new class extends Migration1781000000ConsolidateContentSettings {
+            protected function migrateMediaIds(Connection $connection): void
+            {
+            }
+        };
+
+        try {
+            $this->runMigration($migration);
+            static::fail('Expected contentSettings verification to fail');
+        } catch (\RuntimeException $e) {
+            static::assertStringContainsString('verification failed', $e->getMessage());
+        }
+
+        $this->assertColumnExists('blur_elysium_slides', 'slide_cover_id');
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function insertTranslation(string $slideId, string $languageId, array $data): void
+    {
+        $data['blur_elysium_slides_id'] = $slideId;
+        $data['language_id'] = $languageId;
+        $data['created_at'] = $data['created_at'] ?? (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT);
+
+        $this->connection->insert('blur_elysium_slides_translation', $data);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function fetchContentSettings(string $slideId, string $languageId): array
+    {
+        $contentSettings = $this->connection->fetchOne(
+            'SELECT content_settings FROM blur_elysium_slides_translation WHERE blur_elysium_slides_id = ? AND language_id = ?',
+            [$slideId, $languageId]
+        );
+
+        static::assertNotFalse($contentSettings);
+        $decoded = json_decode((string) $contentSettings, true);
+        static::assertIsArray($decoded);
+
+        return $decoded;
+    }
+
+    private function createSlideTableWithAllMediaColumns(): void
+    {
+        $this->createSlideTable([
+            '`slide_cover_id` BINARY(16) NULL',
+            '`slide_cover_mobile_id` BINARY(16) NULL',
+            '`slide_cover_tablet_id` BINARY(16) NULL',
+            '`slide_cover_video_id` BINARY(16) NULL',
+            '`presentation_media_id` BINARY(16) NULL',
+        ]);
+    }
+
+    private function assertAllMediaColumnsDropped(): void
+    {
+        $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_id');
+        $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_mobile_id');
+        $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_tablet_id');
+        $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_video_id');
+        $this->assertColumnDoesNotExist('blur_elysium_slides', 'presentation_media_id');
     }
 
     protected function assertColumnDoesNotExist(string $table, string $column, string $message = ''): void
