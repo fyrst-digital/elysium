@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Tests\Service\ImportExport;
 
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationCollection;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationEntity;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\Service\ImportExport\SlideExportService;
@@ -19,19 +21,21 @@ class SlideExportServiceTest extends TestCase
     {
         $repository = $this->createMock(EntityRepository::class);
 
-        $slide = $this->createMock(ElysiumSlidesEntity::class);
-        $slide->method('getId')->willReturn('test-id');
-        $slide->method('getProductId')->willReturn('product-id');
-        $slide->method('getCategoryId')->willReturn(null);
-        $slide->method('getSlideCoverId')->willReturn('cover-id');
-        $slide->method('getSlideCoverMobileId')->willReturn(null);
-        $slide->method('getSlideCoverTabletId')->willReturn(null);
-        $slide->method('getSlideCoverVideoId')->willReturn(null);
-        $slide->method('getPresentationMediaId')->willReturn(null);
-        $slide->method('getActiveFrom')->willReturn(null);
-        $slide->method('getActiveUntil')->willReturn(null);
-        $slide->method('getSlideSettings')->willReturn(['key' => 'value']);
-        $slide->method('getTranslations')->willReturn(null);
+        $translation = new ElysiumSlidesTranslationEntity();
+        $translation->setUniqueIdentifier('trans-id');
+        $translation->setLanguageId('2fbb5fe2e29a4d70aa5854ce7ce3e20b');
+        $translation->setName('Test Slide');
+        $translation->setCustomFields(['foo' => 'bar']);
+        $translation->setContentSettings([
+            'title' => 'Headline',
+            'slideCover' => ['mobileId' => 'cover-id'],
+        ]);
+
+        $slide = new ElysiumSlidesEntity();
+        $slide->setId('test-id');
+        $slide->setProductId('product-id');
+        $slide->setSlideSettings(['key' => 'value']);
+        $slide->setTranslations(new ElysiumSlidesTranslationCollection([$translation]));
 
         $collection = new ElysiumSlidesCollection([$slide]);
         $searchResult = new EntitySearchResult(
@@ -55,33 +59,28 @@ class SlideExportServiceTest extends TestCase
 
         $header = json_decode($lines[0], true);
         $this->assertSame('elysium-slides-export', $header['type']);
-        $this->assertSame('1.0', $header['version']);
+        $this->assertSame('2.0', $header['version']);
         $this->assertSame(1, $header['count']);
 
         $slideData = json_decode($lines[1], true);
         $this->assertSame('test-id', $slideData['id']);
         $this->assertSame('product-id', $slideData['productId']);
-        $this->assertSame('cover-id', $slideData['slideCoverId']);
+        $this->assertArrayNotHasKey('slideCoverId', $slideData);
         $this->assertSame(['key' => 'value'], $slideData['slideSettings']);
+        $this->assertSame('Test Slide', $slideData['translations']['2fbb5fe2e29a4d70aa5854ce7ce3e20b']['name']);
+        $this->assertSame(['foo' => 'bar'], $slideData['translations']['2fbb5fe2e29a4d70aa5854ce7ce3e20b']['customFields']);
+        $this->assertSame('Headline', $slideData['translations']['2fbb5fe2e29a4d70aa5854ce7ce3e20b']['contentSettings']['title']);
+        $this->assertSame('cover-id', $slideData['translations']['2fbb5fe2e29a4d70aa5854ce7ce3e20b']['contentSettings']['slideCover']['mobileId']);
+        $this->assertArrayNotHasKey('title', $slideData['translations']['2fbb5fe2e29a4d70aa5854ce7ce3e20b']);
     }
 
     public function testExportAllReturnsValidJsonl(): void
     {
         $repository = $this->createMock(EntityRepository::class);
 
-        $slide = $this->createMock(ElysiumSlidesEntity::class);
-        $slide->method('getId')->willReturn('test-id');
-        $slide->method('getProductId')->willReturn(null);
-        $slide->method('getCategoryId')->willReturn(null);
-        $slide->method('getSlideCoverId')->willReturn(null);
-        $slide->method('getSlideCoverMobileId')->willReturn(null);
-        $slide->method('getSlideCoverTabletId')->willReturn(null);
-        $slide->method('getSlideCoverVideoId')->willReturn(null);
-        $slide->method('getPresentationMediaId')->willReturn(null);
-        $slide->method('getActiveFrom')->willReturn(null);
-        $slide->method('getActiveUntil')->willReturn(null);
-        $slide->method('getSlideSettings')->willReturn(null);
-        $slide->method('getTranslations')->willReturn(null);
+        $slide = new ElysiumSlidesEntity();
+        $slide->setId('test-id');
+        $slide->setTranslations(new ElysiumSlidesTranslationCollection());
 
         $collection = new ElysiumSlidesCollection([$slide]);
         $searchResult = new EntitySearchResult(
@@ -104,12 +103,13 @@ class SlideExportServiceTest extends TestCase
         $this->assertCount(2, $lines);
 
         $header = json_decode($lines[0], true);
+        $this->assertSame('2.0', $header['version']);
         $this->assertSame(1, $header['count']);
     }
 
     public function testExportWithEmptyIdsReturnsHeaderOnly(): void
     {
-        $repository = $this->createMock(EntityRepository::class);
+        $repository = $this->createStub(EntityRepository::class);
 
         $service = new SlideExportService($repository);
         $jsonl = $service->export([], Context::createDefaultContext());
@@ -119,5 +119,6 @@ class SlideExportServiceTest extends TestCase
 
         $header = json_decode($lines[0], true);
         $this->assertSame(0, $header['count']);
+        $this->assertSame('2.0', $header['version']);
     }
 }

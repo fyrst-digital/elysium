@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Service\ImportExport;
 
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 
 class SlideExportService
 {
+    public const EXPORT_VERSION = '2.0';
+
     public function __construct(
         private readonly EntityRepository $slideRepository
     ) {
@@ -60,7 +60,7 @@ class SlideExportService
     {
         return json_encode([
             'type' => 'elysium-slides-export',
-            'version' => '1.0',
+            'version' => self::EXPORT_VERSION,
             'exportedAt' => (new \DateTime())->format('c'),
             'count' => $count,
         ], JSON_THROW_ON_ERROR);
@@ -72,11 +72,6 @@ class SlideExportService
             'id' => $slide->getId(),
             'productId' => $slide->getProductId(),
             'categoryId' => $slide->getCategoryId(),
-            'slideCoverId' => $slide->getSlideCoverId(),
-            'slideCoverMobileId' => $slide->getSlideCoverMobileId(),
-            'slideCoverTabletId' => $slide->getSlideCoverTabletId(),
-            'slideCoverVideoId' => $slide->getSlideCoverVideoId(),
-            'presentationMediaId' => $slide->getPresentationMediaId(),
             'activeFrom' => $slide->getActiveFrom() ? $slide->getActiveFrom()->format('c') : null,
             'activeUntil' => $slide->getActiveUntil() ? $slide->getActiveUntil()->format('c') : null,
             'slideSettings' => $slide->getSlideSettings(),
@@ -86,6 +81,9 @@ class SlideExportService
         return json_encode($data, JSON_THROW_ON_ERROR);
     }
 
+    /**
+     * @return array<string, array{name: string|null, customFields: mixed, contentSettings: array<mixed>|null}>
+     */
     private function encodeTranslations(ElysiumSlidesEntity $slide): array
     {
         $translations = [];
@@ -93,10 +91,6 @@ class SlideExportService
         foreach ($slide->getTranslations() ?? [] as $translation) {
             $translations[$translation->getLanguageId()] = [
                 'name' => $translation->getName(),
-                'title' => $translation->getTitle(),
-                'description' => $translation->getDescription(),
-                'buttonLabel' => $translation->getButtonLabel(),
-                'url' => $translation->getUrl(),
                 'customFields' => $translation->getCustomFields(),
                 'contentSettings' => $translation->getContentSettings(),
             ];

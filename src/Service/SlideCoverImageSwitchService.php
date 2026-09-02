@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Service;
 
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationEntity;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\NotFilter;
 
 class SlideCoverImageSwitchService
 {
+    private const BATCH_SIZE = 100;
+
     public function __construct(
         private readonly EntityRepository $slideRepository
     ) {
@@ -21,37 +21,99 @@ class SlideCoverImageSwitchService
 
     public function switch(Context $context): int
     {
-        $criteria = new Criteria();
-        $criteria->addFilter(
-            new EqualsFilter('slideCoverMobileId', null)
-        );
-        $criteria->addFilter(
-            new NotFilter(NotFilter::CONNECTION_AND, [
-                new EqualsFilter('slideCoverId', null),
-            ])
-        );
-
-        $result = $this->slideRepository->search($criteria, $context);
-
-        if ($result->getTotal() === 0) {
-            return 0;
-        }
-
-        /** @var ElysiumSlidesCollection $entities */
-        $entities = $result->getEntities();
-
+        $offset = 0;
         $payload = [];
-        foreach ($entities as $slide) {
+
+        do {
+            $criteria = new Criteria();
+            $criteria->addAssociation('translations');
+            $criteria->setLimit(self::BATCH_SIZE);
+            $criteria->setOffset($offset);
+
+            $result = $this->slideRepository->search($criteria, $context);
+
             /** @var ElysiumSlidesEntity $slide */
-            $payload[] = [
-                'id' => $slide->getId(),
-                'slideCoverMobileId' => $slide->getSlideCoverId(),
-                'slideCoverId' => null,
-            ];
+            foreach ($result->getEntities() as $slide) {
+                $slidePayload = $this->buildSlidePayload($slide);
+                if ($slidePayload !== null) {
+                    $payload[] = $slidePayload;
+                }
+            }
+
+            $pageCount = $result->count();
+            $offset += self::BATCH_SIZE;
+        } while ($pageCount === self::BATCH_SIZE);
+
+        if ($payload === []) {
+            return 0;
         }
 
         $this->slideRepository->upsert($payload, $context);
 
-        return $result->getTotal();
+        return \count($payload);
+    }
+
+    /**
+     * @return array{id: string, translations: list<array{languageId: string, contentSettings: array<string, mixed>}>}|null
+     */
+    private function buildSlidePayload(ElysiumSlidesEntity $slide): ?array
+    {
+        $translationsPayload = [];
+
+        foreach ($slide->getTranslations() ?? [] as $translation) {
+            $updatedSettings = $this->switchTranslationCover($translation);
+            if ($updatedSettings === null) {
+                continue;
+            }
+
+            $translationsPayload[] = [
+                'languageId' => $translation->getLanguageId(),
+                'contentSettings' => $updatedSettings,
+            ];
+        }
+
+        if ($translationsPayload === []) {
+            return null;
+        }
+
+        return [
+            'id' => $slide->getId(),
+            'translations' => $translationsPayload,
+        ];
+    }
+
+    /**
+     * Moves desktop cover to mobile when mobile is empty. Reads the translation
+     * row directly so CLI hydration fallbacks are not persisted.
+     *
+     * @return array<string, mixed>|null
+     */
+    private function switchTranslationCover(ElysiumSlidesTranslationEntity $translation): ?array
+    {
+        $contentSettings = $translation->getContentSettings() ?? [];
+        $slideCover = $contentSettings['slideCover'] ?? [];
+
+        if (!\is_array($slideCover)) {
+            return null;
+        }
+
+        $mobileId = $slideCover['mobileId'] ?? null;
+        $desktopId = $slideCover['desktopId'] ?? null;
+
+        if (!$this->isEmptyMediaId($mobileId) || $this->isEmptyMediaId($desktopId)) {
+            return null;
+        }
+
+        $contentSettings['slideCover'] = array_merge($slideCover, [
+            'mobileId' => $desktopId,
+            'desktopId' => null,
+        ]);
+
+        return $contentSettings;
+    }
+
+    private function isEmptyMediaId(mixed $value): bool
+    {
+        return $value === null || $value === '';
     }
 }
