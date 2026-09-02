@@ -651,45 +651,6 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
             ],
         ]];
 
-        yield 'invalid json is treated as empty object' => [[
-            'schema' => 'authentic49JsonLoose',
-            'translations' => [[
-                'lang' => 'system',
-                'name' => 'Broken JSON',
-                'title' => 'Recovered',
-                'content_settings' => '{broken',
-            ]],
-            'expected' => [
-                'system' => ['title' => 'Recovered'],
-            ],
-        ]];
-
-        yield 'json list is treated as empty object' => [[
-            'schema' => 'authentic49Json',
-            'translations' => [[
-                'lang' => 'system',
-                'name' => 'List JSON',
-                'title' => 'Recovered',
-                'content_settings' => '[1,2,3]',
-            ]],
-            'expected' => [
-                'system' => ['title' => 'Recovered'],
-            ],
-        ]];
-
-        yield 'json number is treated as empty object' => [[
-            'schema' => 'authentic49Json',
-            'translations' => [[
-                'lang' => 'system',
-                'name' => 'Number JSON',
-                'title' => 'From number',
-                'content_settings' => '42',
-            ]],
-            'expected' => [
-                'system' => ['title' => 'From number'],
-            ],
-        ]];
-
         yield 'preserves slide cover alt and title' => [[
             'schema' => 'authentic49Json',
             'slideMedia' => ['desktop'],
@@ -1114,6 +1075,46 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
 
         $this->assertLegacyTextColumnsDropped();
         $this->assertAllMediaColumnsDropped();
+    }
+
+    /**
+     * @return iterable<string, array{0: bool, 1: string}>
+     */
+    public static function nonObjectContentSettingsCases(): iterable
+    {
+        yield 'invalid json' => [true, '{broken'];
+        yield 'json list' => [false, '[1,2,3]'];
+        yield 'json number' => [false, '42'];
+    }
+
+    #[DataProvider('nonObjectContentSettingsCases')]
+    public function testNonObjectContentSettingsAbortsWithoutDroppingColumns(bool $looseJson, string $rawJson): void
+    {
+        $this->createSlideTableWithAllMediaColumns();
+        $this->createAuthentic49TranslationTable(true, $looseJson);
+
+        $slideId = $this->insertSlide([]);
+        $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
+        $this->insertTranslation($slideId, $languageId, [
+            'name' => 'Corrupt JSON',
+            'title' => 'Should not copy',
+            'content_settings' => $rawJson,
+        ]);
+
+        try {
+            $this->runMigration(new Migration1781000000ConsolidateContentSettings());
+            static::fail('Expected non-object content_settings to abort the migration');
+        } catch (\RuntimeException $e) {
+            static::assertStringContainsString('non-object content_settings', $e->getMessage());
+        }
+
+        $this->assertColumnExists('blur_elysium_slides_translation', 'title');
+        $this->assertColumnExists('blur_elysium_slides', 'slide_cover_id');
+        $title = $this->connection->fetchOne(
+            'SELECT title FROM blur_elysium_slides_translation WHERE blur_elysium_slides_id = ? AND language_id = ?',
+            [$slideId, $languageId]
+        );
+        static::assertSame('Should not copy', $title);
     }
 
     public function testVerifyFailureDoesNotDropTextColumns(): void

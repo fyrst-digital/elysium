@@ -22,8 +22,6 @@ use Shopware\Core\Framework\Uuid\Uuid;
  */
 class Migration1781000000ConsolidateContentSettings extends MigrationStep
 {
-    private const CHUNK_SIZE = 100;
-
     /**
      * @var array<string, list<string>>
      */
@@ -60,6 +58,7 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
         }
 
         $this->ensureContentSettingsColumn($connection);
+        $this->assertContentSettingsAreObjects($connection);
 
         $connection->transactional(function (Connection $connection): void {
             $this->ensureSystemLanguageTranslations($connection);
@@ -124,175 +123,132 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
         ));
         $now = (new \DateTimeImmutable())->format(ShopwareDefaults::STORAGE_DATE_TIME_FORMAT);
 
-        $lastId = null;
-
-        while (true) {
-            $sql = '
-                SELECT s.id
-                FROM blur_elysium_slides s
-                WHERE (' . $mediaWhere . ')
-                AND NOT EXISTS (
-                    SELECT 1 FROM blur_elysium_slides_translation t
-                    WHERE t.blur_elysium_slides_id = s.id AND t.language_id = :lang_id
-                )
-            ';
-            $params = ['lang_id' => $systemLanguageId];
-            $types = ['lang_id' => ParameterType::BINARY];
-
-            if ($lastId !== null) {
-                $sql .= ' AND s.id > :lastId';
-                $params['lastId'] = $lastId;
-                $types['lastId'] = ParameterType::BINARY;
-            }
-
-            $sql .= ' ORDER BY s.id ASC LIMIT ' . self::CHUNK_SIZE;
-
-            $slides = $connection->fetchAllAssociative($sql, $params, $types);
-            if ($slides === []) {
-                break;
-            }
-
-            foreach ($slides as $slide) {
-                $this->insertSystemLanguageTranslation(
-                    $connection,
-                    $slide['id'],
-                    $systemLanguageId,
-                    $now
-                );
-                $lastId = $slide['id'];
-            }
-        }
+        $connection->executeStatement(
+            '
+            INSERT INTO blur_elysium_slides_translation (
+                blur_elysium_slides_id,
+                language_id,
+                name,
+                created_at
+            )
+            SELECT
+                s.id,
+                :lang_id,
+                COALESCE(
+                    NULLIF((
+                        SELECT t.name
+                        FROM blur_elysium_slides_translation t
+                        WHERE t.blur_elysium_slides_id = s.id
+                        ORDER BY t.created_at ASC, t.language_id ASC
+                        LIMIT 1
+                    ), \'\'),
+                    LOWER(HEX(s.id))
+                ),
+                :created_at
+            FROM blur_elysium_slides s
+            WHERE (' . $mediaWhere . ')
+            AND NOT EXISTS (
+                SELECT 1 FROM blur_elysium_slides_translation existing
+                WHERE existing.blur_elysium_slides_id = s.id
+                AND existing.language_id = :lang_id
+            )
+            ',
+            [
+                'lang_id' => $systemLanguageId,
+                'created_at' => $now,
+            ],
+            [
+                'lang_id' => ParameterType::BINARY,
+                'created_at' => ParameterType::STRING,
+            ]
+        );
     }
 
     protected function migrateTranslationData(Connection $connection): void
     {
-        $availableColumns = $this->getAvailableTextColumns($connection);
-        if ($availableColumns === []) {
-            return;
-        }
+        foreach ($this->getAvailableTextColumns($connection) as $column) {
+            $path = self::TEXT_COLUMN_MAP[$column];
+            $expression = $this->jsonSetExpression('content_settings', $path, '`' . $column . '`');
 
-        $selectColumns = implode(', ', array_merge(
-            ['blur_elysium_slides_id', 'language_id', 'content_settings'],
-            $availableColumns
-        ));
-        $where = implode(' OR ', array_map(
-            static fn (string $column): string => '`' . $column . '` IS NOT NULL',
-            $availableColumns
-        ));
-
-        $lastSlideId = null;
-        $lastLangId = null;
-
-        while (true) {
-            $sql = 'SELECT ' . $selectColumns . ' FROM blur_elysium_slides_translation WHERE (' . $where . ')';
-            $params = [];
-            $types = [];
-
-            if ($lastSlideId !== null && $lastLangId !== null) {
-                $sql .= ' AND (
-                    blur_elysium_slides_id > :lastSlideId
-                    OR (blur_elysium_slides_id = :lastSlideId AND language_id > :lastLangId)
-                )';
-                $params['lastSlideId'] = $lastSlideId;
-                $params['lastLangId'] = $lastLangId;
-                $types['lastSlideId'] = ParameterType::BINARY;
-                $types['lastLangId'] = ParameterType::BINARY;
-            }
-
-            $sql .= ' ORDER BY blur_elysium_slides_id ASC, language_id ASC LIMIT ' . self::CHUNK_SIZE;
-
-            $rows = $connection->fetchAllAssociative($sql, $params, $types);
-            if ($rows === []) {
-                break;
-            }
-
-            foreach ($rows as $row) {
-                $this->migrateTranslationRow($connection, $row, $availableColumns);
-                $lastSlideId = $row['blur_elysium_slides_id'];
-                $lastLangId = $row['language_id'];
-            }
+            $connection->executeStatement(
+                'UPDATE blur_elysium_slides_translation
+                 SET content_settings = ' . $expression . '
+                 WHERE `' . $column . '` IS NOT NULL AND `' . $column . '` <> \'\''
+            );
         }
     }
 
     protected function migrateMediaIds(Connection $connection): void
     {
-        $availableColumns = $this->getAvailableMediaColumns($connection);
-        if ($availableColumns === []) {
-            return;
-        }
+        foreach ($this->getAvailableMediaColumns($connection) as $column) {
+            $path = self::MEDIA_COLUMN_MAP[$column];
+            $expression = $this->jsonSetExpression(
+                't.content_settings',
+                $path,
+                'LOWER(HEX(s.`' . $column . '`))'
+            );
 
-        $selectColumns = implode(', ', array_merge(['id'], array_map(
-            static fn (string $column): string => '`' . $column . '`',
-            $availableColumns
-        )));
-        $where = implode(' OR ', array_map(
-            static fn (string $column): string => '`' . $column . '` IS NOT NULL',
-            $availableColumns
-        ));
-
-        $lastId = null;
-
-        while (true) {
-            $sql = 'SELECT ' . $selectColumns . ' FROM blur_elysium_slides WHERE (' . $where . ')';
-            $params = [];
-            $types = [];
-
-            if ($lastId !== null) {
-                $sql .= ' AND id > :lastId';
-                $params['lastId'] = $lastId;
-                $types['lastId'] = ParameterType::BINARY;
-            }
-
-            $sql .= ' ORDER BY id ASC LIMIT ' . self::CHUNK_SIZE;
-
-            $slides = $connection->fetchAllAssociative($sql, $params, $types);
-            if ($slides === []) {
-                break;
-            }
-
-            foreach ($slides as $slide) {
-                $this->migrateMediaIdsForSlide($connection, $slide, $availableColumns);
-                $lastId = $slide['id'];
-            }
+            $connection->executeStatement(
+                'UPDATE blur_elysium_slides_translation t
+                 INNER JOIN blur_elysium_slides s ON s.id = t.blur_elysium_slides_id
+                 SET t.content_settings = ' . $expression . '
+                 WHERE s.`' . $column . '` IS NOT NULL'
+            );
         }
     }
 
     protected function verify(Connection $connection): void
     {
-        $failures = array_merge(
-            $this->verifyTranslationData($connection),
-            $this->verifyMediaIds($connection)
+        $idSelects = array_merge(
+            $this->translationFailureIdSelects($connection),
+            $this->mediaFailureIdSelects($connection)
         );
 
-        if ($failures === []) {
+        if ($idSelects === []) {
             return;
         }
 
-        $unique = array_values(array_unique($failures));
-        $sample = implode(', ', \array_slice($unique, 0, 5));
+        $union = implode(' UNION ', $idSelects);
+        $count = (int) $connection->fetchOne('SELECT COUNT(*) FROM (' . $union . ') failed_slides');
+        if ($count === 0) {
+            return;
+        }
+
+        $sampleRows = $connection->fetchFirstColumn(
+            'SELECT LOWER(HEX(id)) FROM (' . $union . ') failed_slides LIMIT 5'
+        );
+        $sample = implode(', ', $sampleRows);
 
         throw new \RuntimeException(\sprintf(
             'Elysium contentSettings migration verification failed for %d slide(s). Sample ids: %s. Legacy columns were not dropped.',
-            \count($unique),
+            $count,
             $sample
         ));
     }
 
     protected function dropTranslationColumns(Connection $connection): void
     {
-        foreach (array_keys(self::TEXT_COLUMN_MAP) as $column) {
-            if (!$this->hasColumn($connection, 'blur_elysium_slides_translation', $column)) {
-                continue;
-            }
+        $columns = array_values(array_filter(
+            array_keys(self::TEXT_COLUMN_MAP),
+            fn (string $column): bool => $this->hasColumn($connection, 'blur_elysium_slides_translation', $column)
+        ));
 
-            try {
-                $connection->executeStatement(
-                    'ALTER TABLE `blur_elysium_slides_translation` DROP COLUMN `' . $column . '`'
-                );
-            } catch (\Throwable $e) {
-                if (preg_match(Defaults::MIGRATION_COLUMN_NOT_EXISTS, $e->getMessage()) !== 1) {
-                    throw $e;
-                }
+        if ($columns === []) {
+            return;
+        }
+
+        $clauses = implode(', ', array_map(
+            static fn (string $column): string => 'DROP COLUMN `' . $column . '`',
+            $columns
+        ));
+
+        try {
+            $connection->executeStatement(
+                'ALTER TABLE `blur_elysium_slides_translation` ' . $clauses
+            );
+        } catch (\Throwable $e) {
+            if (preg_match(Defaults::MIGRATION_COLUMN_NOT_EXISTS, $e->getMessage()) !== 1) {
+                throw $e;
             }
         }
     }
@@ -346,32 +302,35 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
             }
         }
 
+        $clauses = [];
         foreach (array_unique($indexesToDrop) as $indexName) {
-            try {
-                $connection->executeStatement(
-                    'ALTER TABLE `blur_elysium_slides` DROP INDEX `' . $indexName . '`'
-                );
-            } catch (\Throwable $e) {
-                if (preg_match(Defaults::MIGRATION_INDEX_NOT_EXISTS, $e->getMessage()) !== 1) {
-                    throw $e;
-                }
-            }
+            $clauses[] = 'DROP INDEX `' . $indexName . '`';
         }
 
         foreach ($columns as $column) {
-            if (!$this->hasColumn($connection, 'blur_elysium_slides', $column)) {
-                continue;
+            if ($this->hasColumn($connection, 'blur_elysium_slides', $column)) {
+                $clauses[] = 'DROP COLUMN `' . $column . '`';
+            }
+        }
+
+        if ($clauses === []) {
+            return;
+        }
+
+        try {
+            $connection->executeStatement(
+                'ALTER TABLE `blur_elysium_slides` ' . implode(', ', $clauses)
+            );
+        } catch (\Throwable $e) {
+            $message = $e->getMessage();
+            $indexGone = preg_match(Defaults::MIGRATION_INDEX_NOT_EXISTS, $message) === 1;
+            $columnGone = preg_match(Defaults::MIGRATION_COLUMN_NOT_EXISTS, $message) === 1;
+
+            if (!$indexGone && !$columnGone) {
+                throw $e;
             }
 
-            try {
-                $connection->executeStatement(
-                    'ALTER TABLE `blur_elysium_slides` DROP COLUMN `' . $column . '`'
-                );
-            } catch (\Throwable $e) {
-                if (preg_match(Defaults::MIGRATION_COLUMN_NOT_EXISTS, $e->getMessage()) !== 1) {
-                    throw $e;
-                }
-            }
+            $this->dropRemainingMediaColumns($connection, $columns);
         }
     }
 
@@ -410,341 +369,164 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
         return (int) $result > 0;
     }
 
-    /**
-     * @param array<string, mixed> $row
-     * @param list<string> $availableColumns
-     */
-    private function migrateTranslationRow(Connection $connection, array $row, array $availableColumns): void
+    private function assertContentSettingsAreObjects(Connection $connection): void
     {
-        $existing = $this->decodeContentSettings($row['content_settings'] ?? null);
-        $changed = false;
-
-        foreach ($availableColumns as $column) {
-            $value = $row[$column] ?? null;
-            if ($this->isEmptyValue($value)) {
-                continue;
-            }
-
-            $this->setPath($existing, self::TEXT_COLUMN_MAP[$column], $value);
-            $changed = true;
-        }
-
-        if (!$changed) {
+        if (!$this->hasColumn($connection, 'blur_elysium_slides_translation', 'content_settings')) {
             return;
         }
 
-        $this->updateContentSettings(
-            $connection,
-            $row['blur_elysium_slides_id'],
-            $row['language_id'],
-            $existing
+        $where = "
+            content_settings IS NOT NULL
+            AND content_settings <> ''
+            AND CASE
+                WHEN JSON_VALID(content_settings) = 0 THEN 1
+                WHEN JSON_TYPE(content_settings) = 'OBJECT' THEN 0
+                ELSE 1
+            END = 1
+        ";
+
+        $count = (int) $connection->fetchOne(
+            'SELECT COUNT(*) FROM blur_elysium_slides_translation WHERE ' . $where
         );
+
+        if ($count === 0) {
+            return;
+        }
+
+        $sampleRows = $connection->fetchFirstColumn(
+            'SELECT DISTINCT LOWER(HEX(blur_elysium_slides_id))
+             FROM blur_elysium_slides_translation
+             WHERE ' . $where . '
+             LIMIT 5'
+        );
+
+        throw new \RuntimeException(\sprintf(
+            'Elysium contentSettings migration aborted: %d translation(s) have non-object content_settings. Sample ids: %s. Legacy columns were not dropped.',
+            $count,
+            implode(', ', $sampleRows)
+        ));
     }
 
     /**
-     * @param array<string, mixed> $slide
-     * @param list<string> $availableColumns
+     * @param list<string> $path
      */
-    private function migrateMediaIdsForSlide(Connection $connection, array $slide, array $availableColumns): void
+    private function jsonSetExpression(string $columnSql, array $path, string $valueSql): string
     {
-        $mediaValues = $this->extractMediaHexValues($slide, $availableColumns);
-        if ($mediaValues === []) {
-            return;
+        $base = 'COALESCE(' . $columnSql . ", '{}')";
+        $jsonPath = $this->jsonPath($path);
+
+        if (\count($path) === 1) {
+            return 'JSON_SET(' . $base . ", '" . $jsonPath . "', " . $valueSql . ')';
         }
 
-        $translations = $connection->fetchAllAssociative(
-            'SELECT language_id, content_settings FROM blur_elysium_slides_translation WHERE blur_elysium_slides_id = :slide_id',
-            ['slide_id' => $slide['id']],
-            ['slide_id' => ParameterType::BINARY]
-        );
+        $parentPath = $this->jsonPath([$path[0]]);
+        $coerced = 'CASE
+            WHEN JSON_TYPE(JSON_EXTRACT(' . $base . ", '" . $parentPath . "')) = 'OBJECT' THEN " . $base . '
+            ELSE JSON_SET(' . $base . ", '" . $parentPath . "', JSON_OBJECT())
+        END";
 
-        foreach ($translations as $translation) {
-            $existing = $this->decodeContentSettings($translation['content_settings'] ?? null);
+        return 'JSON_SET(' . $coerced . ", '" . $jsonPath . "', " . $valueSql . ')';
+    }
 
-            foreach ($mediaValues as $column => $hex) {
-                $this->setPath($existing, self::MEDIA_COLUMN_MAP[$column], $hex);
-            }
-
-            $this->updateContentSettings(
-                $connection,
-                $slide['id'],
-                $translation['language_id'],
-                $existing
-            );
-        }
+    /**
+     * @param list<string> $path
+     */
+    private function jsonPath(array $path): string
+    {
+        return '$' . implode('', array_map(
+            static fn (string $segment): string => '.' . $segment,
+            $path
+        ));
     }
 
     /**
      * @return list<string>
      */
-    private function verifyTranslationData(Connection $connection): array
+    private function translationFailureIdSelects(Connection $connection): array
     {
-        $availableColumns = $this->getAvailableTextColumns($connection);
-        if ($availableColumns === []) {
-            return [];
+        $selects = [];
+
+        foreach ($this->getAvailableTextColumns($connection) as $column) {
+            $jsonPath = $this->jsonPath(self::TEXT_COLUMN_MAP[$column]);
+            $extracted = "CAST(JSON_UNQUOTE(JSON_EXTRACT(content_settings, '" . $jsonPath . "')) AS CHAR)";
+
+            $selects[] = 'SELECT DISTINCT blur_elysium_slides_id AS id
+                FROM blur_elysium_slides_translation
+                WHERE `' . $column . '` IS NOT NULL AND `' . $column . '` <> \'\'
+                AND (
+                    JSON_EXTRACT(content_settings, \'' . $jsonPath . '\') IS NULL
+                    OR ' . $extracted . ' <> `' . $column . '`
+                )';
         }
 
-        $selectColumns = implode(', ', array_merge(
-            ['blur_elysium_slides_id', 'content_settings'],
-            $availableColumns
-        ));
-        $where = implode(' OR ', array_map(
-            static fn (string $column): string => '`' . $column . '` IS NOT NULL',
-            $availableColumns
-        ));
-
-        $rows = $connection->fetchAllAssociative(
-            'SELECT ' . $selectColumns . ' FROM blur_elysium_slides_translation WHERE ' . $where
-        );
-
-        $failures = [];
-
-        foreach ($rows as $row) {
-            $settings = $this->decodeContentSettings($row['content_settings'] ?? null);
-            $failed = false;
-
-            foreach ($availableColumns as $column) {
-                $value = $row[$column] ?? null;
-                if ($this->isEmptyValue($value)) {
-                    continue;
-                }
-
-                if ($this->getPath($settings, self::TEXT_COLUMN_MAP[$column]) !== $value) {
-                    $failed = true;
-                    break;
-                }
-            }
-
-            if ($failed) {
-                $failures[] = $this->toHex($row['blur_elysium_slides_id']);
-            }
-        }
-
-        return $failures;
+        return $selects;
     }
 
     /**
      * @return list<string>
      */
-    private function verifyMediaIds(Connection $connection): array
+    private function mediaFailureIdSelects(Connection $connection): array
     {
         $availableColumns = $this->getAvailableMediaColumns($connection);
         if ($availableColumns === []) {
             return [];
         }
 
-        $selectColumns = implode(', ', array_merge(['id'], array_map(
-            static fn (string $column): string => '`' . $column . '`',
-            $availableColumns
-        )));
-        $where = implode(' OR ', array_map(
-            static fn (string $column): string => '`' . $column . '` IS NOT NULL',
+        $selects = [];
+        $mediaWhere = implode(' OR ', array_map(
+            static fn (string $column): string => 's.`' . $column . '` IS NOT NULL',
             $availableColumns
         ));
-
-        $slides = $connection->fetchAllAssociative(
-            'SELECT ' . $selectColumns . ' FROM blur_elysium_slides WHERE ' . $where
-        );
-
-        $failures = [];
-
-        foreach ($slides as $slide) {
-            $mediaValues = $this->extractMediaHexValues($slide, $availableColumns);
-            if ($mediaValues === []) {
-                continue;
-            }
-
-            $translations = $connection->fetchAllAssociative(
-                'SELECT language_id, content_settings FROM blur_elysium_slides_translation WHERE blur_elysium_slides_id = :slide_id',
-                ['slide_id' => $slide['id']],
-                ['slide_id' => ParameterType::BINARY]
-            );
-
-            $hasSystemLanguage = false;
-            $slideFailed = $translations === [];
-
-            foreach ($translations as $translation) {
-                if ($this->toHex((string) $translation['language_id']) === ShopwareDefaults::LANGUAGE_SYSTEM) {
-                    $hasSystemLanguage = true;
-                }
-
-                $settings = $this->decodeContentSettings($translation['content_settings'] ?? null);
-
-                foreach ($mediaValues as $column => $hex) {
-                    if ($this->getPath($settings, self::MEDIA_COLUMN_MAP[$column]) !== $hex) {
-                        $slideFailed = true;
-                        break;
-                    }
-                }
-            }
-
-            if (!$hasSystemLanguage || $slideFailed) {
-                $failures[] = $this->toHex($slide['id']);
-            }
-        }
-
-        return $failures;
-    }
-
-    /**
-     * @param array<string, mixed> $slide
-     * @param list<string> $availableColumns
-     * @return array<string, string>
-     */
-    private function extractMediaHexValues(array $slide, array $availableColumns): array
-    {
-        $values = [];
+        $selects[] = 'SELECT s.id
+            FROM blur_elysium_slides s
+            WHERE (' . $mediaWhere . ')
+            AND NOT EXISTS (
+                SELECT 1 FROM blur_elysium_slides_translation t
+                WHERE t.blur_elysium_slides_id = s.id
+                AND t.language_id = UNHEX(\'' . ShopwareDefaults::LANGUAGE_SYSTEM . '\')
+            )';
 
         foreach ($availableColumns as $column) {
-            $bytes = $slide[$column] ?? null;
-            if ($this->isEmptyValue($bytes)) {
-                continue;
-            }
+            $jsonPath = $this->jsonPath(self::MEDIA_COLUMN_MAP[$column]);
+            $extracted = "CAST(JSON_UNQUOTE(JSON_EXTRACT(t.content_settings, '" . $jsonPath . "')) AS CHAR)";
 
-            if (!\is_string($bytes) || \strlen($bytes) !== 16) {
-                throw new \RuntimeException(\sprintf(
-                    'Elysium contentSettings migration failed: invalid media UUID on slide %s column %s.',
-                    $this->toHex(\is_string($slide['id'] ?? null) ? $slide['id'] : ''),
-                    $column
-                ));
-            }
-
-            try {
-                $values[$column] = Uuid::fromBytesToHex($bytes);
-            } catch (\Throwable $e) {
-                throw new \RuntimeException(\sprintf(
-                    'Elysium contentSettings migration failed: invalid media UUID on slide %s column %s.',
-                    $this->toHex($slide['id']),
-                    $column
-                ), 0, $e);
-            }
+            $selects[] = 'SELECT DISTINCT s.id
+                FROM blur_elysium_slides s
+                INNER JOIN blur_elysium_slides_translation t ON t.blur_elysium_slides_id = s.id
+                WHERE s.`' . $column . '` IS NOT NULL
+                AND (
+                    JSON_EXTRACT(t.content_settings, \'' . $jsonPath . '\') IS NULL
+                    OR ' . $extracted . ' <> LOWER(HEX(s.`' . $column . '`))
+                )';
         }
 
-        return $values;
+        return $selects;
     }
 
     /**
-     * @param array<string, mixed> $contentSettings
+     * @param list<string> $columns
      */
-    private function updateContentSettings(
-        Connection $connection,
-        string $slideId,
-        string $languageId,
-        array $contentSettings
-    ): void {
-        $connection->executeStatement(
-            'UPDATE blur_elysium_slides_translation SET content_settings = :content WHERE blur_elysium_slides_id = :slide_id AND language_id = :lang_id',
-            [
-                'content' => json_encode($contentSettings, \JSON_THROW_ON_ERROR | \JSON_UNESCAPED_UNICODE | \JSON_UNESCAPED_SLASHES),
-                'slide_id' => $slideId,
-                'lang_id' => $languageId,
-            ],
-            [
-                'content' => ParameterType::STRING,
-                'slide_id' => ParameterType::BINARY,
-                'lang_id' => ParameterType::BINARY,
-            ]
-        );
-    }
-
-    private function insertSystemLanguageTranslation(
-        Connection $connection,
-        string $slideId,
-        string $systemLanguageId,
-        string $createdAt
-    ): void {
-        $existingName = $connection->fetchOne(
-            'SELECT name FROM blur_elysium_slides_translation WHERE blur_elysium_slides_id = :slide_id ORDER BY created_at ASC LIMIT 1',
-            ['slide_id' => $slideId],
-            ['slide_id' => ParameterType::BINARY]
-        );
-
-        $name = \is_string($existingName) && $existingName !== ''
-            ? $existingName
-            : $this->toHex($slideId);
-
-        $connection->insert('blur_elysium_slides_translation', [
-            'blur_elysium_slides_id' => $slideId,
-            'language_id' => $systemLanguageId,
-            'name' => $name,
-            'created_at' => $createdAt,
-        ]);
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function decodeContentSettings(mixed $raw): array
+    private function dropRemainingMediaColumns(Connection $connection, array $columns): void
     {
-        if (\is_array($raw)) {
-            $decoded = $raw;
-        } elseif (!\is_string($raw) || $raw === '') {
-            return [];
-        } else {
-            try {
-                $decoded = json_decode($raw, true, 512, \JSON_THROW_ON_ERROR);
-            } catch (\JsonException) {
-                return [];
+        $clauses = [];
+        foreach ($columns as $column) {
+            if ($this->hasColumn($connection, 'blur_elysium_slides', $column)) {
+                $clauses[] = 'DROP COLUMN `' . $column . '`';
             }
         }
 
-        if (!\is_array($decoded) || array_is_list($decoded)) {
-            return [];
-        }
-
-        return $decoded;
-    }
-
-    /**
-     * @param array<string, mixed> $target
-     * @param list<string> $path
-     */
-    private function setPath(array &$target, array $path, mixed $value): void
-    {
-        if (\count($path) === 1) {
-            $target[$path[0]] = $value;
-
+        if ($clauses === []) {
             return;
         }
 
-        $root = $path[0];
-        if (!isset($target[$root]) || !\is_array($target[$root])) {
-            $target[$root] = [];
-        }
-
-        $target[$root][$path[1]] = $value;
-    }
-
-    /**
-     * @param array<string, mixed> $source
-     * @param list<string> $path
-     */
-    private function getPath(array $source, array $path): mixed
-    {
-        $current = $source;
-
-        foreach ($path as $segment) {
-            if (!\is_array($current) || !\array_key_exists($segment, $current)) {
-                return null;
-            }
-
-            $current = $current[$segment];
-        }
-
-        return $current;
-    }
-
-    private function isEmptyValue(mixed $value): bool
-    {
-        return $value === null || $value === '';
-    }
-
-    private function toHex(string $bytes): string
-    {
         try {
-            return Uuid::fromBytesToHex($bytes);
-        } catch (\Throwable) {
-            return bin2hex($bytes);
+            $connection->executeStatement(
+                'ALTER TABLE `blur_elysium_slides` ' . implode(', ', $clauses)
+            );
+        } catch (\Throwable $e) {
+            if (preg_match(Defaults::MIGRATION_COLUMN_NOT_EXISTS, $e->getMessage()) !== 1) {
+                throw $e;
+            }
         }
     }
 }
