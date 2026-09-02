@@ -1,13 +1,20 @@
 # Unreleased
 
+**Changelog**
+- Slide title, description, button label, URL, and media (cover images, video, and focus image) can now be maintained per language
+- Empty text and media fields fall back to the default language, so the same content no longer has to be copied into every language
+- The Slide Builder shows when a cover, video, or focus image is inherited from the default language or from a smaller device
+- The slide overview and editor inputs show fallback values from the default language
+- Existing slides are migrated automatically: copy and media IDs move into the translated `contentSettings`
+- **Breaking** Cover media associations (`slideCover`, `slideCoverMobile`, `slideCoverTablet`, `slideCoverVideo`, `presentationMedia`) and the translated `title`, `description`, `buttonLabel`, and `url` fields have been removed. These values now live in the translated `contentSettings` JSON
+- **Breaking** The Store API route `/store-api/elysium-slide` no longer returns hydrated cover media. Media IDs are in `contentSettings`; Store API consumers must resolve media themselves
+
 # 4.9.0
 
 **Changelog**
-- Slide copy (title, description, button label, URL) and media IDs are now stored per language in `contentSettings`
 - Added slides import/export feature (technical preview). Slides can be exported as JSONL files and imported back via administration UI or CLI commands
 - Added `<wbr>` HTML tag support and `text-wrap: balance` CSS styling for slide headlines
 - Added slide cover image switch service, CLI command (`elysium:slides:switch-cover-images`) and administration UI action. For all slides that have a desktop cover image but no mobile cover image, the desktop image is moved to the mobile cover and the desktop cover is cleared
-- **Breaking** The Store API route `/store-api/elysium-slide` no longer returns hydrated cover media associations. Media IDs now live in the translated `contentSettings` JSON; Store API consumers must resolve media themselves
 
 # 4.8.1
 
