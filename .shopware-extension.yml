@@ -12,6 +12,10 @@ validation:
   ignore:
     - message: 'Internal error: Class Shopware\\Administration\\Notification\\NotificationService was not found while trying to analyse it'
     - message: 'XmlFileLoader'
+    # v6.8.0 deprecations in code that still targets Shopware ^6.7
+    # (matching is literal substring, so class names use single backslashes):
+    - message: 'Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult'
+    - message: 'Shopware\Core\Framework\Adapter\Console\ShopwareStyle'
 
 store:
   availabilities:
