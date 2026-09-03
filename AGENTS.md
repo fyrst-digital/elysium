@@ -11,8 +11,7 @@ The Cloud Agent environment is defined in `.cursor/` (`environment.json`, `Docke
 `install.sh`, `start.sh`). It is a **native** setup (no `docker compose`): PHP 8.3, MariaDB,
 Composer, Node 20 and `shopware-cli` are installed directly, and a full Shopware `v6.7.13.1`
 checkout is cloned to `$HOME/shopware` with this repo symlinked into
-`$HOME/shopware/custom/plugins/BlurElysiumSlider`. GitHub CI PHPUnit also runs against
-`v6.7.8.2` (see `.github/workflows/ci.yml`).
+`$HOME/shopware/custom/plugins/BlurElysiumSlider`.
 
 Run commands natively (not via `docker compose exec web`):
 
