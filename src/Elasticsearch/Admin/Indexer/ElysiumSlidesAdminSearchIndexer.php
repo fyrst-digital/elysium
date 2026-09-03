@@ -6,6 +6,7 @@ namespace Blur\BlurElysiumSlider\Elasticsearch\Admin\Indexer;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesDefinition;
+use Blur\BlurElysiumSlider\Framework\DataAbstractionLayer\EntitySearch;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\Context;
@@ -111,7 +112,7 @@ class ElysiumSlidesAdminSearchIndexer extends AbstractAdminIndexer
 
         return [
             'total' => (int) $result['total'],
-            'data' => $this->repository->search(new Criteria($ids), $context)->getEntities(),
+            'data' => EntitySearch::entities($this->repository, new Criteria($ids), $context),
         ];
     }
 }

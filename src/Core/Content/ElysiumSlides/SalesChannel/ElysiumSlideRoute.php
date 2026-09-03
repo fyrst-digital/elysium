@@ -6,6 +6,7 @@ namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesResultEvent;
+use Blur\BlurElysiumSlider\Framework\DataAbstractionLayer\EntitySearch;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\Plugin\Exception\DecorationPatternException;
@@ -51,10 +52,11 @@ class ElysiumSlideRoute extends AbstractElysiumSlideRoute
         $this->addAssociations($criteria);
 
         /** @var ElysiumSlidesCollection $slides */
-        $slides = $this->elysiumSlidesRepository->search(
+        $slides = EntitySearch::entities(
+            $this->elysiumSlidesRepository,
             $criteria,
             $context->getContext()
-        )->getEntities();
+        );
 
         return $slides;
     }

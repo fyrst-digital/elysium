@@ -125,11 +125,9 @@ class Lifecycle
         $mediaDefaultFolderRepository = $this->container->get('media_default_folder.repository');
 
         $searchCriteria = new Criteria([Defaults::MEDIA_FOLDER_ID]);
-        $searchCriteria->addAssociation('configuration');
-        $searchCriteria->addAssociation('defaultFolder');
         $searchCriteria->setLimit(1);
 
-        $searchMediaFolder = $mediaFolderRepositroy->search($searchCriteria, $context);
+        $existingMediaFolderIds = $mediaFolderRepositroy->searchIds($searchCriteria, $context);
         /** @var array<'id', string>|null $thumbnailSizeIds */
         $thumbnailSizeIds = $this->getMediaThumbnailSizesIds();
 
@@ -137,7 +135,7 @@ class Lifecycle
          * If there is no existing slides media folder
          * create it with default media thumbnails
          */
-        if ($searchMediaFolder->getTotal() <= 0) {
+        if ($existingMediaFolderIds->getTotal() <= 0) {
             // Check if default folder already exists
             $defaultFolderCriteria = new Criteria();
             $defaultFolderCriteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));
