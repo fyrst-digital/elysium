@@ -53,6 +53,12 @@ ln -sfn "$PLUGIN_DIR" "$SHOPWARE_ROOT/custom/plugins/BlurElysiumSlider"
 
 echo "==> [4/5] Installing Shopware PHP dependencies"
 cd "$SHOPWARE_ROOT"
+# composer.lock is gitignored in the Shopware monorepo. A leftover lock
+# from a previous pin (e.g. v6.7.8.2) will not satisfy v6.7.13.1, so drop
+# it whenever the checkout actually changed.
+if [ "$SHOPWARE_VERSION_CHANGED" = true ]; then
+    rm -f composer.lock
+fi
 # Composer 2.10+ blocks packages with advisories. The v6.7.8.2 CI pin
 # ships advisory-affected dompdf 3.1.4; opting out is harmless on
 # v6.7.13.1 (dompdf 3.1.6) and keeps local installs aligned with CI.
