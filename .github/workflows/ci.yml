@@ -70,22 +70,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shopware-version: [v6.7.8.2, v6.7.13.1]
+        include:
+          - shopware-version: v6.7.0.0
+            allow-insecure-versions: true
+          - shopware-version: v6.7.13.1
+            allow-insecure-versions: false
     name: PHPUnit (${{ matrix.shopware-version }})
     steps:
-      # Composer 2.10+ refuses to install packages affected by security
-      # advisories by default. The v6.7.8.2 matrix pin still ships
-      # dompdf/dompdf 3.1.4 (advisory-affected), which breaks
-      # setup-shopware's composer install. v6.7.13.1 is not affected
-      # (dompdf 3.1.6); keeping the opt-out for the older pin is harmless.
-      - name: Allow Composer 2.10+ to install advisory-affected dependencies
-        run: composer config --global policy.advisories.block false
-
       - name: Setup Shopware
         uses: shopware/setup-shopware@v2
         with:
           shopware-version: ${{ matrix.shopware-version }}
           php-version: '8.3'
+          allow-insecure-versions: ${{ matrix.allow-insecure-versions }}
 
       - name: Checkout plugin
         uses: actions/checkout@v4

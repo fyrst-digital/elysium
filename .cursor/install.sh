@@ -59,10 +59,6 @@ cd "$SHOPWARE_ROOT"
 if [ "$SHOPWARE_VERSION_CHANGED" = true ]; then
     rm -f composer.lock
 fi
-# Composer 2.10+ blocks packages with advisories. The v6.7.8.2 CI pin
-# ships advisory-affected dompdf 3.1.4; opting out is harmless on
-# v6.7.13.1 (dompdf 3.1.6) and keeps local installs aligned with CI.
-composer config policy.advisories.block false
 composer install --no-interaction --no-progress
 
 echo "==> [5/5] Bootstrapping the test database"

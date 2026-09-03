@@ -6,6 +6,7 @@ namespace Blur\BlurElysiumSlider\Service;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Blur\BlurElysiumSlider\Framework\DataAbstractionLayer\EntitySearch;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -31,14 +32,14 @@ class SlideCoverImageSwitchService
             ])
         );
 
-        $result = $this->slideRepository->search($criteria, $context);
+        $result = EntitySearch::fetch($this->slideRepository, $criteria, $context);
 
-        if ($result->getTotal() === 0) {
+        if ($result['total'] === 0) {
             return 0;
         }
 
         /** @var ElysiumSlidesCollection $entities */
-        $entities = $result->getEntities();
+        $entities = $result['entities'];
 
         $payload = [];
         foreach ($entities as $slide) {
@@ -52,6 +53,6 @@ class SlideCoverImageSwitchService
 
         $this->slideRepository->upsert($payload, $context);
 
-        return $result->getTotal();
+        return $result['total'];
     }
 }
