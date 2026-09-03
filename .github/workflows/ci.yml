@@ -68,6 +68,12 @@ jobs:
   php-unit-test:
     runs-on: ubuntu-latest
     steps:
+      # Composer 2.10+ refuses to install packages affected by security
+      # advisories by default. Shopware v6.7.8.2 pins dompdf/dompdf 3.1.4
+      # (advisory-affected), which breaks setup-shopware's composer install.
+      - name: Allow Composer 2.10+ to install advisory-affected dependencies
+        run: composer config --global policy.advisories.block false
+
       - name: Setup Shopware
         uses: shopware/setup-shopware@v2
         with:
