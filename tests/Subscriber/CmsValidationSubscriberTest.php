@@ -5,6 +5,7 @@ namespace Blur\BlurElysiumSlider\Tests\Subscriber;
 use Blur\BlurElysiumSlider\Defaults;
 use Blur\BlurElysiumSlider\Service\ValidationService;
 use Blur\BlurElysiumSlider\Subscriber\CmsValidationSubscriber;
+use Blur\BlurElysiumSlider\Tests\FeatureFlagTestTrait;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -19,22 +20,21 @@ use Shopware\Core\Framework\DataAbstractionLayer\Write\Command\WriteCommand;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\EntityExistence;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\Validation\PreWriteValidationEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Write\WriteContext;
-use Shopware\Core\Framework\Feature;
 use Shopware\Core\Framework\Validation\WriteConstraintViolationException;
 use Shopware\Core\Framework\Uuid\Uuid;
 
 
 class CmsValidationSubscriberTest extends TestCase
 {
+    use FeatureFlagTestTrait;
+
     private Connection&MockObject $connection;
 
     private CmsValidationSubscriber $subscriber;
 
     protected function setUp(): void
     {
-        Feature::registerFeatures([
-            'elysium_preview_time_control' => ['default' => true],
-        ]);
+        $this->enablePluginFeatureFlags('elysium_preview_time_control');
 
         $this->connection = $this->createMock(Connection::class);
         $this->subscriber = new CmsValidationSubscriber($this->connection, new ValidationService());
@@ -42,7 +42,7 @@ class CmsValidationSubscriberTest extends TestCase
 
     protected function tearDown(): void
     {
-        Feature::resetRegisteredFeatures();
+        $this->restorePluginFeatureFlags();
     }
 
     public function testGetSubscribedEvents(): void
