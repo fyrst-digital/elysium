@@ -67,12 +67,22 @@ jobs:
 
   php-unit-test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - shopware-version: v6.7.0.0
+            allow-insecure-versions: true
+          - shopware-version: v6.7.13.1
+            allow-insecure-versions: false
+    name: PHPUnit (${{ matrix.shopware-version }})
     steps:
       - name: Setup Shopware
         uses: shopware/setup-shopware@v2
         with:
-          shopware-version: v6.7.13.1
+          shopware-version: ${{ matrix.shopware-version }}
           php-version: '8.3'
+          allow-insecure-versions: ${{ matrix.allow-insecure-versions }}
 
       - name: Checkout plugin
         uses: actions/checkout@v4
