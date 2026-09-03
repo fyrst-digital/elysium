@@ -11,7 +11,6 @@ use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderCollection;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
@@ -130,7 +129,6 @@ class Lifecycle
         $searchCriteria->addAssociation('defaultFolder');
         $searchCriteria->setLimit(1);
 
-        /** @var EntitySearchResult $searchMediaFolder */
         $searchMediaFolder = $mediaFolderRepositroy->search($searchCriteria, $context);
         /** @var array<'id', string>|null $thumbnailSizeIds */
         $thumbnailSizeIds = $this->getMediaThumbnailSizesIds();

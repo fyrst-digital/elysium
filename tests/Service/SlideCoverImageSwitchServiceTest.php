@@ -26,14 +26,9 @@ class SlideCoverImageSwitchServiceTest extends TestCase
         $slide->method('getSlideCoverId')->willReturn('cover-id');
 
         $collection = new ElysiumSlidesCollection([$slide]);
-        $searchResult = new EntitySearchResult(
-            'blur_elysium_slides',
-            1,
-            $collection,
-            null,
-            new Criteria(),
-            Context::createDefaultContext()
-        );
+        $searchResult = $this->createMock(EntitySearchResult::class);
+        $searchResult->method('getTotal')->willReturn(1);
+        $searchResult->method('getEntities')->willReturn($collection);
 
         $repository->expects($this->once())
             ->method('search')
@@ -75,14 +70,9 @@ class SlideCoverImageSwitchServiceTest extends TestCase
     {
         $repository = $this->createMock(EntityRepository::class);
 
-        $searchResult = new EntitySearchResult(
-            'blur_elysium_slides',
-            0,
-            new ElysiumSlidesCollection([]),
-            null,
-            new Criteria(),
-            Context::createDefaultContext()
-        );
+        $searchResult = $this->createMock(EntitySearchResult::class);
+        $searchResult->method('getTotal')->willReturn(0);
+        $searchResult->method('getEntities')->willReturn(new ElysiumSlidesCollection([]));
 
         $repository->expects($this->once())
             ->method('search')

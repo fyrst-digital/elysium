@@ -10,7 +10,6 @@ use Blur\BlurElysiumSlider\Service\ImportExport\SlideExportService;
 use PHPUnit\Framework\TestCase;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 
 class SlideExportServiceTest extends TestCase
@@ -34,14 +33,8 @@ class SlideExportServiceTest extends TestCase
         $slide->method('getTranslations')->willReturn(null);
 
         $collection = new ElysiumSlidesCollection([$slide]);
-        $searchResult = new EntitySearchResult(
-            'blur_elysium_slides',
-            1,
-            $collection,
-            null,
-            new Criteria(),
-            Context::createDefaultContext()
-        );
+        $searchResult = $this->createMock(EntitySearchResult::class);
+        $searchResult->method('getEntities')->willReturn($collection);
 
         $repository->expects($this->once())
             ->method('search')
@@ -84,14 +77,8 @@ class SlideExportServiceTest extends TestCase
         $slide->method('getTranslations')->willReturn(null);
 
         $collection = new ElysiumSlidesCollection([$slide]);
-        $searchResult = new EntitySearchResult(
-            'blur_elysium_slides',
-            1,
-            $collection,
-            null,
-            new Criteria(),
-            Context::createDefaultContext()
-        );
+        $searchResult = $this->createMock(EntitySearchResult::class);
+        $searchResult->method('getEntities')->willReturn($collection);
 
         $repository->expects($this->once())
             ->method('search')

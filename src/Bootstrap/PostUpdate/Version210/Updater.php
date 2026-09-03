@@ -81,7 +81,7 @@ class Updater
         $updateSlideSettings = [];
 
         if ($result->getTotal() > 0) {
-            foreach ($result->getElements() as $id => $slide) {
+            foreach ($result->getEntities()->getElements() as $id => $slide) {
                 $slideSettings = $slide->get('slideSettings');
                 $convertedSlideSettings = [];
                 $convertedSlideSettings['id'] = $id;
@@ -226,7 +226,7 @@ class Updater
         $updatedCmsElementsConfig = [];
 
         if ($result->getTotal() > 0) {
-            foreach ($result->getElements() as $id => $cmsElement) {
+            foreach ($result->getEntities()->getElements() as $id => $cmsElement) {
                 /** @var CmsSlotEntity $cmsElement */
                 $cmsElementConfig = $cmsElement->getConfig();
                 $convertedCmsElementConfig = [];

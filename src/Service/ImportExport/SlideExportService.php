@@ -27,7 +27,7 @@ class SlideExportService
         $criteria = new Criteria($slideIds);
         $criteria->addAssociation('translations');
 
-        $slides = $this->slideRepository->search($criteria, $context);
+        $slides = $this->slideRepository->search($criteria, $context)->getEntities();
 
         $lines = [$this->createHeaderLine($slides->count())];
 
@@ -44,7 +44,7 @@ class SlideExportService
         $criteria = new Criteria();
         $criteria->addAssociation('translations');
 
-        $slides = $this->slideRepository->search($criteria, $context);
+        $slides = $this->slideRepository->search($criteria, $context)->getEntities();
 
         $lines = [$this->createHeaderLine($slides->count())];
 

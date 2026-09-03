@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events;
 
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\Framework\Event\NestedEvent;
 use Shopware\Core\Framework\Event\ShopwareSalesChannelEvent;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -13,7 +13,7 @@ use Shopware\Core\System\SalesChannel\SalesChannelContext;
 class ElysiumSlidesResultEvent extends NestedEvent implements ShopwareSalesChannelEvent
 {
     /**
-     * @var EntitySearchResult
+     * @var ElysiumSlidesCollection
      */
     protected $result;
 
@@ -28,7 +28,7 @@ class ElysiumSlidesResultEvent extends NestedEvent implements ShopwareSalesChann
     protected $identifier;
 
     public function __construct(
-        EntitySearchResult $result,
+        ElysiumSlidesCollection $result,
         SalesChannelContext $context,
         ?string $identifier = null
     ) {
@@ -37,12 +37,12 @@ class ElysiumSlidesResultEvent extends NestedEvent implements ShopwareSalesChann
         $this->identifier = $identifier;
     }
 
-    public function getResult(): EntitySearchResult
+    public function getResult(): ElysiumSlidesCollection
     {
         return $this->result;
     }
 
-    public function setResult(EntitySearchResult $result): void
+    public function setResult(ElysiumSlidesCollection $result): void
     {
         $this->result = $result;
     }
