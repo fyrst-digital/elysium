@@ -8,6 +8,7 @@
 - Bestehende Slides werden automatisch migriert: Texte und Medien-IDs werden in die übersetzten `contentSettings` übernommen
 - **Breaking** Cover-Medien-Assoziationen (`slideCover`, `slideCoverMobile`, `slideCoverTablet`, `slideCoverVideo`, `presentationMedia`) sowie die übersetzten Felder `title`, `description`, `buttonLabel` und `url` wurden entfernt. Diese Werte liegen jetzt im übersetzten `contentSettings`-JSON
 - **Breaking** Die Store-API-Route `/store-api/elysium-slide` liefert Cover-Medien nicht mehr als hydrierte Assoziationen. Medien-IDs liegen in `contentSettings`; Konsumenten müssen Medien selbst auflösen
+- Beim Anlegen eines neuen Slides nach dem Öffnen eines anderen Slides werden Inhalt, Verlinkung und Medien nicht mehr vom vorherigen Slide übernommen
 
 # 4.9.0
 

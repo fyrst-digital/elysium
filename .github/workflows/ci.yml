@@ -33,6 +33,9 @@ jobs:
       - name: Lint administration
         run: npm run lint:administration
 
+      - name: Test administration
+        run: npm run test:administration
+
   validate-build:
     runs-on: ubuntu-latest
     needs: [lint, php-unit-test]

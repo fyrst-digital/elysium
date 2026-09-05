@@ -8,6 +8,7 @@
 - Existing slides are migrated automatically: copy and media IDs move into the translated `contentSettings`
 - **Breaking** Cover media associations (`slideCover`, `slideCoverMobile`, `slideCoverTablet`, `slideCoverVideo`, `presentationMedia`) and the translated `title`, `description`, `buttonLabel`, and `url` fields have been removed. These values now live in the translated `contentSettings` JSON
 - **Breaking** The Store API route `/store-api/elysium-slide` no longer returns hydrated cover media. Media IDs are in `contentSettings`; Store API consumers must resolve media themselves
+- Creating a new slide after opening another slide no longer copies the previous slide's content, linking, or media settings
 
 # 4.9.0
 

@@ -1,8 +1,12 @@
 import { defaultSlideSettings, defaultContentSettings } from '@elysium/component/slide/settings';
 import template from './template.html.twig';
-import { ElysiumSlide, SlideError } from '@elysium/types/slide';
+import { SlideError } from '@elysium/types/slide';
+import {
+    applyCreateSlideDefaults,
+    mergeSlideSettings,
+} from './merge-settings';
 
-const { Component, Context, Mixin, Data, Utils, Store } = Shopware;
+const { Component, Context, Mixin, Data, Store } = Shopware;
 const { Criteria } = Data;
 
 export default Component.wrapComponentConfig({
@@ -56,12 +60,11 @@ export default Component.wrapComponentConfig({
 
     data() {
         return {
-            defaultSlideSettings: structuredClone(defaultSlideSettings),
-            defaultContentSettings: structuredClone(defaultContentSettings),
             showDeleteModal: false,
             isLoading: true,
             isSaved: false,
             hasChanges: false,
+            slideRequestToken: 0,
         };
     },
 
@@ -218,13 +221,12 @@ export default Component.wrapComponentConfig({
         },
 
         createSlide() {
+            this.slideRequestToken += 1;
             this.context.resetLanguageToDefault();
+            this.elysiumSlide.clearSlide();
+            this.elysiumSlide.clearCustomFieldSet();
             const slide = this.slidesRepository.create(Context.api);
-            Object.assign(slide, { 
-                slideSettings: this.defaultSlideSettings,
-                contentSettings: this.defaultContentSettings
-            });
-            this.elysiumSlide.setSlide(slide);
+            this.elysiumSlide.setSlide(applyCreateSlideDefaults(slide));
             this.isLoading = false;
         },
 
@@ -243,6 +245,7 @@ export default Component.wrapComponentConfig({
         },
 
         loadSlide() {
+            const token = ++this.slideRequestToken;
 
             const criteria = new Criteria();
             criteria.addAssociation('product');
@@ -255,10 +258,14 @@ export default Component.wrapComponentConfig({
             this.slidesRepository
                 .get(this.slideId, { ...Context.api, inheritance: true }, criteria)
                 .then((slide) => {
-                    const mergedSlide = this._mergeSettings(slide, {
-                        slideSettings: this.defaultSlideSettings,
-                        contentSettings: this.defaultContentSettings,
-                    })
+                    if (token !== this.slideRequestToken) {
+                        return;
+                    }
+
+                    const mergedSlide = mergeSlideSettings(slide, {
+                        slideSettings: defaultSlideSettings,
+                        contentSettings: defaultContentSettings,
+                    });
                     this.elysiumSlide.setSlide(mergedSlide);
                     this.loadCustomFieldSets();
                 })
@@ -266,11 +273,14 @@ export default Component.wrapComponentConfig({
                     console.warn(exception);
                 })
                 .finally(() => {
-                    this.isLoading = false;
+                    if (token === this.slideRequestToken) {
+                        this.isLoading = false;
+                    }
                 });
         },
 
         loadCustomFieldSets() {
+            const token = this.slideRequestToken;
             const criteria = new Criteria();
 
             criteria.addFilter(
@@ -284,6 +294,10 @@ export default Component.wrapComponentConfig({
             this.customFieldSetRepository
                 .search(criteria, Context.api)
                 .then((result) => {
+                    if (token !== this.slideRequestToken) {
+                        return;
+                    }
+
                     this.elysiumSlide.setCustomFieldSet(result);
                 })
                 .catch((exception) => {
@@ -433,19 +447,6 @@ export default Component.wrapComponentConfig({
                     console.warn(error);
                 });
         },
-
-        _mergeSettings(slide: ElysiumSlide, properties: Record<string, unknown>) {
-            const slideObj = slide as unknown as Record<string, unknown>;
-            Object.entries(properties).forEach(([key, defaultSettings]) => {
-                if (slideObj[key]) {
-                    slideObj[key] = Utils.object.deepMergeObject(defaultSettings as object, slideObj[key] as object);
-                } else {
-                    slideObj[key] = defaultSettings;
-                }
-            });
-            
-            return slide;
-        }
     },
 
     created() {
