@@ -80,7 +80,8 @@ class ContentSettingsSanitizerSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $command->addPayload('content_settings', Json::encode($contentSettings));
+        // WriteCommand::addPayload is @internal; EntityWriteEvent has no other payload setter.
+        $command->addPayload('content_settings', Json::encode($contentSettings)); // @phpstan-ignore shopware.internalMethodCall
     }
 
     /**
