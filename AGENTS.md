@@ -1,20 +1,14 @@
 # AGENTS.md - BlurElysiumSlider Plugin
 
-Shopware 6.7 plugin. Version 4.6.x.
+Shopware 6.7 plugin (`shopware/core`, `storefront`, `elasticsearch` `^6.7`). Current version is in `composer.json`. Metadata lives there too; there is no `plugin.xml`.
 
-## Working with github
-- On any github related prompts, **always use this repository as reference**. And **always use the GitHub CLI (gh)**. If the GiotHub CLI should not be installed, give the user according feedback.
+## GitHub
 
-## Cursor Cloud specific instructions
+Origin is `fyrst-digital/elysium`. For GitHub work, use this repository and the GitHub CLI (`gh`). If `gh` is not installed, say so.
 
-The Cloud Agent environment is defined in `.cursor/` (`environment.json`, `Dockerfile`,
-`install.sh`, `start.sh`). It is a **native** setup (no `docker compose`): PHP 8.3, MariaDB,
-Composer, Node 20 and `shopware-cli` are installed directly, and a full Shopware `v6.7.13.1`
-checkout is cloned to `$HOME/shopware` with this repo symlinked into
-`$HOME/shopware/custom/plugins/BlurElysiumSlider`. GitHub CI PHPUnit also runs
-against `v6.7.0.0` (see `.github/workflows/ci.yml`).
+## Cursor Cloud
 
-Run commands natively (not via `docker compose exec web`):
+Defined in `.cursor/` (`environment.json`, `Dockerfile`, `install.sh`, `start.sh`). Native setup (no `docker compose`): PHP 8.3, MariaDB, Composer, Node 20, `shopware-cli`. Shopware `v6.7.13.1` is cloned to `$HOME/shopware`; this repo is symlinked to `$HOME/shopware/custom/plugins/BlurElysiumSlider`. GitHub CI PHPUnit also runs against `v6.7.0.0` (see `.github/workflows/ci.yml`). CI lint is administration eslint + `npm run test:administration` only (no storefront lint).
 
 ```bash
 # PHPUnit (test DB is bootstrapped by install.sh)
@@ -25,112 +19,97 @@ cd "$HOME/shopware" && APP_ENV=test ./vendor/bin/phpunit \
 cd "$HOME/shopware" && FORCE_INSTALL=true APP_ENV=test ./vendor/bin/phpunit \
   --configuration custom/plugins/BlurElysiumSlider/phpunit.xml --testsuite migration
 
-# Lint (run from the plugin repo root; deps already installed by install.sh)
+# Lint and admin unit tests (plugin repo root; deps already installed by install.sh)
 npm run lint:administration
 npm run lint:storefront
+npm run test:administration
 
 # Validate the extension
 shopware-cli extension validate .
 ```
 
-The MariaDB DSN is `mysql://app:app@127.0.0.1:3306/shopware` (tests use `shopware_test`).
-`start.sh` starts MariaDB on each boot.
+MariaDB DSN: `mysql://app:app@127.0.0.1:3306/shopware` (tests use `shopware_test`). `start.sh` starts MariaDB on each boot.
 
+## Local commands
 
-## Commands
+From the Shopware root. Plugin path: `custom/static-plugins/BlurElysiumSlider`. Shopware JS builds strip plugin `node_modules`; run `npm install` in the plugin before lint.
 
 ```bash
-# Build (from Shopware root)
+# Build
 docker compose exec web bin/build-administration.sh
 docker compose exec web bin/build-storefront.sh
 docker compose exec web bin/console cache:clear
 docker compose exec web bin/console bundle:dump
 
-# Lint (from Shopware root)
-docker compose exec -w /var/www/html/custom/static-plugins/BlurElysiumSlider web npm install // before running lint you have to install packages first to ensure the packages are iinstalled. This is because shopware remove de dependecies of the plugin when you build the administration and storefront. So you have to install the dependencies again before running the lint command.
+# Lint and admin tests (re-install deps after a JS build)
+docker compose exec -w /var/www/html/custom/static-plugins/BlurElysiumSlider web npm install
 docker compose exec -w /var/www/html/custom/static-plugins/BlurElysiumSlider web npm run lint:administration
 docker compose exec -w /var/www/html/custom/static-plugins/BlurElysiumSlider web npm run lint:storefront
+docker compose exec -w /var/www/html/custom/static-plugins/BlurElysiumSlider web npm run test:administration
 
-# Tests (from Shopware root)
-docker compose exec -e APP_ENV=test web ./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider/phpunit.xml"
-
+# PHPUnit (phpunit.xml already sets APP_ENV=test)
+docker compose exec web ./vendor/bin/phpunit --configuration="custom/static-plugins/BlurElysiumSlider/phpunit.xml"
 ```
 
 ## Testing
 
-PHPUnit tests in `tests/Migration/`.
-
-## Code Patterns
-
-### Vue Component
-```typescript
-const { Component, Mixin, Store, Data } = Shopware;
-const { Criteria } = Data;
-
-export default Component.wrapComponentConfig({
-    template,
-    inject: ['repositoryFactory', 'acl'],
-    mixins: [Mixin.getByName('placeholder')],
-    props: { slideId: { type: String, required: false, default: null } },
-    data() { return { isLoading: true }; },
-    computed: { elysiumSlide() { return Store.get('elysiumSlide'); } },
-    methods: { loadSlide(): void { /* ... */ } },
-    created(): void { this.loadSlide(); },
-});
-```
-
-### Pinia Store
-```typescript
-export default {
-    id: 'elysiumSlide',
-    state: (): SlideState => ({ slide: null }),
-    getters: { slideViewportSettings(state: SlideState) { return state.slide?.slideSettings?.viewports ?? null; } },
-    actions: { setSlide(slide: Entity<'blur_elysium_slides'>): void { this.slide = slide; } },
-};
-```
-
-### PHP Migration
-```php
-public function update(Connection $connection): void {
-    if ($this->isAlreadyMigrated($connection, $id)) return;
-    $connection->transactional(function (Connection $connection) { /* ... */ });
-}
-```
+PHPUnit (`phpunit.xml`): suites `migration`, `subscriber`, `service`, `command`, `demodata`. Admin unit tests: `npm run test:administration` → `tests/Administration/`.
 
 ## Architecture
 
-- **Entity**: `blur_elysium_slides` in `src/Core/Content/ElysiumSlides/`
-- **Viewport System**: mobile → tablet → desktop. Use `viewportsPlaceholder()` mixin.
-- **Data Resolvers**: `ElysiumSliderCmsElementResolver`, `ElysiumBannerCmsElementResolver`
-- **Events**: `ElysiumSlidesResultEvent`, `ElysiumSlidesCriteriaEvent`, `ElysiumCmsSlidesCriteriaEvent`
-- **Lifecycle**: `src/Bootstrap/Lifecycle.php`, `src/Bootstrap/PostUpdate/Version{VERSION}/`
-- **Twig**: `camel_to_kebab_case`, `create_srcset`
+- **DAL:** `blur_elysium_slides` + translation `blur_elysium_slides_translation` in `src/Core/Content/ElysiumSlides/`. Slide copy and media IDs live in translated `contentSettings` JSON (hydrator: `ElysiumSlidesHydrator`). Do not reintroduce cover FKs or translated `title`/`url` columns.
+- **Viewport system:** mobile → tablet → desktop. Mixin `blur-device-utilities`; method `viewportsPlaceholder()`. Also `blur-style-utilities`.
+- **CMS:** elements `blur-elysium-slider` / `blur-elysium-banner` (resolvers `ElysiumSliderCmsElementResolver`, `ElysiumBannerCmsElementResolver`). Section `blur-elysium-section` is injected by overriding `sw-cms-section`, not `registerCmsSection`.
+- **Events:** `ElysiumSlidesResultEvent`, `ElysiumSlidesCriteriaEvent`, `ElysiumCmsSlidesCriteriaEvent`. `ElysiumCmsSlidesResultEvent` is gone.
+- **Lifecycle:** `src/Bootstrap/Lifecycle.php`. PostUpdate `Version210` only runs when upgrading from < 2.0.0.
+- **Twig functions:** `camel_to_kebab_case`, `create_srcset`.
+- **Storefront plugins:** `ElysiumSliderPlugin` (`[data-elysium-slider]`), `ElysiumSlidePreview` (`[data-elysium-slide-preview]`).
+- **Preview:** `/elysium-preview/{elementType}/{slideId}`; schema source of truth is PHP (`elysium:preview-schema:generate`).
+- **Store API:** `GET|POST /store-api/elysium-slide`, `GET /store-api/elysium-slide/{slideId}` (media IDs in `contentSettings`; consumers resolve media themselves).
+- **Admin API:** `POST /api/_action/elysium-slides/{export,import,switch-cover-images}`.
+- **ACL:** `blur_elysium_slides.{viewer,editor,creator,deleter,exporter,importer}`.
+- **Feature flags** (`Defaults::FEATURES`): `elysium_preview_elasticsearch`, `elysium_preview_time_control`, `elysium_preview_import_export`.
+- **CLI:** `elysium:demodata`, `elysium:slides:export`, `elysium:slides:import`, `elysium:slides:switch-cover-images`, `elysium:preview-schema:generate`.
+- **Admin alias:** `@elysium/*` → `src/Resources/app/administration/src/*`.
 
-## File Structure
+## File structure
+
 ```
 src/
-├── Core/Content/ElysiumSlides/   # Entity + Events
+├── Core/Content/ElysiumSlides/   # Entity, translation, events, sales channel, demodata
 ├── DataResolver/                  # CMS resolvers
 ├── Migration/                     # DB migrations
-├── Bootstrap/                     # Lifecycle + PostUpdate
-├── Twig/                          # Extensions
-├── Struct/                        # DTOs
-├── Subscriber/                    # Event subscribers
+├── Bootstrap/                     # Lifecycle + PostUpdate/Version210
+├── Command/                       # CLI
+├── Service/                       # Import/export, validation, cache, cover switch
+├── Subscriber/
+├── Preview/                       # Live-preview schema (PHP source of truth)
+├── Twig/
+├── Struct/
+├── Storefront/Controller/
+├── Administration/Controller/
+├── Elasticsearch/
+├── MessageHandler/
 └── Resources/
-    ├── app/administration/src/   # Vue components, mixins, stores
-    ├── app/storefront/src/       # JS plugins, SCSS
-    └── views/storefront/         # Twig templates
+    ├── app/administration/src/    # Vue, mixins, Pinia, CMS
+    ├── app/storefront/src/        # JS plugins, SCSS
+    └── views/storefront/          # Twig
 ```
 
 ## Naming
 
 | Type | Convention |
 |------|------------|
-| CMS Elements | `blur-elysium-*` |
-| UI Components | `elyium-*` |
+| CMS types / section | `blur-elysium-*` |
+| CMS Vue (element / block) | `cms-el-blur-elysium-*`, `sw-cms-block-blur-elysium-*` |
+| Slide Builder UI | `elysium-*` |
+| Form primitives | `py-*` |
 | Entity | `blur_elysium_slides` |
-| Pinia Stores | `elysium*` |
+| Pinia stores | `elysiumSlide`, `elysiumUI`, `elysiumCMS`, `elysiumMedia` |
 
-## Subagents
+Do not use `elyium-*`. Vue/PHP/CMS conventions live in `.agents/skills/`.
 
-- `@changelog` - Changelog workflow
+## Skills and subagents
+
+- Skills (portable): `.agents/skills/` — `changelog`, `administration-vue`, `php-migrations`, `cms-storefront`
+- Cursor subagents: `.cursor/agents/` — `changelog`, `plugin-reviewer`
