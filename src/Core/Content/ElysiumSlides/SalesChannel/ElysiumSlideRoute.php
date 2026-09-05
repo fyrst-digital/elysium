@@ -63,9 +63,11 @@ class ElysiumSlideRoute extends AbstractElysiumSlideRoute
 
     private function addAssociations(Criteria $criteria): void
     {
-        $criteria->addAssociation('media');
-        $criteria->addAssociation('media.mediaFolder');
-        $criteria->addAssociation('media.mediaFolder.configuration');
+        // @breaking-change Media associations were removed from this route.
+        // Previously slide covers were loaded as hydrated MediaEntity associations.
+        // Since media IDs moved into the translated contentSettings JSON blob,
+        // callers now receive raw UUID strings. Headless consumers that relied on
+        // resolved media objects must perform their own media resolution.
         $criteria->addAssociation('product');
         $criteria->addAssociation('product.media');
         $criteria->addAssociation('product.cover');

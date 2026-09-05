@@ -59,8 +59,7 @@ class ElysiumSlidesAdminSearchIndexer extends AbstractAdminIndexer
          *
          * $data = $this->connection->fetchAllAssociative(
          *     'SELECT LOWER(HEX(elysium_slides.id)) as id,
-         *             GROUP_CONCAT(DISTINCT translation.name SEPARATOR " ") as name,
-         *             GROUP_CONCAT(DISTINCT translation.title SEPARATOR " ") as title
+         *             GROUP_CONCAT(DISTINCT translation.name SEPARATOR " ") as name
          *      FROM blur_elysium_slides elysium_slides
          *         INNER JOIN blur_elysium_slides_translation translation
          *             ON elysium_slides.id = translation.blur_elysium_slides_id
@@ -74,10 +73,9 @@ class ElysiumSlidesAdminSearchIndexer extends AbstractAdminIndexer
         // New implementation: Fetch translations separately and aggregate in PHP
         // This approach scales better with varying numbers of translations per slide
         $translations = $this->connection->fetchAllAssociative(
-            'SELECT LOWER(HEX(blur_elysium_slides_id)) as slide_id, 
-                    name, 
-                    title
-             FROM blur_elysium_slides_translation 
+            'SELECT LOWER(HEX(blur_elysium_slides_id)) as slide_id,
+                    name
+             FROM blur_elysium_slides_translation
              WHERE blur_elysium_slides_id IN (:ids)',
             ['ids' => Uuid::fromHexToBytesList($ids)],
             ['ids' => ArrayParameterType::BINARY]
@@ -90,7 +88,7 @@ class ElysiumSlidesAdminSearchIndexer extends AbstractAdminIndexer
             if (!isset($grouped[$slideId])) {
                 $grouped[$slideId] = [];
             }
-            $grouped[$slideId][] = $row['name'] . ' ' . $row['title'];
+            $grouped[$slideId][] = $row['name'];
         }
 
         // Build mapped array with aggregated text

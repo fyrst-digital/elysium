@@ -293,7 +293,7 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
             const clientRenderer = this.fragmentRenderers.getClientRenderer(fragment.name);
             if (clientRenderer) {
                 try {
-                    clientRenderer(slide, element);
+                    clientRenderer(slide, element, data.resolvedMedia || {}, data.device || 'desktop');
                 } catch (err) {
                     this._showError(`Failed to render fragment "${fragment.name}"`);
                     console.error(err);

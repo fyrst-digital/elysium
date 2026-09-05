@@ -138,6 +138,9 @@
                         }" />
                 </div>
             </template>
+            <template #column-contentSettings.title="{ item }">
+                {{ displayContentSettings(item).title || '' }}
+            </template>
             <template #more-actions="{ item }">
                 <sw-context-menu-item
                     :disabled="!permissionCreate"

@@ -1,3 +1,15 @@
+# Unreleased
+
+**Changelog**
+- Slide-Titel, Beschreibung, Button-Label, URL sowie Cover-Bilder, Video und Fokusbild können jetzt sprachabhängig gepflegt werden
+- Leere Text- und Medienfelder fallen auf die Standardsprache zurück, sodass dieselben Inhalte nicht in jeder Sprache erneut hinterlegt werden müssen
+- Der Slide Builder zeigt an, wenn ein Cover, Video oder Fokusbild aus der Standardsprache oder von einem kleineren Gerät übernommen wird
+- Die Slide-Übersicht und die Eingabefelder im Editor zeigen Fallback-Werte aus der Standardsprache
+- Bestehende Slides werden automatisch migriert: Texte und Medien-IDs werden in die übersetzten `contentSettings` übernommen
+- **Breaking** Cover-Medien-Assoziationen (`slideCover`, `slideCoverMobile`, `slideCoverTablet`, `slideCoverVideo`, `presentationMedia`) sowie die übersetzten Felder `title`, `description`, `buttonLabel` und `url` wurden entfernt. Diese Werte liegen jetzt im übersetzten `contentSettings`-JSON
+- **Breaking** Die Store-API-Route `/store-api/elysium-slide` liefert Cover-Medien nicht mehr als hydrierte Assoziationen. Medien-IDs liegen in `contentSettings`; Konsumenten müssen Medien selbst auflösen
+- Beim Anlegen eines neuen Slides nach dem Öffnen eines anderen Slides werden Inhalt, Verlinkung und Medien nicht mehr vom vorherigen Slide übernommen
+
 # 4.9.0
 
 **Changelog**

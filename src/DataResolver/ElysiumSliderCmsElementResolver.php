@@ -14,11 +14,14 @@ use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
 use Shopware\Core\Content\Cms\DataResolver\FieldConfig;
 use Shopware\Core\Content\Cms\DataResolver\FieldConfigCollection;
 use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
+use Shopware\Core\Content\Media\MediaEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
 {
+    use MediaResolutionTrait;
     /**
      * Single source of truth for slider viewport options.
      *
@@ -33,6 +36,7 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
     public function __construct(
         private readonly ElysiumSlideLoader $slideLoader,
         private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly EntityRepository $mediaRepository,
     ) {}
 
     public function getType(): string
@@ -75,7 +79,13 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
         if (!empty($elysiumSlideIds)) {
             $slides = $this->slideLoader->load($elysiumSlideIds, $criteria, $context, "cms-element-elysium-slider-{$slot->getId()}");
 
-            $elysiumSliderStruct->setSlideCollection($slides->getElements());
+            $slideElements = $slides->getElements();
+            $elysiumSliderStruct->setSlideCollection($slideElements);
+
+            $resolvedMedia = $this->resolveMediaForSlides($slideElements, $this->mediaRepository, $context);
+            $elysiumSliderStruct->setResolvedMedia($resolvedMedia);
+
+            $slot->setData($elysiumSliderStruct);
         }
 
         $slot->setData($elysiumSliderStruct);

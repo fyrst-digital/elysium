@@ -2,7 +2,6 @@ import { SlideSettings, ContentSettings, ViewportConfig } from '@elysium/types/s
 
 /**
  * @todo
- * - add typed `ContentSettings`
  * - change current default to named export
  */
 
@@ -145,7 +144,18 @@ export const defaultSlideSettings: SlideSettings = {
 };
 
 export const defaultContentSettings: ContentSettings = {
+    title: '',
+    description: '',
+    button: {
+        label: '',
+    },
+    url: '',
+    focusImageId: null,
     slideCover: {
+        mobileId: null,
+        tabletId: null,
+        desktopId: null,
+        videoId: null,
         alt: null,
         title: null,
     },

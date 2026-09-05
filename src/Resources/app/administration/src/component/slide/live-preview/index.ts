@@ -1,11 +1,16 @@
 import template from './template.html.twig'
 import { previewSchema } from '@elysium/composables/preview-schema'
+import { getDisplayContentSettings } from '@elysium/composables/content-settings-display'
+import { Media } from '@elysium/types/slide';
 
-const { Component, Store } = Shopware;
+const { Component, Store, Data, Context } = Shopware;
 const { debounce } = Shopware.Utils;
+const { Criteria } = Data;
 
 export default Component.wrapComponentConfig({
     template,
+
+    inject: ['repositoryFactory'],
 
     props: {
         slideId: {
@@ -68,6 +73,10 @@ export default Component.wrapComponentConfig({
             return Store.get('elysiumSlide');
         },
 
+        elysiumMedia() {
+            return Store.get('elysiumMedia');
+        },
+
         previewStyles(): Record<string, string> {
             return {
                 display: 'flex',
@@ -124,11 +133,30 @@ export default Component.wrapComponentConfig({
             }, { deep: mapping.deep ?? false });
         });
 
-        window.addEventListener('message', this._handleIframeMessage.bind(this));
+        // Watch media ID paths — load media into shared store, then trigger update
+        const mediaIdPaths = [
+            'slide.contentSettings.slideCover.mobileId',
+            'slide.contentSettings.slideCover.tabletId',
+            'slide.contentSettings.slideCover.desktopId',
+            'slide.contentSettings.slideCover.videoId',
+            'slide.contentSettings.focusImageId',
+        ];
+        mediaIdPaths.forEach((path) => {
+            this.$watch(path, () => {
+                this.loadMediaForSlide().then(() => {
+                    this.sendSlideUpdate(['contentSettings']);
+                });
+            });
+        });
+
+        this.loadMediaForSlide();
+
+        this._boundHandleIframeMessage = this._handleIframeMessage.bind(this);
+        window.addEventListener('message', this._boundHandleIframeMessage);
     },
 
     beforeDestroy() {
-        window.removeEventListener('message', this._handleIframeMessage.bind(this));
+        window.removeEventListener('message', this._boundHandleIframeMessage);
         if (this.iframeAckTimer) {
             clearTimeout(this.iframeAckTimer);
             this.iframeAckTimer = null;
@@ -136,6 +164,47 @@ export default Component.wrapComponentConfig({
     },
 
     methods: {
+        loadMediaForSlide(): Promise<void> {
+            const rawCover = this.slide?.contentSettings?.slideCover ?? {};
+            const displaySettings = getDisplayContentSettings(this.slide);
+            const displayCover = displaySettings?.slideCover ?? {};
+
+            const mediaIds = [
+                rawCover.mobileId,
+                rawCover.tabletId,
+                rawCover.desktopId,
+                rawCover.videoId,
+                this.slide?.contentSettings?.focusImageId,
+                displayCover.mobileId,
+                displayCover.tabletId,
+                displayCover.desktopId,
+                displayCover.videoId,
+                displaySettings?.focusImageId,
+            ].filter((id): id is string => Boolean(id));
+
+            if (mediaIds.length === 0) return Promise.resolve();
+
+            const uncachedIds = this.elysiumMedia.getUncachedIds(mediaIds);
+            if (uncachedIds.length === 0) return Promise.resolve();
+
+            const mediaRepository = this.repositoryFactory?.create('media');
+            if (!mediaRepository) return Promise.resolve();
+
+            const criteria = new Criteria();
+            criteria.setIds(uncachedIds);
+
+            return mediaRepository
+                .search(criteria, Context.api)
+                .then((result: Media[]) => {
+                    result.forEach((media: Media) => {
+                        this.elysiumMedia.setMedia(media.id, media);
+                    });
+                })
+                .catch((exception: Error) => {
+                    console.error(exception);
+                });
+        },
+
         buildIframeSrc(cacheBuster?: number) {
             this.isLoading = true;
             const isNew = this.slide?._isNew === true;
@@ -154,12 +223,14 @@ export default Component.wrapComponentConfig({
                 this.isLoading = false;
                 return;
             }
-            this.sendSlideUpdateImmediate();
-            // Wait for storefront JS to confirm values are injected before hiding loader
-            this.iframeAckTimer = setTimeout(() => {
-                this.isLoading = false;
-                this.iframeAckTimer = null;
-            }, 300);
+            // Load media first, then send the initial update with resolved media
+            this.loadMediaForSlide().then(() => {
+                this.sendSlideUpdate(undefined, true);
+                this.iframeAckTimer = setTimeout(() => {
+                    this.isLoading = false;
+                    this.iframeAckTimer = null;
+                }, 300);
+            });
         },
 
         _handleIframeMessage(event: MessageEvent) {
@@ -176,8 +247,22 @@ export default Component.wrapComponentConfig({
             }
         },
 
-        sendSlideUpdateImmediate(fields?: string[]) {
+        /**
+         * Sends a slide update to the live preview iframe.
+         *
+         * @param fields - Which fields changed (for the iframe to selectively update)
+                 * @param immediate - If true, sends immediately. If false, debounces (300ms).
+         */
+        sendSlideUpdate(fields?: string[], immediate: boolean = false) {
             if (this.readOnly) {
+                return;
+            }
+
+            if (!immediate) {
+                if (fields) {
+                    fields.forEach((f) => this.pendingFields.add(f));
+                }
+                this._flushSlideUpdate();
                 return;
             }
 
@@ -187,10 +272,17 @@ export default Component.wrapComponentConfig({
                 return;
             }
 
+            // Build a display copy with merged fallback values for the preview iframe
+            const displaySlide = JSON.parse(JSON.stringify(this.slide));
+            const displaySettings = JSON.parse(JSON.stringify(getDisplayContentSettings(this.slide)));
+
+            displaySlide.contentSettings = displaySettings;
+
             iframe.contentWindow.postMessage({
                 type: 'elysium-slide-update',
                 device: this.device,
-                slide: JSON.parse(JSON.stringify(this.slide)),
+                slide: displaySlide,
+                resolvedMedia: JSON.parse(JSON.stringify(this.elysiumMedia.getResolvedMedia(displaySlide.contentSettings))),
                 fields: fields && fields.length > 0 ? fields : ['slide'],
                 previewAspectRatio: this.aspectRatioX && this.aspectRatioY ? { x: this.aspectRatioX, y: this.aspectRatioY } : null,
                 previewWidth: this.maxWidth,
@@ -198,21 +290,10 @@ export default Component.wrapComponentConfig({
             }, this.baseUrl);
         },
 
-        sendSlideUpdate(fields?: string[]) {
-            if (this.readOnly) {
-                return;
-            }
-
-            if (fields) {
-                fields.forEach((f) => this.pendingFields.add(f));
-            }
-            this._flushSlideUpdate();
-        },
-
-        _flushSlideUpdate: debounce(function (this: { pendingFields: Set<string>; sendSlideUpdateImmediate(fields: string[]): void }) {
+        _flushSlideUpdate: debounce(function (this: { pendingFields: Set<string>; sendSlideUpdate(fields: string[], immediate: boolean): void }) {
             const fields = Array.from(this.pendingFields);
             this.pendingFields.clear();
-            this.sendSlideUpdateImmediate(fields);
+            this.sendSlideUpdate(fields, true);
         }, 300),
     },
 });

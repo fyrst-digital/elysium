@@ -1,4 +1,5 @@
 import { module } from '@elysium/meta';
+import { getDisplayContentSettings } from '@elysium/composables/content-settings-display';
 import template from './template.html.twig';
 
 const { Component, Mixin, Data, Filter, Context, Store } = Shopware;
@@ -42,7 +43,7 @@ export default Component.wrapComponentConfig({
                     primary: true,
                 },
                 {
-                    property: 'title',
+                    property: 'contentSettings.title',
                     inlineEdit: 'string',
                     label: 'blurElysiumSlides.grid.headlineLabel',
                     routerLink: 'blur.elysium.slides.detail',
@@ -110,6 +111,7 @@ export default Component.wrapComponentConfig({
             const criteria = new Criteria(this.page, this.limit);
 
             criteria.setTerm(this.searchTerm);
+            criteria.addAssociation('translations');
 
             criteria.addSorting(
                 Criteria.sort(this.sortBy, this.sortDirection, this.naturalSorting)
@@ -161,7 +163,7 @@ export default Component.wrapComponentConfig({
             this.isLoading = true;
 
             this.slidesRepository
-                .search(this.defaultCriteria, Context.api)
+                .search(this.defaultCriteria, { ...Context.api, inheritance: true })
                 .then((result) => {
                     this.slidesCollection = result;
                     this.total =
@@ -172,6 +174,10 @@ export default Component.wrapComponentConfig({
                     console.error(error);
                     this.isLoading = false;
                 });
+        },
+
+        displayContentSettings(item) {
+            return getDisplayContentSettings(item);
         },
 
         onSearch(searchTerm: string) {

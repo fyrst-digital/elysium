@@ -8,10 +8,34 @@ function stripTags(html, allowedTags = []) {
     if (!html) {
         return '';
     }
+
     const allowed = new Set(allowedTags.map((t) => t.replace(/[<>]/g, '').toLowerCase()));
-    return html.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, (match, tag) => {
-        return allowed.has(tag.toLowerCase()) ? match : '';
-    });
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    function walk(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            return node.textContent;
+        }
+
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+            return '';
+        }
+
+        const tagName = node.tagName.toLowerCase();
+
+        if (allowed.has(tagName)) {
+            const attrs = Array.from(node.attributes)
+                .map((attr) => ` ${attr.name}="${attr.value.replace(/"/g, '&quot;')}"`)
+                .join('');
+            const children = Array.from(node.childNodes).map(walk).join('');
+            return `<${tagName}${attrs}>${children}</${tagName}>`;
+        }
+
+        return Array.from(node.childNodes).map(walk).join('');
+    }
+
+    return Array.from(doc.body.childNodes).map(walk).join('');
 }
 
 function createSrcset(thumbnails) {
@@ -22,6 +46,11 @@ function createSrcset(thumbnails) {
         .filter((t) => t.url && t.width)
         .map((t) => `${t.url} ${t.width}w`)
         .join(', ');
+}
+
+function getMediaById(resolvedMedia, id) {
+    if (!id || !resolvedMedia) return null;
+    return resolvedMedia[id] || null;
 }
 
 /**
@@ -51,7 +80,7 @@ function createPreviewSizingRenderer() {
     };
 }
 
-function renderHeadline(slide, element) {
+function renderHeadline(slide, element, _resolvedMedia, _device) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
     const headline = slide.slideSettings?.slide?.headline || {};
@@ -63,7 +92,7 @@ function renderHeadline(slide, element) {
     } else if (linking.type === 'category' && linking.showCategoryTitle && slide.category?.translated?.name) {
         content = slide.category.translated.name;
     } else {
-        content = slide.title || '';
+        content = slide.contentSettings?.title || '';
     }
 
     const whitelist = ['br', 'wbr', 'i', 'b', 'u', 'strong', 'span'];
@@ -89,7 +118,7 @@ function renderHeadline(slide, element) {
     }
 }
 
-function renderDescription(slide, element) {
+function renderDescription(slide, element, _resolvedMedia, _device) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
 
@@ -99,7 +128,7 @@ function renderDescription(slide, element) {
     } else if (linking.type === 'category' && linking.showCategoryDescription && slide.category?.translated?.description) {
         content = slide.category.translated.description;
     } else {
-        content = slide.description || '';
+        content = slide.contentSettings?.description || '';
     }
 
     const whitelist = ['p', 'br', 'span', 'i', 'b', 'u', 'strong', 'em', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'div', 'img', 'table', 'tr', 'td', 'th', 'tbody', 'thead'];
@@ -125,11 +154,11 @@ function renderDescription(slide, element) {
     }
 }
 
-function renderButton(slide, element) {
+function renderButton(slide, element, _resolvedMedia, _device) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
-    const url = slide.url || '';
-    const label = slide.buttonLabel || '';
+    const url = slide.contentSettings?.url || '';
+    const label = slide.contentSettings?.button?.label || '';
     const showActions = url && linking.overlay !== true && label;
 
     const existing = element.querySelector('.blur-elysium-slide-actions');
@@ -170,73 +199,82 @@ function renderButton(slide, element) {
     }
 }
 
-function renderCover(slide, element) {
+function renderCover(slide, element, resolvedMedia, device) {
     const id = slide.id;
     const borderRadius = slide.slideSettings?.slide?.borderRadius || 0;
     const style = `border-radius: var(--slide-border-radius, ${borderRadius}px);`;
+    const contentCover = slide.contentSettings?.slideCover || {};
 
+    const videoMedia = getMediaById(resolvedMedia, contentCover.videoId);
+
+    const covers = {};
+    const mobileMedia = getMediaById(resolvedMedia, contentCover.mobileId);
+    const tabletMedia = getMediaById(resolvedMedia, contentCover.tabletId);
+    const desktopMedia = getMediaById(resolvedMedia, contentCover.desktopId);
+
+    if (mobileMedia) covers.mobile = mobileMedia;
+    if (tabletMedia) covers.tablet = tabletMedia;
+    if (desktopMedia) covers.desktop = desktopMedia;
+
+    // No cover IDs in contentSettings — covers were removed or never set
+    const hasAnyCoverId = Boolean(
+        contentCover.mobileId || contentCover.tabletId ||
+        contentCover.desktopId || contentCover.videoId
+    );
+
+    if (!hasAnyCoverId) {
+        const existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
+        const existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
+        if (existingPicture) existingPicture.remove();
+        if (existingVideo) existingVideo.remove();
+        return;
+    }
+
+    // Cover IDs exist but media not loaded yet — preserve server-rendered
+    if (!videoMedia && Object.keys(covers).length === 0) {
+        return;
+    }
+
+    // Now safe to remove existing elements
     const existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
     const existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
-    if (existingPicture) {
-        existingPicture.remove();
-    }
-    if (existingVideo) {
-        existingVideo.remove();
-    }
+    if (existingPicture) existingPicture.remove();
+    if (existingVideo) existingVideo.remove();
 
-    if (slide.slideCoverVideo) {
-        const html = `<video autoplay muted loop class="blur-elysium-slide-cover-video" data-elysium-slide-cover-video="${id}" style="${style}"><source src="${slide.slideCoverVideo.url}" type="${slide.slideCoverVideo.mimeType}"></video>`;
+    if (videoMedia) {
+        const html = `<video autoplay muted loop class="blur-elysium-slide-cover-video" data-elysium-slide-cover-video="${id}" style="${style}"><source src="${videoMedia.url}" type="${videoMedia.mimeType}"></video>`;
         element.insertAdjacentHTML('afterbegin', html);
         return;
     }
 
-    const covers = {};
-    if (slide.slideCoverMobile) {
-        covers.mobile = slide.slideCoverMobile;
-    }
-    if (slide.slideCoverTablet) {
-        covers.tablet = slide.slideCoverTablet;
-    }
-    if (slide.slideCover) {
-        covers.desktop = slide.slideCover;
+    // Mobile-first fallback: select cover for the current device
+    let selectedCover;
+    switch (device) {
+        case 'mobile':
+            selectedCover = covers.mobile || null;
+            break;
+        case 'tablet':
+            selectedCover = covers.tablet || covers.mobile || null;
+            break;
+        default: // desktop
+            selectedCover = covers.desktop || covers.tablet || covers.mobile || null;
     }
 
-    if (Object.keys(covers).length === 0) {
+    if (!selectedCover) {
         return;
     }
 
-    let sources = '';
-    const breakpoints = { desktop: 1200, tablet: 768 };
-
-    if (covers.desktop) {
-        const thumbs = covers.desktop.metaData?._thumbnails || covers.desktop.thumbnails || [];
-        const srcset = createSrcset(thumbs);
-        sources += `<source ${srcset ? `srcset="${srcset}"` : `srcset="${covers.desktop.url}"`} media="screen and (min-width:${breakpoints.desktop}px)" />`;
-    }
-
-    if (covers.tablet) {
-        const thumbs = covers.tablet.metaData?._thumbnails || covers.tablet.thumbnails || [];
-        const srcset = createSrcset(thumbs);
-        sources += `<source ${srcset ? `srcset="${srcset}"` : `srcset="${covers.tablet.url}"`} media="screen and (min-width:${breakpoints.tablet}px)" />`;
-    }
-
-    let imgHtml;
-    if (covers.mobile) {
-        const thumbs = covers.mobile.metaData?._thumbnails || covers.mobile.thumbnails || [];
-        const srcset = createSrcset(thumbs);
-        imgHtml = `<img src="${covers.mobile.url}" ${srcset ? `srcset="${srcset}"` : ''} class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
-    } else {
-        imgHtml = `<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
-    }
-
-    const html = `<picture class="blur-elysium-slide-cover-picture">${sources}${imgHtml}</picture>`;
+    const thumbs = selectedCover.metaData?._thumbnails || selectedCover.thumbnails || [];
+    const srcset = createSrcset(thumbs);
+    const imgHtml = `<img src="${selectedCover.url}" ${srcset ? `srcset="${srcset}"` : ''} class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
+    const html = `<picture class="blur-elysium-slide-cover-picture">${imgHtml}</picture>`;
     element.insertAdjacentHTML('afterbegin', html);
 }
 
-function renderFocusImage(slide, element) {
+function renderFocusImage(slide, element, resolvedMedia, _device) {
     const id = slide.id;
     const linking = slide.slideSettings?.slide?.linking || {};
-    let imageMedia = slide.presentationMedia;
+    let imageMedia = getMediaById(resolvedMedia, slide.contentSettings?.focusImageId);
 
     if (linking.type === 'product' && slide.product?.cover?.media && linking.showProductFocusImage) {
         imageMedia = slide.product.cover.media;
@@ -246,7 +284,13 @@ function renderFocusImage(slide, element) {
 
     const existing = element.querySelector('[data-elysium-slide-focus-image]');
     if (!imageMedia) {
-        if (existing) {
+        // Only remove existing element if there's definitely no focus image to show
+        // (no ID in contentSettings and no product/category fallback)
+        const hasFocusImageId = Boolean(slide.contentSettings?.focusImageId);
+        const hasProductFallback = linking.type === 'product' && slide.product?.cover?.media && linking.showProductFocusImage;
+        const hasCategoryFallback = linking.type === 'category' && slide.category?.media && linking.showCategoryFocusImage;
+
+        if (!hasFocusImageId && !hasProductFallback && !hasCategoryFallback && existing) {
             existing.remove();
         }
         return;

@@ -16,9 +16,9 @@
     {% set slideClasses = defaultSlideClasses %}
 {% endif %}
 
-{% set actionMainUrl = slideData.translated.url %}
+{% set actionMainUrl = slideData.contentSettings.url|default('') %}
 {% set showActions = actionMainUrl and slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
-{% set actionMainLabel = slideData.translated.buttonLabel ?? 'blurElysiumSlides.buttonLabel'|trans %}
+{% set actionMainLabel = slideData.contentSettings.button.label|default('') ?: 'blurElysiumSlides.buttonLabel'|trans %}
 
 {% if slideData.slideSettings.slide.linking.type is same as('product') %}
     {% if slideData.product.id %}
@@ -27,8 +27,10 @@
     {% if slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
         {% set showActions = true %}
     {% endif %}
-    {% if slideData.translated.buttonLabel is empty %}
-        {% set actionMainLabel = 'blurElysiumSlides.buttonLabelProduct'|trans %}
+    {% if actionMainLabel is empty or actionMainLabel == 'blurElysiumSlides.buttonLabel'|trans %}
+        {% if slideData.contentSettings.button.label|default('') is empty %}
+            {% set actionMainLabel = 'blurElysiumSlides.buttonLabelProduct'|trans %}
+        {% endif %}
     {% endif %}
 {% endif %}
 
@@ -39,8 +41,10 @@
     {% if slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
         {% set showActions = true %}
     {% endif %}
-    {% if slideData.translated.buttonLabel is empty %}
-        {% set actionMainLabel = 'blurElysiumSlides.buttonLabelCategory'|trans %}
+    {% if actionMainLabel is empty or actionMainLabel == 'blurElysiumSlides.buttonLabel'|trans %}
+        {% if slideData.contentSettings.button.label|default('') is empty %}
+            {% set actionMainLabel = 'blurElysiumSlides.buttonLabelCategory'|trans %}
+        {% endif %}
     {% endif %}
 {% endif %}
 

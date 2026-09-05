@@ -59,6 +59,10 @@ class SlideImportService
         return $result;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>|null
+     */
     private function buildSlidePayload(array $data): ?array
     {
         if (empty($data['id'])) {
@@ -69,11 +73,6 @@ class SlideImportService
             'id' => $data['id'],
             'productId' => $data['productId'] ?? null,
             'categoryId' => $data['categoryId'] ?? null,
-            'slideCoverId' => $data['slideCoverId'] ?? null,
-            'slideCoverMobileId' => $data['slideCoverMobileId'] ?? null,
-            'slideCoverTabletId' => $data['slideCoverTabletId'] ?? null,
-            'slideCoverVideoId' => $data['slideCoverVideoId'] ?? null,
-            'presentationMediaId' => $data['presentationMediaId'] ?? null,
             'activeFrom' => $data['activeFrom'] ?? null,
             'activeUntil' => $data['activeUntil'] ?? null,
             'slideSettings' => $data['slideSettings'] ?? null,
@@ -83,20 +82,19 @@ class SlideImportService
             $payload['translations'] = [];
 
             foreach ($data['translations'] as $languageId => $translation) {
+                if (!is_array($translation)) {
+                    continue;
+                }
+
                 $payload['translations'][] = [
                     'languageId' => $languageId,
                     'name' => $translation['name'] ?? null,
-                    'title' => $translation['title'] ?? null,
-                    'description' => $translation['description'] ?? null,
-                    'buttonLabel' => $translation['buttonLabel'] ?? null,
-                    'url' => $translation['url'] ?? null,
                     'customFields' => $translation['customFields'] ?? null,
-                    'contentSettings' => $translation['contentSettings'] ?? null,
+                    'contentSettings' => $this->buildContentSettings($data, $translation),
                 ];
             }
         }
 
-        // Check if at least one translation has a name
         if (empty($payload['translations'])) {
             return null;
         }
@@ -114,5 +112,69 @@ class SlideImportService
         }
 
         return $payload;
+    }
+
+    /**
+     * Builds contentSettings for a translation.
+     *
+     * Version 2.0 files already store copy and media IDs here. Version 1.0 files
+     * from master keep title/description/url/buttonLabel on the translation and
+     * media FKs on the slide root; those are mapped with the same rules as
+     * Migration1781000000ConsolidateContentSettings, filling only empty keys.
+     *
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $translation
+     * @return array<string, mixed>
+     */
+    private function buildContentSettings(array $data, array $translation): array
+    {
+        $contentSettings = is_array($translation['contentSettings'] ?? null)
+            ? $translation['contentSettings']
+            : [];
+
+        $this->fillEmpty($contentSettings, 'title', $translation['title'] ?? null);
+        $this->fillEmpty($contentSettings, 'description', $translation['description'] ?? null);
+        $this->fillEmpty($contentSettings, 'url', $translation['url'] ?? null);
+
+        if (!$this->isEmptyValue($translation['buttonLabel'] ?? null)) {
+            if (!isset($contentSettings['button']) || !is_array($contentSettings['button'])) {
+                $contentSettings['button'] = [];
+            }
+            $this->fillEmpty($contentSettings['button'], 'label', $translation['buttonLabel']);
+        }
+
+        $slideCover = is_array($contentSettings['slideCover'] ?? null)
+            ? $contentSettings['slideCover']
+            : [];
+
+        $this->fillEmpty($slideCover, 'desktopId', $data['slideCoverId'] ?? null);
+        $this->fillEmpty($slideCover, 'mobileId', $data['slideCoverMobileId'] ?? null);
+        $this->fillEmpty($slideCover, 'tabletId', $data['slideCoverTabletId'] ?? null);
+        $this->fillEmpty($slideCover, 'videoId', $data['slideCoverVideoId'] ?? null);
+
+        if ($slideCover !== []) {
+            $contentSettings['slideCover'] = $slideCover;
+        }
+
+        $this->fillEmpty($contentSettings, 'focusImageId', $data['presentationMediaId'] ?? null);
+
+        return $contentSettings;
+    }
+
+    /**
+     * @param array<string, mixed> $target
+     */
+    private function fillEmpty(array &$target, string $key, mixed $value): void
+    {
+        if ($this->isEmptyValue($value) || !$this->isEmptyValue($target[$key] ?? null)) {
+            return;
+        }
+
+        $target[$key] = $value;
+    }
+
+    private function isEmptyValue(mixed $value): bool
+    {
+        return $value === null || $value === '';
     }
 }

@@ -7,7 +7,7 @@
       and slideData.category.translated.description %}
     {% set descriptionContent = slideData.category.translated.description|raw %}
 {% else %}
-    {% set descriptionContent = slideData.description|default('') %}
+    {% set descriptionContent = slideData.contentSettings.description|default('') %}
 {% endif %}
 
 {% set descriptionTagsWhitelist = '<p><br><span><i><b><u><strong><em><ul><ol><li><h1><h2><h3><h4><h5><h6><a><div><img><table><tr><td><th><tbody><thead>' %}

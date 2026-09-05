@@ -6,9 +6,30 @@ namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
 
 /**
  * Trait for handling content settings in entities.
- * 
- * Provides methods for getting, setting, and manipulating content settings
- * similar to the EntityCustomFieldsTrait for custom fields.
+ *
+ * Provides methods for getting, setting, and manipulating content settings.
+ *
+ * Translation fallback for contentSettings is handled at hydration time by
+ * {@see ElysiumSlidesHydrator}, which deep-merges the JSON blob across the
+ * language chain. Therefore accessors in this trait read directly from the
+ * already-merged `$this->contentSettings`.
+ *
+ * ContentSettings schema:
+ * {
+ *   "title": "Headline Text",
+ *   "description": "<p>Rich text...</p>",
+ *   "button": { "label": "Click here" },
+ *   "url": "/some-path",
+ *   "focusImageId": "uuid...",
+ *   "slideCover": {
+ *     "mobileId": "uuid...",
+ *     "tabletId": "uuid...",
+ *     "desktopId": "uuid...",
+ *     "videoId": "uuid...",
+ *     "alt": "Alt text",
+ *     "title": "Title text"
+ *   }
+ * }
  */
 trait ContentSettingsTrait
 {
@@ -30,28 +51,9 @@ trait ContentSettingsTrait
     /**
      * Get specific content settings values by keys.
      *
-     * Returns an array with the field names as keys and the values as values will be returned.
-     * If you pass multiple field names and one of the fields does not exist, the field will not be in the result.
-     *
-     * Example:
-     * ```php
-     * $entity->setContentSettings([
-     *     'my_content_field' => 'value',
-     *     'my_other_content_field' => 'value',
-     * ]);
-     *
-     * $entity->getContentSettingsValues('my_content_field') === ['my_content_field' => 'value'];
-     *
-     * $entity->getContentSettingsValues('my_content_field', 'my_other_content_field') === [
-     *    'my_content_field' => 'value',
-     *    'my_other_content_field' => 'value',
-     * ];
-     *
-     * $entity->getContentSettingsValues('my_content_field', 'my_other_content_field', 'my_third_content_field') === [
-     *    'my_content_field' => 'value',
-     *    'my_other_content_field' => 'value',
-     * ];
-     * ```
+     * Returns an array with the field names as keys and the values as values.
+     * If you pass multiple field names and one of the fields does not exist,
+     * the field will not be in the result.
      *
      * @param string ...$fields
      * @return array<string, mixed>
@@ -66,28 +68,12 @@ trait ContentSettingsTrait
      *
      * If the field does not exist, null will be returned.
      *
-     * Example:
-     * ```php
-     * $entity->getContentSettingsValue('my_content_field') === 'value';
-     * ```
-     *
      * @param string $field
      * @return mixed
      */
     public function getContentSettingsValue(string $field): mixed
     {
         return $this->contentSettings[$field] ?? null;
-    }
-
-    /**
-     * Get a translated content setting value by key.
-     *
-     * @param string $field
-     * @return mixed
-     */
-    public function getTranslatedContentSettingsValue(string $field): mixed
-    {
-        return $this->translated['contentSettings'][$field] ?? null;
     }
 
     /**
@@ -103,33 +89,6 @@ trait ContentSettingsTrait
     /**
      * Change content settings values.
      *
-     * Allows to change content settings. If you pass only one field name, the value of the field will be changed.
-     * If you pass multiple field names, an array with the field names as keys and the values as values will be changed.
-     *
-     * Example:
-     * ```php
-     * $entity->setContentSettings([
-     *      'my_content_field' => 'value',
-     *      'my_other_content_field' => 'value',
-     * ]);
-     *
-     * $entity->changeContentSettings([
-     *      'my_content_field' => 'new value',
-     * ]);
-     *
-     * $entity->getContentSettingsValue('my_content_field') === 'new value';
-     *
-     * $entity->changeContentSettings([
-     *      'my_content_field' => 'new value',
-     *      'my_other_content_field' => 'new value',
-     * ]);
-     *
-     * $entity->getContentSettingsValues('my_content_field', 'my_other_content_field') === [
-     *      'my_content_field' => 'new value',
-     *      'my_other_content_field' => 'new value',
-     * ];
-     * ```
-     *
      * @param array<string, mixed> $contentSettings
      */
     public function changeContentSettings(array $contentSettings): void
@@ -138,5 +97,103 @@ trait ContentSettingsTrait
             $this->contentSettings ?? [],
             $contentSettings
         );
+    }
+
+    // --- Content accessors ---
+
+    public function getContentTitle(): ?string
+    {
+        return $this->getContentSettingsValue('title');
+    }
+
+    public function getContentDescription(): ?string
+    {
+        return $this->getContentSettingsValue('description');
+    }
+
+    public function getContentButtonLabel(): ?string
+    {
+        $button = $this->getContentSettingsValue('button');
+
+        return \is_array($button) ? ($button['label'] ?? null) : null;
+    }
+
+    public function getContentUrl(): ?string
+    {
+        return $this->getContentSettingsValue('url');
+    }
+
+    // --- Media ID accessors ---
+
+    public function getContentSlideCoverMobileId(): ?string
+    {
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['mobileId'] ?? null) : null;
+    }
+
+    public function getContentSlideCoverTabletId(): ?string
+    {
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['tabletId'] ?? null) : null;
+    }
+
+    public function getContentSlideCoverDesktopId(): ?string
+    {
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['desktopId'] ?? null) : null;
+    }
+
+    public function getContentSlideCoverVideoId(): ?string
+    {
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['videoId'] ?? null) : null;
+    }
+
+    public function getContentFocusImageId(): ?string
+    {
+        return $this->getContentSettingsValue('focusImageId');
+    }
+
+    public function getContentSlideCoverAlt(): ?string
+    {
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['alt'] ?? null) : null;
+    }
+
+    public function getContentSlideCoverTitle(): ?string
+    {
+        $slideCover = $this->getContentSettingsValue('slideCover');
+
+        return \is_array($slideCover) ? ($slideCover['title'] ?? null) : null;
+    }
+
+    /**
+     * Collect all non-null media IDs from contentSettings for batch resolution.
+     *
+     * @return string[]
+     */
+    public function getContentMediaIds(): array
+    {
+        $ids = [];
+
+        $slideCover = $this->getContentSettingsValue('slideCover') ?? [];
+
+        foreach (['mobileId', 'tabletId', 'desktopId', 'videoId'] as $key) {
+            if (!empty($slideCover[$key])) {
+                $ids[] = $slideCover[$key];
+            }
+        }
+
+        $focusImageId = $this->getContentFocusImageId();
+        if ($focusImageId !== null) {
+            $ids[] = $focusImageId;
+        }
+
+        return array_values(array_unique($ids));
     }
 }

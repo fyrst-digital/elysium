@@ -14,6 +14,8 @@ final class Defaults
 
     public const MIGRATION_FK_ALREADY_EXISTS = '/duplicate key name|duplicate foreign key/i';
 
+    public const MIGRATION_INDEX_NOT_EXISTS = '/can\'t drop index|cannot drop index|check that (column\/)?key exists|check that it exists|unknown key/i';
+
     /**
      * @var string
      */
