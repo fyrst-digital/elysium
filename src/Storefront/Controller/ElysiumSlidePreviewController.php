@@ -6,6 +6,7 @@ namespace Blur\BlurElysiumSlider\Storefront\Controller;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
 use Blur\BlurElysiumSlider\DataResolver\MediaResolutionTrait;
+use Blur\BlurElysiumSlider\Framework\DataAbstractionLayer\EntitySearch;
 use Blur\BlurElysiumSlider\Preview\PreviewSchemaRegistry;
 use Shopware\Core\Content\Media\MediaCollection;
 use Shopware\Core\Defaults;
@@ -112,7 +113,7 @@ class ElysiumSlidePreviewController extends StorefrontController
         $criteria->addAssociation('domains');
         $criteria->addFilter(new EqualsFilter('typeId', Defaults::SALES_CHANNEL_TYPE_STOREFRONT));
 
-        $salesChannels = $this->salesChannelRepository->search($criteria, $context->getContext())->getEntities();
+        $salesChannels = EntitySearch::entities($this->salesChannelRepository, $criteria, $context->getContext());
 
         $domains = [];
         /** @var SalesChannelEntity $salesChannel */
@@ -201,7 +202,7 @@ class ElysiumSlidePreviewController extends StorefrontController
         $criteria->addAssociation('category');
 
         /** @var ElysiumSlidesEntity|null $slide */
-        $slide = $this->elysiumSlidesRepository->search($criteria, $context->getContext())->first();
+        $slide = EntitySearch::entities($this->elysiumSlidesRepository, $criteria, $context->getContext())->first();
 
         if ($slide === null) {
             throw $this->createNotFoundException(sprintf('Slide "%s" not found for preview.', $slideId));

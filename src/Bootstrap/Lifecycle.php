@@ -11,7 +11,6 @@ use Shopware\Core\Content\Media\Aggregate\MediaFolder\MediaFolderCollection;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
@@ -126,12 +125,9 @@ class Lifecycle
         $mediaDefaultFolderRepository = $this->container->get('media_default_folder.repository');
 
         $searchCriteria = new Criteria([Defaults::MEDIA_FOLDER_ID]);
-        $searchCriteria->addAssociation('configuration');
-        $searchCriteria->addAssociation('defaultFolder');
         $searchCriteria->setLimit(1);
 
-        /** @var EntitySearchResult $searchMediaFolder */
-        $searchMediaFolder = $mediaFolderRepositroy->search($searchCriteria, $context);
+        $existingMediaFolderIds = $mediaFolderRepositroy->searchIds($searchCriteria, $context);
         /** @var array<'id', string>|null $thumbnailSizeIds */
         $thumbnailSizeIds = $this->getMediaThumbnailSizesIds();
 
@@ -139,7 +135,7 @@ class Lifecycle
          * If there is no existing slides media folder
          * create it with default media thumbnails
          */
-        if ($searchMediaFolder->getTotal() <= 0) {
+        if ($existingMediaFolderIds->getTotal() <= 0) {
             // Check if default folder already exists
             $defaultFolderCriteria = new Criteria();
             $defaultFolderCriteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));

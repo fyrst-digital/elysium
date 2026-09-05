@@ -6,6 +6,7 @@ namespace Blur\BlurElysiumSlider\Service;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Aggregate\ElysiumSlidesTranslation\ElysiumSlidesTranslationEntity;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Blur\BlurElysiumSlider\Framework\DataAbstractionLayer\EntitySearch;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -30,17 +31,17 @@ class SlideCoverImageSwitchService
             $criteria->setLimit(self::BATCH_SIZE);
             $criteria->setOffset($offset);
 
-            $result = $this->slideRepository->search($criteria, $context);
+            $result = EntitySearch::fetch($this->slideRepository, $criteria, $context);
 
             /** @var ElysiumSlidesEntity $slide */
-            foreach ($result->getEntities() as $slide) {
+            foreach ($result['entities'] as $slide) {
                 $slidePayload = $this->buildSlidePayload($slide);
                 if ($slidePayload !== null) {
                     $payload[] = $slidePayload;
                 }
             }
 
-            $pageCount = $result->count();
+            $pageCount = $result['entities']->count();
             $offset += self::BATCH_SIZE;
         } while ($pageCount === self::BATCH_SIZE);
 

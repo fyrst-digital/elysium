@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\SalesChannel;
 
+use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\Events\ElysiumSlidesResultEvent;
+use Blur\BlurElysiumSlider\Framework\DataAbstractionLayer\EntitySearch;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\Plugin\Exception\DecorationPatternException;
 use Shopware\Core\Framework\Routing\StoreApiRouteScope;
@@ -14,7 +15,6 @@ use Shopware\Core\PlatformRequest;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
 
 #[Route(defaults: [PlatformRequest::ATTRIBUTE_ROUTE_SCOPE => [StoreApiRouteScope::ID]])]
 class ElysiumSlideRoute extends AbstractElysiumSlideRoute
@@ -36,29 +36,29 @@ class ElysiumSlideRoute extends AbstractElysiumSlideRoute
             new ElysiumSlidesResultEvent($this->loadSlides($criteria, $context), $context, $identifier)
         );
 
-        /** @var ElysiumSlidesCollection $slides */
-        $slides = $result->getResult()->getEntities();
-
-        return new ElysiumSlideRouteResponse($slides);
+        return new ElysiumSlideRouteResponse($result->getResult());
     }
 
     #[Route(path: '/store-api/elysium-slide/{slideId}', name: 'store-api.elysium-slide.detail', methods: ['GET'], defaults: ['_entity' => 'blur_elysium_slides'])]
     public function loadDetail(string $slideId, SalesChannelContext $context): ElysiumSlideRouteResponse
     {
         $criteria = new Criteria([$slideId]);
-        $result = $this->loadSlides($criteria, $context);
 
-        return new ElysiumSlideRouteResponse($result->getEntities());
+        return new ElysiumSlideRouteResponse($this->loadSlides($criteria, $context));
     }
 
-    private function loadSlides(Criteria $criteria, SalesChannelContext $context): EntitySearchResult
+    private function loadSlides(Criteria $criteria, SalesChannelContext $context): ElysiumSlidesCollection
     {
         $this->addAssociations($criteria);
 
-        return $this->elysiumSlidesRepository->search(
+        /** @var ElysiumSlidesCollection $slides */
+        $slides = EntitySearch::entities(
+            $this->elysiumSlidesRepository,
             $criteria,
             $context->getContext()
         );
+
+        return $slides;
     }
 
     private function addAssociations(Criteria $criteria): void

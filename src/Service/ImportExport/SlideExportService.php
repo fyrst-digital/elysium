@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Service\ImportExport;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesEntity;
+use Blur\BlurElysiumSlider\Framework\DataAbstractionLayer\EntitySearch;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -27,7 +28,7 @@ class SlideExportService
         $criteria = new Criteria($slideIds);
         $criteria->addAssociation('translations');
 
-        $slides = $this->slideRepository->search($criteria, $context);
+        $slides = EntitySearch::entities($this->slideRepository, $criteria, $context);
 
         $lines = [$this->createHeaderLine($slides->count())];
 
@@ -44,7 +45,7 @@ class SlideExportService
         $criteria = new Criteria();
         $criteria->addAssociation('translations');
 
-        $slides = $this->slideRepository->search($criteria, $context);
+        $slides = EntitySearch::entities($this->slideRepository, $criteria, $context);
 
         $lines = [$this->createHeaderLine($slides->count())];
 

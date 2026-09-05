@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Bootstrap\PostUpdate\Version210;
 
 use Blur\BlurElysiumSlider\Core\Content\ElysiumSlides\ElysiumSlidesCollection;
+use Blur\BlurElysiumSlider\Framework\DataAbstractionLayer\EntitySearch;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotCollection;
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
@@ -77,11 +78,11 @@ class Updater
     {
         $defaultSlideSettings = (new SlideSettings())->getSettings();
         $criteria = new Criteria();
-        $result = $this->slidesRepository->search($criteria, $this->context);
+        $result = EntitySearch::fetch($this->slidesRepository, $criteria, $this->context);
         $updateSlideSettings = [];
 
-        if ($result->getTotal() > 0) {
-            foreach ($result->getElements() as $id => $slide) {
+        if ($result['total'] > 0) {
+            foreach ($result['entities']->getElements() as $id => $slide) {
                 $slideSettings = $slide->get('slideSettings');
                 $convertedSlideSettings = [];
                 $convertedSlideSettings['id'] = $id;
@@ -222,11 +223,11 @@ class Updater
     {
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('type', 'blur-elysium-slider'));
-        $result = $this->cmsSlotRepository->search($criteria, $this->context);
+        $result = EntitySearch::fetch($this->cmsSlotRepository, $criteria, $this->context);
         $updatedCmsElementsConfig = [];
 
-        if ($result->getTotal() > 0) {
-            foreach ($result->getElements() as $id => $cmsElement) {
+        if ($result['total'] > 0) {
+            foreach ($result['entities']->getElements() as $id => $cmsElement) {
                 /** @var CmsSlotEntity $cmsElement */
                 $cmsElementConfig = $cmsElement->getConfig();
                 $convertedCmsElementConfig = [];
