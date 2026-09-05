@@ -1110,6 +1110,7 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
     public static function nonObjectContentSettingsCases(): iterable
     {
         yield 'invalid json' => [true, '{broken'];
+        yield 'empty string' => [true, ''];
         yield 'json list' => [false, '[1,2,3]'];
         yield 'json number' => [false, '42'];
     }

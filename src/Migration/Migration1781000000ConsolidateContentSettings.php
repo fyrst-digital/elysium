@@ -375,9 +375,11 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
             return;
         }
 
+        // Do not compare JSON to ''. MySQL native JSON casts the operand via
+        // CAST('' AS JSON) and raises ERROR 3141. MariaDB empty strings are
+        // already JSON_VALID = 0.
         $where = "
             content_settings IS NOT NULL
-            AND content_settings <> ''
             AND CASE
                 WHEN JSON_VALID(content_settings) = 0 THEN 1
                 WHEN JSON_TYPE(content_settings) = 'OBJECT' THEN 0
