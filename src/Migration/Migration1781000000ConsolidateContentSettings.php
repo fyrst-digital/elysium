@@ -440,6 +440,16 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
     }
 
     /**
+     * JSON_UNQUOTE / CAST AS CHAR inherit utf8mb4_general_ci on MySQL, while
+     * Shopware tables use utf8mb4_unicode_ci. Comparing those without an
+     * explicit collation aborts plugin install (errno 1267).
+     */
+    private function unicodeText(string $expression): string
+    {
+        return 'CONVERT(' . $expression . ' USING utf8mb4) COLLATE utf8mb4_unicode_ci';
+    }
+
+    /**
      * @return list<string>
      */
     private function translationFailureIdSelects(Connection $connection): array
@@ -448,14 +458,14 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
 
         foreach ($this->getAvailableTextColumns($connection) as $column) {
             $jsonPath = $this->jsonPath(self::TEXT_COLUMN_MAP[$column]);
-            $extracted = "CAST(JSON_UNQUOTE(JSON_EXTRACT(content_settings, '" . $jsonPath . "')) AS CHAR)";
+            $extracted = $this->unicodeText("JSON_UNQUOTE(JSON_EXTRACT(content_settings, '" . $jsonPath . "'))");
 
             $selects[] = 'SELECT DISTINCT blur_elysium_slides_id AS id
                 FROM blur_elysium_slides_translation
                 WHERE `' . $column . '` IS NOT NULL AND `' . $column . '` <> \'\'
                 AND (
                     JSON_EXTRACT(content_settings, \'' . $jsonPath . '\') IS NULL
-                    OR ' . $extracted . ' <> `' . $column . '`
+                    OR ' . $extracted . ' <> ' . $this->unicodeText('`' . $column . '`') . '
                 )';
         }
 
@@ -488,7 +498,7 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
 
         foreach ($availableColumns as $column) {
             $jsonPath = $this->jsonPath(self::MEDIA_COLUMN_MAP[$column]);
-            $extracted = "CAST(JSON_UNQUOTE(JSON_EXTRACT(t.content_settings, '" . $jsonPath . "')) AS CHAR)";
+            $extracted = $this->unicodeText("JSON_UNQUOTE(JSON_EXTRACT(t.content_settings, '" . $jsonPath . "'))");
 
             $selects[] = 'SELECT DISTINCT s.id
                 FROM blur_elysium_slides s
@@ -496,7 +506,7 @@ class Migration1781000000ConsolidateContentSettings extends MigrationStep
                 WHERE s.`' . $column . '` IS NOT NULL
                 AND (
                     JSON_EXTRACT(t.content_settings, \'' . $jsonPath . '\') IS NULL
-                    OR ' . $extracted . ' <> LOWER(HEX(s.`' . $column . '`))
+                    OR ' . $extracted . ' <> ' . $this->unicodeText('LOWER(HEX(s.`' . $column . '`))') . '
                 )';
         }
 

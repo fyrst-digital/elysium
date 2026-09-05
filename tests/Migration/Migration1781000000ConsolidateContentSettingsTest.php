@@ -335,6 +335,33 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
         $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_id');
     }
 
+    public function testMigrationVerifyHandlesGeneralCiConnectionCollation(): void
+    {
+        $this->createSlideTableWithAllMediaColumns();
+        $this->createUpgradeTranslationTable();
+
+        $desktopCoverId = Uuid::randomBytes();
+        $slideId = $this->insertSlide([
+            'slide_cover_id' => $desktopCoverId,
+        ]);
+        $languageId = Uuid::fromHexToBytes(Defaults::LANGUAGE_SYSTEM);
+        $this->insertTranslation($slideId, $languageId, [
+            'name' => 'Collation Slide',
+            'title' => 'Headline',
+        ]);
+
+        $this->withConnectionCollation('utf8mb4_general_ci', function (): void {
+            $this->runMigration(new Migration1781000000ConsolidateContentSettings());
+        });
+
+        $this->assertColumnDoesNotExist('blur_elysium_slides_translation', 'title');
+        $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_id');
+
+        $decoded = $this->fetchContentSettings($slideId, $languageId);
+        static::assertSame('Headline', $decoded['title']);
+        static::assertSame(Uuid::fromBytesToHex($desktopCoverId), $decoded['slideCover']['desktopId']);
+    }
+
     public function testVerifyFailureDoesNotDropMediaColumns(): void
     {
         $this->createSlideTableWithAllMediaColumns();
@@ -1198,6 +1225,34 @@ class Migration1781000000ConsolidateContentSettingsTest extends AbstractMigratio
         $this->assertColumnDoesNotExist('blur_elysium_slides', 'slide_cover_id');
         $this->assertColumnExists('blur_elysium_slides_translation', 'content_settings');
         static::assertSame('Once', $this->fetchContentSettings($slideId, $languageId)['title']);
+    }
+
+    /**
+     * @param callable(): void $callback
+     */
+    private function withConnectionCollation(string $collation, callable $callback): void
+    {
+        if (preg_match('/^[a-z0-9_]+$/', $collation) !== 1) {
+            throw new \InvalidArgumentException('Invalid collation: ' . $collation);
+        }
+
+        $charset = (string) $this->connection->fetchOne('SELECT @@character_set_connection');
+        $previous = (string) $this->connection->fetchOne('SELECT @@collation_connection');
+
+        if (preg_match('/^[a-z0-9]+$/', $charset) !== 1 || preg_match('/^[a-z0-9_]+$/', $previous) !== 1) {
+            throw new \RuntimeException(\sprintf(
+                'Unexpected connection charset/collation: %s / %s',
+                $charset,
+                $previous
+            ));
+        }
+
+        try {
+            $this->connection->executeStatement('SET NAMES utf8mb4 COLLATE ' . $collation);
+            $callback();
+        } finally {
+            $this->connection->executeStatement('SET NAMES ' . $charset . ' COLLATE ' . $previous);
+        }
     }
 
     /**
