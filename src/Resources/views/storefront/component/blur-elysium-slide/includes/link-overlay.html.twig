@@ -3,13 +3,13 @@
         <a href="{{ isPreviewMode is defined and isPreviewMode ? '#' : actionMainUrl }}"
             class="blur-elysium-slide-link-overlay"
             data-elysium-slide-link-overlay="{{ slideData.id }}"
-            aria-label="{{ headlineContent }}"
+            aria-label="{{ overlayAccessibleName|default(headlineContent|striptags|trim) }}"
             {% if isPreviewMode is defined and isPreviewMode %}
                 onclick="return false"
             {% endif %}
             {% if slideData.slideSettings.slide.linking.openExternal is same as(true) %}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
             {% endif %}>
         </a>
     {% endif %}

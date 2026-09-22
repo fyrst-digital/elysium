@@ -16,6 +16,12 @@
     {% set slideClasses = defaultSlideClasses %}
 {% endif %}
 
+{% if slideData is null %}
+    <div class="{{ slideClasses|join(' ') }}">
+        {{ 'blurElysiumSlides.noSlideData'|trans }}
+    </div>
+{% else %}
+
 {% set actionMainUrl = slideData.contentSettings.url|default('') %}
 {% set showActions = actionMainUrl and slideData.slideSettings.slide.linking.overlay is not same as( true ) %}
 {% set actionMainLabel = slideData.contentSettings.button.label|default('') ?: 'blurElysiumSlides.buttonLabel'|trans %}
@@ -48,11 +54,34 @@
     {% endif %}
 {% endif %}
 
-{% if slideData is null %}
-    <div class="{{ slideClasses|join(' ') }}">
-        No slide data
-    </div>
+{% if slideData.slideSettings.slide.linking.type is same as('product')
+      and slideData.slideSettings.slide.linking.showProductTitle is same as(true)
+      and slideData.product.translated.name %}
+    {% set headlineContent = slideData.product.translated.name %}
+{% elseif slideData.slideSettings.slide.linking.type is same as('category')
+      and slideData.slideSettings.slide.linking.showCategoryTitle is same as(true)
+      and slideData.category.translated.name %}
+    {% set headlineContent = slideData.category.translated.name %}
 {% else %}
+    {% set headlineContent = slideData.contentSettings.title|default('') %}
+{% endif %}
+
+{% set headlineTagsWhitelist = ['<br>', '<wbr>', '<i>', '<b>', '<u>', '<strong>', '<span>'] %}
+{% set headlineContent = headlineContent|striptags(headlineTagsWhitelist|join) %}
+{% set slideHasHeadline = headlineContent|striptags|trim is not empty %}
+{% set slideHasOverlay = slideData.slideSettings.slide.linking.overlay is same as(true) and actionMainUrl %}
+
+{% set overlayAccessibleName = headlineContent|striptags|trim %}
+{% if overlayAccessibleName is empty %}
+    {% set overlayAccessibleName = actionMainLabel|striptags|trim %}
+{% endif %}
+{% if overlayAccessibleName is empty %}
+    {% set overlayAccessibleName = 'blurElysiumSlides.linkOverlayFallback'|trans %}
+{% endif %}
+{% if slideData.slideSettings.slide.linking.openExternal is same as(true) %}
+    {% set overlayAccessibleName = overlayAccessibleName ~ ' (' ~ ('elysiumSlider.opensInNewWindow'|trans) ~ ')' %}
+{% endif %}
+
     {% block blur_elysium_slide %}
 
         <div class="{{ slideClasses|join(' ') }}{% if slideData.slideSettings.slide.cssClass %} {{ slideData.slideSettings.slide.cssClass }}{% endif %}"
@@ -60,6 +89,8 @@
             {% if isPreviewMode is defined and isPreviewMode %}
                 data-elysium-slide-preview
                 data-elysium-slide-preview-options="{{ {layout: layout|default('detail')}|json_encode|escape('html_attr') }}"
+                data-elysium-opens-in-new-window="{{ 'elysiumSlider.opensInNewWindow'|trans }}"
+                data-elysium-overlay-fallback="{{ 'blurElysiumSlides.linkOverlayFallback'|trans }}"
             {% endif %}
             style="aspect-ratio: var(--slide-aspect-ratio, auto);">
 

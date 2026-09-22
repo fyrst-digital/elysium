@@ -1,19 +1,21 @@
 {% set headlineElement = slideData.slideSettings.slide.headline.element|default('div') %}
 
-{% if slideData.slideSettings.slide.linking.type is same as('product')
-      and slideData.slideSettings.slide.linking.showProductTitle is same as(true)
-      and slideData.product.translated.name %}
-    {% set headlineContent = slideData.product.translated.name %}
-{% elseif slideData.slideSettings.slide.linking.type is same as('category')
-      and slideData.slideSettings.slide.linking.showCategoryTitle is same as(true)
-      and slideData.category.translated.name %}
-    {% set headlineContent = slideData.category.translated.name %}
-{% else %}
-    {% set headlineContent = slideData.contentSettings.title|default('') %}
-{% endif %}
+{% if headlineContent is not defined %}
+    {% if slideData.slideSettings.slide.linking.type is same as('product')
+          and slideData.slideSettings.slide.linking.showProductTitle is same as(true)
+          and slideData.product.translated.name %}
+        {% set headlineContent = slideData.product.translated.name %}
+    {% elseif slideData.slideSettings.slide.linking.type is same as('category')
+          and slideData.slideSettings.slide.linking.showCategoryTitle is same as(true)
+          and slideData.category.translated.name %}
+        {% set headlineContent = slideData.category.translated.name %}
+    {% else %}
+        {% set headlineContent = slideData.contentSettings.title|default('') %}
+    {% endif %}
 
-{% set headlineTagsWhitelist = ['<br>', '<wbr>', '<i>', '<b>', '<u>', '<strong>', '<span>'] %}
-{% set headlineContent = headlineContent|striptags(headlineTagsWhitelist|join) %}
+    {% set headlineTagsWhitelist = ['<br>', '<wbr>', '<i>', '<b>', '<u>', '<strong>', '<span>'] %}
+    {% set headlineContent = headlineContent|striptags(headlineTagsWhitelist|join) %}
+{% endif %}
 
 {% if headlineContent %}
     <{{ headlineElement }} class="blur-elysium-slide-headline" data-elysium-slide-headline="{{ slideData.id }}">

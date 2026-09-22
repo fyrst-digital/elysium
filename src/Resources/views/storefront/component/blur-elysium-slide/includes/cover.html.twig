@@ -21,10 +21,15 @@
 {% set slideCoverTablet = coverTabletId and resolvedMedia ? (resolvedMedia|filter(m => m.id == coverTabletId)|first|default(null)) : null %}
 {% set slideCoverDesktop = coverDesktopId and resolvedMedia ? (resolvedMedia|filter(m => m.id == coverDesktopId)|first|default(null)) : null %}
 
+{% set slideHasHeadline = slideHasHeadline|default(false) %}
+{% set slideHasOverlay = slideHasOverlay|default(false) %}
+{% set coverIsDecorative = slideHasHeadline or slideHasOverlay %}
+
 {% if slideCoverVideo %}
-    <video autoplay muted loop
+    <video autoplay muted loop playsinline
         class="blur-elysium-slide-cover-video"
         data-elysium-slide-cover-video="{{ slideData.id }}"
+        {% if coverIsDecorative %}aria-hidden="true"{% endif %}
         style="border-radius: var(--slide-border-radius, 0px);">
         <source src="{{ slideCoverVideo.url }}" type="{{ slideCoverVideo.mimeType }}">
     </video>
@@ -51,15 +56,16 @@
                 slideCoverDesktop.title|default(null)
             )
         ) %}
-        {% set slideCoverLabel = slideCoverAlt %}
-
         {% if contentCover.alt %}
             {% set slideCoverAlt = contentCover.alt %}
-            {% set slideCoverLabel = contentCover.alt %}
         {% endif %}
 
         {% if contentCover.title %}
             {% set slideCoverTitle = contentCover.title %}
+        {% endif %}
+
+        {% if coverIsDecorative %}
+            {% set slideCoverAlt = '' %}
         {% endif %}
 
         <picture class="blur-elysium-slide-cover-picture">
@@ -92,11 +98,8 @@
                     {% if coverThumbnails|length > 0 %}
                         srcset="{{ create_srcset(coverThumbnails) }}"
                     {% endif %}
-                    width="100%"
-                    height="100%"
-                    {% if slideCoverAlt %}alt="{{ slideCoverAlt }}"{% endif %}
+                    alt="{{ slideCoverAlt|default('') }}"
                     {% if slideCoverTitle %}title="{{ slideCoverTitle }}"{% endif %}
-                    {% if slideCoverLabel %}aria-label="{{ slideCoverLabel }}"{% endif %}
                     class="blur-elysium-slide-cover-image"
                     data-elysium-slide-cover-image="{{ slideData.id }}"
                     style="border-radius: var(--slide-border-radius, 0px);"
@@ -104,8 +107,7 @@
             {% else %}
                 <img
                     src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                    width="100%"
-                    height="100%"
+                    alt=""
                     class="blur-elysium-slide-cover-image"
                     data-elysium-slide-cover-image="{{ slideData.id }}"
                     style="border-radius: var(--slide-border-radius, 0px);"
