@@ -89,8 +89,6 @@
             {% if isPreviewMode is defined and isPreviewMode %}
                 data-elysium-slide-preview
                 data-elysium-slide-preview-options="{{ {layout: layout|default('detail')}|json_encode|escape('html_attr') }}"
-                data-elysium-opens-in-new-window="{{ 'elysiumSlider.opensInNewWindow'|trans }}"
-                data-elysium-overlay-fallback="{{ 'blurElysiumSlides.linkOverlayFallback'|trans }}"
             {% endif %}
             style="aspect-ratio: var(--slide-aspect-ratio, auto);">
 

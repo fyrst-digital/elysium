@@ -53,84 +53,6 @@ function getMediaById(resolvedMedia, id) {
     return resolvedMedia[id] || null;
 }
 
-function escapeAttr(value) {
-    return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-}
-
-function resolveHeadlineText(slide) {
-    const linking = slide.slideSettings?.slide?.linking || {};
-    let content;
-
-    if (linking.type === 'product' && linking.showProductTitle && slide.product?.translated?.name) {
-        content = slide.product.translated.name;
-    } else if (linking.type === 'category' && linking.showCategoryTitle && slide.category?.translated?.name) {
-        content = slide.category.translated.name;
-    } else {
-        content = slide.contentSettings?.title || '';
-    }
-
-    return stripTags(content, ['br', 'wbr', 'i', 'b', 'u', 'strong', 'span']);
-}
-
-function resolveOverlayName(slide, element) {
-    const linking = slide.slideSettings?.slide?.linking || {};
-    let name = stripTags(resolveHeadlineText(slide)).trim();
-
-    if (!name) {
-        name = slide.contentSettings?.button?.label || element?.dataset?.elysiumOverlayFallback || '';
-    }
-
-    if (linking.openExternal === true) {
-        const hint = element?.dataset?.elysiumOpensInNewWindow;
-        if (hint) {
-            name = `${name} (${hint})`;
-        }
-    }
-
-    return name;
-}
-
-function hasVisibleHeadline(slide) {
-    return Boolean(stripTags(resolveHeadlineText(slide)).trim());
-}
-
-function isOverlayLink(slide) {
-    const linking = slide.slideSettings?.slide?.linking || {};
-    const url = slide.contentSettings?.url || slide.product?.id || slide.category?.id;
-    return linking.overlay === true && Boolean(url);
-}
-
-function resolveCoverAlt(slide, selectedCover) {
-    if (hasVisibleHeadline(slide) || isOverlayLink(slide)) {
-        return '';
-    }
-
-    const contentCover = slide.contentSettings?.slideCover || {};
-    return contentCover.alt || selectedCover?.translated?.alt || selectedCover?.alt || '';
-}
-
-function updateLinkOverlay(slide, element) {
-    const overlay = element.querySelector('[data-elysium-slide-link-overlay]');
-    if (!overlay) {
-        return;
-    }
-
-    const linking = slide.slideSettings?.slide?.linking || {};
-    overlay.setAttribute('aria-label', resolveOverlayName(slide, element));
-
-    if (linking.openExternal === true) {
-        overlay.setAttribute('target', '_blank');
-        overlay.setAttribute('rel', 'noopener noreferrer');
-    } else {
-        overlay.removeAttribute('target');
-        overlay.removeAttribute('rel');
-    }
-}
-
 /**
  * CSS Variable Renderer
  * Applies inline styles based on style mappings.
@@ -160,16 +82,27 @@ function createPreviewSizingRenderer() {
 
 function renderHeadline(slide, element, _resolvedMedia, _device) {
     const id = slide.id;
+    const linking = slide.slideSettings?.slide?.linking || {};
     const headline = slide.slideSettings?.slide?.headline || {};
     const headlineElement = headline.element || 'div';
-    const content = resolveHeadlineText(slide);
+
+    let content;
+    if (linking.type === 'product' && linking.showProductTitle && slide.product?.translated?.name) {
+        content = slide.product.translated.name;
+    } else if (linking.type === 'category' && linking.showCategoryTitle && slide.category?.translated?.name) {
+        content = slide.category.translated.name;
+    } else {
+        content = slide.contentSettings?.title || '';
+    }
+
+    const whitelist = ['br', 'wbr', 'i', 'b', 'u', 'strong', 'span'];
+    content = stripTags(content, whitelist);
 
     const existing = element.querySelector('[data-elysium-slide-headline]');
     if (!content) {
         if (existing) {
             existing.remove();
         }
-        updateLinkOverlay(slide, element);
         return;
     }
 
@@ -183,8 +116,6 @@ function renderHeadline(slide, element, _resolvedMedia, _device) {
             container.insertAdjacentHTML('afterbegin', html);
         }
     }
-
-    updateLinkOverlay(slide, element);
 }
 
 function renderDescription(slide, element, _resolvedMedia, _device) {
@@ -235,7 +166,6 @@ function renderButton(slide, element, _resolvedMedia, _device) {
         if (existing) {
             existing.remove();
         }
-        updateLinkOverlay(slide, element);
         return;
     }
 
@@ -254,14 +184,10 @@ function renderButton(slide, element, _resolvedMedia, _device) {
         attrs = ' onclick="return false"';
     }
     if (linking.openExternal === true) {
-        attrs += ' target="_blank" rel="noopener noreferrer"';
+        attrs += ' target="_blank" rel="noopener"';
     }
 
-    const newWindowHint = linking.openExternal === true && element.dataset.elysiumOpensInNewWindow
-        ? `<span class="visually-hidden">${escapeAttr(element.dataset.elysiumOpensInNewWindow)}</span>`
-        : '';
-
-    const html = `<div class="blur-elysium-slide-actions"><a href="${href}" title="${escapeAttr(label)}" class="${classes.join(' ')}" data-elysium-slide-button="${id}"${attrs}>${label}${newWindowHint}</a></div>`;
+    const html = `<div class="blur-elysium-slide-actions"><a href="${href}" title="${label}" class="${classes.join(' ')}" data-elysium-slide-button="${id}"${attrs}>${label}</a></div>`;
 
     if (existing) {
         existing.outerHTML = html;
@@ -271,8 +197,6 @@ function renderButton(slide, element, _resolvedMedia, _device) {
             container.insertAdjacentHTML('beforeend', html);
         }
     }
-
-    updateLinkOverlay(slide, element);
 }
 
 function renderCover(slide, element, resolvedMedia, device) {
@@ -318,25 +242,8 @@ function renderCover(slide, element, resolvedMedia, device) {
     if (existingVideo) existingVideo.remove();
 
     if (videoMedia) {
-        const decorative = hasVisibleHeadline(slide) || isOverlayLink(slide)
-        let videoAttrs = ' autoplay muted loop playsinline'
-        if (decorative) {
-            videoAttrs += ' aria-hidden="true"'
-        } else {
-            const videoLabel = escapeAttr(contentCover.alt || videoMedia.translated?.alt || videoMedia.alt || '')
-            if (videoLabel) {
-                videoAttrs += ` aria-label="${videoLabel}"`
-            }
-        }
-        const html = `<video${videoAttrs} class="blur-elysium-slide-cover-video" data-elysium-slide-cover-video="${id}" style="${style}"><source src="${videoMedia.url}" type="${videoMedia.mimeType}"></video>`;
+        const html = `<video autoplay muted loop class="blur-elysium-slide-cover-video" data-elysium-slide-cover-video="${id}" style="${style}"><source src="${videoMedia.url}" type="${videoMedia.mimeType}"></video>`;
         element.insertAdjacentHTML('afterbegin', html);
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            const video = element.querySelector('[data-elysium-slide-cover-video]');
-            if (video) {
-                video.pause();
-                video.autoplay = false;
-            }
-        }
         return;
     }
 
@@ -359,8 +266,7 @@ function renderCover(slide, element, resolvedMedia, device) {
 
     const thumbs = selectedCover.metaData?._thumbnails || selectedCover.thumbnails || [];
     const srcset = createSrcset(thumbs);
-    const alt = escapeAttr(resolveCoverAlt(slide, selectedCover));
-    const imgHtml = `<img src="${selectedCover.url}" ${srcset ? `srcset="${srcset}"` : ''} alt="${alt}" class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
+    const imgHtml = `<img src="${selectedCover.url}" ${srcset ? `srcset="${srcset}"` : ''} class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
     const html = `<picture class="blur-elysium-slide-cover-picture">${imgHtml}</picture>`;
     element.insertAdjacentHTML('afterbegin', html);
 }
@@ -390,8 +296,7 @@ function renderFocusImage(slide, element, resolvedMedia, _device) {
         return;
     }
 
-    const focusAlt = escapeAttr((hasVisibleHeadline(slide) || isOverlayLink(slide)) ? '' : (imageMedia.translated?.alt || imageMedia.alt || ''));
-    const html = `<div class="blur-elysium-slide-image" data-elysium-slide-focus-image="${id}"><img src="${imageMedia.url}" alt="${focusAlt}" class="d-block img-fluid" style="width: var(--slide-focus-image-w, 100%);" loading="eager" /></div>`;
+    const html = `<div class="blur-elysium-slide-image" data-elysium-slide-focus-image="${id}"><img src="${imageMedia.url}" class="d-block img-fluid" style="width: var(--slide-focus-image-w, 100%);" loading="eager" /></div>`;
 
     if (existing) {
         existing.outerHTML = html;
