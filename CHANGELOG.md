@@ -1,3 +1,8 @@
+# 4.9.1
+
+**Changelog**
+- Fixed the slide builder live preview showing the wrong cover when the preview area is narrower than the desktop or tablet breakpoint
+
 # 4.9.0
 
 **Changelog**
