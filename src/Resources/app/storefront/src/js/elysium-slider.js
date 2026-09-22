@@ -1,7 +1,8 @@
 import Swiper from 'swiper'
 import { A11y, Autoplay, EffectFade, Keyboard, Navigation, Pagination } from 'swiper/modules'
 import deepmerge from 'deepmerge'
-import { applyReducedMotion, pauseCoverVideos, syncSlideInert } from './utils/slide-inert'
+import { syncOffscreenSlides } from './utils/offscreen-slides'
+import { applyReducedMotion, pauseCoverVideos } from './utils/reduced-motion'
 
 const { PluginBaseClass } = window
 
@@ -74,7 +75,7 @@ export default class ElysiumSlider extends PluginBaseClass {
     }
 
     onSlideInit(swiper) {
-        syncSlideInert(swiper.slides)
+        syncOffscreenSlides(swiper.slides)
         this._ensureBulletButtonType(swiper)
         this._syncAutoplayControl()
 
@@ -82,7 +83,7 @@ export default class ElysiumSlider extends PluginBaseClass {
     }
 
     onSlideChange(swiper) {
-        syncSlideInert(swiper.slides)
+        syncOffscreenSlides(swiper.slides)
 
         this.$emitter.publish('onSlideChange', { swiper })
     }

@@ -1,4 +1,4 @@
-import { pauseCoverVideos } from './js/utils/slide-inert'
+import { pauseCoverVideos } from './js/utils/reduced-motion'
 
 const { PluginManager } = window
 
