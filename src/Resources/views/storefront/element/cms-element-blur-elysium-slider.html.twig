@@ -55,7 +55,9 @@
     paginationBulletMessage: 'elysiumSlider.pagination.bullet'|trans,
     slideLabelMessage: 'elysiumSlider.carousel.slideLabel'|trans,
     containerMessage: sliderTitle is not empty ? sliderTitle|striptags : 'elysiumSlider.carousel.label'|trans,
-    containerRoleDescriptionMessage: 'elysiumSlider.carousel.roleDescription'|trans
+    containerRoleDescriptionMessage: 'elysiumSlider.carousel.roleDescription'|trans,
+    containerRole: 'group',
+    itemRoleDescriptionMessage: 'elysiumSlider.carousel.slideRoleDescription'|trans
 } %}
 
 {% set swiperOptions = {
@@ -95,7 +97,7 @@
                 aria-labelledby="elysiumSlider-{{ element.id }}-title"
             {% endif %}
             data-elysium-slider
-            data-swiper-options="{{swiperOptions|json_encode}}">
+            data-swiper-options="{{ swiperOptions|json_encode|escape('html_attr') }}">
 
             {% block cms_element_elysium_slider_header %}
 
@@ -157,7 +159,9 @@
                         {% if element.translated.config.navigation.value.active and element.translated.config.navigation.value.position is same as('in_slider') %}
                             {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
                                 paginationClasses: ['d-flex', 'flex-wrap', 'position-absolute', 'bottom-0', 'start-0', 'end-0', 'top-auto', 'z-2', 'pagination-in-slider'],
-                                label: 'elysiumSlider.pagination.label'|trans
+                                label: sliderTitle is not empty
+                                    ? ('elysiumSlider.pagination.label'|trans) ~ ': ' ~ sliderTitle|striptags
+                                    : 'elysiumSlider.pagination.label'|trans
                             } %}
                         {% endif %}
                     {% endblock %}
@@ -165,10 +169,12 @@
 
                 {% block cms_element_elysium_slider_pagination_below_slider %}
                     {% if element.translated.config.navigation.value.active and element.translated.config.navigation.value.position is same as('below_slider') %}
-                        {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
-                            paginationClasses: ['d-flex', 'flex-wrap', 'pagination-below-slider'],
-                            label: 'elysiumSlider.pagination.label'|trans
-                        } %}
+                            {% sw_include '@Storefront/storefront/component/elysium-slider/pagination.html.twig' with {
+                                paginationClasses: ['d-flex', 'flex-wrap', 'pagination-below-slider'],
+                                label: sliderTitle is not empty
+                                    ? ('elysiumSlider.pagination.label'|trans) ~ ': ' ~ sliderTitle|striptags
+                                    : 'elysiumSlider.pagination.label'|trans
+                            } %}
                     {% endif %}
                 {% endblock %}
             {% endblock %}

@@ -318,8 +318,17 @@ function renderCover(slide, element, resolvedMedia, device) {
     if (existingVideo) existingVideo.remove();
 
     if (videoMedia) {
-        const decorative = hasVisibleHeadline(slide) || isOverlayLink(slide) ? ' aria-hidden="true"' : '';
-        const html = `<video autoplay muted loop playsinline class="blur-elysium-slide-cover-video" data-elysium-slide-cover-video="${id}"${decorative} style="${style}"><source src="${videoMedia.url}" type="${videoMedia.mimeType}"></video>`;
+        const decorative = hasVisibleHeadline(slide) || isOverlayLink(slide)
+        let videoAttrs = ' autoplay muted loop playsinline'
+        if (decorative) {
+            videoAttrs += ' aria-hidden="true"'
+        } else {
+            const videoLabel = escapeAttr(contentCover.alt || videoMedia.translated?.alt || videoMedia.alt || '')
+            if (videoLabel) {
+                videoAttrs += ` aria-label="${videoLabel}"`
+            }
+        }
+        const html = `<video${videoAttrs} class="blur-elysium-slide-cover-video" data-elysium-slide-cover-video="${id}" style="${style}"><source src="${videoMedia.url}" type="${videoMedia.mimeType}"></video>`;
         element.insertAdjacentHTML('afterbegin', html);
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             const video = element.querySelector('[data-elysium-slide-cover-video]');
@@ -381,7 +390,7 @@ function renderFocusImage(slide, element, resolvedMedia, _device) {
         return;
     }
 
-    const focusAlt = escapeAttr(hasVisibleHeadline(slide) ? '' : (imageMedia.translated?.alt || imageMedia.alt || ''));
+    const focusAlt = escapeAttr((hasVisibleHeadline(slide) || isOverlayLink(slide)) ? '' : (imageMedia.translated?.alt || imageMedia.alt || ''));
     const html = `<div class="blur-elysium-slide-image" data-elysium-slide-focus-image="${id}"><img src="${imageMedia.url}" alt="${focusAlt}" class="d-block img-fluid" style="width: var(--slide-focus-image-w, 100%);" loading="eager" /></div>`;
 
     if (existing) {

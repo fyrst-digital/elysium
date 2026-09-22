@@ -9,7 +9,8 @@
     "lint:storefront:fix": "eslint --ext .js,.ts,.vue --fix src/Resources/app/storefront/src",
     "md:changelog": "marked-it-cli ./ --output=./ --overwrite",
     "test:administration": "tsx --tsconfig src/Resources/app/administration/tsconfig.json --test tests/Administration/*.spec.ts",
-    "test": "npm run test:administration"
+    "test:storefront": "tsx --test tests/Storefront/*.spec.js",
+    "test": "npm run test:administration && npm run test:storefront"
   },
   "author": "Robert Bisovski",
   "license": "MIT",

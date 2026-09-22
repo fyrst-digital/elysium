@@ -72,8 +72,8 @@
 {% set slideHasOverlay = slideData.slideSettings.slide.linking.overlay is same as(true) and actionMainUrl %}
 
 {% set overlayAccessibleName = headlineContent|striptags|trim %}
-{% if overlayAccessibleName is empty %}
-    {% set overlayAccessibleName = actionMainLabel|striptags|trim %}
+{% if overlayAccessibleName is empty and slideData.contentSettings.button.label|default('') is not empty %}
+    {% set overlayAccessibleName = slideData.contentSettings.button.label|striptags|trim %}
 {% endif %}
 {% if overlayAccessibleName is empty %}
     {% set overlayAccessibleName = 'blurElysiumSlides.linkOverlayFallback'|trans %}

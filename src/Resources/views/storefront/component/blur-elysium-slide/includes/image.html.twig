@@ -14,7 +14,8 @@
 
     {% if imageMedia %}
         {% set slideHasHeadline = slideHasHeadline|default(false) %}
-        {% set focusImageAlt = slideHasHeadline
+        {% set slideHasOverlay = slideHasOverlay|default(false) %}
+        {% set focusImageAlt = slideHasHeadline or slideHasOverlay
             ? ''
             : imageMedia.translated.alt|default(imageMedia.alt|default(''))
         %}

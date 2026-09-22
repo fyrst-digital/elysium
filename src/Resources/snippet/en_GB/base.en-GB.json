@@ -13,7 +13,8 @@
         "carousel": {
             "label": "Carousel",
             "roleDescription": "carousel",
-            "slideLabel": "{{index}} / {{slidesLength}}"
+            "slideLabel": "{{index}} / {{slidesLength}}",
+            "slideRoleDescription": "slide"
         },
         "autoplay": {
             "pause": "Pause slideshow",

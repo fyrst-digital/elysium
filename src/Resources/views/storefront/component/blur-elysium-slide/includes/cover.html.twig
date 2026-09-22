@@ -26,10 +26,15 @@
 {% set coverIsDecorative = slideHasHeadline or slideHasOverlay %}
 
 {% if slideCoverVideo %}
+    {% set slideCoverVideoLabel = contentCover.alt|default(slideCoverVideo.translated.alt|default(slideCoverVideo.alt|default(''))) %}
     <video autoplay muted loop playsinline
         class="blur-elysium-slide-cover-video"
         data-elysium-slide-cover-video="{{ slideData.id }}"
-        {% if coverIsDecorative %}aria-hidden="true"{% endif %}
+        {% if coverIsDecorative %}
+            aria-hidden="true"
+        {% elseif slideCoverVideoLabel %}
+            aria-label="{{ slideCoverVideoLabel }}"
+        {% endif %}
         style="border-radius: var(--slide-border-radius, 0px);">
         <source src="{{ slideCoverVideo.url }}" type="{{ slideCoverVideo.mimeType }}">
     </video>
@@ -66,6 +71,7 @@
 
         {% if coverIsDecorative %}
             {% set slideCoverAlt = '' %}
+            {% set slideCoverTitle = null %}
         {% endif %}
 
         <picture class="blur-elysium-slide-cover-picture">
