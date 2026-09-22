@@ -29,7 +29,7 @@ describe('swiper storefront dependency', () => {
         assert.match(sliderPlugin, /this\.swiper\s*=\s*new Swiper/)
     })
 
-    it('keeps the Swiper instance when PluginBaseClass calls init() from the constructor', () => {
+    it('documents that a swiper class field is wiped after PluginBaseClass.init()', () => {
         class PluginBaseClass {
             constructor() {
                 this.init()
@@ -38,12 +38,21 @@ describe('swiper storefront dependency', () => {
             init() {}
         }
 
-        class ElysiumSlider extends PluginBaseClass {
+        class BrokenSlider extends PluginBaseClass {
+            swiper = null
+
             init() {
                 this.swiper = { version: '14.2.0' }
             }
         }
 
-        assert.equal(new ElysiumSlider().swiper.version, '14.2.0')
+        class FixedSlider extends PluginBaseClass {
+            init() {
+                this.swiper = { version: '14.2.0' }
+            }
+        }
+
+        assert.equal(new BrokenSlider().swiper, null)
+        assert.equal(new FixedSlider().swiper.version, '14.2.0')
     })
 })
