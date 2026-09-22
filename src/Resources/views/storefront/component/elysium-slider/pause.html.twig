@@ -1,0 +1,36 @@
+{% set btnClasses = [
+    'btn',
+    'swiper-action',
+    'swiper-action-pause',
+    'btn-link',
+    'position-absolute',
+    'z-2'
+] %}
+
+{% block component_elysium_slider_pause %}
+    <button
+        type="button"
+        class="{{ btnClasses|join(' ') }}"
+        data-elysium-slider-autoplay
+        aria-pressed="true"
+        aria-label="{{ 'elysiumSlider.autoplay.pause'|trans }}"
+        data-label-pause="{{ 'elysiumSlider.autoplay.pause'|trans }}"
+        data-label-play="{{ 'elysiumSlider.autoplay.play'|trans }}">
+
+        {% block component_elysium_slider_pause_icon_pause %}
+            <span data-elysium-slider-autoplay-icon="pause">
+                {% sw_include '@Storefront/storefront/utilities/icon.html.twig' with {
+                    name: 'pause'
+                } %}
+            </span>
+        {% endblock %}
+
+        {% block component_elysium_slider_pause_icon_play %}
+            <span data-elysium-slider-autoplay-icon="play" hidden>
+                {% sw_include '@Storefront/storefront/utilities/icon.html.twig' with {
+                    name: 'play'
+                } %}
+            </span>
+        {% endblock %}
+    </button>
+{% endblock %}

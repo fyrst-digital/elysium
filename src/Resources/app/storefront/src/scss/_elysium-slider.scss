@@ -64,9 +64,20 @@
                 right: var(--nav-action-offset, 0px);
             }
 
+            &.swiper-action-pause {
+                left: var(--nav-action-offset, 0px);
+                bottom: var(--nav-action-offset, 0px);
+                top: auto;
+            }
+
             &:disabled,
             &.swiper-button-disabled {
                 opacity: var(--nav-action-opacity, 0);
+            }
+
+            &:focus-visible {
+                outline: 2px solid currentColor;
+                outline-offset: 2px;
             }
 
             svg {
@@ -91,6 +102,9 @@
 
             &-bullet {
                 @extend .d-block;
+                appearance: none;
+                border: 0;
+                padding: 0;
                 aspect-ratio: var(--pagination-bullet-aspect-ratio, 1 / 1);
                 width: var(--pagination-bullet-size, 16px);
                 background-color: var(--pagination-bullet-color, rgba(0, 0, 0, 0.25));
@@ -101,6 +115,11 @@
                 &:hover,
                 &.swiper-pagination-bullet-active {
                     background-color: var(--pagination-bullet-color-active, rgba(0, 0, 0, 0.5));
+                }
+
+                &:focus-visible {
+                    outline: 2px solid currentColor;
+                    outline-offset: 2px;
                 }
             }
         }

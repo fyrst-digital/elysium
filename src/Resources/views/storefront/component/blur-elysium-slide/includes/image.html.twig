@@ -13,6 +13,12 @@
     {% endif %}
 
     {% if imageMedia %}
+        {% set slideHasHeadline = slideHasHeadline|default(false) %}
+        {% set slideHasOverlay = slideHasOverlay|default(false) %}
+        {% set focusImageAlt = slideHasHeadline or slideHasOverlay
+            ? ''
+            : imageMedia.translated.alt|default(imageMedia.alt|default(''))
+        %}
         <div class="blur-elysium-slide-image"
              data-elysium-slide-focus-image="{{ slideData.id }}">
             {% sw_thumbnails 'elysium-slide-focus-image' with {
@@ -20,7 +26,8 @@
                 attributes: {
                     'loading': 'eager',
                     'class': 'd-block img-fluid',
-                    'style': 'width: var(--slide-focus-image-w, 100%);'
+                    'style': 'width: var(--slide-focus-image-w, 100%);',
+                    'alt': focusImageAlt
                 }
             } %}
         </div>

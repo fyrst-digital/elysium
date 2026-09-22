@@ -2,21 +2,32 @@
     "elysiumSlider": {
         "navigation": {
             "actionPrev": "Zum vorherigen Slide",
-            "actionNext": "Zum nächsten Slide"
+            "actionNext": "Zum nächsten Slide",
+            "firstSlide": "Dies ist der erste Slide",
+            "lastSlide": "Dies ist der letzte Slide"
         },
         "pagination": {
-            "label": "Slider Navigation"
+            "label": "Slider Navigation",
+            "bullet": "Gehe zu Slide {{index}}"
         },
-        "showSlidesIndicator": "Slide {current} von {total} wird angezeigt"
+        "carousel": {
+            "label": "Karussell",
+            "roleDescription": "Karussell",
+            "slideLabel": "{{index}} / {{slidesLength}}",
+            "slideRoleDescription": "Slide"
+        },
+        "autoplay": {
+            "pause": "Diashow anhalten",
+            "play": "Diashow abspielen"
+        },
+        "opensInNewWindow": "Öffnet in einem neuen Fenster"
     },
     "blurElysiumSlides": {
-        "sliderControls": {
-            "prev": "Vorheriger Slide",
-            "next": "Nächster Slide"
-        },
         "buttonLabel": "Mehr Erfahren",
         "buttonLabelProduct": "Zum Produkt",
         "buttonLabelCategory": "Zur Kategorie",
-        "noSlides": "Keine Slides gefunden"
+        "noSlides": "Keine Slides gefunden",
+        "noSlideData": "Keine Slide-Daten",
+        "linkOverlayFallback": "Slide öffnen"
     }
 }

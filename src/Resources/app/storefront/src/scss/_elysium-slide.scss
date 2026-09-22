@@ -103,4 +103,14 @@
     position: absolute;
     inset: 0;
     z-index: 5;
+
+    &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: -4px;
+    }
+}
+
+.blur-elysium-slide-main-btn:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
 }

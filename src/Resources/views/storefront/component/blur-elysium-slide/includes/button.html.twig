@@ -42,8 +42,11 @@
             {% if isPreviewMode is defined and isPreviewMode %}
                 onclick="return false"
             {% endif %}
-            {% if linking.openExternal is same as(true) %}target="_blank" rel="noopener"{% endif %}>
+            {% if linking.openExternal is same as(true) %}target="_blank" rel="noopener noreferrer"{% endif %}>
             {{ actionMainLabel }}
+            {% if linking.openExternal is same as(true) %}
+                <span class="visually-hidden">{{ 'elysiumSlider.opensInNewWindow'|trans }}</span>
+            {% endif %}
         </a>
     </div>
 {% endif %}

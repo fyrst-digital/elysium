@@ -1,6 +1,8 @@
 import Swiper from 'swiper'
-import { Autoplay, Navigation, Pagination, EffectFade } from 'swiper/modules'
+import { A11y, Autoplay, EffectFade, Keyboard, Navigation, Pagination } from 'swiper/modules'
 import deepmerge from 'deepmerge'
+import { syncOffscreenSlides } from './utils/offscreen-slides'
+import { applyReducedMotion, pauseCoverVideos } from './utils/reduced-motion'
 
 const { PluginBaseClass } = window
 
@@ -14,103 +16,130 @@ export default class ElysiumSlider extends PluginBaseClass {
      */
     static options = {
         swiperSelector: '[data-elysium-slider-swiper]',
-        liveUpdateSelector: '[data-live-update]',
-        currentSlidePlaceholder: '{current}',
-        totalSlidesPlaceholder: '{total}',
+        autoplayToggleSelector: '[data-elysium-slider-autoplay]',
     };
 
     init() {
         const inlineOptions = typeof this.el.dataset.swiperOptions === 'string' ? JSON.parse(this.el.dataset.swiperOptions) : {}
         const swiperElement = this.el.querySelector(this.options.swiperSelector)
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-        this.liveUpdateElement = this.el.querySelector(this.options.liveUpdateSelector)
-        this.liveUpdateSnippet = this.liveUpdateElement ? this.liveUpdateElement.textContent.trim() : null
+        if (prefersReducedMotion) {
+            pauseCoverVideos(this.el)
+        }
 
-        this.swiper = new Swiper(swiperElement, deepmerge({
-            a11y: true,
+        const options = applyReducedMotion(deepmerge({
             watchSlidesProgress: true,
             on: {
                 init: this.onSlideInit.bind(this),
             },
             loop: false,
-            modules: [Autoplay, Navigation, Pagination, EffectFade],
             pagination: false,
-        }, inlineOptions))
+            keyboard: {
+                enabled: true,
+                onlyInViewport: true,
+                pageUpDown: false,
+            },
+            a11y: {
+                enabled: true,
+            },
+        }, inlineOptions), prefersReducedMotion)
+
+        options.modules = [A11y, Autoplay, Navigation, Pagination, EffectFade, Keyboard]
+
+        this.swiper = new Swiper(swiperElement, options)
+        this.autoplayToggle = this.el.querySelector(this.options.autoplayToggleSelector)
+
+        if (prefersReducedMotion && this.autoplayToggle) {
+            this.autoplayToggle.hidden = true
+        }
 
         this.listeners()
     }
 
     listeners() {
-        this.swiper.on('slideChange', this.onSlideChange.bind(this));
-        this.swiper.on('paginationUpdate', this.onPaginationUpdate.bind(this));
+        this.swiper.on('slideChange', this.onSlideChange.bind(this))
+        this.swiper.on('breakpoint', this.onSlideChange.bind(this))
+        this.swiper.on('resize', this.onSlideChange.bind(this))
+        this.swiper.on('autoplayStart', this.onAutoplayStateChange.bind(this))
+        this.swiper.on('autoplayStop', this.onAutoplayStateChange.bind(this))
+        this.swiper.on('autoplayPause', this.onAutoplayStateChange.bind(this))
+        this.swiper.on('autoplayResume', this.onAutoplayStateChange.bind(this))
+        this.swiper.on('paginationUpdate', this._ensureBulletButtonType.bind(this))
 
-        this.$emitter.publish('listeners', { swiper: this.swiper });
+        if (this.autoplayToggle) {
+            this.autoplayToggle.addEventListener('click', this.onAutoplayToggle.bind(this))
+        }
+
+        this.$emitter.publish('listeners', { swiper: this.swiper })
     }
 
     onSlideInit(swiper) {
-        this._buildliveUpdate(swiper);
-        this._buildA11y(swiper);
-        this._buildA11yBullets(swiper);
+        syncOffscreenSlides(swiper.slides)
+        this._ensureBulletButtonType(swiper)
+        this._syncAutoplayControl()
 
-        this.$emitter.publish('onSlideInit', { swiper });
+        this.$emitter.publish('onSlideInit', { swiper })
     }
 
     onSlideChange(swiper) {
-        this._buildliveUpdate(swiper);
-        this._buildA11y(swiper);
+        syncOffscreenSlides(swiper.slides)
 
-        this.$emitter.publish('onSlideChange', { swiper });
+        this.$emitter.publish('onSlideChange', { swiper })
     }
 
-    onPaginationUpdate(swiper) {
-        this._buildA11yBullets(swiper);
+    onAutoplayToggle() {
+        if (!this.swiper.autoplay) {
+            return
+        }
 
-        this.$emitter.publish('onPaginationUpdate', { swiper });
+        if (this._isAutoplayRunning()) {
+            this.swiper.autoplay.pause()
+        } else if (this.swiper.autoplay.paused) {
+            this.swiper.autoplay.resume()
+        } else {
+            this.swiper.autoplay.start()
+        }
+
+        this._syncAutoplayControl()
     }
 
-    _buildA11y(swiper) {
-        if (swiper.slides?.length > 0) {
-            const activeSlide = swiper.slides[swiper.activeIndex];
+    onAutoplayStateChange() {
+        this._syncAutoplayControl()
+    }
 
-            swiper.slides.forEach((slide) => {
-
-                slide.removeAttribute('aria-current');
-
-                if (slide.classList.contains('swiper-slide-visible')) {
-                    slide.setAttribute('tabindex', '-1');
-                    slide.removeAttribute('aria-hidden');
-                } else {
-                    slide.setAttribute('tabindex', '0');
-                    slide.setAttribute('aria-hidden', 'true');
-                }
-            });
-
-            if (activeSlide) {
-                activeSlide.setAttribute('aria-current', 'true');
+    _ensureBulletButtonType(swiper) {
+        swiper.pagination?.bullets?.forEach((bullet) => {
+            if (bullet.tagName === 'BUTTON') {
+                bullet.setAttribute('type', 'button')
             }
+        })
+    }
+
+    _isAutoplayRunning() {
+        return Boolean(this.swiper.autoplay?.running && !this.swiper.autoplay?.paused)
+    }
+
+    _syncAutoplayControl() {
+        if (!this.autoplayToggle) {
+            return
         }
-    }
 
-    _buildA11yBullets(swiper) {
-        if (swiper.pagination?.bullets?.length > 0) {
-            swiper.pagination.bullets.forEach((bullet) => {
-                bullet.setAttribute('role', 'button');
-                bullet.setAttribute('tabindex', '0');
+        const running = this._isAutoplayRunning()
+        const pauseLabel = this.autoplayToggle.dataset.labelPause
+        const playLabel = this.autoplayToggle.dataset.labelPlay
+        const pauseIcon = this.autoplayToggle.querySelector('[data-elysium-slider-autoplay-icon="pause"]')
+        const playIcon = this.autoplayToggle.querySelector('[data-elysium-slider-autoplay-icon="play"]')
 
-                if (bullet.classList.contains('swiper-pagination-bullet-active')) {
-                    bullet.setAttribute('aria-current', 'true');
-                } else {
-                    bullet.removeAttribute('aria-current');
-                }
-            });
+        this.autoplayToggle.setAttribute('aria-pressed', running ? 'true' : 'false')
+        this.autoplayToggle.setAttribute('aria-label', running ? pauseLabel : playLabel)
+
+        if (pauseIcon) {
+            pauseIcon.hidden = !running
         }
-    }
 
-    _buildliveUpdate(swiper) {
-        this.liveUpdateElement.textContent = this._setLiveUpdateSnippet(swiper.activeIndex + 1, swiper.slides.length);
-    }
-
-    _setLiveUpdateSnippet(currentSlide, slides) {
-        return this.liveUpdateSnippet.replace(this.options.currentSlidePlaceholder, currentSlide).replace(this.options.totalSlidesPlaceholder, slides);
+        if (playIcon) {
+            playIcon.hidden = running
+        }
     }
 }

@@ -8,18 +8,9 @@
     {% set btnClasses = btnDefaultClasses %}
 {% endif %}
 
-{% set controlsId = controlsId|default(false) %}
-{% set label = label|default(false) %}
-
 {% block component_elysium_slider_navigation_action %}
     <button
         type="button"
-        {% if label %}
-            aria-label="{{ label }}"
-        {% endif %}
-        {% if controlsId %}
-            aria-controls="{{ controlsId }}"
-        {% endif %}
         class="{{ btnClasses|join(' ') }}">
 
         {% block component_elysium_slider_navigation_action_icon %}
@@ -27,12 +18,6 @@
                 {% sw_include '@Storefront/storefront/utilities/icon.html.twig' with {
                     name: icon
                 } %}
-            {% endif %}
-        {% endblock %}
-
-        {% block component_elysium_slider_navigation_action_label %}
-            {% if label %}
-                <span class="btn-label visually-hidden">{{ label }}</span>
             {% endif %}
         {% endblock %}
     </button>
