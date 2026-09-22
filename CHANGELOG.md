@@ -9,6 +9,12 @@
 - **Breaking** Cover media associations (`slideCover`, `slideCoverMobile`, `slideCoverTablet`, `slideCoverVideo`, `presentationMedia`) and the translated `title`, `description`, `buttonLabel`, and `url` fields have been removed. These values now live in the translated `contentSettings` JSON
 - **Breaking** The Store API route `/store-api/elysium-slide` no longer returns hydrated cover media. Media IDs are in `contentSettings`; Store API consumers must resolve media themselves
 - Creating a new slide after opening another slide no longer copies the previous slide's content, linking, or media settings
+- Sliders and banners are easier to use with assistive technology, including named pagination, a pause control for autoplay, and correctly labeled slide images and links
+
+# 4.9.1
+
+**Changelog**
+- Fixed the slide builder live preview showing the wrong cover when the preview area is narrower than the desktop or tablet breakpoint
 
 # 4.9.0
 
