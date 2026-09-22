@@ -73,6 +73,7 @@ jobs:
         with:
           shopware-version: v6.7.8.2
           php-version: '8.3'
+          allow-insecure-versions: true
 
       - name: Checkout plugin
         uses: actions/checkout@v4
