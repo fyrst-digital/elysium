@@ -258,6 +258,7 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
 
         const errorEl = document.createElement('div');
         errorEl.className = 'blur-elysium-slide-preview-error';
+        errorEl.setAttribute('role', 'alert');
         errorEl.textContent = message;
         errorEl.style.cssText = 'position:absolute;top:8px;left:8px;right:8px;z-index:9999;padding:8px 12px;background:#dc3545;color:#fff;border-radius:4px;font-size:12px;font-family:sans-serif;';
         this.el.prepend(errorEl);
