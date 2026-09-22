@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "copy:swiper-css": "cp node_modules/swiper/swiper-bundle.min.css ../../../public/css/swiper-bundle.min.css && cp node_modules/swiper/swiper.min.css ../../../public/css/swiper.min.css"
     },
     "keywords": [],
     "author": "",
