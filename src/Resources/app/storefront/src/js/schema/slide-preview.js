@@ -319,7 +319,8 @@ export const previewSchema = {
                 "slideCoverVideo",
                 "showProductFocusImage",
                 "showCategoryFocusImage",
-                "linkingType"
+                "linkingType",
+                "device"
             ],
             "template": "@Storefront/storefront/component/blur-elysium-slide/includes/cover.html.twig",
             "domSelector": ".blur-elysium-slide-cover-picture, .blur-elysium-slide-cover-video",
