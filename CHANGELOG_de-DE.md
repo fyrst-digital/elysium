@@ -1,3 +1,8 @@
+# 4.9.1
+
+**Changelog**
+- Fehler behoben, bei dem die Live-Vorschau im Slide Builder das Cover für das gewählte Gerät nicht anzeigte, wenn der Vorschaubereich schmaler als der Desktop- oder Tablet-Breakpoint war
+
 # 4.9.0
 
 **Changelog**
