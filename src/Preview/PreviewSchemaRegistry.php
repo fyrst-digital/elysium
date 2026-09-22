@@ -116,7 +116,7 @@ class PreviewSchemaRegistry
             new PreviewFragment(
                 'cover',
                 'partial',
-                ['contentSettings', 'slideCover', 'slideCoverMobile', 'slideCoverTablet', 'slideCoverVideo', 'showProductFocusImage', 'showCategoryFocusImage', 'linkingType'],
+                ['contentSettings', 'slideCover', 'slideCoverMobile', 'slideCoverTablet', 'slideCoverVideo', 'showProductFocusImage', 'showCategoryFocusImage', 'linkingType', 'device'],
                 '@Storefront/storefront/component/blur-elysium-slide/includes/cover.html.twig',
                 '.blur-elysium-slide-cover-picture, .blur-elysium-slide-cover-video',
                 'replace-inner',

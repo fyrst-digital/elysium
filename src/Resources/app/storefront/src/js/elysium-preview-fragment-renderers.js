@@ -170,7 +170,17 @@ function renderButton(slide, element) {
     }
 }
 
-function renderCover(slide, element) {
+function resolveCoverForDevice(covers, device) {
+    if (device === 'mobile') {
+        return covers.mobile || null;
+    }
+    if (device === 'tablet') {
+        return covers.tablet || covers.mobile || null;
+    }
+    return covers.desktop || covers.tablet || covers.mobile || null;
+}
+
+function renderCover(slide, element, device = 'desktop') {
     const id = slide.id;
     const borderRadius = slide.slideSettings?.slide?.borderRadius || 0;
     const style = `border-radius: var(--slide-border-radius, ${borderRadius}px);`;
@@ -205,31 +215,15 @@ function renderCover(slide, element) {
         return;
     }
 
-    let sources = '';
-    const breakpoints = { desktop: 1200, tablet: 768 };
-
-    if (covers.desktop) {
-        const thumbs = covers.desktop.metaData?._thumbnails || covers.desktop.thumbnails || [];
-        const srcset = createSrcset(thumbs);
-        sources += `<source ${srcset ? `srcset="${srcset}"` : `srcset="${covers.desktop.url}"`} media="screen and (min-width:${breakpoints.desktop}px)" />`;
+    const previewCover = resolveCoverForDevice(covers, device);
+    if (!previewCover) {
+        return;
     }
 
-    if (covers.tablet) {
-        const thumbs = covers.tablet.metaData?._thumbnails || covers.tablet.thumbnails || [];
-        const srcset = createSrcset(thumbs);
-        sources += `<source ${srcset ? `srcset="${srcset}"` : `srcset="${covers.tablet.url}"`} media="screen and (min-width:${breakpoints.tablet}px)" />`;
-    }
-
-    let imgHtml;
-    if (covers.mobile) {
-        const thumbs = covers.mobile.metaData?._thumbnails || covers.mobile.thumbnails || [];
-        const srcset = createSrcset(thumbs);
-        imgHtml = `<img src="${covers.mobile.url}" ${srcset ? `srcset="${srcset}"` : ''} class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
-    } else {
-        imgHtml = `<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
-    }
-
-    const html = `<picture class="blur-elysium-slide-cover-picture">${sources}${imgHtml}</picture>`;
+    const thumbs = previewCover.metaData?._thumbnails || previewCover.thumbnails || [];
+    const srcset = createSrcset(thumbs);
+    const imgHtml = `<img src="${previewCover.url}" ${srcset ? `srcset="${srcset}"` : ''} class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
+    const html = `<picture class="blur-elysium-slide-cover-picture">${imgHtml}</picture>`;
     element.insertAdjacentHTML('afterbegin', html);
 }
 
