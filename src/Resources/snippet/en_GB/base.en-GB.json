@@ -2,17 +2,31 @@
     "elysiumSlider": {
         "navigation": {
             "actionPrev": "Go to previous slide",
-            "actionNext": "Go to next slide"
+            "actionNext": "Go to next slide",
+            "firstSlide": "This is the first slide",
+            "lastSlide": "This is the last slide"
         },
         "pagination": {
-            "label": "Slider pagination"
+            "label": "Slider pagination",
+            "bullet": "Go to slide {{index}}"
         },
-        "showSlidesIndicator": "Showing slide {current} of {total}"
+        "carousel": {
+            "label": "Carousel",
+            "roleDescription": "carousel",
+            "slideLabel": "{{index}} / {{slidesLength}}"
+        },
+        "autoplay": {
+            "pause": "Pause slideshow",
+            "play": "Play slideshow"
+        },
+        "opensInNewWindow": "Opens in a new window"
     },
     "blurElysiumSlides": {
         "buttonLabel": "Learn more",
         "buttonLabelProduct": "See Product",
         "buttonLabelCategory": "View Category",
-        "noSlides": "No slides found"
+        "noSlides": "No slides found",
+        "noSlideData": "No slide data",
+        "linkOverlayFallback": "Open slide"
     }
 }
