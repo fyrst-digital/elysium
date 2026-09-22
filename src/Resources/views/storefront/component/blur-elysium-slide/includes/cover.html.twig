@@ -75,49 +75,76 @@
         {% endif %}
 
         <picture class="blur-elysium-slide-cover-picture">
-            {% if slideCoverDesktop %}
-                {% set coverThumbnails = slideCoverDesktop.metaData._thumbnails|default(slideCoverDesktop.thumbnails) %}
-                <source
-                    {% if coverThumbnails|length > 0 %}
-                        srcset="{{ create_srcset(coverThumbnails) }}"
-                    {% else %}
-                        srcset="{{ slideCoverDesktop.url }}"
-                    {% endif %}
-                    media="screen and (min-width:{{ theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)~'px' }})" />
-            {% endif %}
+            {% if device is defined %}
+                {# Preview mode: single cover for the selected device (mobile-first fallback) #}
+                {% if device == 'mobile' %}
+                    {% set selectedCover = slideCoverMobile %}
+                {% elseif device == 'tablet' %}
+                    {% set selectedCover = slideCoverTablet|default(slideCoverMobile) %}
+                {% else %}
+                    {% set selectedCover = slideCoverDesktop|default(slideCoverTablet|default(slideCoverMobile)) %}
+                {% endif %}
 
-            {% if slideCoverTablet %}
-                {% set coverThumbnails = slideCoverTablet.metaData._thumbnails|default(slideCoverTablet.thumbnails) %}
-                <source
-                    {% if coverThumbnails|length > 0 %}
-                        srcset="{{ create_srcset(coverThumbnails) }}"
-                    {% else %}
-                        srcset="{{ slideCoverTablet.url }}"
-                    {% endif %}
-                    media="screen and (min-width:{{ theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)~'px' }})" />
-            {% endif %}
-
-            {% if slideCoverMobile %}
-                {% set coverThumbnails = slideCoverMobile.metaData._thumbnails|default(slideCoverMobile.thumbnails) %}
-                <img
-                    src="{{ slideCoverMobile.url }}"
-                    {% if coverThumbnails|length > 0 %}
-                        srcset="{{ create_srcset(coverThumbnails) }}"
-                    {% endif %}
-                    alt="{{ slideCoverAlt|default('') }}"
-                    {% if slideCoverTitle %}title="{{ slideCoverTitle }}"{% endif %}
-                    class="blur-elysium-slide-cover-image"
-                    data-elysium-slide-cover-image="{{ slideData.id }}"
-                    style="border-radius: var(--slide-border-radius, 0px);"
-                    {% if lazyLoading is same as(true) %}loading="lazy"{% endif %} />
+                {% if selectedCover %}
+                    {% set coverThumbnails = selectedCover.metaData._thumbnails|default(selectedCover.thumbnails) %}
+                    <img
+                        src="{{ selectedCover.url }}"
+                        {% if coverThumbnails|length > 0 %}
+                            srcset="{{ create_srcset(coverThumbnails) }}"
+                        {% endif %}
+                        alt="{{ slideCoverAlt|default('') }}"
+                        {% if slideCoverTitle %}title="{{ slideCoverTitle }}"{% endif %}
+                        class="blur-elysium-slide-cover-image"
+                        data-elysium-slide-cover-image="{{ slideData.id }}"
+                        style="border-radius: var(--slide-border-radius, 0px);"
+                        {% if lazyLoading is same as(true) %}loading="lazy"{% endif %} />
+                {% endif %}
             {% else %}
-                <img
-                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                    alt=""
-                    class="blur-elysium-slide-cover-image"
-                    data-elysium-slide-cover-image="{{ slideData.id }}"
-                    style="border-radius: var(--slide-border-radius, 0px);"
-                    {% if lazyLoading is same as(true) %}loading="lazy"{% endif %} />
+                {# Storefront mode: min-width sources for all devices #}
+                {% if slideCoverDesktop %}
+                    {% set coverThumbnails = slideCoverDesktop.metaData._thumbnails|default(slideCoverDesktop.thumbnails) %}
+                    <source
+                        {% if coverThumbnails|length > 0 %}
+                            srcset="{{ create_srcset(coverThumbnails) }}"
+                        {% else %}
+                            srcset="{{ slideCoverDesktop.url }}"
+                        {% endif %}
+                        media="screen and (min-width:{{ theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)~'px' }})" />
+                {% endif %}
+
+                {% if slideCoverTablet %}
+                    {% set coverThumbnails = slideCoverTablet.metaData._thumbnails|default(slideCoverTablet.thumbnails) %}
+                    <source
+                        {% if coverThumbnails|length > 0 %}
+                            srcset="{{ create_srcset(coverThumbnails) }}"
+                        {% else %}
+                            srcset="{{ slideCoverTablet.url }}"
+                        {% endif %}
+                        media="screen and (min-width:{{ theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)~'px' }})" />
+                {% endif %}
+
+                {% if slideCoverMobile %}
+                    {% set coverThumbnails = slideCoverMobile.metaData._thumbnails|default(slideCoverMobile.thumbnails) %}
+                    <img
+                        src="{{ slideCoverMobile.url }}"
+                        {% if coverThumbnails|length > 0 %}
+                            srcset="{{ create_srcset(coverThumbnails) }}"
+                        {% endif %}
+                        alt="{{ slideCoverAlt|default('') }}"
+                        {% if slideCoverTitle %}title="{{ slideCoverTitle }}"{% endif %}
+                        class="blur-elysium-slide-cover-image"
+                        data-elysium-slide-cover-image="{{ slideData.id }}"
+                        style="border-radius: var(--slide-border-radius, 0px);"
+                        {% if lazyLoading is same as(true) %}loading="lazy"{% endif %} />
+                {% else %}
+                    <img
+                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                        alt=""
+                        class="blur-elysium-slide-cover-image"
+                        data-elysium-slide-cover-image="{{ slideData.id }}"
+                        style="border-radius: var(--slide-border-radius, 0px);"
+                        {% if lazyLoading is same as(true) %}loading="lazy"{% endif %} />
+                {% endif %}
             {% endif %}
         </picture>
     {% endif %}
