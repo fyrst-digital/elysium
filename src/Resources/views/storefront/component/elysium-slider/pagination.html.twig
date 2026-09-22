@@ -12,11 +12,10 @@
 {% set label = label|default(false) %}
 
 {% block component_elysium_slider_pagination %}
-    <div 
-        role="navigation"
+    <nav
         {% if label %}
             aria-label="{{ label }}"
         {% endif %}
         class="{{ paginationClasses|join(' ') }}">
-    </div>
+    </nav>
 {% endblock %}
