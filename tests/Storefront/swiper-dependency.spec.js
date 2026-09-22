@@ -10,6 +10,10 @@ const bundleCss = readFileSync(
     resolve('src/Resources/public/css/swiper-bundle.min.css'),
     'utf8',
 )
+const sliderPlugin = readFileSync(
+    resolve('src/Resources/app/storefront/src/js/elysium-slider.js'),
+    'utf8',
+)
 
 describe('swiper storefront dependency', () => {
     it('pins Swiper 14 in the storefront package', () => {
@@ -18,5 +22,28 @@ describe('swiper storefront dependency', () => {
 
     it('ships matching Swiper 14 bundle CSS', () => {
         assert.match(bundleCss, /^\/\*\*\n \* Swiper 14\./)
+    })
+
+    it('does not declare a swiper class field that Shopware would reset after init()', () => {
+        assert.doesNotMatch(sliderPlugin, /^\s*swiper\s*=/m)
+        assert.match(sliderPlugin, /this\.swiper\s*=\s*new Swiper/)
+    })
+
+    it('keeps the Swiper instance when PluginBaseClass calls init() from the constructor', () => {
+        class PluginBaseClass {
+            constructor() {
+                this.init()
+            }
+
+            init() {}
+        }
+
+        class ElysiumSlider extends PluginBaseClass {
+            init() {
+                this.swiper = { version: '14.2.0' }
+            }
+        }
+
+        assert.equal(new ElysiumSlider().swiper.version, '14.2.0')
     })
 })

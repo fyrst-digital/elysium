@@ -7,8 +7,6 @@ import { applyReducedMotion, pauseCoverVideos } from './utils/reduced-motion'
 const { PluginBaseClass } = window
 
 export default class ElysiumSlider extends PluginBaseClass {
-    swiper = null;
-
     /**
      * default slider options
      *
@@ -47,6 +45,7 @@ export default class ElysiumSlider extends PluginBaseClass {
 
         options.modules = [A11y, Autoplay, Navigation, Pagination, EffectFade, Keyboard]
 
+        // Assign on `this` only. A class field would reset after PluginBaseClass.init().
         this.swiper = new Swiper(swiperElement, options)
         this.autoplayToggle = this.el.querySelector(this.options.autoplayToggleSelector)
 
@@ -89,7 +88,7 @@ export default class ElysiumSlider extends PluginBaseClass {
     }
 
     onAutoplayToggle() {
-        if (!this.swiper.autoplay) {
+        if (!this.swiper?.autoplay) {
             return
         }
 
@@ -117,7 +116,7 @@ export default class ElysiumSlider extends PluginBaseClass {
     }
 
     _isAutoplayRunning() {
-        return Boolean(this.swiper.autoplay?.running && !this.swiper.autoplay?.paused)
+        return Boolean(this.swiper?.autoplay?.running && !this.swiper.autoplay?.paused)
     }
 
     _syncAutoplayControl() {
