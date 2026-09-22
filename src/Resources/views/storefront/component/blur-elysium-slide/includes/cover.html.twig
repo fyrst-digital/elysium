@@ -76,7 +76,6 @@
 
         <picture class="blur-elysium-slide-cover-picture">
             {% if device is defined %}
-                {# Preview mode: single cover for the selected device (mobile-first fallback) #}
                 {% if device == 'mobile' %}
                     {% set selectedCover = slideCoverMobile %}
                 {% elseif device == 'tablet' %}
@@ -100,7 +99,6 @@
                         {% if lazyLoading is same as(true) %}loading="lazy"{% endif %} />
                 {% endif %}
             {% else %}
-                {# Storefront mode: min-width sources for all devices #}
                 {% if slideCoverDesktop %}
                     {% set coverThumbnails = slideCoverDesktop.metaData._thumbnails|default(slideCoverDesktop.thumbnails) %}
                     <source
