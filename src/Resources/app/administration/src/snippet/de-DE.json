@@ -468,7 +468,8 @@
             "label": "Auto-Wiedergabe Intervall",
             "placeholder": "Zeit in Millisekunden"
           },
-          "pauseOnHover": "Pausiere Auto-Wiedergabe bei Hover"
+          "pauseOnHover": "Pausiere Auto-Wiedergabe bei Hover",
+          "showPauseButton": "Pause- und Play-Schaltfläche anzeigen"
         }
       },
       "sizingLabel": "Größen",

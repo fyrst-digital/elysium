@@ -468,7 +468,8 @@
             "label": "Autoplay interval",
             "placeholder": "Time in Millisecond"
           },
-          "pauseOnHover": "Pause Autoplay on Mouseover"
+          "pauseOnHover": "Pause Autoplay on Mouseover",
+          "showPauseButton": "Show pause and play button"
         }
       },
       "sizingLabel": "Sizing",

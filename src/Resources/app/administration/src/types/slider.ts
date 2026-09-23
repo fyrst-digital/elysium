@@ -43,6 +43,7 @@ export interface Autoplay {
     active: boolean;
     interval: number;
     pauseOnHover: boolean;
+    showPauseButton: boolean;
 }
 
 export interface NavigationColors {

@@ -149,6 +149,17 @@
         </py-column>
     {% endblock %}
 
+    {% block blur_cms_config_elysium_slider_autoplay_show_pause_button %}
+        <py-column :cols="12" :cols-tablet="6">
+            <mt-switch
+                class="blur-switch-input"
+                :label="$tc('blurElysiumSlider.config.settings.autoplay.showPauseButton')"
+                :checked="settingsConfig.autoplay.showPauseButton"
+                @change="settingsConfig.autoplay.showPauseButton = $event"
+            />
+        </py-column>
+    {% endblock %}
+
     {% block blur_cms_config_elysium_slider_autoplay_pause_on_hover %}
         <py-column :cols="12" :cols-tablet="6">
             <mt-switch

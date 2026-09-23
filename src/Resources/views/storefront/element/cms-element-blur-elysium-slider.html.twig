@@ -22,6 +22,7 @@
 
 {% set sliderTitle = element.translated.config.content.value.title %}
 {% set autoplayActive = element.translated.config.settings.value.autoplay.active %}
+{% set showPauseButton = element.translated.config.settings.value.autoplay.showPauseButton|default(false) %}
 
 {% set autoplayOptions = {
     delay: element.translated.config.settings.value.autoplay.interval,
@@ -142,7 +143,7 @@
                     {% endblock %}
 
                     {% block cms_element_elysium_slider_autoplay %}
-                        {% if autoplayActive %}
+                        {% if autoplayActive and showPauseButton %}
                             {% sw_include '@Storefront/storefront/component/elysium-slider/pause.html.twig' %}
                         {% endif %}
                     {% endblock %}
