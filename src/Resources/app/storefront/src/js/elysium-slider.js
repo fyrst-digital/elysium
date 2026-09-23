@@ -30,16 +30,11 @@ export default class ElysiumSlider extends PluginBaseClass {
             watchSlidesProgress: true,
             on: {
                 init: this.onSlideInit.bind(this),
+                paginationRender: this._ensureBulletButtonType.bind(this),
             },
-            loop: false,
-            pagination: false,
             keyboard: {
                 enabled: true,
-                onlyInViewport: true,
                 pageUpDown: false,
-            },
-            a11y: {
-                enabled: true,
             },
         }, inlineOptions), prefersReducedMotion)
 
@@ -64,7 +59,6 @@ export default class ElysiumSlider extends PluginBaseClass {
         this.swiper.on('autoplayStop', this.onAutoplayStateChange.bind(this))
         this.swiper.on('autoplayPause', this.onAutoplayStateChange.bind(this))
         this.swiper.on('autoplayResume', this.onAutoplayStateChange.bind(this))
-        this.swiper.on('paginationUpdate', this._ensureBulletButtonType.bind(this))
 
         if (this.autoplayToggle) {
             this.autoplayToggle.addEventListener('click', this.onAutoplayToggle.bind(this))
@@ -75,7 +69,6 @@ export default class ElysiumSlider extends PluginBaseClass {
 
     onSlideInit(swiper) {
         syncOffscreenSlides(swiper.slides)
-        this._ensureBulletButtonType(swiper)
         this._syncAutoplayControl()
 
         this.$emitter.publish('onSlideInit', { swiper })
