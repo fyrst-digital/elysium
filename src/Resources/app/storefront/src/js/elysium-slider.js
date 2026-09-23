@@ -7,8 +7,6 @@ import { applyReducedMotion, pauseCoverVideos } from './utils/reduced-motion'
 const { PluginBaseClass } = window
 
 export default class ElysiumSlider extends PluginBaseClass {
-    swiper = null;
-
     /**
      * default slider options
      *
@@ -32,21 +30,17 @@ export default class ElysiumSlider extends PluginBaseClass {
             watchSlidesProgress: true,
             on: {
                 init: this.onSlideInit.bind(this),
+                paginationRender: this._ensureBulletButtonType.bind(this),
             },
-            loop: false,
-            pagination: false,
             keyboard: {
                 enabled: true,
-                onlyInViewport: true,
                 pageUpDown: false,
-            },
-            a11y: {
-                enabled: true,
             },
         }, inlineOptions), prefersReducedMotion)
 
         options.modules = [A11y, Autoplay, Navigation, Pagination, EffectFade, Keyboard]
 
+        // Assign on `this` only. A class field would reset after PluginBaseClass.init().
         this.swiper = new Swiper(swiperElement, options)
         this.autoplayToggle = this.el.querySelector(this.options.autoplayToggleSelector)
 
@@ -65,7 +59,6 @@ export default class ElysiumSlider extends PluginBaseClass {
         this.swiper.on('autoplayStop', this.onAutoplayStateChange.bind(this))
         this.swiper.on('autoplayPause', this.onAutoplayStateChange.bind(this))
         this.swiper.on('autoplayResume', this.onAutoplayStateChange.bind(this))
-        this.swiper.on('paginationUpdate', this._ensureBulletButtonType.bind(this))
 
         if (this.autoplayToggle) {
             this.autoplayToggle.addEventListener('click', this.onAutoplayToggle.bind(this))
@@ -76,7 +69,6 @@ export default class ElysiumSlider extends PluginBaseClass {
 
     onSlideInit(swiper) {
         syncOffscreenSlides(swiper.slides)
-        this._ensureBulletButtonType(swiper)
         this._syncAutoplayControl()
 
         this.$emitter.publish('onSlideInit', { swiper })
@@ -89,7 +81,7 @@ export default class ElysiumSlider extends PluginBaseClass {
     }
 
     onAutoplayToggle() {
-        if (!this.swiper.autoplay) {
+        if (!this.swiper?.autoplay) {
             return
         }
 
@@ -117,7 +109,7 @@ export default class ElysiumSlider extends PluginBaseClass {
     }
 
     _isAutoplayRunning() {
-        return Boolean(this.swiper.autoplay?.running && !this.swiper.autoplay?.paused)
+        return Boolean(this.swiper?.autoplay?.running && !this.swiper.autoplay?.paused)
     }
 
     _syncAutoplayControl() {

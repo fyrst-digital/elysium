@@ -66,6 +66,7 @@ export default <SliderSettings>{
                 active: true,
                 interval: 5000,
                 pauseOnHover: true,
+                showPauseButton: false,
             },
         },
     },
