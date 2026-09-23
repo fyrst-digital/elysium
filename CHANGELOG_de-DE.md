@@ -10,6 +10,7 @@
 - **Breaking** Die Store-API-Route `/store-api/elysium-slide` liefert Cover-Medien nicht mehr als hydrierte Assoziationen. Medien-IDs liegen in `contentSettings`; Konsumenten müssen Medien selbst auflösen
 - Beim Anlegen eines neuen Slides nach dem Öffnen eines anderen Slides werden Inhalt, Verlinkung und Medien nicht mehr vom vorherigen Slide übernommen
 - Slider und Banner sind mit Hilfstechnologien leichter nutzbar, inklusive benannter Pagination, einer Pause-Steuerung für Autoplay und korrekt beschrifteter Slide-Bilder und Links
+- Händler können an einem Slider eine Pause- und Play-Schaltfläche anzeigen. Sie bleibt ausgeblendet, bis sie eingeschaltet wird
 
 # 4.9.1
 

@@ -10,6 +10,7 @@
 - **Breaking** The Store API route `/store-api/elysium-slide` no longer returns hydrated cover media. Media IDs are in `contentSettings`; Store API consumers must resolve media themselves
 - Creating a new slide after opening another slide no longer copies the previous slide's content, linking, or media settings
 - Sliders and banners are easier to use with assistive technology, including named pagination, a pause control for autoplay, and correctly labeled slide images and links
+- Merchants can show a pause and play button on a slider. It stays hidden until they turn it on
 
 # 4.9.1
 
