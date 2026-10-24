@@ -74,6 +74,9 @@
             {% set slideCoverTitle = null %}
         {% endif %}
 
+        {# Mobile-first default: smallest available cover. Larger viewports override via <source>. #}
+        {% set defaultCover = slideCoverMobile|default(slideCoverTablet|default(slideCoverDesktop)) %}
+
         <picture class="blur-elysium-slide-cover-picture">
             {% if device is defined %}
                 {% if device == 'mobile' %}
@@ -86,10 +89,12 @@
 
                 {% if selectedCover %}
                     {% set coverThumbnails = selectedCover.metaData._thumbnails|default(selectedCover.thumbnails) %}
+                    {% set coverSrcset = create_srcset(coverThumbnails, selectedCover.url, selectedCover.metaData.width|default(null)) %}
                     <img
-                        src="{{ selectedCover.url }}"
-                        {% if coverThumbnails|length > 0 %}
-                            srcset="{{ create_srcset(coverThumbnails) }}"
+                        src="{{ srcset_url(selectedCover.url) }}"
+                        {% if coverSrcset %}
+                            srcset="{{ coverSrcset }}"
+                            sizes="100vw"
                         {% endif %}
                         alt="{{ slideCoverAlt|default('') }}"
                         {% if slideCoverTitle %}title="{{ slideCoverTitle }}"{% endif %}
@@ -99,45 +104,35 @@
                         {% if lazyLoading is same as(true) %}loading="lazy"{% endif %} />
                 {% endif %}
             {% else %}
-                {% if slideCoverDesktop %}
+                {% if slideCoverDesktop and slideCoverDesktop.id != defaultCover.id %}
                     {% set coverThumbnails = slideCoverDesktop.metaData._thumbnails|default(slideCoverDesktop.thumbnails) %}
+                    {% set coverSrcset = create_srcset(coverThumbnails, slideCoverDesktop.url, slideCoverDesktop.metaData.width|default(null)) %}
                     <source
-                        {% if coverThumbnails|length > 0 %}
-                            srcset="{{ create_srcset(coverThumbnails) }}"
-                        {% else %}
-                            srcset="{{ slideCoverDesktop.url }}"
-                        {% endif %}
+                        srcset="{{ coverSrcset }}"
+                        sizes="100vw"
                         media="screen and (min-width:{{ theme_config('breakpoint.' ~ blurElysiumBreakpoints.desktop)~'px' }})" />
                 {% endif %}
 
-                {% if slideCoverTablet %}
+                {% if slideCoverTablet and slideCoverTablet.id != defaultCover.id %}
                     {% set coverThumbnails = slideCoverTablet.metaData._thumbnails|default(slideCoverTablet.thumbnails) %}
+                    {% set coverSrcset = create_srcset(coverThumbnails, slideCoverTablet.url, slideCoverTablet.metaData.width|default(null)) %}
                     <source
-                        {% if coverThumbnails|length > 0 %}
-                            srcset="{{ create_srcset(coverThumbnails) }}"
-                        {% else %}
-                            srcset="{{ slideCoverTablet.url }}"
-                        {% endif %}
+                        srcset="{{ coverSrcset }}"
+                        sizes="100vw"
                         media="screen and (min-width:{{ theme_config('breakpoint.' ~ blurElysiumBreakpoints.tablet)~'px' }})" />
                 {% endif %}
 
-                {% if slideCoverMobile %}
-                    {% set coverThumbnails = slideCoverMobile.metaData._thumbnails|default(slideCoverMobile.thumbnails) %}
+                {% if defaultCover %}
+                    {% set coverThumbnails = defaultCover.metaData._thumbnails|default(defaultCover.thumbnails) %}
+                    {% set coverSrcset = create_srcset(coverThumbnails, defaultCover.url, defaultCover.metaData.width|default(null)) %}
                     <img
-                        src="{{ slideCoverMobile.url }}"
-                        {% if coverThumbnails|length > 0 %}
-                            srcset="{{ create_srcset(coverThumbnails) }}"
+                        src="{{ srcset_url(defaultCover.url) }}"
+                        {% if coverSrcset %}
+                            srcset="{{ coverSrcset }}"
+                            sizes="100vw"
                         {% endif %}
                         alt="{{ slideCoverAlt|default('') }}"
                         {% if slideCoverTitle %}title="{{ slideCoverTitle }}"{% endif %}
-                        class="blur-elysium-slide-cover-image"
-                        data-elysium-slide-cover-image="{{ slideData.id }}"
-                        style="border-radius: var(--slide-border-radius, 0px);"
-                        {% if lazyLoading is same as(true) %}loading="lazy"{% endif %} />
-                {% else %}
-                    <img
-                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                        alt=""
                         class="blur-elysium-slide-cover-image"
                         data-elysium-slide-cover-image="{{ slideData.id }}"
                         style="border-radius: var(--slide-border-radius, 0px);"

@@ -31,6 +31,9 @@
         <testsuite name="demodata">
             <directory>tests/Demodata</directory>
         </testsuite>
+        <testsuite name="twig">
+            <directory>tests/Twig</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
