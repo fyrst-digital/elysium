@@ -21,7 +21,7 @@ class CreateSrcset extends AbstractExtension
      * Encode a URL for use in a srcset attribute.
      *
      * srcset splits candidates on commas and the URL from descriptors on
-     * whitespace, so a file name like "Hintergrund Startseite.png" would
+     * whitespace, so a file name like "cover image.png" would
      * otherwise be parsed as an invalid descriptor and the source skipped.
      */
     public function encodeSrcsetUrl(mixed $url): string

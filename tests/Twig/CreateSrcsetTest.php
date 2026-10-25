@@ -18,10 +18,10 @@ class CreateSrcsetTest extends TestCase
 
     public function testEncodeSrcsetUrlReplacesWhitespaceAndCommas(): void
     {
-        $url = "https://example.com/media/Hintergrund Startseite.png?ts=1";
+        $url = "https://example.com/media/cover image.png?ts=1";
 
         static::assertSame(
-            'https://example.com/media/Hintergrund%20Startseite.png?ts=1',
+            'https://example.com/media/cover%20image.png?ts=1',
             $this->extension->encodeSrcsetUrl($url)
         );
         static::assertSame(
@@ -34,12 +34,12 @@ class CreateSrcsetTest extends TestCase
     public function testCreateSrcsetEncodesSpacesInThumbnailUrls(): void
     {
         $srcset = $this->extension->createSrcset([
-            ['url' => 'https://cdn.example/Hintergrund Startseite.png', 'width' => 800],
-            ['url' => 'https://cdn.example/Hintergrund Startseite.png', 'width' => 1600],
+            ['url' => 'https://cdn.example/cover image.png', 'width' => 800],
+            ['url' => 'https://cdn.example/cover image.png', 'width' => 1600],
         ]);
 
         static::assertSame(
-            'https://cdn.example/Hintergrund%20Startseite.png 800w,https://cdn.example/Hintergrund%20Startseite.png 1600w',
+            'https://cdn.example/cover%20image.png 800w,https://cdn.example/cover%20image.png 1600w',
             $srcset
         );
     }
@@ -50,12 +50,12 @@ class CreateSrcsetTest extends TestCase
             [
                 ['url' => 'https://cdn.example/thumb-400.png', 'width' => 400],
             ],
-            'https://cdn.example/Hintergrund Startseite.png',
+            'https://cdn.example/cover image.png',
             1920
         );
 
         static::assertSame(
-            'https://cdn.example/thumb-400.png 400w,https://cdn.example/Hintergrund%20Startseite.png 1920w',
+            'https://cdn.example/thumb-400.png 400w,https://cdn.example/cover%20image.png 1920w',
             $srcset
         );
     }
@@ -63,8 +63,8 @@ class CreateSrcsetTest extends TestCase
     public function testCreateSrcsetFallsBackToEncodedOriginalWithoutWidthDescriptors(): void
     {
         static::assertSame(
-            'https://cdn.example/Hintergrund%20Startseite.png',
-            $this->extension->createSrcset([], 'https://cdn.example/Hintergrund Startseite.png', null)
+            'https://cdn.example/cover%20image.png',
+            $this->extension->createSrcset([], 'https://cdn.example/cover image.png', null)
         );
     }
 
