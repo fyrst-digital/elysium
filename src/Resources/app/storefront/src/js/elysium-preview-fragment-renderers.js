@@ -38,14 +38,46 @@ function stripTags(html, allowedTags = []) {
     return Array.from(doc.body.childNodes).map(walk).join('');
 }
 
-function createSrcset(thumbnails) {
-    if (!Array.isArray(thumbnails)) {
-        return '';
+function encodeSrcsetUrl(url) {
+    return String(url)
+        .replace(/ /g, '%20')
+        .replace(/,/g, '%2C')
+        .replace(/\t/g, '%09')
+        .replace(/\n/g, '%0A')
+        .replace(/\r/g, '%0D');
+}
+
+function createSrcset(thumbnails, originalUrl, originalWidth) {
+    const candidates = [];
+    const seen = new Set();
+
+    const push = (url, width) => {
+        const encoded = encodeSrcsetUrl(url || '');
+        const entry = width > 0 ? `${encoded} ${width}w` : encoded;
+        if (!encoded || seen.has(entry)) {
+            return;
+        }
+        seen.add(entry);
+        candidates.push(entry);
+    };
+
+    if (Array.isArray(thumbnails)) {
+        thumbnails.forEach((thumb) => {
+            const width = Number(thumb.width) || 0;
+            if (width > 0) {
+                push(thumb.url, width);
+            }
+        });
     }
-    return thumbnails
-        .filter((t) => t.url && t.width)
-        .map((t) => `${t.url} ${t.width}w`)
-        .join(', ');
+
+    if (originalUrl) {
+        const width = Number(originalWidth) || 0;
+        if (width > 0 || candidates.length === 0) {
+            push(originalUrl, width);
+        }
+    }
+
+    return candidates.join(',');
 }
 
 function getMediaById(resolvedMedia, id) {
@@ -265,8 +297,10 @@ function renderCover(slide, element, resolvedMedia, device) {
     }
 
     const thumbs = selectedCover.metaData?._thumbnails || selectedCover.thumbnails || [];
-    const srcset = createSrcset(thumbs);
-    const imgHtml = `<img src="${selectedCover.url}" ${srcset ? `srcset="${srcset}"` : ''} class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
+    const srcset = createSrcset(thumbs, selectedCover.url, selectedCover.metaData?.width);
+    const encodedSrc = encodeSrcsetUrl(selectedCover.url);
+    const srcsetAttr = srcset ? `srcset="${srcset}" sizes="100vw"` : '';
+    const imgHtml = `<img src="${encodedSrc}" ${srcsetAttr} class="blur-elysium-slide-cover-image" data-elysium-slide-cover-image="${id}" style="${style}" />`;
     const html = `<picture class="blur-elysium-slide-cover-picture">${imgHtml}</picture>`;
     element.insertAdjacentHTML('afterbegin', html);
 }
