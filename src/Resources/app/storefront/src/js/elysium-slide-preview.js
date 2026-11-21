@@ -280,7 +280,6 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         for (const fragment of fragments) {
             const renderer = this.fragmentRenderers.get(fragment.mode);
             if (renderer) {
-                // css-variable and preview-sizing renderers
                 try {
                     renderer.render(fragment, data, element, this);
                 } catch (err) {
@@ -311,7 +310,6 @@ export default class ElysiumSlidePreview extends PluginBaseClass {
         }
         if (event.data?.type === 'elysium-slide-update') {
             await this.updateSlide(event.data);
-            // Tell admin the values have been injected
             window.parent.postMessage({ type: 'elysium-slide-update-ack' }, event.origin);
         }
     }

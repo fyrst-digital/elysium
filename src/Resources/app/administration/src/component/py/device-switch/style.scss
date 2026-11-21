@@ -1,23 +1,18 @@
 .py-device-switch {
-    /** container vars */
     --container-gap: 16px;
     --container-direction: column;
-    /** item vars */
     --item-align-items: center;
     --item-gap: 12px;
     --item-font-size: 14px;
     --item-font-weight: 600;
     --item-color: var(--color-gray-800);
     --item-active-color: var(--color-darkgray-400);
-    /** icon vars */
     --icon-padding: 10px;
     --icon-color: var(--color-darkgray-300);
     --icon-bg-color: var(--color-gray-100);
     --icon-active-color: var(--color-emerald-800);
     --icon-active-bg-color: var(--color-emerald-50);
-    /** label vars */
     --label-display: none;
-    /** styles */
     display: inline-flex;
     flex-direction: var(--container-direction);
     gap: var(--container-gap);

@@ -54,10 +54,6 @@ class SlideValidationSubscriberTest extends TestCase
         static::assertContains('validateTimeControl', $listenerMethods);
     }
 
-    // =====================================================
-    // Slide Name Validation Tests
-    // =====================================================
-
     #[DataProvider('validSlideNameProvider')]
     public function testValidatesSlideNameWithValidNames(string $name): void
     {
@@ -177,10 +173,6 @@ class SlideValidationSubscriberTest extends TestCase
         static::assertSame(Defaults::ERROR_CODE_NAME_FORMAT, $violation->getCode());
         static::assertSame('invalid@name', $violation->getInvalidValue());
     }
-
-    // =====================================================
-    // Time Control Validation Tests
-    // =====================================================
 
     public function testCreateDoesNotFetchFromDatabase(): void
     {
@@ -483,10 +475,6 @@ class SlideValidationSubscriberTest extends TestCase
 
         static::assertCount(0, $event->getExceptions()->getExceptions());
     }
-
-    // =====================================================
-    // Helper Methods
-    // =====================================================
 
     private function createEvent(array $commands): PreWriteValidationEvent
     {

@@ -22,11 +22,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
 {
     use MediaResolutionTrait;
-    /**
-     * Single source of truth for slider viewport options.
-     *
-     * Adding a new option only requires adding one entry here.
-     */
     private const SLIDER_VIEWPORT_CONFIG = [
         'slidesPerView'  => ['group' => 'settings', 'key' => 'slidesPerPage',  'default' => 1],
         'slidesPerGroup' => ['group' => 'settings', 'key' => 'slidesPerGroup', 'default' => 1],
@@ -115,9 +110,6 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
         ];
     }
 
-    /**
-     * Build the nested defaults array from SLIDER_VIEWPORT_CONFIG.
-     */
     private function buildDefaultsFromConfig(): array
     {
         $defaults = [];
@@ -137,9 +129,6 @@ class ElysiumSliderCmsElementResolver extends AbstractCmsElementResolver
         return $defaults;
     }
 
-    /**
-     * Extract slider viewport options from a resolved viewport config.
-     */
     private function extractViewportOptions(array $viewport): array
     {
         $options = [];

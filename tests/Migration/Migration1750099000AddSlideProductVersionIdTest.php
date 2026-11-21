@@ -31,18 +31,15 @@ class Migration1750099000AddSlideProductVersionIdTest extends AbstractMigrationT
 
     public function testMigrationPopulatesProductVersionIdFromProduct(): void
     {
-        // Create a product
         $productId = $this->insertProduct([
             'product_number' => 'TEST-PRODUCT-001',
         ]);
 
-        // Get the product's version_id
         $product = $this->connection->fetchAssociative(
             'SELECT version_id FROM product WHERE id = ?',
             [$productId]
         );
 
-        // Create a slide with product_id but NULL product_version_id
         $slideId = $this->insertSlide([
             'product_id' => $productId,
             'product_version_id' => null,
@@ -51,7 +48,6 @@ class Migration1750099000AddSlideProductVersionIdTest extends AbstractMigrationT
         $migration = new Migration1750099000AddSlideProductVersionId();
         $this->runMigration($migration);
 
-        // Verify product_version_id was populated
         $slide = $this->connection->fetchAssociative(
             'SELECT product_version_id FROM blur_elysium_slides WHERE id = ?',
             [$slideId]
@@ -66,7 +62,6 @@ class Migration1750099000AddSlideProductVersionIdTest extends AbstractMigrationT
 
     public function testMigrationHandlesSlidesWithoutProduct(): void
     {
-        // Create a slide without product_id
         $slideId = $this->insertSlide([
             'product_id' => null,
             'product_version_id' => null,
@@ -75,7 +70,6 @@ class Migration1750099000AddSlideProductVersionIdTest extends AbstractMigrationT
         $migration = new Migration1750099000AddSlideProductVersionId();
         $this->runMigration($migration);
 
-        // Verify slide still exists and product_version_id is still NULL
         $slide = $this->connection->fetchAssociative(
             'SELECT product_id, product_version_id FROM blur_elysium_slides WHERE id = ?',
             [$slideId]

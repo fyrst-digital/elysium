@@ -45,7 +45,6 @@ class SlideImportCommand extends Command
         $filePath = $input->getArgument('file');
         $content = null;
 
-        // Try absolute path first
         if (is_file($filePath)) {
             $content = file_get_contents($filePath);
             if ($content === false) {
@@ -53,7 +52,6 @@ class SlideImportCommand extends Command
                 return self::FAILURE;
             }
         } else {
-            // Try relative path from default export directory
             $relativePath = self::DEFAULT_IMPORT_PATH . '/' . $filePath;
             if ($this->filesystem->fileExists($relativePath)) {
                 $content = $this->filesystem->read($relativePath);

@@ -8,19 +8,7 @@ export default Component.wrapComponentConfig({
 
     computed: {
         styles() {
-            const styles: Partial<CSSStyleDeclaration> = {
-                // display: 'flex',
-                // flexDirection: 'column',
-                // alignItems: 'center',
-                // justifyContent: 'center',
-                // padding: '20px',
-                // gap: '10px',
-                // border: '2px dashed rgba(0, 0, 0, 0.2)',
-                // borderRadius: '4px',
-                // backgroundColor: '#ffffff',
-                // color: 'var(--color-text-primary-disabled)',
-                // cursor: 'pointer',
-            };
+            const styles: Partial<CSSStyleDeclaration> = {};
 
             return styles;
         },

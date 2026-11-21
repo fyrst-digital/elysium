@@ -16,10 +16,6 @@ class CacheInvalidationSubscriber
         private readonly CmsPageLookup $cmsPageLookup,
     ) {}
 
-    /**
-     * Invalidates CMS page cache tags related to Elysium Slides when slides are created, updated, or deleted.
-     * Automaticlly listen to Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenContainerEvent as it is defined inn the services.xml file.
-     */
     public function invalidateCmsPageIds(EntityWrittenContainerEvent $event): void
     {
         $slideIds = $event->getPrimaryKeys(ElysiumSlidesDefinition::ENTITY_NAME);

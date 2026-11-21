@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Preview;
 
-/**
- * Registry for preview schemas by element type.
- */
 class PreviewSchemaRegistry
 {
     /** @var array<string, PreviewSchema> */

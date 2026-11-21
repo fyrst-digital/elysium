@@ -8,8 +8,6 @@ const { PluginBaseClass } = window
 
 export default class ElysiumSlider extends PluginBaseClass {
     /**
-     * default slider options
-     *
      * @type {*}
      */
     static options = {

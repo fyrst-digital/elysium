@@ -89,9 +89,6 @@ class Lifecycle
     {
         $connection = $this->container->get(Connection::class);
 
-        /**
-         * Delete media folder with dependencies
-         */
         try {
             $connection->executeStatement('
                 DELETE mf, mdf, mfc
@@ -106,9 +103,6 @@ class Lifecycle
             throw new \RuntimeException('Failed to remove tables and data: ' . $e->getMessage());
         }
 
-        /**
-         * Delete elysium slides tables
-         */
         try {
             $connection->executeStatement('DROP TABLE IF EXISTS `blur_elysium_slides_translation`, `blur_elysium_slides`');
         } catch (\Exception $e) {
@@ -131,12 +125,7 @@ class Lifecycle
         /** @var array<'id', string>|null $thumbnailSizeIds */
         $thumbnailSizeIds = $this->getMediaThumbnailSizesIds();
 
-        /**
-         * If there is no existing slides media folder
-         * create it with default media thumbnails
-         */
         if ($existingMediaFolderIds->getTotal() <= 0) {
-            // Check if default folder already exists
             $defaultFolderCriteria = new Criteria();
             $defaultFolderCriteria->addFilter(new EqualsFilter('entity', 'blur_elysium_slides'));
             $existingDefaultFolderId = $mediaDefaultFolderRepository->searchIds($defaultFolderCriteria, $context)->firstId();
@@ -152,7 +141,6 @@ class Lifecycle
                 ],
             ];
 
-            // Use existing default folder or create new one
             if ($existingDefaultFolderId) {
                 $mediaFolderData['defaultFolderId'] = $existingDefaultFolderId;
             } else {

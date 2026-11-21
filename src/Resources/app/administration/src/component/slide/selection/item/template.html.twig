@@ -2,16 +2,12 @@
     class="elysium-slide-selection-item"
     ref="selectItem"
     v-draggable="{
-        {# dataGroup: 'slide-selection',  #}
         data: {
             draggedItemIndex: index,
         },
         delay: 200,
         onDragStart: dragStart,
         onDragEnter: dragEnter,
-        {# validateDrag: validateDrag, #}
-        {# validateDrop: validateDrop, #}
-        {# onDragLeave: dragLeave,  #}
         validateDrop: validateDrop,
         onDrop: dropSlide,
     }"
@@ -20,7 +16,6 @@
             index: index,
         },
         validateDrop: validateDrop,
-        {# onDrop: dropSlide, #}
     }"
 >
     <div v-if="draggedSlide">

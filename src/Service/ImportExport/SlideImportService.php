@@ -25,7 +25,6 @@ class SlideImportService
             return new ImportResult(0, ['The import file is empty.']);
         }
 
-        // Validate header
         $header = json_decode(array_shift($lines), true);
         if (!is_array($header) || !isset($header['type']) || $header['type'] !== 'elysium-slides-export') {
             return new ImportResult(0, ['Invalid import file format. Expected an Elysium slides export.']);

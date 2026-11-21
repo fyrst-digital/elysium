@@ -10,7 +10,6 @@ Module.register('blur-elysium-slides', {
     color: module.color,
     entity: 'blur_elysium_slides',
 
-    /** Search configuration */
     defaultSearchConfiguration: {
         _searchable: true,
         name: {
@@ -19,9 +18,7 @@ Module.register('blur-elysium-slides', {
         },
     },
 
-    /** Module routes */
     routes: {
-        /** Index route */
         overview: {
             path: 'overview',
             component: 'elysium-slides-overview',
@@ -30,7 +27,6 @@ Module.register('blur-elysium-slides', {
             },
         },
 
-        /** Create slide route */
         create: {
             path: 'create',
             component: 'elysium-slides-detail',
@@ -76,7 +72,6 @@ Module.register('blur-elysium-slides', {
             },
         },
 
-        /** Detail slide route */
         detail: {
             path: 'detail/:id',
             component: 'elysium-slides-detail',
@@ -137,7 +132,6 @@ Module.register('blur-elysium-slides', {
         },
     },
 
-    /** Module navigation in shopware menu */
     navigation: [
         {
             id: 'blur-elysium-slides',
@@ -149,7 +143,6 @@ Module.register('blur-elysium-slides', {
         },
     ],
 
-    /** Module navigation in shopware settings */
     settingsItem: [
         {
             group: 'plugins',

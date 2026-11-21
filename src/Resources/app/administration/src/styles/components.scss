@@ -1,4 +1,3 @@
-/** mt-card modification utility */
 .mt-card {
     &.content-no-padding {
         .mt-card__content {
@@ -7,7 +6,6 @@
     }
 }
 
-/** CMS block **/
 .cms-block-elysium {
     border-radius: 5px;
     outline-width: 2px;
@@ -20,7 +18,6 @@
     }
 }
 
-/** Entity select styling */
 .blur-entity-select-input {
     .sw-block-field__block {
         box-shadow: 0 1px 2px 0 rgba(51, 68, 91, 0.1);
@@ -34,7 +31,6 @@
     }
 }
 
-/** Switch input styling */
 .blur-switch-input {
     &.has-padding {
         --switch-padding: 8px;

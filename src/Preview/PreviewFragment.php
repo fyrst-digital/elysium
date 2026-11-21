@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Blur\BlurElysiumSlider\Preview;
 
-/**
- * Value object representing a single preview fragment.
- *
- * A fragment defines how a subset of fields is rendered in the preview.
- */
 class PreviewFragment
 {
     /**
@@ -69,8 +64,6 @@ class PreviewFragment
     }
 
     /**
-     * Check if this fragment should be triggered when the given fields change.
-     *
      * @param string[] $changedFields
      */
     public function isTriggeredBy(array $changedFields): bool

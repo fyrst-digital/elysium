@@ -6,7 +6,6 @@
     <style>
         #elysiumSlider-{{ element.id }} {
 
-            {# navigation styles #}
             {% if navigation.colors.default %}
                 --nav-action-icon-color: {{navigation.colors.default}};
             {% endif %}
@@ -20,7 +19,6 @@
                 --nav-action-bg-color-active: {{navigation.bgColors.active}};
             {% endif %}
 
-            {# pagination styles #}
             {% if pagination.align is same as('start') or pagination.align is same as('end') %}
                 --pagination-justify-content: {{ 'flex-' ~ pagination.align }};
             {% endif %}
@@ -32,12 +30,10 @@
             {% endif %}
         }
 
-        {# responsive styles #}
         {% for device, options in viewports %}
             @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
                 #elysiumSlider-{{ element.id }}
                 {
-                    {# slide styles #}
                     {% if options.sizing.aspectRatio.auto is same as(true) %}
                         --slide-aspect-ratio: auto;
                     {% elseif options.sizing.aspectRatio.width and options.sizing.aspectRatio.height %}
@@ -57,7 +53,6 @@
                         --slide-padding-offset-x: {{ options.sizing.paddingX ~ 'px' }};
                     {% endif %}
 
-                    {# navigation styles #}
                     {% if options.arrows.iconSize is not empty %}
                         --nav-action-icon-size: {{ options.arrows.iconSize ~ 'px' }};
                     {% endif %}
@@ -65,7 +60,6 @@
                         --nav-action-offset: {{ options.arrows.offsetPadding ~ 'px' }};
                     {% endif %}
 
-                    {# pagination styles #}
                     {% if options.navigation.gap is not empty %}
                         --pagination-bullet-gap: {{ options.navigation.gap ~ 'px' }};
                     {% endif %}

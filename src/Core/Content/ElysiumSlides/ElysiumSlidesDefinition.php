@@ -54,18 +54,13 @@ class ElysiumSlidesDefinition extends EntityDefinition
                 new Required(),
                 new PrimaryKey()
             ),
-            // product association
             (new FkField('product_id', 'productId', ProductDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('product', 'product_id', ProductDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            // category association
             (new FkField('category_id', 'categoryId', CategoryDefinition::class))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('category', 'category_id', CategoryDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            // time control
             (new DateTimeField('active_from', 'activeFrom'))->addFlags(new ApiAware()),
             (new DateTimeField('active_until', 'activeUntil'))->addFlags(new ApiAware()),
-            // slide settings
             (new JsonField('slide_settings', 'slideSettings'))->addFlags(new ApiAware()),
-            // translation
             (new TranslatedField('name'))->addFlags(new ApiAware(), new Required(), new Inherited(), new SearchRanking(SearchRanking::HIGH_SEARCH_RANKING)),
             (new TranslatedField('contentSettings'))->addFlags(new ApiAware()),
             (new TranslatedField('customFields'))->addFlags(new ApiAware()),

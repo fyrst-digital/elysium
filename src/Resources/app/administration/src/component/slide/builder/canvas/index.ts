@@ -146,7 +146,6 @@ export default Component.wrapComponentConfig({
                     const channels = result;
                     this.elysiumUI.setSalesChannels(channels);
 
-                    // Auto-select first channel with domains if nothing selected
                     if (!this.selectedSalesChannelId) {
                         const firstChannel = channels.find((channel) => channel.domains && channel.domains.length > 0);
                         if (firstChannel) {

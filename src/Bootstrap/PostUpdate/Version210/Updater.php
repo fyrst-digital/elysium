@@ -88,59 +88,42 @@ class Updater
                 $convertedSlideSettings['id'] = $id;
                 $convertedSlideSettings['slideSettings'] = \array_replace_recursive($defaultSlideSettings, $slideSettings);
 
-                /**
-                 * convert slide settings
-                 */
-                // slide headline
                 $convertedSlideSettings['slideSettings']['slide']['headline']['element'] = isset($slideSettings['headlineElement']) && !empty($slideSettings['headlineElement']) ? $slideSettings['headlineElement'] : 'div';
                 $convertedSlideSettings['slideSettings']['slide']['headline']['color'] = isset($slideSettings['headlineTextcolor']) && !empty($slideSettings['headlineTextcolor']) ? $slideSettings['headlineTextcolor'] : null;
-                // slide general
                 $convertedSlideSettings['slideSettings']['slide']['bgColor'] = isset($slideSettings['slideBgColor']) && !empty($slideSettings['slideBgColor']) ? $slideSettings['slideBgColor'] : null;
                 $convertedSlideSettings['slideSettings']['slide']['cssClass'] = isset($slideSettings['slideCssClass']) && !empty($slideSettings['slideCssClass']) ? $slideSettings['slideCssClass'] : null;
-                // slide linking
                 $convertedSlideSettings['slideSettings']['slide']['linking']['overlay'] = isset($slideSettings['urlOverlay']) && !empty($slideSettings['urlOverlay']) ? $slideSettings['urlOverlay'] : false;
                 $convertedSlideSettings['slideSettings']['slide']['linking']['openExternal'] = isset($slideSettings['urlTarget']) && $slideSettings['urlTarget'] === 'external' ? true : false;
                 $convertedSlideSettings['slideSettings']['slide']['linking']['buttonAppearance'] = isset($slideSettings['buttonAppearance']) && !empty($slideSettings['buttonAppearance']) ? $slideSettings['buttonAppearance'] : 'primary';
-                // container
                 $convertedSlideSettings['slideSettings']['container']['bgColor'] = isset($slideSettings['containerBgColor']) && !empty($slideSettings['containerBgColor']) ? $slideSettings['containerBgColor'] : null;
-                // slide template
                 $convertedSlideSettings['slideSettings']['customTemplateFile'] = isset($slideSettings['customTemplateFile']) && !empty($slideSettings['customTemplateFile']) ? $slideSettings['customTemplateFile'] : null;
 
-                // container padding
                 if (isset($slideSettings['containerPadding']) && !empty($slideSettings['containerPadding'])) {
                     $containerPaddingInt = $this->convertStringToIntUnit($slideSettings['containerPadding']);
 
                     if (!empty($containerPaddingInt)) {
-                        // viewport mobile
                         $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['paddingX'] = $containerPaddingInt;
                         $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['paddingY'] = $containerPaddingInt;
-                        // viewport tablet
                         $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['paddingX'] = $containerPaddingInt;
                         $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['paddingY'] = $containerPaddingInt;
-                        // viewport desktop
                         $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['paddingX'] = $containerPaddingInt;
                         $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['paddingY'] = $containerPaddingInt;
                     }
                 }
 
-                // container max width
                 if (isset($slideSettings['containerMaxWidth']) && !empty($slideSettings['containerMaxWidth'])) {
                     $containerMaxWidthInt = $this->convertStringToIntUnit($slideSettings['containerMaxWidth']);
 
                     if (!empty($containerMaxWidthInt)) {
-                        // viewport mobile
                         $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['maxWidth'] = $containerMaxWidthInt;
                         $convertedSlideSettings['slideSettings']['viewports']['mobile']['container']['maxWidthDisabled'] = false;
-                        // viewport tablet
                         $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['maxWidth'] = $containerMaxWidthInt;
                         $convertedSlideSettings['slideSettings']['viewports']['tablet']['container']['maxWidthDisabled'] = false;
-                        // viewport desktop
                         $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['maxWidth'] = $containerMaxWidthInt;
                         $convertedSlideSettings['slideSettings']['viewports']['desktop']['container']['maxWidthDisabled'] = false;
                     }
                 }
 
-                // container vertical align
                 if (isset($slideSettings['containerVerticalAlign']) && !empty($slideSettings['containerVerticalAlign'])) {
                     $containerAlignItems = null;
 
@@ -159,7 +142,6 @@ class Updater
                     }
                 }
 
-                // container horizontal align
                 if (isset($slideSettings['containerHorizontalAlign']) && !empty($slideSettings['containerHorizontalAlign'])) {
                     $containerJustifyContent = null;
 
@@ -178,7 +160,6 @@ class Updater
                     }
                 }
 
-                // content vertical align
                 if (isset($slideSettings['contentVerticalAlign']) && !empty($slideSettings['contentVerticalAlign'])) {
                     $contentTextAlign = null;
 
@@ -266,7 +247,6 @@ class Updater
                     $convertedCmsElementConfig['config']['viewports']['value'][$viewport]['arrows']['iconSize'] = $config['arrows']['iconSize'];
                 }
 
-                // slide speed
                 $convertedCmsElementConfig['config']['settings']['value']['speed'] = isset($cmsElementConfig['slideSpeed']['value']) ? $cmsElementConfig['slideSpeed']['value'] : null;
 
                 $updatedCmsElementsConfig[] = $convertedCmsElementConfig;

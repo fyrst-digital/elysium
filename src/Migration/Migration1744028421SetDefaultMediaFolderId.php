@@ -23,38 +23,20 @@ class Migration1744028421SetDefaultMediaFolderId extends MigrationStep
     {
         $newMediaFolderId = hex2bin(Defaults::MEDIA_FOLDER_ID);
 
-        /**
-         * Early return if already migrated
-         */
         if ($this->isAlreadyMigrated($connection, $newMediaFolderId)) {
             return;
         }
 
         $connection->transactional(function (Connection $connection) use ($newMediaFolderId) {
-            /**
-             * Check if the new default media folder id already exists
-             * If it does, we can skip the migration
-             */
             $originalFolder = $this->getOriginalMediaFolder($connection);
             if (!$originalFolder) {
                 return;
             }
 
-            /**
-             * Find all media ids by the original media folder id
-             */
             $mediaIds = $this->getMediaIds($connection, $originalFolder['id']);
 
-            /** 
-             * first, delete the original media folder by the original media folder id
-             * then change the id in the original media folder data to the new default media folder id
-             * and insert the new data into the media_folder table
-             */
             $this->transformMediaFolder($connection, $originalFolder, $newMediaFolderId);
 
-            /**
-             * Update all media ids to the new default media folder id
-             */
             if (count($mediaIds) > 0) {
                 $this->updateMediaIds($connection, $mediaIds, $newMediaFolderId);
             }

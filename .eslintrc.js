@@ -17,7 +17,6 @@ module.exports = {
 	parserOptions: {
 		
 		project: "./src/Resources/app/administration/tsconfig.json",
-		// ecmaVersion: 'latest',
 		sourceType: 'module'
 	},
 	plugins: [

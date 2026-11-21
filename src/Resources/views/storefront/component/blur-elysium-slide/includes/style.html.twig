@@ -1,5 +1,4 @@
 {% macro outputViewportVars(options, mappings) %}
-    {# Simple value mappings (path → cssVar with optional unit) #}
     {% for mapping in mappings.simple|default(mappings) %}
         {% set group = attribute(options, mapping.group) %}
         {% if group %}
@@ -14,14 +13,12 @@
         {% endif %}
     {% endfor %}
 
-    {# Column wrap direction #}
     {% if options.container.columnWrap is same as(true) %}
         --container-direction: column;
     {% elseif options.container.columnWrap is same as(false) %}
         --container-direction: row;
     {% endif %}
 
-    {# Image / content order swap #}
     {% if options.container.order is same as('reverse') %}
         --image-order: 1;
         --content-order: 2;
@@ -30,7 +27,6 @@
         --content-order: 1;
     {% endif %}
 
-    {# Content flex sizing #}
     {% if options.content.basis is defined
           and options.content.basis is not null
           and options.content.basis is not same as('') %}
@@ -45,7 +41,6 @@
         {% endif %}
     {% endif %}
 
-    {# Cover media mappings (dynamic keys) #}
     {% if options.coverMedia %}
         {% for key, value in options.coverMedia|filter(v => v is not empty) %}
             {{ '--cover-' ~ camel_to_kebab_case(key) }}: {{ value }};

@@ -16,7 +16,6 @@ class MigrationOrderingTest extends TestCase
         $timestamps = [];
         foreach ($files as $file) {
             $filename = basename($file, '.php');
-            // Extract timestamp from Migration<TIMESTAMP>Name.php
             if (preg_match('/Migration(\d{10})/', $filename, $matches)) {
                 $timestamps[] = (int) $matches[1];
             }
@@ -24,7 +23,6 @@ class MigrationOrderingTest extends TestCase
 
         static::assertNotEmpty($timestamps, 'Should find timestamps in migration filenames');
 
-        // Check for duplicates
         $uniqueTimestamps = array_unique($timestamps);
         static::assertCount(
             count($timestamps),
@@ -33,7 +31,6 @@ class MigrationOrderingTest extends TestCase
             implode(', ', array_diff_key($timestamps, $uniqueTimestamps))
         );
 
-        // Check chronological order
         $sortedTimestamps = $timestamps;
         sort($sortedTimestamps);
         static::assertSame(

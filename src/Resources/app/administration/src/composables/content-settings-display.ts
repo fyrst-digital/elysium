@@ -2,10 +2,6 @@ import type { ContentSettings } from '@elysium/types/slide';
 
 const { Store } = Shopware;
 
-/**
- * Check if a value is considered "empty" for fallback purposes.
- * Empty string, null, and undefined are treated as missing.
- */
 function isEmptyValue(value: unknown): boolean {
     return value === '' || value === null || value === undefined;
 }
@@ -51,10 +47,6 @@ function getTranslations(slide: Record<string, unknown>): Record<string, unknown
         : Object.values(slide.translations as Record<string, unknown>);
 }
 
-/**
- * Get the current language translation row from the slide's translations.
- * Returns the raw translation object for the current UI language, or null.
- */
 export function getCurrentLanguageTranslation(slide: Record<string, unknown>): Record<string, unknown> | null {
     const context = Store.get('context');
     const currentLanguageId = context.api.languageId;
@@ -72,9 +64,6 @@ export function getCurrentLanguageTranslation(slide: Record<string, unknown>): R
     return currentTranslation ?? null;
 }
 
-/**
- * Get the default language contentSettings from the slide's translations.
- */
 export function getDefaultLanguageContentSettings(slide: Record<string, unknown>): ContentSettings | null {
     const context = Store.get('context');
     const systemLanguageId = context.api.systemLanguageId;
@@ -115,9 +104,6 @@ export function getDisplayContentSettings(slide: Record<string, unknown>): Conte
     return merged as ContentSettings;
 }
 
-/**
- * Structured result indicating where a media value was inherited from.
- */
 export interface MediaInheritanceSource {
     type: 'language' | 'device' | null;
     sourceKey: string | null;
@@ -129,11 +115,6 @@ const deviceCascades: Record<string, string[]> = {
 };
 
 /**
- * Determine the inheritance source for a slide cover media field.
- *
- * Checks the exact device first, then walks through smaller devices
- * (mobile → tablet → desktop) in both the current and default language.
- *
  * @param slide - The slide entity
  * @param deviceKey - The key for the current device (e.g. 'mobileId', 'tabletId', 'desktopId')
  * @param isDefaultLanguage - Whether the current UI language is the default language
@@ -148,12 +129,10 @@ export function getCoverInheritanceSource(
     const defaultSettings = isDefaultLanguage ? null : getDefaultLanguageContentSettings(slide);
     const defaultCover = defaultSettings?.slideCover ?? {};
 
-    // 1. Exact match in current language
     if (currentCover[deviceKey]) {
         return { type: null, sourceKey: null };
     }
 
-    // 2. Cascade through smaller devices in current language
     const cascade = deviceCascades[deviceKey] ?? [];
     for (const key of cascade) {
         if (currentCover[key]) {
@@ -161,12 +140,10 @@ export function getCoverInheritanceSource(
         }
     }
 
-    // 3. Exact match in default language
     if (defaultCover[deviceKey]) {
         return { type: 'language', sourceKey: deviceKey };
     }
 
-    // 4. Cascade through smaller devices in default language
     for (const key of cascade) {
         if (defaultCover[key]) {
             return { type: 'language', sourceKey: key };
@@ -176,9 +153,6 @@ export function getCoverInheritanceSource(
     return { type: null, sourceKey: null };
 }
 
-/**
- * Determine the inheritance source for the slide cover video.
- */
 export function getVideoInheritanceSource(
     slide: Record<string, unknown>,
     isDefaultLanguage: boolean,
@@ -200,9 +174,6 @@ export function getVideoInheritanceSource(
     return { type: null, sourceKey: null };
 }
 
-/**
- * Determine the inheritance source for the focus image.
- */
 export function getFocusImageInheritanceSource(
     slide: Record<string, unknown>,
     isDefaultLanguage: boolean,
@@ -224,10 +195,6 @@ export function getFocusImageInheritanceSource(
     return { type: null, sourceKey: null };
 }
 
-/**
- * Gets a value from contentSettings by dot-notated path.
- * e.g. 'title', 'button.label', 'slideCover.alt'
- */
 function getValueByPath(obj: Record<string, unknown>, path: string): unknown {
     return path.split('.').reduce<unknown>((acc, key) => {
         if (acc === null || acc === undefined) {
@@ -238,12 +205,6 @@ function getValueByPath(obj: Record<string, unknown>, path: string): unknown {
 }
 
 /**
- * Gets fallback text for an input placeholder, matching Shopware's placeholder mixin pattern.
- *
- * Returns the current language value if it exists and is non-empty.
- * Otherwise returns the default language fallback value if it exists and is non-empty.
- * Otherwise returns the provided fallback snippet.
- *
  * @param slide - The slide entity
  * @param path - Dot-notated path within contentSettings (e.g. 'title', 'button.label', 'slideCover.alt')
  * @param fallback - Default text snippet if both current and default are empty

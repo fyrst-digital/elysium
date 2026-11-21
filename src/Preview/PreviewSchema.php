@@ -6,13 +6,6 @@ namespace Blur\BlurElysiumSlider\Preview;
 
 use Blur\BlurElysiumSlider\Preview\PreviewFragment;
 
-/**
- * Value object representing a preview schema for an element type.
- *
- * A schema defines:
- * - fieldMappings: which object paths map to which logical field names
- * - fragments: how each logical field is rendered in the preview
- */
 class PreviewSchema
 {
     /**
@@ -47,8 +40,6 @@ class PreviewSchema
     }
 
     /**
-     * Find all fragments that should be triggered by the given field names.
-     *
      * @param string[] $changedFields
      * @return PreviewFragment[]
      */

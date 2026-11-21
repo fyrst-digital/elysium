@@ -1,9 +1,3 @@
-/**
- * Fragment renderers for the Elysium slide preview.
- *
- * Each renderer knows how to update the DOM for a specific fragment type.
- */
-
 function stripTags(html, allowedTags = []) {
     if (!html) {
         return '';
@@ -85,10 +79,6 @@ function getMediaById(resolvedMedia, id) {
     return resolvedMedia[id] || null;
 }
 
-/**
- * CSS Variable Renderer
- * Applies inline styles based on style mappings.
- */
 function createCssVariableRenderer() {
     return {
         render(fragment, data, element, plugin) {
@@ -100,10 +90,6 @@ function createCssVariableRenderer() {
     };
 }
 
-/**
- * Preview Sizing Renderer
- * Updates aspect-ratio and max-width simulation.
- */
 function createPreviewSizingRenderer() {
     return {
         render(fragment, data, element, plugin) {
@@ -267,7 +253,6 @@ function renderCover(slide, element, resolvedMedia, device) {
         return;
     }
 
-    // Now safe to remove existing elements
     const existingPicture = element.querySelector('.blur-elysium-slide-cover-picture');
     const existingVideo = element.querySelector('.blur-elysium-slide-cover-video');
     if (existingPicture) existingPicture.remove();
@@ -279,7 +264,6 @@ function renderCover(slide, element, resolvedMedia, device) {
         return;
     }
 
-    // Mobile-first fallback: select cover for the current device
     let selectedCover;
     switch (device) {
         case 'mobile':
@@ -342,9 +326,6 @@ function renderFocusImage(slide, element, resolvedMedia, _device) {
     }
 }
 
-/**
- * Client-side partial renderers keyed by fragment name.
- */
 function createClientPartialRenderers() {
     return {
         headline: renderHeadline,
@@ -355,9 +336,6 @@ function createClientPartialRenderers() {
     };
 }
 
-/**
- * Registry mapping fragment modes to renderer factories.
- */
 export function createFragmentRenderers() {
     const clientRenderers = createClientPartialRenderers();
 

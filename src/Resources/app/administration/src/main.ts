@@ -10,32 +10,21 @@ import '@elysium/styles/components.scss';
 import '@elysium/mixin/device-utilities.mixin';
 import '@elysium/mixin/style-utilities.mixin';
 import '@elysium/module/blur-elysium-slides';
-// cms elements
 import '@elysium/component/cms/elements/blur-elysium-slider';
 import '@elysium/component/cms/elements/blur-elysium-banner';
-// cms blocks
 import '@elysium/component/cms/blocks/blur-elysium-slider';
 import '@elysium/component/cms/blocks/blur-elysium-banner';
 
 const { Locale, Application, Component, Store, Service } = Shopware;
 
-/**
- * Register pinia stores
- */
 Store.register(slideStore);
 Store.register(uiStore);
 Store.register(cmsStore);
 Store.register(mediaStore);
 
-/**
- * Register global snippets
- */
 Locale.extend('en-GB', enGB);
 Locale.extend('de-DE', deDE);
 
-/**
- * Add search tag
- */
 Application.addServiceProviderDecorator(
     'searchTypeService',
     (searchTypeService) => {
@@ -60,7 +49,6 @@ const CustomFieldDataProviderService = Service(
 CustomFieldDataProviderService.addEntityName('blur_elysium_slides');
 
 /**
- * Register components
  * @todo change the name of elysium related components from `blur-elysium-*` to `elysium-*`
  */
 useComponentRegister([
@@ -113,9 +101,6 @@ useComponentRegister([
     { name: 'blur-elysium-cms-section-block-settings', path: () => import('@elysium/component/cms/section/block-settings') },
 ])
 
-/**
- * Override components
- */
 useComponentOverride([
     { name: 'sw-cms-section', path: () => import('@elysium/extension/sw-cms-section') },
     { name: 'sw-cms-sidebar', path: () => import('@elysium/extension/sw-cms-sidebar') },
@@ -125,40 +110,3 @@ useComponentOverride([
 ])
 
 Component.extend('elysium-cms-sidebar-navigation-item', 'sw-sidebar-navigation-item', () => import('@elysium/extension/sidebar-navigation-item'));
-
-/**
- * Register notification transformers for Elysium validation error codes.
- * Transform notifications whose message matches a known error code snippet key.
- */
-// const errorCodes = [
-//     '24c1a406-ed22-4e82-bda2-5bc2df52977f',
-//     '3e6eacf6-013c-48ab-a557-c218aa64aaa1',
-// ];
-
-// errorCodes.forEach((code) => {
-//     const messageKey = `global.error-codes.${code}`;
-//     const translatedMessage = Shopware.Application.getApplicationRoot()?.$t(messageKey);
-
-//     if (translatedMessage && translatedMessage !== messageKey) {
-//         Store.get('notification').registerTransformer(
-//             translatedMessage,
-//             (notification) => ({
-//                 ...notification,
-//                 title: notification.title ?? Shopware.Application.getApplicationRoot()?.$t('blurElysiumSlides.messages.slideSaveErrorTitle'),
-//                 message: translatedMessage,
-//             }),
-//         );
-//     }
-// });
-
-// Store.get('notification').registerTransformer(
-//     'Request failed with status code 400',
-//     (notification) => {
-//         console.log(notification)
-//         return {
-//             ...notification,
-//             title: notification.title ?? Shopware.Application.getApplicationRoot()?.$t('blurElysiumSlides.messages.slideSaveErrorTitle'),
-//             message: translatedMessage,
-//         }
-//     }
-// );

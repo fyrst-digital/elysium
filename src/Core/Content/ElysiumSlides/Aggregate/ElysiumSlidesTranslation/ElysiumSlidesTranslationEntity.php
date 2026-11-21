@@ -10,7 +10,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
 
 class ElysiumSlidesTranslationEntity extends TranslationEntity
 {
-    use EntityCustomFieldsTrait; // adds $customFields property for CustomFields field
+    use EntityCustomFieldsTrait;
     /**
      * @var ElysiumSlidesEntity
      */
@@ -29,8 +29,6 @@ class ElysiumSlidesTranslationEntity extends TranslationEntity
     protected ?array $contentSettings = null;
 
     /**
-     * Get the value of contentSettings
-     *
      * @return array<mixed>|null
      */
     public function getContentSettings(): ?array
@@ -39,8 +37,6 @@ class ElysiumSlidesTranslationEntity extends TranslationEntity
     }
 
     /**
-     * Set the value of contentSettings
-     *
      * @param array<mixed>|null $contentSettings
      */
     public function setContentSettings(?array $contentSettings): void

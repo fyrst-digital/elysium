@@ -60,8 +60,6 @@ final class Defaults
     ];
 
     /**
-     * Provides default section configuration settings for the Elysium Section.
-     *
      * @return array<string, mixed[]>
      */
     public static function cmsSectionSettings(): array

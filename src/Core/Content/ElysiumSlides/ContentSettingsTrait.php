@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace Blur\BlurElysiumSlider\Core\Content\ElysiumSlides;
 
 /**
- * Trait for handling content settings in entities.
- *
- * Provides methods for getting, setting, and manipulating content settings.
- *
  * Translation fallback for contentSettings is handled at hydration time by
  * {@see ElysiumSlidesHydrator}, which deep-merges the JSON blob across the
  * language chain. Therefore accessors in this trait read directly from the
@@ -39,8 +35,6 @@ trait ContentSettingsTrait
     protected ?array $contentSettings = [];
 
     /**
-     * Get the value of contentSettings
-     *
      * @return array<mixed>|null
      */
     public function getContentSettings(): ?array
@@ -49,12 +43,6 @@ trait ContentSettingsTrait
     }
 
     /**
-     * Get specific content settings values by keys.
-     *
-     * Returns an array with the field names as keys and the values as values.
-     * If you pass multiple field names and one of the fields does not exist,
-     * the field will not be in the result.
-     *
      * @param string ...$fields
      * @return array<string, mixed>
      */
@@ -64,10 +52,6 @@ trait ContentSettingsTrait
     }
 
     /**
-     * Get a single content setting value by key.
-     *
-     * If the field does not exist, null will be returned.
-     *
      * @param string $field
      * @return mixed
      */
@@ -77,8 +61,6 @@ trait ContentSettingsTrait
     }
 
     /**
-     * Set the value of contentSettings
-     *
      * @param array<mixed>|null $contentSettings
      */
     public function setContentSettings(?array $contentSettings): void
@@ -87,8 +69,6 @@ trait ContentSettingsTrait
     }
 
     /**
-     * Change content settings values.
-     *
      * @param array<string, mixed> $contentSettings
      */
     public function changeContentSettings(array $contentSettings): void
@@ -98,8 +78,6 @@ trait ContentSettingsTrait
             $contentSettings
         );
     }
-
-    // --- Content accessors ---
 
     public function getContentTitle(): ?string
     {
@@ -122,8 +100,6 @@ trait ContentSettingsTrait
     {
         return $this->getContentSettingsValue('url');
     }
-
-    // --- Media ID accessors ---
 
     public function getContentSlideCoverMobileId(): ?string
     {
@@ -173,8 +149,6 @@ trait ContentSettingsTrait
     }
 
     /**
-     * Collect all non-null media IDs from contentSettings for batch resolution.
-     *
      * @return string[]
      */
     public function getContentMediaIds(): array

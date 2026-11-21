@@ -30,10 +30,6 @@ class CacheInvalidationSchedulerTest extends TestCase
         $this->scheduler = new CacheInvalidationScheduler($this->messageBus, $this->clock);
     }
 
-    // =====================================================
-    // entityConfig() Tests
-    // =====================================================
-
     public function testEntityConfigContainsElysiumSlides(): void
     {
         $config = CacheInvalidationScheduler::entityConfig();
@@ -60,20 +56,12 @@ class CacheInvalidationSchedulerTest extends TestCase
         );
     }
 
-    // =====================================================
-    // Empty IDs Tests
-    // =====================================================
-
     public function testScheduleReturnsEarlyWhenIdsAreEmpty(): void
     {
         $this->scheduler->schedule(['activeFrom' => '2025-06-16 00:00:00'], ElysiumSlidesDefinition::ENTITY_NAME, []);
 
         static::assertCount(0, $this->messageBus->getDispatched());
     }
-
-    // =====================================================
-    // Future Time Tests (Delayed Dispatch)
-    // =====================================================
 
     public function testScheduleDispatchesDelayedMessageForFutureActiveFrom(): void
     {
@@ -138,10 +126,6 @@ class CacheInvalidationSchedulerTest extends TestCase
         }
     }
 
-    // =====================================================
-    // Past Time Tests (Immediate vs No Dispatch)
-    // =====================================================
-
     public function testScheduleDoesNotDispatchForPastActiveFromOnSlides(): void
     {
         $id = Uuid::randomHex();
@@ -200,10 +184,6 @@ class CacheInvalidationSchedulerTest extends TestCase
         static::assertCount(0, $this->messageBus->getDispatched());
     }
 
-    // =====================================================
-    // Null Value Tests
-    // =====================================================
-
     public function testScheduleSkipsNullActiveFrom(): void
     {
         $id = Uuid::randomHex();
@@ -246,10 +226,6 @@ class CacheInvalidationSchedulerTest extends TestCase
         static::assertCount(0, $this->messageBus->getDispatched());
     }
 
-    // =====================================================
-    // DateTimeInterface Handling Tests
-    // =====================================================
-
     public function testScheduleHandlesDateTimeInterfaceForActiveFrom(): void
     {
         $id = Uuid::randomHex();
@@ -279,10 +255,6 @@ class CacheInvalidationSchedulerTest extends TestCase
 
         static::assertCount(0, $this->messageBus->getDispatched());
     }
-
-    // =====================================================
-    // CMS Section Nested Path Tests
-    // =====================================================
 
     public function testScheduleDispatchesDelayedMessageForCmsSectionWithFutureActiveFrom(): void
     {
@@ -325,10 +297,6 @@ class CacheInvalidationSchedulerTest extends TestCase
         static::assertCount(0, $this->messageBus->getDispatched());
     }
 
-    // =====================================================
-    // Exact Timestamp Delay Tests
-    // =====================================================
-
     #[DataProvider('delayCalculationProvider')]
     public function testScheduleCalculatesCorrectDelaySeconds(string $futureTime, int $expectedDelayMs): void
     {
@@ -357,10 +325,6 @@ class CacheInvalidationSchedulerTest extends TestCase
             '24 hours in future' => ['2025-06-16 12:00:00', 86400 * 1000],
         ];
     }
-
-    // =====================================================
-    // Edge Case: Exact Now Timestamp
-    // =====================================================
 
     public function testScheduleDoesNotDispatchWhenTimeIsExactlyNow(): void
     {

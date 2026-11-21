@@ -36,7 +36,6 @@ export default Component.wrapComponentConfig({
             },
 
             set(value) {
-                // Note: we are using destructuring assignment syntax here.
                 this.element.config.elysiumSlide.value = value;
             },
         },

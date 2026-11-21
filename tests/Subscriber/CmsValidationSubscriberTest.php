@@ -56,10 +56,6 @@ class CmsValidationSubscriberTest extends TestCase
         static::assertContains('validateTimeControl', $listenerMethods);
     }
 
-    // =====================================================
-    // InsertCommand Tests
-    // =====================================================
-
     #[DataProvider('validDateRangeProvider')]
     public function testInsertSectionWithValidDates(string $activeFrom, string $activeUntil): void
     {
@@ -260,10 +256,6 @@ class CmsValidationSubscriberTest extends TestCase
         static::assertSame('2025-12-31 23:59:59', $violation->getInvalidValue());
     }
 
-    // =====================================================
-    // JsonUpdateCommand Tests
-    // =====================================================
-
     #[DataProvider('validDateRangeProvider')]
     public function testJsonUpdateSectionWithBothFieldsValid(string $activeFrom, string $activeUntil): void
     {
@@ -432,10 +424,6 @@ class CmsValidationSubscriberTest extends TestCase
         $this->assertViolationThrown($event, '2025-12-31 23:59:59');
     }
 
-    // =====================================================
-    // Skipped Command Tests
-    // =====================================================
-
     public function testSkipsRegularUpdateCommand(): void
     {
         $command = new CmsTestUpdateCommand(
@@ -470,10 +458,6 @@ class CmsValidationSubscriberTest extends TestCase
 
         static::assertCount(0, $event->getExceptions()->getExceptions());
     }
-
-    // =====================================================
-    // Cross-entity Tests
-    // =====================================================
 
     public function testValidatesBothSectionAndBlockInSameEvent(): void
     {
@@ -512,10 +496,6 @@ class CmsValidationSubscriberTest extends TestCase
         static::assertInstanceOf(WriteConstraintViolationException::class, $exceptions[0]);
     }
 
-    // =====================================================
-    // Data Providers
-    // =====================================================
-
     public static function validDateRangeProvider(): array
     {
         return [
@@ -532,10 +512,6 @@ class CmsValidationSubscriberTest extends TestCase
             'same dates' => ['2025-06-15 12:00:00', '2025-06-15 12:00:00'],
         ];
     }
-
-    // =====================================================
-    // Helper Methods
-    // =====================================================
 
     private function createEvent(array $commands): PreWriteValidationEvent
     {
@@ -645,7 +621,6 @@ class CmsTestJsonUpdateCommand extends JsonUpdateCommand
 }
 
 /**
- * Minimal EntityDefinition for CmsTestJsonUpdateCommand.
  * @internal
  */
 class TestEntityDefinition extends \Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition
@@ -664,7 +639,6 @@ class TestEntityDefinition extends \Shopware\Core\Framework\DataAbstractionLayer
 }
 
 /**
- * Mock UpdateCommand that bypasses parent constructor.
  * @internal
  */
 class CmsTestUpdateCommand extends WriteCommand

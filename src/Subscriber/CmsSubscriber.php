@@ -196,7 +196,6 @@ class CmsSubscriber implements EventSubscriberInterface
 
         $settingsKey = Defaults::CMS_SECTION_SETTINGS_KEY;
 
-        // Time filters: (activeFrom IS NULL OR activeFrom <= NOW)
         $activeFromFilter = new MultiFilter(MultiFilter::CONNECTION_OR, [
             new EqualsFilter('customFields.' . $settingsKey . '.activeFrom', null),
             new RangeFilter('customFields.' . $settingsKey . '.activeFrom', [
@@ -204,7 +203,6 @@ class CmsSubscriber implements EventSubscriberInterface
             ]),
         ]);
 
-        // Time filters: (activeUntil IS NULL OR activeUntil >= NOW)
         $activeUntilFilter = new MultiFilter(MultiFilter::CONNECTION_OR, [
             new EqualsFilter('customFields.' . $settingsKey . '.activeUntil', null),
             new RangeFilter('customFields.' . $settingsKey . '.activeUntil', [
@@ -212,7 +210,6 @@ class CmsSubscriber implements EventSubscriberInterface
             ]),
         ]);
 
-        // Valid elysium section: type='blur-elysium-section' AND time filters pass
         $validElysiumSection = new MultiFilter(MultiFilter::CONNECTION_AND, [
             new EqualsFilter('type', Defaults::CMS_SECTION_NAME),
             $activeFromFilter,
@@ -234,7 +231,6 @@ class CmsSubscriber implements EventSubscriberInterface
 
         $settingsKey = Defaults::CMS_BLOCK_ADVANCED_KEY;
 
-        // Time filters: (activeFrom IS NULL OR activeFrom <= NOW)
         $activeFromFilter = new MultiFilter(MultiFilter::CONNECTION_OR, [
             new EqualsFilter('customFields.' . $settingsKey . '.activeFrom', null),
             new EqualsFilter('customFields.' . $settingsKey . '.activeFrom', ''),
@@ -243,7 +239,6 @@ class CmsSubscriber implements EventSubscriberInterface
             ]),
         ]);
 
-        // Time filters: (activeUntil IS NULL OR activeUntil >= NOW)
         $activeUntilFilter = new MultiFilter(MultiFilter::CONNECTION_OR, [
             new EqualsFilter('customFields.' . $settingsKey . '.activeUntil', null),
             new EqualsFilter('customFields.' . $settingsKey . '.activeUntil', ''),
@@ -252,7 +247,6 @@ class CmsSubscriber implements EventSubscriberInterface
             ]),
         ]);
 
-        // Valid elysium block: type is elysium AND time filters pass
         $validElysiumBlock = new MultiFilter(MultiFilter::CONNECTION_AND, [
             new EqualsAnyFilter('type', self::ELYSIUM_BLOCK_TYPES),
             $activeFromFilter,

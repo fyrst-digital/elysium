@@ -1,6 +1,5 @@
 const { Mixin, Component } = Shopware;
 
-// give the mixin a name and feed it into the register function as the second argument
 export default Mixin.register(
     'blur-device-utilities',
     Component.wrapComponentConfig({

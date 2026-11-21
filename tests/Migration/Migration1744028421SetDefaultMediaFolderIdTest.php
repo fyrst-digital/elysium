@@ -18,19 +18,16 @@ class Migration1744028421SetDefaultMediaFolderIdTest extends AbstractMigrationTe
     {
         // Clean up in reverse dependency order (child tables first)
 
-        // Delete media entries created by this test
         $this->connection->executeStatement(
             "DELETE FROM media WHERE file_name LIKE 'test-image%'"
         );
 
-        // Clean up media folders created by tests
         $defaultFolderId = $this->connection->fetchOne(
             'SELECT id FROM media_default_folder WHERE entity = ?',
             ['blur_elysium_slides']
         );
 
         if ($defaultFolderId) {
-            // Delete any media folders linked to our default folder
             $this->connection->executeStatement(
                 'DELETE FROM media_folder WHERE default_folder_id = ?',
                 [$defaultFolderId]
@@ -64,7 +61,6 @@ class Migration1744028421SetDefaultMediaFolderIdTest extends AbstractMigrationTe
         $this->createMediaDefaultFolder();
         $oldFolderId = $this->createOriginalMediaFolder();
 
-        // Create a media entry in the old folder
         $mediaId = Uuid::randomBytes();
         $this->connection->insert('media', [
             'id' => $mediaId,
@@ -78,7 +74,6 @@ class Migration1744028421SetDefaultMediaFolderIdTest extends AbstractMigrationTe
         $migration = new Migration1744028421SetDefaultMediaFolderId();
         $this->runMigration($migration);
 
-        // Verify media was moved to new folder
         $newFolderId = hex2bin(Defaults::MEDIA_FOLDER_ID);
         $media = $this->connection->fetchAssociative(
             'SELECT media_folder_id FROM media WHERE id = ?',
@@ -109,14 +104,12 @@ class Migration1744028421SetDefaultMediaFolderIdTest extends AbstractMigrationTe
 
     private function cleanupExistingMediaFolder(): void
     {
-        // Get the default folder ID for blur_elysium_slides
         $defaultFolderId = $this->connection->fetchOne(
             'SELECT id FROM media_default_folder WHERE entity = ?',
             ['blur_elysium_slides']
         );
 
         if ($defaultFolderId) {
-            // Delete any existing media folder linked to this default folder
             $this->connection->executeStatement(
                 'DELETE FROM media_folder WHERE default_folder_id = ?',
                 [$defaultFolderId]

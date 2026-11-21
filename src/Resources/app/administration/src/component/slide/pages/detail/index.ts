@@ -365,7 +365,6 @@ export default Component.wrapComponentConfig({
                     });
 
                     if (this.newSlide === true) {
-                        // push to detail route
                         this.detailPush(JSON.parse(result.config.data).id);
                     }
 

@@ -126,14 +126,12 @@ export default Component.wrapComponentConfig({
     },
 
     created() {
-        // Dynamically register watchers from the preview schema
         previewSchema.fieldMappings.forEach((mapping) => {
             this.$watch(mapping.path, () => {
                 this.sendSlideUpdate(mapping.fields);
             }, { deep: mapping.deep ?? false });
         });
 
-        // Watch media ID paths — load media into shared store, then trigger update
         const mediaIdPaths = [
             'slide.contentSettings.slideCover.mobileId',
             'slide.contentSettings.slideCover.tabletId',
@@ -248,8 +246,6 @@ export default Component.wrapComponentConfig({
         },
 
         /**
-         * Sends a slide update to the live preview iframe.
-         *
          * @param fields - Which fields changed (for the iframe to selectively update)
                  * @param immediate - If true, sends immediately. If false, debounces (300ms).
          */
@@ -272,7 +268,6 @@ export default Component.wrapComponentConfig({
                 return;
             }
 
-            // Build a display copy with merged fallback values for the preview iframe
             const displaySlide = JSON.parse(JSON.stringify(this.slide));
             const displaySettings = JSON.parse(JSON.stringify(getDisplayContentSettings(this.slide)));
 

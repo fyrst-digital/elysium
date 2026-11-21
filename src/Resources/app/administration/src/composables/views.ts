@@ -1,9 +1,7 @@
 export function useViewportProp(
         property: string,
         deviceView: string,
-        // fallback: string | number,
         viewportsSettings: object,
-        // snippetPrefix: string | null = null
 ) {
     if (!viewportsSettings) {
         return null;

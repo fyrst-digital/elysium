@@ -76,7 +76,6 @@
 }
 
 .py-section-content {
-    // --py-section-gap: var(--py-section-gap-y, 0px) var(--py-section-gap-x, 0px);
     display: grid;
     grid-template-columns: repeat(var(--py-section-cols, 12), minmax(0, 1fr));
     gap: var(--py-section-gap-y, 0px) var(--py-section-gap-x, 0px);

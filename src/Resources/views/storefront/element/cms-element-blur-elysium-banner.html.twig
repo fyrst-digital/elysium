@@ -13,7 +13,6 @@
             data-cms-element-id="{{ element.id }}">
             
             <style>
-                {# viewport options for cms element #}
                 {% for device, options in element.config.viewports.value %}
                     @media (min-width: {{ theme_config('breakpoint.' ~ blurElysiumBreakpoints[device])~'px' }}) {
                         .blur-elysium-banner[data-cms-element-id="{{ element.id }}"] 
